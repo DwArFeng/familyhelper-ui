@@ -1,0 +1,23 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.el-breadcrumb {
+    margin-bottom: 15px;
+}
+
+.scroll-bar {
+    height: 100%;
+    width: 100%;
+}
+
+.custom-message-box__w450{
+    width: 450px;
+}
+
+.custom-message-box__w500{
+    width: 500px;
+}

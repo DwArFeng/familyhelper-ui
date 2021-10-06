@@ -1,0 +1,77 @@
+#################
+## Eclipse
+#################
+*.pydevproject
+.project
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# CDT-specific
+.cproject
+
+# PDT-specific
+.buildpath
+
+#################
+## Idea
+#################
+**/*.iml
+.idea/
+
+#################
+## Maven
+#################
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
+!/.mvn/wrapper/maven-wrapper.jar
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+#################
+## Maven Npm Files
+#################
+/familyhelper-ui-general-view/familyhelper-ui-general-view-mobile/node/
+/familyhelper-ui-general-view/familyhelper-ui-general-view-pc/node/
+
+#################
+## Logger Files
+#################
+/familyhelper-ui-general-impl/logs/
+/familyhelper-ui-general-node/logs/
+
+#################
+## Configuration Files
+#################
+/familyhelper-ui-general-impl/conf/
+/familyhelper-ui-general-node/conf/

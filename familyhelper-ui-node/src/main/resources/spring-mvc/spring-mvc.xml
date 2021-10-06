@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+    <!--静态资源映射-->
+    <!--本项目把静态资源放在了WEB-INF的statics目录下，资源映射如下-->
+    <mvc:resources mapping="/ui/pc/**" location="/WEB-INF/ui/pc/"/>
+    <mvc:resources mapping="/ui/mobile/**" location="/WEB-INF/ui/mobile/"/>
+
+    <!-- 使SpringMVC支持跨域请求 -->
+    <mvc:cors>
+        <mvc:mapping
+                path="/api/v1/**"
+                allowed-origins="*"
+                allowed-methods="*"
+                max-age="3600"/>
+    </mvc:cors>
+</beans>
