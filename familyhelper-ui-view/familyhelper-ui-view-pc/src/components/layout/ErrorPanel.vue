@@ -57,6 +57,8 @@ export default {
         if (this.$ls.get('loginInfo') == null) {
           return;
         }
+        // noinspection JSUnresolvedVariable
+        const { token } = this.$ls.get('loginInfo');
         const errorHandlerMap = new Map();
         errorHandlerMap.set(90, () => {
           this.$message({
@@ -74,7 +76,7 @@ export default {
           this.$ls.remove('permissionInfo');
           this.$router.push({ path: '/login' });
         });
-        resolveResponse(this, postpone(), errorHandlerMap)
+        resolveResponse(this, postpone(token), errorHandlerMap)
           .then((res) => {
             // noinspection JSUnresolvedVariable
             this.$ls.set('loginInfo', res);

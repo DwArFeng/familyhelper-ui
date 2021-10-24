@@ -3,7 +3,6 @@ errorCodeMessageMap.set(1010, '用户不存在或密码不正确');
 errorCodeMessageMap.set(1020, '用户不存在或密码不正确');
 
 const defaultErrorHandler = (vue, code, message) => {
-  console.log('1122334');
   vue.$message({
     showClose: true,
     dangerouslyUseHTMLString: true,
@@ -45,7 +44,7 @@ export default function resolveResponse(vue, response, errorHandlerMap) {
         message: `<div style="text-align: center">通信错误，异常信息: <br/> ${err == null ? '' : err.message}</div>`,
         type: 'error',
         center: true,
-        duration: 0,
+        duration: 2000,
       });
       return Promise.reject();
     },

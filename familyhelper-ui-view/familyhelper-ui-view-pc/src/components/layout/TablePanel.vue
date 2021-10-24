@@ -108,10 +108,10 @@ export default {
   },
   watch: {
     currentPage(value) {
-      this.watchedCurrentPage = value;
+      this.watchedCurrentPage = value + 1;
     },
     pageSize(value) {
-      this.watchedPageSize = value + 1;
+      this.watchedPageSize = value;
     },
   },
   computed: {
@@ -128,8 +128,8 @@ export default {
   },
   methods: {
     handleCurrentPageChanged() {
-      this.$emit('update:currentPage', this.watchedCurrentPage);
-      this.$emit('onPagingAttributeChanged', this.watchedCurrentPage);
+      this.$emit('update:currentPage', this.watchedCurrentPage - 1);
+      this.$emit('onPagingAttributeChanged', this.watchedCurrentPage - 1);
     },
     handlePageSizeChanged() {
       this.$emit('update:pageSize', this.watchedPageSize);

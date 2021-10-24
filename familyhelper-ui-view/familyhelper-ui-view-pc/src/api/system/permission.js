@@ -59,3 +59,9 @@ export function childForGroup(key, page, rows) {
     rows,
   });
 }
+
+export function lookupForUser(userId) {
+  return post('system', 'permission/lookup-for-user', {
+    string_id: userId,
+  });
+}

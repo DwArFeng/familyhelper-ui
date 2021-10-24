@@ -4,7 +4,7 @@
       class="content-panel"
       :header-visible="true"
       :west-visible="true"
-      :breadcrumb="['系统设置', '权限分组设置']"
+      :breadcrumb="['系统设置', '权限分组管理']"
     >
       <permission-group-tree-panel
         class="tree-container"
@@ -87,14 +87,17 @@
           <el-table-column
             prop="key.string_id"
             label="权限节点"
+            show-overflow-tooltip
           />
           <el-table-column
             prop="name"
             label="名称"
+            show-overflow-tooltip
           />
           <el-table-column
             prop="remark"
             label="备注"
+            show-overflow-tooltip
           />
         </table-panel>
       </div>
@@ -106,6 +109,7 @@
       :entity="anchorEntity"
       :create-rules="createRules"
       :edit-rules="editRules"
+      :close-on-click-modal="false"
       @onEntityCreate="handleEntityCreate"
       @onEntityEdit="handleEntityEdit"
     >

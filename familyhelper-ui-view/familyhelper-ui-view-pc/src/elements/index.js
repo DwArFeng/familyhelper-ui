@@ -24,10 +24,14 @@ import {
   MenuItemGroup,
   Message,
   MessageBox,
+  Option,
   Pagination,
+  Select,
   Submenu,
+  Switch,
   Table,
   TableColumn,
+  TabPane, Tabs,
   Tooltip,
   Tree,
 } from 'element-ui';
@@ -64,8 +68,33 @@ Vue.use(Pagination);
 Vue.use(Dialog);
 Vue.use(Tree);
 Vue.use(Divider);
+Vue.use(Switch);
+Vue.use(Option);
+Vue.use(Select);
+Vue.use(Tabs);
+Vue.use(TabPane);
 
 Vue.prototype.$message = Message;
+Vue.prototype.$alert = MessageBox.alert;
 Vue.prototype.$confirm = MessageBox.confirm;
 
 Vue.use(OverlayScrollbarsPlugin);
+
+const echarts = require('echarts/lib/echarts');
+
+require('echarts/lib/chart/line');
+require('echarts/lib/chart/bar');
+
+require('echarts/lib/component/tooltip');
+require('echarts/lib/component/toolbox');
+require('echarts/lib/component/dataZoom');
+require('echarts/lib/component/title');
+require('echarts/lib/component/grid');
+require('echarts/lib/component/markArea');
+require('echarts/lib/component/markLine');
+require('echarts/lib/component/visualMap');
+require('echarts/lib/component/legend');
+require('echarts/lib/component/legendScroll');
+require('echarts/lib/component/legendScroll');
+
+Vue.prototype.$echarts = echarts;

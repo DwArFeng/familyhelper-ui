@@ -1,9 +1,9 @@
 <template>
-  <div class="permission-node-container">
+  <div class="fund-change-type-indicator-container">
     <content-panel
       class="content-panel"
       :header-visible="true"
-      :breadcrumb="['系统设置', '权限节点管理']"
+      :breadcrumb="['系统设置', '资金变更类型设置']"
     >
       <table-panel
         :page-size.sync="pageSize"
@@ -18,17 +18,12 @@
       >
         <el-table-column
           prop="key.string_id"
-          label="权限节点"
+          label="资金变更类型"
           show-tooltip-when-overflow
         />
         <el-table-column
-          prop="group_key.string_id"
-          label="权限组"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="name"
-          label="名称"
+          prop="label"
+          label="标签"
           show-tooltip-when-overflow
         />
         <el-table-column
@@ -43,11 +38,12 @@
           type="primary"
           @click="handleShowEntityCreateDialog"
         >
-          新建权限
+          新建资金变更类型
         </el-button>
       </div>
     </content-panel>
     <entity-maintain-dialog
+      label-width="100px"
       :mode="dialogMode"
       :visible.sync="dialogVisible"
       :entity="anchorEntity"
@@ -57,22 +53,16 @@
       @onEntityCreate="handleEntityCreate"
       @onEntityEdit="handleEntityEdit"
     >
-      <el-form-item label="权限节点" prop="key.string_id">
+      <el-form-item label="资金变更类型" prop="string_id">
         <el-input
-          v-model="anchorEntity.key.string_id"
+          v-model="anchorEntity.string_id"
           oninput="this.value = this.value.toLowerCase()"
           :disabled="dialogMode !== 'CREATE'"
         />
       </el-form-item>
-      <el-form-item label="权限组ID" prop="group_key.string_id">
+      <el-form-item label="标签" prop="label">
         <el-input
-          v-model="anchorEntity.group_key.string_id"
-          :readonly="dialogMode === 'INSPECT'"
-        />
-      </el-form-item>
-      <el-form-item label="名称" prop="name">
-        <el-input
-          v-model="anchorEntity.name"
+          v-model="anchorEntity.label"
           :readonly="dialogMode === 'INSPECT'"
         />
       </el-form-item>
@@ -90,50 +80,27 @@
 import ContentPanel from '@/components/layout/LayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
-
-import {
-  all, exists, insert, remove, update,
-} from '@/api/system/permission';
-import { exists as permissionGroupExists } from '@/api/system/permissionGroup';
 import resolveResponse from '@/util/response';
+import {
+  exists, all, insert, remove, update,
+} from '@/api/finance/fundChangeTypeIndicator';
 
 export default {
-  name: 'PermissionNode',
+  name: 'FundChangeTypeIndicator',
   components: { EntityMaintainDialog, ContentPanel, TablePanel },
   data() {
     const keyValidator = (rule, value, callback) => {
       Promise.resolve(value)
         .then((res) => {
           if (res === '') {
-            callback(new Error('权限节点不能为空'));
+            callback(new Error('资金变更类型不能为空'));
             return Promise.reject();
           }
           return resolveResponse(this, exists(value));
         })
         .then((res) => {
           if (res) {
-            callback(new Error('权限节点已经存在'));
-            return Promise.reject();
-          }
-          return Promise.resolve();
-        })
-        .then(() => {
-          callback();
-        })
-        .catch(() => {
-        });
-    };
-    const groupKeyValidator = (rule, value, callback) => {
-      Promise.resolve(value)
-        .then((res) => {
-          if (res === '') {
-            return Promise.resolve(true);
-          }
-          return resolveResponse(this, permissionGroupExists(res));
-        })
-        .then((res) => {
-          if (!res) {
-            callback(new Error('权限组节点不存在'));
+            callback(new Error('资金变更类型已经存在'));
             return Promise.reject();
           }
           return Promise.resolve();
@@ -157,32 +124,21 @@ export default {
       dialogVisible: false,
       dialogMode: 'CREATE',
       anchorEntity: {
-        key: {
-          string_id: '',
-        },
-        group_key: {
-          string_id: '',
-        },
-        name: '',
+        string_id: '',
+        label: '',
         remark: '',
       },
       createRules: {
-        'key.string_id': [
+        string_id: [
           { validator: keyValidator, trigger: 'blur' },
         ],
-        'group_key.string_id': [
-          { validator: groupKeyValidator, trigger: 'blur' },
-        ],
-        name: [
-          { required: true, message: '权限名称不能为空', trigger: 'blur' },
+        label: [
+          { required: true, message: '标签不能为空', trigger: 'blur' },
         ],
       },
       editRules: {
-        'group_key.string_id': [
-          { validator: groupKeyValidator, trigger: 'blur' },
-        ],
-        name: [
-          { required: true, message: '权限名称不能为空', trigger: 'blur' },
+        label: [
+          { required: true, message: '标签不能为空', trigger: 'blur' },
         ],
       },
     };
@@ -213,15 +169,14 @@ export default {
     },
     handleEntityCreate() {
       resolveResponse(this, insert(
-        this.anchorEntity.key.string_id,
-        this.anchorEntity.group_key.string_id,
-        this.anchorEntity.name,
+        this.anchorEntity.string_id,
+        this.anchorEntity.label,
         this.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `权限节点 ${this.anchorEntity.key.string_id} 创建成功`,
+            message: `资金变更类型 ${this.anchorEntity.string_id} 创建成功`,
             type: 'success',
             center: true,
           });
@@ -238,15 +193,14 @@ export default {
     },
     handleEntityEdit() {
       resolveResponse(this, update(
-        this.anchorEntity.key.string_id,
-        this.anchorEntity.group_key.string_id,
-        this.anchorEntity.name,
+        this.anchorEntity.string_id,
+        this.anchorEntity.label,
         this.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `权限节点 ${this.anchorEntity.key.string_id} 更新成功`,
+            message: `资金变更类型 ${this.anchorEntity.string_id} 更新成功`,
             type: 'success',
             center: true,
           });
@@ -274,10 +228,8 @@ export default {
     },
     handleEntityDelete(node, entity) {
       Promise.resolve(entity.key.string_id)
-        .then((res) => this.$confirm('此操作将永久删除此权限节点。<br>'
-          + '<div style="color: #b22222"><b>如果您不知道删除该节点后会产生什么后果，'
-          + '请不要进行操作！</b></div>'
-          + '<b>错误的操作可能导致前端界面、后台出错，甚至崩溃！</b><br>'
+        .then((res) => this.$confirm('此操作将永久删除此资金变更类型。<br>'
+          + '如果已经有资金变更属于这个类型，那么该银行的类型将会变为"（未知）"！<br>'
           + '是否继续?',
         '提示', {
           confirmButtonText: '确定',
@@ -290,7 +242,7 @@ export default {
         .then((res) => {
           this.$message({
             showClose: true,
-            message: `权限节点 ${res} 删除成功`,
+            message: `资金变更类型 ${res} 删除成功`,
             type: 'success',
             center: true,
           });
@@ -302,13 +254,8 @@ export default {
         });
     },
     syncAnchorEntity(entity) {
-      this.anchorEntity.key.string_id = entity.key.string_id;
-      if (entity.group_key == null) {
-        this.anchorEntity.group_key.string_id = '';
-      } else {
-        this.anchorEntity.group_key.string_id = entity.group_key.string_id;
-      }
-      this.anchorEntity.name = entity.name;
+      this.anchorEntity.string_id = entity.key.string_id;
+      this.anchorEntity.label = entity.label;
       this.anchorEntity.remark = entity.remark;
     },
     showDialog(mode) {
@@ -325,15 +272,8 @@ export default {
 </script>
 
 <style scoped>
-.permission-node-container {
-  height: 100%;
+.fund-change-type-indicator-container {
   width: 100%;
-}
-
-.header-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
+  height: 100%;
 }
 </style>

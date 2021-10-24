@@ -25,16 +25,62 @@ const routes = [
           permissionRequired: false,
         },
       },
-      // 资金管理。
       {
         path: 'finance-management/account-book',
         component: () => import('@/views/financeManagement/accountBook/AccountBook.vue'),
         meta: {
           permissionRequired: true,
-          permissionNode: 'ui.pc.menu_visible.system_settings.permission_node',
+          permissionNode: 'ui.pc.menu_visible.finance_management.account_book',
         },
       },
-      // 系统设置。
+      {
+        path: 'finance-management/bank-card-type-indicator',
+        component: () => import('@/views/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.finance_management.bank_card_type_indicator',
+        },
+      },
+      {
+        path: 'finance-management/bank-card',
+        component: () => import('@/views/financeManagement/bankCard/BankCard.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.finance_management.bank_card',
+        },
+      },
+      {
+        path: 'finance-management/balance-record',
+        component: () => import('@/views/financeManagement/balanceRecord/BalanceRecord.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.finance_management.balance_record',
+        },
+      },
+      {
+        path: 'finance-management/fund-change-type-indicator',
+        component: () => import('@/views/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.finance_management.fund_change_type_indicator',
+        },
+      },
+      {
+        path: 'finance-management/fund-change',
+        component: () => import('@/views/financeManagement/fundChange/FundChange.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.finance_management.fund_change',
+        },
+      },
+      {
+        path: 'finance-management/finance-report',
+        component: () => import('@/views/financeManagement/financeReport/FinanceReport.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.finance_management.finance_report',
+        },
+      },
       {
         path: 'system-setting/permission-node',
         component: () => import('@/views/systemSettings/permissionNode/PermissionNode.vue'),

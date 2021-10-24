@@ -23,7 +23,12 @@
       </el-form>
       <div class="login-placeholder"/>
       <div class="login-footer">
-        <el-button class="login-footer-button" type="primary" @click="handleLogin">
+        <el-button
+          class="login-footer-button"
+          type="primary"
+          :disabled="form.id === '' || form.password === ''"
+          @click="handleLogin"
+        >
           登录
         </el-button>
         <span class="login-footer-register login-panel-text">没有账号?立即注册!</span>
@@ -36,7 +41,8 @@
 <script>
 import backgroundImg from '@/assets/img/login-background.png';
 
-import { login, myPermissions } from '@/api/system/login';
+import { login } from '@/api/system/login';
+import { lookupForUser } from '@/api/system/permission';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -78,13 +84,15 @@ export default {
       }
       resolveResponse(this, login(this.form.id, this.form.password))
         .then((res) => {
+          console.log(res);
           // noinspection JSUnresolvedVariable
           this.$ls.set('loginInfo', res);
-          return resolveResponse(this, myPermissions());
+          // noinspection JSUnresolvedVariable
+          return resolveResponse(this, lookupForUser(res.account_id));
         })
         .then((res) => {
           // noinspection JSUnresolvedVariable
-          this.$ls.set('permissionInfo', res);
+          this.$ls.set('permissionInfo', res.map((p) => p.key.string_id));
         }).then(() => {
           this.$router.push({ path: '/home' });
         })
@@ -109,6 +117,9 @@ export default {
     },
     handleHotKeyDown(event) {
       if (event.key === 'Enter' && event.shiftKey === false && event.altKey === false) {
+        if (this.form.id === '' || this.form.password === '') {
+          return;
+        }
         this.handleLogin();
       }
     },

@@ -14,7 +14,7 @@
     >
       <template slot="title">
         <i class="el-icon-s-grid"></i>
-        <span>权限节点设置</span>
+        <span>权限节点管理</span>
       </template>
     </el-menu-item>
     <!-- 权限分组设置 -->
@@ -24,7 +24,7 @@
     >
       <template slot="title">
         <i class="el-icon-s-grid"></i>
-        <span>权限分组设置</span>
+        <span>权限分组管理</span>
       </template>
     </el-menu-item>
     <!-- 角色管理 -->

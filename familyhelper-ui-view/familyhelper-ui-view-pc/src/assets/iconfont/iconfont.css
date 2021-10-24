@@ -1,8 +1,8 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 2517035 */
-  src: url('iconfont.woff2?t=1633489751502') format('woff2'),
-       url('iconfont.woff?t=1633489751502') format('woff'),
-       url('iconfont.ttf?t=1633489751502') format('truetype');
+  font-family: "iconfont"; /* Project id 2850115 */
+  src: url('iconfont.woff2?t=1633876881782') format('woff2'),
+       url('iconfont.woff?t=1633876881782') format('woff'),
+       url('iconfont.ttf?t=1633876881782') format('truetype');
 }
 
 .iconfont {
@@ -13,115 +13,43 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-file-doc:before {
-  content: "\ffce";
+.icon-zhengque:before {
+  content: "\ffed";
 }
 
-.icon-file-gif:before {
-  content: "\ffca";
+.icon-bxs-category:before {
+  content: "\ffee";
 }
 
-.icon-file-pdf:before {
-  content: "\ffc9";
+.icon-yue:before {
+  content: "\fff9";
 }
 
-.icon-file-ppt:before {
-  content: "\ffcd";
+.icon-riqi:before {
+  content: "\ffef";
 }
 
-.icon-file-png:before {
-  content: "\ffcb";
+.icon-lock:before {
+  content: "\fffa";
 }
 
-.icon-file-txt:before {
-  content: "\ffc8";
-}
-
-.icon-file-jpg:before {
-  content: "\ffcc";
-}
-
-.icon-file-unknown:before {
-  content: "\ffc7";
-}
-
-.icon-file-xls:before {
-  content: "\ffcf";
-}
-
-.icon-task-poichk:before {
-  content: "\ffdb";
-}
-
-.icon-task-repair-audit:before {
-  content: "\ffdd";
+.icon-user:before {
+  content: "\fffb";
 }
 
 .icon-operate-partial-minimize:before {
   content: "\ffff";
 }
 
-.icon-operate-global-minimize-copy:before {
-  content: "\fffd";
-}
-
-.icon-task-alarm:before {
-  content: "\ffdf";
-}
-
 .icon-operate-partial-maximize:before {
   content: "\fffe";
-}
-
-.icon-task-pred-analyse:before {
-  content: "\ffdc";
-}
-
-.icon-view-right:before {
-  content: "\ffeb";
-}
-
-.icon-view-back:before {
-  content: "\ffed";
-}
-
-.icon-top-bottom:before {
-  content: "\ffe9";
-}
-
-.icon-view-top:before {
-  content: "\ffea";
-}
-
-.icon-view-front:before {
-  content: "\ffee";
-}
-
-.icon-view-left:before {
-  content: "\ffec";
-}
-
-.icon-view-direction:before {
-  content: "\ffef";
-}
-
-.icon-view-perspective:before {
-  content: "\ffe7";
 }
 
 .icon-operate-global-maximize:before {
   content: "\fffc";
 }
 
-.icon-task-manual:before {
-  content: "\ffda";
-}
-
-.icon-task-repair-order:before {
-  content: "\ffde";
-}
-
-.icon-view-axonometric:before {
-  content: "\ffe8";
+.icon-operate-global-minimize-copy:before {
+  content: "\fffd";
 }
 
