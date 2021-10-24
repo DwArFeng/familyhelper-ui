@@ -143,11 +143,6 @@ export default {
   components: {
     TablePanel, ContentPanel, EntityMaintainDialog, AccountBookSelectDialog,
   },
-  watch: {
-    pageSize(val) {
-      console.log(val);
-    },
-  },
   data() {
     const deltaValidator = (rule, value, callback) => {
       if (value === '') {

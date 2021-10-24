@@ -82,6 +82,14 @@ const routes = [
         },
       },
       {
+        path: 'system-setting/account',
+        component: () => import('@/views/systemSettings/account/Account.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.system_settings.account',
+        },
+      },
+      {
         path: 'system-setting/permission-node',
         component: () => import('@/views/systemSettings/permissionNode/PermissionNode.vue'),
         meta: {

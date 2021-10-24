@@ -5,9 +5,19 @@
   >
     <template slot="title">
       <i class="el-icon-menu"></i>
-      <span>系统设置</span>
+      <span>系统管理</span>
     </template>
-    <!-- 权限节点设置 -->
+    <!-- 账户管理 -->
+    <el-menu-item
+      index="/home/system-setting/account"
+      v-if="permissionSet.has(permissionMeta.get('account'))"
+    >
+      <template slot="title">
+        <i class="el-icon-s-grid"></i>
+        <span>账户管理</span>
+      </template>
+    </el-menu-item>
+    <!-- 权限节点管理 -->
     <el-menu-item
       index="/home/system-setting/permission-node"
       v-if="permissionSet.has(permissionMeta.get('permission_node'))"
@@ -17,7 +27,7 @@
         <span>权限节点管理</span>
       </template>
     </el-menu-item>
-    <!-- 权限分组设置 -->
+    <!-- 权限分组管理 -->
     <el-menu-item
       index="/home/system-setting/permission-group"
       v-if="permissionSet.has(permissionMeta.get('permission_group'))"
@@ -85,6 +95,7 @@ export default {
     buildPermissionMeta() {
       const map = new Map();
       map.set('system_settings', 'ui.pc.menu_visible.system_settings');
+      map.set('account', 'ui.pc.menu_visible.system_settings.account');
       map.set('permission_node', 'ui.pc.menu_visible.system_settings.permission_node');
       map.set('permission_group', 'ui.pc.menu_visible.system_settings.permission_group');
       map.set('user_management', 'ui.pc.menu_visible.system_settings.user_management');

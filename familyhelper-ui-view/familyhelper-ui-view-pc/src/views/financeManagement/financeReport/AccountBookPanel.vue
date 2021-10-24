@@ -312,7 +312,6 @@ export default {
       this.handleFundChangeSearch(this.selection.accountBookId);
     },
     handleFundChangeSearch(accountBookId) {
-      console.log(this.fundChangeTable.currentPage);
       resolveResponse(this, fundChangeChildForAccountBookDescDisp(
         accountBookId, this.fundChangeTable.currentPage, this.fundChangeTable.pageSize,
       ))

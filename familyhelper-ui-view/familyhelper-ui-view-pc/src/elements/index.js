@@ -31,8 +31,10 @@ import {
   Switch,
   Table,
   TableColumn,
-  TabPane, Tabs,
+  TabPane,
+  Tabs,
   Tooltip,
+  Transfer,
   Tree,
 } from 'element-ui';
 import { OverlayScrollbarsPlugin } from 'overlayscrollbars-vue';
@@ -73,6 +75,7 @@ Vue.use(Option);
 Vue.use(Select);
 Vue.use(Tabs);
 Vue.use(TabPane);
+Vue.use(Transfer);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$alert = MessageBox.alert;

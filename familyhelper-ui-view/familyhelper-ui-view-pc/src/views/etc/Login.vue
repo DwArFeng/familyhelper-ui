@@ -84,7 +84,6 @@ export default {
       }
       resolveResponse(this, login(this.form.id, this.form.password))
         .then((res) => {
-          console.log(res);
           // noinspection JSUnresolvedVariable
           this.$ls.set('loginInfo', res);
           // noinspection JSUnresolvedVariable

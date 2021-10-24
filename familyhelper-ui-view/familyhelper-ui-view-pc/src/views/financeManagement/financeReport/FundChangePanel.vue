@@ -269,7 +269,6 @@ export default {
           ));
         })
         .then((res) => {
-          console.log(res);
           const data = res.data.reverse();
           data.forEach((item) => {
             // noinspection JSUnresolvedVariable
