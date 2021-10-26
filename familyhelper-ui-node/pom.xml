@@ -73,7 +73,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ../familyhelper-ui-general-view/familyhelper-ui-general-view-pc/dist
+                                        ../familyhelper-ui-view/familyhelper-ui-view-pc/dist
                                     </directory>
                                     <filtering>false</filtering>
                                 </resource>
@@ -93,7 +93,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ../familyhelper-ui-general-view/familyhelper-ui-general-view-mobile/dist
+                                        ../familyhelper-ui-view/familyhelper-ui-view-mobile/dist
                                     </directory>
                                     <filtering>false</filtering>
                                 </resource>

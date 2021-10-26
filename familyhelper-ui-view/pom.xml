@@ -21,7 +21,6 @@
     </properties>
 
     <modules>
-
         <module>familyhelper-ui-view-pc</module>
         <module>familyhelper-ui-view-mobile</module>
     </modules>

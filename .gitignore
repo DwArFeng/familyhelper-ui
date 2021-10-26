@@ -61,17 +61,17 @@ yarn-error.log*
 #################
 ## Maven Npm Files
 #################
-/familyhelper-ui-general-view/familyhelper-ui-general-view-mobile/node/
-/familyhelper-ui-general-view/familyhelper-ui-general-view-pc/node/
+/familyhelper-ui-view/familyhelper-ui-view-mobile/node/
+/familyhelper-ui-view/familyhelper-ui-view-pc/node/
 
 #################
 ## Logger Files
 #################
-/familyhelper-ui-general-impl/logs/
-/familyhelper-ui-general-node/logs/
+/familyhelper-ui-impl/logs/
+/familyhelper-ui-node/logs/
 
 #################
 ## Configuration Files
 #################
-/familyhelper-ui-general-impl/conf/
-/familyhelper-ui-general-node/conf/
+/familyhelper-ui-impl/conf/
+/familyhelper-ui-node/conf/

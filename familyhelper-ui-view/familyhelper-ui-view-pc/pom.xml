@@ -10,6 +10,8 @@
         <version>1.0.0.a-SNAPSHOT</version>
     </parent>
 
+    <packaging>pom</packaging>
+
     <artifactId>familyhelper-ui-view-pc</artifactId>
     <name>familyhelper-ui-view-pc</name>
     <url>http://maven.apache.org</url>
