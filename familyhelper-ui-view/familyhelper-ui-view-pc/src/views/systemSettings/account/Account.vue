@@ -664,6 +664,8 @@ export default {
       this.roleAssignDialog.dialogVisible = false;
     },
     handleShowPasswordResetDialog() {
+      this.passwordResetDialog.formModel.password = '';
+      this.passwordResetDialog.formModel.password_confirm = '';
       this.passwordResetDialog.dialogVisible = true;
     },
     handleResetPassword() {

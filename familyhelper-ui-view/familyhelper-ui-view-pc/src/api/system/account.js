@@ -21,6 +21,13 @@ export function all(page, rows) {
   });
 }
 
+export function childForRole(roleKey, page, rows) {
+  return get('system', `role/${roleKey}/account/`, {
+    page,
+    rows,
+  });
+}
+
 export function register(key, displayName, enabled, remark, password) {
   return post('system', 'account/register', {
     account_key: {

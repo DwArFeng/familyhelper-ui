@@ -90,6 +90,14 @@ const routes = [
         },
       },
       {
+        path: 'system-setting/role',
+        component: () => import('@/views/systemSettings/role/Role.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.system_settings.role',
+        },
+      },
+      {
         path: 'system-setting/permission-node',
         component: () => import('@/views/systemSettings/permissionNode/PermissionNode.vue'),
         meta: {

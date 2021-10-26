@@ -17,6 +17,16 @@
         <span>账户管理</span>
       </template>
     </el-menu-item>
+    <!-- 角色管理 -->
+    <el-menu-item
+      index="/home/system-setting/role"
+      v-if="permissionSet.has(permissionMeta.get('role'))"
+    >
+      <template slot="title">
+        <i class="el-icon-s-grid"></i>
+        <span>角色管理</span>
+      </template>
+    </el-menu-item>
     <!-- 权限节点管理 -->
     <el-menu-item
       index="/home/system-setting/permission-node"
@@ -35,16 +45,6 @@
       <template slot="title">
         <i class="el-icon-s-grid"></i>
         <span>权限分组管理</span>
-      </template>
-    </el-menu-item>
-    <!-- 角色管理 -->
-    <el-menu-item
-      index="/home/system/role-management"
-      v-if="permissionSet.has(permissionMeta.get('role_management'))"
-    >
-      <template slot="title">
-        <i class="el-icon-s-grid"></i>
-        <span>角色管理</span>
       </template>
     </el-menu-item>
     <!-- 部门管理 -->
@@ -96,10 +96,10 @@ export default {
       const map = new Map();
       map.set('system_settings', 'ui.pc.menu_visible.system_settings');
       map.set('account', 'ui.pc.menu_visible.system_settings.account');
+      map.set('role', 'ui.pc.menu_visible.system_settings.role');
       map.set('permission_node', 'ui.pc.menu_visible.system_settings.permission_node');
       map.set('permission_group', 'ui.pc.menu_visible.system_settings.permission_group');
       map.set('user_management', 'ui.pc.menu_visible.system_settings.user_management');
-      map.set('role_management', 'ui.pc.menu_visible.system_settings.role_management');
       map.set('department_management', 'ui.pc.menu_visible.system_settings.department_management');
       map.set('password_update', 'ui.pc.menu_visible.system_settings.password_update');
       this.$set(this.$data, 'permissionMeta', map);
