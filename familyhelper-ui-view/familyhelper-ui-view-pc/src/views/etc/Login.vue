@@ -39,7 +39,7 @@
 
 <!--suppress NpmUsedModulesInstalled -->
 <script>
-import backgroundImg from '@/assets/img/login-background.png';
+import backgroundImg from '@/assets/img/login-background.jpg';
 
 import { login } from '@/api/system/login';
 import { lookupForUser } from '@/api/system/permission';

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import backgroundImg from '@/assets/img/error-background.png';
+import backgroundImg from '@/assets/img/error-background.jpg';
 import resolveResponse from '@/util/response';
 import { postpone } from '@/api/system/login';
 
