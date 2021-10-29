@@ -30,6 +30,8 @@
           >
             <!-- 资金管理 -->
             <finance-manage-menu/>
+            <!-- 我与家庭 -->
+            <me-and-clannad-menu/>
             <!-- 系统设置 -->
             <system-settings-menu/>
           </el-menu>
@@ -57,6 +59,7 @@ import screenfull from 'screenfull';
 import TagsView from '@/views/home/TagsView.vue';
 import SystemSettingsMenu from '@/views/home/menu/SystemSettingsMenu.vue';
 import FinanceManageMenu from '@/views/home/menu/FinanceManageMenu.vue';
+import MeAndClannadMenu from '@/views/home/menu/MeAndClannadMenu.vue';
 
 import loginFormHeaderImg from '@/assets/img/logo.png';
 
@@ -66,7 +69,9 @@ import resolveResponse from '@/util/response';
 
 export default {
   name: 'Home',
-  components: { FinanceManageMenu, SystemSettingsMenu, TagsView },
+  components: {
+    MeAndClannadMenu, FinanceManageMenu, SystemSettingsMenu, TagsView,
+  },
   comments: {
     TagsView,
   },

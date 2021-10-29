@@ -82,6 +82,14 @@ const routes = [
         },
       },
       {
+        path: 'me-and-clannad/gender-type-indicator',
+        component: () => import('@/views/meAndClannad/genderTypeIndicator/GenderTypeIndicator.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.gender_type_indicator',
+        },
+      },
+      {
         path: 'system-setting/account',
         component: () => import('@/views/systemSettings/account/Account.vue'),
         meta: {
