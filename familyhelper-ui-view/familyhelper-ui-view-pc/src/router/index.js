@@ -82,11 +82,51 @@ const routes = [
         },
       },
       {
-        path: 'me-and-clannad/gender-type-indicator',
-        component: () => import('@/views/meAndClannad/genderTypeIndicator/GenderTypeIndicator.vue'),
+        path: 'me-and-clannad/my-profile',
+        component: () => import('@/views/meAndClannad/myProfile/MyProfile.vue'),
         meta: {
           permissionRequired: true,
-          permissionNode: 'ui.pc.menu_visible.me_and_clannad.gender_type_indicator',
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.my_profile',
+        },
+      },
+      {
+        path: 'me-and-clannad/profile-type-indicator',
+        component: () => import('@/views/meAndClannad/profileTypeIndicator/ProfileTypeIndicator.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.profile_type_indicator',
+        },
+      },
+      {
+        path: 'me-and-clannad/my-album',
+        component: () => import('@/views/meAndClannad/myAlbum/MyAlbum.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.my_album',
+        },
+      },
+      {
+        path: 'me-and-clannad/clannad-profile',
+        component: () => import('@/views/meAndClannad/clannadProfile/ClannadProfile.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.clannad_profile',
+        },
+      },
+      {
+        path: 'me-and-clannad/clannad-album',
+        component: () => import('@/views/meAndClannad/clannadAlbum/ClannadAlbum.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.clannad_album',
+        },
+      },
+      {
+        path: 'me-and-clannad/clannad-call',
+        component: () => import('@/views/meAndClannad/clannadCall/ClannadCall.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.clannad_call',
         },
       },
       {

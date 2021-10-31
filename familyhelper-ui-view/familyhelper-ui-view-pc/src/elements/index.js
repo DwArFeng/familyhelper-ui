@@ -36,6 +36,8 @@ import {
   Tooltip,
   Transfer,
   Tree,
+  Loading,
+  DatePicker,
 } from 'element-ui';
 import { OverlayScrollbarsPlugin } from 'overlayscrollbars-vue';
 import 'overlayscrollbars/css/OverlayScrollbars.css';
@@ -76,6 +78,9 @@ Vue.use(Select);
 Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(Transfer);
+Vue.use(DatePicker);
+
+Vue.use(Loading.directive);
 
 Vue.prototype.$message = Message;
 Vue.prototype.$alert = MessageBox.alert;

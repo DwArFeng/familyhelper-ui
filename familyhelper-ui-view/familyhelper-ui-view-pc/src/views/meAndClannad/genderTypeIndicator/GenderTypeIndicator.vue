@@ -3,7 +3,7 @@
     <content-panel
       class="content-panel"
       :header-visible="true"
-      :breadcrumb="['系统设置', '性别类型设置']"
+      :breadcrumb="['系统设置', '性别类型管理']"
     >
       <table-panel
         :page-size.sync="pageSize"
