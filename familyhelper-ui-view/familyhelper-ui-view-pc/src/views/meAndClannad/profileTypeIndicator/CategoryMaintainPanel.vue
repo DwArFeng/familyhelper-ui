@@ -1,16 +1,23 @@
 <template>
-  <div class="gender-type-indicator-container">
-    <content-panel
-      class="content-panel"
-      :header-visible="true"
-      :breadcrumb="['系统设置', '性别类型管理']"
-    >
+  <div class="category-maintain-panel-container">
+    <div class="main-content">
+      <div>
+        <el-button
+          class="insert-button"
+          type="primary"
+          @click="handleShowEntityCreateDialog"
+        >
+          新建{{ label }}
+        </el-button>
+      </div>
+      <el-divider/>
       <table-panel
-        :page-size.sync="pageSize"
-        :entity-count="parseInt(entities.count)"
-        :current-page.sync="currentPage"
+        class="table-panel"
+        :page-size.sync="tablePanel.pageSize"
+        :entity-count="parseInt(tablePanel.entities.count)"
+        :current-page.sync="tablePanel.currentPage"
         :page-sizes="[15,20,30,50]"
-        :table-data="entities.data"
+        :table-data="tablePanel.entities.data"
         @onPagingAttributeChanged="handlePagingAttributeChanged"
         @onEntityInspect="handleShowEntityInspectDialog"
         @onEntityEdit="handleShowEntityEditDialog"
@@ -18,7 +25,7 @@
       >
         <el-table-column
           prop="key.string_id"
-          label="性别类型"
+          label="代号"
           show-tooltip-when-overflow
         />
         <el-table-column
@@ -32,44 +39,35 @@
           show-tooltip-when-overflow
         />
       </table-panel>
-      <div class="header-container" slot="header">
-        <el-button
-          class="insert-button"
-          type="primary"
-          @click="handleShowEntityCreateDialog"
-        >
-          新建性别类型
-        </el-button>
-      </div>
-    </content-panel>
+    </div>
     <entity-maintain-dialog
       label-width="100px"
-      :mode="dialogMode"
-      :visible.sync="dialogVisible"
-      :entity="anchorEntity"
-      :create-rules="createRules"
-      :edit-rules="editRules"
+      :mode="maintainDialog.dialogMode"
+      :visible.sync="maintainDialog.dialogVisible"
+      :entity="maintainDialog.anchorEntity"
+      :create-rules="maintainDialog.createRules"
+      :edit-rules="maintainDialog.editRules"
       :close-on-click-modal="false"
       @onEntityCreate="handleEntityCreate"
       @onEntityEdit="handleEntityEdit"
     >
       <el-form-item label="性别类型" prop="string_id">
         <el-input
-          v-model="anchorEntity.string_id"
-          oninput="this.value = this.value.toLowerCase()"
-          :disabled="dialogMode !== 'CREATE'"
+          v-model="maintainDialog.anchorEntity.string_id"
+          oninput="this.value = this.value.toLowerCase().replace('&','')"
+          :disabled="maintainDialog.dialogMode !== 'CREATE'"
         />
       </el-form-item>
       <el-form-item label="标签" prop="label">
         <el-input
-          v-model="anchorEntity.label"
-          :readonly="dialogMode === 'INSPECT'"
+          v-model="maintainDialog.anchorEntity.label"
+          :readonly="maintainDialog.dialogMode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
-          v-model="anchorEntity.remark"
-          :readonly="dialogMode === 'INSPECT'"
+          v-model="maintainDialog.anchorEntity.remark"
+          :readonly="maintainDialog.dialogMode === 'INSPECT'"
         />
       </el-form-item>
     </entity-maintain-dialog>
@@ -77,30 +75,40 @@
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
-import resolveResponse from '@/util/response';
+
 import {
-  exists, all, insert, remove, update,
-} from '@/api/clannad/genderTypeIndicator';
+  exists, insert, remove, update, childForCategory,
+} from '@/api/clannad/profileTypeIndicator';
+import resolveResponse from '@/util/response';
 
 export default {
-  name: 'GenderTypeIndicator',
-  components: { EntityMaintainDialog, ContentPanel, TablePanel },
+  name: 'CategoryMaintainPanel',
+  components: { TablePanel, EntityMaintainDialog },
+  props: {
+    category: {
+      type: String,
+      default: '',
+    },
+    label: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     const keyValidator = (rule, value, callback) => {
       Promise.resolve(value)
         .then((res) => {
           if (res === '') {
-            callback(new Error('性别类型不能为空'));
+            callback(new Error(`${this.label}不能为空`));
             return Promise.reject();
           }
-          return resolveResponse(this, exists(value));
+          return resolveResponse(this, exists(this.category, value));
         })
         .then((res) => {
           if (res) {
-            callback(new Error('性别类型已经存在'));
+            callback(new Error(`${this.label}已经存在`));
             return Promise.reject();
           }
           return Promise.resolve();
@@ -112,34 +120,38 @@ export default {
         });
     };
     return {
-      entities: {
-        current_page: 0,
-        total_pages: 0,
-        rows: 0,
-        count: '0',
-        data: [],
+      tablePanel: {
+        entities: {
+          current_page: 0,
+          total_pages: 0,
+          rows: 0,
+          count: '0',
+          data: [],
+        },
+        currentPage: 0,
+        pageSize: 15,
       },
-      currentPage: 0,
-      pageSize: 15,
-      dialogVisible: false,
-      dialogMode: 'CREATE',
-      anchorEntity: {
-        string_id: '',
-        label: '',
-        remark: '',
-      },
-      createRules: {
-        string_id: [
-          { validator: keyValidator, trigger: 'blur' },
-        ],
-        label: [
-          { required: true, message: '标签不能为空', trigger: 'blur' },
-        ],
-      },
-      editRules: {
-        label: [
-          { required: true, message: '标签不能为空', trigger: 'blur' },
-        ],
+      maintainDialog: {
+        dialogVisible: false,
+        dialogMode: 'CREATE',
+        anchorEntity: {
+          string_id: '',
+          label: '',
+          remark: '',
+        },
+        createRules: {
+          string_id: [
+            { validator: keyValidator, trigger: 'blur' },
+          ],
+          label: [
+            { required: true, message: '标签不能为空', trigger: 'blur' },
+          ],
+        },
+        editRules: {
+          label: [
+            { required: true, message: '标签不能为空', trigger: 'blur' },
+          ],
+        },
       },
     };
   },
@@ -148,14 +160,18 @@ export default {
       this.handleSearch();
     },
     handleSearch() {
-      this.lookupAll();
+      this.lookupChildForCategory();
     },
-    lookupAll() {
-      resolveResponse(this, all(this.currentPage, this.pageSize))
+    lookupChildForCategory() {
+      resolveResponse(this, childForCategory(
+        this.category, this.tablePanel.currentPage, this.tablePanel.pageSize,
+      ))
         .then((res) => {
-          // 当查询的页数大于总页数，自动查询最后一页。
+        // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(this, all(res.total_pages, this.pageSize));
+            return resolveResponse(this, childForCategory(
+              this.category, res.total_pages, this.tablePanel.pageSize,
+            ));
           }
           return Promise.resolve(res);
         })
@@ -164,19 +180,20 @@ export default {
         });
     },
     updateTableView(res) {
-      this.entities = res;
-      this.currentPage = res.current_page;
+      this.tablePanel.entities = res;
+      this.tablePanel.currentPage = res.current_page;
     },
     handleEntityCreate() {
       resolveResponse(this, insert(
-        this.anchorEntity.string_id,
-        this.anchorEntity.label,
-        this.anchorEntity.remark,
+        this.category,
+        this.maintainDialog.anchorEntity.string_id,
+        this.maintainDialog.anchorEntity.label,
+        this.maintainDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `性别类型 ${this.anchorEntity.string_id} 创建成功`,
+            message: `${this.label} ${this.maintainDialog.anchorEntity.string_id} 创建成功`,
             type: 'success',
             center: true,
           });
@@ -186,21 +203,22 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.dialogVisible = false;
+          this.maintainDialog.dialogVisible = false;
         })
         .catch(() => {
         });
     },
     handleEntityEdit() {
       resolveResponse(this, update(
-        this.anchorEntity.string_id,
-        this.anchorEntity.label,
-        this.anchorEntity.remark,
+        this.category,
+        this.maintainDialog.anchorEntity.string_id,
+        this.maintainDialog.anchorEntity.label,
+        this.maintainDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `性别类型 ${this.anchorEntity.string_id} 更新成功`,
+            message: `${this.label} ${this.maintainDialog.anchorEntity.string_id} 更新成功`,
             type: 'success',
             center: true,
           });
@@ -210,7 +228,7 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.dialogVisible = false;
+          this.maintainDialog.dialogVisible = false;
         })
         .catch(() => {
         });
@@ -238,11 +256,11 @@ export default {
           customClass: 'custom-message-box__w500',
           type: 'warning',
         }).then(() => Promise.resolve(res)).catch(() => Promise.reject()))
-        .then((res) => resolveResponse(this, remove(res)).then(() => res))
+        .then((res) => resolveResponse(this, remove(this.category, res)).then(() => res))
         .then((res) => {
           this.$message({
             showClose: true,
-            message: `性别类型 ${res} 删除成功`,
+            message: `${this.label} ${res} 删除成功`,
             type: 'success',
             center: true,
           });
@@ -254,14 +272,14 @@ export default {
         });
     },
     syncAnchorEntity(entity) {
-      this.anchorEntity.string_id = entity.key.string_id;
-      this.anchorEntity.label = entity.label;
-      this.anchorEntity.remark = entity.remark;
+      this.maintainDialog.anchorEntity.string_id = entity.key.string_id;
+      this.maintainDialog.anchorEntity.label = entity.label;
+      this.maintainDialog.anchorEntity.remark = entity.remark;
     },
     showDialog(mode) {
-      this.dialogMode = mode;
+      this.maintainDialog.dialogMode = mode;
       this.$nextTick(() => {
-        this.dialogVisible = true;
+        this.maintainDialog.dialogVisible = true;
       });
     },
   },
@@ -272,8 +290,26 @@ export default {
 </script>
 
 <style scoped>
-.gender-type-indicator-container {
-  width: 100%;
+.category-maintain-panel-container {
   height: 100%;
+  width: 100%;
+}
+
+.main-content{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/*noinspection CssUnusedSymbol*/
+.el-divider {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.table-panel {
+  height: 0;
+  flex-grow: 1;
 }
 </style>
