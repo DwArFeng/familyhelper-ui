@@ -28,6 +28,13 @@ export function childForRole(roleKey, page, rows) {
   });
 }
 
+export function childForProfileGuest(profileKey, page, rows) {
+  return get('system', `profile/${profileKey}/account/guest/`, {
+    page,
+    rows,
+  });
+}
+
 export function register(key, displayName, enabled, remark, password) {
   return post('system', 'account/register', {
     account_key: {

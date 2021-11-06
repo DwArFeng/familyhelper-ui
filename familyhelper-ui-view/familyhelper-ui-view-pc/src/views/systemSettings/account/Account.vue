@@ -137,14 +137,13 @@
       @keydown.ctrl.enter.native="handleResetRoleRelation"
     >
       <el-transfer
-        class="role-assign-transfer"
         v-model="roleAssignDialog.selectedRoles"
         :titles="['待选角色','已选角色']"
         :props="roleAssignDialog.props"
         :data="roleAssignDialog.allRoles"
       >
       </el-transfer>
-      <div class="role-assign-dialog-footer-container" slot="footer">
+      <div class="dialog-footer-container" slot="footer">
         <el-button
           type="primary"
           @click="handleResetRoleRelation"
@@ -196,7 +195,7 @@
           />
         </el-form-item>
       </el-form>
-      <div class="role-assign-dialog-footer-container" slot="footer">
+      <div class="dialog-footer-container" slot="footer">
         <el-button
           type="primary"
           @click="handleResetPassword"
@@ -509,8 +508,8 @@ export default {
               .catch(() => Promise.reject());
           }
           return this.$confirm(`您似乎在删除 ${nameToDelete}(${accountIdToDelete})。<br>`
-              + '<b>该账号的所有者将会失去此账号的全部数据，且无法恢复</b><br>'
-              + '是否继续?',
+            + '<b>该账号的所有者将会失去此账号的全部数据，且无法恢复</b><br>'
+            + '是否继续?',
           '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -577,6 +576,7 @@ export default {
       return row[column.property] ? '是' : '否';
     },
     handleShowRoleAssignDialog() {
+      this.roleAssignDialog.dialogVisible = true;
       resolveResponse(this, allRole(0, 99999))
         .then((res) => {
           this.roleAssignDialog.allRoles = res.data.map(
@@ -588,9 +588,6 @@ export default {
         )))
         .then((res) => {
           this.roleAssignDialog.selectedRoles = res.data.map((r) => r.key.string_id);
-        })
-        .then(() => {
-          this.roleAssignDialog.dialogVisible = true;
         })
         .catch(() => {
         });
@@ -759,14 +756,14 @@ export default {
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.role-assign-dialog-footer-container {
+.dialog-footer-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  white-space: nowrap;
-  overflow: hidden;
 }
 
 .focusable-switch:focus {
