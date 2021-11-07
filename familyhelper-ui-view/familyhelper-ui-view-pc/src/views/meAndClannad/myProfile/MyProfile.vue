@@ -283,7 +283,7 @@
 import ContentPanel from '@/components/layout/LayoutPanel.vue';
 
 import {
-  exists, inspect, updateProfile, resetGuestPermission,
+  inspect, updateProfile, resetGuestPermission,
 } from '@/api/clannad/profile';
 import { childForCategory } from '@/api/clannad/profileTypeIndicator';
 import { all as allAccount, childForProfileGuest } from '@/api/system/account';
@@ -435,61 +435,32 @@ export default {
         });
     },
     handleProfileReset() {
-      resolveResponse(this, exists(this.me))
-        .then((res) => {
-          if (res) {
-            return resolveResponse(this, inspect(this.me));
-          }
-          return Promise.resolve(null);
-        })
+      resolveResponse(this, inspect(this.me))
         .then(this.updateFormEntity)
         .catch(() => {
         });
     },
     updateFormEntity(res) {
-      if (res === null) {
-        this.profileForm.entity.name = '';
-        this.profileForm.entity.id_number = '';
-        this.profileForm.entity.id_type = '';
-        this.profileForm.entity.birthday = '';
-        this.profileForm.entity.gender = '';
-        this.profileForm.entity.blood_type = '';
-        this.profileForm.entity.nationality = '';
-        this.profileForm.entity.family_address = '';
-        this.profileForm.entity.phone_number = '';
-        this.profileForm.entity.email_address = '';
-        this.profileForm.entity.employer = '';
-        this.profileForm.entity.job_position = '';
-        this.profileForm.entity.employer_address = '';
-        this.profileForm.entity.job_title = '';
-        this.profileForm.entity.latest_school_name = '';
-        this.profileForm.entity.educational_level = '';
-        this.profileForm.entity.educational_background = '';
-        this.profileForm.entity.political_status = '';
-        this.profileForm.entity.marital_status = '';
-        this.profileForm.entity.remark = '';
-      } else {
-        this.profileForm.entity.name = res.name;
-        this.profileForm.entity.id_number = res.id_number;
-        this.profileForm.entity.id_type = res.id_type;
-        this.profileForm.entity.birthday = res.birthday;
-        this.profileForm.entity.gender = res.gender;
-        this.profileForm.entity.blood_type = res.blood_type;
-        this.profileForm.entity.nationality = res.nationality;
-        this.profileForm.entity.family_address = res.family_address;
-        this.profileForm.entity.phone_number = res.phone_number;
-        this.profileForm.entity.email_address = res.email_address;
-        this.profileForm.entity.employer = res.employer;
-        this.profileForm.entity.job_position = res.job_position;
-        this.profileForm.entity.employer_address = res.employer_address;
-        this.profileForm.entity.job_title = res.job_title;
-        this.profileForm.entity.latest_school_name = res.latest_school_name;
-        this.profileForm.entity.educational_level = res.educational_level;
-        this.profileForm.entity.educational_background = res.educational_background;
-        this.profileForm.entity.political_status = res.political_status;
-        this.profileForm.entity.marital_status = res.marital_status;
-        this.profileForm.entity.remark = res.remark;
-      }
+      this.profileForm.entity.name = res.name;
+      this.profileForm.entity.id_number = res.id_number;
+      this.profileForm.entity.id_type = res.id_type;
+      this.profileForm.entity.birthday = res.birthday;
+      this.profileForm.entity.gender = res.gender;
+      this.profileForm.entity.blood_type = res.blood_type;
+      this.profileForm.entity.nationality = res.nationality;
+      this.profileForm.entity.family_address = res.family_address;
+      this.profileForm.entity.phone_number = res.phone_number;
+      this.profileForm.entity.email_address = res.email_address;
+      this.profileForm.entity.employer = res.employer;
+      this.profileForm.entity.job_position = res.job_position;
+      this.profileForm.entity.employer_address = res.employer_address;
+      this.profileForm.entity.job_title = res.job_title;
+      this.profileForm.entity.latest_school_name = res.latest_school_name;
+      this.profileForm.entity.educational_level = res.educational_level;
+      this.profileForm.entity.educational_background = res.educational_background;
+      this.profileForm.entity.political_status = res.political_status;
+      this.profileForm.entity.marital_status = res.marital_status;
+      this.profileForm.entity.remark = res.remark;
     },
     handleSave() {
       resolveResponse(this, updateProfile(
@@ -535,13 +506,7 @@ export default {
           customClass: 'custom-message-box__w500',
           type: 'warning',
         }).then(() => Promise.resolve()).catch(() => Promise.reject())
-        .then(() => resolveResponse(this, exists(this.me)))
-        .then((res) => {
-          if (res) {
-            return resolveResponse(this, inspect(this.me));
-          }
-          return Promise.resolve(null);
-        })
+        .then(() => resolveResponse(this, inspect(this.me)))
         .then(this.updateFormEntity)
         .then(() => {
           this.$message({
