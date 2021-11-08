@@ -26,6 +26,7 @@
               <el-select
                 v-model="profileForm.entity.gender"
                 placeholder="请选择"
+                clearable
               >
                 <el-option
                   v-for="item in genderIndicator.entities.data"
@@ -39,6 +40,7 @@
               <el-select
                 v-model="profileForm.entity.id_type"
                 placeholder="请选择"
+                clearable
               >
                 <el-option
                   v-for="item in idTypeIndicator.entities.data"
@@ -67,6 +69,7 @@
               <el-select
                 v-model="profileForm.entity.nationality"
                 placeholder="请选择"
+                clearable
               >
                 <el-option
                   v-for="item in nationalityIndicator.entities.data"
@@ -76,10 +79,11 @@
                 />
               </el-select>
             </el-form-item>
-            <el-form-item label="血型" prop="id_type">
+            <el-form-item label="血型" prop="blood_type">
               <el-select
                 v-model="profileForm.entity.blood_type"
                 placeholder="请选择"
+                clearable
               >
                 <el-option
                   v-for="item in bloodTypeIndicator.entities.data"
@@ -150,6 +154,7 @@
               <el-select
                 v-model="profileForm.entity.educational_background"
                 placeholder="请选择"
+                clearable
               >
                 <el-option
                   v-for="item in educationalBackgroundIndicator.entities.data"
@@ -163,6 +168,7 @@
               <el-select
                 v-model="profileForm.entity.educational_level"
                 placeholder="请选择"
+                clearable
               >
                 <el-option
                   v-for="item in educationalLevelIndicator.entities.data"
@@ -179,6 +185,7 @@
               <el-select
                 v-model="profileForm.entity.political_status"
                 placeholder="请选择"
+                clearable
               >
                 <el-option
                   v-for="item in politicalStatusIndicator.entities.data"
@@ -195,6 +202,7 @@
               <el-select
                 v-model="profileForm.entity.marital_status"
                 placeholder="请选择"
+                clearable
               >
                 <el-option
                   v-for="item in maritalStatusIndicator.entities.data"
@@ -468,7 +476,7 @@ export default {
         this.profileForm.entity.name,
         this.profileForm.entity.id_number,
         this.profileForm.entity.id_type,
-        this.profileForm.entity.birthday,
+        this.profileForm.entity.birthday === null ? '' : this.profileForm.entity.birthday,
         this.profileForm.entity.gender,
         this.profileForm.entity.blood_type,
         this.profileForm.entity.nationality,

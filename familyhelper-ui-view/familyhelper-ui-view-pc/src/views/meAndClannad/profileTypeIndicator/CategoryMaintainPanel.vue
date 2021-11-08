@@ -311,5 +311,6 @@ export default {
 .table-panel {
   height: 0;
   flex-grow: 1;
+  padding-bottom: 1px;
 }
 </style>

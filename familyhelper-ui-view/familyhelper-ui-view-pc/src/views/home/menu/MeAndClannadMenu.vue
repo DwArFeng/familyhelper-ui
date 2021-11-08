@@ -44,7 +44,7 @@
     >
       <template slot="title">
         <i class="el-icon-s-grid"></i>
-        <span>家庭简介</span>
+        <span>家人简介</span>
       </template>
     </el-menu-item>
     <!-- 家庭相册 -->

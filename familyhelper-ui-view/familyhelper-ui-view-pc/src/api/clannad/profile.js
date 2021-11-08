@@ -11,7 +11,21 @@ export function inspect(key) {
 }
 
 export function inspectDisp(key) {
-  return get('clannad', `profile/${key}/disp`, {});
+  return get('clannad', `profile/${key}/disp/`, {});
+}
+
+export function childForAccountGuest(accountKey, page, rows) {
+  return get('clannad', `account/${accountKey}/profile/permitted/`, {
+    page,
+    rows,
+  });
+}
+
+export function childForAccountGuestDisp(accountKey, page, rows) {
+  return get('clannad', `account/${accountKey}/profile/permitted/disp/`, {
+    page,
+    rows,
+  });
 }
 
 export function updateProfile(
