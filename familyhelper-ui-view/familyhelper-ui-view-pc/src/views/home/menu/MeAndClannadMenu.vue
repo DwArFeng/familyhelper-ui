@@ -59,8 +59,8 @@
     </el-menu-item>
     <!-- 家人称呼管理 -->
     <el-menu-item
-      index="/home/me-and-clannad/clannad-call"
-      v-if="permissionSet.has(permissionMeta.get('clannad_call'))"
+      index="/home/me-and-clannad/clannad-nickname"
+      v-if="permissionSet.has(permissionMeta.get('clannad_nickname'))"
     >
       <template slot="title">
         <i class="el-icon-s-grid"></i>
@@ -90,7 +90,7 @@ export default {
       map.set('my_album', 'ui.pc.menu_visible.me_and_clannad.my_album');
       map.set('clannad_profile', 'ui.pc.menu_visible.me_and_clannad.clannad_profile');
       map.set('clannad_album', 'ui.pc.menu_visible.me_and_clannad.clannad_album');
-      map.set('clannad_call', 'ui.pc.menu_visible.me_and_clannad.clannad_call');
+      map.set('clannad_nickname', 'ui.pc.menu_visible.me_and_clannad.clannad_nickname');
       this.$set(this.$data, 'permissionMeta', map);
     },
   },

@@ -122,11 +122,11 @@ const routes = [
         },
       },
       {
-        path: 'me-and-clannad/clannad-call',
-        component: () => import('@/views/meAndClannad/clannadCall/ClannadCall.vue'),
+        path: 'me-and-clannad/clannad-nickname',
+        component: () => import('@/views/meAndClannad/clannadNickname/ClannadNickname.vue'),
         meta: {
           permissionRequired: true,
-          permissionNode: 'ui.pc.menu_visible.me_and_clannad.clannad_call',
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.clannad_nickname',
         },
       },
       {
