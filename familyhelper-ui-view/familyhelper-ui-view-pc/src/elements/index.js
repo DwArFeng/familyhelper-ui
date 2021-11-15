@@ -38,10 +38,12 @@ import {
   Tree,
   Loading,
   DatePicker,
+  Link,
 } from 'element-ui';
 import { OverlayScrollbarsPlugin } from 'overlayscrollbars-vue';
 import 'overlayscrollbars/css/OverlayScrollbars.css';
 import 'element-ui/lib/theme-chalk/index.css';
+import VueCropper from 'vue-cropper';
 
 Vue.use(Button);
 Vue.use(ButtonGroup);
@@ -79,6 +81,7 @@ Vue.use(Tabs);
 Vue.use(TabPane);
 Vue.use(Transfer);
 Vue.use(DatePicker);
+Vue.use(Link);
 
 Vue.use(Loading.directive);
 
@@ -106,3 +109,5 @@ require('echarts/lib/component/legendScroll');
 require('echarts/lib/component/legendScroll');
 
 Vue.prototype.$echarts = echarts;
+
+Vue.use(VueCropper);

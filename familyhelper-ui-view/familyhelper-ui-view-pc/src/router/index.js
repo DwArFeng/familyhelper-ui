@@ -90,6 +90,14 @@ const routes = [
         },
       },
       {
+        path: 'me-and-clannad/my-avatar',
+        component: () => import('@/views/meAndClannad/myAvatar/MyAvatar.vue'),
+        meta: {
+          permissionRequired: true,
+          permissionNode: 'ui.pc.menu_visible.me_and_clannad.my_avatar',
+        },
+      },
+      {
         path: 'me-and-clannad/profile-type-indicator',
         component: () => import('@/views/meAndClannad/profileTypeIndicator/ProfileTypeIndicator.vue'),
         meta: {

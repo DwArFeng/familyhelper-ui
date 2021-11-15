@@ -58,7 +58,7 @@
         <el-input
           v-model="maintainDialog.anchorEntity.object_user_id"
           readonly
-          v-if="dialogMode === 'INSPECT'"
+          v-if="maintainDialog.dialogMode === 'INSPECT'"
         />
         <el-select
           class='account-select'

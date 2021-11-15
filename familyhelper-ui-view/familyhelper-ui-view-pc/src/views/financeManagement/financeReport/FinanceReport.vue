@@ -44,7 +44,7 @@
 <script>
 import ContentPanel from '@/components/layout/LayoutPanel.vue';
 import AccountBookSelectDialog
-  from '@/views/financeManagement/accountBook/AccountBookSelectDialog.vue';
+from '@/views/financeManagement/accountBook/AccountBookSelectDialog.vue';
 import AccountBookPanel from '@/views/financeManagement/financeReport/AccountBookPanel.vue';
 import BankCardPanel from '@/views/financeManagement/financeReport/BankCardPanel.vue';
 import FundChangePanel from '@/views/financeManagement/financeReport/FundChangePanel.vue';

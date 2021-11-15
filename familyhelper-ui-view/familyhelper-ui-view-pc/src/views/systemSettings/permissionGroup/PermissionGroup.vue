@@ -195,7 +195,7 @@ import ContentPanel from '@/components/layout/LayoutPanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import PermissionGroupTreePanel
-  from '@/views/systemSettings/permissionGroup/PermissionGroupTreePanel.vue';
+from '@/views/systemSettings/permissionGroup/PermissionGroupTreePanel.vue';
 
 import {
   childForParentDisp,

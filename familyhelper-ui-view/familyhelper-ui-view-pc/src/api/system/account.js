@@ -35,6 +35,10 @@ export function childForProfileGuest(profileKey, page, rows) {
   });
 }
 
+export function inspectDisp(key) {
+  return get('system', `account/${key}/disp/`, {});
+}
+
 export function register(key, displayName, enabled, remark, password) {
   return post('system', 'account/register', {
     account_key: {

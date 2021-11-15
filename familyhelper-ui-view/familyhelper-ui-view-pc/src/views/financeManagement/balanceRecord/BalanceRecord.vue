@@ -231,7 +231,7 @@
 import ContentPanel from '@/components/layout/LayoutPanel.vue';
 import CardListPanel from '@/components/layout/CardListPanel.vue';
 import AccountBookSelectDialog
-  from '@/views/financeManagement/accountBook/AccountBookSelectDialog.vue';
+from '@/views/financeManagement/accountBook/AccountBookSelectDialog.vue';
 
 import resolveResponse from '@/util/response';
 import { recordCommit, rollbackAll } from '@/api/finance/accountBook';

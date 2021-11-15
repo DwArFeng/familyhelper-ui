@@ -47,11 +47,23 @@ axios.interceptors.response.use(
   (err) => Promise.reject(err),
 );
 
-export function get(module, url, params, responseType) {
+export function get(module, url, params) {
+  return new Promise((resolve, reject) => {
+    axios.get(`/${module}/${url}`, params)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+export function getBlob(module, url, params) {
   return new Promise((resolve, reject) => {
     axios.get(`/${module}/${url}`, {
       params,
-      responseType,
+      responseType: 'blob',
     })
       .then((res) => {
         resolve(res.data);
@@ -64,13 +76,19 @@ export function get(module, url, params, responseType) {
 
 export function post(module, url, params) {
   return new Promise((resolve, reject) => {
-    let promise;
-    if (params instanceof FormData) {
-      promise = axios.post(`/${module}/${url}`, params, { headers: { 'Content-Type': 'multipart/form-data' } });
-    } else {
-      promise = axios.post(`/${module}/${url}`, params);
-    }
-    promise
+    axios.post(`/${module}/${url}`, params)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+export function postFormData(module, url, params) {
+  return new Promise((resolve, reject) => {
+    axios.post(`/${module}/${url}`, params, { headers: { 'Content-Type': 'multipart/form-data' } })
       .then((res) => {
         resolve(res.data);
       })

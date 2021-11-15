@@ -6,6 +6,34 @@
   "description": "家庭帮手",
   "glyphs": [
     {
+      "icon_id": "12323749",
+      "name": "放大",
+      "font_class": "fangda",
+      "unicode": "ffe8",
+      "unicode_decimal": 65512
+    },
+    {
+      "icon_id": "12323756",
+      "name": "缩小",
+      "font_class": "suoxiao",
+      "unicode": "ffe9",
+      "unicode_decimal": 65513
+    },
+    {
+      "icon_id": "19671215",
+      "name": "向左旋转",
+      "font_class": "rotate-left",
+      "unicode": "ffea",
+      "unicode_decimal": 65514
+    },
+    {
+      "icon_id": "19671216",
+      "name": "向右旋转",
+      "font_class": "rotate-right",
+      "unicode": "ffeb",
+      "unicode_decimal": 65515
+    },
+    {
       "icon_id": "1271",
       "name": "正确",
       "font_class": "zhengque",

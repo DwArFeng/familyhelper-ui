@@ -17,6 +17,16 @@
         <span>个人简介管理</span>
       </template>
     </el-menu-item>
+    <!-- 个人头像管理 -->
+    <el-menu-item
+      index="/home/me-and-clannad/my-avatar"
+      v-if="permissionSet.has(permissionMeta.get('my_avatar'))"
+    >
+      <template slot="title">
+        <i class="el-icon-s-grid"></i>
+        <span>个人头像管理</span>
+      </template>
+    </el-menu-item>
     <!-- 简介类型管理 -->
     <el-menu-item
       index="/home/me-and-clannad/profile-type-indicator"
@@ -86,6 +96,7 @@ export default {
       const map = new Map();
       map.set('me_and_clannad', 'ui.pc.menu_visible.me_and_clannad');
       map.set('my_profile', 'ui.pc.menu_visible.me_and_clannad.my_profile');
+      map.set('my_avatar', 'ui.pc.menu_visible.me_and_clannad.my_avatar');
       map.set('profile_type_indicator', 'ui.pc.menu_visible.me_and_clannad.profile_type_indicator');
       map.set('my_album', 'ui.pc.menu_visible.me_and_clannad.my_album');
       map.set('clannad_profile', 'ui.pc.menu_visible.me_and_clannad.clannad_profile');
