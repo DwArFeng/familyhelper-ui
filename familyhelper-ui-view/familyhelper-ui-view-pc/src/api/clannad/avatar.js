@@ -6,6 +6,10 @@ export function exists(key) {
   return get('clannad', `avatar/${key}/exists/`, {});
 }
 
+export function inspect(key) {
+  return get('clannad', `avatar/${key}/`, {});
+}
+
 export function download(key) {
   return getBlob('clannad', `avatar/${key}/download/`, {});
 }

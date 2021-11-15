@@ -155,7 +155,9 @@ import AvatarPanel from '@/components/layout/AvatarPanel.vue';
 import ComingSoon from '@/components/layout/ComingSoon.vue';
 
 import { inspectDisp } from '@/api/system/account';
-import { exists, download, upload } from '@/api/clannad/avatar';
+import {
+  exists, download, upload, inspect,
+} from '@/api/clannad/avatar';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -202,6 +204,7 @@ export default {
         displayName: '',
         avatarUrl: '',
         blobToUpdate: null,
+        fileName: '',
       },
     };
   },
@@ -254,6 +257,26 @@ export default {
         resolveResponse(this, inspectDisp(me))
           .then((res) => {
             this.neoAvatar.displayName = res.display_name;
+          })
+          .then(() => resolveResponse(this, exists(this.me)))
+          .then((res) => {
+            if (res) {
+              return resolveResponse(this, inspect(this.me))
+                .then((avatarInfo) => {
+                  console.log(avatarInfo);
+                  // noinspection JSUnresolvedVariable
+                  this.neoAvatar.fileName = avatarInfo.origin_name;
+                })
+                .then(() => download(this.me))
+                .then((blob) => {
+                  this.neoAvatar.blobToUpdate = blob;
+                  return Promise.resolve(window.URL.createObjectURL(blob));
+                });
+            }
+            return Promise.resolve('');
+          })
+          .then((res) => {
+            this.neoAvatar.avatarUrl = res;
           })
           .catch(() => {
           });
@@ -348,6 +371,8 @@ export default {
         }
         // Blob 赋值。
         this.neoAvatar.blobToUpdate = data;
+        // 文件名称赋值。
+        this.neoAvatar.fileName = this.avatarEditDialog.file.fileName;
         // 创建新连接。
         this.neoAvatar.avatarUrl = window.URL.createObjectURL(data);
         // 关闭对话框。
@@ -356,19 +381,21 @@ export default {
     },
     handleAvatarUpload() {
       const formData = new FormData();
-      formData.append('file', this.neoAvatar.blobToUpdate, this.avatarEditDialog.file.fileName);
+      formData.append('file', this.neoAvatar.blobToUpdate, this.neoAvatar.fileName);
       resolveResponse(this, upload(this.me, formData))
         .then(() => {
           this.$message({
             showClose: true,
-            message: '头像更新成功',
+            message: '头像更新成功，2秒后刷新界面',
             type: 'success',
             center: true,
           });
         })
         .then(() => {
-          // 刷新或登出。
-          window.location.reload();
+          setTimeout(() => {
+            // 刷新或登出。
+            window.location.reload();
+          }, 2000);
         })
         .catch(() => {
         });

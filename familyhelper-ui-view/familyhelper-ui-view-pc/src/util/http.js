@@ -49,7 +49,7 @@ axios.interceptors.response.use(
 
 export function get(module, url, params) {
   return new Promise((resolve, reject) => {
-    axios.get(`/${module}/${url}`, params)
+    axios.get(`/${module}/${url}`, { params })
       .then((res) => {
         resolve(res.data);
       })

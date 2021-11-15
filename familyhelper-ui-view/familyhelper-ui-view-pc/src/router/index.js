@@ -106,27 +106,11 @@ const routes = [
         },
       },
       {
-        path: 'me-and-clannad/my-album',
-        component: () => import('@/views/meAndClannad/myAlbum/MyAlbum.vue'),
-        meta: {
-          permissionRequired: true,
-          permissionNode: 'ui.pc.menu_visible.me_and_clannad.my_album',
-        },
-      },
-      {
         path: 'me-and-clannad/clannad-profile',
         component: () => import('@/views/meAndClannad/clannadProfile/ClannadProfile.vue'),
         meta: {
           permissionRequired: true,
           permissionNode: 'ui.pc.menu_visible.me_and_clannad.clannad_profile',
-        },
-      },
-      {
-        path: 'me-and-clannad/clannad-album',
-        component: () => import('@/views/meAndClannad/clannadAlbum/ClannadAlbum.vue'),
-        meta: {
-          permissionRequired: true,
-          permissionNode: 'ui.pc.menu_visible.me_and_clannad.clannad_album',
         },
       },
       {

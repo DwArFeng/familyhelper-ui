@@ -37,16 +37,6 @@
         <span>简介类型管理</span>
       </template>
     </el-menu-item>
-    <!-- 个人相册管理 -->
-    <el-menu-item
-      index="/home/me-and-clannad/my-album"
-      v-if="permissionSet.has(permissionMeta.get('my_album'))"
-    >
-      <template slot="title">
-        <i class="el-icon-s-grid"></i>
-        <span>个人相册管理</span>
-      </template>
-    </el-menu-item>
     <!-- 家庭简介 -->
     <el-menu-item
       index="/home/me-and-clannad/clannad-profile"
@@ -55,16 +45,6 @@
       <template slot="title">
         <i class="el-icon-s-grid"></i>
         <span>家人简介</span>
-      </template>
-    </el-menu-item>
-    <!-- 家庭相册 -->
-    <el-menu-item
-      index="/home/me-and-clannad/clannad-album"
-      v-if="permissionSet.has(permissionMeta.get('clannad_album'))"
-    >
-      <template slot="title">
-        <i class="el-icon-s-grid"></i>
-        <span>家庭相册</span>
       </template>
     </el-menu-item>
     <!-- 家人称呼管理 -->
@@ -98,9 +78,7 @@ export default {
       map.set('my_profile', 'ui.pc.menu_visible.me_and_clannad.my_profile');
       map.set('my_avatar', 'ui.pc.menu_visible.me_and_clannad.my_avatar');
       map.set('profile_type_indicator', 'ui.pc.menu_visible.me_and_clannad.profile_type_indicator');
-      map.set('my_album', 'ui.pc.menu_visible.me_and_clannad.my_album');
       map.set('clannad_profile', 'ui.pc.menu_visible.me_and_clannad.clannad_profile');
-      map.set('clannad_album', 'ui.pc.menu_visible.me_and_clannad.clannad_album');
       map.set('clannad_nickname', 'ui.pc.menu_visible.me_and_clannad.clannad_nickname');
       this.$set(this.$data, 'permissionMeta', map);
     },
