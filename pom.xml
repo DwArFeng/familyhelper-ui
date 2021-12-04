@@ -6,7 +6,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>familyhelper-ui</artifactId>
-    <version>1.0.1.b-SNAPSHOT</version>
+    <version>1.0.1.b</version>
 
     <packaging>pom</packaging>
 
