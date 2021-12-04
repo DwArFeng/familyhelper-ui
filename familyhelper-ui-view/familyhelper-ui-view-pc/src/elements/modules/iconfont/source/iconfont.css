@@ -1,0 +1,85 @@
+@font-face {
+    font-family: "iconfont"; /* Project id 2850115 */
+    src: url('./iconfont.woff2?t=1638089769547') format('woff2'),
+    url('./iconfont.woff?t=1638089769547') format('woff'),
+    url('./iconfont.ttf?t=1638089769547') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont", serif !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/*noinspection SpellCheckingInspection*/
+.icon-zhediecaidan:before {
+    content: "\ffe7";
+}
+
+/*noinspection SpellCheckingInspection*/
+.icon-zhankaicaidan:before {
+    content: "\ffe6";
+}
+
+/*noinspection SpellCheckingInspection*/
+.icon-fangda:before {
+    content: "\ffe8";
+}
+
+/*noinspection SpellCheckingInspection*/
+.icon-suoxiao:before {
+    content: "\ffe9";
+}
+
+.icon-rotate-left:before {
+    content: "\ffea";
+}
+
+.icon-rotate-right:before {
+    content: "\ffeb";
+}
+
+/*noinspection SpellCheckingInspection*/
+.icon-zhengque:before {
+    content: "\ffed";
+}
+
+.icon-bxs-category:before {
+    content: "\ffee";
+}
+
+.icon-yue:before {
+    content: "\fff9";
+}
+
+/*noinspection SpellCheckingInspection*/
+.icon-riqi:before {
+    content: "\ffef";
+}
+
+.icon-lock:before {
+    content: "\fffa";
+}
+
+.icon-user:before {
+    content: "\fffb";
+}
+
+.icon-operate-partial-minimize:before {
+    content: "\ffff";
+}
+
+.icon-operate-partial-maximize:before {
+    content: "\fffe";
+}
+
+.icon-operate-global-maximize:before {
+    content: "\fffc";
+}
+
+.icon-operate-global-minimize-copy:before {
+    content: "\fffd";
+}
+

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Vue from 'vue';
+import store from '@/store';
 
 // 根据不同环境设置 baseURL。
 const API_PREFIX = '/api';
@@ -23,15 +23,16 @@ axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
 // 请求拦截器
 axios.interceptors.request.use(
   (config) => {
+    const dejaVu = config;
+
     // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
     // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
-    // noinspection JSUnresolvedVariable
-    const loginInfo = Vue.ls.get('loginInfo');
-    if (!(!loginInfo && loginInfo !== 0 && loginInfo !== '')) {
-      // eslint-disable-next-line no-param-reassign
-      config.headers.Authentication = loginInfo.token;
+    let token = 0;
+    if (store.getters['lnp/isLogin']) {
+      token = store.getters['lnp/token'];
     }
-    return config;
+    dejaVu.headers.Authentication = token;
+    return dejaVu;
   },
   (error) => Promise.error(error),
 );

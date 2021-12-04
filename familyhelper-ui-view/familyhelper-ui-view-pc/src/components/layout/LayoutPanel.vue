@@ -1,14 +1,5 @@
 <template>
   <div class="layout-panel-container">
-    <div class="header">
-      <!-- 面包屑导航区 -->
-      <el-breadcrumb class="breadcrumb" separator="/">
-        <el-breadcrumb-item v-for="label in  breadcrumb" :key="label">
-          {{ label }}
-        </el-breadcrumb-item>
-      </el-breadcrumb>
-      <slot name="tool"/>
-    </div>
     <div class="main-area" >
       <!-- Header -->
       <el-card
@@ -79,18 +70,6 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.header{
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom:15px;
-}
-
-.breadcrumb{
-  margin: 0;
 }
 
 .main-area {
