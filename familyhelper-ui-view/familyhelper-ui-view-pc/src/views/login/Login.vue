@@ -81,8 +81,7 @@ export default {
         return;
       }
       this.login({ accountId: this.form.id, password: this.form.password })
-        .catch((err) => {
-          console.log(err);
+        .catch(() => {
         });
     },
     validate() {

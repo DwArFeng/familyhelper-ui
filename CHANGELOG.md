@@ -8,7 +8,8 @@
 
 #### Bug修复
 
-- 修复工程结构更改导致 .eslintignore 文件失效的 bug。
+- 修复工程结构更改导致 `.eslintignore` 文件失效的 bug。
+- 移除项目中多余的 console.log。
 
 #### 功能移除
 
