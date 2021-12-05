@@ -153,7 +153,7 @@ import { mapGetters } from 'vuex';
 
 import ContentPanel from '@/components/layout/LayoutPanel.vue';
 import AvatarPanel from '@/components/avatar/AvatarPanel.vue';
-import ComingSoon from '@/components/layout/ComingSoon.vue';
+import ComingSoon from '@/components/comingSoon/ComingSoon.vue';
 
 import { inspectDisp } from '@/api/system/account';
 import {

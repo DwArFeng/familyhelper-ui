@@ -4,7 +4,8 @@
 
 #### PC端功能构建
 
-- (无)
+- 优化 components 结构。
+  - 将 `ComingSoon.vue` 放置到单独的文件夹中。
 
 #### Bug修复
 
