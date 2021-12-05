@@ -20,7 +20,7 @@ const welcome = [
       router: {
         required: true,
         path: 'app/welcome',
-        component: () => import('@/views/item/welcome/Welcome.vue'),
+        component: () => import('@/views/items/welcome/Welcome.vue'),
       },
       permission: {
         required: false,

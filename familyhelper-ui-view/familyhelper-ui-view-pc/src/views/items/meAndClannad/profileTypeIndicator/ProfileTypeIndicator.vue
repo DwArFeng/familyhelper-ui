@@ -23,7 +23,7 @@
 
 <script>
 import ContentPanel from '@/components/layout/LayoutPanel.vue';
-import CategoryMaintainPanel from '@/views/item/meAndClannad/profileTypeIndicator/CategoryMaintainPanel.vue';
+import CategoryMaintainPanel from '@/views/items/meAndClannad/profileTypeIndicator/CategoryMaintainPanel.vue';
 
 export default {
   name: 'ProfileTypeIndicator',

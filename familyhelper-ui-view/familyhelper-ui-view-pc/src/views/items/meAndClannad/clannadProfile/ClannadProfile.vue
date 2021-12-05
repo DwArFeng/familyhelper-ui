@@ -26,7 +26,7 @@
 import { mapGetters } from 'vuex';
 
 import ContentPanel from '@/components/layout/LayoutPanel.vue';
-import ProfileDisplayPanel from '@/views/item/meAndClannad/clannadProfile/ProfileDisplayPanel.vue';
+import ProfileDisplayPanel from '@/views/items/meAndClannad/clannadProfile/ProfileDisplayPanel.vue';
 
 import { childForAccountGuest } from '@/api/clannad/profile';
 import { inspect as inspectAccount } from '@/api/system/account';

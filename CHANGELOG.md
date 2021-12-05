@@ -7,6 +7,9 @@
 - 优化 components 结构。
   - 将 `ComingSoon.vue` 放置到单独的文件夹中。
 
+- 优化 views 结构。
+  - 将 `item` 文件夹重命名为 `items`。
+
 #### Bug修复
 
 - (无)

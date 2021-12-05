@@ -43,10 +43,10 @@
 <script>
 import ContentPanel from '@/components/layout/LayoutPanel.vue';
 import AccountBookSelectDialog
-from '@/views/item/financeManagement/accountBook/AccountBookSelectDialog.vue';
-import AccountBookPanel from '@/views/item/financeManagement/financeReport/AccountBookPanel.vue';
-import BankCardPanel from '@/views/item/financeManagement/financeReport/BankCardPanel.vue';
-import FundChangePanel from '@/views/item/financeManagement/financeReport/FundChangePanel.vue';
+from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
+import AccountBookPanel from '@/views/items/financeManagement/financeReport/AccountBookPanel.vue';
+import BankCardPanel from '@/views/items/financeManagement/financeReport/BankCardPanel.vue';
+import FundChangePanel from '@/views/items/financeManagement/financeReport/FundChangePanel.vue';
 
 export default {
   name: 'FinanceReport',

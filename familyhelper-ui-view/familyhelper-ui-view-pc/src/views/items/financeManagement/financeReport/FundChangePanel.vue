@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import FundChangeChart from '@/views/item/financeManagement/financeReport/FundChangeChart.vue';
+import FundChangeChart from '@/views/items/financeManagement/financeReport/FundChangeChart.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 
 import resolveResponse from '@/util/response';

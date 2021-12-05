@@ -46,7 +46,7 @@ const financeManagement = [
       router: {
         required: true,
         path: 'app/finance-management/account-book',
-        component: () => import('@/views/item/financeManagement/accountBook/AccountBook.vue'),
+        component: () => import('@/views/items/financeManagement/accountBook/AccountBook.vue'),
       },
       permission: {
         required: true,
@@ -76,7 +76,7 @@ const financeManagement = [
       router: {
         required: true,
         path: 'app/finance-management/bank-card-type-indicator',
-        component: () => import('@/views/item/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
+        component: () => import('@/views/items/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
       },
       permission: {
         required: true,
@@ -106,7 +106,7 @@ const financeManagement = [
       router: {
         required: true,
         path: 'app/finance-management/bank-card',
-        component: () => import('@/views/item/financeManagement/bankCard/BankCard.vue'),
+        component: () => import('@/views/items/financeManagement/bankCard/BankCard.vue'),
       },
       permission: {
         required: true,
@@ -136,7 +136,7 @@ const financeManagement = [
       router: {
         required: true,
         path: 'app/finance-management/balance-record',
-        component: () => import('@/views/item/financeManagement/balanceRecord/BalanceRecord.vue'),
+        component: () => import('@/views/items/financeManagement/balanceRecord/BalanceRecord.vue'),
       },
       permission: {
         required: true,
@@ -166,7 +166,7 @@ const financeManagement = [
       router: {
         required: true,
         path: 'app/finance-management/fund-change-type-indicator',
-        component: () => import('@/views/item/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
+        component: () => import('@/views/items/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
       },
       permission: {
         required: true,
@@ -196,7 +196,7 @@ const financeManagement = [
       router: {
         required: true,
         path: 'app/finance-management/fund-change',
-        component: () => import('@/views/item/financeManagement/fundChange/FundChange.vue'),
+        component: () => import('@/views/items/financeManagement/fundChange/FundChange.vue'),
       },
       permission: {
         required: true,
@@ -226,7 +226,7 @@ const financeManagement = [
       router: {
         required: true,
         path: 'app/finance-management/finance-report',
-        component: () => import('@/views/item/financeManagement/financeReport/FinanceReport.vue'),
+        component: () => import('@/views/items/financeManagement/financeReport/FinanceReport.vue'),
       },
       permission: {
         required: true,

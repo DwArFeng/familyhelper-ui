@@ -46,7 +46,7 @@ const meAndClannad = [
       router: {
         required: true,
         path: 'app/me-and-clannad/profile-type-indicator',
-        component: () => import('@/views/item/meAndClannad/profileTypeIndicator/ProfileTypeIndicator.vue'),
+        component: () => import('@/views/items/meAndClannad/profileTypeIndicator/ProfileTypeIndicator.vue'),
       },
       permission: {
         required: true,
@@ -76,7 +76,7 @@ const meAndClannad = [
       router: {
         required: true,
         path: 'app/me-and-clannad/my-profile',
-        component: () => import('@/views/item/meAndClannad/myProfile/MyProfile.vue'),
+        component: () => import('@/views/items/meAndClannad/myProfile/MyProfile.vue'),
       },
       permission: {
         required: true,
@@ -106,7 +106,7 @@ const meAndClannad = [
       router: {
         required: true,
         path: 'app/me-and-clannad/my-avatar',
-        component: () => import('@/views/item/meAndClannad/myAvatar/MyAvatar.vue'),
+        component: () => import('@/views/items/meAndClannad/myAvatar/MyAvatar.vue'),
       },
       permission: {
         required: true,
@@ -136,7 +136,7 @@ const meAndClannad = [
       router: {
         required: true,
         path: 'app/me-and-clannad/clannad-profile',
-        component: () => import('@/views/item/meAndClannad/clannadProfile/ClannadProfile.vue'),
+        component: () => import('@/views/items/meAndClannad/clannadProfile/ClannadProfile.vue'),
       },
       permission: {
         required: true,
@@ -166,7 +166,7 @@ const meAndClannad = [
       router: {
         required: true,
         path: 'app/me-and-clannad/clannad-nickname',
-        component: () => import('@/views/item/meAndClannad/clannadNickname/ClannadNickname.vue'),
+        component: () => import('@/views/items/meAndClannad/clannadNickname/ClannadNickname.vue'),
       },
       permission: {
         required: true,

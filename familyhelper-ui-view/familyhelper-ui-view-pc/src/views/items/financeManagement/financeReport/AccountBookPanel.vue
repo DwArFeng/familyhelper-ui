@@ -129,7 +129,7 @@
 </template>
 
 <script>
-import BalanceChart from '@/views/item/financeManagement/financeReport/BalanceChart.vue';
+import BalanceChart from '@/views/items/financeManagement/financeReport/BalanceChart.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 
 import resolveResponse from '@/util/response';

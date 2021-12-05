@@ -125,7 +125,7 @@ import ContentPanel from '@/components/layout/LayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 import AccountBookSelectDialog
-from '@/views/item/financeManagement/accountBook/AccountBookSelectDialog.vue';
+from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
 
 import resolveResponse from '@/util/response';
 import {

@@ -46,7 +46,7 @@ const systemSettings = [
       router: {
         required: true,
         path: 'app/system-settings/account',
-        component: () => import('@/views/item/systemSettings/account/Account.vue'),
+        component: () => import('@/views/items/systemSettings/account/Account.vue'),
       },
       permission: {
         required: true,
@@ -76,7 +76,7 @@ const systemSettings = [
       router: {
         required: true,
         path: 'app/system-settings/role',
-        component: () => import('@/views/item/systemSettings/role/Role.vue'),
+        component: () => import('@/views/items/systemSettings/role/Role.vue'),
       },
       permission: {
         required: true,
@@ -106,7 +106,7 @@ const systemSettings = [
       router: {
         required: true,
         path: 'app/system-settings/permission-group',
-        component: () => import('@/views/item/systemSettings/permissionGroup/PermissionGroup.vue'),
+        component: () => import('@/views/items/systemSettings/permissionGroup/PermissionGroup.vue'),
       },
       permission: {
         required: true,
@@ -136,7 +136,7 @@ const systemSettings = [
       router: {
         required: true,
         path: 'app/system-settings/permission-node',
-        component: () => import('@/views/item/systemSettings/permissionNode/PermissionNode.vue'),
+        component: () => import('@/views/items/systemSettings/permissionNode/PermissionNode.vue'),
       },
       permission: {
         required: true,
