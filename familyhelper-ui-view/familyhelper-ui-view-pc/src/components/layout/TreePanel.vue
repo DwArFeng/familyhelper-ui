@@ -1,5 +1,5 @@
 <template>
-  <div class="tree-content-panel">
+  <div class="tree-panel-container">
     <div class="slot-header">
       <slot name="header"></slot>
     </div>
@@ -161,7 +161,7 @@ export default {
 </script>
 
 <style scoped>
-.tree-content-panel {
+.tree-panel-container {
   display: flex;
   flex-direction: column;
   height: 100%;

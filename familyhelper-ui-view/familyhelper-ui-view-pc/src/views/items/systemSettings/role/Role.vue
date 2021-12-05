@@ -1,7 +1,7 @@
 <template>
   <div class="role-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
       :east-visible="true"
     >
@@ -79,7 +79,7 @@
           新建权限表达式
         </el-button>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <entity-maintain-dialog
       :mode="roleMaintainDialog.dialogMode"
       :visible.sync="roleMaintainDialog.dialogVisible"
@@ -149,7 +149,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 
@@ -168,7 +168,7 @@ import resolveResponse from '@/util/response';
 // noinspection JSAnnotator
 export default {
   name: 'Role',
-  components: { ContentPanel, TablePanel, EntityMaintainDialog },
+  components: { BorderLayoutPanel, TablePanel, EntityMaintainDialog },
   computed: {
     ...mapGetters('lnp', ['me']),
   },
@@ -729,7 +729,7 @@ export default {
 }
 
 /*noinspection CssUnusedSymbol*/
-.content-panel >>> .box-card-east {
+.border-layout-panel >>> .box-card-east {
   width: 45%;
 }
 

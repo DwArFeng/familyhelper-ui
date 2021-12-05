@@ -1,7 +1,7 @@
 <template>
   <div class="clannad-nickname-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
     >
       <table-panel
@@ -41,7 +41,7 @@
           新建昵称设置
         </el-button>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <entity-maintain-dialog
       label-width="100px"
       :mode="maintainDialog.dialogMode"
@@ -92,7 +92,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 
@@ -105,7 +105,7 @@ import resolveResponse from '@/util/response';
 // noinspection JSAnnotator
 export default {
   name: 'ClannadNickname',
-  components: { ContentPanel, TablePanel, EntityMaintainDialog },
+  components: { BorderLayoutPanel, TablePanel, EntityMaintainDialog },
   computed: {
     ...mapGetters('lnp', ['me']),
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="clannad-profile-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
     >
       <el-tabs
         class="profile-tabs"
@@ -18,14 +18,14 @@
           <profile-display-panel :me="item.key.string_id"/>
         </el-tab-pane>
       </el-tabs>
-    </content-panel>
+    </border-layout-panel>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import ProfileDisplayPanel from '@/views/items/meAndClannad/clannadProfile/ProfileDisplayPanel.vue';
 
 import { childForAccountGuest } from '@/api/clannad/profile';
@@ -35,7 +35,7 @@ import resolveResponse from '@/util/response';
 // noinspection JSAnnotator
 export default {
   name: 'ClannadProfile',
-  components: { ProfileDisplayPanel, ContentPanel },
+  components: { ProfileDisplayPanel, BorderLayoutPanel },
   computed: {
     ...mapGetters('lnp', ['me']),
   },

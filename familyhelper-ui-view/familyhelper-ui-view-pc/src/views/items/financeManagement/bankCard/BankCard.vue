@@ -1,7 +1,7 @@
 <template>
   <div class="bank-card-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
     >
       <card-list-panel
@@ -70,7 +70,7 @@
           />
         </el-input>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <entity-maintain-dialog
       :mode="bankCardMaintainDialog.dialogMode"
       :visible.sync="bankCardMaintainDialog.dialogVisible"
@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardListPanel from '@/components/layout/CardListPanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 import AccountBookSelectDialog
@@ -136,7 +136,7 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'BankCard',
   components: {
-    CardListPanel, ContentPanel, EntityMaintainDialog, AccountBookSelectDialog,
+    CardListPanel, BorderLayoutPanel, EntityMaintainDialog, AccountBookSelectDialog,
   },
   data() {
     return {

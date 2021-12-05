@@ -1,7 +1,7 @@
 <template>
   <div class="my-profile-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
     >
       <div class="main-container-wrapper">
@@ -249,7 +249,7 @@
           分配权限
         </el-button>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <el-dialog
       class="guest-assign-dialog-container"
       ref="guestAssignDialog"
@@ -289,7 +289,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 
 import {
   inspect, updateProfile, resetGuestPermission,
@@ -301,7 +301,7 @@ import resolveResponse from '@/util/response';
 // noinspection JSAnnotator
 export default {
   name: 'MyProfile',
-  components: { ContentPanel },
+  components: { BorderLayoutPanel },
   computed: {
     ...mapGetters('lnp', ['me']),
   },

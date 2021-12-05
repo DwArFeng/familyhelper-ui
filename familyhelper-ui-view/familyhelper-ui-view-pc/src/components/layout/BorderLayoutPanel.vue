@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-panel-container">
+  <div class="border-layout-panel-container">
     <div class="main-area" >
       <!-- Header -->
       <el-card
@@ -38,7 +38,7 @@
 
 <script>
 export default {
-  name: 'LayoutPanel',
+  name: 'BorderLayoutPanel',
   props: {
     breadcrumb: {
       type: Array,
@@ -65,7 +65,7 @@ export default {
 </script>
 
 <style scoped>
-.layout-panel-container {
+.border-layout-panel-container {
   width: 100%;
   height: 100%;
   display: flex;

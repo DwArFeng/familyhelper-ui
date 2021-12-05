@@ -6,6 +6,7 @@
 
 - 优化 components 结构。
   - 将 `ComingSoon.vue` 放置到单独的文件夹中。
+  - 将 `LayoutPanel.vue` 重命名为 `BorderLayoutPanel.vue`。
 
 - 优化 views 结构。
   - 将 `item` 文件夹重命名为 `items`。

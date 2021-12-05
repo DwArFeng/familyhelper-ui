@@ -1,7 +1,7 @@
 <template>
   <div class="finance-report-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
     >
       <div class="finance-report-main">
         <div class="finance-report-main-header">
@@ -31,7 +31,7 @@
           </el-tab-pane>
         </el-tabs>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <account-book-select-dialog
       type="FINANCE_REPORT"
       :visible.sync="accountBookSelectDialog.visible"
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import AccountBookSelectDialog
 from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
 import AccountBookPanel from '@/views/items/financeManagement/financeReport/AccountBookPanel.vue';
@@ -54,7 +54,7 @@ export default {
     AccountBookPanel,
     BankCardPanel,
     FundChangePanel,
-    ContentPanel,
+    BorderLayoutPanel,
     AccountBookSelectDialog,
   },
   data() {

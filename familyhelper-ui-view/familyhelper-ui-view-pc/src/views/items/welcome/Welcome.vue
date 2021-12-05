@@ -1,23 +1,23 @@
 <template>
   <div class="readme-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
     >
       <div class="main-container">
         <div class="placeholder">
           欢迎使用家庭助手，我们是幸福的一家人 （๑╹◡╹)ﾉ”
         </div>
       </div>
-    </content-panel>
+    </border-layout-panel>
   </div>
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 
 export default {
   name: 'Readme',
-  components: { ContentPanel },
+  components: { BorderLayoutPanel },
 };
 </script>
 

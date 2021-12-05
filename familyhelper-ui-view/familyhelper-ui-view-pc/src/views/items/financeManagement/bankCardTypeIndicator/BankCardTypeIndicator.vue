@@ -1,7 +1,7 @@
 <template>
   <div class="bank-card-type-indicator-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
     >
       <table-panel
@@ -40,7 +40,7 @@
           新建银行卡类型
         </el-button>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <entity-maintain-dialog
       label-width="100px"
       :mode="dialogMode"
@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 import resolveResponse from '@/util/response';
@@ -86,7 +86,7 @@ import {
 
 export default {
   name: 'BankCardTypeIndicator',
-  components: { EntityMaintainDialog, ContentPanel, TablePanel },
+  components: { EntityMaintainDialog, BorderLayoutPanel, TablePanel },
   data() {
     const keyValidator = (rule, value, callback) => {
       Promise.resolve(value)

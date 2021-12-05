@@ -1,7 +1,7 @@
 <template>
   <div class="fund-change-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
     >
       <table-panel
@@ -64,7 +64,7 @@
           />
         </el-input>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <entity-maintain-dialog
       label-width="100px"
       create-title="记录"
@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 import AccountBookSelectDialog
@@ -140,7 +140,7 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'FundChange',
   components: {
-    TablePanel, ContentPanel, EntityMaintainDialog, AccountBookSelectDialog,
+    TablePanel, BorderLayoutPanel, EntityMaintainDialog, AccountBookSelectDialog,
   },
   data() {
     const deltaValidator = (rule, value, callback) => {

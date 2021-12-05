@@ -1,7 +1,7 @@
 <template>
   <div class="permission-group-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
       :west-visible="true"
     >
@@ -100,7 +100,7 @@
           />
         </table-panel>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <entity-maintain-dialog
       label-width="120px"
       :mode="dialogMode"
@@ -190,7 +190,7 @@
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import PermissionGroupTreePanel
@@ -212,7 +212,7 @@ export default {
   components: {
     PermissionGroupTreePanel,
     TablePanel,
-    ContentPanel,
+    BorderLayoutPanel,
     EntityMaintainDialog,
   },
   data() {

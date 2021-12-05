@@ -1,7 +1,7 @@
 <template>
   <div class="account-book-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
     >
       <card-list-panel
@@ -62,7 +62,7 @@
           @change="handleInspectAllSwitchChanged"
         />
       </div>
-    </content-panel>
+    </border-layout-panel>
     <entity-maintain-dialog
       :mode="accountBookMaintainDialog.dialogMode"
       :visible.sync="accountBookMaintainDialog.dialogVisible"
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardListPanel from '@/components/layout/CardListPanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 
@@ -103,7 +103,7 @@ import { formatTimestamp } from '@/util/timestamp';
 
 export default {
   name: 'AccountBook',
-  components: { CardListPanel, ContentPanel, EntityMaintainDialog },
+  components: { CardListPanel, BorderLayoutPanel, EntityMaintainDialog },
   data() {
     return {
       entities: {

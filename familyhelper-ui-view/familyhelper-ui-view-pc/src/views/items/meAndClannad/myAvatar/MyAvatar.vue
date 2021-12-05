@@ -1,7 +1,7 @@
 <template>
   <div class="my-avatar-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :west-visible="true"
     >
       <div class="container-wrapper" slot="west">
@@ -36,7 +36,7 @@
           <el-link type="primary" @click="handleAvatarEdit">点此选择并编辑</el-link>
         </div>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <el-dialog
       class="avatar-edit-dialog"
       tabindex="0"
@@ -151,7 +151,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import AvatarPanel from '@/components/avatar/AvatarPanel.vue';
 import ComingSoon from '@/components/comingSoon/ComingSoon.vue';
 
@@ -164,7 +164,7 @@ import resolveResponse from '@/util/response';
 // noinspection JSAnnotator
 export default {
   name: 'MyAvatar',
-  components: { ComingSoon, AvatarPanel, ContentPanel },
+  components: { ComingSoon, AvatarPanel, BorderLayoutPanel },
   computed: {
     ...mapGetters('lnp', ['me']),
   },

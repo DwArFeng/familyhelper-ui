@@ -1,5 +1,5 @@
 <template>
-  <div class="table-content-panel">
+  <div class="table-panel-container">
     <div class="table-container">
       <el-table
         class=table
@@ -166,7 +166,7 @@ export default {
 </script>
 
 <style scoped>
-.table-content-panel {
+.table-panel-container {
   display: flex;
   flex-direction: column;
   height: 100%;

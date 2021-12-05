@@ -1,7 +1,7 @@
 <template>
   <div class="balance-record-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
     >
       <card-list-panel
@@ -176,7 +176,7 @@
           />
         </el-input>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <account-book-select-dialog
       :visible.sync="accountBookSelectDialog.visible"
       @onConfirm="handleAccountBookConfirmed"
@@ -227,7 +227,7 @@
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardListPanel from '@/components/layout/CardListPanel.vue';
 import AccountBookSelectDialog
 from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
@@ -242,7 +242,7 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'BalanceRecord',
   components: {
-    CardListPanel, ContentPanel, AccountBookSelectDialog,
+    CardListPanel, BorderLayoutPanel, AccountBookSelectDialog,
   },
   data() {
     const deltaValidator = (rule, value, callback) => {

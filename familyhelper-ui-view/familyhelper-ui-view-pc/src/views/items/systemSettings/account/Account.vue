@@ -1,7 +1,7 @@
 <template>
   <div class="account-container">
-    <content-panel
-      class="content-panel"
+    <border-layout-panel
+      class="border-layout-panel"
       :header-visible="true"
     >
       <table-panel
@@ -60,7 +60,7 @@
           重置密码
         </el-button>
       </div>
-    </content-panel>
+    </border-layout-panel>
     <entity-maintain-dialog
       create-title="注册"
       create-confirm-button-label="注册"
@@ -214,7 +214,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 
@@ -229,7 +229,7 @@ import resolveResponse from '@/util/response';
 // noinspection JSAnnotator
 export default {
   name: 'Account',
-  components: { EntityMaintainDialog, ContentPanel, TablePanel },
+  components: { EntityMaintainDialog, BorderLayoutPanel, TablePanel },
   computed: {
     ...mapGetters('lnp', ['me']),
   },

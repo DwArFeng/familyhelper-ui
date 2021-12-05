@@ -1,7 +1,7 @@
 <template>
 <div class="profile-type-indicator-container">
-  <content-panel
-    class="content-panel"
+  <border-layout-panel
+    class="border-layout-panel"
   >
     <el-tabs
       class="profile-type-tabs"
@@ -17,17 +17,17 @@
         <category-maintain-panel :category="item.category" :label="item.label"/>
       </el-tab-pane>
     </el-tabs>
-  </content-panel>
+  </border-layout-panel>
 </div>
 </template>
 
 <script>
-import ContentPanel from '@/components/layout/LayoutPanel.vue';
+import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CategoryMaintainPanel from '@/views/items/meAndClannad/profileTypeIndicator/CategoryMaintainPanel.vue';
 
 export default {
   name: 'ProfileTypeIndicator',
-  components: { CategoryMaintainPanel, ContentPanel },
+  components: { CategoryMaintainPanel, BorderLayoutPanel },
   data() {
     return {
       profileTypeTabs: {
