@@ -4,8 +4,8 @@
       class="border-layout-panel"
       :header-visible="true"
     >
-      <card-list-panel
-        class="card-list-panel"
+      <card-panel
+        class="card-panel"
         ref="cardList"
         title-prop="name"
         card-width="calc(20% - 18px)"
@@ -146,7 +146,7 @@
             </el-tooltip>
           </el-button-group>
         </template>
-      </card-list-panel>
+      </card-panel>
       <div class="header-container" slot="header">
         <el-button
           type="primary"
@@ -228,7 +228,7 @@
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import CardListPanel from '@/components/layout/CardListPanel.vue';
+import CardPanel from '@/components/card/CardPanel.vue';
 import AccountBookSelectDialog
 from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
 
@@ -242,7 +242,7 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'BalanceRecord',
   components: {
-    CardListPanel, BorderLayoutPanel, AccountBookSelectDialog,
+    CardPanel, BorderLayoutPanel, AccountBookSelectDialog,
   },
   data() {
     const deltaValidator = (rule, value, callback) => {
@@ -681,7 +681,7 @@ export default {
   height: 40px;
 }
 
-.card-list-panel:focus{
+.card-panel:focus{
   outline: none;
 }
 </style>

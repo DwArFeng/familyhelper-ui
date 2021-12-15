@@ -8,16 +8,17 @@
         v-for="(item, index) in data"
         :key="index"
         :style="cardStyle"
-        :body-style="calculateBodyStyle(index)"
+        :body-style="bodyStyle"
       >
         <div
-          class="box-card-wrapper"
-          @mouseenter="handleHoverChanged(index)"
-          @mouseleave="handleHoverChanged(-1)"
+          ref="mainContainer"
+          class="main-container"
+          :class="isSelected(index) ? 'active' : 'inactive'"
           @click="handleSelectionChanged(index)"
+          @contextmenu="mayOpenMenu(index,item, $event)"
         >
           <div class="clearfix">
-            <div class="title">{{ getDeepPropertyBridge(item, titleProp, '') }}</div>
+            <div class="title">{{ innerGetDeepProperty(item, titleProp, '') }}</div>
             <div>
               <slot name="header" :item="item" :index="index">
                 <el-button-group class="button-group">
@@ -27,24 +28,21 @@
                     icon="el-icon-search"
                     v-if="inspectButtonVisible"
                     @click="handleItemToInspect(index, item)"
-                  >
-                  </el-button>
+                  />
                   <el-button
                     class="card-button"
                     size="mini"
                     icon="el-icon-edit"
                     v-if="editButtonVisible"
                     @click="handleItemToEdit(index, item)"
-                  >
-                  </el-button>
+                  />
                   <el-button
                     class="card-button"
                     size="mini"
                     icon="el-icon-delete"
                     v-if="deleteButtonVisible"
                     @click="handleItemToDelete(index,item)"
-                  >
-                  </el-button>
+                  />
                 </el-button-group>
               </slot>
             </div>
@@ -56,27 +54,66 @@
         </div>
       </el-card>
       <el-card
-        class="box-card addon"
+        class="box-card"
         v-if="addonButtonVisible"
         :style="cardStyle"
+        :body-style="bodyStyle"
       >
-        <el-tooltip
-          effect="dark"
-          content="卡片数量已经达到最大值"
-          placement="top"
-          :disabled="data.length < maxCard"
-        >
-          <div>
-            <el-button
-              class="addon-button"
-              icon="el-icon-plus"
-              circle
-              :disabled="data.length >= maxCard"
-              @click="handleAddonClicked"
-            ></el-button>
-          </div>
-        </el-tooltip>
+        <div class="addon-container">
+          <el-tooltip
+            effect="dark"
+            content="卡片数量已经达到最大值"
+            placement="top"
+            :disabled="data.length < maxCard"
+          >
+            <div>
+              <el-button
+                class="addon-container-button"
+                icon="el-icon-plus"
+                circle
+                :disabled="data.length >= maxCard"
+                @click="handleAddonClicked"
+              />
+            </div>
+          </el-tooltip>
+        </div>
       </el-card>
+      <div
+        v-if="contextMenu.visible"
+        ref="contextMenu"
+        class="context-menu"
+        tabindex="0"
+        :style="{left:contextMenu.left+'px',top:contextMenu.top+'px'}"
+        @blur="closeMenu"
+      >
+        <slot
+          name="contextMenu"
+          :item="contextMenu.item"
+          :index="contextMenu.index"
+          :close="closeMenu"
+        >
+          <ul>
+            <li
+              v-if="inspectMenuItemVisible"
+              @click="handleInspectMenuItemClicked(contextMenu.index,contextMenu.item)"
+            >
+              查看...
+            </li>
+            <li
+              v-if="editMenuItemVisible"
+              @click="handleEditMenuItemClicked(contextMenu.index,contextMenu.item)"
+            >
+              编辑...
+            </li>
+            <li
+              v-if="deleteMenuItemVisible"
+              @click="handleDeleteMenuItemClicked(contextMenu.index,contextMenu.item)"
+            >
+              删除...
+            </li>
+          </ul>
+        </slot>
+      </div>
     </div>
   </overlay-scrollbars>
 </template>
@@ -132,6 +169,22 @@ export default {
       },
       default: 'NONE',
     },
+    showContextMenu: {
+      type: Boolean,
+      default: false,
+    },
+    inspectMenuItemVisible: {
+      type: Boolean,
+      default: true,
+    },
+    editMenuItemVisible: {
+      type: Boolean,
+      default: true,
+    },
+    deleteMenuItemVisible: {
+      type: Boolean,
+      default: true,
+    },
   },
   watch: {
     cardWidth(value) {
@@ -150,27 +203,12 @@ export default {
       }
       this.cardStyle.height = height;
     },
-    selectMode(value) {
-      switch (value) {
-        case 'NONE':
-          this.cardStyle.cursor = 'auto';
-          break;
-        case 'SINGLE':
-        case 'MULTI':
-          this.cardStyle.cursor = 'pointer';
-          break;
-        default:
-          this.cardStyle.cursor = 'auto';
-          break;
-      }
-    },
   },
   data() {
     return {
       cardStyle: {
         width: this.initCardWidth(),
         height: this.initCardHeight(),
-        cursor: this.initCardCursor(),
       },
       bodyStyle: {
         width: '100%',
@@ -182,11 +220,17 @@ export default {
         singleSelectionIndex: -1,
         multiSelectionIndex: [],
       },
-      hoverIndex: -1,
+      contextMenu: {
+        visible: false,
+        left: 0,
+        top: 0,
+        index: -1,
+        item: null,
+      },
     };
   },
   methods: {
-    getDeepPropertyBridge(target, property, defaultResult) {
+    innerGetDeepProperty(target, property, defaultResult) {
       return getDeepProperty(target, property, defaultResult);
     },
     handleAddonClicked() {
@@ -217,66 +261,6 @@ export default {
       }
       return height;
     },
-    initCardCursor() {
-      switch (this.selectMode) {
-        case 'NONE':
-          return 'auto';
-        case 'SINGLE':
-        case 'MULTI':
-          return 'pointer';
-        default:
-          return 'auto';
-      }
-    },
-    handleHoverChanged(index) {
-      this.hoverIndex = index;
-    },
-    calculateBodyStyle(index) {
-      // 通常的样式，如果没有选择模式，则返回该样式。
-      const normalTemplate = {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        padding: '2px',
-        boxSizing: 'border-box',
-      };
-      if (this.selectMode === 'NONE') {
-        return normalTemplate;
-      }
-
-      // 被选中的样式，有选择模式且被选中，则返回该样式。
-      const selectedTemplate = {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        padding: '0px',
-        borderWidth: '2px',
-        borderStyle: 'solid',
-        borderColor: '#409EFF',
-        boxSizing: 'border-box',
-      };
-      if (this.selectMode === 'SINGLE' && this.selection.singleSelectionIndex === index) {
-        return selectedTemplate;
-      }
-
-      // 鼠标停留时的样式，有选择模式且鼠标停留时选择的样式。
-      const hoverTemplate = {
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        padding: '1px',
-        borderWidth: '1px',
-        borderStyle: 'solid',
-        borderColor: '#409EFF',
-        boxSizing: 'border-box',
-      };
-      if (index === this.hoverIndex) {
-        return hoverTemplate;
-      }
-
-      // 处于选择模式，但既没有被选中，鼠标又没有停留，同样使用一般样式。
-      return normalTemplate;
-    },
     handleSelectionChanged(index) {
       switch (this.selectMode) {
         case 'NONE':
@@ -296,6 +280,64 @@ export default {
           break;
       }
     },
+    isSelected(index) {
+      if (this.selectMode === 'SINGLE' && this.selection.singleSelectionIndex === index) {
+        return true;
+      }
+      // 为了代码的可读性，此处语法不做简化。
+      // noinspection RedundantIfStatementJS
+      if (this.selectMode === 'MULTI' && this.selection.multiSelectionIndex.includes(index)) {
+        return true;
+      }
+      return false;
+    },
+    mayOpenMenu(index, item, e) {
+      if (!this.showContextMenu) {
+        return;
+      }
+
+      // 阻止系统菜单弹出。
+      e.preventDefault();
+
+      this.contextMenu.index = index;
+      this.contextMenu.item = item;
+
+      const menuMinWidth = 105;
+      const offsetLeft = this.$el.getBoundingClientRect().left; // container margin left
+      const { offsetWidth } = this.$el; // container width
+      const maxLeft = offsetWidth - menuMinWidth; // left boundary
+      const left = e.clientX - offsetLeft + 15; // 15: margin right
+
+      if (left > maxLeft) {
+        this.contextMenu.left = maxLeft;
+      } else {
+        this.contextMenu.left = left;
+      }
+
+      const offsetTop = this.$el.getBoundingClientRect().top; // container margin left
+      this.contextMenu.top = e.clientY - offsetTop;
+
+      this.contextMenu.visible = true;
+
+      this.$nextTick(() => {
+        this.$refs.contextMenu.focus();
+      });
+    },
+    closeMenu() {
+      this.contextMenu.visible = false;
+    },
+    handleInspectMenuItemClicked(index, item) {
+      this.closeMenu();
+      this.$emit('onItemToInspect', index, item);
+    },
+    handleEditMenuItemClicked(index, item) {
+      this.closeMenu();
+      this.$emit('onItemToEdit', index, item);
+    },
+    handleDeleteMenuItemClicked(index, item) {
+      this.closeMenu();
+      this.$emit('onItemToDelete', index, item);
+    },
   },
 };
 </script>
@@ -305,7 +347,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .box-card {
@@ -333,31 +375,90 @@ export default {
   flex-grow: 1;
   padding-right: 10px;
   font-size: 14px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .button-group {
   display: flex;
 }
 
-.addon {
+.addon-container {
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.addon-button {
+.addon-container-button {
   font-size: 40px;
 }
 
 .card-button {
-  padding: 7px
+  padding: 7px;
 }
 
-.box-card-wrapper {
+.main-container {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0
+  box-sizing: border-box;
+}
+
+/*noinspection CssUnusedSymbol*/
+.main-container.inactive {
+  padding: 2px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.main-container.active {
+  padding: 0;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #409EFF;
+}
+
+.main-container:hover {
+  background: rgba(0, 0, 0, .025);
+}
+
+.context-menu {
+  margin: 0;
+  padding: 5px 0;
+  background: #fff;
+  z-index: 3000;
+  position: absolute;
+  list-style-type: none;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #7F7F7F;
+  font-size: 12px;
+  font-weight: 400;
+  color: #333;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
+}
+
+.context-menu:focus {
+  outline: none;
+}
+
+.context-menu ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.context-menu li {
+  margin: 0;
+  padding: 7px 16px;
+  cursor: pointer;
+}
+
+.context-menu li:hover {
+  background: #eee;
 }
 </style>

@@ -39,7 +39,10 @@ export function create(name, remark) {
 }
 
 export function update(key, name, remark) {
-  return post('finance', `account-book/${key}/update`, {
+  return post('finance', 'account-book/update', {
+    account_book_key: {
+      long_id: key,
+    },
     name,
     remark,
   });

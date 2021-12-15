@@ -4,7 +4,7 @@
       class="border-layout-panel"
       :header-visible="true"
     >
-      <card-list-panel
+      <card-panel
         title-prop="name"
         card-width="calc(20% - 18px)"
         :data="entities.data"
@@ -47,7 +47,7 @@
             </div>
           </div>
         </template>
-      </card-list-panel>
+      </card-panel>
       <div class="header-container" slot="header">
         <el-button
           type="primary"
@@ -118,7 +118,7 @@
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import CardListPanel from '@/components/layout/CardListPanel.vue';
+import CardPanel from '@/components/card/CardPanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 import AccountBookSelectDialog
 from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
@@ -136,7 +136,7 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'BankCard',
   components: {
-    CardListPanel, BorderLayoutPanel, EntityMaintainDialog, AccountBookSelectDialog,
+    CardPanel, BorderLayoutPanel, EntityMaintainDialog, AccountBookSelectDialog,
   },
   data() {
     return {

@@ -25,52 +25,53 @@
     </div>
     <ul
       v-if="contextMenu.visible"
-      class="context-menu"
+      ref="contextMenu"
+      class="main-content"
+      tabindex="0"
       :style="{left:contextMenu.left+'px',top:contextMenu.top+'px'}"
+      @blur="closeMenu"
     >
-      <!--suppress JSUnresolvedFunction -->
       <li
         v-if="annotation(contextMenu.itemKey) === 'active'"
-        @click="pin(contextMenu.itemKey)"
+        @click="closeMenu();pin(contextMenu.itemKey)"
       >
         固定
       </li>
-      <!--suppress JSUnresolvedFunction -->
       <li
         v-if="annotation(contextMenu.itemKey) === 'pinned'"
-        @click="unpin(contextMenu.itemKey)"
+        @click="closeMenu();unpin(contextMenu.itemKey)"
       >
         解除固定
       </li>
       <li
         v-if="annotation(contextMenu.itemKey) === 'pinned'"
-        @click="unpinAndClose"
+        @click="closeMenu();unpinAndClose()"
       >
         解除固定并清除
       </li>
       <li
         v-if="annotation(contextMenu.itemKey) === 'active'"
-        @click="removeItemKey(contextMenu.itemKey)"
+        @click="closeMenu();removeItemKey(contextMenu.itemKey)"
       >
         清除
       </li>
       <li
         v-if="annotation(contextMenu.itemKey) === 'active'"
-        @click="clearOther"
+        @click="closeMenu();clearOther()"
       >
         清除其它
       </li>
       <!--suppress JSUnresolvedFunction -->
       <li
         v-if="annotation(contextMenu.itemKey) === 'active'"
-        @click="clearActive()"
+        @click="closeMenu();clearActive()"
       >
         清除所有
       </li>
       <!--suppress JSUnresolvedFunction -->
       <li
         v-if="annotation(contextMenu.itemKey) !== 'affix'"
-        @click="showEditDialog"
+        @click="closeMenu();showEditDialog()"
       >
         调整顺序...
       </li>
@@ -154,17 +155,6 @@ export default {
     ...mapGetters('vimEzNav', ['navItems', 'annotation', 'pinnedNavItems', 'activeNavItems']),
     ...mapGetters('vim', ['isCurrent']),
   },
-  watch: {
-    'contextMenu.visible': {
-      handler(val) {
-        if (val) {
-          document.body.addEventListener('click', this.closeMenu);
-        } else {
-          document.body.removeEventListener('click', this.closeMenu);
-        }
-      },
-    },
-  },
   data() {
     return {
       contextMenu: {
@@ -203,10 +193,13 @@ export default {
       }
 
       const offsetTop = this.$el.getBoundingClientRect().top; // container margin left
-
       this.contextMenu.top = e.clientY - offsetTop;
 
       this.contextMenu.visible = true;
+
+      this.$nextTick(() => {
+        this.$refs.contextMenu.focus();
+      });
     },
     closeMenu() {
       this.contextMenu.visible = false;
@@ -349,7 +342,7 @@ export default {
   color: #fff;
 }
 
-.context-menu {
+.main-content {
   margin: 0;
   background: #fff;
   z-index: 3000;
@@ -357,19 +350,26 @@ export default {
   list-style-type: none;
   padding: 5px 0;
   border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #7F7F7F;
   font-size: 12px;
   font-weight: 400;
   color: #333;
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
 }
 
-.context-menu li {
+.main-content:focus {
+  outline: none;
+}
+
+.main-content li {
   margin: 0;
   padding: 7px 16px;
   cursor: pointer;
 }
 
-.context-menu li:hover {
+.main-content li:hover {
   background: #eee;
 }
 

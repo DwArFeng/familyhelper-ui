@@ -15,7 +15,7 @@
     @closed="handleClosed"
     @keydown.native="handleHotKeyDown"
   >
-    <card-list-panel
+    <card-panel
       title-prop="name"
       class="card-list-container"
       card-width="calc(20% - 18px)"
@@ -26,41 +26,44 @@
       :edit-button-visible="false"
       :delete-button-visible="false"
       :addon-button-visible="false"
+      :inspect-menu-item-visible="false"
+      :edit-menu-item-visible="false"
+      :delete-menu-item-visible="false"
       @onSelectionChanged="handleSelectionChanged"
     >
-      <template slot-scope="card">
+      <template v-slot:default="{index,item}">
         <div class="account-book-container">
           <div class="account-book-property">
             <span class="iconfont account-book-property-icon" style="color:black">&#xfffa;</span>
             <!--suppress JSUnresolvedVariable -->
             <span class="account-book-property-text">
-                权限: {{ card.item.owner_flag ? '所有者' : '访客' }}
+                权限: {{ item.owner_flag ? '所有者' : '访客' }}
               </span>
           </div>
           <div class="account-book-property">
             <span class="iconfont account-book-property-icon" style="color:black">&#xfffb;</span>
             <!--suppress JSUnresolvedVariable -->
             <span class="account-book-property-text">
-                所有者: {{ card.item.owner_account.key.string_id }}
+                所有者: {{ item.owner_account.key.string_id }}
               </span>
           </div>
           <div class="account-book-property">
             <span class="iconfont account-book-property-icon" style="color:black">&#xfff9;</span>
             <!--suppress JSUnresolvedVariable -->
             <span class="account-book-property-text">
-                余额: {{ card.item.total_value }}
+                余额: {{ item.total_value }}
               </span>
           </div>
           <div class="account-book-property">
             <span class="iconfont account-book-property-icon" style="color:black">&#xffef;</span>
             <!--suppress JSUnresolvedVariable -->
             <span class="account-book-property-text">
-                记录日期: {{ formatTimestamp(card.item.last_recorded_date) }}
+                记录日期: {{ formatTimestamp(item.last_recorded_date) }}
               </span>
           </div>
         </div>
       </template>
-    </card-list-panel>
+    </card-panel>
     <div class="footer-container" slot="footer">
       <el-button
         type="primary"
@@ -79,7 +82,7 @@
 </template>
 
 <script>
-import CardListPanel from '@/components/layout/CardListPanel.vue';
+import CardPanel from '@/components/card/CardPanel.vue';
 
 import resolveResponse from '@/util/response';
 import { allOwned, allPermitted } from '@/api/finance/accountBook';
@@ -87,7 +90,7 @@ import { formatTimestamp } from '@/util/timestamp';
 
 export default {
   name: 'AccountBookSelectDialog',
-  components: { CardListPanel },
+  components: { CardPanel },
   props: {
     visible: {
       type: Boolean,
@@ -234,5 +237,8 @@ export default {
 .account-book-property-text {
   font-size: 14px;
   margin-right: 4px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 </style>
