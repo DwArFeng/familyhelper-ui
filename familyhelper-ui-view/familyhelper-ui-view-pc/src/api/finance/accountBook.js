@@ -49,7 +49,32 @@ export function update(key, name, remark) {
 }
 
 export function remove(key) {
-  return post('finance', `account-book/${key}/remove`, {});
+  return post('finance', 'account-book/remove', {
+    long_id: key,
+  });
+}
+
+export function upsertPermission(accountBookKey, userKey, permissionLevel) {
+  return post('finance', 'account-book/upsert-permission', {
+    account_book_key: {
+      long_id: accountBookKey,
+    },
+    user_key: {
+      string_id: userKey,
+    },
+    permission_level: permissionLevel,
+  });
+}
+
+export function removePermission(accountBookKey, userKey) {
+  return post('finance', 'account-book/remove-permission', {
+    account_book_key: {
+      long_id: accountBookKey,
+    },
+    user_key: {
+      string_id: userKey,
+    },
+  });
 }
 
 export function recordCommit(key) {

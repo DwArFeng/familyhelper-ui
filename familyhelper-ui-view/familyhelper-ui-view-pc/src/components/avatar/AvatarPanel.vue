@@ -8,13 +8,14 @@
       :shape="shape"
       :src="display.avatarUrl"
     >
-      <div class="placeholder" :style=placeholder.style>{{display.displayName}}</div>
+      <div class="placeholder" :style=placeholder.style>{{computedDisplayName}}</div>
     </el-avatar>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+
 import { inspectDisp } from '@/api/system/account';
 import { download, exists } from '@/api/clannad/avatar';
 import resolveResponse from '@/util/response';
@@ -59,6 +60,12 @@ export default {
     },
   },
   computed: {
+    computedDisplayName() {
+      if (this.display.displayName === '') {
+        return '';
+      }
+      return this.display.displayName.charAt(0);
+    },
     ...mapGetters('lnp', ['me']),
   },
   watch: {
@@ -113,6 +120,7 @@ export default {
         displayName: '',
         avatarUrl: '',
       },
+
     };
   },
   methods: {
@@ -123,14 +131,14 @@ export default {
       // 2. 更新参数。
       if (this.renderMode === 'BY_ID') {
         this.display.loading = false;
-        resolveResponse(inspectDisp(this.me, this.objectUserId))
+        resolveResponse(inspectDisp(this.objectUserId))
           .then((res) => {
             this.display.displayName = res.display_name;
           })
-          .then(() => resolveResponse(exists(this.me)))
+          .then(() => resolveResponse(exists(this.objectUserId)))
           .then((res) => {
             if (res) {
-              return download(this.me)
+              return download(this.objectUserId)
                 .then((blob) => window.URL.createObjectURL(blob));
             }
             return Promise.resolve('');
@@ -165,5 +173,8 @@ export default {
 <style scoped>
 .placeholder{
   user-select: none;
+  white-space: nowrap;
+  text-overflow: clip;
+  overflow: hidden;
 }
 </style>

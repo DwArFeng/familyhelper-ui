@@ -35,8 +35,24 @@ export function childForProfileGuest(profileKey, page, rows) {
   });
 }
 
+export function idLike(pattern, page, rows) {
+  return get('system', 'account/id-like/', {
+    pattern,
+    page,
+    rows,
+  });
+}
+
 export function inspectDisp(key) {
   return get('system', `account/${key}/disp/`, {});
+}
+
+export function idLikeDisp(pattern, page, rows) {
+  return get('system', 'account/id-like/disp/', {
+    pattern,
+    page,
+    rows,
+  });
 }
 
 export function register(key, displayName, enabled, remark, password) {

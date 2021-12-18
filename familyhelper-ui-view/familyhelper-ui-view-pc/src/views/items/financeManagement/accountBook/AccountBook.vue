@@ -50,18 +50,21 @@
               class="card-button"
               size="mini"
               icon="el-icon-edit"
+              :disabled="item.permission_level !== 0"
               @click="handleItemToEdit(index, item)"
             />
             <el-button
               class="card-button"
               size="mini"
               icon="el-icon-lock"
+              :disabled="item.permission_level !== 0"
               @click="handleItemToPermit(index, item)"
             />
             <el-button
               class="card-button"
               size="mini"
               icon="el-icon-delete"
+              :disabled="item.permission_level !== 0"
               @click="handleItemToDelete(index, item)"
             />
           </el-button-group>
@@ -70,22 +73,22 @@
           <ul class="context-menu">
             <!--suppress JSUnresolvedVariable -->
             <li
-              v-if="item.permission_level === 0"
-              @click="handleEditMenuItemClicked(index,item,close)"
+              :class="{disabled:item.permission_level !== 0}"
+              @click="handleEditMenuItemClicked(index,item,close, $event)"
             >
               编辑...
             </li>
             <!--suppress JSUnresolvedVariable -->
             <li
-              v-if="item.permission_level === 0"
-              @click="handlePermitMenuItemClicked(index,item,close)"
+              :class="{disabled:item.permission_level !== 0}"
+              @click="handlePermitMenuItemClicked(index,item,close, $event)"
             >
               分配权限...
             </li>
             <!--suppress JSUnresolvedVariable -->
             <li
-              v-if="item.permission_level === 0"
-              @click="handleDeleteMenuItemClicked(index,item)"
+              :class="{disabled:item.permission_level !== 0}"
+              @click="handleDeleteMenuItemClicked(index,item, $event)"
             >
               删除...
             </li>
@@ -102,28 +105,32 @@
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
-      :mode="maintainDialog.dialogMode"
-      :visible.sync="maintainDialog.dialogVisible"
-      :entity="maintainDialog.anchorEntity"
-      :create-rules="maintainDialog.rules"
-      :edit-rules="maintainDialog.rules"
+      :mode="entityMaintainDialog.mode"
+      :visible.sync="entityMaintainDialog.visible"
+      :entity="entityMaintainDialog.anchorEntity"
+      :create-rules="entityMaintainDialog.rules"
+      :edit-rules="entityMaintainDialog.rules"
       :close-on-click-modal="false"
       @onEntityCreate="handleAccountBookCreate"
       @onEntityEdit="handleAccountBookEdit"
     >
       <el-form-item label="名称" prop="name">
         <el-input
-          v-model="maintainDialog.anchorEntity.name"
-          :readonly="maintainDialog.dialogMode === 'INSPECT'"
+          v-model="entityMaintainDialog.anchorEntity.name"
+          :readonly="entityMaintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
-          v-model="maintainDialog.anchorEntity.remark"
-          :readonly="maintainDialog.dialogMode === 'INSPECT'"
+          v-model="entityMaintainDialog.anchorEntity.remark"
+          :readonly="entityMaintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
     </entity-maintain-dialog>
+    <permit-maintain-dialog
+      :visible.sync="permitMaintainDialog.visible"
+      :account-book-id="permitMaintainDialog.accountBookId"
+    />
   </div>
 </template>
 
@@ -131,6 +138,8 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardPanel from '@/components/card/CardPanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
+import PermitMaintainDialog
+from '@/views/items/financeManagement/accountBook/PermitMaintainDialog.vue';
 
 import resolveResponse from '@/util/response';
 import {
@@ -141,12 +150,14 @@ import { formatTimestamp } from '@/util/timestamp';
 
 export default {
   name: 'AccountBook',
-  components: { CardPanel, BorderLayoutPanel, EntityMaintainDialog },
+  components: {
+    PermitMaintainDialog, CardPanel, BorderLayoutPanel, EntityMaintainDialog,
+  },
   data() {
     return {
-      maintainDialog: {
-        dialogMode: 'CREATE',
-        dialogVisible: false,
+      entityMaintainDialog: {
+        mode: 'CREATE',
+        visible: false,
         anchorEntity: {
           long_id: '',
           name: '',
@@ -157,6 +168,10 @@ export default {
             { required: true, message: '账本名称不能为空', trigger: 'blur' },
           ],
         },
+      },
+      permitMaintainDialog: {
+        visible: false,
+        accountBookId: '',
       },
       cardPanel: {
         maxCard: 10,
@@ -175,7 +190,7 @@ export default {
   },
   methods: {
     handleSearch() {
-      if (this.inspectAllSwitch) {
+      if (this.inspectAllSwitch.inspectAll) {
         this.lookupAllPermitted();
       } else {
         this.lookupAllOwned();
@@ -215,21 +230,21 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.maintainDialog.dialogMode = 'CREATE';
-          this.maintainDialog.dialogVisible = true;
+          this.entityMaintainDialog.mode = 'CREATE';
+          this.entityMaintainDialog.visible = true;
         })
         .catch(() => {
         });
     },
     handleAccountBookCreate() {
       resolveResponse(create(
-        this.maintainDialog.anchorEntity.name,
-        this.maintainDialog.anchorEntity.remark,
+        this.entityMaintainDialog.anchorEntity.name,
+        this.entityMaintainDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `账本 ${this.maintainDialog.anchorEntity.name} 创建成功`,
+            message: `账本 ${this.entityMaintainDialog.anchorEntity.name} 创建成功`,
             type: 'success',
             center: true,
           });
@@ -239,21 +254,21 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.maintainDialog.dialogVisible = false;
+          this.entityMaintainDialog.visible = false;
         })
         .catch(() => {
         });
     },
     handleAccountBookEdit() {
       resolveResponse(update(
-        this.maintainDialog.anchorEntity.long_id,
-        this.maintainDialog.anchorEntity.name,
-        this.maintainDialog.anchorEntity.remark,
+        this.entityMaintainDialog.anchorEntity.long_id,
+        this.entityMaintainDialog.anchorEntity.name,
+        this.entityMaintainDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `账本 ${this.maintainDialog.anchorEntity.name} 更新成功`,
+            message: `账本 ${this.entityMaintainDialog.anchorEntity.name} 更新成功`,
             type: 'success',
             center: true,
           });
@@ -263,14 +278,14 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.maintainDialog.dialogVisible = false;
+          this.entityMaintainDialog.visible = false;
         })
         .catch(() => {
         });
     },
     handleItemToEdit(index, item) {
       // noinspection JSUnresolvedVariable,JSIncompatibleTypesComparison
-      if (!item.permission_level === 0) {
+      if (!item.permission_level !== 0) {
         this.$alert('您不是此账本的所有者，无权编辑该账本！', '权限不足', {
           confirmButtonText: '确定',
           type: 'warning',
@@ -278,28 +293,30 @@ export default {
         });
         return;
       }
-      this.maintainDialog.anchorEntity.long_id = item.key.long_id;
-      this.maintainDialog.anchorEntity.name = item.name;
-      this.maintainDialog.anchorEntity.remark = item.remark;
-      this.maintainDialog.dialogMode = 'EDIT';
-      this.maintainDialog.dialogVisible = true;
+      this.entityMaintainDialog.anchorEntity.long_id = item.key.long_id;
+      this.entityMaintainDialog.anchorEntity.name = item.name;
+      this.entityMaintainDialog.anchorEntity.remark = item.remark;
+      this.entityMaintainDialog.mode = 'EDIT';
+      this.entityMaintainDialog.visible = true;
     },
     handleItemToPermit(index, item) {
-      // TODO
-      // noinspection JSUnresolvedVariable,JSIncompatibleTypesComparison
-      if (!item.permission_level === 0) {
-        this.$alert('您不是此账本的所有者，无权编辑该账本！', '权限不足', {
-          confirmButtonText: '确定',
-          type: 'warning',
-          customClass: 'custom-message-box__w500',
+      Promise.resolve(item)
+        .then((res) => {
+          // noinspection JSUnresolvedVariable
+          if (res.permission_level !== 0) {
+            this.$alert('您不是此账本的所有者，无权删除该账本！', '权限不足', {
+              confirmButtonText: '确定',
+              type: 'warning',
+              customClass: 'custom-message-box__w500',
+            });
+            return Promise.reject();
+          }
+          return Promise.resolve(res.key.long_id);
+        }).then(() => {
+          this.permitMaintainDialog.accountBookId = item.key.long_id;
+          this.permitMaintainDialog.visible = true;
+        }).catch(() => {
         });
-        return;
-      }
-      this.maintainDialog.anchorEntity.long_id = item.key.long_id;
-      this.maintainDialog.anchorEntity.name = item.name;
-      this.maintainDialog.anchorEntity.remark = item.remark;
-      this.maintainDialog.dialogMode = 'EDIT';
-      this.maintainDialog.dialogVisible = true;
     },
     handleItemToDelete(index, item) {
       // noinspection JSUnresolvedVariable
@@ -355,15 +372,27 @@ export default {
           return ' 未知';
       }
     },
-    handleEditMenuItemClicked(index, item, close) {
+    handleEditMenuItemClicked(index, item, close, event) {
+      if (item.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
       close();
       this.handleItemToEdit(index, item);
     },
-    handlePermitMenuItemClicked(index, item, close) {
+    handlePermitMenuItemClicked(index, item, close, event) {
+      if (item.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
       close();
       this.handleItemToPermit(index, item);
     },
-    handleDeleteMenuItemClicked(index, item, close) {
+    handleDeleteMenuItemClicked(index, item, close, event) {
+      if (item.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
       close();
       this.handleItemToEdit(index, item);
     },
@@ -441,9 +470,16 @@ export default {
   margin: 0;
   padding: 7px 16px;
   cursor: pointer;
+  user-select: none;
 }
 
 .context-menu li:hover {
   background: #eee;
 }
+
+.context-menu li.disabled {
+  color: grey;
+  cursor: not-allowed;
+}
+
 </style>
