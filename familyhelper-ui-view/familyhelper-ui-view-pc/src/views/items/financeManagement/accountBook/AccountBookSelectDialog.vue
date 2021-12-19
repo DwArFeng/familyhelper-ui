@@ -37,7 +37,7 @@
             <span class="iconfont account-book-property-icon" style="color:black">&#xfffa;</span>
             <!--suppress JSUnresolvedVariable -->
             <span class="account-book-property-text">
-                权限: {{ item.owner_flag ? '所有者' : '访客' }}
+                权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
           </div>
           <div class="account-book-property">
@@ -154,6 +154,16 @@ export default {
         .then(this.updateCardListView)
         .catch(() => {
         });
+    },
+    resolvePermissionLabel(permissionLevel) {
+      switch (permissionLevel) {
+        case 0:
+          return '所有者';
+        case 1:
+          return '访客';
+        default:
+          return ' 未知';
+      }
     },
     formatTimestamp(timestamp) {
       return formatTimestamp(timestamp);

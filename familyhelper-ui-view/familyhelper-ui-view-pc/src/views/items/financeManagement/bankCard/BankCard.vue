@@ -7,14 +7,13 @@
       <card-panel
         title-prop="name"
         card-width="calc(20% - 18px)"
-        :data="entities.data"
-        :maxCard="1000"
-        :inspect-button-visible="false"
-        :addon-button-visible="false"
-        @onItemToEdit="handleItemToEdit"
-        @onItemToDelete="handleItemToDelete"
+        :data="cardPanel.entities.data"
+        :maxCard="cardPanel.maxCard"
+        :show-context-menu="true"
+        :addon-button-visible="addonButtonVisible"
+        @onAddonClicked="handleBankCardToCreate"
       >
-        <template slot-scope="card">
+        <template v-slot:default="{index,item}">
           <div class="bank-card-card-container">
             <div class="bank-card-property">
               <span class="iconfont bank-card-property-icon" style="color:black">&#xffee;</span>
@@ -24,10 +23,10 @@
                 <el-tooltip
                   effect="dark"
                   placement="right"
-                  :content="cardTypeLabel(card.item).remark"
+                  :content="cardTypeLabel(item).remark"
                   :open-delay="500"
                 >
-                  <span>{{cardTypeLabel(card.item).label}}</span>
+                  <span>{{ cardTypeLabel(item).label }}</span>
                 </el-tooltip>
               </div>
             </div>
@@ -35,28 +34,56 @@
               <span class="iconfont bank-card-property-icon" style="color:black">&#xfff9;</span>
               <!--suppress JSUnresolvedVariable -->
               <span class="bank-card-property-text">
-                余额: {{ card.item.balance_value }}
+                余额: {{ item.balance_value }}
               </span>
             </div>
             <div class="bank-card-property">
               <span class="iconfont bank-card-property-icon" style="color:black">&#xffef;</span>
               <!--suppress JSUnresolvedVariable -->
               <span class="bank-card-property-text">
-                记录日期: {{ formatTimestamp(card.item.last_recorded_date) }}
+                记录日期: {{ formatTimestamp(item.last_recorded_date) }}
               </span>
             </div>
           </div>
         </template>
+        <template v-slot:header="{index,item}">
+          <el-button-group class="bank-card-control-button-group">
+            <el-button
+              class="card-button"
+              size="mini"
+              icon="el-icon-edit"
+              :disabled="parentSelection.accountBook.permission_level !== 0"
+              @click="handleItemToEdit(index, item)"
+            />
+            <el-button
+              class="card-button"
+              size="mini"
+              icon="el-icon-delete"
+              :disabled="parentSelection.accountBook.permission_level !== 0"
+              @click="handleItemToDelete(index, item)"
+            />
+          </el-button-group>
+        </template>
+        <template v-slot:contextMenu="{index,item,close}">
+          <ul class="context-menu">
+            <!--suppress JSUnresolvedVariable -->
+            <li
+              :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
+              @click="handleEditMenuItemClicked(index,item,close,$event)"
+            >
+              编辑...
+            </li>
+            <!--suppress JSUnresolvedVariable -->
+            <li
+              :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
+              @click="handleDeleteMenuItemClicked(index,item,close,$event)"
+            >
+              删除...
+            </li>
+          </ul>
+        </template>
       </card-panel>
       <div class="header-container" slot="header">
-        <el-button
-          type="primary"
-          :disabled="parentSelection.accountBookId===''"
-          @click="handleBankCardToCreate"
-        >
-          创建银行卡
-        </el-button>
-        <el-divider direction="vertical"/>
         <el-input
           class="header-account-book-indicator"
           v-model="parentSelection.displayValue"
@@ -72,25 +99,25 @@
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
-      :mode="bankCardMaintainDialog.dialogMode"
-      :visible.sync="bankCardMaintainDialog.dialogVisible"
-      :entity="bankCardMaintainDialog.anchorEntity"
-      :create-rules="bankCardMaintainDialog.rules"
-      :edit-rules="bankCardMaintainDialog.rules"
+      :mode="entityMaintainDialog.mode"
+      :visible.sync="entityMaintainDialog.visible"
+      :entity="entityMaintainDialog.anchorEntity"
+      :create-rules="entityMaintainDialog.rules"
+      :edit-rules="entityMaintainDialog.rules"
       :close-on-click-modal="false"
       @onEntityCreate="handleBankCardCreate"
       @onEntityEdit="handleBankCardEdit"
     >
       <el-form-item label="名称" prop="name">
         <el-input
-          v-model="bankCardMaintainDialog.anchorEntity.name"
-          :readonly="bankCardMaintainDialog.dialogMode === 'INSPECT'"
+          v-model="entityMaintainDialog.anchorEntity.name"
+          :readonly="entityMaintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="类型" prop="card_type">
         <el-select
           class='bank-card-type-select'
-          v-model="bankCardMaintainDialog.anchorEntity.card_type"
+          v-model="entityMaintainDialog.anchorEntity.card_type"
           placeholder="请选择"
         >
           <el-option
@@ -103,8 +130,8 @@
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
-          v-model="bankCardMaintainDialog.anchorEntity.remark"
-          :readonly="bankCardMaintainDialog.dialogMode === 'INSPECT'"
+          v-model="entityMaintainDialog.anchorEntity.remark"
+          :readonly="entityMaintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
     </entity-maintain-dialog>
@@ -138,6 +165,12 @@ export default {
   components: {
     CardPanel, BorderLayoutPanel, EntityMaintainDialog, AccountBookSelectDialog,
   },
+  computed: {
+    addonButtonVisible() {
+      return this.parentSelection.accountBookId !== ''
+        && this.parentSelection.accountBook.permission_level === 0;
+    },
+  },
   data() {
     return {
       parentSelection: {
@@ -145,16 +178,9 @@ export default {
         accountBook: null,
         displayValue: '',
       },
-      entities: {
-        current_page: 0,
-        total_pages: 0,
-        rows: 0,
-        count: '0',
-        data: [],
-      },
-      bankCardMaintainDialog: {
-        dialogMode: 'CREATE',
-        dialogVisible: false,
+      entityMaintainDialog: {
+        mode: 'CREATE',
+        visible: false,
         anchorEntity: {
           long_id: '',
           name: '',
@@ -170,8 +196,15 @@ export default {
           ],
         },
       },
-      cardList: {
+      cardPanel: {
         maxCard: 100,
+        entities: {
+          current_page: 0,
+          total_pages: 0,
+          rows: 0,
+          count: '0',
+          data: [],
+        },
       },
       accountBookSelectDialog: {
         visible: false,
@@ -205,20 +238,20 @@ export default {
     },
     lookupChildForAccountBook() {
       resolveResponse(childForAccountBookDisp(this.parentSelection.accountBookId, 0, 1000))
-        .then(this.updateCardListView)
+        .then(this.updateCardPanelView)
         .catch(() => {
         });
     },
-    updateCardListView(res) {
-      this.entities = res;
+    updateCardPanelView(res) {
+      this.cardPanel.entities = res;
     },
     handleBankCardToCreate() {
       resolveResponse(childForAccountBookDisp(this.parentSelection.accountBookId, 0, 1000))
         .then((res) => {
-          if (res.count >= this.cardList.maxCard) {
+          if (res.count >= this.cardPanel.maxCard) {
             this.$alert(
-              `您创建了过多的银行卡，每个人创建银行卡的最大数量不应超过 ${this.cardList.maxCard}
-               个！<br>${this.cardList.maxCard}个应该够用了QwQ`,
+              `您创建了过多的银行卡，每个人创建银行卡的最大数量不应超过 ${this.cardPanel.maxCard}
+               个！<br>${this.cardPanel.maxCard}个应该够用了QwQ`,
               {
                 confirmButtonText: '确定',
                 dangerouslyUseHTMLString: true,
@@ -231,8 +264,8 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.bankCardMaintainDialog.dialogMode = 'CREATE';
-          this.bankCardMaintainDialog.dialogVisible = true;
+          this.entityMaintainDialog.mode = 'CREATE';
+          this.entityMaintainDialog.visible = true;
         })
         .catch(() => {
         });
@@ -240,14 +273,14 @@ export default {
     handleBankCardCreate() {
       resolveResponse(create(
         this.parentSelection.accountBookId,
-        this.bankCardMaintainDialog.anchorEntity.name,
-        this.bankCardMaintainDialog.anchorEntity.card_type,
-        this.bankCardMaintainDialog.anchorEntity.remark,
+        this.entityMaintainDialog.anchorEntity.name,
+        this.entityMaintainDialog.anchorEntity.card_type,
+        this.entityMaintainDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `银行卡 ${this.bankCardMaintainDialog.anchorEntity.name} 创建成功`,
+            message: `银行卡 ${this.entityMaintainDialog.anchorEntity.name} 创建成功`,
             type: 'success',
             center: true,
           });
@@ -257,22 +290,22 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.bankCardMaintainDialog.dialogVisible = false;
+          this.entityMaintainDialog.visible = false;
         })
         .catch(() => {
         });
     },
     handleBankCardEdit() {
       resolveResponse(update(
-        this.bankCardMaintainDialog.anchorEntity.long_id,
-        this.bankCardMaintainDialog.anchorEntity.name,
-        this.bankCardMaintainDialog.anchorEntity.card_type,
-        this.bankCardMaintainDialog.anchorEntity.remark,
+        this.entityMaintainDialog.anchorEntity.long_id,
+        this.entityMaintainDialog.anchorEntity.name,
+        this.entityMaintainDialog.anchorEntity.card_type,
+        this.entityMaintainDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `银行卡 ${this.bankCardMaintainDialog.anchorEntity.name} 更新成功`,
+            message: `银行卡 ${this.entityMaintainDialog.anchorEntity.name} 更新成功`,
             type: 'success',
             center: true,
           });
@@ -282,22 +315,43 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.bankCardMaintainDialog.dialogVisible = false;
+          this.entityMaintainDialog.visible = false;
         })
         .catch(() => {
         });
     },
     handleItemToEdit(index, item) {
-      this.bankCardMaintainDialog.anchorEntity.long_id = item.key.long_id;
-      this.bankCardMaintainDialog.anchorEntity.name = item.name;
-      this.bankCardMaintainDialog.anchorEntity.card_type = item.card_type;
-      this.bankCardMaintainDialog.anchorEntity.remark = item.remark;
-      this.bankCardMaintainDialog.dialogMode = 'EDIT';
-      this.bankCardMaintainDialog.dialogVisible = true;
+      // noinspection JSUnresolvedVariable,JSIncompatibleTypesComparison
+      if (this.parentSelection.accountBook.permission_level !== 0) {
+        this.$alert('您不是此账本的所有者，无权编辑该账本！', '权限不足', {
+          confirmButtonText: '确定',
+          type: 'warning',
+          customClass: 'custom-message-box__w500',
+        });
+        return;
+      }
+      this.entityMaintainDialog.anchorEntity.long_id = item.key.long_id;
+      this.entityMaintainDialog.anchorEntity.name = item.name;
+      this.entityMaintainDialog.anchorEntity.card_type = item.card_type;
+      this.entityMaintainDialog.anchorEntity.remark = item.remark;
+      this.entityMaintainDialog.mode = 'EDIT';
+      this.entityMaintainDialog.visible = true;
     },
     handleItemToDelete(index, item) {
       // noinspection JSUnresolvedVariable
-      Promise.resolve(item.key.long_id)
+      Promise.resolve(item)
+        .then((res) => {
+          // noinspection JSUnresolvedVariable
+          if (this.parentSelection.accountBook.permission_level !== 0) {
+            this.$alert('您不是此账本的所有者，无权删除该账本！', '权限不足', {
+              confirmButtonText: '确定',
+              type: 'warning',
+              customClass: 'custom-message-box__w500',
+            });
+            return Promise.reject();
+          }
+          return Promise.resolve(res.key.long_id);
+        })
         .then((res) => this.$confirm('此操作将永久删除此银行卡。<br>是否继续?',
           '提示', {
             confirmButtonText: '确定',
@@ -360,6 +414,22 @@ export default {
         remark: '该银行卡未指定类型',
       };
     },
+    handleEditMenuItemClicked(index, item, close, event) {
+      if (this.parentSelection.accountBook.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
+      close();
+      this.handleItemToEdit(index, item);
+    },
+    handleDeleteMenuItemClicked(index, item, close, event) {
+      if (this.parentSelection.accountBook.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
+      close();
+      this.handleItemToDelete(index, item);
+    },
   },
   mounted() {
     this.updateParentSelectionDisplayValue();
@@ -388,7 +458,7 @@ export default {
   padding: 0 10px;
 }
 
-.bank-card-type-select{
+.bank-card-type-select {
   width: 100%;
 }
 
@@ -422,5 +492,46 @@ export default {
 .bank-card-property-text {
   font-size: 14px;
   margin-right: 4px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.header-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.bank-card-control-button-group {
+  display: flex;
+}
+
+.card-button {
+  padding: 7px;
+}
+
+.context-menu {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.context-menu li {
+  margin: 0;
+  padding: 7px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.context-menu li:hover {
+  background: #eee;
+}
+
+.context-menu li.disabled {
+  color: grey;
+  cursor: not-allowed;
 }
 </style>

@@ -110,7 +110,7 @@
 
 <script>
 import FundChangeChart from '@/views/items/financeManagement/financeReport/FundChangeChart.vue';
-import TablePanel from '@/components/layout/TablePanel.vue';
+import TablePanel from '@/components/table/TablePanel.vue';
 
 import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';

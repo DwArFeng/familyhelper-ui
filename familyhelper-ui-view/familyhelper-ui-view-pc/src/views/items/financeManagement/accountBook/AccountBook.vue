@@ -10,6 +10,7 @@
         :data="cardPanel.entities.data"
         :maxCard="1000"
         :show-context-menu="true"
+        :context-menu-width="110"
         @onAddonClicked="handleAccountBookToCreate"
       >
         <template v-slot:default="{index,item}">
@@ -74,21 +75,21 @@
             <!--suppress JSUnresolvedVariable -->
             <li
               :class="{disabled:item.permission_level !== 0}"
-              @click="handleEditMenuItemClicked(index,item,close, $event)"
+              @click="handleEditMenuItemClicked(index,item,close,$event)"
             >
               编辑...
             </li>
             <!--suppress JSUnresolvedVariable -->
             <li
               :class="{disabled:item.permission_level !== 0}"
-              @click="handlePermitMenuItemClicked(index,item,close, $event)"
+              @click="handlePermitMenuItemClicked(index,item,close,$event)"
             >
               分配权限...
             </li>
             <!--suppress JSUnresolvedVariable -->
             <li
               :class="{disabled:item.permission_level !== 0}"
-              @click="handleDeleteMenuItemClicked(index,item, $event)"
+              @click="handleDeleteMenuItemClicked(index,item,close,$event)"
             >
               删除...
             </li>
@@ -174,7 +175,7 @@ export default {
         accountBookId: '',
       },
       cardPanel: {
-        maxCard: 10,
+        maxCard: 100,
         entities: {
           current_page: 0,
           total_pages: 0,
@@ -285,7 +286,7 @@ export default {
     },
     handleItemToEdit(index, item) {
       // noinspection JSUnresolvedVariable,JSIncompatibleTypesComparison
-      if (!item.permission_level !== 0) {
+      if (item.permission_level !== 0) {
         this.$alert('您不是此账本的所有者，无权编辑该账本！', '权限不足', {
           confirmButtonText: '确定',
           type: 'warning',
@@ -481,5 +482,4 @@ export default {
   color: grey;
   cursor: not-allowed;
 }
-
 </style>

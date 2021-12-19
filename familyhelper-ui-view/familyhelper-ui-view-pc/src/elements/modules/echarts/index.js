@@ -1,21 +1,20 @@
 import Vue from 'vue';
 
-import echarts from 'echarts/lib/echarts';
+import * as echarts from 'echarts/lib/echarts';
 
-require('echarts/lib/chart/line');
-require('echarts/lib/chart/bar');
+import 'echarts/lib/chart/line';
+import 'echarts/lib/chart/bar';
 
-require('echarts/lib/component/tooltip');
-require('echarts/lib/component/toolbox');
-require('echarts/lib/component/dataZoom');
-require('echarts/lib/component/title');
-require('echarts/lib/component/grid');
-require('echarts/lib/component/markArea');
-require('echarts/lib/component/markLine');
-require('echarts/lib/component/visualMap');
-require('echarts/lib/component/legend');
-require('echarts/lib/component/legendScroll');
-require('echarts/lib/component/legendScroll');
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/toolbox';
+import 'echarts/lib/component/dataZoom';
+import 'echarts/lib/component/title';
+import 'echarts/lib/component/grid';
+import 'echarts/lib/component/markArea';
+import 'echarts/lib/component/markLine';
+import 'echarts/lib/component/visualMap';
+import 'echarts/lib/component/legend';
+import 'echarts/lib/component/legendScroll';
 
 // noinspection JSUnusedGlobalSymbols
 Vue.prototype.$echarts = echarts;

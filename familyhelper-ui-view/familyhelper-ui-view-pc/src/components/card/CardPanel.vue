@@ -83,7 +83,7 @@
         ref="contextMenu"
         class="context-menu"
         tabindex="0"
-        :style="{left:contextMenu.left+'px',top:contextMenu.top+'px'}"
+        :style="{left:contextMenu.left+'px',top:contextMenu.top+'px',width:contextMenuWidth+'px'}"
         @blur="closeMenu"
       >
         <slot
@@ -172,6 +172,10 @@ export default {
     showContextMenu: {
       type: Boolean,
       default: false,
+    },
+    contextMenuWidth: {
+      type: Number,
+      default: 85,
     },
     inspectMenuItemVisible: {
       type: Boolean,
@@ -302,10 +306,9 @@ export default {
       this.contextMenu.index = index;
       this.contextMenu.item = item;
 
-      const menuMinWidth = 105;
       const offsetLeft = this.$el.getBoundingClientRect().left; // container margin left
       const { offsetWidth } = this.$el; // container width
-      const maxLeft = offsetWidth - menuMinWidth; // left boundary
+      const maxLeft = offsetWidth - this.contextMenuWidth - 2; // left boundary
       const left = e.clientX - offsetLeft + 15; // 15: margin right
 
       if (left > maxLeft) {

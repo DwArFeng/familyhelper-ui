@@ -6,20 +6,18 @@
     >
       <card-panel
         class="card-panel"
-        ref="cardList"
+        ref="cardPanel"
         title-prop="name"
         card-width="calc(20% - 18px)"
         tabindex="0"
-        :data="entities.data"
-        :maxCard="1000"
-        :inspect-button-visible="false"
-        :edit-button-visible="false"
-        :delete-button-visible="false"
+        :data="cardPanel.entities.data"
+        :maxCard="cardPanel.maxCard"
+        :show-context-menu="true"
         :addon-button-visible="false"
         @onItemToEdit="handleShowRecordDialog"
-        @keydown.ctrl.enter.native="handleCardListHotKeyDown"
+        @keydown.ctrl.enter.native="handleCardPanelHotKeyDown"
       >
-        <template slot-scope="card">
+        <template v-slot:default="{index,item}">
           <div class="balance-record-card-container">
             <div class="balance-record-property">
               <span
@@ -34,10 +32,10 @@
                 <el-tooltip
                   effect="dark"
                   placement="right"
-                  :content="cardTypeLabel(card.item).remark"
+                  :content="cardTypeLabel(item).remark"
                   :open-delay="500"
                 >
-                  <span>{{ cardTypeLabel(card.item).label }}</span>
+                  <span>{{ cardTypeLabel(item).label }}</span>
                 </el-tooltip>
               </div>
             </div>
@@ -52,20 +50,20 @@
               <div class="balance-record-property-text">
                 <div>
                   <!--suppress JSUnresolvedVariable -->
-                  <div v-if="card.item.temp_flag">
+                  <div v-if="item.temp_flag">
                     <!--suppress JSUnresolvedVariable -->
                     <el-tooltip
                       effect="dark"
                       placement="right"
-                      :content="'原余额：' + card.item.balance_value"
+                      :content="'原余额：' + item.balance_value"
                       :open-delay="500"
                     >
                       <!--suppress JSUnresolvedVariable -->
-                      <span>{{ '余额: ' + card.item.temp_balance_value }}</span>
+                      <span>{{ '余额: ' + item.temp_balance_value }}</span>
                     </el-tooltip>
                   </div>
                   <!--suppress JSUnresolvedVariable -->
-                  <span v-else>{{ '余额: ' + card.item.balance_value }}</span>
+                  <span v-else>{{ '余额: ' + item.balance_value }}</span>
                 </div>
               </div>
             </div>
@@ -80,23 +78,23 @@
               <div class="balance-record-property-text">
                 <div>
                   <!--suppress JSUnresolvedVariable -->
-                  <div v-if="card.item.temp_flag">
+                  <div v-if="item.temp_flag">
                     <!--suppress JSUnresolvedVariable -->
                     <el-tooltip
                       effect="dark"
                       placement="right"
-                      :content="'原记录日期：' + formatTimestamp(card.item.last_recorded_date)"
+                      :content="'原记录日期：' + formatTimestamp(item.last_recorded_date)"
                       :open-delay="500"
                     >
                       <!--suppress JSUnresolvedVariable -->
                       <span>
-                        {{ '记录日期: ' + formatTimestamp(card.item.temp_last_recorded_date) }}
+                        {{ '记录日期: ' + formatTimestamp(item.temp_last_recorded_date) }}
                       </span>
                     </el-tooltip>
                   </div>
                   <!--suppress JSUnresolvedVariable -->
                   <span v-else>
-                    {{ '记录日期: ' + formatTimestamp(card.item.last_recorded_date) }}
+                    {{ '记录日期: ' + formatTimestamp(item.last_recorded_date) }}
                   </span>
                 </div>
               </div>
@@ -110,24 +108,26 @@
               </span>
               <!--suppress JSUnresolvedVariable -->
               <span class="balance-record-property-text">
-                提交状态: {{ card.item.temp_flag ? '待提交' : '未更改' }}
+                提交状态: {{ item.temp_flag ? '待提交' : '未更改' }}
               </span>
             </div>
           </div>
         </template>
-        <template slot-scope="bg" slot="header">
-          <el-button-group class="card-list-button-group">
+        <template v-slot:header="{index,item}">
+          <el-button-group class="balance-record-control-button-group">
             <el-tooltip
               effect="dark"
               placement="top"
               content="记录余额"
               :open-delay="500"
+              :disabled="parentSelection.accountBook.permission_level !== 0"
             >
               <el-button
-                class="card-list-header-button"
+                class="card-button"
                 size="mini"
                 icon="el-icon-edit"
-                @click="handleShowRecordDialog(bg.index, bg.item)"
+                :disabled="parentSelection.accountBook.permission_level !== 0"
+                @click="handleShowRecordDialog(index, item)"
               />
             </el-tooltip>
             <el-tooltip
@@ -135,29 +135,49 @@
               placement="top"
               content="撤销记录"
               :open-delay="500"
+              :disabled="parentSelection.accountBook.permission_level !== 0"
             >
               <el-button
-                class="card-list-header-button"
+                class="card-button"
                 type="danger"
                 size="mini"
                 icon="el-icon-refresh-left"
-                @click="handleBankCardRollback(bg.index, bg.item)"
+                :disabled="parentSelection.accountBook.permission_level !== 0"
+                @click="handleBankCardRollback(index, item)"
               />
             </el-tooltip>
           </el-button-group>
+        </template>
+        <template v-slot:contextMenu="{index,item,close}">
+          <ul class="context-menu">
+            <!--suppress JSUnresolvedVariable -->
+            <li
+              :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
+              @click="handleRecordMenuItemClicked(index,item,close,$event)"
+            >
+              记录余额...
+            </li>
+            <!--suppress JSUnresolvedVariable -->
+            <li
+              :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
+              @click="handleRollbackMenuItemClicked(index,item,close,$event)"
+            >
+              撤销记录
+            </li>
+          </ul>
         </template>
       </card-panel>
       <div class="header-container" slot="header">
         <el-button
           type="primary"
-          :disabled="parentSelection.accountBookId===''"
+          :disabled="headerButtonDisabled"
           @click="handleRecordCommit"
         >
           提交记录
         </el-button>
         <el-button
           type="danger"
-          :disabled="parentSelection.accountBookId===''"
+          :disabled="headerButtonDisabled"
           @click="handleRollbackAll"
         >
           撤销记录
@@ -244,6 +264,12 @@ export default {
   components: {
     CardPanel, BorderLayoutPanel, AccountBookSelectDialog,
   },
+  computed: {
+    headerButtonDisabled() {
+      return this.parentSelection.accountBookId === ''
+        || this.parentSelection.accountBook.permission_level !== 0;
+    },
+  },
   data() {
     const deltaValidator = (rule, value, callback) => {
       if (value === '') {
@@ -260,15 +286,15 @@ export default {
         accountBook: null,
         displayValue: '',
       },
-      entities: {
-        current_page: 0,
-        total_pages: 0,
-        rows: 0,
-        count: '0',
-        data: [],
-      },
-      cardList: {
+      cardPanel: {
         maxCard: 100,
+        entities: {
+          current_page: 0,
+          total_pages: 0,
+          rows: 0,
+          count: '0',
+          data: [],
+        },
       },
       accountBookSelectDialog: {
         visible: false,
@@ -316,12 +342,12 @@ export default {
     },
     lookupChildForAccountBook() {
       resolveResponse(childForAccountBookDisp(this.parentSelection.accountBookId, 0, 1000))
-        .then(this.updateCardListView)
+        .then(this.updateCardPanelView)
         .catch(() => {
         });
     },
-    updateCardListView(res) {
-      this.entities = res;
+    updateCardPanelView(res) {
+      this.cardPanel.entities = res;
     },
     formatTimestamp(timestamp) {
       return formatTimestamp(timestamp);
@@ -374,7 +400,7 @@ export default {
       this.recordDialog.formattedBalance = this.convertCurrency(tempResult);
       this.recordDialog.visible = true;
     },
-    handleCardListHotKeyDown() {
+    handleCardPanelHotKeyDown() {
       if (this.parentSelection.accountBookId === '') {
         return;
       }
@@ -405,7 +431,7 @@ export default {
             .then(() => {
               this.recordDialog.visible = false;
               // noinspection JSUnresolvedFunction
-              this.$refs.cardList.$el.focus();
+              this.$refs.cardPanel.$el.focus();
             })
             .catch(() => {
             });
@@ -415,7 +441,7 @@ export default {
     handleBankCardToCancel() {
       this.recordDialog.visible = false;
       // noinspection JSUnresolvedFunction
-      this.$refs.cardList.$el.focus();
+      this.$refs.cardPanel.$el.focus();
     },
     handleBankCardRollback(index, item) {
       this.$confirm(`此操作撤销银行卡 ${item.name} 所记录的余额。<br>是否继续?`,
@@ -597,6 +623,22 @@ export default {
         .catch(() => {
         });
     },
+    handleRecordMenuItemClicked(index, item, close, event) {
+      if (this.parentSelection.accountBook.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
+      close();
+      this.handleBankCardToRecord(index, item);
+    },
+    handleRollbackMenuItemClicked(index, item, close, event) {
+      if (this.parentSelection.accountBook.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
+      close();
+      this.handleBankCardRollback(index, item);
+    },
   },
   mounted() {
     this.updateParentSelectionDisplayValue();
@@ -655,19 +697,52 @@ export default {
 .balance-record-property-text {
   font-size: 14px;
   margin-right: 4px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.header-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.balance-record-control-button-group {
+  display: flex;
+}
+
+.card-button {
+  padding: 7px;
+}
+
+.context-menu {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.context-menu li {
+  margin: 0;
+  padding: 7px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.context-menu li:hover {
+  background: #eee;
+}
+
+.context-menu li.disabled {
+  color: grey;
+  cursor: not-allowed;
 }
 
 /*noinspection CssUnusedSymbol*/
 .record-dialog-container >>> .el-dialog {
   margin-bottom: 0 !important;
-}
-
-.card-list-button-group {
-  display: flex;
-}
-
-.card-list-header-button {
-  padding: 7px
 }
 
 .record-dialog-input-wrapper {
@@ -681,7 +756,7 @@ export default {
   height: 40px;
 }
 
-.card-panel:focus{
+.card-panel:focus {
   outline: none;
 }
 </style>

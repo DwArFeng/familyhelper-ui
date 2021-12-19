@@ -78,9 +78,13 @@ export function removePermission(accountBookKey, userKey) {
 }
 
 export function recordCommit(key) {
-  return post('finance', `account-book/${key}/record-commit`, {});
+  return post('finance', 'account-book/record-commit', {
+    long_id: key,
+  });
 }
 
 export function rollbackAll(key) {
-  return post('finance', `account-book/${key}/rollback-all`, {});
+  return post('finance', 'account-book/rollback-all', {
+    long_id: key,
+  });
 }

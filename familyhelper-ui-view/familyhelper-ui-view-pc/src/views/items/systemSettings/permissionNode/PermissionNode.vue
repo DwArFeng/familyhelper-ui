@@ -87,7 +87,7 @@
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import TablePanel from '@/components/layout/TablePanel.vue';
+import TablePanel from '@/components/table/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 
 import {

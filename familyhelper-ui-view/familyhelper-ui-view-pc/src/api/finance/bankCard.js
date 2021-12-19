@@ -43,7 +43,10 @@ export function childForAccountBookDisp(accountBookKey, page, rows) {
 }
 
 export function create(accountBookKey, name, cardType, remark) {
-  return post('finance', `account-book/${accountBookKey}/bank-card/create`, {
+  return post('finance', 'bank-card/create', {
+    account_book_key: {
+      long_id: accountBookKey,
+    },
     name,
     card_type: cardType,
     remark,
@@ -51,7 +54,10 @@ export function create(accountBookKey, name, cardType, remark) {
 }
 
 export function update(key, name, cardType, remark) {
-  return post('finance', `bank-card/${key}/update`, {
+  return post('finance', 'bank-card/update', {
+    bank_card_key: {
+      long_id: key,
+    },
     name,
     card_type: cardType,
     remark,
@@ -59,15 +65,22 @@ export function update(key, name, cardType, remark) {
 }
 
 export function remove(key) {
-  return post('finance', `bank-card/${key}/remove`, {});
+  return post('finance', 'bank-card/remove', {
+    long_id: key,
+  });
 }
 
 export function recordBalance(key, balance) {
-  return post('finance', `bank-card/${key}/record-balance`, {
+  return post('finance', 'bank-card/record-balance', {
+    bank_card_key: {
+      long_id: key,
+    },
     balance,
   });
 }
 
 export function rollbackBalance(key) {
-  return post('finance', `bank-card/${key}/rollback-balance`, {});
+  return post('finance', 'bank-card/rollback-balance', {
+    long_id: key,
+  });
 }

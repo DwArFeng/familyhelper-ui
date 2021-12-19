@@ -89,7 +89,10 @@ export function childForAccountBookTypeEqualsDescDisp(accountBookKey, pattern, p
 }
 
 export function record(accountBookKey, delta, changeType, remark) {
-  return post('finance', `account-book/${accountBookKey}/fund-change/record`, {
+  return post('finance', 'fund-change/record', {
+    account_book_key: {
+      long_id: accountBookKey,
+    },
     delta,
     change_type: changeType,
     remark,
@@ -97,7 +100,10 @@ export function record(accountBookKey, delta, changeType, remark) {
 }
 
 export function update(key, delta, changeType, remark) {
-  return post('finance', `fund-change/${key}/update`, {
+  return post('finance', 'fund-change/update', {
+    fund_change_key: {
+      long_id: key,
+    },
     delta,
     change_type: changeType,
     remark,
@@ -105,5 +111,7 @@ export function update(key, delta, changeType, remark) {
 }
 
 export function remove(key) {
-  return post('finance', `fund-change/${key}/remove`, {});
+  return post('finance', 'fund-change/remove', {
+    long_id: key,
+  });
 }

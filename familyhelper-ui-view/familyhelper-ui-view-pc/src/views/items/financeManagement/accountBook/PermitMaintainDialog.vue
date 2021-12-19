@@ -85,7 +85,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import TablePanel from '@/components/layout/TablePanel.vue';
+import TablePanel from '@/components/table/TablePanel.vue';
 import AccountSelector from '@/views/items/systemSettings/account/AccountSelector.vue';
 
 import resolveResponse from '@/util/response';

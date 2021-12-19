@@ -10,42 +10,95 @@
         :current-page.sync="currentPage"
         :page-sizes="[15,20,30,50]"
         :table-data="entities.data"
+        :show-context-menu="true"
         @onPagingAttributeChanged="handlePagingAttributeChanged"
-        @onEntityInspect="handleShowEntityInspectDialog"
-        @onEntityEdit="handleShowEntityEditDialog"
-        @onEntityDelete="handleEntityDelete"
       >
-        <!--suppress HtmlDeprecatedAttribute -->
-        <el-table-column
-          prop="delta"
-          label="变更金额"
-          align="right"
-          show-tooltip-when-overflow
-          :formatter="deltaFormatter"
-        />
-        <el-table-column
-          prop="change_type"
-          label="资金变更类型"
-          show-tooltip-when-overflow
-          :formatter="changeTypeFormatter"
-        />
-        <el-table-column
-          prop="happened_date"
-          label="记录日期"
-          width="180px"
-          show-tooltip-when-overflow
-          :formatter="timestampFormatter"
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
+        <template v-slot:default>
+          <!--suppress HtmlDeprecatedAttribute -->
+          <el-table-column
+            prop="delta"
+            label="变更金额"
+            align="right"
+            show-tooltip-when-overflow
+            :formatter="deltaFormatter"
+          />
+          <el-table-column
+            prop="change_type"
+            label="资金变更类型"
+            show-tooltip-when-overflow
+            :formatter="changeTypeFormatter"
+          />
+          <el-table-column
+            prop="happened_date"
+            label="记录日期"
+            width="180px"
+            show-tooltip-when-overflow
+            :formatter="timestampFormatter"
+          />
+          <el-table-column
+            prop="remark"
+            label="备注"
+            show-tooltip-when-overflow
+          />
+        </template>
+        <template v-slot:operateColumn="{$index,row}">
+          <el-button-group class=operate-column>
+            <el-button
+              class="table-button"
+              size="mini"
+              icon="el-icon-search"
+              type="success"
+              :disabled="parentSelection.accountBook.permission_level !== 0"
+              @click="handleShowEntityInspectDialog($index, row)"
+            />
+            <el-button
+              class="table-button"
+              size="mini"
+              icon="el-icon-edit"
+              type="primary"
+              :disabled="parentSelection.accountBook.permission_level !== 0"
+              @click="handleShowEntityEditDialog($index, row)"
+            />
+            <el-button
+              class="table-button"
+              size="mini"
+              icon="el-icon-delete"
+              type="danger"
+              :disabled="parentSelection.accountBook.permission_level !== 0"
+              @click="handleEntityDelete($index, row)"
+            />
+          </el-button-group>
+        </template>
+        <template v-slot:contextMenu="{index,row,close}">
+          <ul class="context-menu1">
+            <!--suppress JSUnresolvedVariable -->
+            <li
+              :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
+              @click="handleInspectMenuItemClicked(index,row,close,$event)"
+            >
+              查看...
+            </li>
+            <!--suppress JSUnresolvedVariable -->
+            <li
+              :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
+              @click="handleEditMenuItemClicked(index,row,close,$event)"
+            >
+              编辑...
+            </li>
+            <!--suppress JSUnresolvedVariable -->
+            <li
+              :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
+              @click="handleDeleteMenuItemClicked(index,row,close,$event)"
+            >
+              删除...
+            </li>
+          </ul>
+        </template>
       </table-panel>
       <div class="header-container" slot="header">
         <el-button
           type="primary"
-          :disabled="parentSelection.accountBookId===''"
+          :disabled="headerButtonDisabled"
           @click="handleShowEntityRecordDialog"
         >
           记录资金变更
@@ -122,7 +175,7 @@
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import TablePanel from '@/components/layout/TablePanel.vue';
+import TablePanel from '@/components/table/TablePanel.vue';
 import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
 import AccountBookSelectDialog
 from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
@@ -141,6 +194,12 @@ export default {
   name: 'FundChange',
   components: {
     TablePanel, BorderLayoutPanel, EntityMaintainDialog, AccountBookSelectDialog,
+  },
+  computed: {
+    headerButtonDisabled() {
+      return this.parentSelection.accountBookId === ''
+        || this.parentSelection.accountBook.permission_level !== 0;
+    },
   },
   data() {
     const deltaValidator = (rule, value, callback) => {
@@ -316,6 +375,7 @@ export default {
       this.showDialog('CREATE');
     },
     handleShowEntityInspectDialog(index, entity) {
+      console.log(index, entity);
       this.syncAnchorEntity(entity);
       this.showDialog('INSPECT');
     },
@@ -421,6 +481,30 @@ export default {
     timestampFormatter(row, column) {
       return formatTimestamp(row[column.property]);
     },
+    handleInspectMenuItemClicked(index, row, close, event) {
+      if (this.parentSelection.accountBook.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
+      close();
+      this.handleShowEntityInspectDialog(index, row);
+    },
+    handleEditMenuItemClicked(index, row, close, event) {
+      if (this.parentSelection.accountBook.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
+      close();
+      this.handleShowEntityEditDialog(index, row);
+    },
+    handleDeleteMenuItemClicked(index, row, close, event) {
+      if (this.parentSelection.accountBook.permission_level !== 0) {
+        event.preventDefault();
+        return;
+      }
+      close();
+      this.handleEntityDelete(index, row);
+    },
   },
   mounted() {
     this.updateParentSelectionDisplayValue();
@@ -452,5 +536,35 @@ export default {
 
 .fund-change-type-select {
   width: 100%;
+}
+
+.table-button {
+  padding: 7px
+}
+
+.operate-column {
+  /*display: flex;*/
+}
+
+.context-menu1 {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.context-menu1 li {
+  margin: 0;
+  padding: 7px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.context-menu1 li:hover {
+  background: #eee;
+}
+
+.context-menu1 li.disabled {
+  color: grey;
+  cursor: not-allowed;
 }
 </style>
