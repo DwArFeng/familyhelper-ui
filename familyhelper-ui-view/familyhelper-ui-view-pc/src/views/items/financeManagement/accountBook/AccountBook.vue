@@ -9,8 +9,8 @@
         card-width="calc(20% - 18px)"
         :data="cardPanel.entities.data"
         :maxCard="1000"
-        :show-context-menu="true"
-        :context-menu-width="110"
+        :show-contextmenu="true"
+        :contextmenu-width="110"
         @onAddonClicked="handleAccountBookToCreate"
       >
         <template v-slot:default="{index,item}">
@@ -70,8 +70,8 @@
             />
           </el-button-group>
         </template>
-        <template v-slot:contextMenu="{index,item,close}">
-          <ul class="context-menu">
+        <template v-slot:contextmenu="{index,item,close}">
+          <ul class="my-contextmenu">
             <!--suppress JSUnresolvedVariable -->
             <li
               :class="{disabled:item.permission_level !== 0}"
@@ -461,24 +461,24 @@ export default {
   padding: 7px;
 }
 
-.context-menu {
+.my-contextmenu {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.context-menu li {
+.my-contextmenu li {
   margin: 0;
   padding: 7px 16px;
   cursor: pointer;
   user-select: none;
 }
 
-.context-menu li:hover {
+.my-contextmenu li:hover {
   background: #eee;
 }
 
-.context-menu li.disabled {
+.my-contextmenu li.disabled {
   color: grey;
   cursor: not-allowed;
 }

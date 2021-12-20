@@ -10,7 +10,7 @@
         :current-page.sync="currentPage"
         :page-sizes="[15,20,30,50]"
         :table-data="entities.data"
-        :show-context-menu="true"
+        :show-contextmenu="true"
         @onPagingAttributeChanged="handlePagingAttributeChanged"
       >
         <template v-slot:default>
@@ -69,8 +69,8 @@
             />
           </el-button-group>
         </template>
-        <template v-slot:contextMenu="{index,row,close}">
-          <ul class="context-menu1">
+        <template v-slot:contextmenu="{index,row,close}">
+          <ul class="my-contextmenu">
             <!--suppress JSUnresolvedVariable -->
             <li
               :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
@@ -546,24 +546,24 @@ export default {
   /*display: flex;*/
 }
 
-.context-menu1 {
+.my-contextmenu {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.context-menu1 li {
+.my-contextmenu li {
   margin: 0;
   padding: 7px 16px;
   cursor: pointer;
   user-select: none;
 }
 
-.context-menu1 li:hover {
+.my-contextmenu li:hover {
   background: #eee;
 }
 
-.context-menu1 li.disabled {
+.my-contextmenu li.disabled {
   color: grey;
   cursor: not-allowed;
 }

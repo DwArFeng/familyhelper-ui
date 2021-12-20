@@ -54,41 +54,46 @@
         </el-table-column>
       </el-table>
       <div
-        v-if="contextMenu.visible"
-        ref="contextMenu"
-        class="context-menu"
+        v-if="contextmenu.visible"
+        ref="contextmenu"
+        class="contextmenu"
+        aria-modal="true"
         tabindex="0"
-        :style="{left:contextMenu.left+'px',top:contextMenu.top+'px',width:contextMenuWidth+'px'}"
+        :style="{left:contextmenu.left+'px',top:contextmenu.top+'px',width:contextmenuWidth+'px'}"
         @blur="closeMenu"
       >
         <slot
-          name="contextMenu"
-          :row="contextMenu.row"
-          :index="contextMenu.index"
+          name="contextmenu"
+          :row="contextmenu.row"
+          :index="contextmenu.index"
           :close="closeMenu"
         >
           <ul>
             <li
               v-if="inspectMenuItemVisible"
-              @click="handleInspectMenuItemClicked(contextMenu.index,contextMenu.row)"
+              @click="handleInspectMenuItemClicked(contextmenu.index,contextmenu.row)"
             >
               查看...
             </li>
             <li
               v-if="editMenuItemVisible"
-              @click="handleEditMenuItemClicked(contextMenu.index,contextMenu.row)"
+              @click="handleEditMenuItemClicked(contextmenu.index,contextmenu.row)"
             >
               编辑...
             </li>
             <li
               v-if="deleteMenuItemVisible"
-              @click="handleDeleteMenuItemClicked(contextMenu.index,contextMenu.row)"
+              @click="handleDeleteMenuItemClicked(contextmenu.index,contextmenu.row)"
             >
               删除...
             </li>
           </ul>
         </slot>
       </div>
+      <div
+        v-if="contextmenu.visible"
+        class="contextmenu-modal"
+      />
     </div>
     <el-pagination
       class="pagination"
@@ -157,11 +162,11 @@ export default {
       type: Number,
       default: 103,
     },
-    showContextMenu: {
+    showContextmenu: {
       type: Boolean,
       default: false,
     },
-    contextMenuWidth: {
+    contextmenuWidth: {
       type: Number,
       default: 85,
     },
@@ -191,7 +196,7 @@ export default {
       watchedCurrentPage: 0,
       watchedPageSize: 0,
       watchedTableSelection: null,
-      contextMenu: {
+      contextmenu: {
         visible: false,
         left: 0,
         top: 0,
@@ -233,37 +238,37 @@ export default {
       this.$emit('onSelectionChanged', selection);
     },
     mayOpenMenu(row, column, e) {
-      if (!this.showContextMenu) {
+      if (!this.showContextmenu) {
         return;
       }
 
       // 阻止系统菜单弹出。
       e.preventDefault();
 
-      this.contextMenu.row = row;
-      this.contextMenu.index = this.findRowIndex(row);
+      this.contextmenu.row = row;
+      this.contextmenu.index = this.findRowIndex(row);
 
       const offsetLeft = this.$el.getBoundingClientRect().left; // container margin left
       const { offsetWidth } = this.$el; // container width
-      const maxLeft = offsetWidth + offsetLeft - this.contextMenuWidth; // left boundary
+      const maxLeft = offsetWidth + offsetLeft - this.contextmenuWidth; // left boundary
       const left = e.clientX + 15; // 15: margin right
 
       if (left > maxLeft) {
-        this.contextMenu.left = maxLeft;
+        this.contextmenu.left = maxLeft;
       } else {
-        this.contextMenu.left = left;
+        this.contextmenu.left = left;
       }
 
-      this.contextMenu.top = e.clientY;
+      this.contextmenu.top = e.clientY;
 
-      this.contextMenu.visible = true;
+      this.contextmenu.visible = true;
 
       this.$nextTick(() => {
-        this.$refs.contextMenu.focus();
+        this.$refs.contextmenu.focus();
       });
     },
     closeMenu() {
-      this.contextMenu.visible = false;
+      this.contextmenu.visible = false;
     },
     findRowIndex(row) {
       for (let i = 0; i < this.tableData.length; i += 1) {
@@ -324,7 +329,7 @@ export default {
   /*display: flex;*/
 }
 
-.context-menu {
+.contextmenu {
   margin: 0;
   padding: 5px 0;
   background: #fff;
@@ -341,23 +346,32 @@ export default {
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
 }
 
-.context-menu:focus {
+.contextmenu:focus {
   outline: none;
 }
 
-.context-menu ul {
+.contextmenu ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.context-menu li {
+.contextmenu li {
   margin: 0;
   padding: 7px 16px;
   cursor: pointer;
 }
 
-.context-menu li:hover {
+.contextmenu li:hover {
   background: #eee;
+}
+
+.contextmenu-modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2999;
 }
 </style>

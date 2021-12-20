@@ -9,7 +9,7 @@
         card-width="calc(20% - 18px)"
         :data="cardPanel.entities.data"
         :maxCard="cardPanel.maxCard"
-        :show-context-menu="true"
+        :show-contextmenu="true"
         :addon-button-visible="addonButtonVisible"
         @onAddonClicked="handleBankCardToCreate"
       >
@@ -64,8 +64,8 @@
             />
           </el-button-group>
         </template>
-        <template v-slot:contextMenu="{index,item,close}">
-          <ul class="context-menu">
+        <template v-slot:contextmenu="{index,item,close}">
+          <ul class="my-contextmenu">
             <!--suppress JSUnresolvedVariable -->
             <li
               :class="{disabled:parentSelection.accountBook.permission_level !== 0}"
@@ -513,24 +513,24 @@ export default {
   padding: 7px;
 }
 
-.context-menu {
+.my-contextmenu {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.context-menu li {
+.my-contextmenu li {
   margin: 0;
   padding: 7px 16px;
   cursor: pointer;
   user-select: none;
 }
 
-.context-menu li:hover {
+.my-contextmenu li:hover {
   background: #eee;
 }
 
-.context-menu li.disabled {
+.my-contextmenu li.disabled {
   color: grey;
   cursor: not-allowed;
 }

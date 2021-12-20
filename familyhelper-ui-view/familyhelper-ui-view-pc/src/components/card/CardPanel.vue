@@ -1,121 +1,126 @@
 <template>
-  <overlay-scrollbars class="scroll-bar">
-    <div
-      class="card-container-panel"
-    >
-      <el-card
-        class="box-card"
-        v-for="(item, index) in data"
-        :key="index"
-        :style="cardStyle"
-        :body-style="bodyStyle"
-      >
-        <div
-          ref="mainContainer"
-          class="main-container"
-          :class="isSelected(index) ? 'active' : 'inactive'"
-          @click="handleSelectionChanged(index)"
-          @contextmenu="mayOpenMenu(index,item, $event)"
+  <div class="card-panel-container">
+    <overlay-scrollbars class="scroll-bar">
+      <div class="card-container">
+        <el-card
+          class="box-card"
+          v-for="(item, index) in data"
+          :key="index"
+          :style="cardStyle"
+          :body-style="bodyStyle"
         >
-          <div class="clearfix">
-            <div class="title">{{ innerGetDeepProperty(item, titleProp, '') }}</div>
-            <div>
-              <slot name="header" :item="item" :index="index">
-                <el-button-group class="button-group">
-                  <el-button
-                    class="card-button"
-                    size="mini"
-                    icon="el-icon-search"
-                    v-if="inspectButtonVisible"
-                    @click="handleItemToInspect(index, item)"
-                  />
-                  <el-button
-                    class="card-button"
-                    size="mini"
-                    icon="el-icon-edit"
-                    v-if="editButtonVisible"
-                    @click="handleItemToEdit(index, item)"
-                  />
-                  <el-button
-                    class="card-button"
-                    size="mini"
-                    icon="el-icon-delete"
-                    v-if="deleteButtonVisible"
-                    @click="handleItemToDelete(index,item)"
-                  />
-                </el-button-group>
-              </slot>
-            </div>
-          </div>
-          <el-divider class="divider"></el-divider>
-          <div class="slot-container">
-            <slot :item="item" :index="index"></slot>
-          </div>
-        </div>
-      </el-card>
-      <el-card
-        class="box-card"
-        v-if="addonButtonVisible"
-        :style="cardStyle"
-        :body-style="bodyStyle"
-      >
-        <div class="addon-container">
-          <el-tooltip
-            effect="dark"
-            content="卡片数量已经达到最大值"
-            placement="top"
-            :disabled="data.length < maxCard"
+          <div
+            ref="mainContainer"
+            class="main-container"
+            :class="isSelected(index) ? 'active' : 'inactive'"
+            @click="handleSelectionChanged(index)"
+            @contextmenu="mayOpenMenu(index,item, $event)"
           >
-            <div>
-              <el-button
-                class="addon-container-button"
-                icon="el-icon-plus"
-                circle
-                :disabled="data.length >= maxCard"
-                @click="handleAddonClicked"
-              />
+            <div class="clearfix">
+              <div class="title">{{ innerGetDeepProperty(item, titleProp, '') }}</div>
+              <div>
+                <slot name="header" :item="item" :index="index">
+                  <el-button-group class="button-group">
+                    <el-button
+                      class="card-button"
+                      size="mini"
+                      icon="el-icon-search"
+                      v-if="inspectButtonVisible"
+                      @click="handleItemToInspect(index, item)"
+                    />
+                    <el-button
+                      class="card-button"
+                      size="mini"
+                      icon="el-icon-edit"
+                      v-if="editButtonVisible"
+                      @click="handleItemToEdit(index, item)"
+                    />
+                    <el-button
+                      class="card-button"
+                      size="mini"
+                      icon="el-icon-delete"
+                      v-if="deleteButtonVisible"
+                      @click="handleItemToDelete(index,item)"
+                    />
+                  </el-button-group>
+                </slot>
+              </div>
             </div>
-          </el-tooltip>
-        </div>
-      </el-card>
-      <div
-        v-if="contextMenu.visible"
-        ref="contextMenu"
-        class="context-menu"
-        tabindex="0"
-        :style="{left:contextMenu.left+'px',top:contextMenu.top+'px',width:contextMenuWidth+'px'}"
-        @blur="closeMenu"
-      >
-        <slot
-          name="contextMenu"
-          :item="contextMenu.item"
-          :index="contextMenu.index"
-          :close="closeMenu"
+            <el-divider class="divider"></el-divider>
+            <div class="slot-container">
+              <slot :item="item" :index="index"></slot>
+            </div>
+          </div>
+        </el-card>
+        <el-card
+          class="box-card"
+          v-if="addonButtonVisible"
+          :style="cardStyle"
+          :body-style="bodyStyle"
         >
-          <ul>
-            <li
-              v-if="inspectMenuItemVisible"
-              @click="handleInspectMenuItemClicked(contextMenu.index,contextMenu.item)"
+          <div class="addon-container">
+            <el-tooltip
+              effect="dark"
+              content="卡片数量已经达到最大值"
+              placement="top"
+              :disabled="data.length < maxCard"
             >
-              查看...
-            </li>
-            <li
-              v-if="editMenuItemVisible"
-              @click="handleEditMenuItemClicked(contextMenu.index,contextMenu.item)"
-            >
-              编辑...
-            </li>
-            <li
-              v-if="deleteMenuItemVisible"
-              @click="handleDeleteMenuItemClicked(contextMenu.index,contextMenu.item)"
-            >
-              删除...
-            </li>
-          </ul>
-        </slot>
+              <div>
+                <el-button
+                  class="addon-container-button"
+                  icon="el-icon-plus"
+                  circle
+                  :disabled="data.length >= maxCard"
+                  @click="handleAddonClicked"
+                />
+              </div>
+            </el-tooltip>
+          </div>
+        </el-card>
       </div>
+    </overlay-scrollbars>
+    <div
+      v-if="contextmenu.visible"
+      ref="contextmenu"
+      class="contextmenu"
+      aria-modal="true"
+      tabindex="0"
+      :style="{left:contextmenu.left+'px',top:contextmenu.top+'px',width:contextmenuWidth+'px'}"
+      @blur="closeMenu"
+    >
+      <slot
+        name="contextmenu"
+        :item="contextmenu.item"
+        :index="contextmenu.index"
+        :close="closeMenu"
+      >
+        <ul>
+          <li
+            v-if="inspectMenuItemVisible"
+            @click="handleInspectMenuItemClicked(contextmenu.index,contextmenu.item)"
+          >
+            查看...
+          </li>
+          <li
+            v-if="editMenuItemVisible"
+            @click="handleEditMenuItemClicked(contextmenu.index,contextmenu.item)"
+          >
+            编辑...
+          </li>
+          <li
+            v-if="deleteMenuItemVisible"
+            @click="handleDeleteMenuItemClicked(contextmenu.index,contextmenu.item)"
+          >
+            删除...
+          </li>
+        </ul>
+      </slot>
     </div>
-  </overlay-scrollbars>
+    <div
+      v-if="contextmenu.visible"
+      class="contextmenu-modal"
+    />
+  </div>
 </template>
 
 <script>
@@ -169,11 +174,11 @@ export default {
       },
       default: 'NONE',
     },
-    showContextMenu: {
+    showContextmenu: {
       type: Boolean,
       default: false,
     },
-    contextMenuWidth: {
+    contextmenuWidth: {
       type: Number,
       default: 85,
     },
@@ -224,7 +229,7 @@ export default {
         singleSelectionIndex: -1,
         multiSelectionIndex: [],
       },
-      contextMenu: {
+      contextmenu: {
         visible: false,
         left: 0,
         top: 0,
@@ -296,38 +301,39 @@ export default {
       return false;
     },
     mayOpenMenu(index, item, e) {
-      if (!this.showContextMenu) {
+      if (!this.showContextmenu) {
         return;
       }
 
       // 阻止系统菜单弹出。
       e.preventDefault();
 
-      this.contextMenu.index = index;
-      this.contextMenu.item = item;
+      this.contextmenu.index = index;
+      this.contextmenu.item = item;
 
       const offsetLeft = this.$el.getBoundingClientRect().left; // container margin left
       const { offsetWidth } = this.$el; // container width
-      const maxLeft = offsetWidth - this.contextMenuWidth - 2; // left boundary
-      const left = e.clientX - offsetLeft + 15; // 15: margin right
+      const maxLeft = offsetWidth + offsetLeft - this.contextmenuWidth - 2; // left boundary
+      const left = e.clientX + 15; // 15: margin right
 
       if (left > maxLeft) {
-        this.contextMenu.left = maxLeft;
+        this.contextmenu.left = maxLeft;
       } else {
-        this.contextMenu.left = left;
+        this.contextmenu.left = left;
       }
 
-      const offsetTop = this.$el.getBoundingClientRect().top; // container margin left
-      this.contextMenu.top = e.clientY - offsetTop;
+      this.contextmenu.top = e.clientY;
 
-      this.contextMenu.visible = true;
+      console.log('OvO!');
+
+      this.contextmenu.visible = true;
 
       this.$nextTick(() => {
-        this.$refs.contextMenu.focus();
+        this.$refs.contextmenu.focus();
       });
     },
     closeMenu() {
-      this.contextMenu.visible = false;
+      this.contextmenu.visible = false;
     },
     handleInspectMenuItemClicked(index, item) {
       this.closeMenu();
@@ -346,7 +352,12 @@ export default {
 </script>
 
 <style scoped>
-.card-container-panel {
+.card-panel-container {
+  height: 100%;
+  width: 100%;
+}
+
+.card-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -428,7 +439,7 @@ export default {
   background: rgba(0, 0, 0, .025);
 }
 
-.context-menu {
+.contextmenu {
   margin: 0;
   padding: 5px 0;
   background: #fff;
@@ -445,23 +456,32 @@ export default {
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
 }
 
-.context-menu:focus {
+.contextmenu:focus {
   outline: none;
 }
 
-.context-menu ul {
+.contextmenu ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.context-menu li {
+.contextmenu li {
   margin: 0;
   padding: 7px 16px;
   cursor: pointer;
 }
 
-.context-menu li:hover {
+.contextmenu li:hover {
   background: #eee;
+}
+
+.contextmenu-modal {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2999;
 }
 </style>

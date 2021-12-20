@@ -24,58 +24,63 @@
       </div>
     </div>
     <ul
-      v-if="contextMenu.visible"
-      ref="contextMenu"
-      class="main-content"
+      v-if="contextmenu.visible"
+      ref="contextmenu"
+      class="contextmenu"
       tabindex="0"
-      :style="{left:contextMenu.left+'px',top:contextMenu.top+'px'}"
+      :style="{left:contextmenu.left+'px',top:contextmenu.top+'px'}"
       @blur="closeMenu"
     >
       <li
-        v-if="annotation(contextMenu.itemKey) === 'active'"
-        @click="closeMenu();pin(contextMenu.itemKey)"
+        v-if="annotation(contextmenu.itemKey) === 'active'"
+        @click="closeMenu();pin(contextmenu.itemKey)"
       >
         固定
       </li>
       <li
-        v-if="annotation(contextMenu.itemKey) === 'pinned'"
-        @click="closeMenu();unpin(contextMenu.itemKey)"
+        v-if="annotation(contextmenu.itemKey) === 'pinned'"
+        @click="closeMenu();unpin(contextmenu.itemKey)"
       >
         解除固定
       </li>
       <li
-        v-if="annotation(contextMenu.itemKey) === 'pinned'"
+        v-if="annotation(contextmenu.itemKey) === 'pinned'"
         @click="closeMenu();unpinAndClose()"
       >
         解除固定并清除
       </li>
       <li
-        v-if="annotation(contextMenu.itemKey) === 'active'"
-        @click="closeMenu();removeItemKey(contextMenu.itemKey)"
+        v-if="annotation(contextmenu.itemKey) === 'active'"
+        @click="closeMenu();removeItemKey(contextmenu.itemKey)"
       >
         清除
       </li>
       <li
-        v-if="annotation(contextMenu.itemKey) === 'active'"
+        v-if="annotation(contextmenu.itemKey) === 'active'"
         @click="closeMenu();clearOther()"
       >
         清除其它
       </li>
       <!--suppress JSUnresolvedFunction -->
       <li
-        v-if="annotation(contextMenu.itemKey) === 'active'"
+        v-if="annotation(contextmenu.itemKey) === 'active'"
         @click="closeMenu();clearActive()"
       >
         清除所有
       </li>
       <!--suppress JSUnresolvedFunction -->
       <li
-        v-if="annotation(contextMenu.itemKey) !== 'affix'"
+        v-if="annotation(contextmenu.itemKey) !== 'affix'"
         @click="closeMenu();showEditDialog()"
       >
         调整顺序...
       </li>
+      <li @click="closeMenu();handleNav(contextmenu.itemKey)">转到</li>
     </ul>
+    <div
+      v-if="contextmenu.visible"
+      class="contextmenu-modal"
+    />
     <el-dialog
       class="edit-dialog-container"
       ref="dialog"
@@ -157,7 +162,7 @@ export default {
   },
   data() {
     return {
-      contextMenu: {
+      contextmenu: {
         visible: false,
         left: 0,
         top: 0,
@@ -178,39 +183,39 @@ export default {
       this.removeItemKey(itemKey);
     },
     openMenu(itemKey, e) {
-      this.contextMenu.itemKey = itemKey;
+      this.contextmenu.itemKey = itemKey;
 
-      const menuMinWidth = 105;
+      const menuMinWidth = 120;
       const offsetLeft = this.$el.getBoundingClientRect().left; // container margin left
       const { offsetWidth } = this.$el; // container width
       const maxLeft = offsetWidth - menuMinWidth; // left boundary
       const left = e.clientX - offsetLeft + 15; // 15: margin right
 
       if (left > maxLeft) {
-        this.contextMenu.left = maxLeft;
+        this.contextmenu.left = maxLeft;
       } else {
-        this.contextMenu.left = left;
+        this.contextmenu.left = left;
       }
 
       const offsetTop = this.$el.getBoundingClientRect().top; // container margin left
-      this.contextMenu.top = e.clientY - offsetTop;
+      this.contextmenu.top = e.clientY - offsetTop;
 
-      this.contextMenu.visible = true;
+      this.contextmenu.visible = true;
 
       this.$nextTick(() => {
-        this.$refs.contextMenu.focus();
+        this.$refs.contextmenu.focus();
       });
     },
     closeMenu() {
-      this.contextMenu.visible = false;
+      this.contextmenu.visible = false;
     },
     unpinAndClose() {
-      this.unpin(this.contextMenu.itemKey);
-      this.removeItemKey(this.contextMenu.itemKey);
+      this.unpin(this.contextmenu.itemKey);
+      this.removeItemKey(this.contextmenu.itemKey);
     },
     clearOther() {
       this.clearActive();
-      this.pushItemKey(this.contextMenu.itemKey);
+      this.pushItemKey(this.contextmenu.itemKey);
     },
     showEditDialog() {
       this.editDialog.pinnedNavItems = [];
@@ -342,7 +347,9 @@ export default {
   color: #fff;
 }
 
-.main-content {
+.contextmenu {
+  width: 120px;
+  min-width: 120px;
   margin: 0;
   background: #fff;
   z-index: 3000;
@@ -359,18 +366,27 @@ export default {
   box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, .3);
 }
 
-.main-content:focus {
+.contextmenu:focus {
   outline: none;
 }
 
-.main-content li {
+.contextmenu li {
   margin: 0;
   padding: 7px 16px;
   cursor: pointer;
 }
 
-.main-content li:hover {
+.contextmenu li:hover {
   background: #eee;
+}
+
+.contextmenu-modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2999;
 }
 
 /*noinspection CssUnusedSymbol*/
