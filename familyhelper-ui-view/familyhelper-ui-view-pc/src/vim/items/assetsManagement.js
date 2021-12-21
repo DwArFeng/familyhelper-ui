@@ -1,4 +1,4 @@
-const assetManagement = [
+const assetsManagement = [
   {
     key: 'assetManagement',
     index: 20,
@@ -46,7 +46,7 @@ const assetManagement = [
       router: {
         required: true,
         path: 'app/asset-management/asset-catalog',
-        component: () => import('@/views/items/assetManagement/assetCatalog/AssetCatalog.vue'),
+        component: () => import('@/views/items/assetsManagement/assetCatalog/AssetCatalog.vue'),
       },
       permission: {
         required: true,
@@ -76,7 +76,7 @@ const assetManagement = [
       router: {
         required: true,
         path: 'app/asset-management/asset-bom',
-        component: () => import('@/views/items/assetManagement/assetBom/AssetBom.vue'),
+        component: () => import('@/views/items/assetsManagement/assetBom/AssetBom.vue'),
       },
       permission: {
         required: true,
@@ -106,7 +106,7 @@ const assetManagement = [
       router: {
         required: true,
         path: 'app/asset-management/item-label',
-        component: () => import('@/views/items/assetManagement/itemLabel/ItemLabel.vue'),
+        component: () => import('@/views/items/assetsManagement/itemLabel/ItemLabel.vue'),
       },
       permission: {
         required: true,
@@ -136,7 +136,7 @@ const assetManagement = [
       router: {
         required: true,
         path: 'app/asset-management/item-file-label',
-        component: () => import('@/views/items/assetManagement/itemFileLabel/ItemFileLabel.vue'),
+        component: () => import('@/views/items/assetsManagement/itemFileLabel/ItemFileLabel.vue'),
       },
       permission: {
         required: true,
@@ -149,4 +149,4 @@ const assetManagement = [
   },
 ];
 
-export default assetManagement;
+export default assetsManagement;

@@ -1,85 +1,67 @@
 @font-face {
-    font-family: "iconfont"; /* Project id 2850115 */
-    src: url('./iconfont.woff2?t=1638089769547') format('woff2'),
-    url('./iconfont.woff?t=1638089769547') format('woff'),
-    url('./iconfont.ttf?t=1638089769547') format('truetype');
+  font-family: "iconfont"; /* Project id 2850115 */
+  src: url('iconfont.woff2?t=1640093781615') format('woff2'),
+       url('iconfont.woff?t=1640093781615') format('woff'),
+       url('iconfont.ttf?t=1640093781615') format('truetype');
 }
 
 .iconfont {
-    font-family: "iconfont", serif !important;
-    font-size: 16px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: "iconfont", serif !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/*noinspection SpellCheckingInspection*/
-.icon-zhediecaidan:before {
-    content: "\ffe7";
+.icon-tiaomu-xuanzhong:before {
+  content: "\ffe7";
 }
 
-/*noinspection SpellCheckingInspection*/
-.icon-zhankaicaidan:before {
-    content: "\ffe6";
-}
-
-/*noinspection SpellCheckingInspection*/
 .icon-fangda:before {
-    content: "\ffe8";
+  content: "\ffe8";
 }
 
-/*noinspection SpellCheckingInspection*/
 .icon-suoxiao:before {
-    content: "\ffe9";
+  content: "\ffe9";
 }
 
 .icon-rotate-left:before {
-    content: "\ffea";
+  content: "\ffea";
 }
 
 .icon-rotate-right:before {
-    content: "\ffeb";
+  content: "\ffeb";
 }
 
-/*noinspection SpellCheckingInspection*/
 .icon-zhengque:before {
-    content: "\ffed";
+  content: "\ffed";
 }
 
 .icon-bxs-category:before {
-    content: "\ffee";
+  content: "\ffee";
 }
 
 .icon-yue:before {
-    content: "\fff9";
+  content: "\fff9";
 }
 
-/*noinspection SpellCheckingInspection*/
 .icon-riqi:before {
-    content: "\ffef";
+  content: "\ffef";
 }
 
 .icon-lock:before {
-    content: "\fffa";
+  content: "\fffa";
 }
 
 .icon-user:before {
-    content: "\fffb";
-}
-
-.icon-operate-partial-minimize:before {
-    content: "\ffff";
-}
-
-.icon-operate-partial-maximize:before {
-    content: "\fffe";
+  content: "\fffb";
 }
 
 .icon-operate-global-maximize:before {
-    content: "\fffc";
+  content: "\fffc";
 }
 
 .icon-operate-global-minimize-copy:before {
-    content: "\fffd";
+  content: "\fffd";
 }
 

@@ -93,8 +93,8 @@ import TablePanel from '@/components/table/TablePanel.vue';
 import AccountSelector from '@/views/items/systemSettings/account/AccountSelector.vue';
 
 import resolveResponse from '@/util/response';
-import { childForAccountBookDisp } from '@/api/finance/poab';
-import { removePermission, upsertPermission } from '@/api/finance/accountBook';
+import { childForAssetCatalogDisp } from '@/api/assets/poac';
+import { removePermission, upsertPermission } from '@/api/assets/assetCatalog';
 
 // noinspection JSAnnotator
 export default {
@@ -108,7 +108,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    accountBookId: {
+    assetCatalogId: {
       type: String,
       default: '',
     },
@@ -117,7 +117,7 @@ export default {
     visible(value) {
       this.dialog.watchedVisible = value;
     },
-    accountBookId(value) {
+    assetCatalogId(value) {
       if (value === '') {
         return;
       }
@@ -160,17 +160,17 @@ export default {
       this.handleSearch();
     },
     handleSearch() {
-      this.lookupChildForAccountBook();
+      this.lookupChildForAssetCatalog();
     },
-    lookupChildForAccountBook() {
-      resolveResponse(childForAccountBookDisp(
-        this.accountBookId, this.table.currentPage, this.table.pageSize,
+    lookupChildForAssetCatalog() {
+      resolveResponse(childForAssetCatalogDisp(
+        this.assetCatalogId, this.table.currentPage, this.table.pageSize,
       ))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(childForAccountBookDisp(
-              this.accountBookId, res.total_pages, this.table.pageSize,
+            return resolveResponse(childForAssetCatalogDisp(
+              this.assetCatalogId, res.total_pages, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -209,7 +209,7 @@ export default {
             type: 'warning',
           },
         ).then(() => Promise.resolve(res)).catch(() => Promise.reject()))
-        .then((res) => resolveResponse(removePermission(this.accountBookId, res.key.string_id)))
+        .then((res) => resolveResponse(removePermission(this.assetCatalogId, res.key.string_id)))
         .then(() => {
           this.$message({
             showClose: true,
@@ -226,7 +226,7 @@ export default {
     },
     handleUpsertButtonClicked() {
       resolveResponse(upsertPermission(
-        this.accountBookId, this.form.userId, this.form.permissionLevel,
+        this.assetCatalogId, this.form.userId, this.form.permissionLevel,
       ))
         .then(() => {
           this.$message({

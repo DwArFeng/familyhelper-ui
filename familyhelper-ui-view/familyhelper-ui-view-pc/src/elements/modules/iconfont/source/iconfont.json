@@ -6,18 +6,11 @@
   "description": "家庭帮手",
   "glyphs": [
     {
-      "icon_id": "20764004",
-      "name": "折叠菜单",
-      "font_class": "zhediecaidan",
+      "icon_id": "11277163",
+      "name": "条目-选中",
+      "font_class": "tiaomu-xuanzhong",
       "unicode": "ffe7",
       "unicode_decimal": 65511
-    },
-    {
-      "icon_id": "20764005",
-      "name": "展开菜单",
-      "font_class": "zhankaicaidan",
-      "unicode": "ffe6",
-      "unicode_decimal": 65510
     },
     {
       "icon_id": "12323749",
@@ -88,20 +81,6 @@
       "font_class": "user",
       "unicode": "fffb",
       "unicode_decimal": 65531
-    },
-    {
-      "icon_id": "4232342",
-      "name": "最小化",
-      "font_class": "operate-partial-minimize",
-      "unicode": "ffff",
-      "unicode_decimal": 65535
-    },
-    {
-      "icon_id": "10355217",
-      "name": "-zuidahua",
-      "font_class": "operate-partial-maximize",
-      "unicode": "fffe",
-      "unicode_decimal": 65534
     },
     {
       "icon_id": "16286361",
