@@ -1,6 +1,6 @@
 const assetsManagement = [
   {
-    key: 'assetManagement',
+    key: 'assetsManagement',
     index: 20,
     meta: {
       display: {
@@ -28,7 +28,7 @@ const assetsManagement = [
     },
   },
   {
-    key: 'assetManagement.assetCatalog',
+    key: 'assetsManagement.assetCatalog',
     index: 0,
     meta: {
       display: {
@@ -54,11 +54,11 @@ const assetsManagement = [
       },
     },
     node: {
-      parentKey: 'assetManagement',
+      parentKey: 'assetsManagement',
     },
   },
   {
-    key: 'assetManagement.assetBom',
+    key: 'assetsManagement.assetBom',
     index: 10,
     meta: {
       display: {
@@ -84,12 +84,42 @@ const assetsManagement = [
       },
     },
     node: {
-      parentKey: 'assetManagement',
+      parentKey: 'assetsManagement',
     },
   },
   {
-    key: 'assetManagement.itemLabel',
+    key: 'assetsManagement.itemTypeIndicator',
     index: 20,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '项目类型管理',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+      },
+      router: {
+        required: true,
+        path: 'app/assets-management/item-type-indicator',
+        component: () => import('@/views/items/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.assets_management.bank_card_type_indicator',
+      },
+    },
+    node: {
+      parentKey: 'assetsManagement',
+    },
+  },
+  {
+    key: 'assetsManagement.itemLabel',
+    index: 30,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -114,12 +144,12 @@ const assetsManagement = [
       },
     },
     node: {
-      parentKey: 'assetManagement',
+      parentKey: 'assetsManagement',
     },
   },
   {
-    key: 'assetManagement.itemFileLabel',
-    index: 30,
+    key: 'assetsManagement.itemFileLabel',
+    index: 40,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -144,7 +174,7 @@ const assetsManagement = [
       },
     },
     node: {
-      parentKey: 'assetManagement',
+      parentKey: 'assetsManagement',
     },
   },
 ];
