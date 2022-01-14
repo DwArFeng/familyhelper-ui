@@ -334,7 +334,7 @@ export default {
   padding: 5px 0;
   background: #fff;
   z-index: 3000;
-  position: absolute;
+  position: fixed;
   list-style-type: none;
   border-radius: 4px;
   border-width: 1px;

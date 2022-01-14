@@ -11,3 +11,32 @@ export function pad(number, size) {
   }
   return s;
 }
+
+const dataSizePreset = [
+  { label: 'B', stair: 1 },
+  { label: 'KB', stair: 1024 },
+  { label: 'MB', stair: 1024 },
+  { label: 'GB', stair: 1024 },
+  { label: 'TB', stair: 1024 },
+];
+export { dataSizePreset };
+
+export function formatUnit(number, preset, toFixed = 2) {
+  let lastValidValue;
+  let lastValidLabel;
+  for (let i = 0; i < preset.length; i += 1) {
+    const { label, stair } = preset[i];
+    // 由于循环的逻辑，执行到此处 lastValidValue 变量一定会被初始化。
+    // noinspection JSUnusedAssignment
+    const value = i === 0 ? number / stair : lastValidValue / stair;
+    if (value < 1) {
+      if (i === 0) {
+        return `${value.toFixed(toFixed)} ${label}`;
+      }
+      return `${lastValidValue.toFixed(toFixed)} ${lastValidLabel}`;
+    }
+    lastValidValue = value;
+    lastValidLabel = label;
+  }
+  return `${lastValidValue.toFixed(toFixed)} ${lastValidLabel}`;
+}

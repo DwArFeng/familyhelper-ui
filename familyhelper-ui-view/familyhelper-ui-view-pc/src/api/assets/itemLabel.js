@@ -36,6 +36,10 @@ export function update(key, label, remark) {
   });
 }
 
+export function allExists(keys) {
+  return post('assets', 'item-label/all-exists/', keys);
+}
+
 export function all(page, rows) {
   return get('assets', 'item-label/all/', {
     page,

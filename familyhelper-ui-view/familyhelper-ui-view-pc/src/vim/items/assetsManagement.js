@@ -147,36 +147,6 @@ const assetsManagement = [
       parentKey: 'assetsManagement',
     },
   },
-  {
-    key: 'assetsManagement.itemFileLabel',
-    index: 40,
-    meta: {
-      display: {
-        iconType: 'elementUI',
-        iconContent: '',
-        labelType: 'elementUI',
-        labelContent: '项目文件标签管理',
-      },
-      menu: {
-        shown: true,
-      },
-      ezNav: {
-        shown: true,
-      },
-      router: {
-        required: true,
-        path: 'app/asset-management/item-file-label',
-        component: () => import('@/views/items/assetsManagement/itemFileLabel/ItemFileLabel.vue'),
-      },
-      permission: {
-        required: true,
-        node: 'ui.pc.menu_visible.asset_management.item_file_label',
-      },
-    },
-    node: {
-      parentKey: 'assetsManagement',
-    },
-  },
 ];
 
 export default assetsManagement;

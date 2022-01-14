@@ -146,7 +146,7 @@
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardPanel from '@/components/card/CardPanel.vue';
-import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
+import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import AccountBookSelectDialog
 from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
 

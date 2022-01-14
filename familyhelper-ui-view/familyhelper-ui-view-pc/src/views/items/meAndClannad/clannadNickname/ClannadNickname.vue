@@ -94,7 +94,7 @@ import { mapGetters } from 'vuex';
 
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/table/TablePanel.vue';
-import EntityMaintainDialog from '@/components/dialog/EntityMaintainDialog.vue';
+import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 
 import {
   exists, insert, remove, update, childForSubjectUser,
