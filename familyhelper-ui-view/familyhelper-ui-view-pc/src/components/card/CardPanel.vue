@@ -324,8 +324,6 @@ export default {
 
       this.contextmenu.top = e.clientY;
 
-      console.log('OvO!');
-
       this.contextmenu.visible = true;
 
       this.$nextTick(() => {

@@ -187,11 +187,9 @@ export default {
   },
   watch: {
     tableData(value) {
-      console.log('tableDataChanged');
       this.watchedTableData = value;
     },
     watchedTableData(value) {
-      console.log('watchedTableDataChanged');
       if (value.length === 0) {
         return;
       }

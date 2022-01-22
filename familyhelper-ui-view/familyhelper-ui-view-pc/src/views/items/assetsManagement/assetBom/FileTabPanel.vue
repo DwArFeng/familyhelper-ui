@@ -27,6 +27,7 @@
     <el-divider/>
     <table-panel
       class="table-panel"
+      operate-column-width="130px"
       :page-size.sync="tablePanel.pageSize"
       :entity-count="parseInt(tablePanel.entities.count)"
       :current-page.sync="tablePanel.currentPage"
@@ -94,6 +95,7 @@
             icon="el-icon-search"
             type="success"
             :disabled="inspectTableButtonDisabled(row)"
+            @click="handleItemFileInspect(row)"
           />
           <el-button
             class="table-button"
@@ -101,6 +103,14 @@
             icon="el-icon-edit"
             type="primary"
             :disabled="editTableButtonDisabled(row)"
+          />
+          <el-button
+            class="table-button"
+            size="mini"
+            icon="el-icon-download"
+            type="success"
+            :disabled="inspectTableButtonDisabled(row)"
+            @click="handleItemFileDownload(row)"
           />
           <el-button
             class="table-button"
@@ -134,6 +144,7 @@ import {
   childForItemModifiedDateDesc,
   childForItemOriginNameAsc,
   remove,
+  download,
 } from '@/api/assets/itemFile';
 import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
@@ -332,6 +343,19 @@ export default {
     timestampFormatter(row, column) {
       return formatTimestamp(row[column.property]);
     },
+    handleItemFileDownload(itemFileInfo) {
+      download(itemFileInfo.key.long_id)
+        .then((blob) => {
+          // noinspection JSUnresolvedVariable
+          const fileName = itemFileInfo.origin_name;
+          const link = document.createElement('a');
+          // noinspection JSCheckFunctionSignatures
+          link.href = window.URL.createObjectURL(blob);
+          link.download = fileName;
+          link.click();
+          window.URL.revokeObjectURL(link.href);
+        });
+    },
     handleItemFileDelete(itemFileInfo) {
       this.$confirm('此操作将永久删除此项目文件。<br>'
         + '该操作不可恢复！<br>'
@@ -361,6 +385,9 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    handleItemFileInspect(row) {
+      this.$router.push({ name: 'miscellaneous.fileEditor', query: { type: 'itemFile', action: 'inspect', id: row.key.long_id } });
     },
   },
   mounted() {

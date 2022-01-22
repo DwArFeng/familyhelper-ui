@@ -1,6 +1,6 @@
 const tierSettings = [
   { tier: 0, extensions: ['TXT'] },
-  { tier: 1, extensions: ['JPG', 'PNG', 'GIF'] },
+  { tier: 1, extensions: ['JPG', 'PNG', 'GIF', 'PDF'] },
 ];
 
 export function fileExtension(fileName) {

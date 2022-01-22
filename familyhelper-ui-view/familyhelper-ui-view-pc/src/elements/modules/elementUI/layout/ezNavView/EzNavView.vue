@@ -157,7 +157,7 @@ export default {
   name: 'TagsView',
   components: { EditorNavBar, VimLabel, Draggable },
   computed: {
-    ...mapGetters('vimEzNav', ['navItems', 'annotation', 'pinnedNavItems', 'activeNavItems']),
+    ...mapGetters('vimEzNav', ['navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta']),
     ...mapGetters('vim', ['isCurrent']),
   },
   data() {
@@ -177,7 +177,9 @@ export default {
   },
   methods: {
     handleNav(itemKey) {
-      this.$router.push({ name: itemKey });
+      const { params, query } = this.itemMeta(itemKey);
+      const location = { name: itemKey, params, query };
+      this.$router.push(location);
     },
     handleRemove(itemKey) {
       this.removeItemKey(itemKey);

@@ -11,6 +11,7 @@ const state = {
   affixItemKeys: [],
   pinnedItemKeys: [],
   activeItemKeys: [],
+  itemMetaMap: {},
 };
 
 const getters = {
@@ -35,11 +36,47 @@ const getters = {
   persistenceData: (s) => ({
     pinnedItemKeys: s.pinnedItemKeys,
     activeItemKeys: s.activeItemKeys,
+    itemMetaMap: s.itemMetaMap,
   }),
+  itemMeta: (s) => (itemKey) => {
+    const metaMayExists = s.itemMetaMap[itemKey];
+    if (metaMayExists === undefined || metaMayExists === null) {
+      return { query: {}, params: {} };
+    }
+    return metaMayExists;
+  },
 };
-
 const mutations = {
   pushItemKey: (s, itemKey) => {
+    // itemMetaMap 进行添加或更新空对象。
+    s.itemMetaMap[itemKey] = { params: {}, query: {} };
+
+    // 获取 params, query 参数，并对 itemMetaMap 进行添加或更新。
+    // noinspection DuplicatedCode
+    if (s.affixItemKeys.includes(itemKey)) {
+      return;
+    }
+    if (s.pinnedItemKeys.includes(itemKey)) {
+      return;
+    }
+    if (s.activeItemKeys.includes(itemKey)) {
+      return;
+    }
+    if (s.pinnedItemKeys.length + s.activeItemKeys.length >= vim.addons.ezNav.maxActiveItem) {
+      return;
+    }
+    s.activeItemKeys.push(itemKey);
+  },
+  pushLocation: (s, location) => {
+    // 获取 location 的名称，作为接下来一系列操作的主键使用。
+    const itemKey = location.name;
+
+    // 获取 params, query 参数，并对 itemMetaMap 进行添加或更新。
+    const { params, query } = location;
+    s.itemMetaMap[itemKey] = { params, query };
+
+    // 如果 affix, pinned, active 三处数组都没有 itemKey 的话， 把 itemKey 添加到 active 数组里。
+    // noinspection DuplicatedCode
     if (s.affixItemKeys.includes(itemKey)) {
       return;
     }
@@ -68,6 +105,7 @@ const mutations = {
   restorePersistenceData: (s, pd) => {
     s.pinnedItemKeys = pd.pinnedItemKeys;
     s.activeItemKeys = pd.activeItemKeys;
+    s.itemMetaMap = pd.itemMetaMap;
   },
   clearActive: (s) => {
     s.activeItemKeys = [];
@@ -101,6 +139,9 @@ const actions = {
   pushItemKey: ({ commit }, itemKey) => {
     commit('pushItemKey', itemKey);
   },
+  pushLocation: ({ commit }, location) => {
+    commit('pushLocation', location);
+  },
   removeItemKey: ({ commit }, itemKey) => {
     commit('removeItemKey', itemKey);
   },
@@ -119,7 +160,6 @@ const actions = {
         break;
       default:
         persistenceData.activeItemKeys = [];
-        console.log(persistenceData);
         break;
     }
     commit('restorePersistenceData', persistenceData);

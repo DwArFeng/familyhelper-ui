@@ -20,7 +20,7 @@ const assetsManagement = [
       },
       permission: {
         required: true,
-        node: 'ui.pc.menu_visible.asset_management',
+        node: 'ui.pc.menu_visible.assets_management',
       },
     },
     node: {
@@ -50,7 +50,7 @@ const assetsManagement = [
       },
       permission: {
         required: true,
-        node: 'ui.pc.menu_visible.asset_management.asset_catalog',
+        node: 'ui.pc.menu_visible.assets_management.assets_catalog',
       },
     },
     node: {
@@ -80,7 +80,7 @@ const assetsManagement = [
       },
       permission: {
         required: true,
-        node: 'ui.pc.menu_visible.asset_management.asset_bom',
+        node: 'ui.pc.menu_visible.assets_management.assets_bom',
       },
     },
     node: {
@@ -110,7 +110,7 @@ const assetsManagement = [
       },
       permission: {
         required: true,
-        node: 'ui.pc.menu_visible.assets_management.bank_card_type_indicator',
+        node: 'ui.pc.menu_visible.assets_management.item_type_indicator',
       },
     },
     node: {
@@ -140,7 +140,7 @@ const assetsManagement = [
       },
       permission: {
         required: true,
-        node: 'ui.pc.menu_visible.asset_management.item_label',
+        node: 'ui.pc.menu_visible.assets_management.item_label',
       },
     },
     node: {
