@@ -10,32 +10,32 @@
     >
       <!--suppress HtmlUnknownAttribute -->
       <div
+        class="editor-container"
         v-loading="loading"
         element-loading-text="作者偷懒没有做进度显示，长时间转圈是正常现象，请耐心等待"
       >
-        <div class="editor-container">
-          <div class="item header">
-            <file-selector
-              :multiple="true"
-              :tester="tester"
-              @onFileLoaded="handleFileLoaded"
+        <div class="item header">
+          <file-selector
+            :multiple="true"
+            :tester="tester"
+            @onFileLoaded="handleFileLoaded"
+          />
+        </div>
+        <el-divider class="item"/>
+        <overlay-scrollbars class="scroll-bar body">
+          <div class="file-detail" v-for="(file, index) in files" :key="index">
+            <i class="file-item iconfont icon">{{ file.name | fileType }}</i>
+            <span class="file-item name">{{ file.name }}</span>
+            <span class="file-item size">{{ wrappedFormatUnit(file.blob.size) }}</span>
+            <el-button
+              class="file-item button"
+              icon="el-icon-delete"
+              type="danger"
+              @click="files.splice(index, 1)"
             />
           </div>
-          <el-divider class="item"/>
-          <overlay-scrollbars class="scroll-bar body">
-            <div class="file-detail" v-for="(file, index) in files" :key="index">
-              <i class="file-item iconfont icon">{{ file.name | fileType }}</i>
-              <span class="file-item name">{{ file.name }}</span>
-              <span class="file-item size">{{ wrappedFormatUnit(file.blob.size) }}</span>
-              <el-button
-                class="file-item button"
-                icon="el-icon-delete"
-                type="danger"
-                @click="files.splice(index, 1)"
-              />
-            </div>
-          </overlay-scrollbars>
-        </div>
+        </overlay-scrollbars>
+        <span>温馨提示：请不要上传过大（超过40MB）的文件哦，会失败的</span>
       </div>
       <div slot="footer">
         <el-button
@@ -104,9 +104,9 @@ export default {
   data() {
     return {
       watchedVisible: false,
+      loading: false,
       tester: () => true,
       files: [],
-      loading: false,
     };
   },
   methods: {

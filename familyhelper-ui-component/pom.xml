@@ -12,8 +12,8 @@
         <version>1.0.2.a-SNAPSHOT</version>
     </parent>
 
-    <artifactId>familyhelper-ui-view</artifactId>
-    <name>familyhelper-ui-view</name>
+    <artifactId>familyhelper-ui-component</artifactId>
+    <name>familyhelper-ui-component</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -22,7 +22,6 @@
     </properties>
 
     <modules>
-        <module>familyhelper-ui-view-pc</module>
-        <module>familyhelper-ui-view-mobile</module>
+        <module>familyhelper-ui-component-ckeditor5</module>
     </modules>
 </project>

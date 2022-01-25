@@ -31,6 +31,9 @@
   - 银行卡管理页面。
   - 资金变更记录页面。
 
+- 新建 `familyhelper-ui-component` 模块。
+  - 新建 `familyhelper-ui-component-ckeditor5` 子模块，集成 `CKEditor5`。
+
 #### Bug修复
 
 - (无)

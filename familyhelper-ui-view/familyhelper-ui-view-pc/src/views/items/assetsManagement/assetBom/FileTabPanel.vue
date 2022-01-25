@@ -10,6 +10,13 @@
       </el-button>
       <el-button
         class="item"
+        type="primary"
+        @click="createDialog.visible=true"
+      >
+        新建
+      </el-button>
+      <el-button
+        class="item"
         type="success"
         @click="handleSearch"
       >
@@ -27,12 +34,12 @@
     <el-divider/>
     <table-panel
       class="table-panel"
-      operate-column-width="130px"
       :page-size.sync="tablePanel.pageSize"
       :entity-count="parseInt(tablePanel.entities.count)"
       :current-page.sync="tablePanel.currentPage"
       :page-sizes="[10,15,20,30]"
       :table-data="tablePanel.entities.data"
+      :operate-column-width="130"
       @onPagingAttributeChanged="handlePagingAttributeChanged"
     >
       <template v-slot:default>
@@ -103,6 +110,7 @@
             icon="el-icon-edit"
             type="primary"
             :disabled="editTableButtonDisabled(row)"
+            @click="handleItemFileEdit(row)"
           />
           <el-button
             class="table-button"
@@ -128,12 +136,19 @@
       :item-id="itemId"
       @onItemFileChanged="handleSearch"
     />
+    <file-create-dialog
+      title="新建文件"
+      :visible.sync="createDialog.visible"
+      :item-id="itemId"
+      @onItemFileChanged="handleSearch"
+    />
   </div>
 </template>
 
 <script>
 import TablePanel from '@/components/table/TablePanel.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
+import FileCreateDialog from '@/views/items/assetsManagement/assetBom/FileCreateDialog.vue';
 
 import { dataSizePreset, formatUnit } from '@/util/number';
 import { formatTimestamp } from '@/util/timestamp';
@@ -151,7 +166,7 @@ import { fileType } from '@/util/file';
 
 export default {
   name: 'FileTabPanel',
-  components: { FileUploadDialog, TablePanel },
+  components: { FileCreateDialog, FileUploadDialog, TablePanel },
   props: {
     itemId: {
       type: String,
@@ -216,6 +231,9 @@ export default {
         ],
       },
       uploadDialog: {
+        visible: false,
+      },
+      createDialog: {
         visible: false,
       },
       loading: false,
@@ -388,6 +406,9 @@ export default {
     },
     handleItemFileInspect(row) {
       this.$router.push({ name: 'miscellaneous.fileEditor', query: { type: 'itemFile', action: 'inspect', id: row.key.long_id } });
+    },
+    handleItemFileEdit(row) {
+      this.$router.push({ name: 'miscellaneous.fileEditor', query: { type: 'itemFile', action: 'edit', id: row.key.long_id } });
     },
   },
   mounted() {

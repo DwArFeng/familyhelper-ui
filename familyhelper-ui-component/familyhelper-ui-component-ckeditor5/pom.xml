@@ -5,15 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>familyhelper-ui-view</artifactId>
+        <artifactId>familyhelper-ui-component</artifactId>
         <groupId>com.dwarfeng</groupId>
         <version>1.0.2.a-SNAPSHOT</version>
     </parent>
 
-    <packaging>pom</packaging>
-
-    <artifactId>familyhelper-ui-view-pc</artifactId>
-    <name>familyhelper-ui-view-pc</name>
+    <artifactId>familyhelper-ui-component-ckeditor5</artifactId>
+    <name>familyhelper-ui-component-ckeditor5</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -22,33 +20,8 @@
     </properties>
 
     <build>
+        <!-- Maven 前端插件，用于执行npm指令。 -->
         <plugins>
-            <!-- Maven 资源插件，用于拷贝 component 资源。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-familyhelper-ui-component-ckeditor5-bin</id>
-                        <phase>validate</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/src/elements/modules/ckeditor/bin</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>
-                                        ../../familyhelper-ui-component/familyhelper-ui-component-ckeditor5/dist
-                                    </directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Maven 前端插件，用于执行npm指令。 -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
@@ -74,17 +47,6 @@
                             <arguments>install --no-save</arguments>
                         </configuration>
                     </execution>
-                    <!-- Lint files -->
-                    <execution>
-                        <id>npm run lint</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>run lint</arguments>
-                        </configuration>
-                    </execution>
                     <!-- Build and minify static files -->
                     <execution>
                         <id>npm run build</id>
@@ -107,9 +69,6 @@
                         <fileset>
                             <directory>dist</directory>
                             <directory>node</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>src/elements/modules/ckeditor/bin</directory>
                         </fileset>
                     </filesets>
                 </configuration>

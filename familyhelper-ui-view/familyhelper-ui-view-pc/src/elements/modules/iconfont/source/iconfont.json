@@ -6,6 +6,20 @@
   "description": "家庭帮手",
   "glyphs": [
     {
+      "icon_id": "22272921",
+      "name": "suffix-md",
+      "font_class": "suffix-md",
+      "unicode": "ffe1",
+      "unicode_decimal": 65505
+    },
+    {
+      "icon_id": "22272922",
+      "name": "suffix-rtf",
+      "font_class": "suffix-rtf",
+      "unicode": "ffe2",
+      "unicode_decimal": 65506
+    },
+    {
       "icon_id": "16035951",
       "name": "file-search-line",
       "font_class": "file-search-line",

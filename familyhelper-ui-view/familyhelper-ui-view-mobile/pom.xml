@@ -46,7 +46,7 @@
                         <phase>generate-resources</phase>
                         <!-- Optional configuration which provides for running any npm command -->
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>install --no-save</arguments>
                         </configuration>
                     </execution>
                     <!-- Lint files -->

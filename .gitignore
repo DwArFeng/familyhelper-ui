@@ -61,6 +61,7 @@ yarn-error.log*
 #################
 ## Maven Npm Files
 #################
+/familyhelper-ui-component/familyhelper-ui-component-ckeditor5/node/
 /familyhelper-ui-view/familyhelper-ui-view-mobile/node/
 /familyhelper-ui-view/familyhelper-ui-view-pc/node/
 

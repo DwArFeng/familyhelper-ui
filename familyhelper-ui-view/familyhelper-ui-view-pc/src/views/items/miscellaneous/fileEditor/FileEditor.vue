@@ -22,6 +22,10 @@
         v-else-if="subEditor.pdfEditorExtensions.indexOf(extension) >= 0"
         :url="fileIndicator.url"
       />
+      <rtf-sub-editor
+        v-else-if="subEditor.rtfEditorExtensions.indexOf(extension) >= 0"
+        :url="fileIndicator.url"
+      />
     </div>
     <div class="type-unsupported" v-else>不支持的类型: {{query.type}}</div>
   </div>
@@ -31,6 +35,7 @@
 <script>
 import PhotoSubEditor from '@/views/items/miscellaneous/fileEditor/PhotoSubEditor.vue';
 import PdfSubEditor from '@/views/items/miscellaneous/fileEditor/PdfSubEditor.vue';
+import RtfSubEditor from '@/views/items/miscellaneous/fileEditor/RtfSubEditor.vue';
 
 import { inspect, download } from '@/api/assets/itemFile';
 
@@ -39,7 +44,7 @@ import resolveResponse from '@/util/response';
 
 export default {
   name: 'FileEditor',
-  components: { PhotoSubEditor, PdfSubEditor },
+  components: { PhotoSubEditor, PdfSubEditor, RtfSubEditor },
   computed: {
     typeSupported() {
       return this.util.supportedTypes.indexOf(this.query.type) >= 0;
@@ -107,6 +112,7 @@ export default {
       subEditor: {
         photoEditorExtensions: ['JPG', 'PNG', 'GIF'],
         pdfEditorExtensions: ['PDF'],
+        rtfEditorExtensions: ['RTF'],
       },
     };
   },

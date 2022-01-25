@@ -109,6 +109,7 @@
     </build>
 
     <modules>
+        <module>familyhelper-ui-component</module>
         <module>familyhelper-ui-view</module>
         <module>familyhelper-ui-node</module>
         <module>familyhelper-ui-distribute</module>
