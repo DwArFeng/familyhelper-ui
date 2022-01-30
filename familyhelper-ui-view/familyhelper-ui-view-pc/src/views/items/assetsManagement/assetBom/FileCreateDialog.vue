@@ -121,9 +121,9 @@ export default {
         },
         {
           icon: '\uffe1',
-          label: 'Markdown',
-          description: '使用 Markdown 语言的标记文件，轻量化且格式丰富',
-          extension: '.md',
+          label: '纯文本',
+          description: '纯文本文件，节约空间',
+          extension: '.txt',
         },
       ],
       selectedIndex: 0,

@@ -1,5 +1,5 @@
 const tierSettings = [
-  { tier: 0, extensions: ['RTF', 'MD'] },
+  { tier: 0, extensions: ['RTF', 'TXT'] },
   { tier: 1, extensions: ['JPG', 'PNG', 'GIF', 'PDF'] },
 ];
 

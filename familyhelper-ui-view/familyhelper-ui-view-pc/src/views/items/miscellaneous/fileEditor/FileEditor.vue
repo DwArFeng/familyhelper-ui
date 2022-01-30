@@ -1,69 +1,83 @@
 <template>
-<div class="file-editor-container" v-loading="loading">
-  <div class="editor-header">
-    <div class="file-indicator">
-      <!--suppress JSUnresolvedVariable -->
-      <i class="iconfont icon">{{ fileIndicator.originName | fileType }}</i>
-      <span>{{ fileIndicator.originName }}</span>
+  <div class="file-editor-container" v-loading="loading">
+    <div class="editor-header">
+      <div class="file-indicator">
+        <!--suppress JSUnresolvedVariable -->
+        <i class="iconfont icon">{{ fileIndicator.originName | fileType }}</i>
+        <span>{{ fileIndicator.originName }}</span>
+      </div>
+      <div class="button">
+        <el-button v-if="editable" type="primary" @click="handleCommitButtonClicked">提交</el-button>
+        <el-button v-if="editable" type="danger" @click="handleResetButtonClicked">重置</el-button>
+      </div>
     </div>
-    <div class="button">
-      <el-button v-if="editable" type="primary" @click="handleCommitButtonClicked">提交</el-button>
-      <el-button v-if="editable" type="danger" @click="handleResetButtonClicked">重置</el-button>
-    </div>
-  </div>
-  <el-divider/>
-  <div class="editor-body">
-    <div class="sub-editor-wrapper" v-if="typeSupported">
+    <el-divider/>
+    <div class="editor-body">
       <photo-sub-editor
-        v-if="photoSubEditorVisible"
+        v-if="photoSubEditorUsing"
         :url="fileIndicator.url"
       />
       <pdf-sub-editor
-        v-else-if="pdfSubEditorVisible"
+        v-else-if="pdfSubEditorUsing"
         :url="fileIndicator.url"
       />
       <rtf-sub-editor
-        v-else-if="rtfSubEditorVisible"
+        v-else-if="rtfSubEditorUsing"
         ref="rtfSubEditor"
         :blob="fileIndicator.blob"
+        :readonly="query.action==='inspect'"
       />
+      <txt-sub-editor
+        v-else-if="txtSubEditorUsing"
+        ref="txtSubEditor"
+        :blob="fileIndicator.blob"
+        :readonly="query.action==='inspect'"
+      />
+      <div class="placeholder" v-else>
+        未能找到扩展名为 {{ extension }} 的{{ query.action === 'inspect' ? '查看器' : '编辑器' }}
+      </div>
     </div>
-    <div class="type-unsupported" v-else>不支持的类型: {{query.type}}</div>
   </div>
-</div>
 </template>
 
 <script>
 import PhotoSubEditor from '@/views/items/miscellaneous/fileEditor/PhotoSubEditor.vue';
 import PdfSubEditor from '@/views/items/miscellaneous/fileEditor/PdfSubEditor.vue';
 import RtfSubEditor from '@/views/items/miscellaneous/fileEditor/RtfSubEditor.vue';
+import TxtSubEditor from '@/views/items/miscellaneous/fileEditor/TxtSubEditor.vue';
 
-import { inspect as inspectItemFile, download as downloadItemFile, update as updateItemFile } from '@/api/assets/itemFile';
+import {
+  inspect as inspectItemFile,
+  download as downloadItemFile,
+  update as updateItemFile,
+} from '@/api/assets/itemFile';
 
 import { fileExtension, fileType } from '@/util/file';
 import resolveResponse from '@/util/response';
 
 export default {
   name: 'FileEditor',
-  components: { PhotoSubEditor, PdfSubEditor, RtfSubEditor },
+  components: {
+    PhotoSubEditor, PdfSubEditor, RtfSubEditor, TxtSubEditor,
+  },
   computed: {
-    typeSupported() {
-      return this.util.supportedTypes.indexOf(this.query.type) >= 0;
-    },
     editable() {
-      return fileType(this.fileIndicator.originName) === 0;
+      return fileType(this.fileIndicator.originName) === 0 && this.query.action === 'edit';
     },
     extension() {
       return fileExtension(this.fileIndicator.originName).toUpperCase();
     },
-    photoSubEditorVisible() {
-      return this.subEditor.photoEditorExtensions.indexOf(this.extension) >= 0;
+    photoSubEditorUsing() {
+      return this.subEditor.photoEditorExtensions.indexOf(this.extension) >= 0 && this.query.action === 'inspect';
     },
-    pdfSubEditorVisible() {
-      return this.subEditor.pdfEditorExtensions.indexOf(this.extension) >= 0;
+    pdfSubEditorUsing() {
+      return this.subEditor.pdfEditorExtensions.indexOf(this.extension) >= 0 && this.query.action === 'inspect';
     },
-    rtfSubEditorVisible() {
+    rtfSubEditorUsing() {
       return this.subEditor.rtfEditorExtensions.indexOf(this.extension) >= 0;
+    },
+    txtSubEditorUsing() {
+      return this.subEditor.txtEditorExtensions.indexOf(this.extension) >= 0;
     },
   },
   watch: {
@@ -123,6 +137,7 @@ export default {
         photoEditorExtensions: ['JPG', 'PNG', 'GIF'],
         pdfEditorExtensions: ['PDF'],
         rtfEditorExtensions: ['RTF'],
+        txtEditorExtensions: ['TXT'],
       },
     };
   },
@@ -144,7 +159,7 @@ export default {
       }
       resolveResponse(inspectItemFile(id))
         .then((res) => {
-        // noinspection JSUnresolvedVariable
+          // noinspection JSUnresolvedVariable
           this.fileIndicator.originName = res.origin_name;
         })
         .then(() => downloadItemFile(id))
@@ -164,8 +179,10 @@ export default {
     },
     commitFile() {
       let blob = null;
-      if (this.rtfSubEditorVisible) {
+      if (this.rtfSubEditorUsing) {
         blob = this.$refs.rtfSubEditor.contentToBlob();
+      } else if (this.txtSubEditorUsing) {
+        blob = this.$refs.txtSubEditor.contentToBlob();
       }
       if (blob === null) {
         return;
@@ -205,7 +222,7 @@ export default {
 </script>
 
 <style scoped>
-.file-editor-container{
+.file-editor-container {
   height: 100%;
   width: 100%;
   display: flex;
@@ -217,35 +234,30 @@ export default {
   margin: 5px 0;
 }
 
-.file-editor-container .editor-header{
+.file-editor-container .editor-header {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
-.file-editor-container .editor-header .file-indicator{
+.file-editor-container .editor-header .file-indicator {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.file-editor-container .editor-header .icon{
+.file-editor-container .editor-header .icon {
   font-size: 32px;
   user-select: none;
 }
 
-.file-editor-container .editor-body{
+.file-editor-container .editor-body {
   height: 0;
   flex-grow: 1;
 }
 
-.file-editor-container .editor-body .sub-editor-wrapper{
-  height: 100%;
-  width: 100%;
-}
-
-.file-editor-container .editor-body .type-unsupported{
+.placeholder {
   width: 100%;
   height: 100%;
   text-align: center;

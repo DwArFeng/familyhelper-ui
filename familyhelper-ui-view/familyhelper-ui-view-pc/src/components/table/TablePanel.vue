@@ -303,6 +303,8 @@ export default {
   flex-direction: column;
   height: 100%;
   width: 100%;
+  /**解决分页控件被选中时边框实现不全的问题。*/
+  padding-bottom: 1px;
 }
 
 .table-container {

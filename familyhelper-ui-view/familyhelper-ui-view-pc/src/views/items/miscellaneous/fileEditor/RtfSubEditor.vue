@@ -1,6 +1,6 @@
 <template>
   <div class="rtf-sub-editor-container">
-    <ckeditor :editor="editor" v-model="content"/>
+    <ckeditor :editor="editorClass" v-model="content" @ready="handleEditorReady"/>
   </div>
 </template>
 
@@ -14,6 +14,10 @@ export default {
       type: Blob,
       default: null,
     },
+    readonly: {
+      type: Boolean,
+      default: true,
+    },
   },
   watch: {
     blob(value) {
@@ -22,16 +26,35 @@ export default {
           this.content = text;
         });
     },
+    readonly(value) {
+      if (this.editor === null) {
+        return;
+      }
+      this.editor.isReadOnly = value;
+    },
   },
   data() {
     return {
-      editor: ClassicEditor,
+      editorClass: ClassicEditor,
+      editor: null,
       content: '',
     };
   },
   methods: {
     contentToBlob() {
       return new Blob([this.content], { type: 'text/plain' });
+    },
+    handleEditorReady(editor) {
+      this.editor = editor;
+      const toolbarElement = this.editor.ui.view.toolbar.element;
+      this.editor.on('change:isReadOnly', (evt, propertyName, isReadOnly) => {
+        if (isReadOnly) {
+          toolbarElement.style.display = 'none';
+        } else {
+          toolbarElement.style.display = 'flex';
+        }
+      });
+      this.editor.isReadOnly = this.readonly;
     },
   },
 };
