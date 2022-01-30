@@ -5,15 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>familyhelper-ui-view</artifactId>
+        <artifactId>familyhelper-ui-component</artifactId>
         <groupId>com.dwarfeng</groupId>
         <version>1.0.2.a-SNAPSHOT</version>
     </parent>
 
-    <packaging>pom</packaging>
-
-    <artifactId>familyhelper-ui-view-mobile</artifactId>
-    <name>familyhelper-ui-view-mobile</name>
+    <artifactId>familyhelper-ui-component-iconfont</artifactId>
+    <name>familyhelper-ui-component-iconfont</name>
     <url>http://maven.apache.org</url>
 
     <properties>
@@ -47,17 +45,6 @@
                         <!-- Optional configuration which provides for running any npm command -->
                         <configuration>
                             <arguments>install --no-save</arguments>
-                        </configuration>
-                    </execution>
-                    <!-- Lint files -->
-                    <execution>
-                        <id>npm run lint</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>run lint</arguments>
                         </configuration>
                     </execution>
                     <!-- Build and minify static files -->

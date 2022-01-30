@@ -32,7 +32,7 @@
                             <goal>install-node-and-npm</goal>
                         </goals>
                         <configuration>
-                            <nodeVersion>v12.16.1</nodeVersion>
+                            <nodeVersion>${nodejs.version}</nodeVersion>
                         </configuration>
                     </execution>
                     <!-- Install all project dependencies -->

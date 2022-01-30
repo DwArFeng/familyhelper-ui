@@ -1,4 +1,4 @@
-# Iconfont source files
-src/elements/modules/iconfont/source
+# Iconfont bin files
+src/elements/modules/iconfont/bin
 # CKEditor bin files
 src/elements/modules/ckeditor/bin

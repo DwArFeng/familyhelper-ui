@@ -6,9 +6,9 @@
   "description": "家庭帮手",
   "glyphs": [
     {
-      "icon_id": "22272921",
-      "name": "suffix-md",
-      "font_class": "suffix-md",
+      "icon_id": "22272828",
+      "name": "suffix-txt",
+      "font_class": "suffix-txt",
       "unicode": "ffe1",
       "unicode_decimal": 65505
     },

@@ -49,6 +49,10 @@ export function upload(itemKey, formData) {
   return postFormData('assets', `item/${itemKey}/item-file/upload/`, formData);
 }
 
+export function update(itemFileKey, formData) {
+  return postFormData('assets', `/item-file/${itemFileKey}/update/`, formData);
+}
+
 export function remove(key) {
   return post('assets', 'item-file/remove/', {
     long_id: key,

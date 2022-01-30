@@ -33,6 +33,7 @@
 
 - 新建 `familyhelper-ui-component` 模块。
   - 新建 `familyhelper-ui-component-ckeditor5` 子模块，集成 `CKEditor5`。
+  - 新建 `familyhelper-ui-component-iconfont` 子模块，集成 `Iconfont`。
 
 #### Bug修复
 

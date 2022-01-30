@@ -7,24 +7,25 @@
       <span>{{ fileIndicator.originName }}</span>
     </div>
     <div class="button">
-      <el-button v-if="editable" type="primary">提交</el-button>
-      <el-button v-if="editable" type="danger">取消</el-button>
+      <el-button v-if="editable" type="primary" @click="handleCommitButtonClicked">提交</el-button>
+      <el-button v-if="editable" type="danger" @click="handleResetButtonClicked">重置</el-button>
     </div>
   </div>
   <el-divider/>
   <div class="editor-body">
     <div class="sub-editor-wrapper" v-if="typeSupported">
       <photo-sub-editor
-        v-if="subEditor.photoEditorExtensions.indexOf(extension) >= 0"
+        v-if="photoSubEditorVisible"
         :url="fileIndicator.url"
       />
       <pdf-sub-editor
-        v-else-if="subEditor.pdfEditorExtensions.indexOf(extension) >= 0"
+        v-else-if="pdfSubEditorVisible"
         :url="fileIndicator.url"
       />
       <rtf-sub-editor
-        v-else-if="subEditor.rtfEditorExtensions.indexOf(extension) >= 0"
-        :url="fileIndicator.url"
+        v-else-if="rtfSubEditorVisible"
+        ref="rtfSubEditor"
+        :blob="fileIndicator.blob"
       />
     </div>
     <div class="type-unsupported" v-else>不支持的类型: {{query.type}}</div>
@@ -37,7 +38,7 @@ import PhotoSubEditor from '@/views/items/miscellaneous/fileEditor/PhotoSubEdito
 import PdfSubEditor from '@/views/items/miscellaneous/fileEditor/PdfSubEditor.vue';
 import RtfSubEditor from '@/views/items/miscellaneous/fileEditor/RtfSubEditor.vue';
 
-import { inspect, download } from '@/api/assets/itemFile';
+import { inspect as inspectItemFile, download as downloadItemFile, update as updateItemFile } from '@/api/assets/itemFile';
 
 import { fileExtension, fileType } from '@/util/file';
 import resolveResponse from '@/util/response';
@@ -54,6 +55,15 @@ export default {
     },
     extension() {
       return fileExtension(this.fileIndicator.originName).toUpperCase();
+    },
+    photoSubEditorVisible() {
+      return this.subEditor.photoEditorExtensions.indexOf(this.extension) >= 0;
+    },
+    pdfSubEditorVisible() {
+      return this.subEditor.pdfEditorExtensions.indexOf(this.extension) >= 0;
+    },
+    rtfSubEditorVisible() {
+      return this.subEditor.rtfEditorExtensions.indexOf(this.extension) >= 0;
     },
   },
   watch: {
@@ -132,12 +142,12 @@ export default {
       if (this.fileIndicator.url !== '') {
         window.URL.revokeObjectURL(this.fileIndicator.url);
       }
-      resolveResponse(inspect(id))
+      resolveResponse(inspectItemFile(id))
         .then((res) => {
         // noinspection JSUnresolvedVariable
           this.fileIndicator.originName = res.origin_name;
         })
-        .then(() => download(id))
+        .then(() => downloadItemFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
           this.fileIndicator.url = window.URL.createObjectURL(blob);
@@ -145,6 +155,38 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    handleCommitButtonClicked() {
+      this.commitFile();
+    },
+    handleResetButtonClicked() {
+      this.handleInspect();
+    },
+    commitFile() {
+      let blob = null;
+      if (this.rtfSubEditorVisible) {
+        blob = this.$refs.rtfSubEditor.contentToBlob();
+      }
+      if (blob === null) {
+        return;
+      }
+      const formData = new FormData();
+      formData.append('file', blob, this.fileIndicator.originName);
+      switch (this.query.type) {
+        case 'itemFile':
+          resolveResponse(updateItemFile(this.query.id, formData))
+            .then(() => {
+              this.$message({
+                showClose: true,
+                message: '项目文件提交成功',
+                type: 'success',
+                center: true,
+              });
+            });
+          break;
+        default:
+          break;
+      }
     },
   },
   mounted() {

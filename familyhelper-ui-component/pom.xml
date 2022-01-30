@@ -23,5 +23,6 @@
 
     <modules>
         <module>familyhelper-ui-component-ckeditor5</module>
+        <module>familyhelper-ui-component-iconfont</module>
     </modules>
 </project>

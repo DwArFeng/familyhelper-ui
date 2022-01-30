@@ -1,19 +1,19 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2850115 */
-  src: url('iconfont.woff2?t=1642921413584') format('woff2'),
-       url('iconfont.woff?t=1642921413584') format('woff'),
-       url('iconfont.ttf?t=1642921413584') format('truetype');
+  src: url('iconfont.woff2?t=1643510894709') format('woff2'),
+       url('iconfont.woff?t=1643510894709') format('woff'),
+       url('iconfont.ttf?t=1643510894709') format('truetype');
 }
 
 .iconfont {
-  font-family: "iconfont", serif !important;
+  font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-suffix-md:before {
+.icon-suffix-txt:before {
   content: "\ffe1";
 }
 

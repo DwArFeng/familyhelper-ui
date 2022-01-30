@@ -10,18 +10,30 @@ import ClassicEditor from '@/elements/modules/ckeditor/bin/ckeditor';
 export default {
   name: 'RtfSubEditor',
   props: {
-    url: {
-      type: String,
-      default: '',
+    blob: {
+      type: Blob,
+      default: null,
+    },
+  },
+  watch: {
+    blob(value) {
+      value.text()
+        .then((text) => {
+          this.content = text;
+        });
     },
   },
   data() {
     return {
       editor: ClassicEditor,
-      content: '<p>Content of the editor.</p>',
+      content: '',
     };
   },
-  methods: {},
+  methods: {
+    contentToBlob() {
+      return new Blob([this.content], { type: 'text/plain' });
+    },
+  },
 };
 </script>
 
