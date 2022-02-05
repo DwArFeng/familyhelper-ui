@@ -9,7 +9,7 @@
     <parent>
         <artifactId>familyhelper-ui</artifactId>
         <groupId>com.dwarfeng</groupId>
-        <version>1.0.2.a-SNAPSHOT</version>
+        <version>1.0.2.a</version>
     </parent>
 
     <artifactId>familyhelper-ui-view</artifactId>
