@@ -1,7 +1,7 @@
 const systemSettings = [
   {
     key: 'systemSettings',
-    index: 100,
+    index: 110,
     meta: {
       display: {
         iconType: 'elementUI',
