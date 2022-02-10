@@ -11,7 +11,7 @@
         </div>
         <el-tabs
           class="asset-tabs"
-          tab-position="right"
+          tab-position="left"
           v-model="assetTabs.activeName"
           v-else
         >

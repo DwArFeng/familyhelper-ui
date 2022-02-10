@@ -166,7 +166,7 @@ export default {
         },
         rules: {
           name: [
-            { required: true, message: '账本名称不能为空', trigger: 'blur' },
+            { required: true, message: '资产目录名称不能为空', trigger: 'blur' },
           ],
         },
       },
@@ -217,7 +217,7 @@ export default {
         .then((res) => {
           if (res.count >= this.cardPanel.maxCard) {
             this.$alert(
-              `您创建了过多的账本，每个人创建账本的最大数量不应超过 ${this.cardPanel.maxCard}
+              `您创建了过多的资产目录，每个人创建资产目录的最大数量不应超过 ${this.cardPanel.maxCard}
                个！<br>${this.cardPanel.maxCard}个应该够用了QwQ`,
               {
                 confirmButtonText: '确定',
@@ -245,7 +245,7 @@ export default {
         .then(() => {
           this.$message({
             showClose: true,
-            message: `账本 ${this.entityMaintainDialog.anchorEntity.name} 创建成功`,
+            message: `资产目录 ${this.entityMaintainDialog.anchorEntity.name} 创建成功`,
             type: 'success',
             center: true,
           });
@@ -269,7 +269,7 @@ export default {
         .then(() => {
           this.$message({
             showClose: true,
-            message: `账本 ${this.entityMaintainDialog.anchorEntity.name} 更新成功`,
+            message: `资产目录 ${this.entityMaintainDialog.anchorEntity.name} 更新成功`,
             type: 'success',
             center: true,
           });
@@ -287,7 +287,7 @@ export default {
     handleItemToEdit(index, item) {
       // noinspection JSUnresolvedVariable,JSIncompatibleTypesComparison
       if (item.permission_level !== 0) {
-        this.$alert('您不是此账本的所有者，无权编辑该账本！', '权限不足', {
+        this.$alert('您不是此资产目录的所有者，无权编辑该资产目录！', '权限不足', {
           confirmButtonText: '确定',
           type: 'warning',
           customClass: 'custom-message-box__w500',
@@ -305,7 +305,7 @@ export default {
         .then((res) => {
           // noinspection JSUnresolvedVariable
           if (res.permission_level !== 0) {
-            this.$alert('您不是此账本的所有者，无权删除该账本！', '权限不足', {
+            this.$alert('您不是此资产目录的所有者，无权删除该资产目录！', '权限不足', {
               confirmButtonText: '确定',
               type: 'warning',
               customClass: 'custom-message-box__w500',
@@ -325,7 +325,7 @@ export default {
         .then((res) => {
           // noinspection JSUnresolvedVariable
           if (res.permission_level !== 0) {
-            this.$alert('您不是此账本的所有者，无权删除该账本！', '权限不足', {
+            this.$alert('您不是此资产目录的所有者，无权删除该资产目录！', '权限不足', {
               confirmButtonText: '确定',
               type: 'warning',
               customClass: 'custom-message-box__w500',
@@ -334,7 +334,7 @@ export default {
           }
           return Promise.resolve(res.key.long_id);
         })
-        .then((res) => this.$confirm('此操作将永久删除此账本。<br>是否继续?',
+        .then((res) => this.$confirm('此操作将永久删除此资产目录。<br>是否继续?',
           '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
@@ -346,7 +346,7 @@ export default {
         .then(() => {
           this.$message({
             showClose: true,
-            message: `账本 ${item.name} 删除成功`,
+            message: `资产目录 ${item.name} 删除成功`,
             type: 'success',
             center: true,
           });
