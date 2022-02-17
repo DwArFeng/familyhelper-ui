@@ -29,7 +29,7 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>copy-familyhelper-ui-component-ckeditor5-bin</id>
+                        <id>copy-familyhelper-ui-component-ckeditor5</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>copy-resources</goal>
@@ -47,17 +47,35 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>copy-familyhelper-ui-component-iconfont-bin</id>
+                        <id>copy-familyhelper-ui-component-iconfont</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>src/elements/modules/iconfont/bin</outputDirectory>
+                            <outputDirectory>src/elements/modules/iconfont/src</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>
-                                        ../../familyhelper-ui-component/familyhelper-ui-component-iconfont/dist
+                                        ../../familyhelper-ui-component/familyhelper-ui-component-iconfont/src
+                                    </directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-familyhelper-ui-component-api</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ../../familyhelper-ui-component/familyhelper-ui-component-api/src
                                     </directory>
                                     <filtering>false</filtering>
                                 </resource>
@@ -128,6 +146,18 @@
                         </fileset>
                         <fileset>
                             <directory>src/elements/modules/ckeditor/bin</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>src/elements/modules/iconfont/src</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>src/api</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>src/util</directory>
+                            <includes>
+                                <include>http.js</include>
+                            </includes>
                         </fileset>
                     </filesets>
                 </configuration>

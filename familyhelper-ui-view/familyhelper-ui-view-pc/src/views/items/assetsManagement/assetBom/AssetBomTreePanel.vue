@@ -15,7 +15,7 @@
     <tree-panel
       class="tree-panel"
       ref="treePanel"
-      v-cloak
+      v-loading="treeLoading"
       node-key="node_key"
       :tree-data="treeData"
       :tree-props="treeProps"
@@ -81,14 +81,19 @@ export default {
         label: (data) => data.name,
         isLeaf: (data) => data.has_no_child,
       },
+      treeLoading: false,
     };
   },
   methods: {
     inspectRoot() {
+      this.treeLoading = true;
       resolveResponse(childForAssetCatalogRootDisp(this.assetCatalogKey, 0, 1000))
         .then(this.appendEntitiesNodeKey)
         .then((res) => {
           this.treeData = res.data;
+        })
+        .finally(() => {
+          this.treeLoading = false;
         });
     },
     handleTreeSearch() {
@@ -105,24 +110,7 @@ export default {
         this.treeData = [];
         this.treeSelection = {
           node: null,
-          data: {
-            key: {
-              string_id: '',
-            },
-            parent_permission_group: {
-              key: {
-                string_id: '',
-              },
-              parent_key: {
-                string_id: '',
-              },
-              name: '',
-              remark: '',
-            },
-            name: '',
-            remark: '',
-            has_no_child: true,
-          },
+          data: null,
         };
         this.inspectRoot();
       }

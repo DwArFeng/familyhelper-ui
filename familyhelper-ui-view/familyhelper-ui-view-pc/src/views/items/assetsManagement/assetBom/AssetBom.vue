@@ -313,10 +313,6 @@ export default {
       this.parentSelection.assetCatalog = assetCatalog;
       this.parentSelection.assetCatalogId = assetCatalog.key.long_id;
       this.parentSelection.displayValue = assetCatalog.name;
-      this.handleSearch();
-    },
-    handleSearch() {
-
     },
     handleCurrentChanged(node, data) {
       this.treePanel.selection.node = node;
@@ -489,7 +485,6 @@ export default {
     this.updateParentSelectionDisplayValue();
     this.handleTypeIndicatorSearch();
     this.handleLabelSearch();
-    this.handleSearch();
   },
 };
 </script>

@@ -76,7 +76,7 @@ const projectHelper = [
       router: {
         required: true,
         path: 'app/project-helper/task',
-        component: () => import('@/views/items/projectHelper/task/Task.vue'),
+        component: () => import('@/views/items/projectHelper/taskView/TaskView.vue'),
       },
       permission: {
         required: true,

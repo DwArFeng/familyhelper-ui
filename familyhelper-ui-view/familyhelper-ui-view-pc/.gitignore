@@ -20,3 +20,12 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Iconfont src files
+src/elements/modules/iconfont/src
+
+# API files
+src/api
+
+# Http lib file
+util/http.js
