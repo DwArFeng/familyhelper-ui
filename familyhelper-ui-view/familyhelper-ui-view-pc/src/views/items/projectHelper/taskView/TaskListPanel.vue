@@ -13,12 +13,27 @@
       />
     </el-input>
     <overlay-scrollbars class="scroll-bar">
-      <el-collapse v-model="listActiveName" accordion>
+      <el-collapse v-loading="listLoading" v-model="listActiveName">
         <el-collapse-item title="正在进行" name="inProgress">
+          <task-sub-list-panel
+            :task-list="inProgress"
+            :selection="selection"
+            @onTaskClicked="handleTaskClicked"
+          />
         </el-collapse-item>
         <el-collapse-item title="还未开始" name="notStart">
+          <task-sub-list-panel
+            :task-list="notStart"
+            :selection="selection"
+            @onTaskClicked="handleTaskClicked"
+          />
         </el-collapse-item>
         <el-collapse-item title="已经完成" name="finished">
+          <task-sub-list-panel
+            :task-list="finished"
+            :selection="selection"
+            @onTaskClicked="handleTaskClicked"
+          />
         </el-collapse-item>
       </el-collapse>
     </overlay-scrollbars>
@@ -26,8 +41,14 @@
 </template>
 
 <script>
+import TaskSubListPanel from '@/views/items/projectHelper/taskView/TaskSubListPanel.vue';
+
+import resolveResponse from '@/util/response';
+import { childForProjectDisp } from '@/api/project/task';
+
 export default {
   name: 'TaskListPanel',
+  components: { TaskSubListPanel },
   props: {
     projectKey: {
       type: String,
@@ -41,6 +62,11 @@ export default {
       default: 'DEFAULT',
     },
   },
+  watch: {
+    projectKey() {
+      this.inspectData();
+    },
+  },
   data() {
     return {
       taskNameToSearch: '',
@@ -49,11 +75,41 @@ export default {
       inProgress: [],
       notStart: [],
       finished: [],
+      selection: '',
     };
   },
   methods: {
     inspectData() {
-
+      if (this.projectKey === '') {
+        return;
+      }
+      this.listLoading = true;
+      resolveResponse(childForProjectDisp(this.projectKey, 0, 1000))
+        .then(this.updateListView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.listLoading = false;
+        });
+    },
+    updateListView(res) {
+      this.inProgress.splice(0, this.inProgress.length);
+      this.notStart.splice(0, this.notStart.length);
+      this.finished.splice(0, this.finished.length);
+      res.data.forEach((task) => {
+        switch (task.status) {
+          case 0:
+            this.notStart.push(task);
+            break;
+          case 1:
+            this.inProgress.push(task);
+            break;
+          case 2:
+            this.finished.push(task);
+            break;
+          default:
+        }
+      });
     },
     handleListSearch() {
       if (this.projectKey === '') {
@@ -73,11 +129,12 @@ export default {
         this.inspectData();
       }
     },
+    handleTaskClicked(taskId) {
+      this.selection = taskId;
+      this.$emit('onCurrentChanged', this.selection);
+    },
   },
   mounted() {
-    if (this.assetCatalogKey === '') {
-      return;
-    }
     this.inspectData();
   },
 };

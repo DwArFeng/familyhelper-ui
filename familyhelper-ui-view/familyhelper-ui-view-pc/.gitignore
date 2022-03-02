@@ -28,4 +28,4 @@ src/elements/modules/iconfont/src
 src/api
 
 # Http lib file
-util/http.js
+src/util/http.js

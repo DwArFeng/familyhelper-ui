@@ -254,9 +254,9 @@ export default {
   height: 100%;
 }
 
-/*noinspection CssUnusedSymbol*/
-.property-form >>> .el-divider:not(:first-child) {
-  margin-top: 40px
+.property-form  {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .property-form >>> label {
@@ -270,11 +270,17 @@ export default {
   margin-bottom: 0;
   width: 51%;
   white-space: nowrap;
+  display: flex;
+  flex-direction: row;
 }
 
 /*noinspection CssUnusedSymbol*/
 .property-form >>> .el-form-item__content {
+  width: 0;
+  margin-right: 5px;
+  flex-grow: 1;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .property-form .form-tag:not(:first-child) {
