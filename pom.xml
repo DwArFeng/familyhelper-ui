@@ -23,7 +23,7 @@
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
         <spring.version>5.2.5.RELEASE</spring.version>
-        <log4j2.version>2.12.1</log4j2.version>
+        <log4j2.version>2.17.1</log4j2.version>
         <slf4j.version>1.7.5</slf4j.version>
         <!-- Maven插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
