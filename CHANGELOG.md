@@ -11,6 +11,8 @@
 - 前端工程结构变更。
   - 新建模块 familyhelper-ui-component-api, 用于分离 api。
 
+- 添加项目的许可证。
+
 #### Bug修复
 
 - (无)
