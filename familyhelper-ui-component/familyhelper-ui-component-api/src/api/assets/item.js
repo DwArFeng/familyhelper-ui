@@ -91,9 +91,7 @@ export function create(assetCatalogKey, parentKey, labelKeys, name, type, lifeCy
     });
 }
 
-export function update(
-    assetCatalogKey, itemKey, parentKey, labelKeys, name, type, lifeCycle, remark,
-) {
+export function update(itemKey, parentKey, labelKeys, name, type, lifeCycle, remark) {
     let finalParentKey = {
         long_id: parentKey,
     };
@@ -102,9 +100,6 @@ export function update(
     }
     const finalLabelKeys = labelKeys.map((key) => ({string_id: key}));
     return post('assets', 'item/update', {
-        asset_catalog_key: {
-            long_id: assetCatalogKey,
-        },
         item_key: {
             long_id: itemKey,
         },

@@ -450,7 +450,6 @@ export default {
     },
     handleEntityEdit() {
       resolveResponse(update(
-        this.parentSelection.assetCatalogId,
         this.maintainDialog.anchorEntity.long_id,
         this.maintainDialog.anchorEntity.parent_long_id,
         this.maintainDialog.anchorEntity.label_keys,
