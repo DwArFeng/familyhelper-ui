@@ -25,5 +25,10 @@
             <source>../CHANGELOG.md</source>
             <fileMode>0644</fileMode>
         </file>
+        <file>
+            <outputDirectory>./</outputDirectory>
+            <source>../LICENSE</source>
+            <fileMode>0644</fileMode>
+        </file>
     </files>
 </assembly>

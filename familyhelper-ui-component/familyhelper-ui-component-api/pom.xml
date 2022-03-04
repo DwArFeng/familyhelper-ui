@@ -10,6 +10,8 @@
         <version>1.0.3.a-SNAPSHOT</version>
     </parent>
 
+    <packaging>pom</packaging>
+
     <artifactId>familyhelper-ui-component-api</artifactId>
     <name>familyhelper-ui-component-api</name>
     <url>http://maven.apache.org</url>
@@ -18,61 +20,4 @@
         <!-- 进行工程编码声明 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <build>
-        <!-- Maven 前端插件，用于执行npm指令。 -->
-        <plugins>
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <configuration>
-                            <nodeVersion>${nodejs.version}</nodeVersion>
-                        </configuration>
-                    </execution>
-                    <!-- Install all project dependencies -->
-                    <execution>
-                        <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <!-- Optional configuration which provides for running any npm command -->
-                        <configuration>
-                            <arguments>install --no-save</arguments>
-                        </configuration>
-                    </execution>
-                    <!-- Build and minify static files -->
-                    <execution>
-                        <id>npm run build</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>generate-resources</phase>
-                        <configuration>
-                            <arguments>run build</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <!-- Maven 清理插件，用于清理dist文件。 -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-clean-plugin</artifactId>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>dist</directory>
-                            <directory>node</directory>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>

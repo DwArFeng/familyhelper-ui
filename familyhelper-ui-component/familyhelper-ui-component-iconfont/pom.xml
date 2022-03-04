@@ -10,6 +10,8 @@
         <version>1.0.3.a-SNAPSHOT</version>
     </parent>
 
+    <packaging>pom</packaging>
+
     <artifactId>familyhelper-ui-component-iconfont</artifactId>
     <name>familyhelper-ui-component-iconfont</name>
     <url>http://maven.apache.org</url>

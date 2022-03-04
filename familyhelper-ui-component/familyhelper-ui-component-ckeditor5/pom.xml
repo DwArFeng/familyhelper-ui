@@ -10,6 +10,8 @@
         <version>1.0.3.a-SNAPSHOT</version>
     </parent>
 
+    <packaging>pom</packaging>
+
     <artifactId>familyhelper-ui-component-ckeditor5</artifactId>
     <name>familyhelper-ui-component-ckeditor5</name>
     <url>http://maven.apache.org</url>
