@@ -11,6 +11,7 @@
     >
       <el-form
         ref="form"
+        v-loading="loading"
         :model="entity"
         :label-width="labelWidth"
         :rules="rules"
@@ -23,11 +24,13 @@
         <el-button
           type="primary"
           v-if="mode !== 'INSPECT'"
+          :disabled="loading"
           @click="handleFirstButtonClicked"
         >
           {{ firstButtonLabel }}
         </el-button>
         <el-button
+          :disabled="loading"
           @click="handleSecondButtonClicked"
         >
           {{ secondButtonLabel }}
@@ -39,7 +42,7 @@
 
 <script>
 export default {
-  name: 'EntityMaintainDialogPanel',
+  name: 'EntityMaintainDialog',
   props: {
     visible: {
       type: Boolean,
@@ -104,6 +107,10 @@ export default {
     closeOnClickModal: {
       type: Boolean,
       default: true,
+    },
+    loading: {
+      type: Boolean,
+      default: false,
     },
   },
   watch: {

@@ -117,6 +117,36 @@ const projectHelper = [
       parentKey: 'projectHelper',
     },
   },
+  {
+    key: 'projectHelper.memo',
+    index: 30,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '备忘录',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+      },
+      router: {
+        required: true,
+        path: 'app/project-helper/memo',
+        component: () => import('@/views/items/projectHelper/memo/Memo.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.project_helper.memo',
+      },
+    },
+    node: {
+      parentKey: 'projectHelper',
+    },
+  },
 ];
 
 export default projectHelper;

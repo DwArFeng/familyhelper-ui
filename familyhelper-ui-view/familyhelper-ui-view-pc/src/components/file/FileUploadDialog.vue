@@ -61,7 +61,9 @@ import FileSelector from '@/components/file/FileSelector.vue';
 
 import { dataSizePreset, formatUnit } from '@/util/number';
 import { fileType } from '@/util/file';
-import { upload } from '@/api/assets/itemFile';
+import { upload as uploadItemFile } from '@/api/assets/itemFile';
+import { upload as uploadMemoFile } from '@/api/project/memoFile';
+import resolveResponse from '@/util/response';
 
 export default {
   name: 'FileUploadDialog',
@@ -71,9 +73,16 @@ export default {
       type: Boolean,
       default: false,
     },
-    itemId: {
+    parentId: {
       type: String,
       default: '',
+    },
+    type: {
+      type: String,
+      validator(value) {
+        return ['ITEM', 'MEMO'].indexOf(value) !== -1;
+      },
+      required: true,
     },
     title: {
       type: String,
@@ -130,7 +139,15 @@ export default {
       this.files.forEach((file) => {
         const formData = new FormData();
         formData.append('file', file.blob, file.name);
-        promises.push(upload(this.itemId, formData));
+        switch (this.type) {
+          case 'ITEM':
+            promises.push(resolveResponse(uploadItemFile(this.parentId, formData)));
+            break;
+          case 'MEMO':
+            promises.push(resolveResponse(uploadMemoFile(this.parentId, formData)));
+            break;
+          default:
+        }
       });
       Promise.all(promises)
         .then(() => {

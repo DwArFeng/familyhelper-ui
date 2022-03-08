@@ -39,7 +39,7 @@
           v-model="fileName"
           oninput="this.value = this.value.replace(/[&\|\\\*^%$'&quot;#@\-:;，。？！\,@\$]/g,'')"
         >
-          <template slot="append">{{currentIndicator.extension}}</template>
+          <template slot="append">{{ currentIndicator.extension }}</template>
         </el-input>
       </div>
       <div slot="footer">
@@ -64,7 +64,9 @@
 <script>
 import { fileType } from '@/util/file';
 import { dataSizePreset, formatUnit } from '@/util/number';
-import { upload } from '@/api/assets/itemFile';
+import { upload as uploadItemFile } from '@/api/assets/itemFile';
+import { upload as uploadMemoFile } from '@/api/project/memoFile';
+import resolveResponse from '@/util/response';
 
 export default {
   name: 'FileCreateDialog',
@@ -73,9 +75,16 @@ export default {
       type: Boolean,
       default: false,
     },
-    itemId: {
+    parentId: {
       type: String,
       default: '',
+    },
+    type: {
+      type: String,
+      validator(value) {
+        return ['ITEM', 'MEMO'].indexOf(value) !== -1;
+      },
+      required: true,
     },
     title: {
       type: String,
@@ -150,7 +159,20 @@ export default {
       const blob = new Blob([]);
       const formData = new FormData();
       formData.append('file', blob, `${this.fileName}${this.currentIndicator.extension}`);
-      upload(this.itemId, formData)
+      let promise = null;
+      switch (this.type) {
+        case 'ITEM':
+          promise = resolveResponse(uploadItemFile(this.parentId, formData));
+          break;
+        case 'MEMO':
+          promise = resolveResponse(uploadMemoFile(this.parentId, formData));
+          break;
+        default:
+      }
+      if (promise === null) {
+        return;
+      }
+      promise
         .then(() => {
           this.$message({
             showClose: true,
@@ -237,7 +259,7 @@ export default {
   margin-bottom: 10px;
 }
 
-.editor-container .input{
+.editor-container .input {
   width: 85%;
 }
 </style>

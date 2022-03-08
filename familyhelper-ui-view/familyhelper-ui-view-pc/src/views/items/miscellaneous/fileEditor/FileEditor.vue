@@ -51,6 +51,11 @@ import {
   download as downloadItemFile,
   update as updateItemFile,
 } from '@/api/assets/itemFile';
+import {
+  inspect as inspectMemoFile,
+  download as downloadMemoFile,
+  update as updateMemoFile,
+} from '@/api/project/memoFile';
 
 import { fileExtension, fileType } from '@/util/file';
 import resolveResponse from '@/util/response';
@@ -130,7 +135,7 @@ export default {
         id: '',
       },
       util: {
-        supportedTypes: ['itemFile'],
+        supportedTypes: ['itemFile', 'memoFile'],
       },
       loading: false,
       subEditor: {
@@ -148,6 +153,9 @@ export default {
         case 'itemFile':
           this.inspectItemFile(id);
           break;
+        case 'memoFile':
+          this.inspectMemoFile(id);
+          break;
         default:
           break;
       }
@@ -163,6 +171,25 @@ export default {
           this.fileIndicator.originName = res.origin_name;
         })
         .then(() => downloadItemFile(id))
+        .then((blob) => {
+          this.fileIndicator.blob = blob;
+          this.fileIndicator.url = window.URL.createObjectURL(blob);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    inspectMemoFile(id) {
+      this.loading = true;
+      if (this.fileIndicator.url !== '') {
+        window.URL.revokeObjectURL(this.fileIndicator.url);
+      }
+      resolveResponse(inspectMemoFile(id))
+        .then((res) => {
+          // noinspection JSUnresolvedVariable
+          this.fileIndicator.originName = res.origin_name;
+        })
+        .then(() => downloadMemoFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
           this.fileIndicator.url = window.URL.createObjectURL(blob);
@@ -196,6 +223,17 @@ export default {
               this.$message({
                 showClose: true,
                 message: '项目文件提交成功',
+                type: 'success',
+                center: true,
+              });
+            });
+          break;
+        case 'memoFile':
+          resolveResponse(updateMemoFile(this.query.id, formData))
+            .then(() => {
+              this.$message({
+                showClose: true,
+                message: '备忘录文件提交成功',
                 type: 'success',
                 center: true,
               });

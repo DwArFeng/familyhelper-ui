@@ -190,6 +190,14 @@ export default {
     pageSize(value) {
       this.watchedPageSize = value;
     },
+    tableData(value) {
+      if (this.watchedTableSelection === null || this.watchedTableSelection === undefined) {
+        return;
+      }
+      if (value.indexOf(this.watchedTableSelection) < 0) {
+        this.$emit('update:tableSelection', null);
+      }
+    },
   },
   data() {
     return {

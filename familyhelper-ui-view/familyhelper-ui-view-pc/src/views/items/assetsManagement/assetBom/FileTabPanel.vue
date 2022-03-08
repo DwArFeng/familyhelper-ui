@@ -132,14 +132,16 @@
     </table-panel>
     <file-upload-dialog
       title="上传文件"
+      type="ITEM"
       :visible.sync="uploadDialog.visible"
-      :item-id="itemId"
+      :parent-id="itemId"
       @onItemFileChanged="handleSearch"
     />
     <file-create-dialog
       title="新建文件"
+      type="ITEM"
       :visible.sync="createDialog.visible"
-      :item-id="itemId"
+      :parent-id="itemId"
       @onItemFileChanged="handleSearch"
     />
   </div>
@@ -148,7 +150,7 @@
 <script>
 import TablePanel from '@/components/table/TablePanel.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
-import FileCreateDialog from '@/views/items/assetsManagement/assetBom/FileCreateDialog.vue';
+import FileCreateDialog from '@/components/file/FileCreateDialog.vue';
 
 import { dataSizePreset, formatUnit } from '@/util/number';
 import { formatTimestamp } from '@/util/timestamp';
@@ -272,7 +274,9 @@ export default {
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(childForItem(res.total_pages, this.tablePanel.pageSize));
+            return resolveResponse(childForItem(
+              this.itemId, res.total_pages, this.tablePanel.pageSize,
+            ));
           }
           return Promise.resolve(res);
         })
@@ -288,7 +292,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForItemInspectedDateDesc(childForItem(
-              res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.tablePanel.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -305,7 +309,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForItemModifiedDateDesc(childForItem(
-              res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.tablePanel.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -322,7 +326,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForItemOriginNameAsc(childForItem(
-              res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.tablePanel.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -339,7 +343,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForItemCreatedDateAsc(childForItem(
-              res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.tablePanel.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -385,7 +389,9 @@ export default {
         type: 'warning',
       })
         .then(() => Promise.resolve()).catch(() => Promise.reject())
-        .then(() => { this.loading = true; })
+        .then(() => {
+          this.loading = true;
+        })
         .then(() => resolveResponse(remove(itemFileInfo.key.long_id)))
         .then(() => {
           this.$message({
@@ -405,10 +411,16 @@ export default {
         });
     },
     handleItemFileInspect(row) {
-      this.$router.push({ name: 'miscellaneous.fileEditor', query: { type: 'itemFile', action: 'inspect', id: row.key.long_id } });
+      this.$router.push({
+        name: 'miscellaneous.fileEditor',
+        query: { type: 'itemFile', action: 'inspect', id: row.key.long_id },
+      });
     },
     handleItemFileEdit(row) {
-      this.$router.push({ name: 'miscellaneous.fileEditor', query: { type: 'itemFile', action: 'edit', id: row.key.long_id } });
+      this.$router.push({
+        name: 'miscellaneous.fileEditor',
+        query: { type: 'itemFile', action: 'edit', id: row.key.long_id },
+      });
     },
   },
   mounted() {
