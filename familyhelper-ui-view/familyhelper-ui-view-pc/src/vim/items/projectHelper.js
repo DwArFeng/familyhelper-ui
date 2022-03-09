@@ -147,6 +147,36 @@ const projectHelper = [
       parentKey: 'projectHelper',
     },
   },
+  {
+    key: 'projectHelper.memoHistory',
+    index: 40,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '历史备忘录',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+      },
+      router: {
+        required: true,
+        path: 'app/project-helper/memo-history',
+        component: () => import('@/views/items/projectHelper/memoHistory/MemoHistory.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.project_helper.memo_history',
+      },
+    },
+    node: {
+      parentKey: 'projectHelper',
+    },
+  },
 ];
 
 export default projectHelper;
