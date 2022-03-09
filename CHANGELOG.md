@@ -4,7 +4,7 @@
 
 #### 功能构建
 
-- (无)
+- 使用 `LocalStorage` 代替 `Cookies` 存放 `EzNav` 的信息。
 
 #### Bug修复
 

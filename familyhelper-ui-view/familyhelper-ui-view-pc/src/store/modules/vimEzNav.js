@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 // noinspection JSUnusedGlobalSymbols
 
-import Cookies from 'js-cookie';
 import vim from '@/vim';
 
 // 存储在 Cookie 中的持久化主键
@@ -131,8 +130,12 @@ const mutations = {
       s.activeItemKeys.push(itemKey);
     }
   },
-  updatePinnedItemKeys: (s, itemKeys) => { s.pinnedItemKeys = itemKeys; },
-  updateActiveItemKeys: (s, itemKeys) => { s.activeItemKeys = itemKeys; },
+  updatePinnedItemKeys: (s, itemKeys) => {
+    s.pinnedItemKeys = itemKeys;
+  },
+  updateActiveItemKeys: (s, itemKeys) => {
+    s.activeItemKeys = itemKeys;
+  },
 };
 
 const actions = {
@@ -147,10 +150,14 @@ const actions = {
   },
   // eslint-disable-next-line no-shadow
   savePersistenceData: ({ getters }, accountId) => {
-    Cookies.set(`${PERSISTENCE_DATA_PREFIX}${accountId}`, JSON.stringify(getters.persistenceData));
+    window.localStorage.setItem(
+      `${PERSISTENCE_DATA_PREFIX}${accountId}`, JSON.stringify(getters.persistenceData),
+    );
   },
   restorePersistenceDataForLogin: ({ commit }, accountId) => {
-    const persistenceDataJson = Cookies.get(`${PERSISTENCE_DATA_PREFIX}${accountId}`);
+    const persistenceDataJson = window.localStorage.getItem(
+      `${PERSISTENCE_DATA_PREFIX}${accountId}`,
+    );
     if (persistenceDataJson === null || persistenceDataJson === undefined) {
       return;
     }
@@ -189,7 +196,9 @@ const loadHook = (store) => {
   // 恢复导航信息。
   // noinspection JSUnresolvedVariable
   const { accountId } = store.state.lnp;
-  const persistenceDataJson = Cookies.get(`${PERSISTENCE_DATA_PREFIX}${accountId}`);
+  const persistenceDataJson = window.localStorage.getItem(
+    `${PERSISTENCE_DATA_PREFIX}${accountId}`,
+  );
   if (persistenceDataJson !== null && persistenceDataJson !== undefined) {
     const persistenceData = JSON.parse(persistenceDataJson);
     store.commit('vimEzNav/restorePersistenceData', persistenceData);
@@ -201,7 +210,9 @@ const beforeUnloadHook = (store) => {
   // noinspection JSUnresolvedVariable
   const { accountId } = store.state.lnp;
   const persistenceData = store.getters['vimEzNav/persistenceData'];
-  Cookies.set(`${PERSISTENCE_DATA_PREFIX}${accountId}`, JSON.stringify(persistenceData));
+  window.localStorage.setItem(
+    `${PERSISTENCE_DATA_PREFIX}${accountId}`, JSON.stringify(persistenceData),
+  );
 };
 
 export default {

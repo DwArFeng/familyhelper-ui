@@ -2,7 +2,6 @@
 // noinspection JSUnusedGlobalSymbols
 
 import Vue from 'vue';
-import Cookies from 'js-cookie';
 import vim from '@/vim';
 import router from '@/router';
 
@@ -154,7 +153,7 @@ const PERSISTENCE_DATA_KEY = 'store.persistence_data.lnp';
 
 const postConstructHook = (store) => {
   // 复位登录参数。
-  const persistenceDataJson = Cookies.get(PERSISTENCE_DATA_KEY);
+  const persistenceDataJson = window.localStorage.getItem(PERSISTENCE_DATA_KEY);
   if (persistenceDataJson !== null && persistenceDataJson !== undefined) {
     const persistenceData = JSON.parse(persistenceDataJson);
     store.commit('lnp/restorePersistenceData', persistenceData);
@@ -194,8 +193,7 @@ const loadHook = (store) => {
 const beforeUnloadHook = (store) => {
   // 存储登录参数。
   const persistenceData = store.getters['lnp/persistenceData'];
-  Cookies.set(PERSISTENCE_DATA_KEY, JSON.stringify(persistenceData));
-
+  window.localStorage.setItem(PERSISTENCE_DATA_KEY, JSON.stringify(persistenceData));
   // 清除登录保持器。
   clearInterval(loginKeeper);
 };
