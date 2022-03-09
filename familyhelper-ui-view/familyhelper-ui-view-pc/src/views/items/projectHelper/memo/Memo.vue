@@ -595,7 +595,6 @@ export default {
       this.showDialog('CREATE');
     },
     handleShowMemoEditDialog(entity) {
-      console.log(entity);
       this.syncAnchorMemo(entity);
       this.showDialog('EDIT');
     },
