@@ -33,6 +33,12 @@
         :blob="fileIndicator.blob"
         :readonly="query.action==='inspect'"
       />
+      <mmd-sub-editor
+        v-else-if="mmdSubEditorUsing"
+        ref="mmdSubEditor"
+        :blob="fileIndicator.blob"
+        :readonly="query.action==='inspect'"
+      />
       <div class="placeholder" v-else>
         未能找到扩展名为 {{ extension }} 的{{ query.action === 'inspect' ? '查看器' : '编辑器' }}
       </div>
@@ -41,10 +47,11 @@
 </template>
 
 <script>
-import PhotoSubEditor from '@/views/items/miscellaneous/fileEditor/PhotoSubEditor.vue';
-import PdfSubEditor from '@/views/items/miscellaneous/fileEditor/PdfSubEditor.vue';
-import RtfSubEditor from '@/views/items/miscellaneous/fileEditor/RtfSubEditor.vue';
-import TxtSubEditor from '@/views/items/miscellaneous/fileEditor/TxtSubEditor.vue';
+import PhotoSubEditor from '@/views/items/miscellaneous/fileEditor/photoSubEditor/PhotoSubEditor.vue';
+import PdfSubEditor from '@/views/items/miscellaneous/fileEditor/pdfSubEditor/PdfSubEditor.vue';
+import RtfSubEditor from '@/views/items/miscellaneous/fileEditor/rtfSubEditor/RtfSubEditor.vue';
+import TxtSubEditor from '@/views/items/miscellaneous/fileEditor/txtSubEditor/TxtSubEditor.vue';
+import MmdSubEditor from '@/views/items/miscellaneous/fileEditor/mmdSubEditor/MmdSubEditor.vue';
 
 import {
   inspect as inspectItemFile,
@@ -63,7 +70,7 @@ import resolveResponse from '@/util/response';
 export default {
   name: 'FileEditor',
   components: {
-    PhotoSubEditor, PdfSubEditor, RtfSubEditor, TxtSubEditor,
+    PhotoSubEditor, PdfSubEditor, RtfSubEditor, TxtSubEditor, MmdSubEditor,
   },
   computed: {
     editable() {
@@ -83,6 +90,9 @@ export default {
     },
     txtSubEditorUsing() {
       return this.subEditor.txtEditorExtensions.indexOf(this.extension) >= 0;
+    },
+    mmdSubEditorUsing() {
+      return this.subEditor.mmdEditorExtensions.indexOf(this.extension) >= 0;
     },
   },
   watch: {
@@ -143,6 +153,7 @@ export default {
         pdfEditorExtensions: ['PDF'],
         rtfEditorExtensions: ['RTF'],
         txtEditorExtensions: ['TXT'],
+        mmdEditorExtensions: ['MMD'],
       },
     };
   },

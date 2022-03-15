@@ -10,6 +10,8 @@
   "dependencies": {
     "@ckeditor/ckeditor5-vue2": "^1.0.5",
     "axios": "^0.21.0",
+    "butterfly-dag": "^4.1.33",
+    "butterfly-vue": "^1.0.17",
     "core-js": "^3.6.5",
     "echarts": "^5.2.1",
     "element-ui": "^2.15.7",

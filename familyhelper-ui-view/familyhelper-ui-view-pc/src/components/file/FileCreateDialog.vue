@@ -134,6 +134,12 @@ export default {
           description: '纯文本文件，节约空间',
           extension: '.txt',
         },
+        {
+          icon: '\uffe0',
+          label: '思维导图',
+          description: '通过图标助力思维散发',
+          extension: '.mmd',
+        },
       ],
       selectedIndex: 0,
       fileName: '',

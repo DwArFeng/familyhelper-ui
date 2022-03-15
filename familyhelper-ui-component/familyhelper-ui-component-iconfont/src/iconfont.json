@@ -6,6 +6,55 @@
   "description": "家庭帮手",
   "glyphs": [
     {
+      "icon_id": "7192343",
+      "name": "T-加粗",
+      "font_class": "T-jiacu",
+      "unicode": "ffda",
+      "unicode_decimal": 65498
+    },
+    {
+      "icon_id": "7192344",
+      "name": "T-放大",
+      "font_class": "T-fangda",
+      "unicode": "ffdb",
+      "unicode_decimal": 65499
+    },
+    {
+      "icon_id": "7192349",
+      "name": "T-倾斜",
+      "font_class": "T-qingxie",
+      "unicode": "ffdc",
+      "unicode_decimal": 65500
+    },
+    {
+      "icon_id": "7192354",
+      "name": "T-下划线",
+      "font_class": "T-xiahuaxian",
+      "unicode": "ffdd",
+      "unicode_decimal": 65501
+    },
+    {
+      "icon_id": "8554558",
+      "name": "file-list-2-fill",
+      "font_class": "file-list--fill",
+      "unicode": "ffdf",
+      "unicode_decimal": 65503
+    },
+    {
+      "icon_id": "8555197",
+      "name": "image-2-fill",
+      "font_class": "image--fill",
+      "unicode": "ffde",
+      "unicode_decimal": 65502
+    },
+    {
+      "icon_id": "5961430",
+      "name": "神经",
+      "font_class": "shenjing",
+      "unicode": "ffe0",
+      "unicode_decimal": 65504
+    },
+    {
       "icon_id": "22272828",
       "name": "suffix-txt",
       "font_class": "suffix-txt",
