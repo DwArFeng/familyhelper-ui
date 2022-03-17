@@ -2,6 +2,7 @@
   <div class="permission-node-container">
     <border-layout-panel
       class="border-layout-panel"
+      v-loading="loading"
       :header-visible="true"
     >
       <table-panel
@@ -44,6 +45,21 @@
         >
           新建权限
         </el-button>
+        <el-divider direction="vertical"/>
+        <el-input
+          class="id-search-bar"
+          v-model="idSearchBar.value"
+          clearable
+          @keydown.enter.native="handleSearch"
+          @clear="handleSearch"
+        >
+          <span slot="prepend">权限节点</span>
+          <el-button
+            slot="append"
+            icon="el-icon-search"
+            @click="handleSearch"
+          />
+        </el-input>
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
@@ -91,7 +107,7 @@ import TablePanel from '@/components/table/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 
 import {
-  all, exists, insert, remove, update,
+  all, exists, idLike, insert, remove, update,
 } from '@/api/system/permission';
 import { exists as permissionGroupExists } from '@/api/system/permissionGroup';
 import resolveResponse from '@/util/response';
@@ -184,6 +200,10 @@ export default {
           { required: true, message: '权限名称不能为空', trigger: 'blur' },
         ],
       },
+      idSearchBar: {
+        value: '',
+      },
+      loading: false,
     };
   },
   methods: {
@@ -191,9 +211,14 @@ export default {
       this.handleSearch();
     },
     handleSearch() {
-      this.lookupAll();
+      if (this.idSearchBar.value !== '') {
+        this.lookupIdLike();
+      } else {
+        this.lookupAll();
+      }
     },
     lookupAll() {
+      this.loading = true;
       resolveResponse(all(this.currentPage, this.pageSize))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
@@ -204,6 +229,26 @@ export default {
         })
         .then(this.updateTableView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    lookupIdLike() {
+      this.loading = true;
+      resolveResponse(idLike(this.idSearchBar.value, this.currentPage, this.pageSize))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(all(this.idSearchBar.value, res.total_pages, this.pageSize));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     updateTableView(res) {
@@ -334,5 +379,14 @@ export default {
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.id-search-bar{
+  width: 400px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.id-search-bar >>> .el-input-group__prepend {
+  padding: 0 10px;
 }
 </style>

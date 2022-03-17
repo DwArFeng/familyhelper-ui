@@ -53,6 +53,14 @@ export function all(page, rows) {
     });
 }
 
+export function idLike(pattern, page, rows) {
+    return get('system', 'permission/id-like/', {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function childForGroup(key, page, rows) {
     return get('system', `permission-group/${key}/permission`, {
         page,
