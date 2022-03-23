@@ -46,9 +46,20 @@ export function create(userKey, message, remark) {
     });
 }
 
-export function read(keys) {
-    const notificationKeys = keys.map((key) => {
-        return {long_id: key}
-    })
-    return post('clannad', 'notification/finish', notificationKeys);
+export function read(key) {
+    return post('clannad', 'notification/read', {
+        long_id: key
+    });
+}
+
+export function readAll(userKey) {
+    return post('clannad', 'notification/read-all', {
+        string_id: userKey
+    });
+}
+
+export function removeAll(userKey) {
+    return post('clannad', 'notification/remove-all', {
+        string_id: userKey
+    });
 }

@@ -9,6 +9,8 @@
         border
         :data="tableData"
         :highlight-current-row="highlightCurrentRow"
+        :row-class-name="rowClassName"
+        :cell-class-name="cellClassName"
         @row-click="handleRowClick"
         @current-change="handleCurrentChange"
         @selection-change="handleSelectionChange"
@@ -181,6 +183,14 @@ export default {
     deleteMenuItemVisible: {
       type: Boolean,
       default: true,
+    },
+    rowClassName: {
+      type: [String, Function],
+      default: '',
+    },
+    cellClassName: {
+      type: [String, Function],
+      default: '',
     },
   },
   watch: {

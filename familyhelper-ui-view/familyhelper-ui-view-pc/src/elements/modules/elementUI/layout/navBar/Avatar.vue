@@ -1,7 +1,7 @@
 <template>
   <el-dropdown class="avatar-container" trigger="click" @command="handleCommand">
     <div class="avatar-wrapper">
-      <el-badge class="item" :is-dot="notification.unreadCount > 0">
+      <el-badge class="item" :is-dot="unreadCount > 0">
         <avatar-panel
           class="avatar"
           render-mode="BY_ID"
@@ -18,9 +18,9 @@
       <el-dropdown-item command="notification" divided>
         <el-badge
           :class="notificationStyle"
-          :value="notification.unreadCount"
+          :value="unreadCount"
           :max="99"
-          :hidden="notification.unreadCount === 0"
+          :hidden="unreadCount === 0"
         >
           <span>消息</span>
         </el-badge>
@@ -37,9 +37,6 @@ import { mapGetters, mapActions } from 'vuex';
 
 import AvatarPanel from '@/components/avatar/AvatarPanel.vue';
 
-import { childForUserUnread } from '@/api/clannad/notification';
-import resolveResponse from '@/util/response';
-
 // noinspection JSAnnotator
 export default {
   name: 'Avatar',
@@ -48,35 +45,25 @@ export default {
   },
   computed: {
     notificationStyle() {
-      if (this.notification.unreadCount === 0) {
+      if (this.unreadCount === 0) {
         return '';
       }
-      if (this.notification.unreadCount < 10) {
+      if (this.unreadCount < 10) {
         return 'notify';
       }
       return 'long-notify';
     },
     ...mapGetters('lnp', ['me']),
-  },
-  data() {
-    return {
-      notification: {
-        unreadCount: 0,
-        timer: null,
-      },
-    };
+    ...mapGetters('notification', ['unreadCount']),
   },
   methods: {
-    updateNotification() {
-      resolveResponse(childForUserUnread(this.me, 0, 0))
-        .then((res) => {
-          this.notification.unreadCount = res.count;
-        });
-    },
     handleCommand(key) {
       switch (key) {
         case 'welcome':
           this.$router.push({ name: 'vim' });
+          break;
+        case 'notification':
+          this.$router.push({ name: 'meAndClannad.notification' });
           break;
         case 'logout':
           this.logout();
@@ -85,13 +72,6 @@ export default {
       }
     },
     ...mapActions('lnp', ['logout']),
-  },
-  mounted() {
-    this.updateNotification();
-    this.notification.timer = setInterval(() => { this.updateNotification(); }, 30000);
-  },
-  beforeDestroy() {
-    clearInterval(this.notification.timer);
   },
 };
 </script>

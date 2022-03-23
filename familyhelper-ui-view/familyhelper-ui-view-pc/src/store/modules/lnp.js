@@ -148,7 +148,7 @@ const actions = {
   },
 };
 
-// 存储在 Cookie 中的持久化主键
+// 存储在 LocalStorage 中的持久化主键
 const PERSISTENCE_DATA_KEY = 'store.persistence_data.lnp';
 
 const postConstructHook = (store) => {

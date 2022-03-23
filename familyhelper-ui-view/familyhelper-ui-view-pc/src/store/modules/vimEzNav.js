@@ -3,7 +3,7 @@
 
 import vim from '@/vim';
 
-// 存储在 Cookie 中的持久化主键
+// 存储在 LocalStorage 中的持久化主键
 const PERSISTENCE_DATA_PREFIX = 'store.persistence_data.vim_ez_nav.';
 
 const state = {
