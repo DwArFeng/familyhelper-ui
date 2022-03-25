@@ -16,10 +16,10 @@
           v-else
         >
           <el-tab-pane label="信息" name="info">
-            <info-tab-panel ref="infoTabPanel" :item-id="assetTabs.itemId"/>
+            <info-tab-panel ref="infoTabPanel" :item-id="assetTabs.itemId" :read-only="readOnly"/>
           </el-tab-pane>
           <el-tab-pane label="资料" name="file">
-            <file-tab-panel :item-id="assetTabs.itemId"/>
+            <file-tab-panel :item-id="assetTabs.itemId" :read-only="readOnly"/>
           </el-tab-pane>
           <el-tab-pane label="参数" name="params">
             <params-tab-panel/>
@@ -32,6 +32,7 @@
         ref="assetBomTreePanel"
         mode="ASSET_BOM"
         :asset-catalog-key="parentSelection.assetCatalogId"
+        :read-only="readOnly"
         @onCurrentChanged="handleCurrentChanged"
         @onEntityEdit="handleShowEntityEditDialog"
         @onEntityDelete="handleEntityDelete"
@@ -175,8 +176,13 @@ export default {
   },
   computed: {
     headerButtonDisabled() {
-      return this.parentSelection.assetCatalogId === ''
-        || this.parentSelection.assetCatalogId.permission_level === 1;
+      return this.parentSelection.assetCatalogId === '' || this.readOnly;
+    },
+    readOnly() {
+      if (this.parentSelection.assetCatalog === null) {
+        return true;
+      }
+      return this.parentSelection.assetCatalog.permission_level === 1;
     },
   },
   data() {

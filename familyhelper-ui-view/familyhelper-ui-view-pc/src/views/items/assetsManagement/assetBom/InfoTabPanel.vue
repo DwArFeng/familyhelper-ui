@@ -13,6 +13,7 @@
           size="mini"
           type="primary"
           icon="el-icon-edit"
+          :disabled="readOnly"
           @click="itemCoverEditDialog.visible=true"
         />
       </div>
@@ -105,6 +106,10 @@ export default {
     itemId: {
       type: String,
       default: '',
+    },
+    readOnly: {
+      type: Boolean,
+      default: false,
     },
   },
   watch: {

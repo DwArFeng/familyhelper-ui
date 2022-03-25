@@ -22,6 +22,8 @@
       :lazy="true"
       :accordion="true"
       :inspect-button-visible="false"
+      :edit-button-visible="!readOnly"
+      :delete-button-visible="!readOnly"
       :load-handler="handleLoad"
       @onCurrentChanged="handleCurrentChanged"
       @onEntityInspect="handleEntityInspect"
@@ -51,6 +53,10 @@ export default {
         return ['ASSET_BOM', 'GENERAL', 'DEFAULT', 'DRIVER_SETTING'].indexOf(value) !== -1;
       },
       default: 'DEFAULT',
+    },
+    readOnly: {
+      type: Boolean,
+      default: false,
     },
   },
   watch: {

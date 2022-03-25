@@ -4,6 +4,7 @@
       <el-button
         class="item"
         type="primary"
+        :disabled="readOnly"
         @click="uploadDialog.visible=true"
       >
         上传
@@ -11,6 +12,7 @@
       <el-button
         class="item"
         type="primary"
+        :disabled="readOnly"
         @click="createDialog.visible=true"
       >
         新建
@@ -109,7 +111,7 @@
             size="mini"
             icon="el-icon-edit"
             type="primary"
-            :disabled="editTableButtonDisabled(row)"
+            :disabled="editTableButtonDisabled(row) || readOnly"
             @click="handleItemFileEdit(row)"
           />
           <el-button
@@ -125,6 +127,7 @@
             size="mini"
             icon="el-icon-delete"
             type="danger"
+            :disabled="readOnly"
             @click="handleItemFileDelete(row)"
           />
         </el-button-group>
@@ -173,6 +176,10 @@ export default {
     itemId: {
       type: String,
       default: '',
+    },
+    readOnly: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
