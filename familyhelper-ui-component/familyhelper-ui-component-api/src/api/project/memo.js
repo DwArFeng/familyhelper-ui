@@ -31,8 +31,8 @@ export function childForUserInProgress(userKey, page, rows) {
     });
 }
 
-export function childForUserCreatedDateDesc(userKey, page, rows) {
-    return get('project', `user/${userKey}/memo/created-date-desc`, {
+export function childForUserFinished(userKey, page, rows) {
+    return get('project', `user/${userKey}/memo/finished`, {
         page,
         rows,
     });
@@ -68,4 +68,8 @@ export function finish(key) {
     return post('project', 'memo/finish', {
         long_id: key,
     });
+}
+
+export function removeFinishedMemos() {
+    return post('project', 'memo/remove-finished-memos', {});
 }

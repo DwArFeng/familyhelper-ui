@@ -71,15 +71,15 @@
       </table-panel>
       <div class="header-container" slot="header">
         <el-button
-          class="insert-button"
+          class="operate-button"
           type="primary"
           @click="handleAllNotificationRead"
         >
           全部已读
         </el-button>
         <el-button
-          class="insert-button"
-          type="primary"
+          class="operate-button"
+          type="danger"
           @click="handleAllNotificationDelete"
         >
           全部删除

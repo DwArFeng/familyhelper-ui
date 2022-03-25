@@ -5,6 +5,24 @@
       :west-visible="true"
     >
       <div class="west-container" slot="west" v-loading="memoTable.loading">
+        <div>
+          <el-button
+            type="danger"
+            @click="handleRemoveFinishedMemos"
+          >
+            删除已完成
+          </el-button>
+          <el-divider direction="vertical"/>
+          <el-select class="selector" v-model="selector.value" @change="handleMemoSearch">
+            <el-option
+              v-for="item in selector.options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </div>
+        <el-divider class="horizontal"/>
         <table-panel
           class="table-panel"
           :page-size.sync="memoTable.pageSize"
@@ -187,8 +205,11 @@ import TablePanel from '@/components/table/TablePanel.vue';
 
 import {
   inspect as inspectMemo,
-  childForUserCreatedDateDesc as childMemoForCreatedDateDesc,
+  childForUser as childMemoForUser,
+  childForUserInProgress as childMemoForUserInProgress,
+  childForUserFinished as childMemoForUserFinished,
   remove as removeMemo,
+  removeFinishedMemos,
 } from '@/api/project/memo';
 import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';
@@ -257,21 +278,6 @@ export default {
         selection: null,
         loading: false,
       },
-      maintainDialog: {
-        dialogVisible: false,
-        dialogMode: 'CREATE',
-        anchorEntity: {
-          long_id: '',
-          profile: '',
-          remark: '',
-        },
-        rules: {
-          profile: [
-            { required: true, message: '简报不能为空', trigger: 'blur' },
-          ],
-        },
-        loading: false,
-      },
       memoDetail: {
         entity: null,
         loading: false,
@@ -307,6 +313,14 @@ export default {
         memoId: '',
         visible: false,
       },
+      selector: {
+        value: 0,
+        options: [
+          { value: 0, label: '全部' },
+          { value: 1, label: '进行中' },
+          { value: 2, label: '已完成' },
+        ],
+      },
     };
   },
   methods: {
@@ -314,17 +328,69 @@ export default {
       this.handleMemoSearch();
     },
     handleMemoSearch() {
-      this.childMemoForUserCreatedDateDesc(this.me);
+      switch (this.selector.value) {
+        case 0:
+          this.childMemoForUser(this.me);
+          break;
+        case 1:
+          this.childMemoForUserInProgress(this.me);
+          break;
+        case 2:
+        default:
+          this.childMemoForUserFinished(this.me);
+      }
     },
-    childMemoForUserCreatedDateDesc(user) {
+    childMemoForUser(user) {
       this.memoTable.loading = true;
-      resolveResponse(childMemoForCreatedDateDesc(
+      resolveResponse(childMemoForUser(
         user, this.memoTable.currentPage, this.memoTable.pageSize,
       ))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(childMemoForCreatedDateDesc(
+            return resolveResponse(childMemoForUser(
+              user, res.total_pages, this.memoTable.pageSize,
+            ));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateMemoTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.memoTable.loading = false;
+        });
+    },
+    childMemoForUserInProgress(user) {
+      this.memoTable.loading = true;
+      resolveResponse(childMemoForUserInProgress(
+        user, this.memoTable.currentPage, this.memoTable.pageSize,
+      ))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(childMemoForUserInProgress(
+              user, res.total_pages, this.memoTable.pageSize,
+            ));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateMemoTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.memoTable.loading = false;
+        });
+    },
+    childMemoForUserFinished(user) {
+      this.memoTable.loading = true;
+      resolveResponse(childMemoForUserFinished(
+        user, this.memoTable.currentPage, this.memoTable.pageSize,
+      ))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(childMemoForUserFinished(
               user, res.total_pages, this.memoTable.pageSize,
             ));
           }
@@ -504,23 +570,9 @@ export default {
       this.memoFileTable.entities = res;
       this.memoTable.currentPage = res.current_page;
     },
-    handleShowMemoCreateDialog() {
-      this.showDialog('CREATE');
-    },
     handleShowMemoEditDialog(entity) {
       this.syncAnchorMemo(entity);
       this.showDialog('EDIT');
-    },
-    syncAnchorMemo(entity) {
-      this.maintainDialog.anchorEntity.long_id = entity.key.long_id;
-      this.maintainDialog.anchorEntity.profile = entity.profile;
-      this.maintainDialog.anchorEntity.remark = entity.remark;
-    },
-    showDialog(mode) {
-      this.maintainDialog.dialogMode = mode;
-      this.$nextTick(() => {
-        this.maintainDialog.dialogVisible = true;
-      });
     },
     wrappedFormatTimestamp(timestamp) {
       if (timestamp === null || timestamp === undefined || timestamp === 0) {
@@ -592,10 +644,14 @@ export default {
         });
     },
     handleMemoDelete(row) {
+      let message;
+      if (row.status === 0) {
+        message = '<b>您正在删除还未完成的备忘录！</b><br>此操作将永久删除此备忘录，该操作不可恢复。<br>是否继续?';
+      } else {
+        message = '此操作将永久删除此备忘录，该操作不可恢复。<br>是否继续?';
+      }
       Promise.resolve(row.key.long_id)
-        .then((res) => this.$confirm('此操作将永久删除此备忘录。<br>'
-          + '是否继续?',
-        '提示', {
+        .then((res) => this.$confirm(message, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           dangerouslyUseHTMLString: true,
@@ -626,6 +682,38 @@ export default {
         default:
           return '进行中';
       }
+    },
+    handleRemoveFinishedMemos() {
+      this.$confirm('此操作将永久删除所有已完成的备忘录。<br>'
+        + '该操作不可恢复！<br>'
+        + '是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        dangerouslyUseHTMLString: true,
+        customClass: 'custom-message-box__w500',
+        type: 'warning',
+      })
+        .then(() => Promise.resolve()).catch(() => Promise.reject())
+        .then(() => {
+          this.loading = true;
+        })
+        .then(() => resolveResponse(removeFinishedMemos()))
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '备忘录删除成功',
+            type: 'success',
+            center: true,
+          });
+        })
+        .then(() => {
+          this.handleMemoSearch();
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
   mounted() {
@@ -733,5 +821,9 @@ export default {
 
 .table-panel .table-button {
   padding: 7px;
+}
+
+.west-container .selector{
+  width: 125px;
 }
 </style>
