@@ -118,7 +118,7 @@ const systemSettings = [
     },
   },
   {
-    key: 'systemSettings.node',
+    key: 'systemSettings.permissionNode',
     index: 30,
     meta: {
       display: {
@@ -141,6 +141,36 @@ const systemSettings = [
       permission: {
         required: true,
         node: 'ui.pc.menu_visible.system_settings.permission_node',
+      },
+    },
+    node: {
+      parentKey: 'systemSettings',
+    },
+  },
+  {
+    key: 'systemSettings.settingNode',
+    index: 40,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '配置仓库维护',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+      },
+      router: {
+        required: true,
+        path: 'app/system-settings/setting-node',
+        component: () => import('@/views/items/systemSettings/settingNode/SettingNode.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.system_settings.setting_node',
       },
     },
     node: {
