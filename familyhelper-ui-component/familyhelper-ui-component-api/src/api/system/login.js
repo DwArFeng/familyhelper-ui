@@ -1,4 +1,4 @@
-import {post} from '@/util/http';
+import { post } from '@/util/http';
 
 export function login(accountId, password) {
     return post('system', 'login/login', {

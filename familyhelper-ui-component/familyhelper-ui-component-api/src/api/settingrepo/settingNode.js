@@ -3,15 +3,15 @@ import {
 } from '@/util/http';
 
 export function exists(key) {
-    return get('system', `setting-node/${key}/exists/`, {});
+    return get('settingrepo', `setting-node/${key}/exists/`, {});
 }
 
 export function inspect(key) {
-    return get('system', `setting-node/${key}/`, {});
+    return get('settingrepo', `setting-node/${key}/`, {});
 }
 
 export function insert(key, value, remark) {
-    return post('system', 'setting-node/', {
+    return post('settingrepo', 'setting-node/', {
         key: {
             string_id: key,
         },
@@ -21,11 +21,11 @@ export function insert(key, value, remark) {
 }
 
 export function remove(key) {
-    return del('system', `setting-node/${key}/`, {});
+    return del('settingrepo', `setting-node/${key}/`, {});
 }
 
 export function update(key, value, remark) {
-    return patch('system', 'setting-node/', {
+    return patch('settingrepo', 'setting-node/', {
         key: {
             string_id: key,
         },
@@ -35,14 +35,14 @@ export function update(key, value, remark) {
 }
 
 export function all(page, rows) {
-    return get('system', 'setting-node/all/', {
+    return get('settingrepo', 'setting-node/all/', {
         page,
         rows,
     });
 }
 
 export function idLike(pattern, page, rows) {
-    return get('system', 'setting-node/id-like/', {
+    return get('settingrepo', 'setting-node/id-like/', {
         pattern,
         page,
         rows,

@@ -1,16 +1,16 @@
 <template>
-  <div class="setting-node-container">
+  <div class="setting-category-container">
     <border-layout-panel
       class="border-layout-panel"
       v-loading="loading"
       :header-visible="true"
     >
       <table-panel
-        :page-size.sync="pageSize"
-        :entity-count="parseInt(entities.count)"
-        :current-page.sync="currentPage"
+        :page-size.sync="table.pageSize"
+        :entity-count="parseInt(table.entities.count)"
+        :current-page.sync="table.currentPage"
         :page-sizes="[15,20,30,50]"
-        :table-data="entities.data"
+        :table-data="table.entities.data"
         @onPagingAttributeChanged="handlePagingAttributeChanged"
         @onEntityInspect="handleShowEntityInspectDialog"
         @onEntityEdit="handleShowEntityEditDialog"
@@ -18,12 +18,17 @@
       >
         <el-table-column
           prop="key.string_id"
-          label="设置节点"
+          label="设置类型"
           show-tooltip-when-overflow
         />
         <el-table-column
-          prop="value"
-          label="值"
+          prop="formatter_type"
+          label="格式化器类型"
+          show-tooltip-when-overflow
+        />
+        <el-table-column
+          prop="formatter_param"
+          label="格式化器参数"
           show-tooltip-when-overflow
         />
         <el-table-column
@@ -48,7 +53,7 @@
           @keydown.enter.native="handleSearch"
           @clear="handleSearch"
         >
-          <span slot="prepend">设置节点</span>
+          <span slot="prepend">设置类型</span>
           <el-button
             slot="append"
             icon="el-icon-search"
@@ -58,34 +63,55 @@
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
-      :mode="dialogMode"
-      :visible.sync="dialogVisible"
-      :entity="anchorEntity"
-      :create-rules="createRules"
+      label-width="100px"
+      :mode="entityDialog.mode"
+      :visible.sync="entityDialog.visible"
+      :entity="entityDialog.anchorEntity"
+      :create-rules="entityDialog.createRules"
+      :edit-rules="entityDialog.editRules"
       :close-on-click-modal="false"
       @onEntityCreate="handleEntityCreate"
       @onEntityEdit="handleEntityEdit"
     >
-      <el-form-item label="设置节点" prop="key.string_id">
+      <el-form-item label="设置类型" prop="key.string_id">
         <el-input
-          v-model="anchorEntity.key.string_id"
+          v-model="entityDialog.anchorEntity.key.string_id"
           oninput="this.value = this.value.toLowerCase()"
-          :disabled="dialogMode !== 'CREATE'"
+          :disabled="entityDialog.mode !== 'CREATE'"
         />
       </el-form-item>
-      <el-form-item label="值" prop="value">
+      <el-form-item label="格式化器类型" prop="formatter_type">
         <el-input
-          v-model="anchorEntity.value"
-          :readonly="dialogMode === 'INSPECT'"
+          v-model="entityDialog.anchorEntity.formatter_type"
+          :readonly="entityDialog.mode === 'INSPECT'"
+        >
+          <el-button
+            v-if="entityDialog.mode !== 'INSPECT'"
+            slot="append"
+            icon="el-icon-search"
+            @click="supportDialog.visible = true"
+          />
+        </el-input>
+      </el-form-item>
+      <el-form-item label="格式化器参数" prop="formatter_param">
+        <el-input
+          v-model="entityDialog.anchorEntity.formatter_param"
+          type="textarea"
+          :autosize="{maxRows: 10}"
+          :readonly="entityDialog.mode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
-          v-model="anchorEntity.remark"
-          :readonly="dialogMode === 'INSPECT'"
+          v-model="entityDialog.anchorEntity.remark"
+          :readonly="entityDialog.mode === 'INSPECT'"
         />
       </el-form-item>
     </entity-maintain-dialog>
+    <support-dialog
+      :visible.sync="supportDialog.visible"
+      @onConfirmed="handleSupportSelected"
+    />
   </div>
 </template>
 
@@ -93,28 +119,54 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/table/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
+import SupportDialog from '@/views/items/systemSettings/settingCategory/SupportDialog.vue';
 
 import {
   all, exists, idLike, insert, remove, update,
-} from '@/api/settingrepo/settingNode';
+} from '@/api/settingrepo/settingCategory';
+import { exists as existsSupport } from '@/api/settingrepo/formatterSupport';
 import resolveResponse from '@/util/response';
 
 export default {
-  name: 'SettingNode',
-  components: { EntityMaintainDialog, BorderLayoutPanel, TablePanel },
+  name: 'SettingCategory',
+  components: {
+    SupportDialog, EntityMaintainDialog, BorderLayoutPanel, TablePanel,
+  },
   data() {
     const keyValidator = (rule, value, callback) => {
       Promise.resolve(value)
         .then((res) => {
           if (res === '') {
-            callback(new Error('设置节点不能为空'));
+            callback(new Error('设置类型不能为空'));
             return Promise.reject();
           }
           return resolveResponse(exists(value));
         })
         .then((res) => {
           if (res) {
-            callback(new Error('设置节点已经存在'));
+            callback(new Error('设置类型已经存在'));
+            return Promise.reject();
+          }
+          return Promise.resolve();
+        })
+        .then(() => {
+          callback();
+        })
+        .catch(() => {
+        });
+    };
+    const formatterTypeValidator = (rule, value, callback) => {
+      Promise.resolve(value)
+        .then((res) => {
+          if (res === '') {
+            callback(new Error('格式化器类型不能为空'));
+            return Promise.reject();
+          }
+          return resolveResponse(existsSupport(value));
+        })
+        .then((res) => {
+          if (!res) {
+            callback(new Error('格式化器类型不支持'));
             return Promise.reject();
           }
           return Promise.resolve();
@@ -126,33 +178,49 @@ export default {
         });
     };
     return {
-      entities: {
-        current_page: 0,
-        total_pages: 0,
-        rows: 0,
-        count: '0',
-        data: [],
-      },
-      currentPage: 0,
-      pageSize: 15,
-      dialogVisible: false,
-      dialogMode: 'CREATE',
-      anchorEntity: {
-        key: {
-          string_id: '',
-        },
-        value: '',
-        remark: '',
-      },
-      createRules: {
-        'key.string_id': [
-          { validator: keyValidator, trigger: 'blur' },
-        ],
-      },
       idSearchBar: {
         value: '',
       },
       loading: false,
+      table: {
+        entities: {
+          current_page: 0,
+          total_pages: 0,
+          rows: 0,
+          count: '0',
+          data: [],
+        },
+        currentPage: 0,
+        pageSize: 15,
+      },
+      entityDialog: {
+        visible: false,
+        mode: 'CREATE',
+        anchorEntity: {
+          key: {
+            string_id: '',
+          },
+          formatter_type: '',
+          formatter_param: '',
+          remark: '',
+        },
+        createRules: {
+          'key.string_id': [
+            { validator: keyValidator, trigger: 'blur' },
+          ],
+          formatter_type: [
+            { validator: formatterTypeValidator, trigger: 'blur' },
+          ],
+        },
+        editRules: {
+          formatter_type: [
+            { validator: formatterTypeValidator, trigger: 'blur' },
+          ],
+        },
+      },
+      supportDialog: {
+        visible: false,
+      },
     };
   },
   methods: {
@@ -168,11 +236,11 @@ export default {
     },
     lookupAll() {
       this.loading = true;
-      resolveResponse(all(this.currentPage, this.pageSize))
+      resolveResponse(all(this.table.currentPage, this.table.pageSize))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(all(res.total_pages, this.pageSize));
+            return resolveResponse(all(res.total_pages, this.table.pageSize));
           }
           return Promise.resolve(res);
         })
@@ -185,11 +253,15 @@ export default {
     },
     lookupIdLike() {
       this.loading = true;
-      resolveResponse(idLike(this.idSearchBar.value, this.currentPage, this.pageSize))
+      resolveResponse(idLike(
+        this.idSearchBar.value, this.table.currentPage, this.table.pageSize,
+      ))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(all(this.idSearchBar.value, res.total_pages, this.pageSize));
+            return resolveResponse(all(
+              this.idSearchBar.value, res.total_pages, this.table.pageSize,
+            ));
           }
           return Promise.resolve(res);
         })
@@ -201,19 +273,20 @@ export default {
         });
     },
     updateTableView(res) {
-      this.entities = res;
-      this.currentPage = res.current_page;
+      this.table.entities = res;
+      this.table.currentPage = res.current_page;
     },
     handleEntityCreate() {
       resolveResponse(insert(
-        this.anchorEntity.key.string_id,
-        this.anchorEntity.value,
-        this.anchorEntity.remark,
+        this.entityDialog.anchorEntity.key.string_id,
+        this.entityDialog.anchorEntity.formatter_type,
+        this.entityDialog.anchorEntity.formatter_param,
+        this.entityDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `设置节点 ${this.anchorEntity.key.string_id} 创建成功`,
+            message: `设置类型 ${this.entityDialog.anchorEntity.key.string_id} 创建成功`,
             type: 'success',
             center: true,
           });
@@ -223,21 +296,22 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.dialogVisible = false;
+          this.entityDialog.visible = false;
         })
         .catch(() => {
         });
     },
     handleEntityEdit() {
       resolveResponse(update(
-        this.anchorEntity.key.string_id,
-        this.anchorEntity.value,
-        this.anchorEntity.remark,
+        this.entityDialog.anchorEntity.key.string_id,
+        this.entityDialog.anchorEntity.formatter_type,
+        this.entityDialog.anchorEntity.formatter_param,
+        this.entityDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `设置节点 ${this.anchorEntity.key.string_id} 更新成功`,
+            message: `设置类型 ${this.entityDialog.anchorEntity.key.string_id} 更新成功`,
             type: 'success',
             center: true,
           });
@@ -247,7 +321,7 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.dialogVisible = false;
+          this.entityDialog.visible = false;
         })
         .catch(() => {
         });
@@ -263,10 +337,10 @@ export default {
       this.syncAnchorEntity(entity);
       this.showDialog('EDIT');
     },
-    handleEntityDelete(node, entity) {
+    handleEntityDelete(category, entity) {
       Promise.resolve(entity.key.string_id)
-        .then((res) => this.$confirm('此操作将永久删除此设置节点。<br>'
-          + '<div style="color: #b22222"><b>如果您不知道删除该节点后会产生什么后果，'
+        .then((res) => this.$confirm('此操作将永久删除此设置类型。<br>'
+          + '<div style="color: #b22222"><b>如果您不知道删除该类型后会产生什么后果，'
           + '请不要进行操作！</b></div>'
           + '<b>错误的操作可能导致前端界面、后台出错，甚至崩溃！</b><br>'
           + '是否继续?',
@@ -281,7 +355,7 @@ export default {
         .then((res) => {
           this.$message({
             showClose: true,
-            message: `设置节点 ${res} 删除成功`,
+            message: `设置类型 ${res} 删除成功`,
             type: 'success',
             center: true,
           });
@@ -293,15 +367,21 @@ export default {
         });
     },
     syncAnchorEntity(entity) {
-      this.anchorEntity.key.string_id = entity.key.string_id;
-      this.anchorEntity.value = entity.value;
-      this.anchorEntity.remark = entity.remark;
+      this.entityDialog.anchorEntity.key.string_id = entity.key.string_id;
+      this.entityDialog.anchorEntity.formatter_type = entity.formatter_type;
+      this.entityDialog.anchorEntity.formatter_param = entity.formatter_param;
+      this.entityDialog.anchorEntity.remark = entity.remark;
     },
     showDialog(mode) {
-      this.dialogMode = mode;
+      this.entityDialog.mode = mode;
       this.$nextTick(() => {
-        this.dialogVisible = true;
+        this.entityDialog.visible = true;
       });
+    },
+    handleSupportSelected(selection) {
+      this.entityDialog.anchorEntity.formatter_type = selection.key.string_id;
+      // noinspection JSUnresolvedVariable
+      this.entityDialog.anchorEntity.formatter_param = selection.example_param;
     },
   },
   mounted() {
@@ -311,7 +391,7 @@ export default {
 </script>
 
 <style scoped>
-.setting-node-container {
+.setting-category-container {
   height: 100%;
   width: 100%;
 }
@@ -323,7 +403,7 @@ export default {
   flex-wrap: wrap;
 }
 
-.id-search-bar{
+.id-search-bar {
   width: 400px;
 }
 

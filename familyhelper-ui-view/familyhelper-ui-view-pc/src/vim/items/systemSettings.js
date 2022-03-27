@@ -148,8 +148,38 @@ const systemSettings = [
     },
   },
   {
-    key: 'systemSettings.settingNode',
+    key: 'systemSettings.settingCategory',
     index: 40,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '配置类型管理',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+      },
+      router: {
+        required: true,
+        path: 'app/system-settings/setting-category',
+        component: () => import('@/views/items/systemSettings/settingCategory/SettingCategory.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.system_settings.setting_category',
+      },
+    },
+    node: {
+      parentKey: 'systemSettings',
+    },
+  },
+  {
+    key: 'systemSettings.settingNode',
+    index: 50,
     meta: {
       display: {
         iconType: 'elementUI',

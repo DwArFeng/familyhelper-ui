@@ -6,7 +6,7 @@ const API_PREFIX = '/api';
 const VERSION_PREFIX = '/v1';
 let urlPrefix;
 if (process.env.NODE_ENV === 'development') {
-  urlPrefix = 'http://localhost:8080/familyhelper_webapi_node_war_exploded/';
+  urlPrefix = 'http://localhost:8080/familyhelper_webapi_node_war_exploded';
 } else if (process.env.NODE_ENV === 'debug') {
   urlPrefix = 'https://www.debug.com';
 } else if (process.env.NODE_ENV === 'production') {
