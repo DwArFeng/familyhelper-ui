@@ -6,6 +6,7 @@
       :header-visible="true"
     >
       <table-panel
+        class="table"
         :page-size.sync="table.pageSize"
         :entity-count="parseInt(table.entities.count)"
         :current-page.sync="table.currentPage"
@@ -29,7 +30,7 @@
         <el-table-column
           prop="formatter_param"
           label="格式化器参数"
-          show-tooltip-when-overflow
+          class-name="single-line"
         />
         <el-table-column
           prop="remark"
@@ -97,7 +98,8 @@
         <el-input
           v-model="entityDialog.anchorEntity.formatter_param"
           type="textarea"
-          :autosize="{maxRows: 10}"
+          resize="none"
+          :rows="10"
           :readonly="entityDialog.mode === 'INSPECT'"
         />
       </el-form-item>
@@ -117,7 +119,7 @@
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import TablePanel from '@/components/table/TablePanel.vue';
+import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import SupportDialog from '@/views/items/systemSettings/settingCategory/SupportDialog.vue';
 
@@ -410,5 +412,12 @@ export default {
 /*noinspection CssUnusedSymbol*/
 .id-search-bar >>> .el-input-group__prepend {
   padding: 0 10px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.table >>> .single-line .cell{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

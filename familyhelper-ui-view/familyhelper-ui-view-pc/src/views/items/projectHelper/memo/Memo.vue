@@ -262,7 +262,7 @@
 import { mapGetters } from 'vuex';
 
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import TablePanel from '@/components/table/TablePanel.vue';
+import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
 import FileCreateDialog from '@/components/file/FileCreateDialog.vue';

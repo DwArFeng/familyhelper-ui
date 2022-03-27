@@ -102,7 +102,7 @@
 import { mapActions, mapGetters } from 'vuex';
 
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import TablePanel from '@/components/table/TablePanel.vue';
+import TablePanel from '@/components/layout/TablePanel.vue';
 
 import {
   remove, childForUser, childForUserUnread, read, readAll, removeAll,

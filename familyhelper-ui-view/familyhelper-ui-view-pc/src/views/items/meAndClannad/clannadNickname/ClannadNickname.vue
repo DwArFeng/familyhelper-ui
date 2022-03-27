@@ -93,7 +93,7 @@
 import { mapGetters } from 'vuex';
 
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import TablePanel from '@/components/table/TablePanel.vue';
+import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 
 import {

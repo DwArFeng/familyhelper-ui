@@ -48,3 +48,27 @@ export function idLike(pattern, page, rows) {
         rows,
     });
 }
+
+export function operateInspect(category, args) {
+    return post('settingrepo', 'setting-node/inspect/', {
+        category,
+        args
+    });
+}
+
+export function operatePut(category, args, value, remark) {
+    return post('settingrepo', 'setting-node/put/', {
+        category,
+        args,
+        value,
+        remark
+    });
+}
+
+export function operateRemove(category, args) {
+    return post('settingrepo', 'setting-node/remove/', {
+        category,
+        args
+    });
+}
+

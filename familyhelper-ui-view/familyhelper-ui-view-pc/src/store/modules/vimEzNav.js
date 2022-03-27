@@ -3,14 +3,20 @@
 
 import vim from '@/vim';
 
-// 存储在 LocalStorage 中的持久化主键
-const PERSISTENCE_DATA_PREFIX = 'store.persistence_data.vim_ez_nav.';
+import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
+
+import resolveResponse from '@/util/response';
+
+// 存储在设置仓库中的设置类型ID。
+const SETTINGREPO_CATEGORY_ID = 'framework.pc.eznav';
 
 const state = {
   affixItemKeys: [],
   pinnedItemKeys: [],
   activeItemKeys: [],
   itemMetaMap: {},
+  loading: false,
 };
 
 const getters = {
@@ -44,6 +50,7 @@ const getters = {
     }
     return metaMayExists;
   },
+  loading: (s) => s.loading,
 };
 const mutations = {
   pushItemKey: (s, itemKey) => {
@@ -136,6 +143,7 @@ const mutations = {
   updateActiveItemKeys: (s, itemKeys) => {
     s.activeItemKeys = itemKeys;
   },
+  setLoading: (s, value) => { s.loading = value; },
 };
 
 const actions = {
@@ -150,18 +158,7 @@ const actions = {
   },
   // eslint-disable-next-line no-shadow
   savePersistenceData: ({ getters }, accountId) => {
-    window.localStorage.setItem(
-      `${PERSISTENCE_DATA_PREFIX}${accountId}`, JSON.stringify(getters.persistenceData),
-    );
-  },
-  restorePersistenceDataForLogin: ({ commit }, accountId) => {
-    const persistenceDataJson = window.localStorage.getItem(
-      `${PERSISTENCE_DATA_PREFIX}${accountId}`,
-    );
-    if (persistenceDataJson === null || persistenceDataJson === undefined) {
-      return;
-    }
-    const persistenceData = JSON.parse(persistenceDataJson);
+    const { persistenceData } = getters;
     switch (vim.addons.ezNav.restoreWhenLogin) {
       case 'restore-all':
         break;
@@ -169,7 +166,39 @@ const actions = {
         persistenceData.activeItemKeys = [];
         break;
     }
-    commit('restorePersistenceData', persistenceData);
+    return resolveResponse(operatePut(
+      SETTINGREPO_CATEGORY_ID,
+      [accountId],
+      JSON.stringify(persistenceData),
+      formatTimestamp(currentTimestamp()),
+    ));
+  },
+  restorePersistenceData: ({ commit }, accountId) => {
+    // 置位加载标志。
+    commit('setLoading', true);
+    return resolveResponse(operateInspect(
+      SETTINGREPO_CATEGORY_ID,
+      [accountId],
+    ))
+      .then((res) => {
+        if (res === null) {
+          return Promise.resolve();
+        }
+        const persistenceData = JSON.parse(res.value);
+        switch (vim.addons.ezNav.restoreWhenLogin) {
+          case 'restore-all':
+            break;
+          default:
+            persistenceData.activeItemKeys = [];
+            break;
+        }
+        commit('restorePersistenceData', persistenceData);
+        return Promise.resolve();
+      })
+      .finally(() => {
+        // 复位加载标志。
+        commit('setLoading', false);
+      });
   },
   clearActive: ({ commit }) => {
     commit('clearActive');
@@ -193,16 +222,29 @@ const postConstructHook = () => {
 };
 
 const loadHook = (store) => {
+  // 置位加载标志。
+  store.commit('vimEzNav/setLoading', true);
   // 恢复导航信息。
   // noinspection JSUnresolvedVariable
   const { accountId } = store.state.lnp;
-  const persistenceDataJson = window.localStorage.getItem(
-    `${PERSISTENCE_DATA_PREFIX}${accountId}`,
-  );
-  if (persistenceDataJson !== null && persistenceDataJson !== undefined) {
-    const persistenceData = JSON.parse(persistenceDataJson);
-    store.commit('vimEzNav/restorePersistenceData', persistenceData);
-  }
+  resolveResponse(operateInspect(
+    SETTINGREPO_CATEGORY_ID,
+    [accountId],
+  ))
+    .then((res) => {
+      if (res === null) {
+        return Promise.resolve();
+      }
+      const persistenceData = JSON.parse(res.value);
+      store.commit('vimEzNav/restorePersistenceData', persistenceData);
+      return Promise.resolve();
+    })
+    .catch(() => {
+    })
+    .finally(() => {
+      // 复位加载标志。
+      store.commit('vimEzNav/setLoading', false);
+    });
 };
 
 const beforeUnloadHook = (store) => {
@@ -210,9 +252,14 @@ const beforeUnloadHook = (store) => {
   // noinspection JSUnresolvedVariable
   const { accountId } = store.state.lnp;
   const persistenceData = store.getters['vimEzNav/persistenceData'];
-  window.localStorage.setItem(
-    `${PERSISTENCE_DATA_PREFIX}${accountId}`, JSON.stringify(persistenceData),
-  );
+  resolveResponse(operatePut(
+    SETTINGREPO_CATEGORY_ID,
+    [accountId],
+    JSON.stringify(persistenceData),
+    formatTimestamp(currentTimestamp()),
+  ))
+    .catch(() => {
+    });
 };
 
 export default {

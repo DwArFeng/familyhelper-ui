@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import CardPanel from '@/components/card/CardPanel.vue';
+import CardPanel from '@/components/layout/CardPanel.vue';
 
 import resolveResponse from '@/util/response';
 import { allOwned, allPermitted } from '@/api/project/project';

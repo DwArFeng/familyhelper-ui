@@ -1,26 +1,28 @@
 <template>
   <div class="ez-nav-container">
-    <div
-      class="router-link-container"
-    >
-      <!--suppress JSUnresolvedVariable, JSUnresolvedFunction -->
-      <div
-        class="ez-nav-item"
-        :class="isCurrent(item.key) ? 'active' : ''"
-        v-for="item in navItems"
-        :key="item.key"
-        @click="handleNav(item.key)"
-        @contextmenu.prevent="openMenu(item.key, $event)"
-      >
-        <i class="el-icon-lock prefix-icon" v-if="annotation(item.key) === 'affix'"/>
-        <i class="el-icon-link prefix-icon" v-if="annotation(item.key) === 'pinned'"/>
-        <vim-label :type="item.meta.display.labelType" :content="item.meta.display.labelContent"/>
-        <!--suppress JSUnresolvedFunction -->
-        <i
-          class="el-icon-close close-icon"
-          v-if="annotation(item.key) === 'active'"
-          @click.stop="handleRemove(item.key)"
-        />
+    <div class="router-link-container-wrapper">
+      <div class="loading" v-if="loading">正在加载，请稍候...</div>
+      <div class="router-link-container" v-else>
+        <!--suppress JSUnresolvedVariable, JSUnresolvedFunction -->
+        <div
+          class="ez-nav-item"
+          :class="isCurrent(item.key) ? 'active' : ''"
+          v-for="item in navItems"
+          :key="item.key"
+          @click="handleNav(item.key)"
+          @contextmenu.prevent="openMenu(item.key, $event)"
+        >
+          <!--suppress JSUnresolvedFunction -->
+          <i class="el-icon-lock prefix-icon" v-if="annotation(item.key) === 'affix'"/>
+          <i class="el-icon-link prefix-icon" v-if="annotation(item.key) === 'pinned'"/>
+          <vim-label :type="item.meta.display.labelType" :content="item.meta.display.labelContent"/>
+          <!--suppress JSUnresolvedFunction -->
+          <i
+            class="el-icon-close close-icon"
+            v-if="annotation(item.key) === 'active'"
+            @click.stop="handleRemove(item.key)"
+          />
+        </div>
       </div>
     </div>
     <ul
@@ -157,7 +159,7 @@ export default {
   name: 'TagsView',
   components: { EditorNavBar, VimLabel, Draggable },
   computed: {
-    ...mapGetters('vimEzNav', ['navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta']),
+    ...mapGetters('vimEzNav', ['navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta', 'loading']),
     ...mapGetters('vim', ['isCurrent']),
   },
   data() {
@@ -260,6 +262,18 @@ export default {
   width: 100%;
   background: #fff;
   position: relative;
+}
+
+.router-link-container-wrapper {
+  width: 100%;
+}
+
+.router-link-container-wrapper .loading{
+  margin: 0 14px;
+  padding: 1px 0;
+  line-height: 30px;
+  font-size: 14px;
+  user-select: none;
 }
 
 .router-link-container {

@@ -6,6 +6,7 @@
       :header-visible="true"
     >
       <table-panel
+        class="table"
         :page-size.sync="pageSize"
         :entity-count="parseInt(entities.count)"
         :current-page.sync="currentPage"
@@ -24,7 +25,7 @@
         <el-table-column
           prop="value"
           label="值"
-          show-tooltip-when-overflow
+          class-name="single-line"
         />
         <el-table-column
           prop="remark"
@@ -74,7 +75,8 @@
         />
       </el-form-item>
       <el-form-item label="值" prop="value">
-        <el-input
+        <text-editor
+          class="text-editor"
           v-model="anchorEntity.value"
           :readonly="dialogMode === 'INSPECT'"
         />
@@ -91,8 +93,9 @@
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import TablePanel from '@/components/table/TablePanel.vue';
+import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
+import TextEditor from '@/components/text/TextEditor.vue';
 
 import {
   all, exists, idLike, insert, remove, update,
@@ -101,7 +104,9 @@ import resolveResponse from '@/util/response';
 
 export default {
   name: 'SettingNode',
-  components: { EntityMaintainDialog, BorderLayoutPanel, TablePanel },
+  components: {
+    TextEditor, EntityMaintainDialog, BorderLayoutPanel, TablePanel,
+  },
   data() {
     const keyValidator = (rule, value, callback) => {
       Promise.resolve(value)
@@ -330,5 +335,16 @@ export default {
 /*noinspection CssUnusedSymbol*/
 .id-search-bar >>> .el-input-group__prepend {
   padding: 0 10px;
+}
+
+.text-editor{
+  height: 300px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.table >>> .single-line .cell{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

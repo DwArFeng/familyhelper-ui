@@ -130,7 +130,7 @@
 
 <script>
 import BalanceChart from '@/views/items/financeManagement/financeReport/BalanceChart.vue';
-import TablePanel from '@/components/table/TablePanel.vue';
+import TablePanel from '@/components/layout/TablePanel.vue';
 
 import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';

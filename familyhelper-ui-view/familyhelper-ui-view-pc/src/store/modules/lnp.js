@@ -106,7 +106,7 @@ const actions = {
       })
       .then(() => {
         if (vim.addons.ezNav.enabled) {
-          return dispatch('vimEzNav/restorePersistenceDataForLogin', state.accountId, { root: true });
+          return dispatch('vimEzNav/restorePersistenceData', state.accountId, { root: true });
         }
         return Promise.resolve();
       });
@@ -132,17 +132,21 @@ const actions = {
   },
   // eslint-disable-next-line no-shadow
   logout({ state, commit, dispatch }) {
-    commit('setOnlineFlag', false);
-    return resolveResponse(logout(state.token))
-      .finally(() => {
-        router.push({ path: '/login' });
-        return Promise.resolve();
-      })
+    return Promise.resolve()
       .then(() => {
         if (vim.addons.ezNav.enabled) {
           return dispatch('vimEzNav/savePersistenceData', state.accountId, { root: true })
             .then(() => dispatch('vimEzNav/clearAll', null, { root: true }));
         }
+        return Promise.resolve();
+      })
+      .then(() => {
+        commit('setOnlineFlag', false);
+        return Promise.resolve();
+      })
+      .then(() => resolveResponse(logout(state.token)))
+      .finally(() => {
+        router.push({ path: '/login' });
         return Promise.resolve();
       });
   },

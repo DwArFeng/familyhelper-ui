@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import DraggableTablePanel from '@/components/table/DraggableTablePanel.vue';
+import DraggableTablePanel from '@/components/layout/DraggableTablePanel.vue';
 import ImageUploadEditDialog from '@/components/image/ImageUploadEditDialog.vue';
 
 import {

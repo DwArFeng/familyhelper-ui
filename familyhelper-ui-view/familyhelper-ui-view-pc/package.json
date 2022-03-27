@@ -21,6 +21,7 @@
     "sortablejs": "^1.14.0",
     "vue": "^2.6.11",
     "vue-cropper": "^0.5.8",
+    "vue-json-editor": "^1.4.3",
     "vue-pdf": "^4.3.0",
     "vue-router": "3.0.2",
     "vuedraggable": "^2.24.3",

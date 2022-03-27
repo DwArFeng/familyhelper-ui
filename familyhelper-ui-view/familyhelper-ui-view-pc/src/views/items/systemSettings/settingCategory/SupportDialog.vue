@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import TablePanel from '@/components/table/TablePanel.vue';
+import TablePanel from '@/components/layout/TablePanel.vue';
 
 import { all } from '@/api/settingrepo/formatterSupport';
 import resolveResponse from '@/util/response';
