@@ -590,13 +590,13 @@ export default {
     handleMemoFileInspect(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: 'memoFile', action: 'inspect', id: row.key.long_id },
+        query: { type: 'memo-file', action: 'inspect', id: row.key.long_id },
       });
     },
     handleMemoFileEdit(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: 'memoFile', action: 'edit', id: row.key.long_id },
+        query: { type: 'memo-file', action: 'edit', id: row.key.long_id },
       });
     },
     handleMemoFileDownload(memoFileInfo) {
