@@ -141,7 +141,6 @@ const actions = {
         return Promise.resolve();
       })
       .then(() => {
-        console.log('here!');
         commit('setOnlineFlag', false);
         return Promise.resolve();
       })
