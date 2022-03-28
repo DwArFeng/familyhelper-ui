@@ -107,8 +107,7 @@
       :current-page.sync="watchedCurrentPage"
       @current-change="handleCurrentPageChanged"
       @size-change="handlePageSizeChanged"
-    >
-    </el-pagination>
+    />
   </div>
 </template>
 

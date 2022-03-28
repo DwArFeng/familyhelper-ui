@@ -11,6 +11,7 @@
         <el-divider class="horizontal"/>
         <table-panel
           class="table-panel"
+          highlight-current-row
           :page-size.sync="memoTable.pageSize"
           :entity-count="parseInt(memoTable.entities.count)"
           :current-page.sync="memoTable.currentPage"
@@ -589,7 +590,7 @@ export default {
     },
     updateMemoFileTableView(res) {
       this.memoFileTable.entities = res;
-      this.memoTable.currentPage = res.current_page;
+      this.memoFileTable.currentPage = res.current_page;
     },
     handleShowMemoCreateDialog() {
       this.showDialog('CREATE');
