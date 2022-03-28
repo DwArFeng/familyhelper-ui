@@ -22,10 +22,11 @@ const actions = {
   // eslint-disable-next-line no-shadow
   updateUnreadCount({ rootGetters, commit }) {
     commit('updateUnreadCount', 0);
-    const me = rootGetters['lnp/me'];
-    if (me === '') {
+    const isLogin = rootGetters['lnp/isLogin'];
+    if (!isLogin) {
       return;
     }
+    const me = rootGetters['lnp/me'];
     resolveResponse(childForUserUnread(me, 0, 0))
       .then((res) => {
         commit('updateUnreadCount', parseInt(res.count, 10));

@@ -222,6 +222,12 @@ const postConstructHook = () => {
 };
 
 const loadHook = (store) => {
+  // 如果没有登录，则什么也不做。
+  const isLogin = store.getters['lnp/isLogin'];
+  if (!isLogin) {
+    return;
+  }
+
   // 置位加载标志。
   store.commit('vimEzNav/setLoading', true);
   // 恢复导航信息。
@@ -248,6 +254,12 @@ const loadHook = (store) => {
 };
 
 const beforeUnloadHook = (store) => {
+  // 如果没有登录，则什么也不做。
+  const isLogin = store.getters['lnp/isLogin'];
+  if (!isLogin) {
+    return;
+  }
+
   // 存储导航信息。
   // noinspection JSUnresolvedVariable
   const { accountId } = store.state.lnp;
