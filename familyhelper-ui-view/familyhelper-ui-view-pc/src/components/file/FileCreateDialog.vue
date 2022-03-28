@@ -8,39 +8,45 @@
       :close-on-click-modal="false"
       @keydown.ctrl.enter.native="handleHotKeyDown"
     >
-      <!--suppress HtmlUnknownAttribute -->
-      <div
-        class="editor-container"
-        v-loading="loading"
-        element-loading-text="作者偷懒没有做进度显示，长时间转圈是正常现象，请耐心等待"
-      >
-        <div class="type-selector">
-          <el-tooltip
-            v-for="(indicator, index) in indicators"
-            placement="top"
-            :open-delay="1000"
-            :content="indicator.description"
-            :key="index"
-          >
-            <div
-              class="item"
-              :class="index === selectedIndex ? 'selected' : 'unselected'"
-              @click="selectedIndex=index"
-            >
-              <i class="iconfont">{{ indicator.icon }}</i>
-              <span>{{ indicator.label }}</span>
-            </div>
-          </el-tooltip>
+      <div>
+        <div class="placeholder" v-if="permittedIndicators.length === 0">
+          您没有创建任何类型文件的权限！
         </div>
-        <!--suppress RegExpDuplicateCharacterInClass, RegExpRedundantEscape -->
-        <el-input
-          class="input"
-          placeholder="请输入文件名称（不用输入后缀名），注意不要输入非法字符"
-          v-model="fileName"
-          oninput="this.value = this.value.replace(/[&\|\\\*^%$'&quot;#@\-:;，。？！\,@\$]/g,'')"
+        <!--suppress HtmlUnknownAttribute -->
+        <div
+          class="editor-container"
+          v-else
+          v-loading="loading"
+          element-loading-text="作者偷懒没有做进度显示，长时间转圈是正常现象，请耐心等待"
         >
-          <template slot="append">{{ currentIndicator.extension }}</template>
-        </el-input>
+          <div class="type-selector">
+            <el-tooltip
+              v-for="(indicator, index) in permittedIndicators"
+              placement="top"
+              :open-delay="1000"
+              :content="indicator.description"
+              :key="index"
+            >
+              <div
+                class="item"
+                :class="index === selectedIndex ? 'selected' : 'unselected'"
+                @click="selectedIndex=index"
+              >
+                <i class="iconfont">{{ indicator.icon }}</i>
+                <span>{{ indicator.label }}</span>
+              </div>
+            </el-tooltip>
+          </div>
+          <!--suppress RegExpDuplicateCharacterInClass, RegExpRedundantEscape -->
+          <el-input
+            class="input"
+            placeholder="请输入文件名称（不用输入后缀名），注意不要输入非法字符"
+            v-model="fileName"
+            oninput="this.value = this.value.replace(/[&\|\\\*^%$'&quot;#@\-:;，。？！\,@\$]/g,'')"
+          >
+            <template slot="append">{{ currentIndicator.extension }}</template>
+          </el-input>
+        </div>
       </div>
       <div slot="footer">
         <el-button
@@ -62,12 +68,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import { fileType } from '@/util/file';
 import { dataSizePreset, formatUnit } from '@/util/number';
 import { upload as uploadItemFile } from '@/api/assets/itemFile';
 import { upload as uploadMemoFile } from '@/api/project/memoFile';
 import resolveResponse from '@/util/response';
 
+// noinspection JSAnnotator
 export default {
   name: 'FileCreateDialog',
   props: {
@@ -103,6 +112,16 @@ export default {
     currentIndicator() {
       return this.indicators[this.selectedIndex];
     },
+    permittedIndicators() {
+      return this.indicators.filter((indicator) => {
+        const { required, node } = indicator.permission;
+        if (!required) {
+          return true;
+        }
+        return this.hasPermission(node);
+      });
+    },
+    ...mapGetters('lnp', ['hasPermission']),
   },
   filters: {
     fileType(fileName) {
@@ -127,18 +146,30 @@ export default {
           label: '富文本',
           description: '包含文本，图片等多媒体的富文本文件',
           extension: '.rtf',
+          permission: {
+            required: true,
+            node: 'action.file_create.rtf',
+          },
         },
         {
           icon: '\uffe1',
           label: '纯文本',
           description: '纯文本文件，节约空间',
           extension: '.txt',
+          permission: {
+            required: true,
+            node: 'action.file_create.txt',
+          },
         },
         {
           icon: '\uffe0',
           label: '思维导图',
           description: '通过图标助力思维散发',
           extension: '.mmd',
+          permission: {
+            required: true,
+            node: 'action.file_create.mmd',
+          },
         },
       ],
       selectedIndex: 0,
@@ -267,5 +298,18 @@ export default {
 
 .editor-container .input {
   width: 85%;
+}
+
+.placeholder {
+  width: 100%;
+  line-height: 184px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #BFBFBF;
+  user-select: none;
 }
 </style>
