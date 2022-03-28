@@ -119,6 +119,7 @@ const mutations = {
   clearAll: (s) => {
     s.pinnedItemKeys = [];
     s.activeItemKeys = [];
+    s.itemMetaMap = {};
   },
   pin: (s, itemKey) => {
     if (s.pinnedItemKeys.includes(itemKey)) {
@@ -170,7 +171,7 @@ const actions = {
       SETTINGREPO_CATEGORY_ID,
       [accountId],
       JSON.stringify(persistenceData),
-      formatTimestamp(currentTimestamp()),
+      `更新时间: ${formatTimestamp(currentTimestamp())}`,
     ));
   },
   restorePersistenceData: ({ commit }, accountId) => {
@@ -268,7 +269,7 @@ const beforeUnloadHook = (store) => {
     SETTINGREPO_CATEGORY_ID,
     [accountId],
     JSON.stringify(persistenceData),
-    formatTimestamp(currentTimestamp()),
+    `更新时间: ${formatTimestamp(currentTimestamp())}`,
   ))
     .catch(() => {
     });

@@ -70,7 +70,6 @@
       >
         清除所有
       </li>
-      <!--suppress JSUnresolvedFunction -->
       <li
         v-if="annotation(contextmenu.itemKey) !== 'affix'"
         @click="closeMenu();showEditDialog()"
@@ -78,6 +77,12 @@
         调整顺序...
       </li>
       <li @click="closeMenu();handleNav(contextmenu.itemKey)">转到</li>
+      <li
+        v-if="hasPermission('action.eznav.pc.deep_clean')"
+        @click="closeMenu();deepClean()"
+      >
+        深度清理
+      </li>
     </ul>
     <div
       v-if="contextmenu.visible"
@@ -159,8 +164,11 @@ export default {
   name: 'TagsView',
   components: { EditorNavBar, VimLabel, Draggable },
   computed: {
-    ...mapGetters('vimEzNav', ['navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta', 'loading']),
+    ...mapGetters('vimEzNav', [
+      'navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta', 'loading',
+    ]),
     ...mapGetters('vim', ['isCurrent']),
+    ...mapGetters('lnp', ['hasPermission']),
   },
   data() {
     return {
@@ -248,9 +256,27 @@ export default {
         this.editDialog.activeNavItems.splice(index, 1);
       }
     },
+    deepClean() {
+      this.$confirm('该操作将会清空您所有与导航栏相关的缓存的数据。<br>'
+        + '<b>这将使您的导航栏全部清空，包括固定导航栏与活动导航栏</b><br>'
+        + '是否继续?',
+      '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        dangerouslyUseHTMLString: true,
+        customClass: 'custom-message-box__w500',
+        type: 'warning',
+      })
+        .then(() => this.clearAll())
+        .then(() => {
+          this.$router.push({ name: 'vim' });
+        })
+        .catch(() => {
+        });
+    },
     ...mapMutations('vimEzNav', [
       'removeItemKey', 'pin', 'unpin', 'clearActive', 'pushItemKey', 'updatePinnedItemKeys',
-      'updateActiveItemKeys',
+      'updateActiveItemKeys', 'clearAll',
     ]),
   },
 };
@@ -268,7 +294,7 @@ export default {
   width: 100%;
 }
 
-.router-link-container-wrapper .loading{
+.router-link-container-wrapper .loading {
   margin: 0 14px;
   padding: 1px 0;
   line-height: 30px;
