@@ -5,18 +5,7 @@
     >
       <div class="finance-report-main">
         <div class="finance-report-main-header">
-          <el-input
-            class="indicator"
-            v-model="accountBookSelection.displayValue"
-            readonly
-          >
-            <span slot="prepend">当前账本</span>
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="handleShowAccountBookSelectDialog"
-            />
-          </el-input>
+          <account-book-indicator mode="FINANCE_REPORT" @change="handleAccountBookChanged"/>
         </div>
         <el-divider class="tiny-margin-divider"/>
         <el-tabs class="finance-report-main-body" v-model="tabPane.activeName" tab-position="left">
@@ -32,37 +21,30 @@
         </el-tabs>
       </div>
     </border-layout-panel>
-    <account-book-select-dialog
-      type="FINANCE_REPORT"
-      :visible.sync="accountBookSelectDialog.visible"
-      @onConfirm="handleAccountBookConfirmed"
-    />
   </div>
 </template>
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import AccountBookSelectDialog
-from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
 import AccountBookPanel from '@/views/items/financeManagement/financeReport/AccountBookPanel.vue';
 import BankCardPanel from '@/views/items/financeManagement/financeReport/BankCardPanel.vue';
 import FundChangePanel from '@/views/items/financeManagement/financeReport/FundChangePanel.vue';
+import AccountBookIndicator from '@/views/items/financeManagement/accountBook/AccountBookIndicator.vue';
 
 export default {
   name: 'FinanceReport',
   components: {
+    AccountBookIndicator,
     AccountBookPanel,
     BankCardPanel,
     FundChangePanel,
     BorderLayoutPanel,
-    AccountBookSelectDialog,
   },
   data() {
     return {
       accountBookSelection: {
         accountBookId: '',
         accountBook: null,
-        displayValue: '',
       },
       accountBookSelectDialog: {
         visible: false,
@@ -73,10 +55,14 @@ export default {
     };
   },
   methods: {
-    handleAccountBookConfirmed(accountBook) {
-      this.accountBookSelection.accountBook = accountBook;
-      this.accountBookSelection.accountBookId = accountBook.key.long_id;
-      this.accountBookSelection.displayValue = accountBook.name;
+    handleAccountBookChanged(accountBook) {
+      if (accountBook === null) {
+        this.accountBookSelection.accountBook = null;
+        this.accountBookSelection.accountBookId = '';
+      } else {
+        this.accountBookSelection.accountBook = accountBook;
+        this.accountBookSelection.accountBookId = accountBook.key.long_id;
+      }
     },
     handleShowAccountBookSelectDialog() {
       this.accountBookSelectDialog.visible = true;
@@ -107,20 +93,6 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.indicator {
-  width: min(50%, 400px);
-}
-
-/*noinspection CssUnusedSymbol*/
-.indicator >>> .el-input__inner {
-  text-align: center;
-}
-
-/*noinspection CssUnusedSymbol*/
-.indicator >>> .el-input-group__prepend {
-  padding: 0 10px;
 }
 
 .finance-report-main-body {

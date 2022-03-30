@@ -15,55 +15,58 @@
     @closed="handleClosed"
     @keydown.native="handleHotKeyDown"
   >
-    <card-panel
-      title-prop="name"
-      class="card-list-container"
-      card-width="calc(20% - 18px)"
-      select-mode="SINGLE"
-      :data="entities.data"
-      :maxCard="1000"
-      :inspect-button-visible="false"
-      :edit-button-visible="false"
-      :delete-button-visible="false"
-      :addon-button-visible="false"
-      :inspect-menu-item-visible="false"
-      :edit-menu-item-visible="false"
-      :delete-menu-item-visible="false"
-      @onSelectionChanged="handleSelectionChanged"
-    >
-      <template v-slot:default="{index,item}">
-        <div class="account-book-container">
-          <div class="account-book-property">
-            <span class="iconfont account-book-property-icon" style="color:black">&#xfffa;</span>
-            <!--suppress JSUnresolvedVariable -->
-            <span class="account-book-property-text">
+    <div class="body-wrapper">
+      <card-panel
+        title-prop="name"
+        class="card-list-container"
+        card-width="calc(20% - 18px)"
+        select-mode="SINGLE"
+        :data="entities.data"
+        :maxCard="1000"
+        :inspect-button-visible="false"
+        :edit-button-visible="false"
+        :delete-button-visible="false"
+        :addon-button-visible="false"
+        :inspect-menu-item-visible="false"
+        :edit-menu-item-visible="false"
+        :delete-menu-item-visible="false"
+        @onSelectionChanged="handleSelectionChanged"
+      >
+        <template v-slot:default="{index,item}">
+          <div class="account-book-container">
+            <div class="account-book-property">
+              <span class="iconfont account-book-property-icon" style="color:black">&#xfffa;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="account-book-property-text">
                 权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
-          </div>
-          <div class="account-book-property">
-            <span class="iconfont account-book-property-icon" style="color:black">&#xfffb;</span>
-            <!--suppress JSUnresolvedVariable -->
-            <span class="account-book-property-text">
+            </div>
+            <div class="account-book-property">
+              <span class="iconfont account-book-property-icon" style="color:black">&#xfffb;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="account-book-property-text">
                 所有者: {{ item.owner_account.key.string_id }}
               </span>
-          </div>
-          <div class="account-book-property">
-            <span class="iconfont account-book-property-icon" style="color:black">&#xfff9;</span>
-            <!--suppress JSUnresolvedVariable -->
-            <span class="account-book-property-text">
+            </div>
+            <div class="account-book-property">
+              <span class="iconfont account-book-property-icon" style="color:black">&#xfff9;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="account-book-property-text">
                 余额: {{ item.total_value }}
               </span>
-          </div>
-          <div class="account-book-property">
-            <span class="iconfont account-book-property-icon" style="color:black">&#xffef;</span>
-            <!--suppress JSUnresolvedVariable -->
-            <span class="account-book-property-text">
+            </div>
+            <div class="account-book-property">
+              <span class="iconfont account-book-property-icon" style="color:black">&#xffef;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="account-book-property-text">
                 记录日期: {{ formatTimestamp(item.last_recorded_date) }}
               </span>
+            </div>
           </div>
-        </div>
-      </template>
-    </card-panel>
+        </template>
+      </card-panel>
+      <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
+    </div>
     <div class="footer-container" slot="footer">
       <el-button
         type="primary"
@@ -100,7 +103,7 @@ export default {
       type: String,
       validator(value) {
         return [
-          'BANK_CARD', 'FUND_CHANGE', 'FINANCE_REPORT', 'DEFAULT',
+          'BANK_CARD', 'BALANCE_RECORD', 'FUND_CHANGE', 'FINANCE_REPORT', 'DEFAULT',
         ].indexOf(value) !== -1;
       },
       default: 'DEFAULT',
@@ -127,6 +130,7 @@ export default {
       },
       watchedVisible: this.visible,
       selection: null,
+      checkboxValue: false,
     };
   },
   methods: {
@@ -182,7 +186,7 @@ export default {
     },
     handleConfirm() {
       this.watchedVisible = false;
-      this.$emit('onConfirm', this.selection);
+      this.$emit('onConfirm', this.selection, this.checkboxValue);
     },
     handleSelectionChanged(index) {
       if (index === -1) {
@@ -207,6 +211,13 @@ export default {
 </script>
 
 <style scoped>
+
+.body-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .card-list-container {
   width: 100%;
   height: 68vh;

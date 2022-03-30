@@ -10,6 +10,10 @@ export function inspect(key) {
     return get('finance', `account-book/${key}/`, {});
 }
 
+export function inspectDisp(key) {
+    return get('finance', `account-book/${key}/disp/`, {});
+}
+
 export function all(page, rows) {
     return get('finance', 'account-book/all/', {
         page,

@@ -84,18 +84,7 @@
         </template>
       </card-panel>
       <div class="header-container" slot="header">
-        <el-input
-          class="header-account-book-indicator"
-          v-model="parentSelection.displayValue"
-          readonly
-        >
-          <span slot="prepend">当前账本</span>
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="handleShowAccountBookSelectDialog"
-          />
-        </el-input>
+        <account-book-indicator mode="BANK_CARD" @change="handleAccountBookChanged"/>
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
@@ -135,11 +124,6 @@
         />
       </el-form-item>
     </entity-maintain-dialog>
-    <account-book-select-dialog
-      type="BANK_CARD"
-      :visible.sync="accountBookSelectDialog.visible"
-      @onConfirm="handleAccountBookConfirmed"
-    />
   </div>
 </template>
 
@@ -147,8 +131,7 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardPanel from '@/components/layout/CardPanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
-import AccountBookSelectDialog
-from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
+import AccountBookIndicator from '@/views/items/financeManagement/accountBook/AccountBookIndicator.vue';
 
 import resolveResponse from '@/util/response';
 import {
@@ -163,7 +146,10 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'BankCard',
   components: {
-    CardPanel, BorderLayoutPanel, EntityMaintainDialog, AccountBookSelectDialog,
+    AccountBookIndicator,
+    CardPanel,
+    BorderLayoutPanel,
+    EntityMaintainDialog,
   },
   computed: {
     addonButtonVisible() {
@@ -176,7 +162,6 @@ export default {
       parentSelection: {
         accountBookId: '',
         accountBook: null,
-        displayValue: '',
       },
       entityMaintainDialog: {
         mode: 'CREATE',
@@ -378,21 +363,18 @@ export default {
     formatTimestamp(timestamp) {
       return formatTimestamp(timestamp);
     },
-    updateParentSelectionDisplayValue() {
-      if (this.parentSelection.accountBook === null) {
-        this.parentSelection.displayValue = '（未选择账本）';
-      } else {
-        this.parentSelection.displayValue = this.parentSelection.accountBook.name;
-      }
-    },
     handleShowAccountBookSelectDialog() {
       this.accountBookSelectDialog.visible = true;
     },
-    handleAccountBookConfirmed(accountBook) {
-      this.parentSelection.accountBook = accountBook;
-      this.parentSelection.accountBookId = accountBook.key.long_id;
-      this.parentSelection.displayValue = accountBook.name;
-      this.handleSearch();
+    handleAccountBookChanged(accountBook) {
+      if (accountBook === null) {
+        this.parentSelection.accountBook = null;
+        this.parentSelection.accountBookId = '';
+      } else {
+        this.parentSelection.accountBook = accountBook;
+        this.parentSelection.accountBookId = accountBook.key.long_id;
+        this.handleSearch();
+      }
     },
     cardTypeLabel(item) {
       // noinspection JSUnresolvedVariable
@@ -432,7 +414,6 @@ export default {
     },
   },
   mounted() {
-    this.updateParentSelectionDisplayValue();
     this.handleBankCardTypeIndicatorSearch();
   },
 };
@@ -442,20 +423,6 @@ export default {
 .bank-card-container {
   height: 100%;
   width: 100%;
-}
-
-.header-account-book-indicator {
-  width: 360px;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-account-book-indicator >>> .el-input__inner {
-  text-align: center;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-account-book-indicator >>> .el-input-group__prepend {
-  padding: 0 10px;
 }
 
 .bank-card-type-select {

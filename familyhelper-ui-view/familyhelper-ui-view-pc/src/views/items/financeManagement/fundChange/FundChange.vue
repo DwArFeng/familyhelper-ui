@@ -104,18 +104,7 @@
           记录资金变更
         </el-button>
         <el-divider direction="vertical"/>
-        <el-input
-          class="header-account-book-indicator"
-          v-model="parentSelection.displayValue"
-          readonly
-        >
-          <span slot="prepend">当前账本</span>
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="handleShowAccountBookSelectDialog"
-          />
-        </el-input>
+        <account-book-indicator mode="FUND_CHANGE" @change="handleAccountBookChanged"/>
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
@@ -165,11 +154,6 @@
         />
       </el-form-item>
     </entity-maintain-dialog>
-    <account-book-select-dialog
-      type="FUND_CHANGE"
-      :visible.sync="accountBookSelectDialog.visible"
-      @onConfirm="handleAccountBookConfirmed"
-    />
   </div>
 </template>
 
@@ -177,8 +161,7 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
-import AccountBookSelectDialog
-from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
+import AccountBookIndicator from '@/views/items/financeManagement/accountBook/AccountBookIndicator.vue';
 
 import resolveResponse from '@/util/response';
 import {
@@ -193,7 +176,10 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'FundChange',
   components: {
-    TablePanel, BorderLayoutPanel, EntityMaintainDialog, AccountBookSelectDialog,
+    AccountBookIndicator,
+    TablePanel,
+    BorderLayoutPanel,
+    EntityMaintainDialog,
   },
   computed: {
     headerButtonDisabled() {
@@ -215,7 +201,6 @@ export default {
       parentSelection: {
         accountBookId: '',
         accountBook: null,
-        displayValue: '',
       },
       entities: {
         current_page: 0,
@@ -406,21 +391,18 @@ export default {
     formatTimestamp(timestamp) {
       return formatTimestamp(timestamp);
     },
-    updateParentSelectionDisplayValue() {
-      if (this.parentSelection.accountBook === null) {
-        this.parentSelection.displayValue = '（未选择账本）';
-      } else {
-        this.parentSelection.displayValue = this.parentSelection.accountBook.name;
-      }
-    },
     handleShowAccountBookSelectDialog() {
       this.accountBookSelectDialog.visible = true;
     },
-    handleAccountBookConfirmed(accountBook) {
-      this.parentSelection.accountBook = accountBook;
-      this.parentSelection.accountBookId = accountBook.key.long_id;
-      this.parentSelection.displayValue = accountBook.name;
-      this.handleSearch();
+    handleAccountBookChanged(accountBook) {
+      if (accountBook === null) {
+        this.parentSelection.accountBook = null;
+        this.parentSelection.accountBookId = '';
+      } else {
+        this.parentSelection.accountBook = accountBook;
+        this.parentSelection.accountBookId = accountBook.key.long_id;
+        this.handleSearch();
+      }
     },
     handleRecordBalanceInput(value) {
       this.anchorEntity.delta = this.limitInput(value);
@@ -506,7 +488,6 @@ export default {
     },
   },
   mounted() {
-    this.updateParentSelectionDisplayValue();
     this.handleFundChangeTypeIndicatorSearch();
     this.handleSearch();
   },
@@ -519,18 +500,12 @@ export default {
   width: 100%;
 }
 
-.header-account-book-indicator {
-  width: 360px;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-account-book-indicator >>> .el-input__inner {
-  text-align: center;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-account-book-indicator >>> .el-input-group__prepend {
-  padding: 0 10px;
+.header-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .fund-change-type-select {
