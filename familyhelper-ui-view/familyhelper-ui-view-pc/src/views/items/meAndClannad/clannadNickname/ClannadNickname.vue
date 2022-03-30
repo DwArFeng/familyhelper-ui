@@ -59,19 +59,11 @@
           readonly
           v-if="maintainDialog.dialogMode === 'INSPECT'"
         />
-        <el-select
-          class='account-select'
+        <account-selector
           v-model="maintainDialog.anchorEntity.object_user_id"
-          placeholder="请选择"
           v-else
-        >
-          <el-option
-            v-for="item in accountIndicator.entities.data"
-            :key="item.key.string_id"
-            :label="`${item.name}(${item.key.string_id})`"
-            :value="item.key.string_id"
-          />
-        </el-select>
+          :filter="(d)=> d.key.string_id !== this.me"
+        />
       </el-form-item>
       <el-form-item label="称呼" prop="call">
         <el-input
@@ -95,17 +87,20 @@ import { mapGetters } from 'vuex';
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
+import AccountSelector from '@/views/items/systemSettings/account/AccountSelector.vue';
 
 import {
   exists, insert, remove, update, childForSubjectUser,
 } from '@/api/clannad/nickname';
-import { exists as existsAccount, all as allAccount } from '@/api/system/account';
+import { exists as existsAccount } from '@/api/system/account';
 import resolveResponse from '@/util/response';
 
 // noinspection JSAnnotator
 export default {
   name: 'ClannadNickname',
-  components: { BorderLayoutPanel, TablePanel, EntityMaintainDialog },
+  components: {
+    AccountSelector, BorderLayoutPanel, TablePanel, EntityMaintainDialog,
+  },
   computed: {
     ...mapGetters('lnp', ['me']),
   },
@@ -173,30 +168,9 @@ export default {
           ],
         },
       },
-      accountIndicator: {
-        entities: {
-          current_page: 0,
-          total_pages: 0,
-          rows: 0,
-          count: '0',
-          data: [],
-        },
-      },
     };
   },
   methods: {
-    handleAccountSearch() {
-      this.lookupAllAccount();
-    },
-    lookupAllAccount() {
-      resolveResponse(allAccount(0, 1000))
-        .then(this.updateAccountObject)
-        .catch(() => {
-        });
-    },
-    updateAccountObject(res) {
-      this.accountIndicator.entities = res;
-    },
     handlePagingAttributeChanged() {
       this.handleSearch();
     },
@@ -322,7 +296,6 @@ export default {
     },
   },
   mounted() {
-    this.handleAccountSearch();
     this.handleSearch();
   },
 };
@@ -332,9 +305,5 @@ export default {
 .clannad-nickname-container {
   width: 100%;
   height: 100%;
-}
-
-.account-select {
-  width: 100%;
 }
 </style>

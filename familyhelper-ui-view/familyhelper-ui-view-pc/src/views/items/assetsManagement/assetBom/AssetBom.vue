@@ -55,25 +55,9 @@
           新建子项目
         </el-button>
         <el-divider direction="vertical"/>
-        <el-input
-          class="header-asset-catalog-indicator"
-          v-model="parentSelection.displayValue"
-          readonly
-        >
-          <span slot="prepend">当前资产目录</span>
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="handleShowAssetCatalogSelectDialog"
-          />
-        </el-input>
+        <asset-catalog-indicator mode="ASSET_BOM" @change="handleAssetCatalogChanged"/>
       </div>
     </border-layout-panel>
-    <asset-catalog-select-dialog
-      type="BANK_CARD"
-      :visible.sync="assetCatalogSelectDialog.visible"
-      @onConfirm="handleAssetCatalogConfirmed"
-    />
     <entity-maintain-dialog
       label-width="100px"
       inspect-title="查看项目"
@@ -149,12 +133,12 @@
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import AssetBomTreePanel from '@/views/items/assetsManagement/assetBom/AssetBomTreePanel.vue';
-import AssetCatalogSelectDialog
-from '@/views/items/assetsManagement/assetCatalog/AssetCatalogSelectDialog.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import InfoTabPanel from '@/views/items/assetsManagement/assetBom/InfoTabPanel.vue';
 import ParamsTabPanel from '@/views/items/assetsManagement/assetBom/ParamsTabPanel.vue';
 import FileTabPanel from '@/views/items/assetsManagement/assetBom/FileTabPanel.vue';
+import AssetCatalogIndicator
+from '@/views/items/assetsManagement/assetCatalog/AssetCatalogIndicator.vue';
 
 import resolveResponse from '@/util/response';
 import {
@@ -166,12 +150,12 @@ import { all as allLabel, allExists as allLabelExists } from '@/api/assets/itemL
 export default {
   name: 'AssetBom',
   components: {
+    AssetCatalogIndicator,
     FileTabPanel,
     ParamsTabPanel,
     InfoTabPanel,
     BorderLayoutPanel,
     AssetBomTreePanel,
-    AssetCatalogSelectDialog,
     EntityMaintainDialog,
   },
   computed: {
@@ -208,10 +192,6 @@ export default {
       parentSelection: {
         assetCatalogId: '',
         assetCatalog: null,
-        displayValue: '',
-      },
-      assetCatalogSelectDialog: {
-        visible: false,
       },
       maintainDialog: {
         visible: false,
@@ -312,13 +292,9 @@ export default {
     updateLabelObject(res) {
       this.label.entities = res;
     },
-    handleShowAssetCatalogSelectDialog() {
-      this.assetCatalogSelectDialog.visible = true;
-    },
-    handleAssetCatalogConfirmed(assetCatalog) {
+    handleAssetCatalogChanged(assetCatalog) {
       this.parentSelection.assetCatalog = assetCatalog;
       this.parentSelection.assetCatalogId = assetCatalog.key.long_id;
-      this.parentSelection.displayValue = assetCatalog.name;
     },
     handleCurrentChanged(node, data) {
       this.treePanel.selection.node = node;
@@ -407,13 +383,6 @@ export default {
       this.inspectRoot();
       return Promise.resolve();
     },
-    updateParentSelectionDisplayValue() {
-      if (this.parentSelection.assetCatalog === null) {
-        this.parentSelection.displayValue = '（未选择项目）';
-      } else {
-        this.parentSelection.displayValue = this.parentSelection.assetCatalog.name;
-      }
-    },
     handleEntityCreate() {
       resolveResponse(create(
         this.parentSelection.assetCatalogId,
@@ -487,7 +456,6 @@ export default {
     },
   },
   mounted() {
-    this.updateParentSelectionDisplayValue();
     this.handleTypeIndicatorSearch();
     this.handleLabelSearch();
   },
@@ -495,6 +463,14 @@ export default {
 </script>
 
 <style scoped>
+.header-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .asset-bom-container {
   width: 100%;
   height: 100%;
@@ -503,20 +479,6 @@ export default {
 .tree-container {
   width: calc(25vw - 230px - 20px + 80px);
   height: 100%;
-}
-
-.header-asset-catalog-indicator {
-  width: 360px;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-asset-catalog-indicator >>> .el-input__inner {
-  text-align: center;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-asset-catalog-indicator >>> .el-input-group__prepend {
-  padding: 0 10px;
 }
 
 .asset-bom-select {

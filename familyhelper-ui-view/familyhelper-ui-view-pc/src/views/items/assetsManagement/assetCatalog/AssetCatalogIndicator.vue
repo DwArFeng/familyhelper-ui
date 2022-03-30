@@ -1,12 +1,12 @@
 <template>
-  <div class="account-book-indicator-container">
+  <div class="asset-catalog-indicator-container">
     <el-input
       v-loading="loading"
       class="indicator"
       v-model="displayValue"
       readonly
     >
-      <span slot="prepend">当前账本</span>
+      <span slot="prepend">当前资产目录</span>
       <el-button-group class="button-group" slot="append">
         <el-button
           class="button"
@@ -20,7 +20,7 @@
         />
       </el-button-group>
     </el-input>
-    <account-book-select-dialog
+    <asset-catalog-select-dialog
       :mode="mode"
       :visible.sync="dialogVisible"
       @onConfirm="handleConfirmed"
@@ -31,73 +31,73 @@
 <script>
 import { mapGetters } from 'vuex';
 
-import AccountBookSelectDialog
-from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
+import AssetCatalogSelectDialog
+from '@/views/items/assetsManagement/assetCatalog/AssetCatalogSelectDialog.vue';
 
 import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
-import { exists, inspectDisp } from '@/api/finance/accountBook';
+import { exists, inspectDisp } from '@/api/assets/assetCatalog';
 
 import resolveResponse from '@/util/response';
 import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
-const SETTINGREPO_CATEGORY_ID = 'finance_management.default_account_book';
+const SETTINGREPO_CATEGORY_ID = 'assets_management.default_asset_catalog';
 
 // noinspection JSAnnotator
 export default {
-  name: 'AccountBookIndicator',
-  components: { AccountBookSelectDialog },
+  name: 'AssetCatalogIndicator',
+  components: { AssetCatalogSelectDialog },
   props: {
     mode: {
       type: String,
       validator(value) {
         return [
-          'BANK_CARD', 'BALANCE_RECORD', 'FUND_CHANGE', 'FINANCE_REPORT', 'DEFAULT',
+          'ASSET_BOM', 'ASSETS_REPORT', 'DEFAULT',
         ].indexOf(value) !== -1;
       },
       default: 'DEFAULT',
     },
   },
   computed: {
-    accountBookId() {
-      if (this.accountBook === null) {
+    assetCatalogId() {
+      if (this.assetCatalog === null) {
         return '';
       }
-      return this.accountBook.key.long_id;
+      return this.assetCatalog.key.long_id;
     },
     displayValue() {
-      if (this.accountBook === null) {
+      if (this.assetCatalog === null) {
         return '（未选择账本）';
       }
-      return this.accountBook.name;
+      return this.assetCatalog.name;
     },
     ...mapGetters('lnp', ['me']),
   },
   data() {
     return {
-      accountBook: null,
+      assetCatalog: null,
       dialogVisible: false,
       loading: false,
-      defaultAccountBook: null,
+      defaultAssetCatalog: null,
     };
   },
   methods: {
     handleShowDialog() {
       this.dialogVisible = true;
     },
-    handleConfirmed(accountBook, setDefault) {
-      this.accountBook = accountBook;
-      this.$emit('change', accountBook);
+    handleConfirmed(assetCatalog, setDefault) {
+      this.assetCatalog = assetCatalog;
+      this.$emit('change', assetCatalog);
       if (!setDefault) {
         return;
       }
       resolveResponse(operatePut(
         SETTINGREPO_CATEGORY_ID,
         [this.me],
-        this.accountBookId,
+        this.assetCatalogId,
         `更新时间: ${formatTimestamp(currentTimestamp())}`,
       ))
         .then(() => {
-          this.defaultAccountBook = this.accountBook;
+          this.defaultAssetCatalog = this.assetCatalog;
         })
         .catch(() => {
         });
@@ -107,7 +107,7 @@ export default {
       resolveResponse(operateInspect(SETTINGREPO_CATEGORY_ID, [this.me]))
         .then((res) => {
           if (res === null) {
-            this.accountBook = null;
+            this.assetCatalog = null;
             return Promise.reject();
           }
           return Promise.resolve(res.value);
@@ -117,24 +117,24 @@ export default {
             if (existsFlag) {
               return Promise.resolve(res);
             }
-            this.accountBook = null;
+            this.assetCatalog = null;
             return Promise.reject();
           }))
         .then((res) => resolveResponse(inspectDisp(res)))
         .then((res) => {
-          this.defaultAccountBook = res;
-          this.accountBook = res;
+          this.defaultAssetCatalog = res;
+          this.assetCatalog = res;
         })
         .catch(() => {
         })
         .finally(() => {
           this.loading = false;
-          this.$emit('change', this.accountBook);
+          this.$emit('change', this.assetCatalog);
         });
     },
     handleResetDefault() {
-      this.accountBook = this.defaultAccountBook;
-      this.$emit('change', this.accountBook);
+      this.assetCatalog = this.defaultAssetCatalog;
+      this.$emit('change', this.assetCatalog);
     },
   },
   mounted() {

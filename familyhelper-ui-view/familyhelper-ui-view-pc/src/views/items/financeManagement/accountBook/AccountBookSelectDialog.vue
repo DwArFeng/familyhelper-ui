@@ -88,7 +88,7 @@
 import CardPanel from '@/components/layout/CardPanel.vue';
 
 import resolveResponse from '@/util/response';
-import { allOwned, allPermitted } from '@/api/finance/accountBook';
+import { allOwnedDisp, allPermittedDisp } from '@/api/finance/accountBook';
 import { formatTimestamp } from '@/util/timestamp';
 
 export default {
@@ -111,6 +111,9 @@ export default {
   },
   watch: {
     visible(value) {
+      if (value) {
+        this.checkboxValue = false;
+      }
       this.watchedVisible = value;
     },
   },
@@ -148,13 +151,13 @@ export default {
       }
     },
     lookupAllPermitted() {
-      resolveResponse(allPermitted(0, 1000))
+      resolveResponse(allPermittedDisp(0, 1000))
         .then(this.updateCardListView)
         .catch(() => {
         });
     },
     lookupAllOwned() {
-      resolveResponse(allOwned(0, 1000))
+      resolveResponse(allOwnedDisp(0, 1000))
         .then(this.updateCardListView)
         .catch(() => {
         });
@@ -211,7 +214,6 @@ export default {
 </script>
 
 <style scoped>
-
 .body-wrapper {
   width: 100%;
   display: flex;

@@ -15,55 +15,58 @@
     @closed="handleClosed"
     @keydown.native="handleHotKeyDown"
   >
-    <card-panel
-      title-prop="name"
-      class="card-list-container"
-      card-width="calc(20% - 18px)"
-      select-mode="SINGLE"
-      :data="entities.data"
-      :maxCard="1000"
-      :inspect-button-visible="false"
-      :edit-button-visible="false"
-      :delete-button-visible="false"
-      :addon-button-visible="false"
-      :inspect-menu-item-visible="false"
-      :edit-menu-item-visible="false"
-      :delete-menu-item-visible="false"
-      @onSelectionChanged="handleSelectionChanged"
-    >
-      <template v-slot:default="{index,item}">
-        <div class="asset-catalog-container">
-          <div class="asset-catalog-property">
-            <span class="iconfont asset-catalog-property-icon" style="color:black">&#xfffa;</span>
-            <!--suppress JSUnresolvedVariable -->
-            <span class="asset-catalog-property-text">
+    <div class="body-wrapper">
+      <card-panel
+        title-prop="name"
+        class="card-list-container"
+        card-width="calc(20% - 18px)"
+        select-mode="SINGLE"
+        :data="entities.data"
+        :maxCard="1000"
+        :inspect-button-visible="false"
+        :edit-button-visible="false"
+        :delete-button-visible="false"
+        :addon-button-visible="false"
+        :inspect-menu-item-visible="false"
+        :edit-menu-item-visible="false"
+        :delete-menu-item-visible="false"
+        @onSelectionChanged="handleSelectionChanged"
+      >
+        <template v-slot:default="{index,item}">
+          <div class="asset-catalog-container">
+            <div class="asset-catalog-property">
+              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xfffa;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="asset-catalog-property-text">
                 权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
-          </div>
-          <div class="asset-catalog-property">
-            <span class="iconfont asset-catalog-property-icon" style="color:black">&#xfffb;</span>
-            <!--suppress JSUnresolvedVariable -->
-            <span class="asset-catalog-property-text">
+            </div>
+            <div class="asset-catalog-property">
+              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xfffb;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="asset-catalog-property-text">
                 所有者: {{ item.owner_account.key.string_id }}
               </span>
-          </div>
-          <div class="asset-catalog-property">
-            <span class="iconfont asset-catalog-property-icon" style="color:black">&#xffe7;</span>
-            <!--suppress JSUnresolvedVariable -->
-            <span class="asset-catalog-property-text">
+            </div>
+            <div class="asset-catalog-property">
+              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xffe7;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="asset-catalog-property-text">
                 项目总数: {{ item.item_count }}
               </span>
-          </div>
-          <div class="asset-catalog-property">
-            <span class="iconfont asset-catalog-property-icon" style="color:black">&#xffef;</span>
-            <!--suppress JSUnresolvedVariable -->
-            <span class="asset-catalog-property-text">
+            </div>
+            <div class="asset-catalog-property">
+              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xffef;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="asset-catalog-property-text">
                 创建日期: {{ formatTimestamp(item.created_date) }}
               </span>
+            </div>
           </div>
-        </div>
-      </template>
-    </card-panel>
+        </template>
+      </card-panel>
+      <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
+    </div>
     <div class="footer-container" slot="footer">
       <el-button
         type="primary"
@@ -85,7 +88,7 @@
 import CardPanel from '@/components/layout/CardPanel.vue';
 
 import resolveResponse from '@/util/response';
-import { allOwned, allPermitted } from '@/api/assets/assetCatalog';
+import { allOwnedDisp, allPermittedDisp } from '@/api/assets/assetCatalog';
 import { formatTimestamp } from '@/util/timestamp';
 
 export default {
@@ -100,7 +103,7 @@ export default {
       type: String,
       validator(value) {
         return [
-          'ASSET_BOM', 'FUND_CHANGE', 'ASSETS_REPORT', 'DEFAULT',
+          'ASSET_BOM', 'ASSETS_REPORT', 'DEFAULT',
         ].indexOf(value) !== -1;
       },
       default: 'DEFAULT',
@@ -108,6 +111,9 @@ export default {
   },
   watch: {
     visible(value) {
+      if (value) {
+        this.checkboxValue = false;
+      }
       this.watchedVisible = value;
     },
   },
@@ -127,6 +133,7 @@ export default {
       },
       watchedVisible: this.visible,
       selection: null,
+      checkboxValue: false,
     };
   },
   methods: {
@@ -144,13 +151,13 @@ export default {
       }
     },
     lookupAllPermitted() {
-      resolveResponse(allPermitted(0, 1000))
+      resolveResponse(allPermittedDisp(0, 1000))
         .then(this.updateCardListView)
         .catch(() => {
         });
     },
     lookupAllOwned() {
-      resolveResponse(allOwned(0, 1000))
+      resolveResponse(allOwnedDisp(0, 1000))
         .then(this.updateCardListView)
         .catch(() => {
         });
@@ -182,7 +189,7 @@ export default {
     },
     handleConfirm() {
       this.watchedVisible = false;
-      this.$emit('onConfirm', this.selection);
+      this.$emit('onConfirm', this.selection, this.checkboxValue);
     },
     handleSelectionChanged(index) {
       if (index === -1) {
@@ -207,6 +214,12 @@ export default {
 </script>
 
 <style scoped>
+.body-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .card-list-container {
   width: 100%;
   height: 68vh;

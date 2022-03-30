@@ -18,13 +18,31 @@ export function all(page, rows) {
 }
 
 export function allPermitted(page, rows) {
-    return get('assets', 'asset-catalog/all-permitted/disp/', {
+    return get('assets', 'asset-catalog/all-permitted/', {
         page,
         rows,
     });
 }
 
 export function allOwned(page, rows) {
+    return get('assets', 'asset-catalog/all-owned/', {
+        page,
+        rows,
+    });
+}
+
+export function inspectDisp(key) {
+    return get('assets', `asset-catalog/${key}/disp/`, {});
+}
+
+export function allPermittedDisp(page, rows) {
+    return get('assets', 'asset-catalog/all-permitted/disp/', {
+        page,
+        rows,
+    });
+}
+
+export function allOwnedDisp(page, rows) {
     return get('assets', 'asset-catalog/all-owned/disp/', {
         page,
         rows,

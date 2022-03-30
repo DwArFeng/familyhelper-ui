@@ -6,6 +6,7 @@
       filterable
       remote
       :remote-method="updateOption"
+      :loading="loading"
     >
       <el-option
         v-for="option in filteredOptions"

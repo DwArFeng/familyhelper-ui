@@ -10,10 +10,6 @@ export function inspect(key) {
     return get('finance', `account-book/${key}/`, {});
 }
 
-export function inspectDisp(key) {
-    return get('finance', `account-book/${key}/disp/`, {});
-}
-
 export function all(page, rows) {
     return get('finance', 'account-book/all/', {
         page,
@@ -22,13 +18,31 @@ export function all(page, rows) {
 }
 
 export function allPermitted(page, rows) {
-    return get('finance', 'account-book/all-permitted/disp/', {
+    return get('finance', 'account-book/all-permitted/', {
         page,
         rows,
     });
 }
 
 export function allOwned(page, rows) {
+    return get('finance', 'account-book/all-owned/', {
+        page,
+        rows,
+    });
+}
+
+export function inspectDisp(key) {
+    return get('finance', `account-book/${key}/disp/`, {});
+}
+
+export function allPermittedDisp(page, rows) {
+    return get('finance', 'account-book/all-permitted/disp/', {
+        page,
+        rows,
+    });
+}
+
+export function allOwnedDisp(page, rows) {
     return get('finance', 'account-book/all-owned/disp/', {
         page,
         rows,
