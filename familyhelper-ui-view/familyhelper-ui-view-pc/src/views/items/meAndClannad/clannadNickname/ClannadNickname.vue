@@ -62,7 +62,6 @@
         <account-selector
           v-model="maintainDialog.anchorEntity.object_user_id"
           v-else
-          :filter="(d)=> d.key.string_id !== this.me"
         />
       </el-form-item>
       <el-form-item label="称呼" prop="call">
