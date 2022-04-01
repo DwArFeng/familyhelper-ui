@@ -18,13 +18,31 @@ export function all(page, rows) {
 }
 
 export function allPermitted(page, rows) {
+    return get('project', 'project/all-permitted/', {
+        page,
+        rows,
+    });
+}
+
+export function inspectDisp(key) {
+    return get('project', `project/${key}/disp/`, {});
+}
+
+export function allOwned(page, rows) {
+    return get('project', 'project/all-owned/', {
+        page,
+        rows,
+    });
+}
+
+export function allPermittedDisp(page, rows) {
     return get('project', 'project/all-permitted/disp/', {
         page,
         rows,
     });
 }
 
-export function allOwned(page, rows) {
+export function allOwnedDisp(page, rows) {
     return get('project', 'project/all-owned/disp/', {
         page,
         rows,

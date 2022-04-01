@@ -158,7 +158,7 @@ from '@/views/items/projectHelper/project/PermitMaintainDialog.vue';
 
 import resolveResponse from '@/util/response';
 import {
-  allPermitted, allOwned, create, update, remove,
+  allPermittedDisp, allOwnedDisp, create, update, remove,
 } from '@/api/project/project';
 
 import { formatTimestamp } from '@/util/timestamp';
@@ -217,13 +217,13 @@ export default {
       }
     },
     lookupAllPermitted() {
-      resolveResponse(allPermitted(0, 1000))
+      resolveResponse(allPermittedDisp(0, 1000))
         .then(this.updateCardListView)
         .catch(() => {
         });
     },
     lookupAllOwned() {
-      resolveResponse(allOwned(0, 1000))
+      resolveResponse(allOwnedDisp(0, 1000))
         .then(this.updateCardListView)
         .catch(() => {
         });
@@ -232,7 +232,7 @@ export default {
       this.cardPanel.entities = res;
     },
     handleProjectToCreate() {
-      resolveResponse(allOwned(0, 1000))
+      resolveResponse(allOwnedDisp(0, 1000))
         .then((res) => {
           if (res.count >= this.cardPanel.maxCard) {
             this.$alert(

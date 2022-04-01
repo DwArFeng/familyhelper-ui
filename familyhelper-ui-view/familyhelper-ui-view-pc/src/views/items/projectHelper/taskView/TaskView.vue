@@ -46,25 +46,9 @@
           新建任务
         </el-button>
         <el-divider direction="vertical"/>
-        <el-input
-          class="header-project-indicator"
-          v-model="parentSelection.displayValue"
-          readonly
-        >
-          <span slot="prepend">当前工程</span>
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="handleShowProjectSelectDialog"
-          />
-        </el-input>
+        <project-indicator mode="TASK_VIEW" @change="handleProjectChanged"/>
       </div>
     </border-layout-panel>
-    <project-select-dialog
-      type="BANK_CARD"
-      :visible.sync="projectSelectDialog.visible"
-      @onConfirm="handleProjectConfirmed"
-    />
     <el-dialog
       id="dialog"
       append-to-body
@@ -136,10 +120,10 @@
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import ProjectSelectDialog from '@/views/items/projectHelper/project/ProjectSelectDialog.vue';
 import ComingSoon from '@/components/comingSoon/ComingSoon.vue';
 import TaskListPanel from '@/views/items/projectHelper/taskView/TaskListPanel.vue';
 import InfoTabPanel from '@/views/items/projectHelper/taskView/InfoTabPanel.vue';
+import ProjectIndicator from '@/views/items/projectHelper/project/ProjectIndicator.vue';
 
 import resolveResponse from '@/util/response';
 import { all as allTypeIndicator } from '@/api/project/taskTypeIndicator';
@@ -148,9 +132,9 @@ import { create } from '@/api/project/task';
 export default {
   name: 'Task',
   components: {
+    ProjectIndicator,
     TaskListPanel,
     BorderLayoutPanel,
-    ProjectSelectDialog,
     ComingSoon,
     InfoTabPanel,
   },
@@ -165,10 +149,6 @@ export default {
       parentSelection: {
         projectId: '',
         project: null,
-        displayValue: '',
-      },
-      projectSelectDialog: {
-        visible: false,
       },
       taskTabs: {
         activeName: 'info',
@@ -216,13 +196,9 @@ export default {
     updateTypeIndicatorObject(res) {
       this.typeIndicator.entities = res;
     },
-    handleShowProjectSelectDialog() {
-      this.projectSelectDialog.visible = true;
-    },
-    handleProjectConfirmed(project) {
+    handleProjectChanged(project) {
       this.parentSelection.project = project;
       this.parentSelection.projectId = project.key.long_id;
-      this.parentSelection.displayValue = project.name;
       this.handleSearch();
     },
     handleSearch() {
@@ -269,22 +245,22 @@ export default {
     handleEntityDelete() {
       // TODO
     },
-    updateParentSelectionDisplayValue() {
-      if (this.parentSelection.project === null) {
-        this.parentSelection.displayValue = '（未选择项目）';
-      } else {
-        this.parentSelection.displayValue = this.parentSelection.project.name;
-      }
-    },
   },
   mounted() {
     this.handleTypeIndicatorSearch();
-    this.updateParentSelectionDisplayValue();
   },
 };
 </script>
 
 <style scoped>
+.header-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .task-view-container {
   height: 100%;
   width: 100%;
@@ -293,20 +269,6 @@ export default {
 .list-container {
   width: calc(25vw - 230px - 20px + 80px);
   height: 100%;
-}
-
-.header-project-indicator {
-  width: 360px;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-project-indicator >>> .el-input__inner {
-  text-align: center;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-project-indicator >>> .el-input-group__prepend {
-  padding: 0 10px;
 }
 
 .task-view-select {
