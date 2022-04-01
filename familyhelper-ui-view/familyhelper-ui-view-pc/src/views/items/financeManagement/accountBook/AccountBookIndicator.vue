@@ -16,7 +16,7 @@
         <el-button
           class="button"
           icon="el-icon-refresh"
-          @click="handleResetDefault"
+          @click="fetchSettingrepo"
         />
       </el-button-group>
     </el-input>
@@ -77,7 +77,6 @@ export default {
       accountBook: null,
       dialogVisible: false,
       loading: false,
-      defaultAccountBook: null,
     };
   },
   methods: {
@@ -96,9 +95,6 @@ export default {
         this.accountBookId,
         `更新时间: ${formatTimestamp(currentTimestamp())}`,
       ))
-        .then(() => {
-          this.defaultAccountBook = this.accountBook;
-        })
         .catch(() => {
         });
     },
@@ -122,7 +118,6 @@ export default {
           }))
         .then((res) => resolveResponse(inspectDisp(res)))
         .then((res) => {
-          this.defaultAccountBook = res;
           this.accountBook = res;
         })
         .catch(() => {
@@ -131,10 +126,6 @@ export default {
           this.loading = false;
           this.$emit('change', this.accountBook);
         });
-    },
-    handleResetDefault() {
-      this.accountBook = this.defaultAccountBook;
-      this.$emit('change', this.accountBook);
     },
   },
   mounted() {
