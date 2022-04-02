@@ -199,10 +199,6 @@ export default {
     handleProjectChanged(project) {
       this.parentSelection.project = project;
       this.parentSelection.projectId = project.key.long_id;
-      this.handleSearch();
-    },
-    handleSearch() {
-
     },
     handleCurrentChanged(taskId) {
       this.taskTabs.taskId = taskId;

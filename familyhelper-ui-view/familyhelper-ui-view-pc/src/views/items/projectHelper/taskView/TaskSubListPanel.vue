@@ -73,12 +73,12 @@ export default {
 
 /*noinspection CssUnusedSymbol*/
 .task-item.active {
-  background: rgba(0, 0, 0, .025);
+  background: #F5F7FA;
 }
 
 /*noinspection CssUnusedSymbol*/
 .task-item.inactive:hover {
-  background: rgba(0, 0, 0, .025);
+  background: #F5F7FA;
 }
 
 .task-item span {

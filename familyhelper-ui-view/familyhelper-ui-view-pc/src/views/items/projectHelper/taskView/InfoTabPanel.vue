@@ -1,132 +1,85 @@
 <template>
-  <div class="info-tab-panel-container">
-    <div class="edit-panel" v-loading="editPanelLoading">
-      <div class="divider-block">
-        <el-divider
-          class="divider"
-          content-position="left"
-        >
-          基本信息
-        </el-divider>
-        <el-button
-          class="button"
-          size="mini"
-          type="primary"
-          icon="el-icon-edit"
-          @click="itemCoverEditDialog.visible=true"
-        />
-      </div>
-      <el-form
-        class="property-form"
-        label-position="left"
-        label-width="80px"
-        inline
-        :model="form.entity"
-      >
-        <el-form-item label="名称" style="width: 100%">
-          {{ form.entity.name }}
-        </el-form-item>
-        <el-form-item label="类型" style="width: 33%">
-          {{ formattedType }}
-        </el-form-item>
-        <el-form-item label="状态" style="width: 67%">
-          {{ form.entity.status }}
-        </el-form-item>
-        <el-form-item label="创建日期" style="width: 33%">
-          {{ wrappedFormatTimestamp(form.entity.created_date) }}
-        </el-form-item>
-        <el-form-item label="修改日期" style="width: 33%">
-          {{ wrappedFormatTimestamp(form.entity.modified_date) }}
-        </el-form-item>
-        <el-form-item label="完成日期" style="width: 33%">
-          {{ wrappedFormatTimestamp(form.entity.scrapped_date) }}
-        </el-form-item>
-        <el-form-item label="备注" style="width: 100%">
-          {{ form.entity.remark }}
-        </el-form-item>
-      </el-form>
-      <div class="divider-block">
-        <el-divider
-          class="divider"
-          content-position="left"
-        >
-          进度
-        </el-divider>
-        <el-button
-          class="button"
-          size="mini"
-          type="primary"
-          icon="el-icon-edit"
-          @click="itemCoverEditDialog.visible=true"
-        />
-      </div>
-      <el-form
-        class="property-form"
-        label-position="left"
-        label-width="80px"
-        inline
-        :model="form.entity"
-      >
-        <el-form-item label="已完成任务" style="width: 50%">
-          {{ form.entity.finished_mission_count }}
-        </el-form-item>
-        <el-form-item label="总任务" style="width: 50%">
-          {{ form.entity.total_mission_count }}
-        </el-form-item>
-        <el-form-item label="进度" style="width: 100%">
-          <el-progress class="progress" :percentage="percentage"/>
-        </el-form-item>
-      </el-form>
-      <div class="divider-block">
-        <el-divider
-          class="divider"
-          content-position="left"
-        >
-          前置任务
-        </el-divider>
-        <el-button
-          class="button"
-          size="mini"
-          type="primary"
-          icon="el-icon-edit"
-          @click="itemCoverEditDialog.visible=true"
-        />
-      </div>
-      <div style="background: #7BBDFF;flex-grow: 1"></div>
-      <div class="divider-block">
-        <el-divider
-          class="divider"
-          content-position="left"
-        >
-          其它操作
-        </el-divider>
-      </div>
-      <div>
-        <el-button type="primary">复制</el-button>
-        <el-button type="success">刷新状态</el-button>
-        <el-button type="danger">删除</el-button>
-      </div>
-    </div>
-    <overlay-scrollbars class="timeline-panel">
-      <el-timeline class="timeline-block">
-        <el-timeline-item
-          v-for="(activity, index) in activities"
-          :key="index"
-          :timestamp="activity.timestamp">
-          {{activity.content}}
-        </el-timeline-item>
-      </el-timeline>
-    </overlay-scrollbars>
+  <div class="info-tab-panel-container" v-loading="loading">
+    <header-layout-panel>
+      <template v-slot:header>
+        <div class="header">
+          <el-button type="primary">编辑属性</el-button>
+          <el-button type="primary">编辑进度</el-button>
+          <el-button type="primary">编辑前置任务</el-button>
+        </div>
+      </template>
+      <template v-slot:default>
+        <div class="details-wrapper">
+          <title-layout-panel class="details" title="基础属性" bordered>
+            <el-form
+              class="property-form"
+              label-position="left"
+              label-width="80px"
+              inline
+              :model="form.entity"
+            >
+              <el-form-item label="名称" style="width: 100%">
+                {{ form.entity.name }}
+              </el-form-item>
+              <el-form-item label="类型" style="width: 33%">
+                {{ formattedType }}
+              </el-form-item>
+              <el-form-item label="状态" style="width: 67%">
+                {{ form.entity.status }}
+              </el-form-item>
+              <el-form-item label="创建日期" style="width: 33%">
+                {{ wrappedFormatTimestamp(form.entity.created_date) }}
+              </el-form-item>
+              <el-form-item label="修改日期" style="width: 33%">
+                {{ wrappedFormatTimestamp(form.entity.modified_date) }}
+              </el-form-item>
+              <el-form-item label="完成日期" style="width: 33%">
+                {{ wrappedFormatTimestamp(form.entity.scrapped_date) }}
+              </el-form-item>
+              <el-form-item label="备注" style="width: 100%">
+                {{ form.entity.remark }}
+              </el-form-item>
+            </el-form>
+          </title-layout-panel>
+          <title-layout-panel class="details" title="进度" bordered>
+            <el-form
+              class="property-form"
+              label-position="left"
+              label-width="80px"
+              inline
+              :model="form.entity"
+            >
+              <el-form-item label="已完成任务" style="width: 50%">
+                {{ form.entity.finished_mission_count }}
+              </el-form-item>
+              <el-form-item label="总任务" style="width: 50%">
+                {{ form.entity.total_mission_count }}
+              </el-form-item>
+              <el-form-item label="进度" style="width: 100%">
+                <el-progress class="progress" :percentage="percentage"/>
+              </el-form-item>
+            </el-form>
+          </title-layout-panel>
+          <title-layout-panel class="details" title="前置任务" bordered grow>
+            <div style="background: #7BBDFF;height: 100%;width: 100%"/>
+          </title-layout-panel>
+        </div>
+      </template>
+    </header-layout-panel>
   </div>
 </template>
 
 <script>
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
+import TitleLayoutPanel from '@/components/layout/TitleLayoutPanel.vue';
+
 import { formatTimestamp } from '@/util/timestamp';
 import resolveResponse from '@/util/response';
 import { inspectDisp } from '@/api/project/task';
 
 export default {
   name: 'InfoTabPanel',
+  components: { TitleLayoutPanel, HeaderLayoutPanel },
   props: {
     taskId: {
       type: String,
@@ -180,70 +133,18 @@ export default {
           type_indicator: null,
         },
       },
-      editPanelLoading: false,
-      activities: [{
-        content: '活动按期开始123123123123123123123123',
-        timestamp: '2018-04-15',
-      }, {
-        content: '通过审核',
-        timestamp: '2018-04-13',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }, {
-        content: '创建成功',
-        timestamp: '2018-04-11',
-      }],
+      loading: false,
     };
   },
   methods: {
     inspectTask() {
-      this.editPanelLoading = true;
+      this.loading = true;
       resolveResponse(inspectDisp(this.taskId))
         .then(this.updateFormView)
         .catch(() => {
         })
         .finally(() => {
-          this.editPanelLoading = false;
+          this.loading = false;
         });
     },
     updateFormView(res) {
@@ -269,34 +170,28 @@ export default {
 .info-tab-panel-container {
   height: 100%;
   width: 100%;
+}
+
+.header {
+  width: 100%;
   display: flex;
   flex-direction: row;
 }
 
-.edit-panel {
-  width: 0;
-  flex-grow: 1;
-  margin-right: 10px;
+.details-wrapper {
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.edit-panel .divider-block {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+.details-wrapper .details:not(:first-child){
+  margin-top: 5px;
 }
 
-.edit-panel .divider-block .divider {
-  margin-top: 18px;
-  margin-bottom: 18px;
+.details-wrapper .details:last-child{
+  height: 0;
   flex-grow: 1;
-}
-
-.edit-panel .divider-block .button {
-  margin-left: 20px;
-  padding: 7px
 }
 
 .property-form {
@@ -307,6 +202,7 @@ export default {
 .property-form >>> label {
   width: 240px;
   color: #99a9bf;
+  line-height: 25px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -326,18 +222,10 @@ export default {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 25px;
 }
 
-.property-form .progress{
-  line-height: 40px;
-}
-
-.timeline-panel{
-  width: 250px;
-}
-
-.timeline-panel .timeline-block{
-  width: 245px;
-  margin-right: 5px;
+.property-form .progress {
+  line-height: 25px;
 }
 </style>
