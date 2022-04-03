@@ -5,215 +5,231 @@
       :west-visible="true"
     >
       <div class="west-container" slot="west" v-loading="memoTable.loading">
-        <div>
-          <el-button type="primary" @click="handleShowMemoCreateDialog">新建</el-button>
-        </div>
-        <el-divider class="horizontal"/>
-        <table-panel
-          class="table-panel"
-          highlight-current-row
-          :page-size.sync="memoTable.pageSize"
-          :entity-count="parseInt(memoTable.entities.count)"
-          :current-page.sync="memoTable.currentPage"
-          :page-sizes="[15,20,30,50]"
-          :table-data="memoTable.entities.data"
-          :show-contextmenu="false"
-          :table-selection.sync="memoTable.selection"
-          :operate-column-width="76"
-          @onPagingAttributeChanged="handleMemoTablePagingAttributeChanged"
-        >
+        <header-layout-panel>
+          <template v-slot:header>
+            <div>
+              <el-button type="primary" @click="handleShowMemoCreateDialog">新建</el-button>
+            </div>
+          </template>
           <template v-slot:default>
-            <el-table-column
-              prop="profile"
-              label="简报"
-              show-tooltip-when-overflow
-            />
+            <table-panel
+              class="table-panel"
+              highlight-current-row
+              :page-size.sync="memoTable.pageSize"
+              :entity-count="parseInt(memoTable.entities.count)"
+              :current-page.sync="memoTable.currentPage"
+              :page-sizes="[15,20,30,50]"
+              :table-data="memoTable.entities.data"
+              :show-contextmenu="false"
+              :table-selection.sync="memoTable.selection"
+              :operate-column-width="76"
+              @onPagingAttributeChanged="handleMemoTablePagingAttributeChanged"
+            >
+              <template v-slot:default>
+                <el-table-column
+                  prop="profile"
+                  label="简报"
+                  show-tooltip-when-overflow
+                />
+              </template>
+              <template v-slot:operateColumn="{row}">
+                <el-button-group class=operate-column>
+                  <el-button
+                    class="table-button"
+                    size="mini"
+                    icon="el-icon-check"
+                    type="success"
+                    @click="handleMemoFinish(row)"
+                  />
+                  <el-button
+                    class="table-button"
+                    size="mini"
+                    icon="el-icon-delete"
+                    type="danger"
+                    @click="handleMemoDelete(row)"
+                  />
+                </el-button-group>
+              </template>
+            </table-panel>
           </template>
-          <template v-slot:operateColumn="{row}">
-            <el-button-group class=operate-column>
-              <el-button
-                class="table-button"
-                size="mini"
-                icon="el-icon-check"
-                type="success"
-                @click="handleMemoFinish(row)"
-              />
-              <el-button
-                class="table-button"
-                size="mini"
-                icon="el-icon-delete"
-                type="danger"
-                @click="handleMemoDelete(row)"
-              />
-            </el-button-group>
-          </template>
-        </table-panel>
+        </header-layout-panel>
       </div>
       <div class="center-container" v-loading="memoDetail.loading">
         <div class="placeholder" v-if="memoDetail.entity===null">请选择备忘录</div>
         <div class="wrapper" v-else>
-          <div>
-            <el-button
-              class="item"
-              type="primary"
-              @click="handleShowMemoEditDialog(memoDetail.entity)"
-            >
-              属性编辑
-            </el-button>
-            <el-button
-              class="item"
-              type="primary"
-              @click="uploadDialog.visible=true"
-            >
-              上传文件
-            </el-button>
-            <el-button
-              class="item"
-              type="primary"
-              @click="createDialog.visible=true"
-            >
-              新建文件
-            </el-button>
-            <el-button
-              class="item"
-              type="success"
-              @click="handleMemoFileSearch"
-            >
-              刷新文件
-            </el-button>
-            <el-divider direction="vertical"/>
-            <el-select
-              class="select"
-              v-model="memoDetail.select.model"
-              @change="handleMemoDetailRefresh"
-            >
-              <el-option
-                v-for="item in memoDetail.select.options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </div>
-          <el-divider class="horizontal"/>
-          <el-form
-            class="property-form"
-            label-position="left"
-            label-width="80px"
-            inline
-            :model="memoDetail.entity"
-          >
-            <el-form-item label="简报" style="width: 100%">
-              {{ memoDetail.entity.profile }}
-            </el-form-item>
-            <el-form-item label="备注" style="width: 100%">
-              {{ memoDetail.entity.remark }}
-            </el-form-item>
-            <el-form-item label="创建日期" style="width: 50%">
-              {{ wrappedFormatTimestamp(memoDetail.entity.created_date) }}
-            </el-form-item>
-            <el-form-item label="修改日期" style="width: 50%">
-              {{ wrappedFormatTimestamp(memoDetail.entity.modified_date) }}
-            </el-form-item>
-          </el-form>
-          <table-panel
-            class="table-panel"
-            v-loading="memoFileTable.loading"
-            :page-size.sync="memoFileTable.pageSize"
-            :entity-count="parseInt(memoFileTable.entities.count)"
-            :current-page.sync="memoFileTable.currentPage"
-            :page-sizes="[10,15,20,30]"
-            :table-data="memoFileTable.entities.data"
-            :operate-column-width="130"
-          >
-            <template v-slot:default>
-              <el-table-column
-                label="图标"
-                width="53px"
-                :resizable="false"
-              >
-                <template v-slot:default="{row}">
-                  <div class="icon-wrapper">
-                    <!--suppress JSUnresolvedVariable -->
-                    <i class="iconfont icon">{{ row.origin_name | fileType }}</i>
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="origin_name"
-                label="文件名称"
-                show-tooltip-when-overflow
-              />
-              <el-table-column
-                prop="length"
-                label="大小"
-                width="95px"
-                show-tooltip-when-overflow
-                :formatter="unitFormatter"
-              />
-              <el-table-column
-                prop="inspected_date"
-                label="查看日期"
-                width="180px"
-                show-tooltip-when-overflow
-                :formatter="timestampFormatter"
-              />
-              <el-table-column
-                prop="modified_date"
-                label="编辑日期"
-                width="180px"
-                show-tooltip-when-overflow
-                :formatter="timestampFormatter"
-              />
-              <el-table-column
-                prop="created_date"
-                label="创建日期"
-                width="180px"
-                show-tooltip-when-overflow
-                :formatter="timestampFormatter"
-              />
-              <el-table-column
-                prop="remark"
-                label="备注"
-                show-tooltip-when-overflow
-              />
-            </template>
-            <template v-slot:operateColumn="{row}">
-              <el-button-group class=operate-column>
+          <header-layout-panel>
+            <template v-slot:header>
+              <div class="header">
                 <el-button
-                  class="table-button"
-                  size="mini"
-                  icon="el-icon-search"
-                  type="success"
-                  :disabled="inspectTableButtonDisabled(row)"
-                  @click="handleMemoFileInspect(row)"
-                />
-                <el-button
-                  class="table-button"
-                  size="mini"
-                  icon="el-icon-edit"
+                  class="item"
                   type="primary"
-                  :disabled="editTableButtonDisabled(row)"
-                  @click="handleMemoFileEdit(row)"
-                />
+                  @click="handleShowMemoEditDialog(memoDetail.entity)"
+                >
+                  属性编辑
+                </el-button>
                 <el-button
-                  class="table-button"
-                  size="mini"
-                  icon="el-icon-download"
+                  class="item"
+                  type="primary"
+                  @click="uploadDialog.visible=true"
+                >
+                  上传文件
+                </el-button>
+                <el-button
+                  class="item"
+                  type="primary"
+                  @click="createDialog.visible=true"
+                >
+                  新建文件
+                </el-button>
+                <el-button
+                  class="item"
                   type="success"
-                  :disabled="inspectTableButtonDisabled(row)"
-                  @click="handleMemoFileDownload(row)"
-                />
-                <el-button
-                  class="table-button"
-                  size="mini"
-                  icon="el-icon-delete"
-                  type="danger"
-                  @click="handleMemoFileDelete(row)"
-                />
-              </el-button-group>
+                  @click="handleMemoFileSearch"
+                >
+                  刷新文件
+                </el-button>
+                <el-divider direction="vertical"/>
+                <el-select
+                  class="select"
+                  v-model="memoDetail.select.model"
+                  @change="handleMemoDetailRefresh"
+                >
+                  <el-option
+                    v-for="item in memoDetail.select.options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
             </template>
-          </table-panel>
+            <template v-slot:default>
+              <div class="details-wrapper">
+                <title-layout-panel class="details" title="属性" bordered>
+                  <el-form
+                    class="property-form"
+                    label-position="left"
+                    label-width="80px"
+                    inline
+                    :model="memoDetail.entity"
+                  >
+                    <el-form-item label="简报" style="width: 100%">
+                      {{ memoDetail.entity.profile }}
+                    </el-form-item>
+                    <el-form-item label="备注" style="width: 100%">
+                      {{ memoDetail.entity.remark }}
+                    </el-form-item>
+                    <el-form-item label="创建日期" style="width: 50%">
+                      {{ wrappedFormatTimestamp(memoDetail.entity.created_date) }}
+                    </el-form-item>
+                    <el-form-item label="修改日期" style="width: 50%">
+                      {{ wrappedFormatTimestamp(memoDetail.entity.modified_date) }}
+                    </el-form-item>
+                  </el-form>
+                </title-layout-panel>
+                <title-layout-panel class="details" title="文件" bordered>
+                  <table-panel
+                    class="table-panel"
+                    v-loading="memoFileTable.loading"
+                    :page-size.sync="memoFileTable.pageSize"
+                    :entity-count="parseInt(memoFileTable.entities.count)"
+                    :current-page.sync="memoFileTable.currentPage"
+                    :page-sizes="[10,15,20,30]"
+                    :table-data="memoFileTable.entities.data"
+                    :operate-column-width="130"
+                  >
+                    <template v-slot:default>
+                      <el-table-column
+                        label="图标"
+                        width="53px"
+                        :resizable="false"
+                      >
+                        <template v-slot:default="{row}">
+                          <div class="icon-wrapper">
+                            <!--suppress JSUnresolvedVariable -->
+                            <i class="iconfont icon">{{ row.origin_name | fileType }}</i>
+                          </div>
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        prop="origin_name"
+                        label="文件名称"
+                        show-tooltip-when-overflow
+                      />
+                      <el-table-column
+                        prop="length"
+                        label="大小"
+                        width="95px"
+                        show-tooltip-when-overflow
+                        :formatter="unitFormatter"
+                      />
+                      <el-table-column
+                        prop="inspected_date"
+                        label="查看日期"
+                        width="180px"
+                        show-tooltip-when-overflow
+                        :formatter="timestampFormatter"
+                      />
+                      <el-table-column
+                        prop="modified_date"
+                        label="编辑日期"
+                        width="180px"
+                        show-tooltip-when-overflow
+                        :formatter="timestampFormatter"
+                      />
+                      <el-table-column
+                        prop="created_date"
+                        label="创建日期"
+                        width="180px"
+                        show-tooltip-when-overflow
+                        :formatter="timestampFormatter"
+                      />
+                      <el-table-column
+                        prop="remark"
+                        label="备注"
+                        show-tooltip-when-overflow
+                      />
+                    </template>
+                    <template v-slot:operateColumn="{row}">
+                      <el-button-group class=operate-column>
+                        <el-button
+                          class="table-button"
+                          size="mini"
+                          icon="el-icon-search"
+                          type="success"
+                          :disabled="inspectTableButtonDisabled(row)"
+                          @click="handleMemoFileInspect(row)"
+                        />
+                        <el-button
+                          class="table-button"
+                          size="mini"
+                          icon="el-icon-edit"
+                          type="primary"
+                          :disabled="editTableButtonDisabled(row)"
+                          @click="handleMemoFileEdit(row)"
+                        />
+                        <el-button
+                          class="table-button"
+                          size="mini"
+                          icon="el-icon-download"
+                          type="success"
+                          :disabled="inspectTableButtonDisabled(row)"
+                          @click="handleMemoFileDownload(row)"
+                        />
+                        <el-button
+                          class="table-button"
+                          size="mini"
+                          icon="el-icon-delete"
+                          type="danger"
+                          @click="handleMemoFileDelete(row)"
+                        />
+                      </el-button-group>
+                    </template>
+                  </table-panel>
+                </title-layout-panel>
+              </div>
+            </template>
+          </header-layout-panel>
         </div>
       </div>
     </border-layout-panel>
@@ -267,6 +283,8 @@ import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
 import FileCreateDialog from '@/components/file/FileCreateDialog.vue';
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
+import TitleLayoutPanel from '@/components/layout/TitleLayoutPanel.vue';
 
 import {
   inspect as inspectMemo,
@@ -291,7 +309,13 @@ import { fileType } from '@/util/file';
 export default {
   name: 'Memo',
   components: {
-    EntityMaintainDialog, BorderLayoutPanel, TablePanel, FileUploadDialog, FileCreateDialog,
+    HeaderLayoutPanel,
+    EntityMaintainDialog,
+    BorderLayoutPanel,
+    TablePanel,
+    FileUploadDialog,
+    FileCreateDialog,
+    TitleLayoutPanel,
   },
   computed: {
     inspectTableButtonDisabled() {
@@ -820,8 +844,8 @@ export default {
 }
 
 .center-container .wrapper .table-panel {
-  height: 0;
-  flex-grow: 1;
+  width: 100%;
+  height: 100%;
 }
 
 .center-container .property-form {
@@ -832,6 +856,7 @@ export default {
 .center-container .property-form >>> label {
   width: 240px;
   color: #99a9bf;
+  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -851,6 +876,7 @@ export default {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 30px;
 }
 
 .center-container .select {
@@ -880,13 +906,28 @@ export default {
   user-select: none;
 }
 
-/*noinspection CssUnusedSymbol*/
-.el-divider.horizontal {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
 .table-panel .table-button {
   padding: 7px;
+}
+
+.details-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-wrapper .details:not(:first-child){
+  margin-top: 5px;
+}
+
+.details-wrapper .details:last-child{
+  height: 0;
+  flex-grow: 1;
+}
+
+/*noinspection CssUnusedSymbol*/
+.header .el-divider{
+  margin: 0 8px;
 }
 </style>

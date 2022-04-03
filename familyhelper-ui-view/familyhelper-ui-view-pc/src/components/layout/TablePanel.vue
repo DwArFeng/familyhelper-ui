@@ -16,7 +16,7 @@
         @selection-change="handleSelectionChange"
         @row-contextmenu="mayOpenMenu"
       >
-        <slot></slot>
+        <slot name="default"/>
         <el-table-column v-if="operateColumnVisible" label="操作" :width="operateColumnWidth">
           <template v-slot="scope">
             <slot
