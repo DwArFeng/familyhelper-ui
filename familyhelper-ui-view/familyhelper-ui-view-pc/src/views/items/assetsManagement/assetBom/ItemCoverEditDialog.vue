@@ -9,70 +9,73 @@
       :visible.sync="watchedVisible"
       :close-on-click-modal="false"
     >
-      <div class="editor-container">
-        <div class="item header">
-          <div>
-            <el-button
-              type="primary"
-              :disabled="table.data.length >= maxSize"
-              @click="uploadDialog.visible=true"
-            >
-              上传
-            </el-button>
-            <el-button
-              type="success"
-              @click="handleSearch"
-            >
-              刷新
-            </el-button>
+      <header-layout-panel>
+        <template v-slot:header>
+          <div class="header">
+            <div>
+              <el-button
+                type="primary"
+                :disabled="table.data.length >= maxSize"
+                @click="uploadDialog.visible=true"
+              >
+                上传
+              </el-button>
+              <el-button
+                type="success"
+                @click="handleSearch"
+              >
+                刷新
+              </el-button>
+            </div>
+            <span>封面数量:{{ table.data.length }}/{{ maxSize }}</span>
           </div>
-          <span>封面数量:{{table.data.length}}/{{maxSize}}</span>
-        </div>
-        <el-divider class="item"/>
-        <draggable-table-panel
-          class="item table-panel"
-          row-key="id"
-          v-loading="table.loading"
-          :table-data.sync="table.data"
-          :inspect-button-visible="false"
-          :edit-button-visible="false"
-          :operate-column-width="49"
-          :show-contextmenu="true"
-          @onEntityDelete="handleEntityDelete"
-          @onEntityOrderChanged="handleEntityOrderChanged"
-        >
-          <el-table-column
-            label="内容"
-            width="141px"
-            :resizable="false"
+        </template>
+        <template v-slot:default>
+          <draggable-table-panel
+            class="table-panel"
+            row-key="id"
+            v-loading="table.loading"
+            :table-data.sync="table.data"
+            :inspect-button-visible="false"
+            :edit-button-visible="false"
+            :operate-column-width="49"
+            :show-contextmenu="true"
+            @onEntityDelete="handleEntityDelete"
+            @onEntityOrderChanged="handleEntityOrderChanged"
           >
-            <template v-slot:default="{row}">
-              <div class="image-wrapper">
-                <el-image class="image" fit="cover" :src="row.url" :preview-src-list="[row.url]"/>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="length"
-            label="大小"
-            width="95px"
-            show-tooltip-when-overflow
-            :formatter="unitFormatter"
-          />
-          <el-table-column
-            prop="modified_date"
-            label="上传日期"
-            width="180px"
-            show-tooltip-when-overflow
-            :formatter="timestampFormatter"
-          />
-          <el-table-column
-            prop="remark"
-            label="备注"
-            show-tooltip-when-overflow
-          />
-        </draggable-table-panel>
-      </div>
+            <el-table-column
+              label="内容"
+              width="141px"
+              :resizable="false"
+            >
+              <template v-slot:default="{row}">
+                <div class="image-wrapper">
+                  <el-image class="image" fit="cover" :src="row.url" :preview-src-list="[row.url]"/>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="length"
+              label="大小"
+              width="95px"
+              show-tooltip-when-overflow
+              :formatter="unitFormatter"
+            />
+            <el-table-column
+              prop="modified_date"
+              label="上传日期"
+              width="180px"
+              show-tooltip-when-overflow
+              :formatter="timestampFormatter"
+            />
+            <el-table-column
+              prop="remark"
+              label="备注"
+              show-tooltip-when-overflow
+            />
+          </draggable-table-panel>
+        </template>
+      </header-layout-panel>
       <div class="footer-container" slot="footer">
         <el-button @click="watchedVisible=false">关闭</el-button>
       </div>
@@ -94,6 +97,7 @@
 <script>
 import DraggableTablePanel from '@/components/layout/DraggableTablePanel.vue';
 import ImageUploadEditDialog from '@/components/image/ImageUploadEditDialog.vue';
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 
 import {
   childForItem, download, upload, remove, updateOrder,
@@ -105,7 +109,9 @@ import { formatUnit, dataSizePreset } from '@/util/number';
 export default {
   name: 'ItemCoverEditDialog',
   components: {
-    ImageUploadEditDialog, DraggableTablePanel,
+    HeaderLayoutPanel,
+    ImageUploadEditDialog,
+    DraggableTablePanel,
   },
   props: {
     visible: {
@@ -252,39 +258,23 @@ export default {
 </script>
 
 <style scoped>
-.editor-container {
+.header {
   width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.editor-container .item {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/*noinspection CssUnusedSymbol*/
-.editor-container .el-divider {
-  margin: 5px 0;
-}
-
-.editor-container .header {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
 }
 
-.editor-container .table-panel {
+.table-panel {
   height: 500px
 }
 
-.editor-container .table-panel .image-wrapper {
+.table-panel .image-wrapper {
   line-height: 0;
 }
 
-.editor-container .table-panel .image {
+.table-panel .image {
   width: 100%;
   height: 67px;
 }

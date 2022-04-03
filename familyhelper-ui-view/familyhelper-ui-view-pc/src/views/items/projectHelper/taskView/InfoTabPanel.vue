@@ -202,7 +202,7 @@ export default {
 .property-form >>> label {
   width: 240px;
   color: #99a9bf;
-  line-height: 25px;
+  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -222,10 +222,10 @@ export default {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 25px;
+  line-height: 30px;
 }
 
 .property-form .progress {
-  line-height: 25px;
+  line-height: 30px;
 }
 </style>

@@ -1,88 +1,74 @@
 <template>
-  <div class="info-tab-panel-container">
-    <div class="info-container">
-      <div class="divider-block">
-        <el-divider
-          class="divider"
-          content-position="left"
-        >
-          封面
-        </el-divider>
-        <el-button
-          class="button"
-          size="mini"
-          type="primary"
-          icon="el-icon-edit"
-          :disabled="readOnly"
-          @click="itemCoverEditDialog.visible=true"
-        />
-      </div>
-      <div class="content-block">
-        <el-carousel
-          class="el-carousel"
-          v-if="carousel.images.length > 0"
-          height="calc(100% - 30px)"
-          type="card"
-          :autoplay="false"
-        >
-          <el-carousel-item v-for="(url,index) in carousel.images" :key="index">
-            <el-image class="image" fit="cover" :src="url"/>
-          </el-carousel-item>
-        </el-carousel>
-        <span class="placeholder" v-else>暂无封面，请上传</span>
-      </div>
-    </div>
-    <div class="info-container">
-      <div class="divider-block">
-        <el-divider
-          class="divider"
-          content-position="left"
-        >
-          属性
-        </el-divider>
-      </div>
-      <div class="content-block">
-        <el-form
-          class="property-form"
-          label-position="left"
-          label-width="80px"
-          inline
-          :model="form.entity"
-        >
-          <el-form-item label="名称" style="width: 33%">
-            {{ form.entity.name }}
-          </el-form-item>
-          <el-form-item label="类型" style="width: 33%">
-            {{ formatType() }}
-          </el-form-item>
-          <el-form-item label="生命周期" style="width: 33%">
-            {{ formatLifeCycle() }}
-          </el-form-item>
-          <el-form-item label="标签" style="width: 100%">
-            <el-tag
-              class="form-tag"
-              v-for="label in form.entity.labels"
-              type="info"
-              :key="label.key.string_id"
+  <div class="info-tab-panel-container" v-loading="loading">
+    <header-layout-panel>
+      <template v-slot:header>
+        <div class="header">
+          <el-button type="primary" @click="itemCoverEditDialog.visible=true">编辑封面</el-button>
+          <el-button type="primary" @click="handleEntityEdit">编辑属性</el-button>
+        </div>
+      </template>
+      <template v-slot:default>
+        <div class="details-wrapper">
+          <title-layout-panel class="details" title="封面" bordered>
+            <div class="carousel-wrapper">
+              <el-carousel
+                class="el-carousel"
+                v-if="carousel.images.length > 0"
+                height="calc(100% - 30px)"
+                type="card"
+                :autoplay="false"
+              >
+                <el-carousel-item v-for="(url,index) in carousel.images" :key="index">
+                  <el-image class="image" fit="cover" :src="url"/>
+                </el-carousel-item>
+              </el-carousel>
+              <span class="placeholder" v-else>暂无封面，请上传</span>
+            </div>
+          </title-layout-panel>
+          <title-layout-panel class="details" title="属性" bordered>
+            <el-form
+              class="property-form"
+              label-position="left"
+              label-width="80px"
+              inline
+              :model="form.entity"
             >
-              {{ label.label }}
-            </el-tag>
-          </el-form-item>
-          <el-form-item label="创建日期" style="width: 33%">
-            {{ wrappedFormatTimestamp(form.entity.created_date) }}
-          </el-form-item>
-          <el-form-item label="修改日期" style="width: 33%">
-            {{ wrappedFormatTimestamp(form.entity.modified_date) }}
-          </el-form-item>
-          <el-form-item label="废弃日期" style="width: 33%">
-            {{ wrappedFormatTimestamp(form.entity.scrapped_date) }}
-          </el-form-item>
-          <el-form-item label="备注" 备注="width: 100%">
-            {{form.entity.remark}}
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
+              <el-form-item label="名称" style="width: 33%">
+                {{ form.entity.name }}
+              </el-form-item>
+              <el-form-item label="类型" style="width: 33%">
+                {{ formatType() }}
+              </el-form-item>
+              <el-form-item label="生命周期" style="width: 33%">
+                {{ formatLifeCycle() }}
+              </el-form-item>
+              <el-form-item label="标签" style="width: 100%">
+                <el-tag
+                  class="form-tag"
+                  v-for="label in form.entity.labels"
+                  type="info"
+                  :key="label.key.string_id"
+                >
+                  {{ label.label }}
+                </el-tag>
+              </el-form-item>
+              <el-form-item label="创建日期" style="width: 33%">
+                {{ wrappedFormatTimestamp(form.entity.created_date) }}
+              </el-form-item>
+              <el-form-item label="修改日期" style="width: 33%">
+                {{ wrappedFormatTimestamp(form.entity.modified_date) }}
+              </el-form-item>
+              <el-form-item label="废弃日期" style="width: 33%">
+                {{ wrappedFormatTimestamp(form.entity.scrapped_date) }}
+              </el-form-item>
+              <el-form-item label="备注" 备注="width: 100%">
+                {{ form.entity.remark }}
+              </el-form-item>
+            </el-form>
+          </title-layout-panel>
+        </div>
+      </template>
+    </header-layout-panel>
     <item-cover-edit-dialog
       :item-id="itemId"
       :visible.sync="itemCoverEditDialog.visible"
@@ -93,6 +79,8 @@
 
 <script>
 import ItemCoverEditDialog from '@/views/items/assetsManagement/assetBom/ItemCoverEditDialog.vue';
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
+import TitleLayoutPanel from '@/components/layout/TitleLayoutPanel.vue';
 
 import { inspectDisp } from '@/api/assets/item';
 import { formatTimestamp } from '@/util/timestamp';
@@ -101,7 +89,9 @@ import resolveResponse from '@/util/response';
 
 export default {
   name: 'InfoTabPanel',
-  components: { ItemCoverEditDialog },
+  components: {
+    TitleLayoutPanel, HeaderLayoutPanel, ItemCoverEditDialog,
+  },
   props: {
     itemId: {
       type: String,
@@ -152,6 +142,19 @@ export default {
       itemCoverEditDialog: {
         visible: false,
       },
+      maintainDialog: {
+        visible: false,
+        anchorEntity: {
+          long_id: '',
+          parent_long_id: '',
+          name: '',
+          label_keys: [],
+          type: '',
+          life_cycle: '',
+          remark: '',
+        },
+      },
+      loading: false,
     };
   },
   methods: {
@@ -176,7 +179,9 @@ export default {
     },
     searchImages() {
       // 释放旧图片的链接，并清空旧图片链接数组。
-      this.carousel.images.forEach((url) => { window.URL.revokeObjectURL(url); });
+      this.carousel.images.forEach((url) => {
+        window.URL.revokeObjectURL(url);
+      });
       this.carousel.images.splice(0, this.carousel.images.length);
       resolveResponse(childForItem(this.itemId, 0, 100))
         .then((res) => {
@@ -202,6 +207,9 @@ export default {
     wrappedFormatTimestamp(timestamp) {
       return formatTimestamp(timestamp);
     },
+    handleEntityEdit() {
+      this.$emit('onEntityEdit');
+    },
   },
   mounted() {
     if (this.itemId === '') {
@@ -221,45 +229,44 @@ export default {
   flex-direction: column;
 }
 
-.info-container {
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.details-wrapper {
+  height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.info-container .divider-block {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+.details-wrapper .details:not(:first-child) {
+  margin-top: 5px;
 }
 
-.info-container .divider-block .divider {
-  margin-top: 18px;
-  margin-bottom: 18px;
-  flex-grow: 1;
-}
-
-.info-container .divider-block .button {
-  margin-left: 20px;
-  padding: 7px
-}
-
-.info-container .content-block {
-  flex-grow: 1;
-}
-
-.info-container:first-child {
+.details-wrapper .details:first-child {
   height: 0;
   flex-grow: 1;
 }
 
-/*noinspection CssUnusedSymbol*/
-.info-container:first-child .el-carousel {
+.carousel-wrapper {
+  width: 100%;
   height: 100%;
 }
 
-.property-form  {
+.carousel-wrapper .el-carousel {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-wrapper .el-carousel .image {
+  height: 100%;
+  width: 100%;
+}
+
+.property-form {
   display: flex;
   flex-wrap: wrap;
 }
@@ -267,6 +274,7 @@ export default {
 .property-form >>> label {
   width: 240px;
   color: #99a9bf;
+  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -286,10 +294,16 @@ export default {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 30px;
 }
 
 .property-form .form-tag:not(:first-child) {
   margin-left: 5px;
+}
+
+.property-form .form-tag {
+  height: 25px;
+  line-height: 23px;
 }
 
 .placeholder {
@@ -303,10 +317,5 @@ export default {
   font-weight: bold;
   color: #BFBFBF;
   user-select: none;
-}
-
-.el-carousel .image{
-  height: 100%;
-  width: 100%;
 }
 </style>

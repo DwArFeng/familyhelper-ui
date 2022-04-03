@@ -43,7 +43,7 @@ export default {
   font-size: 14px;
   line-height: 30px;
   background: #F5F7FA;
-  padding: 0 5px;
+  padding: 0 10px;
   box-sizing: border-box;
 }
 
@@ -55,7 +55,7 @@ export default {
 .content {
   width: 100%;
   height: 100%;
-  padding: 3px 5px;
+  padding: 3px 10px;
   box-sizing: border-box;
 }
 </style>

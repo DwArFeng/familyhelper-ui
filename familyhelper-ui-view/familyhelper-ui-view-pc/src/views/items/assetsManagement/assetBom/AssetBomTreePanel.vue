@@ -22,12 +22,12 @@
       :lazy="true"
       :accordion="true"
       :inspect-button-visible="false"
-      :edit-button-visible="!readOnly"
+      :edit-button-visible="false"
       :delete-button-visible="!readOnly"
+      :operate-area-visible="!readOnly"
       :load-handler="handleLoad"
       @onCurrentChanged="handleCurrentChanged"
       @onEntityInspect="handleEntityInspect"
-      @onEntityEdit="handleEntityEdit"
       @onEntityDelete="handleEntityDelete"
     />
   </div>
@@ -140,16 +140,10 @@ export default {
       return Promise.resolve(res);
     },
     handleCurrentChanged(node, data) {
-      if (this.buttonHover) {
-        return;
-      }
       this.$emit('onCurrentChanged', node, data);
     },
     handleEntityInspect(node, data) {
       this.$emit('onEntityInspect', node, data);
-    },
-    handleEntityEdit(node, data) {
-      this.$emit('onEntityEdit', node, data);
     },
     handleEntityDelete(node, data, accept) {
       this.$emit('onEntityDelete', node, data, accept);

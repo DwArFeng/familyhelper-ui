@@ -19,42 +19,47 @@
           :highlight-current="true"
           @current-change="handleCurrentChanged"
         >
-          <span class="tree-node" slot-scope="{ node, data }">
-            <span style="margin-right: 5px"><i class="el-icon-menu"></i> </span>
-            <span class="tree-node-label">{{ node.label }}</span>
-            <span>
-              <el-button-group
-                class="tree-node-button-group"
-                v-if="entityOperateColumnVisible"
-                @mouseenter.native="handleMouseEntered"
-                @mouseleave.native="handleMouseLeft"
+          <template v-slot="{node,data}">
+            <div class="tree-node">
+              <div style="margin-right: 5px"><i class="el-icon-menu"/></div>
+              <div class="label">{{ node.label }}</div>
+              <div
+                v-if="operateAreaVisible"
+                @mouseenter="handleMouseEntered"
+                @mouseleave="handleMouseLeft"
               >
-                <el-button
-                  class="tree-node-button"
-                  size="mini"
-                  icon="el-icon-search"
-                  type="success"
-                  v-if="inspectButtonVisible"
-                  @click="handleEntityInspect(node, data)"
-                />
-                <el-button
-                  class="tree-node-button"
-                  size="mini"
-                  icon="el-icon-edit"
-                  v-if="editButtonVisible"
-                  @click="handleEntityEdit(node, data)"
-                />
-                <el-button
-                  class="tree-node-button"
-                  type="danger"
-                  size="mini"
-                  icon="el-icon-delete"
-                  v-if="deleteButtonVisible"
-                  @click="handleEntityDelete(node,data)"
-                />
-              </el-button-group>
-            </span>
-          </span>
+                <slot
+                  name="operateArea" :node="node" :data="data"
+                >
+                  <el-button-group>
+                    <el-button
+                      class="tree-node-button"
+                      size="mini"
+                      icon="el-icon-search"
+                      type="success"
+                      v-if="inspectButtonVisible"
+                      @click="handleEntityInspect(node, data)"
+                    />
+                    <el-button
+                      class="tree-node-button"
+                      size="mini"
+                      icon="el-icon-edit"
+                      v-if="editButtonVisible"
+                      @click="handleEntityEdit(node, data)"
+                    />
+                    <el-button
+                      class="tree-node-button"
+                      type="danger"
+                      size="mini"
+                      icon="el-icon-delete"
+                      v-if="deleteButtonVisible"
+                      @click="handleEntityDelete(node,data)"
+                    />
+                  </el-button-group>
+                </slot>
+              </div>
+            </div>
+          </template>
         </el-tree>
       </overlay-scrollbars>
     </div>
@@ -105,20 +110,19 @@ export default {
       type: String,
       default: '',
     },
-  },
-  computed: {
-    entityOperateColumnVisible() {
-      return this.inspectButtonVisible || this.editButtonVisible || this.deleteButtonVisible;
+    operateAreaVisible: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
     return {
-      buttonHover: false,
+      operateAreaHover: false,
     };
   },
   methods: {
     handleCurrentChanged(data, node) {
-      if (this.buttonHover) {
+      if (this.operateAreaHover) {
         return;
       }
       this.$emit('onCurrentChanged', node, data);
@@ -136,10 +140,10 @@ export default {
       this.$emit('onEntityDelete', node, data, accept);
     },
     handleMouseEntered() {
-      this.buttonHover = true;
+      this.operateAreaHover = true;
     },
     handleMouseLeft() {
-      this.buttonHover = false;
+      this.operateAreaHover = false;
     },
     getNode(data) {
       return this.$refs.tree.getNode(data);
@@ -199,17 +203,12 @@ export default {
   font-family: Arial, sans-serif;
 }
 
-.tree-node-label {
+.tree-node .label {
   flex: 1;
   margin-right: 20px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.tree-node-button-group {
-  display: flex;
-  width: 100%;
 }
 
 .tree-node-button {

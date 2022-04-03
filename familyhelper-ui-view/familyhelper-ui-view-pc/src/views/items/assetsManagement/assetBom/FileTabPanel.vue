@@ -1,138 +1,143 @@
 <template>
   <div class="file-tab-panel-container" v-loading="loading">
-    <div class="header">
-      <el-button
-        class="item"
-        type="primary"
-        :disabled="readOnly"
-        @click="uploadDialog.visible=true"
-      >
-        上传
-      </el-button>
-      <el-button
-        class="item"
-        type="primary"
-        :disabled="readOnly"
-        @click="createDialog.visible=true"
-      >
-        新建
-      </el-button>
-      <el-button
-        class="item"
-        type="success"
-        @click="handleSearch"
-      >
-        刷新
-      </el-button>
-      <el-select class="item select" v-model="select.model" @change="handleSearch">
-        <el-option
-          v-for="item in select.options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
-    </div>
-    <el-divider/>
-    <table-panel
-      class="table-panel"
-      :page-size.sync="tablePanel.pageSize"
-      :entity-count="parseInt(tablePanel.entities.count)"
-      :current-page.sync="tablePanel.currentPage"
-      :page-sizes="[10,15,20,30]"
-      :table-data="tablePanel.entities.data"
-      :operate-column-width="130"
-      @onPagingAttributeChanged="handlePagingAttributeChanged"
-    >
-      <template v-slot:default>
-        <el-table-column
-          label="图标"
-          width="53px"
-          :resizable="false"
-        >
-          <template v-slot:default="{row}">
-            <div class="icon-wrapper">
-              <!--suppress JSUnresolvedVariable -->
-              <i class="iconfont icon">{{ row.origin_name | fileType }}</i>
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column
-          prop="origin_name"
-          label="文件名称"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="length"
-          label="大小"
-          width="95px"
-          show-tooltip-when-overflow
-          :formatter="unitFormatter"
-        />
-        <el-table-column
-          prop="inspected_date"
-          label="查看日期"
-          width="180px"
-          show-tooltip-when-overflow
-          :formatter="timestampFormatter"
-        />
-        <el-table-column
-          prop="modified_date"
-          label="编辑日期"
-          width="180px"
-          show-tooltip-when-overflow
-          :formatter="timestampFormatter"
-        />
-        <el-table-column
-          prop="created_date"
-          label="创建日期"
-          width="180px"
-          show-tooltip-when-overflow
-          :formatter="timestampFormatter"
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
-      </template>
-      <template v-slot:operateColumn="{row}">
-        <el-button-group class=operate-column>
+    <header-layout-panel>
+      <template v-slot:header>
+        <div class="header">
           <el-button
-            class="table-button"
-            size="mini"
-            icon="el-icon-search"
-            type="success"
-            :disabled="inspectTableButtonDisabled(row)"
-            @click="handleItemFileInspect(row)"
-          />
-          <el-button
-            class="table-button"
-            size="mini"
-            icon="el-icon-edit"
+            class="item"
             type="primary"
-            :disabled="editTableButtonDisabled(row) || readOnly"
-            @click="handleItemFileEdit(row)"
-          />
-          <el-button
-            class="table-button"
-            size="mini"
-            icon="el-icon-download"
-            type="success"
-            :disabled="inspectTableButtonDisabled(row)"
-            @click="handleItemFileDownload(row)"
-          />
-          <el-button
-            class="table-button"
-            size="mini"
-            icon="el-icon-delete"
-            type="danger"
             :disabled="readOnly"
-            @click="handleItemFileDelete(row)"
-          />
-        </el-button-group>
+            @click="uploadDialog.visible=true"
+          >
+            上传
+          </el-button>
+          <el-button
+            class="item"
+            type="primary"
+            :disabled="readOnly"
+            @click="createDialog.visible=true"
+          >
+            新建
+          </el-button>
+          <el-button
+            class="item"
+            type="success"
+            @click="handleSearch"
+          >
+            刷新
+          </el-button>
+          <el-select class="item select" v-model="select.model" @change="handleSearch">
+            <el-option
+              v-for="item in select.options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </div>
       </template>
-    </table-panel>
+      <template v-slot:default>
+        <table-panel
+          class="table-panel"
+          :page-size.sync="tablePanel.pageSize"
+          :entity-count="parseInt(tablePanel.entities.count)"
+          :current-page.sync="tablePanel.currentPage"
+          :page-sizes="[10,15,20,30]"
+          :table-data="tablePanel.entities.data"
+          :operate-column-width="130"
+          @onPagingAttributeChanged="handlePagingAttributeChanged"
+        >
+          <template v-slot:default>
+            <el-table-column
+              label="图标"
+              width="53px"
+              :resizable="false"
+            >
+              <template v-slot:default="{row}">
+                <div class="icon-wrapper">
+                  <!--suppress JSUnresolvedVariable -->
+                  <i class="iconfont icon">{{ row.origin_name | fileType }}</i>
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="origin_name"
+              label="文件名称"
+              show-tooltip-when-overflow
+            />
+            <el-table-column
+              prop="length"
+              label="大小"
+              width="95px"
+              show-tooltip-when-overflow
+              :formatter="unitFormatter"
+            />
+            <el-table-column
+              prop="inspected_date"
+              label="查看日期"
+              width="180px"
+              show-tooltip-when-overflow
+              :formatter="timestampFormatter"
+            />
+            <el-table-column
+              prop="modified_date"
+              label="编辑日期"
+              width="180px"
+              show-tooltip-when-overflow
+              :formatter="timestampFormatter"
+            />
+            <el-table-column
+              prop="created_date"
+              label="创建日期"
+              width="180px"
+              show-tooltip-when-overflow
+              :formatter="timestampFormatter"
+            />
+            <el-table-column
+              prop="remark"
+              label="备注"
+              show-tooltip-when-overflow
+            />
+          </template>
+          <template v-slot:operateColumn="{row}">
+            <el-button-group class=operate-column>
+              <el-button
+                class="table-button"
+                size="mini"
+                icon="el-icon-search"
+                type="success"
+                :disabled="inspectTableButtonDisabled(row)"
+                @click="handleItemFileInspect(row)"
+              />
+              <el-button
+                class="table-button"
+                size="mini"
+                icon="el-icon-edit"
+                type="primary"
+                :disabled="editTableButtonDisabled(row) || readOnly"
+                @click="handleItemFileEdit(row)"
+              />
+              <el-button
+                class="table-button"
+                size="mini"
+                icon="el-icon-download"
+                type="success"
+                :disabled="inspectTableButtonDisabled(row)"
+                @click="handleItemFileDownload(row)"
+              />
+              <el-button
+                class="table-button"
+                size="mini"
+                icon="el-icon-delete"
+                type="danger"
+                :disabled="readOnly"
+                @click="handleItemFileDelete(row)"
+              />
+            </el-button-group>
+          </template>
+        </table-panel>
+      </template>
+    </header-layout-panel>
     <file-upload-dialog
       title="上传文件"
       type="ITEM"
@@ -154,6 +159,7 @@
 import TablePanel from '@/components/layout/TablePanel.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
 import FileCreateDialog from '@/components/file/FileCreateDialog.vue';
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 
 import { dataSizePreset, formatUnit } from '@/util/number';
 import { formatTimestamp } from '@/util/timestamp';
@@ -171,7 +177,9 @@ import { fileType } from '@/util/file';
 
 export default {
   name: 'FileTabPanel',
-  components: { FileCreateDialog, FileUploadDialog, TablePanel },
+  components: {
+    HeaderLayoutPanel, FileCreateDialog, FileUploadDialog, TablePanel,
+  },
   props: {
     itemId: {
       type: String,
@@ -444,17 +452,12 @@ export default {
   flex-direction: column;
 }
 
-.file-tab-panel-container .header {
+.header {
   display: flex;
   flex-direction: row;
 }
 
-/*noinspection CssUnusedSymbol*/
-.file-tab-panel-container .el-divider {
-  margin: 5px 0;
-}
-
-.file-tab-panel-container .table-panel {
+.table-panel {
   height: 0;
   flex-grow: 1;
 }

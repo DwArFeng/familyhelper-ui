@@ -16,7 +16,12 @@
           v-else
         >
           <el-tab-pane label="信息" name="info">
-            <info-tab-panel ref="infoTabPanel" :item-id="assetTabs.itemId" :read-only="readOnly"/>
+            <info-tab-panel
+              ref="infoTabPanel"
+              :item-id="assetTabs.itemId"
+              :read-only="readOnly"
+              @onEntityEdit="handleShowEntityEditDialog"
+            />
           </el-tab-pane>
           <el-tab-pane label="资料" name="file">
             <file-tab-panel :item-id="assetTabs.itemId" :read-only="readOnly"/>
@@ -34,7 +39,6 @@
         :asset-catalog-key="parentSelection.assetCatalogId"
         :read-only="readOnly"
         @onCurrentChanged="handleCurrentChanged"
-        @onEntityEdit="handleShowEntityEditDialog"
         @onEntityDelete="handleEntityDelete"
       />
       <div class="header-container" slot="header">
@@ -58,105 +62,41 @@
         <asset-catalog-indicator mode="ASSET_BOM" @change="handleAssetCatalogChanged"/>
       </div>
     </border-layout-panel>
-    <entity-maintain-dialog
-      label-width="100px"
-      inspect-title="查看项目"
-      create-title="创建项目"
-      edit-title="编辑项目"
+    <item-maintain-dialog
+      v-model="maintainDialog.anchorEntity"
       :visible.sync="maintainDialog.visible"
       :mode="maintainDialog.mode"
-      :entity="maintainDialog.anchorEntity"
-      :create-rules="maintainDialog.rules"
-      :edit-rules="maintainDialog.rules"
-      :close-on-click-modal="false"
       @onEntityCreate="handleEntityCreate"
       @onEntityEdit="handleEntityEdit"
-    >
-      <el-form-item label="名称" prop="name">
-        <el-input
-          v-model="maintainDialog.anchorEntity.name"
-          placeholder="必填"
-        />
-      </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select
-          class='asset-bom-select'
-          v-model="maintainDialog.anchorEntity.type"
-          placeholder="请选择"
-        >
-          <el-option
-            v-for="item in typeIndicator.entities.data"
-            :key="item.key.string_id"
-            :label="item.label"
-            :value="item.key.string_id"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="标签" prop="label_keys">
-        <el-select
-          class='asset-bom-select'
-          v-model="maintainDialog.anchorEntity.label_keys"
-          placeholder="请选择"
-          multiple
-        >
-          <el-option
-            v-for="item in label.entities.data"
-            :key="item.key.string_id"
-            :label="item.label"
-            :value="item.key.string_id"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="生命周期" prop="life_cycle">
-        <el-select
-          class='asset-bom-select'
-          v-model="maintainDialog.anchorEntity.life_cycle"
-          placeholder="请选择"
-        >
-          <el-option
-            v-for="item in lifeCycle.entities.data"
-            :key="item.key"
-            :label="item.label"
-            :value="item.key"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input
-          v-model="maintainDialog.anchorEntity.remark"
-        />
-      </el-form-item>
-    </entity-maintain-dialog>
+    />
   </div>
 </template>
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import AssetBomTreePanel from '@/views/items/assetsManagement/assetBom/AssetBomTreePanel.vue';
-import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import InfoTabPanel from '@/views/items/assetsManagement/assetBom/InfoTabPanel.vue';
 import ParamsTabPanel from '@/views/items/assetsManagement/assetBom/ParamsTabPanel.vue';
 import FileTabPanel from '@/views/items/assetsManagement/assetBom/FileTabPanel.vue';
 import AssetCatalogIndicator
 from '@/views/items/assetsManagement/assetCatalog/AssetCatalogIndicator.vue';
+import ItemMaintainDialog from '@/views/items/assetsManagement/assetBom/ItemMaintainDialog.vue';
 
 import resolveResponse from '@/util/response';
 import {
   create, inspectDisp, remove, update,
 } from '@/api/assets/item';
-import { all as allTypeIndicator } from '@/api/assets/itemTypeIndicator';
-import { all as allLabel, allExists as allLabelExists } from '@/api/assets/itemLabel';
 
 export default {
   name: 'AssetBom',
   components: {
+    ItemMaintainDialog,
     AssetCatalogIndicator,
     FileTabPanel,
     ParamsTabPanel,
     InfoTabPanel,
     BorderLayoutPanel,
     AssetBomTreePanel,
-    EntityMaintainDialog,
   },
   computed: {
     headerButtonDisabled() {
@@ -170,24 +110,6 @@ export default {
     },
   },
   data() {
-    const labelExistsValidator = (rule, value, callback) => {
-      if (value === [] || value === null || value === undefined) {
-        callback();
-        return;
-      }
-      const keys = value.map((key) => ({ string_id: key }));
-      resolveResponse(allLabelExists(keys))
-        .then((res) => {
-          if (!res) {
-            callback(new Error('至少一个标签不存在'));
-          } else {
-            callback();
-          }
-        })
-        .catch(() => {
-          callback(new Error('通信故障'));
-        });
-    };
     return {
       parentSelection: {
         assetCatalogId: '',
@@ -204,48 +126,6 @@ export default {
           type: '',
           life_cycle: '',
           remark: '',
-        },
-        rules: {
-          name: [
-            { required: true, message: '名称不能为空', trigger: 'change' },
-          ],
-          label_keys: [
-            { validator: labelExistsValidator, trigger: 'blur' },
-          ],
-          type: [
-            { required: true, message: '类型不能为空', trigger: 'blur' },
-          ],
-          life_cycle: [
-            { required: true, message: '生命周期不能为空', trigger: 'blur' },
-          ],
-        },
-      },
-      typeIndicator: {
-        entities: {
-          current_page: 0,
-          total_pages: 0,
-          rows: 0,
-          count: '0',
-          data: [],
-        },
-      },
-      label: {
-        entities: {
-          current_page: 0,
-          total_pages: 0,
-          rows: 0,
-          count: '0',
-          data: [],
-        },
-      },
-      lifeCycle: {
-        entities: {
-          data: [
-            { key: 0, label: '准备中' },
-            { key: 1, label: '使用中' },
-            { key: 2, label: '禁用中' },
-            { key: 3, label: '已废弃' },
-          ],
         },
       },
       treePanel: {
@@ -264,34 +144,11 @@ export default {
       assetTabs: {
         activeName: 'info',
         itemId: '',
+        item: null,
       },
     };
   },
   methods: {
-    handleTypeIndicatorSearch() {
-      this.lookupAllTypeIndicator();
-    },
-    lookupAllTypeIndicator() {
-      resolveResponse(allTypeIndicator(0, 1000))
-        .then(this.updateTypeIndicatorObject)
-        .catch(() => {
-        });
-    },
-    updateTypeIndicatorObject(res) {
-      this.typeIndicator.entities = res;
-    },
-    handleLabelSearch() {
-      this.lookupAllLabel();
-    },
-    lookupAllLabel() {
-      resolveResponse(allLabel(0, 1000))
-        .then(this.updateLabelObject)
-        .catch(() => {
-        });
-    },
-    updateLabelObject(res) {
-      this.label.entities = res;
-    },
     handleAssetCatalogChanged(assetCatalog) {
       this.parentSelection.assetCatalog = assetCatalog;
       this.parentSelection.assetCatalogId = assetCatalog.key.long_id;
@@ -300,6 +157,7 @@ export default {
       this.treePanel.selection.node = node;
       this.treePanel.selection.data = data;
       this.assetTabs.itemId = data.key.long_id;
+      this.assetTabs.item = data;
     },
     handleShowEntityCreateDialogParent() {
       this.treePanel.appendChild = false;
@@ -317,8 +175,8 @@ export default {
       this.maintainDialog.anchorEntity.parent_long_id = this.treePanel.selection.data.key.long_id;
       this.showDialog('CREATE');
     },
-    handleShowEntityEditDialog(index, entity) {
-      this.syncAnchorEntity(entity);
+    handleShowEntityEditDialog() {
+      this.syncAnchorEntity(this.assetTabs.item);
       this.showDialog('EDIT');
     },
     handleEntityDelete(node, entity, accept) {
@@ -455,10 +313,6 @@ export default {
         });
     },
   },
-  mounted() {
-    this.handleTypeIndicatorSearch();
-    this.handleLabelSearch();
-  },
 };
 </script>
 
@@ -479,10 +333,6 @@ export default {
 .tree-container {
   width: calc(25vw - 230px - 20px + 80px);
   height: 100%;
-}
-
-.asset-bom-select {
-  width: 100%;
 }
 
 .placeholder {
