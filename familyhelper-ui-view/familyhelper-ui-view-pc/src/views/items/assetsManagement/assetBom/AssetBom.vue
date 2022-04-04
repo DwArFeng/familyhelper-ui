@@ -144,7 +144,6 @@ export default {
       assetTabs: {
         activeName: 'info',
         itemId: '',
-        item: null,
       },
     };
   },
@@ -157,7 +156,7 @@ export default {
       this.treePanel.selection.node = node;
       this.treePanel.selection.data = data;
       this.assetTabs.itemId = data.key.long_id;
-      this.assetTabs.item = data;
+      this.syncAnchorEntity(data);
     },
     handleShowEntityCreateDialogParent() {
       this.treePanel.appendChild = false;
@@ -176,7 +175,6 @@ export default {
       this.showDialog('CREATE');
     },
     handleShowEntityEditDialog() {
-      this.syncAnchorEntity(this.assetTabs.item);
       this.showDialog('EDIT');
     },
     handleEntityDelete(node, entity, accept) {
@@ -302,6 +300,7 @@ export default {
         .then(() => resolveResponse(inspectDisp(this.maintainDialog.anchorEntity.long_id)))
         .then((res) => {
           this.$refs.assetBomTreePanel.update(res);
+          this.syncAnchorEntity(res);
         })
         .then(() => {
           this.$refs.infoTabPanel.updateView();

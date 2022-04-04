@@ -23,13 +23,23 @@
       :accordion="true"
       :inspect-button-visible="false"
       :edit-button-visible="false"
-      :delete-button-visible="!readOnly"
+      :delete-button-visible="false"
       :operate-area-visible="!readOnly"
       :load-handler="handleLoad"
       @onCurrentChanged="handleCurrentChanged"
       @onEntityInspect="handleEntityInspect"
       @onEntityDelete="handleEntityDelete"
-    />
+    >
+      <template v-slot:operateArea="{node,data}">
+        <el-button
+          class="button"
+          type="danger"
+          icon="el-icon-delete"
+          size="mini"
+          @click="handleEntityDelete(node,data)"
+        />
+      </template>
+    </tree-panel>
   </div>
 </template>
 
@@ -145,7 +155,10 @@ export default {
     handleEntityInspect(node, data) {
       this.$emit('onEntityInspect', node, data);
     },
-    handleEntityDelete(node, data, accept) {
+    handleEntityDelete(node, data) {
+      const accept = () => {
+        this.$refs.treePanel.remove(node);
+      };
       this.$emit('onEntityDelete', node, data, accept);
     },
     appendRoot(item) {
@@ -202,5 +215,9 @@ export default {
 .tree-panel {
   height: 0;
   flex-grow: 1;
+}
+
+.tree-panel .button{
+  padding: 7px;
 }
 </style>

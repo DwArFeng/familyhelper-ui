@@ -3,28 +3,12 @@
     <header-layout-panel>
       <template v-slot:header>
         <div class="header">
-          <el-button type="primary" @click="itemCoverEditDialog.visible=true">编辑封面</el-button>
           <el-button type="primary" @click="handleEntityEdit">编辑属性</el-button>
+          <el-button type="primary" @click="itemCoverEditDialog.visible=true">编辑封面</el-button>
         </div>
       </template>
       <template v-slot:default>
         <div class="details-wrapper">
-          <title-layout-panel class="details" title="封面" bordered>
-            <div class="carousel-wrapper">
-              <el-carousel
-                class="el-carousel"
-                v-if="carousel.images.length > 0"
-                height="calc(100% - 30px)"
-                type="card"
-                :autoplay="false"
-              >
-                <el-carousel-item v-for="(url,index) in carousel.images" :key="index">
-                  <el-image class="image" fit="cover" :src="url"/>
-                </el-carousel-item>
-              </el-carousel>
-              <span class="placeholder" v-else>暂无封面，请上传</span>
-            </div>
-          </title-layout-panel>
           <title-layout-panel class="details" title="属性" bordered>
             <el-form
               class="property-form"
@@ -66,6 +50,22 @@
               </el-form-item>
             </el-form>
           </title-layout-panel>
+          <title-layout-panel class="details" title="封面" bordered>
+            <div class="carousel-wrapper">
+              <el-carousel
+                class="el-carousel"
+                v-if="carousel.images.length > 0"
+                height="calc(100% - 30px)"
+                type="card"
+                :autoplay="false"
+              >
+                <el-carousel-item v-for="(url,index) in carousel.images" :key="index">
+                  <el-image class="image" fit="cover" :src="url"/>
+                </el-carousel-item>
+              </el-carousel>
+              <span class="placeholder" v-else>暂无封面，请上传</span>
+            </div>
+          </title-layout-panel>
         </div>
       </template>
     </header-layout-panel>
@@ -102,13 +102,14 @@ export default {
       default: false,
     },
   },
+  computed: {
+    loading() {
+      return this.itemLoading || this.coverLoading;
+    },
+  },
   watch: {
-    itemId(val) {
-      if (val === '') {
-        return;
-      }
-      this.inspectItem();
-      this.searchImages();
+    itemId() {
+      this.updateView();
     },
   },
   data() {
@@ -154,13 +155,20 @@ export default {
           remark: '',
         },
       },
-      loading: false,
+      itemLoading: false,
+      coverLoading: false,
     };
   },
   methods: {
     inspectItem() {
+      this.itemLoading = true;
       resolveResponse(inspectDisp(this.itemId))
-        .then(this.updateFormView);
+        .then(this.updateFormView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.itemLoading = false;
+        });
     },
     updateFormView(res) {
       this.$set(this.form, 'entity', res);
@@ -178,6 +186,7 @@ export default {
       return '（未知）';
     },
     searchImages() {
+      this.coverLoading = true;
       // 释放旧图片的链接，并清空旧图片链接数组。
       this.carousel.images.forEach((url) => {
         window.URL.revokeObjectURL(url);
@@ -195,9 +204,15 @@ export default {
           res.forEach((blob) => {
             this.carousel.images.push(window.URL.createObjectURL(blob));
           });
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          this.coverLoading = false;
         });
     },
     updateView() {
+      console.log(this.itemId);
       if (this.itemId === '') {
         return;
       }
@@ -212,11 +227,7 @@ export default {
     },
   },
   mounted() {
-    if (this.itemId === '') {
-      return;
-    }
-    this.inspectItem();
-    this.searchImages();
+    this.updateView();
   },
 };
 </script>
@@ -246,7 +257,7 @@ export default {
   margin-top: 5px;
 }
 
-.details-wrapper .details:first-child {
+.details-wrapper .details:last-child {
   height: 0;
   flex-grow: 1;
 }
