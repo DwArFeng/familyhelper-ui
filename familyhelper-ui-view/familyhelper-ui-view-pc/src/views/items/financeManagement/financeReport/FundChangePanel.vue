@@ -9,100 +9,106 @@
           请选择一条数据（๑╹◡╹)ﾉ
         </div>
         <div class="fund-change-body-grid-main" v-else>
-          <el-divider class="expand-divider" content-position="left">资金变更详情</el-divider>
-          <el-form class="fund-change-detail" label-position="left" inline label-width="70px">
-            <el-form-item label="变更类型" style="width: 50%">
-              <span>{{ formatChangeType(detail.fundChange) }}</span>
-            </el-form-item>
-            <el-form-item label="变更日期" style="width: 50%">
-              <!--suppress JSUnresolvedVariable -->
-              <span>{{ formatTimestamp(detail.fundChange.happened_date) }}</span>
-            </el-form-item>
-            <el-form-item label="备注" style="width: 100%">
-              <span>{{ selection.accountBook.remark }}</span>
-            </el-form-item>
-          </el-form>
-          <el-divider class="expand-divider" content-position="left">余额</el-divider>
-          <div class="balance-container">
-            <div
-              class="balance-label"
-              :style="balance.valueStyle"
-            >
-              {{ balance.value }}
-            </div>
-            <div
-              class="balance-label"
-              :style="balance.formattedValueStyle"
-            >
-              {{ balance.formattedValue }}
-            </div>
+          <div class="details-wrapper">
+            <title-layout-panel class="details" title="资金变更详情" bordered>
+              <el-form class="fund-change-detail" label-position="left" inline label-width="70px">
+                <el-form-item label="变更类型" style="width: 50%">
+                  <span>{{ formatChangeType(detail.fundChange) }}</span>
+                </el-form-item>
+                <el-form-item label="变更日期" style="width: 50%">
+                  <!--suppress JSUnresolvedVariable -->
+                  <span>{{ formatTimestamp(detail.fundChange.happened_date) }}</span>
+                </el-form-item>
+                <el-form-item label="备注" style="width: 100%">
+                  <span>{{ selection.accountBook.remark }}</span>
+                </el-form-item>
+              </el-form>
+            </title-layout-panel>
+            <title-layout-panel class="details" title="变更金额" bordered>
+              <div class="balance-container">
+                <div
+                  class="balance-label"
+                  :style="balance.valueStyle"
+                >
+                  {{ balance.value }}
+                </div>
+                <div
+                  class="balance-label"
+                  :style="balance.formattedValueStyle"
+                >
+                  {{ balance.formattedValue }}
+                </div>
+              </div>
+            </title-layout-panel>
+            <title-layout-panel class="details" title="图表" bordered>
+              <fund-change-chart
+                class="fund-change-chart"
+                :show-title="false"
+                :hover-animation="false"
+                :category="detail.category"
+                :data="detail.data"
+              />
+            </title-layout-panel>
           </div>
-          <el-divider class="expand-divider" content-position="left">图表</el-divider>
-          <fund-change-chart
-            class="fund-change-chart"
-            :show-title="false"
-            :hover-animation="false"
-            :category="detail.category"
-            :data="detail.data"
-          />
         </div>
       </div>
-      <el-divider class="vertical-divider" direction="vertical"/>
       <div class="fund-change-body-grid">
-        <el-divider class="expand-divider" content-position="left">类型选择</el-divider>
-        <el-select
-          class='fund-change-type-select'
-          v-model="detail.change_type"
-          placeholder="选择资金变更类型以查看图表"
-          @change="handleChangeTypeChanged"
-        >
-          <el-option
-            v-for="item in fundChangeTypeIndicator.entities.data"
-            :key="item.key.string_id"
-            :label="item.label"
-            :value="item.key.string_id"
-          />
-        </el-select>
-        <el-divider class="expand-divider" content-position="left">资金变更列表</el-divider>
-        <table-panel
-          class="fund-change-table"
-          :page-size.sync="table.pageSize"
-          :entity-count="parseInt(table.entities.count)"
-          :current-page.sync="table.currentPage"
-          :page-sizes="[15,20,30,50]"
-          :table-data="table.entities.data"
-          :edit-button-visible="false"
-          :delete-button-visible="false"
-          @onPagingAttributeChanged="handleTablePagingAttributeChanged"
-          @onEntityInspect="handleEntityInspect"
-        >
-          <!--suppress HtmlDeprecatedAttribute -->
-          <el-table-column
-            prop="delta"
-            label="变更金额"
-            align="right"
-            show-tooltip-when-overflow
-            :formatter="balanceNumberFormatter"
-          />
-          <el-table-column
-            prop="change_type"
-            label="资金变更类型"
-            show-tooltip-when-overflow
-            :formatter="changeTypeFormatter"
-          />
-          <el-table-column
-            prop="happened_date"
-            label="记录日期"
-            width="180px"
-            show-tooltip-when-overflow
-            :formatter="timestampFormatter"
-          />
-          <el-table-column
-            prop="remark"
-            label="备注"
-            show-tooltip-when-overflow
-          />
-        </table-panel>
+        <div class="details-wrapper">
+          <title-layout-panel class="details" title="资金变更列表" bordered>
+            <el-select
+              class='fund-change-type-select'
+              v-model="detail.change_type"
+              placeholder="选择资金变更类型以查看图表"
+              @change="handleChangeTypeChanged"
+            >
+              <el-option
+                v-for="item in fundChangeTypeIndicator.entities.data"
+                :key="item.key.string_id"
+                :label="item.label"
+                :value="item.key.string_id"
+              />
+            </el-select>
+            <table-panel
+              class="fund-change-table"
+              :page-size.sync="table.pageSize"
+              :entity-count="parseInt(table.entities.count)"
+              :current-page.sync="table.currentPage"
+              :page-sizes="[15,20,30,50]"
+              :table-data="table.entities.data"
+              :edit-button-visible="false"
+              :delete-button-visible="false"
+              @onPagingAttributeChanged="handleTablePagingAttributeChanged"
+              @onEntityInspect="handleEntityInspect"
+            >
+              <!--suppress HtmlDeprecatedAttribute -->
+              <el-table-column
+                prop="delta"
+                label="变更金额"
+                align="right"
+                show-tooltip-when-overflow
+                :formatter="balanceNumberFormatter"
+              />
+              <el-table-column
+                prop="change_type"
+                label="资金变更类型"
+                show-tooltip-when-overflow
+                :formatter="changeTypeFormatter"
+              />
+              <el-table-column
+                prop="happened_date"
+                label="记录日期"
+                width="180px"
+                show-tooltip-when-overflow
+                :formatter="timestampFormatter"
+              />
+              <el-table-column
+                prop="remark"
+                label="备注"
+                show-tooltip-when-overflow
+              />
+            </table-panel>
+          </title-layout-panel>
+        </div>
       </div>
     </div>
   </div>
@@ -111,6 +117,7 @@
 <script>
 import FundChangeChart from '@/views/items/financeManagement/financeReport/FundChangeChart.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
+import TitleLayoutPanel from '@/components/layout/TitleLayoutPanel.vue';
 
 import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';
@@ -123,7 +130,7 @@ import { all as allFundChangeTypeIndicator } from '@/api/finance/fundChangeTypeI
 
 export default {
   name: 'FundChangePanel',
-  components: { FundChangeChart, TablePanel },
+  components: { TitleLayoutPanel, FundChangeChart, TablePanel },
   props: {
     selection: {
       type: Object,
@@ -390,32 +397,27 @@ export default {
 .fund-change-body-grid {
   height: 100%;
   width: 0;
-  box-sizing: border-box;
-  padding: 1px;
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 .fund-change-body-grid:first-child {
-  margin-right: 1px;
-}
-
-.fund-change-body-grid:last-child {
-  margin-left: 1px;
+  margin-right: 10px;
 }
 
 .fund-change-body-grid-main {
   width: 100%;
-  height: 0;
-  flex-grow: 1;
+  height: 100%;
+}
+
+.fund-change-detail {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .fund-change-detail >>> label {
   width: 240px;
   color: #99a9bf;
+  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -423,17 +425,19 @@ export default {
   margin-right: 0;
   margin-bottom: 0;
   width: 51%;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
 }
 
 /*noinspection CssUnusedSymbol*/
-.fund-change-detail >>> .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 51%;
-}
-
-.vertical-divider {
-  height: 100%;
+.fund-change-detail >>> .el-form-item__content {
+  width: 0;
+  margin-right: 5px;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 30px;
 }
 
 .balance-container {
@@ -452,17 +456,36 @@ export default {
 
 .fund-change-chart {
   width: 100%;
-  height: 0;
-  flex-grow: 1;
+  height: 100%;
 }
 
 .fund-change-table {
   width: 100%;
-  height: 0;
-  flex-grow: 1;
+  height: 100%;
 }
 
 .fund-change-type-select {
   width: 100%;
+  margin-bottom: 5px;
+}
+
+.details-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-wrapper .details:not(:first-child) {
+  margin-top: 5px;
+}
+
+.details-wrapper .details:last-child {
+  height: 0;
+  flex-grow: 1;
+}
+
+.details-wrapper .details:not(:first-child) {
+  margin-top: 5px;
 }
 </style>

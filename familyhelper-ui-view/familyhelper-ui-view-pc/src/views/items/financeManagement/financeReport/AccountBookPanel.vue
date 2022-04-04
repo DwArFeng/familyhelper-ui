@@ -4,125 +4,133 @@
       请选择一个账本（๑╹◡╹)ﾉ
     </div>
     <div class="account-book-body" v-else>
-      <div class="account-book-body-grid">
-        <el-divider class="expand-divider" content-position="left">账本详情</el-divider>
-        <el-form class="account-book-detail" label-position="left" inline label-width="60px">
-          <el-form-item label="名称" style="width: 50%">
-            <span>{{ selection.accountBook.name }}</span>
-          </el-form-item>
-          <el-form-item label="所有者" style="width: 50%">
-            <!--suppress JSUnresolvedVariable -->
-            <span>{{ selection.accountBook.owner_account.key.string_id }}</span>
-          </el-form-item>
-          <el-form-item label="备注" style="width: 100%">
-            <span>{{ selection.accountBook.remark }}</span>
-          </el-form-item>
-        </el-form>
-        <el-divider class="expand-divider" content-position="left">余额</el-divider>
-        <div class="balance-container">
-          <div
-            class="balance-label"
-            :style="balance.valueStyle"
-          >
-            {{ balance.value }}
-          </div>
-          <div
-            class="balance-label"
-            :style="balance.formattedValueStyle"
-          >
-            {{ balance.formattedValue }}
-          </div>
+      <div class="west-body-grid">
+        <div class="details-wrapper">
+          <title-layout-panel class="details" title="账本详情" bordered>
+            <el-form class="account-book-detail" label-position="left" inline label-width="60px">
+              <el-form-item label="名称" style="width: 50%">
+                <span>{{ selection.accountBook.name }}</span>
+              </el-form-item>
+              <el-form-item label="所有者" style="width: 50%">
+                <!--suppress JSUnresolvedVariable -->
+                <span>{{ selection.accountBook.owner_account.key.string_id }}</span>
+              </el-form-item>
+              <el-form-item label="备注" style="width: 100%">
+                <span>{{ selection.accountBook.remark }}</span>
+              </el-form-item>
+            </el-form>
+          </title-layout-panel>
+          <title-layout-panel class="details" title="余额" bordered>
+            <div class="balance-container">
+              <div
+                class="balance-label"
+                :style="balance.valueStyle"
+              >
+                {{ balance.value }}
+              </div>
+              <div
+                class="balance-label"
+                :style="balance.formattedValueStyle"
+              >
+                {{ balance.formattedValue }}
+              </div>
+            </div>
+          </title-layout-panel>
+          <title-layout-panel class="details" title="图表" bordered>
+            <balance-chart
+              class="account-book-chart"
+              :show-title="false"
+              :hover-animation="false"
+              :category="chart.category"
+              :data="chart.data"
+            />
+          </title-layout-panel>
         </div>
-        <el-divider class="expand-divider" content-position="left">图表</el-divider>
-        <balance-chart
-          class="account-book-chart"
-          :show-title="false"
-          :hover-animation="false"
-          :category="chart.category"
-          :data="chart.data"
-        />
       </div>
-      <el-divider class="vertical-divider" direction="vertical"/>
-      <div class="account-book-body-grid">
-        <el-divider class="expand-divider" content-position="left">银行卡概述</el-divider>
-        <table-panel
-          class="account-book-table"
-          :page-size.sync="bankCardTable.pageSize"
-          :entity-count="parseInt(bankCardTable.entities.count)"
-          :current-page.sync="bankCardTable.currentPage"
-          :page-sizes="[3,5,7]"
-          :table-data="bankCardTable.entities.data"
-          :inspect-button-visible="false"
-          :edit-button-visible="false"
-          :delete-button-visible="false"
-          @onPagingAttributeChanged="handleBankCardTablePagingAttributeChanged"
-        >
-          <!--suppress HtmlDeprecatedAttribute -->
-          <el-table-column
-            prop="name"
-            label="名称"
-            show-tooltip-when-overflow
-          />
-          <el-table-column
-            prop="card_type"
-            label="类型"
-            show-tooltip-when-overflow
-            :formatter="cardTypeFormatter"
-          />
-          <!--suppress HtmlDeprecatedAttribute -->
-          <el-table-column
-            prop="balance_value"
-            label="余额"
-            align="right"
-            show-tooltip-when-overflow
-            :formatter="balanceNumberFormatter"
-          />
-          <el-table-column
-            prop="remark"
-            label="备注"
-            show-tooltip-when-overflow
-          />
-        </table-panel>
-        <el-divider class="expand-divider" content-position="left">资金变更概述</el-divider>
-        <table-panel
-          class="account-book-table"
-          :page-size.sync="fundChangeTable.pageSize"
-          :entity-count="parseInt(fundChangeTable.entities.count)"
-          :current-page.sync="fundChangeTable.currentPage"
-          :page-sizes="[3,5,7]"
-          :table-data="fundChangeTable.entities.data"
-          :inspect-button-visible="false"
-          :edit-button-visible="false"
-          :delete-button-visible="false"
-          @onPagingAttributeChanged="handleFundChangeTablePagingAttributeChanged"
-        >
-          <!--suppress HtmlDeprecatedAttribute -->
-          <el-table-column
-            prop="delta"
-            label="变更金额"
-            align="right"
-            show-tooltip-when-overflow
-            :formatter="balanceNumberFormatter"
-          />
-          <el-table-column
-            prop="change_type"
-            label="资金变更类型"
-            show-tooltip-when-overflow
-            :formatter="changeTypeFormatter"
-          />
-          <el-table-column
-            prop="happened_date"
-            label="记录日期"
-            width="180px"
-            show-tooltip-when-overflow
-            :formatter="timestampFormatter"
-          />
-          <el-table-column
-            prop="remark"
-            label="备注"
-            show-tooltip-when-overflow
-          />
-        </table-panel>
+      <div class="east-body-grid">
+        <div class="details-wrapper">
+          <title-layout-panel class="details" title="银行卡概述" bordered>
+            <table-panel
+              class="account-book-table"
+              :page-size.sync="bankCardTable.pageSize"
+              :entity-count="parseInt(bankCardTable.entities.count)"
+              :current-page.sync="bankCardTable.currentPage"
+              :page-sizes="[3,5,7]"
+              :table-data="bankCardTable.entities.data"
+              :inspect-button-visible="false"
+              :edit-button-visible="false"
+              :delete-button-visible="false"
+              @onPagingAttributeChanged="handleBankCardTablePagingAttributeChanged"
+            >
+              <!--suppress HtmlDeprecatedAttribute -->
+              <el-table-column
+                prop="name"
+                label="名称"
+                show-tooltip-when-overflow
+              />
+              <el-table-column
+                prop="card_type"
+                label="类型"
+                show-tooltip-when-overflow
+                :formatter="cardTypeFormatter"
+              />
+              <!--suppress HtmlDeprecatedAttribute -->
+              <el-table-column
+                prop="balance_value"
+                label="余额"
+                align="right"
+                show-tooltip-when-overflow
+                :formatter="balanceNumberFormatter"
+              />
+              <el-table-column
+                prop="remark"
+                label="备注"
+                show-tooltip-when-overflow
+              />
+            </table-panel>
+          </title-layout-panel>
+          <title-layout-panel class="details" title="资金变更概述" bordered>
+            <table-panel
+              class="account-book-table"
+              :page-size.sync="fundChangeTable.pageSize"
+              :entity-count="parseInt(fundChangeTable.entities.count)"
+              :current-page.sync="fundChangeTable.currentPage"
+              :page-sizes="[3,5,7]"
+              :table-data="fundChangeTable.entities.data"
+              :inspect-button-visible="false"
+              :edit-button-visible="false"
+              :delete-button-visible="false"
+              @onPagingAttributeChanged="handleFundChangeTablePagingAttributeChanged"
+            >
+              <!--suppress HtmlDeprecatedAttribute -->
+              <el-table-column
+                prop="delta"
+                label="变更金额"
+                align="right"
+                show-tooltip-when-overflow
+                :formatter="balanceNumberFormatter"
+              />
+              <el-table-column
+                prop="change_type"
+                label="资金变更类型"
+                show-tooltip-when-overflow
+                :formatter="changeTypeFormatter"
+              />
+              <el-table-column
+                prop="happened_date"
+                label="记录日期"
+                width="180px"
+                show-tooltip-when-overflow
+                :formatter="timestampFormatter"
+              />
+              <el-table-column
+                prop="remark"
+                label="备注"
+                show-tooltip-when-overflow
+              />
+            </table-panel>
+          </title-layout-panel>
+        </div>
       </div>
     </div>
   </div>
@@ -131,16 +139,19 @@
 <script>
 import BalanceChart from '@/views/items/financeManagement/financeReport/BalanceChart.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
+import TitleLayoutPanel from '@/components/layout/TitleLayoutPanel.vue';
 
 import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';
 import { childForAccountBookDesc } from '@/api/finance/totalBalanceHistory';
 import { childForAccountBookDisp as bankCardChildForAccountBookDisp } from '@/api/finance/bankCard';
-import { childForAccountBookDescDisp as fundChangeChildForAccountBookDescDisp } from '@/api/finance/fundChange';
+import {
+  childForAccountBookDescDisp as fundChangeChildForAccountBookDescDisp,
+} from '@/api/finance/fundChange';
 
 export default {
   name: 'AccountBookPanel',
-  components: { BalanceChart, TablePanel },
+  components: { TitleLayoutPanel, BalanceChart, TablePanel },
   props: {
     selection: {
       type: Object,
@@ -380,30 +391,30 @@ export default {
   width: 100%;
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
-.account-book-body-grid {
+.west-body-grid {
   height: 100%;
   width: 0;
-  box-sizing: border-box;
-  padding: 1px;
   flex-grow: 1;
+  margin-right: 10px;
+}
+
+.east-body-grid {
+  height: 100%;
+  width: 0;
+  flex-grow: 1;
+}
+
+.account-book-detail {
   display: flex;
-  flex-direction: column;
-}
-
-.account-book-body-grid:first-child {
-  margin-right: 1px;
-}
-
-.account-book-body-grid:last-child {
-  margin-left: 1px;
+  flex-wrap: wrap;
 }
 
 .account-book-detail >>> label {
   width: 240px;
   color: #99a9bf;
+  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -411,21 +422,24 @@ export default {
   margin-right: 0;
   margin-bottom: 0;
   width: 51%;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
 }
 
 /*noinspection CssUnusedSymbol*/
-.account-book-detail >>> .el-form-item {
-  margin-right: 0;
-  margin-bottom: 0;
-  width: 51%;
-}
-
-.vertical-divider {
-  height: 100%;
+.account-book-detail >>> .el-form-item__content {
+  width: 0;
+  margin-right: 5px;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 30px;
 }
 
 .balance-container {
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: row;
 }
@@ -440,12 +454,35 @@ export default {
 
 .account-book-chart {
   width: 100%;
-  height: 0;
-  flex-grow: 1;
+  height: 100%;
 }
 
 .account-book-table {
   width: 100%;
+  height: 100%;
+}
+
+.details-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.west-body-grid .details-wrapper .details:not(:first-child) {
+  margin-top: 5px;
+}
+
+.west-body-grid .details-wrapper .details:last-child {
+  height: 0;
+  flex-grow: 1;
+}
+
+.east-body-grid .details-wrapper .details:not(:first-child) {
+  margin-top: 5px;
+}
+
+.east-body-grid .details-wrapper .details {
   height: 0;
   flex-grow: 1;
 }

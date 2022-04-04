@@ -4,21 +4,30 @@
       class="border-layout-panel"
     >
       <div class="finance-report-main">
-        <div class="finance-report-main-header">
-          <account-book-indicator mode="FINANCE_REPORT" @change="handleAccountBookChanged"/>
-        </div>
-        <el-divider class="tiny-margin-divider"/>
-        <el-tabs class="finance-report-main-body" v-model="tabPane.activeName" tab-position="left">
-          <el-tab-pane label="账本" name="account_book">
-            <account-book-panel :selection="accountBookSelection"/>
-          </el-tab-pane>
-          <el-tab-pane label="银行卡" name="bank_card">
-            <bank-card-panel :selection="accountBookSelection"/>
-          </el-tab-pane>
-          <el-tab-pane label="资金变更" name="fund_change">
-            <fund-change-panel :selection="accountBookSelection"/>
-          </el-tab-pane>
-        </el-tabs>
+        <header-layout-panel>
+          <template v-slot:header>
+            <div class="finance-report-main-header">
+              <account-book-indicator mode="FINANCE_REPORT" @change="handleAccountBookChanged"/>
+            </div>
+          </template>
+          <template v-slot:default>
+            <el-tabs
+              class="finance-report-main-body"
+              v-model="tabPane.activeName"
+              tab-position="left"
+            >
+              <el-tab-pane label="账本" name="account_book">
+                <account-book-panel :selection="accountBookSelection"/>
+              </el-tab-pane>
+              <el-tab-pane label="银行卡" name="bank_card">
+                <bank-card-panel :selection="accountBookSelection"/>
+              </el-tab-pane>
+              <el-tab-pane label="资金变更" name="fund_change">
+                <fund-change-panel :selection="accountBookSelection"/>
+              </el-tab-pane>
+            </el-tabs>
+          </template>
+        </header-layout-panel>
       </div>
     </border-layout-panel>
   </div>
@@ -30,10 +39,12 @@ import AccountBookPanel from '@/views/items/financeManagement/financeReport/Acco
 import BankCardPanel from '@/views/items/financeManagement/financeReport/BankCardPanel.vue';
 import FundChangePanel from '@/views/items/financeManagement/financeReport/FundChangePanel.vue';
 import AccountBookIndicator from '@/views/items/financeManagement/accountBook/AccountBookIndicator.vue';
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 
 export default {
   name: 'FinanceReport',
   components: {
+    HeaderLayoutPanel,
     AccountBookIndicator,
     AccountBookPanel,
     BankCardPanel,
@@ -82,11 +93,6 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.tiny-margin-divider {
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .finance-report-main-header {
