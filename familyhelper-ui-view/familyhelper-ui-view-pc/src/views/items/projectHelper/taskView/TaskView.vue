@@ -16,7 +16,11 @@
           v-else
         >
           <el-tab-pane label="信息" name="info">
-            <info-tab-panel ref="infoTabPanel" :task-id="taskTabs.taskId"/>
+            <info-tab-panel
+              ref="infoTabPanel"
+              :task-id="taskTabs.taskId"
+              @onEntityEdit="handleShowEntityEditDialog"
+            />
           </el-tab-pane>
           <el-tab-pane label="待做清单" name="todoList">
             <coming-soon/>
@@ -49,72 +53,65 @@
         <project-indicator mode="TASK_VIEW" @change="handleProjectChanged"/>
       </div>
     </border-layout-panel>
-    <el-dialog
-      id="dialog"
-      append-to-body
-      destroy-on-close
-      title="新建任务"
-      :visible.sync="createDialog.visible"
+    <entity-maintain-dialog
+      inspect-title="查看任务"
+      create-title="创建任务"
+      edit-title="编辑任务"
+      label-width="82px"
+      :visible.sync="maintainDialog.visible"
+      :mode="maintainDialog.mode"
+      :entity="maintainDialog.anchorEntity"
+      :create-rules="maintainDialog.rules"
+      :edit-rules="maintainDialog.rules"
       :close-on-click-modal="false"
-      @keydown.ctrl.enter.native="handleEntityCreate"
+      :loading="maintainDialog.loading"
+      @onEntityCreate="handleEntityCreate"
+      @onEntityEdit="handleEntityEdit"
     >
-      <!--suppress HtmlUnknownAttribute -->
-      <el-form
-        class="editor-container"
-        ref="createForm"
-        v-loading="createDialog.loading"
-        label-width="100px"
-        :model="createDialog.formModel"
-        :rules="createDialog.rules"
+      <el-form-item label="名称" prop="name">
+        <el-input
+          v-model="maintainDialog.anchorEntity.name"
+          placeholder="必填"
+        />
+      </el-form-item>
+      <el-form-item label="类型" prop="type">
+        <el-select
+          class='task-view-select'
+          v-model="maintainDialog.anchorEntity.type"
+          placeholder="请选择"
+        >
+          <el-option
+            v-for="item in typeIndicator.entities.data"
+            :key="item.key.string_id"
+            :label="item.label"
+            :value="item.key.string_id"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item
+        v-if="maintainDialog.mode==='EDIT'"
+        label="完成任务数"
+        prop="finished_mission_count"
       >
-        <el-form-item label="名称" prop="name">
-          <el-input
-            v-model="createDialog.formModel.name"
-            placeholder="必填"
-          />
-        </el-form-item>
-        <el-form-item label="类型" prop="type">
-          <el-select
-            class='task-view-select'
-            v-model="createDialog.formModel.type"
-            placeholder="请选择"
-          >
-            <el-option
-              v-for="item in typeIndicator.entities.data"
-              :key="item.key.string_id"
-              :label="item.label"
-              :value="item.key.string_id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="总任务数" prop="totalMissionCount">
-          <el-input-number
-            v-model="createDialog.formModel.totalMissionCount"
-            :min="1"
-          />
-        </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input
-            v-model="createDialog.formModel.remark"
-          />
-        </el-form-item>
-      </el-form>
-      <div slot="footer">
-        <el-button
-          type="primary"
-          :disabled="createDialog.loading"
-          @click="handleEntityCreate"
-        >
-          确认
-        </el-button>
-        <el-button
-          :disabled="createDialog.loading"
-          @click="createDialog.visible=false"
-        >
-          取消
-        </el-button>
-      </div>
-    </el-dialog>
+        <el-input-number
+          v-model="maintainDialog.anchorEntity.finished_mission_count"
+          :min="1"
+          :max="maintainDialog.anchorEntity.total_mission_count"
+        />
+      </el-form-item>
+      <el-form-item label="总任务数" prop="total_mission_count">
+        <el-input-number
+          v-model="maintainDialog.anchorEntity.total_mission_count"
+          :min="1"
+          @change="handleTotalMissionCountChanged"
+        />
+      </el-form-item>
+      <el-form-item label="备注" prop="remark">
+        <el-input
+          v-model="maintainDialog.anchorEntity.remark"
+        />
+      </el-form-item>
+    </entity-maintain-dialog>
   </div>
 </template>
 
@@ -124,14 +121,16 @@ import ComingSoon from '@/components/comingSoon/ComingSoon.vue';
 import TaskListPanel from '@/views/items/projectHelper/taskView/TaskListPanel.vue';
 import InfoTabPanel from '@/views/items/projectHelper/taskView/InfoTabPanel.vue';
 import ProjectIndicator from '@/views/items/projectHelper/project/ProjectIndicator.vue';
+import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 
 import resolveResponse from '@/util/response';
 import { all as allTypeIndicator } from '@/api/project/taskTypeIndicator';
-import { create } from '@/api/project/task';
+import { inspectDisp, create, update } from '@/api/project/task';
 
 export default {
   name: 'Task',
   components: {
+    EntityMaintainDialog,
     ProjectIndicator,
     TaskListPanel,
     BorderLayoutPanel,
@@ -154,14 +153,16 @@ export default {
         activeName: 'info',
         taskId: '',
       },
-      createDialog: {
+      maintainDialog: {
         visible: false,
-        loading: false,
-        formModel: {
+        mode: 'CREATE',
+        anchorEntity: {
+          long_id: '',
           type: '',
           name: '',
           remark: '',
-          totalMissionCount: 0,
+          total_mission_count: 0,
+          finished_mission_count: 0,
         },
         rules: {
           name: [
@@ -171,6 +172,7 @@ export default {
             { required: true, message: '类型不能为空', trigger: 'blur' },
           ],
         },
+        loading: false,
       },
       typeIndicator: {
         entities: {
@@ -200,28 +202,29 @@ export default {
       this.parentSelection.project = project;
       this.parentSelection.projectId = project.key.long_id;
     },
-    handleCurrentChanged(taskId) {
-      this.taskTabs.taskId = taskId;
+    handleCurrentChanged(data) {
+      this.taskTabs.taskId = data.key.long_id;
+      this.syncAnchorEntity(data);
     },
     handleShowEntityCreateDialog() {
-      this.createDialog.visible = true;
+      this.showDialog('CREATE');
+    },
+    handleShowEntityEditDialog() {
+      this.showDialog('EDIT');
     },
     handleEntityCreate() {
-      this.$refs.createForm.validate()
-        .then(() => {
-          this.createDialog.loading = true;
-        })
-        .then(() => resolveResponse(create(
-          this.parentSelection.projectId,
-          this.createDialog.formModel.type,
-          this.createDialog.formModel.name,
-          this.createDialog.formModel.remark,
-          this.createDialog.formModel.totalMissionCount,
-        )))
+      this.maintainDialog.loading = true;
+      resolveResponse(create(
+        this.parentSelection.projectId,
+        this.maintainDialog.anchorEntity.type,
+        this.maintainDialog.anchorEntity.name,
+        this.maintainDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.total_mission_count,
+      ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `任务 ${this.createDialog.formModel.name} 创建成功`,
+            message: `任务 ${this.maintainDialog.anchorEntity.name} 创建成功`,
             type: 'success',
             center: true,
           });
@@ -230,16 +233,66 @@ export default {
           this.$refs.taskViewListPanel.inspectData();
         })
         .then(() => {
-          this.createDialog.visible = false;
+          this.maintainDialog.visible = false;
         })
         .catch(() => {
         })
         .finally(() => {
-          this.createDialog.loading = false;
+          this.maintainDialog.loading = false;
+        });
+    },
+    handleEntityEdit() {
+      this.maintainDialog.loading = true;
+      resolveResponse(update(
+        this.maintainDialog.anchorEntity.long_id,
+        this.maintainDialog.anchorEntity.type,
+        this.maintainDialog.anchorEntity.name,
+        this.maintainDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.total_mission_count,
+        this.maintainDialog.anchorEntity.finished_mission_count,
+      ))
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: `任务 ${this.maintainDialog.anchorEntity.name} 更新成功`,
+            type: 'success',
+            center: true,
+          });
+        })
+        .then(() => resolveResponse(inspectDisp(this.maintainDialog.anchorEntity.long_id)))
+        .then(() => {
+          this.$refs.taskViewListPanel.inspectData();
+          this.$refs.infoTabPanel.updateView();
+          this.maintainDialog.visible = false;
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          this.maintainDialog.loading = false;
         });
     },
     handleEntityDelete() {
       // TODO
+    },
+    syncAnchorEntity(entity) {
+      this.maintainDialog.anchorEntity.long_id = entity.key.long_id;
+      this.maintainDialog.anchorEntity.name = entity.name;
+      this.maintainDialog.anchorEntity.type = entity.type;
+      this.maintainDialog.anchorEntity.remark = entity.remark;
+      this.maintainDialog.anchorEntity.total_mission_count = entity.total_mission_count;
+      this.maintainDialog.anchorEntity.finished_mission_count = entity.finished_mission_count;
+    },
+    showDialog(mode) {
+      this.maintainDialog.mode = mode;
+      this.$nextTick(() => {
+        this.maintainDialog.visible = true;
+      });
+    },
+    handleTotalMissionCountChanged() {
+      this.maintainDialog.anchorEntity.finished_mission_count = Math.min(
+        this.maintainDialog.anchorEntity.finished_mission_count,
+        this.maintainDialog.anchorEntity.total_mission_count,
+      );
     },
   },
   mounted() {

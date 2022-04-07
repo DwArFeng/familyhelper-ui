@@ -3,16 +3,19 @@
     <div v-if="taskList.length>0">
       <div
         class="task-item" v-for="(task, index) in taskList"
-        :class="task.key.long_id === selection ? 'active': 'inactive'"
+        :class="isActive(task) ? 'active': 'inactive'"
         :key="index"
-        @click="handleTaskClicked(task.key.long_id)"
+        @click="handleTaskClicked(task)"
       >
-        <span>{{ task.name }}</span>
-        <el-progress
-          class="progress"
-          :percentage="percentage(task)"
-          :show-text="false"
-        />
+        <div class="task-item-body">
+          <span>{{ task.name }}</span>
+          <el-progress
+            class="progress"
+            :percentage="percentage(task)"
+            :show-text="false"
+          />
+        </div>
+        <el-button class="button" type="danger" icon="el-icon-delete" size="mini"/>
       </div>
     </div>
     <span class="placeholder" v-else>（暂无内容）</span>
@@ -28,14 +31,10 @@ export default {
       default: () => [],
     },
     selection: {
-      type: String,
-      default: '',
+      required: true,
     },
   },
   computed: {
-    hasRemark() {
-      return (task) => task.remark !== null && task.remark !== '';
-    },
     percentage() {
       return (task) => {
         const total = task.total_mission_count;
@@ -49,10 +48,18 @@ export default {
         return finished / (total / 100);
       };
     },
+    isActive() {
+      return (task) => {
+        if (this.selection === null) {
+          return false;
+        }
+        return task.key.long_id === this.selection.key.long_id;
+      };
+    },
   },
   methods: {
-    handleTaskClicked(taskId) {
-      this.$emit('onTaskClicked', taskId);
+    handleTaskClicked(task) {
+      this.$emit('onTaskClicked', task);
     },
   },
 };
@@ -65,10 +72,23 @@ export default {
 
 .task-item {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   padding: 4px;
   margin-left: 12px;
   margin-right: 4px;
+}
+
+.task-item-body {
+  width: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: 5px;
+}
+
+.task-item .button{
+  padding: 7px;
 }
 
 /*noinspection CssUnusedSymbol*/

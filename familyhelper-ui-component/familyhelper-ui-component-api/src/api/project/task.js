@@ -55,15 +55,16 @@ export function create(projectKey, type, name, remark, totalMissionCount) {
     });
 }
 
-//TODO
-export function update(key, name, remark, status) {
+export function update(taskKey, type, name, remark, totalMissionCount, finishedMissionCount) {
     return post('project', 'task/update', {
-        project_key: {
-            long_id: key,
+        task_key: {
+            long_id: taskKey,
         },
+        type,
         name,
         remark,
-        status,
+        total_mission_count: totalMissionCount,
+        finished_mission_count: finishedMissionCount
     });
 }
 

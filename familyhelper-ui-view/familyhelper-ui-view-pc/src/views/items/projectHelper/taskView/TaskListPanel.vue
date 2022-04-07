@@ -75,7 +75,7 @@ export default {
       inProgress: [],
       notStart: [],
       finished: [],
-      selection: '',
+      selection: null,
     };
   },
   methods: {
@@ -112,25 +112,10 @@ export default {
       });
     },
     handleListSearch() {
-      if (this.projectKey === '') {
-        this.$message({
-          showClose: true,
-          message: '请先选择资产目录！',
-          type: 'warning',
-          center: true,
-        });
-      }
-      if (this.taskNameToSearch === '') {
-        this.listData = [];
-        this.listSelection = {
-          node: null,
-          data: null,
-        };
-        this.inspectData();
-      }
+      this.inspectData();
     },
-    handleTaskClicked(taskId) {
-      this.selection = taskId;
+    handleTaskClicked(task) {
+      this.selection = task;
       this.$emit('onCurrentChanged', this.selection);
     },
   },

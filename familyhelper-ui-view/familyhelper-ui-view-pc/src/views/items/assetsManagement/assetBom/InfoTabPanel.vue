@@ -37,13 +37,13 @@
                 </el-tag>
               </el-form-item>
               <el-form-item label="创建日期" style="width: 33%">
-                {{ wrappedFormatTimestamp(form.entity.created_date) }}
+                {{ form.entity.created_date | timestamp }}
               </el-form-item>
               <el-form-item label="修改日期" style="width: 33%">
-                {{ wrappedFormatTimestamp(form.entity.modified_date) }}
+                {{ form.entity.modified_date | timestamp }}
               </el-form-item>
               <el-form-item label="废弃日期" style="width: 33%">
-                {{ wrappedFormatTimestamp(form.entity.scrapped_date) }}
+                {{ form.entity.scrapped_date | timestamp }}
               </el-form-item>
               <el-form-item label="备注" 备注="width: 100%">
                 {{ form.entity.remark }}
@@ -105,6 +105,14 @@ export default {
   computed: {
     loading() {
       return this.itemLoading || this.coverLoading;
+    },
+  },
+  filters: {
+    timestamp(timestamp) {
+      if (timestamp === null || timestamp === undefined) {
+        return '（暂无）';
+      }
+      return formatTimestamp(timestamp);
     },
   },
   watch: {
@@ -217,9 +225,6 @@ export default {
       }
       this.inspectItem();
       this.searchImages();
-    },
-    wrappedFormatTimestamp(timestamp) {
-      return formatTimestamp(timestamp);
     },
     handleEntityEdit() {
       this.$emit('onEntityEdit');

@@ -3,7 +3,7 @@
     <header-layout-panel>
       <template v-slot:header>
         <div class="header">
-          <el-button type="primary">编辑属性</el-button>
+          <el-button type="primary" @click="handleEntityEdit">编辑属性</el-button>
           <el-button type="primary">编辑进度</el-button>
           <el-button type="primary">编辑前置任务</el-button>
         </div>
@@ -28,31 +28,21 @@
                 {{ form.entity.status }}
               </el-form-item>
               <el-form-item label="创建日期" style="width: 33%">
-                {{ wrappedFormatTimestamp(form.entity.created_date) }}
+                {{ form.entity.created_date | timestamp }}
               </el-form-item>
               <el-form-item label="修改日期" style="width: 33%">
-                {{ wrappedFormatTimestamp(form.entity.modified_date) }}
+                {{ form.entity.modified_date | timestamp }}
               </el-form-item>
               <el-form-item label="完成日期" style="width: 33%">
-                {{ wrappedFormatTimestamp(form.entity.scrapped_date) }}
+                {{ form.entity.scrapped_date | timestamp }}
               </el-form-item>
               <el-form-item label="备注" style="width: 100%">
                 {{ form.entity.remark }}
               </el-form-item>
-            </el-form>
-          </title-layout-panel>
-          <title-layout-panel class="details" title="进度" bordered>
-            <el-form
-              class="property-form"
-              label-position="left"
-              label-width="80px"
-              inline
-              :model="form.entity"
-            >
-              <el-form-item label="已完成任务" style="width: 50%">
+              <el-form-item label="已完成任务" style="width: 33%">
                 {{ form.entity.finished_mission_count }}
               </el-form-item>
-              <el-form-item label="总任务" style="width: 50%">
+              <el-form-item label="总任务" style="width: 33%">
                 {{ form.entity.total_mission_count }}
               </el-form-item>
               <el-form-item label="进度" style="width: 100%">
@@ -109,6 +99,14 @@ export default {
       return indicator.label;
     },
   },
+  filters: {
+    timestamp(timestamp) {
+      if (timestamp === null || timestamp === undefined) {
+        return '（暂无）';
+      }
+      return formatTimestamp(timestamp);
+    },
+  },
   watch: {
     taskId(val) {
       if (val === '') {
@@ -150,18 +148,18 @@ export default {
     updateFormView(res) {
       this.$set(this.form, 'entity', res);
     },
-    wrappedFormatTimestamp(timestamp) {
-      if (timestamp === null || timestamp === undefined || timestamp === 0) {
-        return '（暂无）';
+    updateView() {
+      if (this.taskId === '') {
+        return;
       }
-      return formatTimestamp(timestamp);
+      this.inspectTask();
+    },
+    handleEntityEdit() {
+      this.$emit('onEntityEdit');
     },
   },
   mounted() {
-    if (this.taskId === '') {
-      return;
-    }
-    this.inspectTask();
+    this.updateView();
   },
 };
 </script>
