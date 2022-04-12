@@ -4,6 +4,7 @@
       id="dialog"
       append-to-body
       destroy-on-close
+      :top="top"
       :title="title"
       :visible.sync="watchedVisible"
       :close-on-click-modal="closeOnClickModal"
@@ -111,6 +112,10 @@ export default {
     loading: {
       type: Boolean,
       default: false,
+    },
+    top: {
+      type: String,
+      default: '15vh',
     },
   },
   watch: {
