@@ -1,7 +1,14 @@
 <template>
   <div class="ez-nav-container">
     <div class="router-link-container-wrapper">
-      <div class="loading" v-if="loading">正在加载，请稍候...</div>
+      <div class="loading" v-if="loading">
+        <span>正在加载，请稍候...</span>
+        <div class="deep-clean-panel">
+          <span>加载失败？</span>
+          <el-button type="text" @click="deepCleanWithoutPrompt">点击此处</el-button>
+          <span>进行深度清理</span>
+        </div>
+      </div>
       <div class="router-link-container" v-else>
         <!--suppress JSUnresolvedVariable, JSUnresolvedFunction -->
         <div
@@ -274,6 +281,15 @@ export default {
         .catch(() => {
         });
     },
+    deepCleanWithoutPrompt() {
+      return Promise.resolve()
+        .then(() => this.clearAll())
+        .then(() => {
+          this.$router.push({ name: 'vim' });
+        })
+        .catch(() => {
+        });
+    },
     ...mapMutations('vimEzNav', [
       'removeItemKey', 'pin', 'unpin', 'clearActive', 'pushItemKey', 'updatePinnedItemKeys',
       'updateActiveItemKeys', 'clearAll',
@@ -295,11 +311,19 @@ export default {
 }
 
 .router-link-container-wrapper .loading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   margin: 0 14px;
   padding: 1px 0;
   line-height: 30px;
   font-size: 14px;
   user-select: none;
+}
+
+.router-link-container-wrapper .loading .deep-clean-panel {
+  display: inline-block;
 }
 
 .router-link-container {

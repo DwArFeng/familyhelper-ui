@@ -212,7 +212,6 @@ export default {
         });
     },
     updateView() {
-      console.log(this.itemId);
       if (this.itemId === '') {
         return;
       }
