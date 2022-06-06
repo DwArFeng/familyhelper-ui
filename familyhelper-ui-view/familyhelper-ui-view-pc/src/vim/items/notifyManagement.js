@@ -19,8 +19,8 @@ const notifyManagement = [
         required: false,
       },
       permission: {
-        required: false,
-        node: 'ui.pc.menu_visible.notify_settings',
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management',
       },
     },
     node: {
@@ -49,8 +49,8 @@ const notifyManagement = [
         component: () => import('@/views/items/notifyManagement/notifySetting/NotifySetting.vue'),
       },
       permission: {
-        required: false,
-        node: 'ui.pc.menu_visible.notify_settings.setting_node',
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.notify_setting',
       },
     },
     node: {
@@ -79,8 +79,8 @@ const notifyManagement = [
         component: () => import('@/views/items/notifyManagement/topic/Topic.vue'),
       },
       permission: {
-        required: false,
-        node: 'ui.pc.menu_visible.notify_settings.setting_node',
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.topic',
       },
     },
     node: {
@@ -109,8 +109,8 @@ const notifyManagement = [
         component: () => import('@/views/items/notifyManagement/routerInfo/RouterInfo.vue'),
       },
       permission: {
-        required: false,
-        node: 'ui.pc.menu_visible.notify_settings.setting_node',
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.router_info',
       },
     },
     node: {
@@ -139,8 +139,8 @@ const notifyManagement = [
         component: () => import('@/views/items/notifyManagement/senderInfo/SenderInfo.vue'),
       },
       permission: {
-        required: false,
-        node: 'ui.pc.menu_visible.notify_settings.setting_node',
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.sender_info',
       },
     },
     node: {
@@ -169,8 +169,8 @@ const notifyManagement = [
         component: () => import('@/views/items/notifyManagement/senderRelation/SenderRelation.vue'),
       },
       permission: {
-        required: false,
-        node: 'ui.pc.menu_visible.notify_settings.setting_node',
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.sender_relation',
       },
     },
     node: {
@@ -199,8 +199,8 @@ const notifyManagement = [
         component: () => import('@/views/items/notifyManagement/routerSupport/RouterSupport.vue'),
       },
       permission: {
-        required: false,
-        node: 'ui.pc.menu_visible.notify_settings.setting_node',
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.router_support',
       },
     },
     node: {
@@ -229,8 +229,8 @@ const notifyManagement = [
         component: () => import('@/views/items/notifyManagement/senderSupport/SenderSupport.vue'),
       },
       permission: {
-        required: false,
-        node: 'ui.pc.menu_visible.notify_settings.setting_node',
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.sender_support',
       },
     },
     node: {
