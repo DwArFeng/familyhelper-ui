@@ -1,40 +1,45 @@
 <template>
-<div class="text-editor-container">
-  <div class="header">
-    <el-select class="item selector" v-model="selector.value" size="mini">
-      <i class="el-icon-s-data" slot="prefix"/>
-      <el-option
-        v-for="item in selector.options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+  <div class="text-editor-container">
+    <div class="header">
+      <div class="function-panel">
+        <el-select class="item selector" v-model="selector.value" size="mini">
+          <i class="el-icon-s-data" slot="prefix"/>
+          <el-option
+            v-for="item in selector.options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+        <el-tag class="item" size="medium">长度：{{ watchedValue.length }}</el-tag>
+        <el-link
+          class="item"
+          type="primary"
+          icon="el-icon-document"
+          :underline="false"
+          @click="handleCopy"
+        >
+          复制
+        </el-link>
+      </div>
+      <div>
+        <slot name="addon" :replace="addonReplace"/>
+      </div>
+    </div>
+    <div class="body">
+      <plain-sub-editor
+        v-model="watchedValue"
+        v-if="selector.value==='plain'"
+        :readonly="readonly"
       />
-    </el-select>
-    <el-tag class="item" size="medium">长度：{{watchedValue.length}}</el-tag>
-    <el-link
-      class="item"
-      type="primary"
-      icon="el-icon-document"
-      :underline="false"
-      @click="handleCopy"
-    >
-      复制
-    </el-link>
+      <json-sub-editor
+        v-model="watchedValue"
+        v-else-if="selector.value==='json'"
+        :readonly="readonly"
+      />
+      <coming-soon v-else-if="selector.value==='base64image'"/>
+    </div>
   </div>
-  <div class="body">
-    <plain-sub-editor
-      v-model="watchedValue"
-      v-if="selector.value==='plain'"
-      :readonly="readonly"
-    />
-    <json-sub-editor
-      v-model="watchedValue"
-      v-else-if="selector.value==='json'"
-      :readonly="readonly"
-    />
-    <coming-soon v-else-if="selector.value==='base64image'"/>
-  </div>
-</div>
 </template>
 
 <script>
@@ -95,6 +100,9 @@ export default {
           });
         });
     },
+    addonReplace(value) {
+      this.watchedValue = value;
+    },
   },
   mounted() {
     this.watchedValue = this.value;
@@ -103,37 +111,46 @@ export default {
 </script>
 
 <style scoped>
-.text-editor-container{
+.text-editor-container {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.header{
+.header {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.body{
+.body {
   width: 100%;
   height: 0;
   flex-grow: 1;
 }
 
-.header .item:not(:first-child){
+.function-panel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.function-panel .item:not(:first-child) {
   margin-left: 5px;
 }
 
-.header .selector{
+.function-panel .selector {
   width: 140px;
 }
 
-.header .selector >>> input{
+.function-panel .selector >>> input {
   padding-left: 20px;
 }
 
 /*noinspection CssUnusedSymbol*/
-.header >>> .el-link--inner{
+.header >>> .el-link--inner {
   margin: 0;
 }
 </style>
