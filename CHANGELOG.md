@@ -33,8 +33,11 @@
 
 - eznav 导航栏在加载中面板处增加深度清理功能，提供了在加载失败后进行深度复位的能力。
 
-- EntityMaintainDialog.vue 增加 `top` 属性。
-  
+- 优化公共组件。
+  - EntityMaintainDialog.vue 增加 `top` 属性。
+  - BorderLayoutPanel.vue.vue 增加调节东西部面板宽度的属性。
+  - TextEditor.vue.vue 增加辅助工具插槽。
+
 #### Bug修复
 
 - 备忘录、历史备忘录页面 bug 修复。

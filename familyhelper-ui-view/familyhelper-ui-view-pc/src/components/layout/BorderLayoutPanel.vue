@@ -1,6 +1,6 @@
 <template>
   <div class="border-layout-panel-container">
-    <div class="main-area" >
+    <div class="main-area">
       <!-- Header -->
       <el-card
         v-if="headerVisible"
@@ -12,7 +12,10 @@
         <!-- West -->
         <el-card
           v-if="westVisible"
-          class="box-card-west" body-style="height: calc(100% - 30px); padding: 15px">
+          class="box-card-west"
+          body-style="height: calc(100% - 30px); padding: 15px"
+          :style="{width:westWidth}"
+        >
           <slot name="west"/>
         </el-card>
         <!-- Main -->
@@ -22,7 +25,10 @@
         <!-- East -->
         <el-card
           v-if="eastVisible"
-          class="box-card-east" body-style="height: calc(100% - 30px); padding: 15px">
+          class="box-card-east"
+          body-style="height: calc(100% - 30px); padding: 15px"
+          :style="{width:eastWidth}"
+        >
           <slot name="east"/>
         </el-card>
       </div>
@@ -59,6 +65,14 @@ export default {
     eastVisible: {
       type: Boolean,
       default: () => false,
+    },
+    westWidth: {
+      type: String,
+      default: 'unset',
+    },
+    eastWidth: {
+      type: String,
+      default: 'unset',
     },
   },
 };
