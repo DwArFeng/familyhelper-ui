@@ -44,8 +44,13 @@
 
 - 优化公共组件。
   - EntityMaintainDialog.vue 增加 `top` 属性。
-  - BorderLayoutPanel.vue.vue 增加调节东西部面板宽度的属性。
-  - TextEditor.vue.vue 增加辅助工具插槽。
+  - BorderLayoutPanel.vue 增加调节东西部面板宽度的属性。
+  - TextEditor.vue 增加辅助工具插槽。
+
+- 依赖升级。
+  - 升级 `spring` 依赖版本为 `5.3.20` 以规避漏洞。
+  - 升级 `log4j2` 依赖版本为 `2.17.2` 以规避漏洞。
+  - 升级 `log4j2` 依赖版本为 `1.7.36` 以规避漏洞。
 
 #### Bug修复
 
