@@ -8,7 +8,7 @@
 
 #### Bug修复
 
-- (无)
+- 修正 familyhelper-ui-distribute 模块的打包模式。
 
 #### 功能移除
 
