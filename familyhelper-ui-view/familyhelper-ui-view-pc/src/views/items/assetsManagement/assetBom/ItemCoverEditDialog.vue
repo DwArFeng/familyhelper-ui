@@ -62,7 +62,7 @@
               :formatter="unitFormatter"
             />
             <el-table-column
-              prop="modified_date"
+              prop="created_date"
               label="上传日期"
               width="180px"
               show-tooltip-when-overflow
@@ -164,6 +164,7 @@ export default {
           res.data.forEach((itemCoverInfo) => {
             promises.push(download(itemCoverInfo.key.long_id).then(((blob) => {
               const neoItemCoverInfo = itemCoverInfo;
+              // noinspection JSCheckFunctionSignatures
               neoItemCoverInfo.url = window.URL.createObjectURL(blob);
               return Promise.resolve(neoItemCoverInfo);
             })));
