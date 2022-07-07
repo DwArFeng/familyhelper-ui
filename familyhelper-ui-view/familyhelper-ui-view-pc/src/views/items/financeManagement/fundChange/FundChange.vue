@@ -46,7 +46,7 @@ import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
 import resolveResponse from '@/util/response';
 import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
-const SETTINGREPO_UI_PREFERENCE_ID = 'ui_preference.pc.fund_management.fund_change';
+const SETTINGREPO_UI_PREFERENCE_ID = 'ui_preference.pc.finance_management.fund_change';
 
 // noinspection JSAnnotator
 export default {
