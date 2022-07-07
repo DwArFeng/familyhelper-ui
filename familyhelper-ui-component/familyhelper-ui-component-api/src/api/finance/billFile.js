@@ -18,7 +18,7 @@ export function childForFundChange(fundChangeKey, page, rows) {
 }
 
 export function childForFundChangeIndexAsc(fundChangeKey, page, rows) {
-    return get('finance', `func-change/${fundChangeKey}/bill-file/index-asc/`, {
+    return get('finance', `fund-change/${fundChangeKey}/bill-file/index-asc/`, {
         page,
         rows,
     });
