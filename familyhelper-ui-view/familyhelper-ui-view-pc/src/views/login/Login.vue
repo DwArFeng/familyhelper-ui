@@ -1,6 +1,6 @@
 <template>
   <div class="page-forbidden-container" v-cloak :style="backgroundImageStyle">
-    <div class="login-panel">
+    <div class="login-panel" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.1)">
       <div class="login-banner">
         <span class="login-panel-text">赵扶风开发制作</span>
         <span class="login-panel-text">github地址: https://github.com/</span>
@@ -59,6 +59,7 @@ export default {
       },
       idError: false,
       passwordError: false,
+      loading: false,
     };
   },
   mounted() {
@@ -77,11 +78,16 @@ export default {
   },
   methods: {
     handleLogin() {
+      this.loading = true;
       if (!this.validate()) {
+        this.loading = false;
         return;
       }
       this.login({ accountId: this.form.id, password: this.form.password })
         .catch(() => {
+        })
+        .finally(() => {
+          this.loading = false;
         });
     },
     validate() {
@@ -127,7 +133,7 @@ export default {
   height: min(600px, 75%);
   width: min(800px, 75%);
   border-radius: 5px;
-  box-shadow: 2px 2px 5px #808080;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   z-index: 1;
   display: flex;
   flex-direction: column;
