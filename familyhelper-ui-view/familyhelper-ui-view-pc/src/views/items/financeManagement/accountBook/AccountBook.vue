@@ -305,7 +305,7 @@ export default {
         .then((res) => {
           // noinspection JSUnresolvedVariable
           if (res.permission_level !== 0) {
-            this.$alert('您不是此账本的所有者，无权删除该账本！', '权限不足', {
+            this.$alert('您不是此账本的所有者，无权分配该账本的权限！', '权限不足', {
               confirmButtonText: '确定',
               type: 'warning',
               customClass: 'custom-message-box__w500',
