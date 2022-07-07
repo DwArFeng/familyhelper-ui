@@ -48,7 +48,6 @@
                 size="mini"
                 icon="el-icon-search"
                 type="success"
-                :disabled="accountBook.permission_level !== 0"
                 @click="handleShowEntityInspectDialog($index, row)"
               />
               <el-button
@@ -73,7 +72,6 @@
             <ul class="my-contextmenu">
               <!--suppress JSUnresolvedVariable -->
               <li
-                :class="{disabled:accountBook.permission_level !== 0}"
                 @click="handleInspectMenuItemClicked(index,row,close,$event)"
               >
                 查看...
@@ -461,11 +459,7 @@ export default {
     timestampFormatter(row, column) {
       return formatTimestamp(row[column.property]);
     },
-    handleInspectMenuItemClicked(index, row, close, event) {
-      if (this.accountBook.permission_level !== 0) {
-        event.preventDefault();
-        return;
-      }
+    handleInspectMenuItemClicked(index, row, close) {
       close();
       this.handleShowEntityInspectDialog(index, row);
     },

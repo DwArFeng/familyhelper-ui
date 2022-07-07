@@ -12,11 +12,7 @@
           :current-page.sync="table.currentPage"
           :page-sizes="[5,10,15,20]"
           :table-data="table.data"
-          :show-contextmenu="true"
-          :inspect-button-visible="false"
-          :edit-button-visible="false"
-          :operate-column-width="49"
-          @onEntityDelete="handleEntityDelete"
+          :operate-column-width="76"
           @onPagingAttributeChanged="handlePagingAttributeChanged"
         >
           <el-table-column
@@ -49,11 +45,30 @@
             label="备注"
             show-tooltip-when-overflow
           />
+          <template v-slot:operateColumn="{index,row}">
+            <el-button-group class=operate-column>
+              <el-button
+                class="table-button"
+                size="mini"
+                icon="el-icon-download"
+                type="success"
+                @click="handleFileDownload(row)"
+              />
+              <el-button
+                class="table-button"
+                size="mini"
+                icon="el-icon-delete"
+                type="danger"
+                :disabled="readOnly"
+                @click="handleEntityDelete(index,row)"
+              />
+            </el-button-group>
+          </template>
         </table-panel>
         <div class="header-container" slot="header">
           <el-button
             type="primary"
-            :disabled="headerButtonDisabled"
+            :disabled="readOnly"
             @click="uploadDialog.visible=true"
           >
             上传票据
@@ -104,7 +119,7 @@ export default {
     },
   },
   computed: {
-    headerButtonDisabled() {
+    readOnly() {
       return this.accountBook === null || this.accountBook.permission_level !== 0;
     },
   },
@@ -231,6 +246,19 @@ export default {
         .catch(() => {
         });
     },
+    handleFileDownload(fileInfo) {
+      download(fileInfo.key.long_id)
+        .then((blob) => {
+          // noinspection JSUnresolvedVariable
+          const fileName = fileInfo.origin_name;
+          const link = document.createElement('a');
+          // noinspection JSCheckFunctionSignatures
+          link.href = window.URL.createObjectURL(blob);
+          link.download = fileName;
+          link.click();
+          window.URL.revokeObjectURL(link.href);
+        });
+    },
   },
   mounted() {
     this.handleSearch();
@@ -251,6 +279,10 @@ export default {
 .table-panel .image {
   width: 100%;
   height: 67px;
+}
+
+.table-panel .table-button {
+  padding: 7px;
 }
 
 .header-container {
