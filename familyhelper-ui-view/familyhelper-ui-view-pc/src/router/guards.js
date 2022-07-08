@@ -26,7 +26,7 @@ const vimGuard = (to, from, next) => {
 
   // 判断 addon 的 ezNav 是否生效，如生效，对 ezNav 进行相应操作。
   if (vim.addons.ezNav.enabled && to.meta.ezNav) {
-    store.commit('vimEzNav/pushLocation', to);
+    store.commit('vimEzNav/pushLocateInfo', { to, from });
   }
 
   next();

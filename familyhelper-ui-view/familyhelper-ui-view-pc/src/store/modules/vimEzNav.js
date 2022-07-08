@@ -11,12 +11,59 @@ import resolveResponse from '@/util/response';
 // 存储在设置仓库中的设置类型ID。
 const SETTINGREPO_CATEGORY_ID = 'framework.pc.eznav';
 
+const mayPutItemBackMap = (s, to, from) => {
+  // 如果当前状态在 backing，或者是 loading 则直接返回。
+  if (s.backing || s.loading) {
+    return;
+  }
+
+  // 如果 to 是 null 或者 undefined，则直接返回。
+  if (to === null || to === undefined) {
+    return;
+  }
+  // 如果 from 是 null 或者 undefined，则直接返回。
+  if (from === null || from === undefined) {
+    return;
+  }
+
+  // 获取 to 和 from 的名称，并更新 itemBackMap。
+  const toName = to.name;
+  const fromName = from.name;
+
+  // 如果 name 和 fromName 相同，则直接返回。
+  if (toName === fromName) {
+    return;
+  }
+
+  // 更新 itemBackMap。
+  s.itemBackMap[toName] = fromName;
+};
+
+const mayPutActiveItemKeys = (s, itemKey) => {
+  // 如果 affix, pinned, active 三处数组都没有 itemKey 的话， 把 itemKey 添加到 active 数组里。
+  if (s.affixItemKeys.includes(itemKey)) {
+    return;
+  }
+  if (s.pinnedItemKeys.includes(itemKey)) {
+    return;
+  }
+  if (s.activeItemKeys.includes(itemKey)) {
+    return;
+  }
+  if (s.pinnedItemKeys.length + s.activeItemKeys.length >= vim.addons.ezNav.maxActiveItem) {
+    return;
+  }
+  s.activeItemKeys.push(itemKey);
+};
+
 const state = {
   affixItemKeys: [],
   pinnedItemKeys: [],
   activeItemKeys: [],
   itemMetaMap: {},
+  itemBackMap: {},
   loading: false,
+  backing: false,
 };
 
 const getters = {
@@ -42,6 +89,7 @@ const getters = {
     pinnedItemKeys: s.pinnedItemKeys,
     activeItemKeys: s.activeItemKeys,
     itemMetaMap: s.itemMetaMap,
+    itemBackMap: s.itemBackMap,
   }),
   itemMeta: (s) => (itemKey) => {
     const metaMayExists = s.itemMetaMap[itemKey];
@@ -50,28 +98,39 @@ const getters = {
     }
     return metaMayExists;
   },
+  itemBack: (s) => (itemKey) => {
+    let backKey = itemKey;
+    const forbidden = [];
+    const { defaultItemKey } = vim;
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+      backKey = s.itemBackMap[backKey];
+      if (backKey === null || backKey === undefined) {
+        return defaultItemKey;
+      }
+      if (forbidden.includes(backKey)) {
+        return defaultItemKey;
+      }
+      forbidden.push(backKey);
+      if (
+        s.affixItemKeys.includes(backKey)
+        || s.pinnedItemKeys.includes(backKey)
+        || s.activeItemKeys.includes(backKey)
+      ) {
+        return backKey;
+      }
+    }
+  },
   loading: (s) => s.loading,
+  backing: (s) => s.backing,
 };
 const mutations = {
   pushItemKey: (s, itemKey) => {
     // itemMetaMap 进行添加或更新空对象。
     s.itemMetaMap[itemKey] = { params: {}, query: {} };
 
-    // 获取 params, query 参数，并对 itemMetaMap 进行添加或更新。
-    // noinspection DuplicatedCode
-    if (s.affixItemKeys.includes(itemKey)) {
-      return;
-    }
-    if (s.pinnedItemKeys.includes(itemKey)) {
-      return;
-    }
-    if (s.activeItemKeys.includes(itemKey)) {
-      return;
-    }
-    if (s.pinnedItemKeys.length + s.activeItemKeys.length >= vim.addons.ezNav.maxActiveItem) {
-      return;
-    }
-    s.activeItemKeys.push(itemKey);
+    // 根据当前状态，选择性地更新 activeItemKeys。
+    mayPutActiveItemKeys(s, itemKey);
   },
   pushLocation: (s, location) => {
     // 获取 location 的名称，作为接下来一系列操作的主键使用。
@@ -81,21 +140,24 @@ const mutations = {
     const { params, query } = location;
     s.itemMetaMap[itemKey] = { params, query };
 
-    // 如果 affix, pinned, active 三处数组都没有 itemKey 的话， 把 itemKey 添加到 active 数组里。
-    // noinspection DuplicatedCode
-    if (s.affixItemKeys.includes(itemKey)) {
-      return;
-    }
-    if (s.pinnedItemKeys.includes(itemKey)) {
-      return;
-    }
-    if (s.activeItemKeys.includes(itemKey)) {
-      return;
-    }
-    if (s.pinnedItemKeys.length + s.activeItemKeys.length >= vim.addons.ezNav.maxActiveItem) {
-      return;
-    }
-    s.activeItemKeys.push(itemKey);
+    // 根据当前状态，选择性地更新 activeItemKeys。
+    mayPutActiveItemKeys(s, itemKey);
+  },
+  pushLocateInfo: (s, locateInfo) => {
+    const { to, from } = locateInfo;
+
+    // 获取 location 的名称，作为接下来一系列操作的主键使用。
+    const itemKey = to.name;
+
+    // 获取 params, query 参数，并对 itemMetaMap 进行添加或更新。
+    const { params, query } = to;
+    s.itemMetaMap[itemKey] = { params, query };
+
+    // 根据当前状态，选择性地更新 itemBackMap。
+    mayPutItemBackMap(s, to, from);
+
+    // 根据当前状态，选择性地更新 activeItemKeys。
+    mayPutActiveItemKeys(s, itemKey);
   },
   removeItemKey: (s, itemKey) => {
     let index;
@@ -112,6 +174,7 @@ const mutations = {
     s.pinnedItemKeys = pd.pinnedItemKeys;
     s.activeItemKeys = pd.activeItemKeys;
     s.itemMetaMap = pd.itemMetaMap;
+    s.itemBackMap = pd.itemBackMap;
   },
   clearActive: (s) => {
     s.activeItemKeys = [];
@@ -145,6 +208,7 @@ const mutations = {
     s.activeItemKeys = itemKeys;
   },
   setLoading: (s, value) => { s.loading = value; },
+  setBacking: (s, value) => { s.backing = value; },
 };
 
 const actions = {

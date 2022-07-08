@@ -14,6 +14,8 @@
 - 完成我与家庭一级菜单。
   - 证件管理二级菜单。
 
+- eznav 增加导航栏关闭后的行为配置。
+
 #### Bug修复
 
 - 修正 familyhelper-ui-distribute 模块的打包模式。

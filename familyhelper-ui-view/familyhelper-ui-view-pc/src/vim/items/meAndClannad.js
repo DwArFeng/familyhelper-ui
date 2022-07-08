@@ -14,6 +14,10 @@ const meAndClannad = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: false,
@@ -42,6 +46,10 @@ const meAndClannad = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: true,
@@ -72,6 +80,10 @@ const meAndClannad = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: true,
@@ -102,6 +114,10 @@ const meAndClannad = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: true,
@@ -132,6 +148,10 @@ const meAndClannad = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: true,
@@ -162,6 +182,10 @@ const meAndClannad = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: true,
@@ -192,6 +216,10 @@ const meAndClannad = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: true,
@@ -222,6 +250,10 @@ const meAndClannad = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: true,

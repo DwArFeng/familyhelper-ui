@@ -14,6 +14,10 @@ const miscellaneous = [
       },
       ezNav: {
         shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
       },
       router: {
         required: true,

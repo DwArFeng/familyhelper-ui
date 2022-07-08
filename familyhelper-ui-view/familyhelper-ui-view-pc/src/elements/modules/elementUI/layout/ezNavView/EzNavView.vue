@@ -172,9 +172,9 @@ export default {
   components: { EditorNavBar, VimLabel, Draggable },
   computed: {
     ...mapGetters('vimEzNav', [
-      'navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta', 'loading',
+      'navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta', 'loading', 'itemBack',
     ]),
-    ...mapGetters('vim', ['isCurrent']),
+    ...mapGetters('vim', ['isCurrent', 'item']),
     ...mapGetters('lnp', ['hasPermission']),
   },
   data() {
@@ -199,7 +199,35 @@ export default {
       this.$router.push(location);
     },
     handleRemove(itemKey) {
+      // 在导航栏中删除 itemKey。
       this.removeItemKey(itemKey);
+
+      // 获取 itemKey 对应的元数据，分析关闭行为。
+      const item = this.item(itemKey);
+      const closedActionType = item.meta.ezNav.closedBehavior.type;
+
+      // 根据不同的行为执行不同的退出动作。
+      this.setBacking(true);
+      switch (closedActionType) {
+        case 'back':
+          this.handleCloseBack(itemKey);
+          break;
+        case 'default':
+          this.handleCloseDefault();
+          break;
+        case 'none':
+        default:
+          break;
+      }
+      this.setBacking(false);
+    },
+    handleCloseBack(itemKey) {
+      const name = this.itemBack(itemKey);
+      const { params, query } = this.itemMeta(name);
+      this.$router.push({ name, params, query });
+    },
+    handleCloseDefault() {
+      this.$router.push({ name: this.$vim.addons.ezNav.defaultItem });
     },
     openMenu(itemKey, e) {
       this.contextmenu.itemKey = itemKey;
@@ -292,7 +320,7 @@ export default {
     },
     ...mapMutations('vimEzNav', [
       'removeItemKey', 'pin', 'unpin', 'clearActive', 'pushItemKey', 'updatePinnedItemKeys',
-      'updateActiveItemKeys', 'clearAll',
+      'updateActiveItemKeys', 'clearAll', 'setBacking',
     ]),
   },
 };
