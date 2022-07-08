@@ -140,10 +140,8 @@
     </header-layout-panel>
     <file-upload-dialog
       title="上传文件"
-      type="ITEM"
       :visible.sync="uploadDialog.visible"
-      :parent-id="itemId"
-      @onItemFileChanged="handleSearch"
+      @onConfirmed="handleUploadConfirmed"
     />
     <file-create-dialog
       title="新建文件"
@@ -169,8 +167,9 @@ import {
   childForItemInspectedDateDesc,
   childForItemModifiedDateDesc,
   childForItemOriginNameAsc,
-  remove,
   download,
+  remove,
+  upload,
 } from '@/api/assets/itemFile';
 import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
@@ -436,6 +435,32 @@ export default {
         name: 'miscellaneous.fileEditor',
         query: { type: 'item-file', action: 'edit', id: row.key.long_id },
       });
+    },
+    handleUploadConfirmed(files, callback) {
+      const promises = [];
+      files.forEach((file) => {
+        const formData = new FormData();
+        formData.append('file', file.blob, file.name);
+        promises.push(resolveResponse(upload(this.itemId, formData)));
+      });
+      Promise.all(promises)
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '文件上传成功',
+            type: 'success',
+            center: true,
+          });
+        })
+        .then(() => {
+          this.handleSearch();
+        })
+        .then(() => {
+          callback(true);
+        })
+        .catch(() => {
+          callback(false);
+        });
     },
   },
   mounted() {

@@ -16,6 +16,9 @@
 
 - eznav 增加导航栏关闭后的行为配置。
 
+- 优化组件结构。
+  - src/components/file/FileUploadDialog.vue。
+
 #### Bug修复
 
 - 修正 familyhelper-ui-distribute 模块的打包模式。

@@ -260,10 +260,8 @@
     </entity-maintain-dialog>
     <file-upload-dialog
       title="上传文件"
-      type="MEMO"
       :visible.sync="uploadDialog.visible"
-      :parent-id="uploadDialog.memoId"
-      @onItemFileChanged="handleMemoFileSearch"
+      @onConfirmed="handleUploadConfirmed"
     />
     <file-create-dialog
       title="新建文件"
@@ -301,7 +299,7 @@ import {
   childForMemo, childForMemoCreatedDateAsc,
   childForMemoInspectedDateDesc,
   childForMemoModifiedDateDesc, childForMemoOriginNameAsc,
-  download, remove,
+  download, remove, upload,
 } from '@/api/project/memoFile';
 import { fileType } from '@/util/file';
 
@@ -804,6 +802,32 @@ export default {
           this.handleMemoSearch();
         })
         .catch(() => {
+        });
+    },
+    handleUploadConfirmed(files, callback) {
+      const promises = [];
+      files.forEach((file) => {
+        const formData = new FormData();
+        formData.append('file', file.blob, file.name);
+        promises.push(resolveResponse(upload(this.uploadDialog.memoId, formData)));
+      });
+      Promise.all(promises)
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '文件上传成功',
+            type: 'success',
+            center: true,
+          });
+        })
+        .then(() => {
+          this.handleMemoFileSearch();
+        })
+        .then(() => {
+          callback(true);
+        })
+        .catch(() => {
+          callback(false);
         });
     },
   },

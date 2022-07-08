@@ -61,9 +61,6 @@ import FileSelector from '@/components/file/FileSelector.vue';
 
 import { dataSizePreset, formatUnit } from '@/util/number';
 import { fileType } from '@/util/file';
-import { upload as uploadItemFile } from '@/api/assets/itemFile';
-import { upload as uploadMemoFile } from '@/api/project/memoFile';
-import resolveResponse from '@/util/response';
 
 export default {
   name: 'FileUploadDialog',
@@ -72,17 +69,6 @@ export default {
     visible: {
       type: Boolean,
       default: false,
-    },
-    parentId: {
-      type: String,
-      default: '',
-    },
-    type: {
-      type: String,
-      validator(value) {
-        return ['ITEM', 'MEMO'].indexOf(value) !== -1;
-      },
-      required: true,
     },
     title: {
       type: String,
@@ -135,37 +121,14 @@ export default {
     },
     handleConfirm() {
       this.loading = true;
-      const promises = [];
-      this.files.forEach((file) => {
-        const formData = new FormData();
-        formData.append('file', file.blob, file.name);
-        switch (this.type) {
-          case 'ITEM':
-            promises.push(resolveResponse(uploadItemFile(this.parentId, formData)));
-            break;
-          case 'MEMO':
-            promises.push(resolveResponse(uploadMemoFile(this.parentId, formData)));
-            break;
-          default:
-        }
-      });
-      Promise.all(promises)
-        .then(() => {
-          this.$message({
-            showClose: true,
-            message: '文件上传成功',
-            type: 'success',
-            center: true,
-          });
-        })
-        .then(() => {
-          this.$emit('onItemFileChanged');
+      const callback = (successFlag) => {
+        if (successFlag) {
           this.watchedVisible = false;
           this.files.splice(0, this.files.length);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+        }
+        this.loading = false;
+      };
+      this.$emit('onConfirmed', this.files, callback);
     },
     handleCancelButtonClicked() {
       this.watchedVisible = false;
