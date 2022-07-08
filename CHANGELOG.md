@@ -18,6 +18,7 @@
 
 - 优化组件结构。
   - src/components/file/FileUploadDialog.vue。
+  - src/components/file/FileCreateDialog.vue。
 
 #### Bug修复
 

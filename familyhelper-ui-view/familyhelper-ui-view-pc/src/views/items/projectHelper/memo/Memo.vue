@@ -265,10 +265,8 @@
     />
     <file-create-dialog
       title="新建文件"
-      type="MEMO"
       :visible.sync="createDialog.visible"
-      :parent-id="createDialog.memoId"
-      @onItemFileChanged="handleMemoFileSearch"
+      @onConfirmed="handleCreateConfirmed"
     />
   </div>
 </template>
@@ -816,6 +814,28 @@ export default {
           this.$message({
             showClose: true,
             message: '文件上传成功',
+            type: 'success',
+            center: true,
+          });
+        })
+        .then(() => {
+          this.handleMemoFileSearch();
+        })
+        .then(() => {
+          callback(true);
+        })
+        .catch(() => {
+          callback(false);
+        });
+    },
+    handleCreateConfirmed(file, callback) {
+      const formData = new FormData();
+      formData.append('file', file.blob, file.name);
+      resolveResponse(upload(this.createDialog.memoId, formData))
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '文件新建成功',
             type: 'success',
             center: true,
           });

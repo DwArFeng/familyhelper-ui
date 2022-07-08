@@ -72,9 +72,6 @@ import { mapGetters } from 'vuex';
 
 import { fileType } from '@/util/file';
 import { dataSizePreset, formatUnit } from '@/util/number';
-import { upload as uploadItemFile } from '@/api/assets/itemFile';
-import { upload as uploadMemoFile } from '@/api/project/memoFile';
-import resolveResponse from '@/util/response';
 
 // noinspection JSAnnotator
 export default {
@@ -83,17 +80,6 @@ export default {
     visible: {
       type: Boolean,
       default: false,
-    },
-    parentId: {
-      type: String,
-      default: '',
-    },
-    type: {
-      type: String,
-      validator(value) {
-        return ['ITEM', 'MEMO'].indexOf(value) !== -1;
-      },
-      required: true,
     },
     title: {
       type: String,
@@ -193,40 +179,17 @@ export default {
     },
     handleConfirm() {
       this.loading = true;
-      const blob = new Blob([]);
-      const formData = new FormData();
-      formData.append('file', blob, `${this.fileName}${this.currentIndicator.extension}`);
-      let promise = null;
-      switch (this.type) {
-        case 'ITEM':
-          promise = resolveResponse(uploadItemFile(this.parentId, formData));
-          break;
-        case 'MEMO':
-          promise = resolveResponse(uploadMemoFile(this.parentId, formData));
-          break;
-        default:
-      }
-      if (promise === null) {
-        return;
-      }
-      promise
-        .then(() => {
-          this.$message({
-            showClose: true,
-            message: '文件新建成功',
-            type: 'success',
-            center: true,
-          });
-        })
-        .then(() => {
-          this.$emit('onItemFileChanged');
+      const callback = (successFlag) => {
+        if (successFlag) {
           this.watchedVisible = false;
           this.selectedIndex = 0;
           this.fileName = '';
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+        }
+        this.loading = false;
+      };
+      const name = `${this.fileName}${this.currentIndicator.extension}`;
+      const blob = new Blob([]);
+      this.$emit('onConfirmed', { name, blob }, callback);
     },
     handleCancelButtonClicked() {
       this.watchedVisible = false;
