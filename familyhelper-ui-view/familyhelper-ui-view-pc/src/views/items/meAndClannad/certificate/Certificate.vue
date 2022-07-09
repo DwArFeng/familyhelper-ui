@@ -2,7 +2,7 @@
   <div class="certificate-container">
     <border-layout-panel
       class="border-layout-panel"
-      east-width="45%"
+      east-width="55%"
       :east-visible="true"
     >
       <certificate-panel

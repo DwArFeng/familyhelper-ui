@@ -80,12 +80,12 @@
       <image-upload-edit-dialog
         title="上传证件照片"
         :visible.sync="uploadDialog.visible"
-        :output-size="0.95"
+        :output-size="1"
         :cropper-height="400"
         :cropper-width="680"
         :crop-box-height="360"
         :crop-box-width="640"
-        :enlarge="2"
+        :enlarge="6"
         @onConfirmed="handleImageUploadConfirmed"
       />
     </div>

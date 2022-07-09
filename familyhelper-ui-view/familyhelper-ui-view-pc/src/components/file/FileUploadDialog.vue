@@ -16,6 +16,7 @@
       >
         <div class="item header">
           <file-selector
+            :accept="accept"
             :multiple="true"
             :tester="tester"
             @onFileLoaded="handleFileLoaded"
@@ -73,6 +74,10 @@ export default {
     title: {
       type: String,
       default: '上传文件',
+    },
+    accept: {
+      type: String,
+      default: '',
     },
   },
   watch: {
