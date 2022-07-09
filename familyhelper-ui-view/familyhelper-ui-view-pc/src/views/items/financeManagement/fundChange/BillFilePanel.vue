@@ -86,7 +86,7 @@
         :cropper-width="680"
         :crop-box-height="360"
         :crop-box-width="640"
-        :enlarge="2"
+        :enlarge="3"
         @onConfirmed="handleImageUploadConfirmed"
       />
     </div>
