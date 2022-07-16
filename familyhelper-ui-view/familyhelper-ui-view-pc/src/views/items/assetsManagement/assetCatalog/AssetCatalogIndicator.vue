@@ -66,7 +66,7 @@ export default {
     },
     displayValue() {
       if (this.assetCatalog === null) {
-        return '（未选择账本）';
+        return '（未选择资产目录）';
       }
       return this.assetCatalog.name;
     },
