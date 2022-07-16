@@ -68,7 +68,7 @@
 
 <script>
 export default {
-  name: 'TablePanel',
+  name: 'TreePanel',
   props: {
     treeData: {
       type: Array,
