@@ -20,6 +20,9 @@
   - src/components/file/FileUploadDialog.vue。
   - src/components/file/FileCreateDialog.vue。
 
+- 完成日常生活一级菜单。
+  - 个人最佳集合二级菜单。
+
 #### Bug修复
 
 - 修正 familyhelper-ui-distribute 模块的打包模式。
