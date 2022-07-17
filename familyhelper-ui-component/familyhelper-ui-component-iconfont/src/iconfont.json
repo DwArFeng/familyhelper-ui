@@ -6,6 +6,20 @@
   "description": "家庭帮手",
   "glyphs": [
     {
+      "icon_id": "4936605",
+      "name": "file-fill",
+      "font_class": "file-fill1",
+      "unicode": "ffd7",
+      "unicode_decimal": 65495
+    },
+    {
+      "icon_id": "4936623",
+      "name": "folder-fill",
+      "font_class": "folder-fill",
+      "unicode": "ffd6",
+      "unicode_decimal": 65494
+    },
+    {
       "icon_id": "21353057",
       "name": "line-mail check（邮件已读）",
       "font_class": "line-mailcheckyoujianyidu",
