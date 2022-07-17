@@ -21,16 +21,16 @@
         >
           <template v-slot="{node,data}">
             <div class="tree-node">
-              <div style="margin-right: 5px"><i class="el-icon-menu"/></div>
-              <div class="label">{{ node.label }}</div>
+              <slot :node="node" :data="data">
+                <div class="icon-wrapper"><i class="el-icon-menu"/></div>
+                <div class="label">{{ node.label }}</div>
+              </slot>
               <div
                 v-if="operateAreaVisible"
                 @mouseenter="handleMouseEntered"
                 @mouseleave="handleMouseLeft"
               >
-                <slot
-                  name="operateArea" :node="node" :data="data"
-                >
+                <slot name="operateArea" :node="node" :data="data">
                   <el-button-group>
                     <el-button
                       class="tree-node-button"
@@ -199,8 +199,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
+}
+
+.tree-node .icon-wrapper{
+  margin-right: 5px;
+  font-size: 18px;
 }
 
 .tree-node .label {
@@ -209,6 +212,8 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
 }
 
 .tree-node-button {

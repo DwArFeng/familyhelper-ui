@@ -19,6 +19,7 @@
 - 优化组件结构。
   - src/components/file/FileUploadDialog.vue。
   - src/components/file/FileCreateDialog.vue。
+  - src/components/layout/TreePanel.vue。
 
 - 完成日常生活一级菜单。
   - 个人最佳集合二级菜单。
