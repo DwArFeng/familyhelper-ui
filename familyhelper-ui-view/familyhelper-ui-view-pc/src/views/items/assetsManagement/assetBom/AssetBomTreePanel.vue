@@ -27,7 +27,6 @@
       :operate-area-visible="!readOnly"
       :load-handler="handleLoad"
       @onCurrentChanged="handleCurrentChanged"
-      @onEntityInspect="handleEntityInspect"
       @onEntityDelete="handleEntityDelete"
     >
       <template v-slot:operateArea="{node,data}">
@@ -73,16 +72,6 @@ export default {
     assetCatalogKey(val) {
       if (val === '') {
         this.treeData = [];
-        this.treeSelection = {
-          node: null,
-          data: {
-            key: {
-              long_id: '',
-            },
-            parent_key: null,
-            has_no_child: true,
-          },
-        };
       } else {
         this.inspectRoot();
       }
@@ -124,10 +113,6 @@ export default {
       }
       if (this.itemNameToSearch === '') {
         this.treeData = [];
-        this.treeSelection = {
-          node: null,
-          data: null,
-        };
         this.inspectRoot();
       }
     },
@@ -151,9 +136,6 @@ export default {
     },
     handleCurrentChanged(node, data) {
       this.$emit('onCurrentChanged', node, data);
-    },
-    handleEntityInspect(node, data) {
-      this.$emit('onEntityInspect', node, data);
     },
     handleEntityDelete(node, data) {
       const accept = () => {

@@ -350,7 +350,6 @@ export default {
             center: true,
           });
         })
-        .then(this.resetTreeView)
         .catch(() => {
         });
     },
@@ -370,24 +369,7 @@ export default {
     },
     showDialog(mode) {
       this.maintainDialog.mode = mode;
-      this.$nextTick(() => {
-        this.maintainDialog.visible = true;
-      });
-    },
-    resetTreeView() {
-      this.treeData = [];
-      this.treeSelection = {
-        node: null,
-        data: {
-          key: {
-            long_id: '',
-          },
-          parent_key: null,
-          has_no_child: true,
-        },
-      };
-      this.inspectRoot();
-      return Promise.resolve();
+      this.maintainDialog.visible = true;
     },
     handleEntityCreate() {
       this.maintainDialog.loading = true;
