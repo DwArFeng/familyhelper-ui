@@ -180,6 +180,7 @@ export default {
     },
     updateFormView(res) {
       this.$set(this.form, 'entity', res);
+      return Promise.resolve();
     },
     formatLifeCycle() {
       return this.lifeCycle.entities.data.filter(

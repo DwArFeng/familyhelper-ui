@@ -29,6 +29,20 @@
                 所有者: {{ item.owner_account.display_name }}
               </span>
             </div>
+            <div class="pb-set-property">
+              <span class="iconfont pb-set-property-icon" style="color:black">&#xffe7;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="pb-set-property-text">
+                项目总数: {{ item.item_count }}
+              </span>
+            </div>
+            <div class="pb-set-property">
+              <span class="iconfont pb-set-property-icon" style="color:black">&#xffef;</span>
+              <!--suppress JSUnresolvedVariable -->
+              <span class="pb-set-property-text">
+                最新记录日期: {{ formatTimestamp(item.last_recorded_date) }}
+              </span>
+            </div>
           </div>
         </template>
         <template v-slot:header="{index,item}">
@@ -125,12 +139,11 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardPanel from '@/components/layout/CardPanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
-import PermitMaintainDialog
-from '@/views/items/life/pbSet/PermitMaintainDialog.vue';
+import PermitMaintainDialog from '@/views/items/life/pbSet/PermitMaintainDialog.vue';
 
 import resolveResponse from '@/util/response';
 import {
-  allPermittedDisp, allOwnedDisp, create, update, remove,
+  allOwnedDisp, allPermittedDisp, create, remove, update,
 } from '@/api/life/pbSet';
 
 import { formatTimestamp } from '@/util/timestamp';

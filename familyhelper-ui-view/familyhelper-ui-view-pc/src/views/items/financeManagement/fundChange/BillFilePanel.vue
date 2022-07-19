@@ -156,11 +156,7 @@ export default {
       this.lookupChildForFundChange();
     },
     lookupChildForFundChange() {
-      // 释放旧图片的链接，并清空旧图片链接数组。
-      this.table.data.forEach((data) => {
-        window.URL.revokeObjectURL(data.url);
-      });
-      this.table.data.splice(0, this.table.data.length);
+      this.revokeTableDataUrl();
       this.table.loading = true;
       resolveResponse(childForFundChange(
         this.fundChange.key.long_id, this.table.currentPage, this.table.pageSize,
@@ -197,6 +193,13 @@ export default {
         .finally(() => {
           this.table.loading = false;
         });
+    },
+    revokeTableDataUrl() {
+      // 释放旧图片的链接，并清空旧图片链接数组。
+      this.table.data.forEach((data) => {
+        window.URL.revokeObjectURL(data.url);
+      });
+      this.table.data.splice(0, this.table.data.length);
     },
     handleImageUploadConfirmed(fileName, blob) {
       const formData = new FormData();
@@ -262,6 +265,9 @@ export default {
   },
   mounted() {
     this.handleSearch();
+  },
+  destroyed() {
+    this.revokeTableDataUrl();
   },
 };
 </script>
