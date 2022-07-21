@@ -18,100 +18,108 @@
         @keydown.ctrl.enter.native="handleCardPanelHotKeyDown"
       >
         <template v-slot:default="{index,item}">
-          <div class="balance-record-card-container">
-            <div class="balance-record-property">
+          <!--suppress JSUnresolvedVariable -->
+          <corner-light-panel
+            class="balance-record-card-wrapper"
+            light-bevel-edge="80px"
+            light-color="#E6A23C"
+            :show-south-east="item.temp_flag"
+          >
+            <div class="balance-record-card-container">
+              <div class="balance-record-property">
               <span
                 class="iconfont balance-record-property-icon"
                 style="color:black"
               >
                 &#xffee;
               </span>
-              <!--suppress JSUnresolvedVariable -->
-              <div class="balance-record-property-text">
-                <span>类型: </span>
-                <el-tooltip
-                  effect="dark"
-                  placement="right"
-                  :content="cardTypeLabel(item).remark"
-                  :open-delay="500"
-                >
-                  <span>{{ cardTypeLabel(item).label }}</span>
-                </el-tooltip>
+                <!--suppress JSUnresolvedVariable -->
+                <div class="balance-record-property-text">
+                  <span>类型: </span>
+                  <el-tooltip
+                    effect="dark"
+                    placement="right"
+                    :content="cardTypeLabel(item).remark"
+                    :open-delay="500"
+                  >
+                    <span>{{ cardTypeLabel(item).label }}</span>
+                  </el-tooltip>
+                </div>
               </div>
-            </div>
-            <div class="balance-record-property">
+              <div class="balance-record-property">
               <span
                 class="iconfont balance-record-property-icon"
                 style="color:black"
               >
                 &#xfff9;
               </span>
-              <!--suppress JSUnresolvedVariable -->
-              <div class="balance-record-property-text">
-                <div>
-                  <!--suppress JSUnresolvedVariable -->
-                  <div v-if="item.temp_flag">
+                <!--suppress JSUnresolvedVariable -->
+                <div class="balance-record-property-text">
+                  <div>
                     <!--suppress JSUnresolvedVariable -->
-                    <el-tooltip
-                      effect="dark"
-                      placement="right"
-                      :content="'原余额：' + item.balance_value"
-                      :open-delay="500"
-                    >
+                    <div v-if="item.temp_flag">
                       <!--suppress JSUnresolvedVariable -->
-                      <span>{{ '余额: ' + item.temp_balance_value }}</span>
-                    </el-tooltip>
+                      <el-tooltip
+                        effect="dark"
+                        placement="right"
+                        :content="'原余额：' + item.balance_value"
+                        :open-delay="500"
+                      >
+                        <!--suppress JSUnresolvedVariable -->
+                        <span>{{ '余额: ' + item.temp_balance_value }}</span>
+                      </el-tooltip>
+                    </div>
+                    <!--suppress JSUnresolvedVariable -->
+                    <span v-else>{{ '余额: ' + item.balance_value }}</span>
                   </div>
-                  <!--suppress JSUnresolvedVariable -->
-                  <span v-else>{{ '余额: ' + item.balance_value }}</span>
                 </div>
               </div>
-            </div>
-            <div class="balance-record-property">
+              <div class="balance-record-property">
               <span
                 class="iconfont balance-record-property-icon"
                 style="color:black"
               >
                 &#xffef;
               </span>
-              <!--suppress JSUnresolvedVariable -->
-              <div class="balance-record-property-text">
-                <div>
-                  <!--suppress JSUnresolvedVariable -->
-                  <div v-if="item.temp_flag">
+                <!--suppress JSUnresolvedVariable -->
+                <div class="balance-record-property-text">
+                  <div>
                     <!--suppress JSUnresolvedVariable -->
-                    <el-tooltip
-                      effect="dark"
-                      placement="right"
-                      :content="'原记录日期：' + formatTimestamp(item.last_recorded_date)"
-                      :open-delay="500"
-                    >
+                    <div v-if="item.temp_flag">
                       <!--suppress JSUnresolvedVariable -->
-                      <span>
+                      <el-tooltip
+                        effect="dark"
+                        placement="right"
+                        :content="'原记录日期：' + formatTimestamp(item.last_recorded_date)"
+                        :open-delay="500"
+                      >
+                        <!--suppress JSUnresolvedVariable -->
+                        <span>
                         {{ '记录日期: ' + formatTimestamp(item.temp_last_recorded_date) }}
                       </span>
-                    </el-tooltip>
-                  </div>
-                  <!--suppress JSUnresolvedVariable -->
-                  <span v-else>
+                      </el-tooltip>
+                    </div>
+                    <!--suppress JSUnresolvedVariable -->
+                    <span v-else>
                     {{ '记录日期: ' + formatTimestamp(item.last_recorded_date) }}
                   </span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="balance-record-property">
+              <div class="balance-record-property">
               <span
                 class="iconfont balance-record-property-icon"
                 style="color:black"
               >
                 &#xffed;
               </span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="balance-record-property-text">
+                <!--suppress JSUnresolvedVariable -->
+                <span class="balance-record-property-text">
                 提交状态: {{ item.temp_flag ? '待提交' : '未更改' }}
               </span>
+              </div>
             </div>
-          </div>
+          </corner-light-panel>
         </template>
         <template v-slot:header="{index,item}">
           <el-button-group class="balance-record-control-button-group">
@@ -234,7 +242,9 @@
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardPanel from '@/components/layout/CardPanel.vue';
-import AccountBookIndicator from '@/views/items/financeManagement/accountBook/AccountBookIndicator.vue';
+import AccountBookIndicator
+from '@/views/items/financeManagement/accountBook/AccountBookIndicator.vue';
+import CornerLightPanel from '@/components/layout/CornerLightPanel.vue';
 
 import resolveResponse from '@/util/response';
 import { recordCommit, rollbackAll } from '@/api/finance/accountBook';
@@ -246,6 +256,7 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'BalanceRecord',
   components: {
+    CornerLightPanel,
     AccountBookIndicator,
     CardPanel,
     BorderLayoutPanel,
@@ -630,6 +641,11 @@ export default {
 
 <style scoped>
 .balance-record-container {
+  height: 100%;
+  width: 100%;
+}
+
+.balance-record-card-wrapper {
   height: 100%;
   width: 100%;
 }
