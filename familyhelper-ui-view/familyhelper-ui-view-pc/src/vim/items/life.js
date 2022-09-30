@@ -1,7 +1,7 @@
 const life = [
   {
     key: 'life',
-    index: 110,
+    index: 120,
     meta: {
       display: {
         iconType: 'elementUI',

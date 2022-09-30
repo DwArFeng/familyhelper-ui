@@ -1,7 +1,7 @@
 const notifyManagement = [
   {
     key: 'notifyManagement',
-    index: 110,
+    index: 130,
     meta: {
       display: {
         iconType: 'elementUI',
