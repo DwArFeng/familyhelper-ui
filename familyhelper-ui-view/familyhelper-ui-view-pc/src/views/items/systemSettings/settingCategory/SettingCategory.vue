@@ -46,6 +46,7 @@
         >
           新建设置
         </el-button>
+        <el-button type="success" @click="handleSearch">刷新数据</el-button>
         <el-divider direction="vertical"/>
         <el-input
           class="id-search-bar"
