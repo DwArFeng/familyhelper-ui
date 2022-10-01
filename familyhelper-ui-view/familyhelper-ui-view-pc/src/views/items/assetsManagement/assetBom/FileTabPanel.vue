@@ -172,6 +172,8 @@ import {
 import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
 
+import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+
 export default {
   name: 'FileTabPanel',
   components: {
@@ -425,13 +427,13 @@ export default {
     handleItemFileInspect(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: 'assets-item-file', action: 'inspect', id: row.key.long_id },
+        query: { type: ASSETS_ITEM_FILE, action: 'inspect', id: row.key.long_id },
       });
     },
     handleItemFileEdit(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: 'assets-item-file', action: 'edit', id: row.key.long_id },
+        query: { type: ASSETS_ITEM_FILE, action: 'edit', id: row.key.long_id },
       });
     },
     handleUploadConfirmed(files, callback) {

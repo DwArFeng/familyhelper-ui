@@ -67,6 +67,8 @@ import {
 import { fileExtension, fileType } from '@/util/file';
 import resolveResponse from '@/util/response';
 
+import { ASSETS_ITEM_FILE, PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+
 export default {
   name: 'FileEditor',
   components: {
@@ -145,7 +147,7 @@ export default {
         id: '',
       },
       util: {
-        supportedTypes: ['assets-item-file', 'project-memo-file'],
+        supportedTypes: [ASSETS_ITEM_FILE, PROJECT_MEMO_FILE],
       },
       loading: false,
       subEditor: {
@@ -161,10 +163,10 @@ export default {
     handleInspect() {
       const { type, id } = this.query;
       switch (type) {
-        case 'assets-item-file':
+        case ASSETS_ITEM_FILE:
           this.inspectItemFile(id);
           break;
-        case 'project-memo-file':
+        case PROJECT_MEMO_FILE:
           this.inspectMemoFile(id);
           break;
         default:
@@ -228,7 +230,7 @@ export default {
       const formData = new FormData();
       formData.append('file', blob, this.fileIndicator.originName);
       switch (this.query.type) {
-        case 'assets-item-file':
+        case ASSETS_ITEM_FILE:
           resolveResponse(updateItemFile(this.query.id, formData))
             .then(() => {
               this.$message({
@@ -239,7 +241,7 @@ export default {
               });
             });
           break;
-        case 'project-memo-file':
+        case PROJECT_MEMO_FILE:
           resolveResponse(updateMemoFile(this.query.id, formData))
             .then(() => {
               this.$message({

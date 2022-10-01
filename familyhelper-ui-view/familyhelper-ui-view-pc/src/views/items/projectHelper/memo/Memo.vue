@@ -301,6 +301,8 @@ import {
 } from '@/api/project/memoFile';
 import { fileType } from '@/util/file';
 
+import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+
 // noinspection JSAnnotator
 export default {
   name: 'Memo',
@@ -696,13 +698,13 @@ export default {
     handleMemoFileInspect(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: 'project-memo-file', action: 'inspect', id: row.key.long_id },
+        query: { type: PROJECT_MEMO_FILE, action: 'inspect', id: row.key.long_id },
       });
     },
     handleMemoFileEdit(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: 'project-memo-file', action: 'edit', id: row.key.long_id },
+        query: { type: PROJECT_MEMO_FILE, action: 'edit', id: row.key.long_id },
       });
     },
     handleMemoFileDownload(memoFileInfo) {
