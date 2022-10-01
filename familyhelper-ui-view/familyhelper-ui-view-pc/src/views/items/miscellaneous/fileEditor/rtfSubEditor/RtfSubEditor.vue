@@ -82,5 +82,6 @@ export default {
 /*noinspection CssUnusedSymbol*/
 .rtf-sub-editor-container >>> .ck-content{
   height: 100%;
+  box-sizing: border-box;
 }
 </style>

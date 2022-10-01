@@ -3,62 +3,62 @@ import {
 } from '@/util/http';
 
 export function exists(key) {
-    return get('life', `pb-set/${key}/exists/`, {});
+    return get('note', `note-book/${key}/exists/`, {});
 }
 
 export function inspect(key) {
-    return get('life', `pb-set/${key}/`, {});
+    return get('note', `note-book/${key}/`, {});
 }
 
 export function all(page, rows) {
-    return get('life', 'pb-set/all/', {
+    return get('note', 'note-book/all/', {
         page,
         rows,
     });
 }
 
 export function allPermitted(page, rows) {
-    return get('life', 'pb-set/all-permitted/', {
+    return get('note', 'note-book/all-permitted/', {
         page,
         rows,
     });
 }
 
 export function allOwned(page, rows) {
-    return get('life', 'pb-set/all-owned/', {
+    return get('note', 'note-book/all-owned/', {
         page,
         rows,
     });
 }
 
 export function inspectDisp(key) {
-    return get('life', `pb-set/${key}/disp/`, {});
+    return get('note', `note-book/${key}/disp/`, {});
 }
 
 export function allPermittedDisp(page, rows) {
-    return get('life', 'pb-set/all-permitted/disp/', {
+    return get('note', 'note-book/all-permitted/disp/', {
         page,
         rows,
     });
 }
 
 export function allOwnedDisp(page, rows) {
-    return get('life', 'pb-set/all-owned/disp/', {
+    return get('note', 'note-book/all-owned/disp/', {
         page,
         rows,
     });
 }
 
 export function create(name, remark) {
-    return post('life', 'pb-set/create', {
+    return post('note', 'note-book/create', {
         name,
         remark,
     });
 }
 
 export function update(key, name, remark) {
-    return post('life', 'pb-set/update', {
-        pb_set_key: {
+    return post('note', 'note-book/update', {
+        note_book_key: {
             long_id: key,
         },
         name,
@@ -67,15 +67,15 @@ export function update(key, name, remark) {
 }
 
 export function remove(key) {
-    return post('life', 'pb-set/remove', {
+    return post('note', 'note-book/remove', {
         long_id: key,
     });
 }
 
-export function upsertPermission(pbSetKey, userKey, permissionLevel) {
-    return post('life', 'pb-set/upsert-permission', {
-        pb_set_key: {
-            long_id: pbSetKey,
+export function upsertPermission(noteBookKey, userKey, permissionLevel) {
+    return post('note', 'note-book/upsert-permission', {
+        note_book_key: {
+            long_id: noteBookKey,
         },
         user_key: {
             string_id: userKey,
@@ -84,10 +84,10 @@ export function upsertPermission(pbSetKey, userKey, permissionLevel) {
     });
 }
 
-export function removePermission(pbSetKey, userKey) {
-    return post('life', 'pb-set/remove-permission', {
-        pb_set_key: {
-            long_id: pbSetKey,
+export function removePermission(noteBookKey, userKey) {
+    return post('note', 'note-book/remove-permission', {
+        note_book_key: {
+            long_id: noteBookKey,
         },
         user_key: {
             string_id: userKey,

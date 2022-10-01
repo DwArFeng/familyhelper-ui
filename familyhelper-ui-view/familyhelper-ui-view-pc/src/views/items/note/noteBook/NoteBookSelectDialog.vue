@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    class="pb-set-select-dialog-container"
+    class="note-book-select-dialog-container"
     ref="dialog"
     tabindex="0"
     append-to-body
@@ -33,32 +33,32 @@
         @onSelectionChanged="handleSelectionChanged"
       >
         <template v-slot:default="{index,item}">
-          <div class="pb-set-container">
-            <div class="pb-set-property">
-              <span class="iconfont pb-set-property-icon" style="color:black">&#xfffa;</span>
+          <div class="note-book-container">
+            <div class="note-book-property">
+              <span class="iconfont note-book-property-icon" style="color:black">&#xfffa;</span>
               <!--suppress JSUnresolvedVariable -->
-              <span class="pb-set-property-text">
+              <span class="note-book-property-text">
                 权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
             </div>
-            <div class="pb-set-property">
-              <span class="iconfont pb-set-property-icon" style="color:black">&#xfffb;</span>
+            <div class="note-book-property">
+              <span class="iconfont note-book-property-icon" style="color:black">&#xfffb;</span>
               <!--suppress JSUnresolvedVariable -->
-              <span class="pb-set-property-text">
+              <span class="note-book-property-text">
                 所有者: {{ item.owner_account.key.string_id }}
               </span>
             </div>
-            <div class="pb-set-property">
-              <span class="iconfont pb-set-property-icon" style="color:black">&#xffe7;</span>
+            <div class="note-book-property">
+              <span class="iconfont note-book-property-icon" style="color:black">&#xffe7;</span>
               <!--suppress JSUnresolvedVariable -->
-              <span class="pb-set-property-text">
+              <span class="note-book-property-text">
                 项目总数: {{ item.item_count }}
               </span>
             </div>
-            <div class="pb-set-property">
-              <span class="iconfont pb-set-property-icon" style="color:black">&#xffef;</span>
+            <div class="note-book-property">
+              <span class="iconfont note-book-property-icon" style="color:black">&#xffef;</span>
               <!--suppress JSUnresolvedVariable -->
-              <span class="pb-set-property-text">
+              <span class="note-book-property-text">
                 创建日期: {{ formatTimestamp(item.created_date) }}
               </span>
             </div>
@@ -88,11 +88,11 @@
 import CardPanel from '@/components/layout/CardPanel.vue';
 
 import resolveResponse from '@/util/response';
-import { allOwnedDisp, allPermittedDisp } from '@/api/life/pbSet';
+import { allOwnedDisp, allPermittedDisp } from '@/api/note/noteBook';
 import { formatTimestamp } from '@/util/timestamp';
 
 export default {
-  name: 'PbSetSelectDialog',
+  name: 'NoteBookSelectDialog',
   components: { CardPanel },
   props: {
     visible: {
@@ -103,7 +103,7 @@ export default {
       type: String,
       validator(value) {
         return [
-          'PB_MANAGEMENT', 'DEFAULT',
+          'NOTE_MANAGEMENT', 'DEFAULT',
         ].indexOf(value) !== -1;
       },
       default: 'DEFAULT',
@@ -221,11 +221,11 @@ export default {
 }
 
 /*noinspection CssUnusedSymbol*/
-.pb-set-select-dialog-container >>> .el-dialog {
+.note-book-select-dialog-container >>> .el-dialog {
   margin-bottom: 0 !important;
 }
 
-.pb-set-container {
+.note-book-container {
   width: 100%;
   height: 100%;
   padding-left: 15px;
@@ -237,7 +237,7 @@ export default {
   justify-content: center;
 }
 
-.pb-set-property {
+.note-book-property {
   width: 100%;
   color: black;
   display: flex;
@@ -247,12 +247,12 @@ export default {
   margin-bottom: 2px;
 }
 
-.pb-set-property-icon {
+.note-book-property-icon {
   font-size: 18px;
   margin-right: 4px;
 }
 
-.pb-set-property-text {
+.note-book-property-text {
   font-size: 14px;
   margin-right: 4px;
   white-space: nowrap;
