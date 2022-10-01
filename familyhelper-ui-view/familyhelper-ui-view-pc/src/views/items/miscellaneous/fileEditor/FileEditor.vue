@@ -145,7 +145,7 @@ export default {
         id: '',
       },
       util: {
-        supportedTypes: ['item-file', 'memo-file'],
+        supportedTypes: ['assets-item-file', 'project-memo-file'],
       },
       loading: false,
       subEditor: {
@@ -161,10 +161,10 @@ export default {
     handleInspect() {
       const { type, id } = this.query;
       switch (type) {
-        case 'item-file':
+        case 'assets-item-file':
           this.inspectItemFile(id);
           break;
-        case 'memo-file':
+        case 'project-memo-file':
           this.inspectMemoFile(id);
           break;
         default:
@@ -228,7 +228,7 @@ export default {
       const formData = new FormData();
       formData.append('file', blob, this.fileIndicator.originName);
       switch (this.query.type) {
-        case 'item-file':
+        case 'assets-item-file':
           resolveResponse(updateItemFile(this.query.id, formData))
             .then(() => {
               this.$message({
@@ -239,7 +239,7 @@ export default {
               });
             });
           break;
-        case 'memo-file':
+        case 'project-memo-file':
           resolveResponse(updateMemoFile(this.query.id, formData))
             .then(() => {
               this.$message({
