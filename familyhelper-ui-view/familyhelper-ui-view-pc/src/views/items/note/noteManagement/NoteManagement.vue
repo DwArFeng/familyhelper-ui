@@ -45,6 +45,10 @@
             />
           </el-tab-pane>
           <el-tab-pane label="附件" name="attachment">
+            <item-attachment-panel
+              :item-id="itemTabs.itemId"
+              :read-only="readOnly"
+            />
           </el-tab-pane>
         </el-tabs>
       </template>
@@ -161,6 +165,7 @@ import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import NodeOverlookPanel from '@/views/items/note/noteManagement/NodeOverlookPanel.vue';
 import ItemOverlookPanel from '@/views/items/note/noteManagement/ItemOverlookPanel.vue';
 import ItemNotePanel from '@/views/items/note/noteManagement/ItemNotePanel.vue';
+import ItemAttachmentPanel from '@/views/items/note/noteManagement/ItemAttachmentPanel.vue';
 
 import {
   create as createNode, inspectDisp as inspectNode, update as updateNode, remove as removeNode,
@@ -173,6 +178,7 @@ import resolveResponse from '@/util/response';
 export default {
   name: 'NoteManagement',
   components: {
+    ItemAttachmentPanel,
     ItemNotePanel,
     ItemOverlookPanel,
     NodeOverlookPanel,

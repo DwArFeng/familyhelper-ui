@@ -47,27 +47,37 @@
 </template>
 
 <script>
-import PhotoSubEditor from '@/views/items/miscellaneous/fileEditor/photoSubEditor/PhotoSubEditor.vue';
+import PhotoSubEditor
+from '@/views/items/miscellaneous/fileEditor/photoSubEditor/PhotoSubEditor.vue';
 import PdfSubEditor from '@/views/items/miscellaneous/fileEditor/pdfSubEditor/PdfSubEditor.vue';
 import RtfSubEditor from '@/views/items/miscellaneous/fileEditor/rtfSubEditor/RtfSubEditor.vue';
 import TxtSubEditor from '@/views/items/miscellaneous/fileEditor/txtSubEditor/TxtSubEditor.vue';
 import MmdSubEditor from '@/views/items/miscellaneous/fileEditor/mmdSubEditor/MmdSubEditor.vue';
 
 import {
-  inspect as inspectItemFile,
-  download as downloadItemFile,
-  update as updateItemFile,
+  download as downloadAssetsItemFile,
+  inspect as inspectAssetsItemFile,
+  update as updateAssetsItemFile,
 } from '@/api/assets/itemFile';
 import {
-  inspect as inspectMemoFile,
-  download as downloadMemoFile,
-  update as updateMemoFile,
+  download as downloadProjectMemoFile,
+  inspect as inspectProjectMemoFile,
+  update as updateProjectMemoFile,
 } from '@/api/project/memoFile';
+import {
+  download as downloadNoteAttachmentFile,
+  inspect as inspectNoteAttachmentFile,
+  update as updateNoteAttachmentFile,
+} from '@/api/note/attachmentFile';
 
 import { fileExtension, fileType } from '@/util/file';
 import resolveResponse from '@/util/response';
 
-import { ASSETS_ITEM_FILE, PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import {
+  ASSETS_ITEM_FILE,
+  PROJECT_MEMO_FILE,
+  NOTE_ATTACHMENT_FILE,
+} from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
 
 export default {
   name: 'FileEditor',
@@ -147,7 +157,7 @@ export default {
         id: '',
       },
       util: {
-        supportedTypes: [ASSETS_ITEM_FILE, PROJECT_MEMO_FILE],
+        supportedTypes: [ASSETS_ITEM_FILE, PROJECT_MEMO_FILE, NOTE_ATTACHMENT_FILE],
       },
       loading: false,
       subEditor: {
@@ -164,26 +174,29 @@ export default {
       const { type, id } = this.query;
       switch (type) {
         case ASSETS_ITEM_FILE:
-          this.inspectItemFile(id);
+          this.inspectAssetsItemFile(id);
           break;
         case PROJECT_MEMO_FILE:
-          this.inspectMemoFile(id);
+          this.inspectProjectMemoFile(id);
+          break;
+        case NOTE_ATTACHMENT_FILE:
+          this.inspectNoteAttachmentFile(id);
           break;
         default:
           break;
       }
     },
-    inspectItemFile(id) {
+    inspectAssetsItemFile(id) {
       this.loading = true;
       if (this.fileIndicator.url !== '') {
         window.URL.revokeObjectURL(this.fileIndicator.url);
       }
-      resolveResponse(inspectItemFile(id))
+      resolveResponse(inspectAssetsItemFile(id))
         .then((res) => {
           // noinspection JSUnresolvedVariable
           this.fileIndicator.originName = res.origin_name;
         })
-        .then(() => downloadItemFile(id))
+        .then(() => downloadAssetsItemFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
           this.fileIndicator.url = window.URL.createObjectURL(blob);
@@ -192,17 +205,36 @@ export default {
           this.loading = false;
         });
     },
-    inspectMemoFile(id) {
+    inspectProjectMemoFile(id) {
       this.loading = true;
       if (this.fileIndicator.url !== '') {
         window.URL.revokeObjectURL(this.fileIndicator.url);
       }
-      resolveResponse(inspectMemoFile(id))
+      resolveResponse(inspectProjectMemoFile(id))
         .then((res) => {
           // noinspection JSUnresolvedVariable
           this.fileIndicator.originName = res.origin_name;
         })
-        .then(() => downloadMemoFile(id))
+        .then(() => downloadProjectMemoFile(id))
+        .then((blob) => {
+          this.fileIndicator.blob = blob;
+          this.fileIndicator.url = window.URL.createObjectURL(blob);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    inspectNoteAttachmentFile(id) {
+      this.loading = true;
+      if (this.fileIndicator.url !== '') {
+        window.URL.revokeObjectURL(this.fileIndicator.url);
+      }
+      resolveResponse(inspectNoteAttachmentFile(id))
+        .then((res) => {
+          // noinspection JSUnresolvedVariable
+          this.fileIndicator.originName = res.origin_name;
+        })
+        .then(() => downloadNoteAttachmentFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
           this.fileIndicator.url = window.URL.createObjectURL(blob);
@@ -231,7 +263,7 @@ export default {
       formData.append('file', blob, this.fileIndicator.originName);
       switch (this.query.type) {
         case ASSETS_ITEM_FILE:
-          resolveResponse(updateItemFile(this.query.id, formData))
+          resolveResponse(updateAssetsItemFile(this.query.id, formData))
             .then(() => {
               this.$message({
                 showClose: true,
@@ -242,11 +274,22 @@ export default {
             });
           break;
         case PROJECT_MEMO_FILE:
-          resolveResponse(updateMemoFile(this.query.id, formData))
+          resolveResponse(updateProjectMemoFile(this.query.id, formData))
             .then(() => {
               this.$message({
                 showClose: true,
                 message: '备忘录文件提交成功',
+                type: 'success',
+                center: true,
+              });
+            });
+          break;
+        case NOTE_ATTACHMENT_FILE:
+          resolveResponse(updateNoteAttachmentFile(this.query.id, formData))
+            .then(() => {
+              this.$message({
+                showClose: true,
+                message: '附件文件提交成功',
                 type: 'success',
                 center: true,
               });
