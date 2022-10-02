@@ -46,7 +46,7 @@
           type="primary"
           @click="handleShowEntityCreateDialog"
         >
-          新建路由器信息
+          新建关联设置
         </el-button>
       </div>
     </border-layout-panel>
@@ -267,7 +267,7 @@ export default {
         .then(() => {
           this.$message({
             showClose: true,
-            message: '路由器信息创建成功',
+            message: '关联设置创建成功',
             type: 'success',
             center: true,
           });
@@ -296,7 +296,7 @@ export default {
         .then(() => {
           this.$message({
             showClose: true,
-            message: '路由器信息更新成功',
+            message: '关联设置更新成功',
             type: 'success',
             center: true,
           });
@@ -341,7 +341,7 @@ export default {
         .then(() => {
           this.$message({
             showClose: true,
-            message: '路由器信息删除成功',
+            message: '关联设置删除成功',
             type: 'success',
             center: true,
           });
