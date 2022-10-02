@@ -101,13 +101,14 @@ import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import RouterSupportSelectDialog
 from '@/views/items/notifyManagement/routerSupport/RouterSupportSelectDialog.vue';
-import NotifySettingInput from '@/views/items/notifyManagement/notifySetting/NotifySettingInput.vue';
+import NotifySettingInput
+from '@/views/items/notifyManagement/notifySetting/NotifySettingInput.vue';
 import TopicInput from '@/views/items/notifyManagement/topic/TopicInput.vue';
 import SenderInfoInput from '@/views/items/notifyManagement/senderInfo/SenderInfoInput.vue';
 
 import resolveResponse from '@/util/response';
 import {
-  exists, allDisp, insert, remove, update,
+  allDisp, exists, insert, remove, update,
 } from '@/api/notify/senderRelation';
 
 export default {
@@ -327,7 +328,7 @@ export default {
     handleEntityDelete(index, entity) {
       this.loading = true;
       Promise.resolve()
-        .then(() => this.$confirm('此操作将永久删除此路由器信息。<br>'
+        .then(() => this.$confirm('此操作将永久删除此关联设置。<br>'
           + '该操作不可恢复！<br>'
           + '是否继续?', '提示', {
           confirmButtonText: '确定',
@@ -336,7 +337,7 @@ export default {
           customClass: 'custom-message-box__w500',
           type: 'warning',
         }).then(() => Promise.resolve()).catch(() => Promise.reject()))
-        .then(() => resolveResponse(remove(entity.key.long_id)))
+        .then(() => resolveResponse(remove(entity.key.notify_setting_id, entity.key.topic_id)))
         .then(() => {
           this.$message({
             showClose: true,
