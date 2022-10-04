@@ -235,40 +235,6 @@ const meAndClannad = [
       parentKey: 'meAndClannad',
     },
   },
-  {
-    key: 'meAndClannad.notification',
-    index: 60,
-    meta: {
-      display: {
-        iconType: 'elementUI',
-        iconContent: '',
-        labelType: 'elementUI',
-        labelContent: '通知管理',
-      },
-      menu: {
-        shown: true,
-      },
-      ezNav: {
-        shown: true,
-        closedBehavior: {
-          type: 'back',
-          data: null,
-        },
-      },
-      router: {
-        required: true,
-        path: 'app/me-and-clannad/notification',
-        component: () => import('@/views/items/meAndClannad/notification/Notification.vue'),
-      },
-      permission: {
-        required: true,
-        node: 'ui.pc.menu_visible.me_and_clannad.notification',
-      },
-    },
-    node: {
-      parentKey: 'meAndClannad',
-    },
-  },
 ];
 
 export default meAndClannad;

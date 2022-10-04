@@ -32,8 +32,42 @@ const notifyManagement = [
     },
   },
   {
-    key: 'notifyManagement.notifySetting',
+    key: 'notifyManagement.notification',
     index: 0,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '通知接收',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/notify-management/notification',
+        component: () => import('@/views/items/notifyManagement/notification/Notification.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.notification',
+      },
+    },
+    node: {
+      parentKey: 'notifyManagement',
+    },
+  },
+  {
+    key: 'notifyManagement.notifySetting',
+    index: 10,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -67,7 +101,7 @@ const notifyManagement = [
   },
   {
     key: 'notifyManagement.topic',
-    index: 10,
+    index: 20,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -101,7 +135,7 @@ const notifyManagement = [
   },
   {
     key: 'notifyManagement.routerInfo',
-    index: 20,
+    index: 30,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -135,7 +169,7 @@ const notifyManagement = [
   },
   {
     key: 'notifyManagement.senderInfo',
-    index: 30,
+    index: 40,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -169,7 +203,7 @@ const notifyManagement = [
   },
   {
     key: 'notifyManagement.senderRelation',
-    index: 40,
+    index: 50,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -203,7 +237,7 @@ const notifyManagement = [
   },
   {
     key: 'notifyManagement.routerSupport',
-    index: 50,
+    index: 60,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -237,7 +271,7 @@ const notifyManagement = [
   },
   {
     key: 'notifyManagement.senderSupport',
-    index: 60,
+    index: 70,
     meta: {
       display: {
         iconType: 'elementUI',

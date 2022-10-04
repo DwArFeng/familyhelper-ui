@@ -63,7 +63,7 @@ export default {
           this.$router.push({ name: 'vim' });
           break;
         case 'notification':
-          this.$router.push({ name: 'meAndClannad.notification' });
+          this.$router.push({ name: 'notifyManagement.notification' });
           break;
         case 'logout':
           this.logout();
