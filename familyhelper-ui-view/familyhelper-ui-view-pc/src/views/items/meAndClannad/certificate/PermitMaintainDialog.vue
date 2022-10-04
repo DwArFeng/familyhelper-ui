@@ -209,7 +209,7 @@ export default {
             type: 'warning',
           },
         ).then(() => Promise.resolve(res)).catch(() => Promise.reject()))
-        .then((res) => resolveResponse(removePermission(this.certificateId, res.key.string_id)))
+        .then((res) => resolveResponse(removePermission(this.certificateId, res.key.user_id)))
         .then(() => {
           this.$message({
             showClose: true,
