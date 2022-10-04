@@ -27,6 +27,11 @@
           show-tooltip-when-overflow
         />
         <el-table-column
+          prop="preferred"
+          label="首选"
+          :formatter="booleanFormatter"
+        />
+        <el-table-column
           prop="remark"
           label="备注"
           show-tooltip-when-overflow
@@ -64,6 +69,16 @@
         <el-input
           v-model="anchorEntity.label"
           :readonly="dialogMode === 'INSPECT'"
+        />
+      </el-form-item>
+      <el-form-item label="首选" prop="preferred">
+        <el-switch
+          class="focusable-switch"
+          tabindex="0"
+          v-model="anchorEntity.preferred"
+          active-text="是"
+          inactive-text="否"
+          :disabled="dialogMode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
@@ -130,6 +145,7 @@ export default {
         },
         label: '',
         remark: '',
+        preferred: false,
       },
       createRules: {
         'key.string_id': [
@@ -182,6 +198,7 @@ export default {
         this.anchorEntity.key.string_id,
         this.anchorEntity.label,
         this.anchorEntity.remark,
+        this.anchorEntity.preferred,
       ))
         .then(() => {
           this.$message({
@@ -210,6 +227,7 @@ export default {
         this.anchorEntity.key.string_id,
         this.anchorEntity.label,
         this.anchorEntity.remark,
+        this.anchorEntity.preferred,
       ))
         .then(() => {
           this.$message({
@@ -276,12 +294,20 @@ export default {
       this.anchorEntity.key.string_id = entity.key.string_id;
       this.anchorEntity.label = entity.label;
       this.anchorEntity.remark = entity.remark;
+      this.anchorEntity.preferred = entity.preferred;
     },
     showDialog(mode) {
       this.dialogMode = mode;
       this.$nextTick(() => {
         this.dialogVisible = true;
       });
+    },
+    booleanFormatter(row, column) {
+      const value = row[column.property];
+      if (value == null) {
+        return '';
+      }
+      return value ? '是' : '否';
     },
   },
   mounted() {
@@ -301,5 +327,9 @@ export default {
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.focusable-switch:focus {
+  outline: none;
 }
 </style>
