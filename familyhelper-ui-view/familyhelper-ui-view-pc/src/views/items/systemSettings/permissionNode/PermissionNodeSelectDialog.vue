@@ -1,9 +1,9 @@
 <template>
-  <div class="notify-setting-select-dialog-container">
+  <div class="permission-node-select-dialog">
     <el-dialog
       tabindex="0"
       id="dialog"
-      title="通知设置选择"
+      title="权限节点选择"
       width="70vw"
       :visible.sync="watchedVisible"
       :close-on-click-modal="closeOnClickModal"
@@ -12,30 +12,59 @@
       @keydown.ctrl.enter.native="handleConfirmHotKeyDown"
       @open="handleDialogOpen"
     >
-      <table-panel
-        class="table-panel"
-        v-loading="loading"
-        highlight-current-row
-        :page-size.sync="table.pageSize"
-        :entity-count="parseInt(table.entities.count)"
-        :current-page.sync="table.currentPage"
-        :page-sizes="[5,10,15]"
-        :table-data="table.entities.data"
-        :operate-column-visible="false"
-        :table-selection.sync="table.selection"
-        @onPagingAttributeChanged="handlePagingAttributeChanged"
-      >
-        <el-table-column
-          prop="label"
-          label="名称"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
-      </table-panel>
+      <header-layout-panel v-loading="loading">
+        <template v-slot:header>
+          <el-input
+            class="id-search-bar"
+            v-model="idSearchBar.value"
+            clearable
+            @keydown.enter.native="handleSearch"
+            @clear="handleSearch"
+          >
+            <span slot="prepend">权限节点</span>
+            <el-button
+              slot="append"
+              icon="el-icon-search"
+              @click="handleSearch"
+            />
+          </el-input>
+        </template>
+        <template v-slot:default>
+          <table-panel
+            class="table-panel"
+            highlight-current-row
+            :page-size.sync="table.pageSize"
+            :entity-count="parseInt(table.entities.count)"
+            :current-page.sync="table.currentPage"
+            :page-sizes="[5,10,15]"
+            :table-data="table.entities.data"
+            :operate-column-visible="false"
+            :table-selection.sync="table.selection"
+            @onPagingAttributeChanged="handlePagingAttributeChanged"
+          >
+            <el-table-column
+              prop="key.string_id"
+              label="权限节点"
+              show-tooltip-when-overflow
+            />
+            <el-table-column
+              prop="group_key.string_id"
+              label="权限组"
+              show-tooltip-when-overflow
+            />
+            <el-table-column
+              prop="name"
+              label="名称"
+              show-tooltip-when-overflow
+            />
+            <el-table-column
+              prop="remark"
+              label="备注"
+              show-tooltip-when-overflow
+            />
+          </table-panel>
+        </template>
+      </header-layout-panel>
       <div slot="footer">
         <el-button
           type="primary"
@@ -56,14 +85,15 @@
 </template>
 
 <script>
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 
-import { all } from '@/api/notify/notifySetting';
+import { all, idLike } from '@/api/system/permission';
 import resolveResponse from '@/util/response';
 
 export default {
-  name: 'NotifySettingSelectDialog',
-  components: { TablePanel },
+  name: 'PermissionNodeSelectDialog',
+  components: { TablePanel, HeaderLayoutPanel },
   props: {
     visible: {
       type: Boolean,
@@ -98,6 +128,9 @@ export default {
         pageSize: 15,
         selection: null,
       },
+      idSearchBar: {
+        value: '',
+      },
     };
   },
   methods: {
@@ -108,7 +141,11 @@ export default {
       this.handleSearch();
     },
     handleSearch() {
-      this.lookupAll();
+      if (this.idSearchBar.value !== '') {
+        this.lookupIdLike();
+      } else {
+        this.lookupAll();
+      }
     },
     lookupAll() {
       this.loading = true;
@@ -117,6 +154,25 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(all(res.total_pages, this.table.pageSize));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    lookupIdLike() {
+      this.loading = true;
+      resolveResponse(idLike(this.idSearchBar.value, this.table.currentPage, this.table.pageSize))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(all(
+              this.idSearchBar.value, res.total_pages, this.table.pageSize,
+            ));
           }
           return Promise.resolve(res);
         })
@@ -141,7 +197,7 @@ export default {
       this.handleConfirm();
     },
     handleConfirm() {
-      this.$emit('onNotifySettingSelected', this.table.selection);
+      this.$emit('onPermissionNodeSelected', this.table.selection);
       this.watchedVisible = false;
     },
     handleCancelButtonClicked() {
@@ -150,18 +206,6 @@ export default {
     handleDialogOpen() {
       this.table.selection = null;
       this.handleSearch();
-    },
-    categoryTypeFormatter(row) {
-      if (row.category === null) {
-        return '未指定';
-      }
-      return row.category.label;
-    },
-    locationTypeFormatter(row) {
-      if (row.location === null) {
-        return '未指定';
-      }
-      return row.location.label;
     },
   },
   mounted() {
