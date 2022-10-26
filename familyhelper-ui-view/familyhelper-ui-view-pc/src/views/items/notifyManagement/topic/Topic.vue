@@ -2,92 +2,175 @@
   <div class="topic-container">
     <border-layout-panel
       class="border-layout-panel"
-      v-loading="loading"
-      :header-visible="true"
+      west-width="50%"
+      :west-visible="true"
     >
-      <table-panel
-        :page-size.sync="pageSize"
-        :entity-count="parseInt(entities.count)"
-        :current-page.sync="currentPage"
-        :page-sizes="[15,20,30,50]"
-        :table-data="entities.data"
-        @onPagingAttributeChanged="handlePagingAttributeChanged"
-        @onEntityInspect="handleShowEntityInspectDialog"
-        @onEntityEdit="handleShowEntityEditDialog"
-        @onEntityDelete="handleEntityDelete"
-      >
-        <el-table-column
-          prop="key.string_id"
-          label="主题ID"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="label"
-          label="标签"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="preferred"
-          label="首选"
-          :formatter="booleanFormatter"
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
-      </table-panel>
-      <div class="header-container" slot="header">
-        <el-button
-          class="insert-button"
-          type="primary"
-          @click="handleShowEntityCreateDialog"
-        >
-          新建主题
-        </el-button>
+      <div class="main-container" v-loading="west.loading" slot="west">
+        <header-layout-panel>
+          <template v-slot:header>
+            <div class="header-container">
+              <el-button
+                type="primary"
+                @click="handleShowTopicCreateDialog"
+              >
+                新建主题
+              </el-button>
+              <el-divider direction="vertical"/>
+              <el-button type="success" @click="handleTopicSearch">刷新数据</el-button>
+            </div>
+          </template>
+          <template v-slot:default>
+            <table-panel
+              class="table"
+              highlight-current-row
+              :page-size.sync="west.table.pageSize"
+              :entity-count="parseInt(west.table.entities.count)"
+              :current-page.sync="west.table.currentPage"
+              :page-sizes="[15,20,30,50]"
+              :table-data="west.table.entities.data"
+              :table-selection.sync="west.table.selection"
+              @onPagingAttributeChanged="handlePagingAttributeChanged"
+              @onEntityInspect="handleShowTopicInspectDialog"
+              @onEntityEdit="handleShowTopicEditDialog"
+              @onEntityDelete="handleTopicDelete"
+            >
+              <el-table-column
+                prop="key.string_id"
+                label="ID"
+                show-tooltip-when-overflow
+              />
+              <el-table-column
+                prop="label"
+                label="名称"
+                show-tooltip-when-overflow
+              />
+              <el-table-column
+                prop="enabled"
+                label="使能"
+                width="50px"
+                :formatter="booleanFormatter"
+              />
+              <el-table-column
+                prop="priority"
+                label="优先级"
+                width="75px"
+              />
+              <el-table-column
+                prop="remark"
+                label="备注"
+                show-tooltip-when-overflow
+              />
+            </table-panel>
+          </template>
+        </header-layout-panel>
+      </div>
+      <div class="main-container" v-loading="center.loading">
+        <div class="placeholder" v-if="west.table.selection===null">
+          请选择主题
+        </div>
+        <header-layout-panel v-else>
+          <template v-slot:header>
+            <div class="header-container">
+              <el-button
+                type="primary"
+                @click="handleSaveDispatcherInfo"
+              >
+                保存调度器设置
+              </el-button>
+              <el-divider direction="vertical"/>
+              <el-button type="success" @click="handleDispatcherInfoSearch">刷新数据</el-button>
+            </div>
+          </template>
+          <template v-slot:default>
+            <el-form
+              class="form"
+              ref="form"
+              label-position="left"
+              label-width="20px"
+              :model="center.form.model"
+              :rules="center.form.rules"
+            >
+              <el-form-item class="validated" label="类型" prop="type">
+                <el-input
+                  v-model="center.form.model.type"
+                >
+                  <el-button
+                    slot="append"
+                    icon="el-icon-search"
+                    @click="center.dispatcherSupportDialog.visible = true"
+                  />
+                </el-input>
+              </el-form-item>
+              <el-form-item label="参数" prop="param">
+                <text-editor
+                  class="text-editor"
+                  v-model="center.form.model.param"
+                />
+              </el-form-item>
+            </el-form>
+          </template>
+        </header-layout-panel>
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
-      :mode="dialogMode"
-      :visible.sync="dialogVisible"
-      :entity="anchorEntity"
-      :create-rules="createRules"
-      :edit-rules="editRules"
+      top="10vh"
+      :mode="west.maintainDialog.mode"
+      :visible.sync="west.maintainDialog.visible"
+      :entity="west.maintainDialog.anchorEntity"
+      :create-rules="west.maintainDialog.createRules"
+      :edit-rules="west.maintainDialog.editRules"
       :close-on-click-modal="false"
-      :loading="dialogLoading"
-      @onEntityCreate="handleEntityCreate"
-      @onEntityEdit="handleEntityEdit"
+      :loading="west.maintainDialog.loading"
+      @onEntityCreate="handleTopicCreate"
+      @onEntityEdit="handleTopicEdit"
     >
-      <el-form-item label="主题" prop="key.string_id">
+      <el-form-item label="ID" prop="key.string_id">
         <el-input
-          v-model="anchorEntity.key.string_id"
+          v-model="west.maintainDialog.anchorEntity.key.string_id"
           oninput="this.value = this.value.toLowerCase()"
-          :disabled="dialogMode !== 'CREATE'"
+          :disabled="west.maintainDialog.mode !== 'CREATE'"
         />
       </el-form-item>
-      <el-form-item label="标签" prop="label">
+      <el-form-item label="名称" prop="label">
         <el-input
-          v-model="anchorEntity.label"
-          :readonly="dialogMode === 'INSPECT'"
+          v-model="west.maintainDialog.anchorEntity.label"
+          :readonly="west.maintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
-      <el-form-item label="首选" prop="preferred">
+      <el-form-item label="使能" prop="enabled">
         <el-switch
           class="focusable-switch"
           tabindex="0"
-          v-model="anchorEntity.preferred"
+          v-model="west.maintainDialog.anchorEntity.enabled"
           active-text="是"
           inactive-text="否"
-          :disabled="dialogMode === 'INSPECT'"
+          :disabled="west.maintainDialog.mode === 'INSPECT'"
+        />
+      </el-form-item>
+      <el-form-item label="优先级" prop="priority">
+        <el-input
+          v-model="west.maintainDialog.anchorEntity.priority"
+          v-if="west.maintainDialog.mode === 'INSPECT'"
+          readonly
+        />
+        <el-input-number
+          v-model="west.maintainDialog.anchorEntity.priority"
+          v-else
+          :min="0"
+          :max="10"
         />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
-          v-model="anchorEntity.remark"
-          :readonly="dialogMode === 'INSPECT'"
+          v-model="west.maintainDialog.anchorEntity.remark"
+          :readonly="west.maintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
     </entity-maintain-dialog>
+    <dispatcher-support-select-dialog
+      :visible.sync="center.dispatcherSupportDialog.visible"
+      @onConfirmed="handleDispatcherSupportSelected"
+    />
   </div>
 </template>
 
@@ -95,24 +178,53 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
+import TextEditor from '@/components/text/TextEditor.vue';
+import DispatcherSupportSelectDialog
+from '@/views/items/notifyManagement/dispatcherSupport/DispatcherSupportSelectDialog.vue';
 
 import {
-  all, exists, insert, remove, update,
+  exists as existsTopic,
+  all as allTopic,
+  insert as insertTopic,
+  remove as removeTopic,
+  update as updateTopic,
 } from '@/api/notify/topic';
+import {
+  exists as existsDispatcherInfo,
+  inspect as inspectDispatcherInfo,
+  insert as insertDispatcherInfo,
+  update as updateDispatcherInfo,
+} from '@/api/notify/dispatcherInfo';
+import { exists as dispatcherSupportExists } from '@/api/notify/dispatcherSupport';
 import resolveResponse from '@/util/response';
 
 export default {
   name: 'Topic',
-  components: { EntityMaintainDialog, BorderLayoutPanel, TablePanel },
+  components: {
+    DispatcherSupportSelectDialog,
+    TextEditor,
+    HeaderLayoutPanel,
+    EntityMaintainDialog,
+    TablePanel,
+    BorderLayoutPanel,
+  },
+  watch: {
+    'west.table.selection': {
+      handler() {
+        this.handleDispatcherInfoSearch();
+      },
+    },
+  },
   data() {
-    const keyValidator = (rule, value, callback) => {
+    const topicKeyValidator = (rule, value, callback) => {
       Promise.resolve(value)
         .then((res) => {
           if (res === '') {
             callback(new Error('主题不能为空'));
             return Promise.reject();
           }
-          return resolveResponse(exists(value));
+          return resolveResponse(existsTopic(value));
         })
         .then((res) => {
           if (res) {
@@ -127,191 +239,325 @@ export default {
         .catch(() => {
         });
     };
+    const dispatcherTypeValidator = (rule, value, callback) => {
+      Promise.resolve(value)
+        .then((res) => {
+          if (res === '') {
+            callback(new Error('调度器类型不能为空'));
+            return Promise.reject();
+          }
+          return resolveResponse(dispatcherSupportExists(value));
+        })
+        .then((res) => {
+          if (!res) {
+            callback(new Error('不支持的调度器类型'));
+            return Promise.reject();
+          }
+          return Promise.resolve();
+        })
+        .then(() => {
+          callback();
+        })
+        .catch(() => {
+        });
+    };
     return {
-      entities: {
-        current_page: 0,
-        total_pages: 0,
-        rows: 0,
-        count: '0',
-        data: [],
-      },
-      currentPage: 0,
-      pageSize: 15,
-      dialogVisible: false,
-      dialogMode: 'CREATE',
-      anchorEntity: {
-        key: {
-          string_id: '',
+      west: {
+        loading: false,
+        table: {
+          entities: {
+            current_page: 0,
+            total_pages: 0,
+            rows: 0,
+            count: '0',
+            data: [],
+          },
+          currentPage: 0,
+          pageSize: 15,
+          selection: null,
         },
-        label: '',
-        remark: '',
-        preferred: false,
+        maintainDialog: {
+          loading: false,
+          visible: false,
+          mode: 'CREATE',
+          anchorEntity: {
+            key: {
+              string_id: '',
+            },
+            label: '',
+            remark: '',
+            enabled: false,
+            priority: 0,
+          },
+          createRules: {
+            'key.string_id': [
+              { validator: topicKeyValidator, trigger: 'blur' },
+            ],
+            label: [
+              { required: true, message: '主题标签不能为空', trigger: 'blur' },
+            ],
+          },
+          editRules: {
+            label: [
+              { required: true, message: '主题标签不能为空', trigger: 'blur' },
+            ],
+          },
+        },
       },
-      createRules: {
-        'key.string_id': [
-          { validator: keyValidator, trigger: 'blur' },
-        ],
-        label: [
-          { required: true, message: '主题标签不能为空', trigger: 'blur' },
-        ],
+      center: {
+        loading: false,
+        form: {
+          model: {
+            type: '',
+            param: '',
+          },
+          rules: {
+            label: [
+              { required: true, message: '标签不能为空', trigger: 'blur' },
+            ],
+            type: [
+              { validator: dispatcherTypeValidator, trigger: 'blur' },
+            ],
+          },
+        },
+        dispatcherSupportDialog: {
+          visible: false,
+        },
       },
-      editRules: {
-        label: [
-          { required: true, message: '主题标签不能为空', trigger: 'blur' },
-        ],
-      },
-      loading: false,
-      dialogLoading: false,
     };
   },
   methods: {
     handlePagingAttributeChanged() {
-      this.handleSearch();
+      this.handleTopicSearch();
     },
-    handleSearch() {
-      this.lookupAll();
+    handleTopicSearch() {
+      this.lookupAllTopic();
     },
-    lookupAll() {
-      this.loading = true;
-      resolveResponse(all(this.currentPage, this.pageSize))
+    lookupAllTopic() {
+      this.west.loading = true;
+      resolveResponse(allTopic(this.west.table.currentPage, this.west.table.pageSize))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(all(res.total_pages, this.pageSize));
+            return resolveResponse(allTopic(res.total_pages, this.west.table.pageSize));
           }
           return Promise.resolve(res);
         })
-        .then(this.updateTableView)
+        .then(this.updateTopicTableView)
         .catch(() => {
         })
         .finally(() => {
-          this.loading = false;
+          this.west.loading = false;
         });
     },
-    updateTableView(res) {
-      this.entities = res;
-      this.currentPage = res.current_page;
+    updateTopicTableView(res) {
+      this.west.table.entities = res;
+      this.west.table.currentPage = res.current_page;
     },
-    handleEntityCreate() {
-      this.dialogLoading = true;
-      resolveResponse(insert(
-        this.anchorEntity.key.string_id,
-        this.anchorEntity.label,
-        this.anchorEntity.remark,
-        this.anchorEntity.preferred,
+    handleTopicCreate() {
+      this.west.maintainDialog.loading = true;
+      resolveResponse(insertTopic(
+        this.west.maintainDialog.anchorEntity.key.string_id,
+        this.west.maintainDialog.anchorEntity.label,
+        this.west.maintainDialog.anchorEntity.remark,
+        this.west.maintainDialog.anchorEntity.enabled,
+        this.west.maintainDialog.anchorEntity.priority,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `主题 ${this.anchorEntity.key.string_id} 创建成功`,
+            message: `主题 ${this.west.maintainDialog.anchorEntity.label} 创建成功`,
             type: 'success',
             center: true,
           });
         })
         .then(() => {
-          this.handleSearch();
+          this.handleTopicSearch();
           return Promise.resolve();
         })
         .then(() => {
-          this.dialogVisible = false;
+          this.west.maintainDialog.visible = false;
         })
         .catch(() => {
         })
         .finally(() => {
-          this.dialogLoading = false;
+          this.west.maintainDialog.loading = false;
         });
     },
-    handleEntityEdit() {
-      this.dialogLoading = true;
-      resolveResponse(update(
-        this.anchorEntity.key.string_id,
-        this.anchorEntity.label,
-        this.anchorEntity.remark,
-        this.anchorEntity.preferred,
+    handleTopicEdit() {
+      this.west.maintainDialog.loading = true;
+      resolveResponse(updateTopic(
+        this.west.maintainDialog.anchorEntity.key.string_id,
+        this.west.maintainDialog.anchorEntity.label,
+        this.west.maintainDialog.anchorEntity.remark,
+        this.west.maintainDialog.anchorEntity.enabled,
+        this.west.maintainDialog.anchorEntity.priority,
       ))
         .then(() => {
           this.$message({
             showClose: true,
-            message: `主题 ${this.anchorEntity.key.string_id} 更新成功`,
+            message: `主题 ${this.west.maintainDialog.anchorEntity.label} 更新成功`,
             type: 'success',
             center: true,
           });
         })
         .then(() => {
-          this.handleSearch();
+          this.handleTopicSearch();
           return Promise.resolve();
         })
         .then(() => {
-          this.dialogVisible = false;
+          this.west.maintainDialog.visible = false;
         })
         .catch(() => {
         })
         .finally(() => {
-          this.dialogLoading = false;
+          this.west.maintainDialog.loading = false;
         });
     },
-    handleShowEntityCreateDialog() {
+    handleShowTopicCreateDialog() {
       this.showDialog('CREATE');
     },
-    handleShowEntityInspectDialog(index, entity) {
-      this.syncAnchorEntity(entity);
+    handleShowTopicInspectDialog(index, entity) {
+      this.syncAnchorTopic(entity);
       this.showDialog('INSPECT');
     },
-    handleShowEntityEditDialog(index, entity) {
-      this.syncAnchorEntity(entity);
+    handleShowTopicEditDialog(index, entity) {
+      this.syncAnchorTopic(entity);
       this.showDialog('EDIT');
     },
-    handleEntityDelete(node, entity) {
-      Promise.resolve(entity.key.string_id)
-        .then((res) => this.$confirm('此操作将永久删除此主题。<br>'
-          + '<div style="color: #b22222"><b>如果您不知道删除该节点后会产生什么后果，'
-          + '请不要进行操作！</b></div>'
-          + '<b>错误的操作可能导致依赖此主题的消息发送机制发送错误，甚至崩溃！</b><br>'
-          + '是否继续?',
-        '提示', {
+    handleTopicDelete(index, entity) {
+      this.west.loading = true;
+      Promise.resolve()
+        .then(() => this.$confirm('此操作将永久删除此主题。<br>'
+          + '该操作不可恢复！<br>'
+          + '是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           dangerouslyUseHTMLString: true,
           customClass: 'custom-message-box__w500',
           type: 'warning',
-        }).then(() => Promise.resolve(res)).catch(() => Promise.reject()))
-        .then((res) => resolveResponse(remove(res)).then(() => res))
-        .then((res) => {
+        }).then(() => Promise.resolve()).catch(() => Promise.reject()))
+        .then(() => resolveResponse(removeTopic(entity.key.string_id)))
+        .then(() => {
           this.$message({
             showClose: true,
-            message: `主题 ${res} 删除成功`,
+            message: `主题 ${entity.label} 删除成功`,
             type: 'success',
             center: true,
           });
         })
         .then(() => {
-          this.handleSearch();
+          this.handleTopicSearch();
         })
         .catch(() => {
+        })
+        .finally(() => {
+          this.west.loading = false;
         });
     },
-    syncAnchorEntity(entity) {
-      this.anchorEntity.key.string_id = entity.key.string_id;
-      this.anchorEntity.label = entity.label;
-      this.anchorEntity.remark = entity.remark;
-      this.anchorEntity.preferred = entity.preferred;
+    syncAnchorTopic(entity) {
+      this.west.maintainDialog.anchorEntity.key.string_id = entity.key.string_id;
+      this.west.maintainDialog.anchorEntity.label = entity.label;
+      this.west.maintainDialog.anchorEntity.remark = entity.remark;
+      this.west.maintainDialog.anchorEntity.enabled = entity.enabled;
+      this.west.maintainDialog.anchorEntity.priority = entity.priority;
     },
     showDialog(mode) {
-      this.dialogMode = mode;
-      this.$nextTick(() => {
-        this.dialogVisible = true;
-      });
+      this.west.maintainDialog.mode = mode;
+      this.west.maintainDialog.visible = true;
     },
     booleanFormatter(row, column) {
       const value = row[column.property];
-      if (value == null) {
+      if (value === null || value === undefined) {
         return '';
       }
       return value ? '是' : '否';
     },
+    handleDispatcherSupportSelected(selection) {
+      this.center.form.model.type = selection.key.string_id;
+      this.center.form.model.param = selection.example_param;
+    },
+    handleDispatcherInfoSearch() {
+      if (this.west.table.selection === null) {
+        this.center.form.model.type = '';
+        this.center.form.model.param = '';
+      } else {
+        this.inspectDispatcherInfo();
+      }
+    },
+    inspectDispatcherInfo() {
+      this.center.loading = true;
+      resolveResponse(existsDispatcherInfo(this.west.table.selection.key.string_id))
+        .then((res) => {
+          if (res) {
+            return resolveResponse(inspectDispatcherInfo(this.west.table.selection.key.string_id));
+          }
+          return Promise.resolve(null);
+        })
+        .then(this.updateDispatcherInfoFormView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.center.loading = false;
+        });
+    },
+    updateDispatcherInfoFormView(res) {
+      if (res === null) {
+        this.center.form.model.type = '';
+        this.center.form.model.param = '';
+      } else {
+        this.center.form.model.type = res.type;
+        this.center.form.model.param = res.param;
+      }
+    },
+    handleSaveDispatcherInfo() {
+      if (this.west.table.selection === null) {
+        return;
+      }
+      this.$refs.form.validate((accept) => {
+        if (accept) {
+          this.saveDispatcherInfo();
+        }
+      });
+    },
+    saveDispatcherInfo() {
+      this.center.loading = true;
+      resolveResponse(existsDispatcherInfo(this.west.table.selection.key.string_id))
+        .then((res) => {
+          if (res) {
+            return resolveResponse(updateDispatcherInfo(
+              this.west.table.selection.key.string_id,
+              this.west.table.selection.label,
+              this.center.form.model.type,
+              this.center.form.model.param,
+              this.west.table.selection.remark,
+            ));
+          }
+          return resolveResponse(insertDispatcherInfo(
+            this.west.table.selection.key.string_id,
+            this.west.table.selection.label,
+            this.center.form.model.type,
+            this.center.form.model.param,
+            this.west.table.selection.remark,
+          ));
+        })
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '调度器设置更新成功',
+            type: 'success',
+            center: true,
+          });
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          this.center.loading = false;
+        });
+    },
   },
   mounted() {
-    this.handleSearch();
+    this.handleTopicSearch();
   },
 };
 </script>
@@ -322,14 +568,82 @@ export default {
   width: 100%;
 }
 
+.main-container {
+  height: 100%;
+  width: 100%;
+}
+
 .header-container {
   display: flex;
   flex-direction: row;
   align-items: center;
-  flex-wrap: wrap;
+}
+
+/*noinspection CssUnusedSymbol*/
+.header-container .el-divider--vertical {
+  margin: 0 8px;
 }
 
 .focusable-switch:focus {
   outline: none;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #BFBFBF;
+  user-select: none;
+}
+
+.form {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form >>> label {
+  width: 240px;
+  color: #99a9bf;
+  line-height: 30px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.form >>> .el-form-item {
+  margin-right: 0;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/*noinspection CssUnusedSymbol*/
+.form >>> .el-form-item:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.form >>> .el-form-item:last-child {
+  height: 0;
+  flex-grow: 1;
+  margin-bottom: 0;
+}
+
+/*noinspection CssUnusedSymbol*/
+.form >>> .el-form-item.validated {
+  margin-bottom: 22px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.form >>> .el-form-item__content {
+  width: 0;
+  height: 100%;
+  flex-grow: 1;
 }
 </style>

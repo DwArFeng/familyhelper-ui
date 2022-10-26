@@ -1,24 +1,23 @@
 <template>
-  <div class="sender-info-select-dialog-container">
+  <div class="dispatcher-support-select-dialog-container">
     <el-dialog
       tabindex="0"
       id="dialog"
-      title="发送器选择"
-      width="70vw"
-      :visible.sync="watchedVisible"
-      :close-on-click-modal="closeOnClickModal"
+      title="模板选择"
       append-to-body
       destroy-on-close
-      @keydown.ctrl.enter.native="handleConfirmHotKeyDown"
-      @open="handleDialogOpen"
+      :visible.sync="watchedVisible"
+      :close-on-click-modal="false"
+      @keydown.ctrl.enter.native="handleHotKeyDown"
     >
       <table-panel
-        class="table-panel"
+        class="table"
+        v-loading="loading"
         highlight-current-row
         :page-size.sync="table.pageSize"
         :entity-count="parseInt(table.entities.count)"
         :current-page.sync="table.currentPage"
-        :page-sizes="[5,10,15]"
+        :page-sizes="[5,15]"
         :table-data="table.entities.data"
         :operate-column-visible="false"
         :table-selection.sync="table.selection"
@@ -30,22 +29,32 @@
           show-tooltip-when-overflow
         />
         <el-table-column
-          prop="remark"
-          label="备注"
+          prop="key.string_id"
+          label="ID"
+          show-tooltip-when-overflow
+        />
+        <el-table-column
+          prop="description"
+          label="描述"
+          show-tooltip-when-overflow
+        />
+        <el-table-column
+          prop="example_param"
+          label="参数示例"
           show-tooltip-when-overflow
         />
       </table-panel>
       <div slot="footer">
         <el-button
           type="primary"
-          :disabled="loading || table.selection===null"
-          @click="handleConfirmButtonClicked"
+          :disabled="loading || table.selection === null"
+          @click="handleConfirmed"
         >
           确认
         </el-button>
         <el-button
           :disabled="loading"
-          @click="handleCancelButtonClicked"
+          @click="handleCanceled"
         >
           取消
         </el-button>
@@ -57,20 +66,16 @@
 <script>
 import TablePanel from '@/components/layout/TablePanel.vue';
 
-import { all } from '@/api/notify/senderInfo';
 import resolveResponse from '@/util/response';
+import { all } from '@/api/notify/dispatcherSupport';
 
 export default {
-  name: 'SenderInfoSelectDialog',
+  name: 'DispatcherSupportSelectDialog',
   components: { TablePanel },
   props: {
     visible: {
       type: Boolean,
       default: false,
-    },
-    closeOnClickModal: {
-      type: Boolean,
-      default: true,
     },
   },
   watch: {
@@ -83,7 +88,6 @@ export default {
   },
   data() {
     return {
-      loading: false,
       watchedVisible: false,
       table: {
         entities: {
@@ -94,16 +98,14 @@ export default {
           data: [],
         },
         currentPage: 0,
-        pageSize: 15,
+        pageSize: 5,
         selection: null,
       },
+      loading: false,
     };
   },
   methods: {
     handlePagingAttributeChanged() {
-      this.handleSearch();
-    },
-    handleSearchHotKeyDown() {
       this.handleSearch();
     },
     handleSearch() {
@@ -130,48 +132,28 @@ export default {
       this.table.entities = res;
       this.table.currentPage = res.current_page;
     },
-    handleConfirmButtonClicked() {
-      this.handleConfirm();
+    handleConfirmed() {
+      this.$emit('onConfirmed', this.table.selection);
+      this.watchedVisible = false;
     },
-    handleConfirmHotKeyDown() {
+    handleCanceled() {
+      this.watchedVisible = false;
+    },
+    handleHotKeyDown() {
       if (this.table.selection === null) {
         return;
       }
-      this.handleConfirm();
-    },
-    handleConfirm() {
-      this.$emit('onSenderInfoSelected', this.table.selection);
-      this.watchedVisible = false;
-    },
-    handleCancelButtonClicked() {
-      this.watchedVisible = false;
-    },
-    handleDialogOpen() {
-      this.table.selection = null;
-      this.handleSearch();
-    },
-    categoryTypeFormatter(row) {
-      if (row.category === null) {
-        return '未指定';
-      }
-      return row.category.label;
-    },
-    locationTypeFormatter(row) {
-      if (row.location === null) {
-        return '未指定';
-      }
-      return row.location.label;
+      this.handleConfirmed();
     },
   },
   mounted() {
-    this.table.selection = null;
     this.handleSearch();
   },
 };
 </script>
 
 <style scoped>
-.table-panel {
-  height: 512px;
+.table {
+  height: 450px;
 }
 </style>

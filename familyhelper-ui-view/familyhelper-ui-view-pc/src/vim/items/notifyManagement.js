@@ -134,14 +134,14 @@ const notifyManagement = [
     },
   },
   {
-    key: 'notifyManagement.routerInfo',
+    key: 'notifyManagement.metaIndicator',
     index: 30,
     meta: {
       display: {
         iconType: 'elementUI',
         iconContent: '',
         labelType: 'elementUI',
-        labelContent: '路由器设置',
+        labelContent: '元数据指示器',
       },
       menu: {
         shown: true,
@@ -155,12 +155,46 @@ const notifyManagement = [
       },
       router: {
         required: true,
-        path: 'app/notify-settings/router-info',
-        component: () => import('@/views/items/notifyManagement/routerInfo/RouterInfo.vue'),
+        path: 'app/notify-settings/meta-indicator',
+        component: () => import('@/views/items/notifyManagement/metaIndicator/MetaIndicator.vue'),
       },
       permission: {
         required: true,
-        node: 'ui.pc.menu_visible.notify_management.router_info',
+        node: 'ui.pc.menu_visible.notify_management.meta_indicator',
+      },
+    },
+    node: {
+      parentKey: 'notifyManagement',
+    },
+  },
+  {
+    key: 'notifyManagement.meta',
+    index: 40,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '元数据管理',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/notify-settings/meta',
+        component: () => import('@/views/items/notifyManagement/meta/Meta.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.meta',
       },
     },
     node: {
@@ -169,7 +203,7 @@ const notifyManagement = [
   },
   {
     key: 'notifyManagement.senderInfo',
-    index: 40,
+    index: 50,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -202,14 +236,14 @@ const notifyManagement = [
     },
   },
   {
-    key: 'notifyManagement.senderRelation',
-    index: 50,
+    key: 'notifyManagement.sendHistory',
+    index: 60,
     meta: {
       display: {
         iconType: 'elementUI',
         iconContent: '',
         labelType: 'elementUI',
-        labelContent: '关联设置',
+        labelContent: '发送历史',
       },
       menu: {
         shown: true,
@@ -223,12 +257,12 @@ const notifyManagement = [
       },
       router: {
         required: true,
-        path: 'app/notify-settings/sender-relation',
-        component: () => import('@/views/items/notifyManagement/senderRelation/SenderRelation.vue'),
+        path: 'app/notify-settings/sender-history',
+        component: () => import('@/views/items/notifyManagement/sendHistory/SendHistory.vue'),
       },
       permission: {
         required: true,
-        node: 'ui.pc.menu_visible.notify_management.sender_relation',
+        node: 'ui.pc.menu_visible.notify_management.send_history',
       },
     },
     node: {
@@ -237,7 +271,7 @@ const notifyManagement = [
   },
   {
     key: 'notifyManagement.routerSupport',
-    index: 60,
+    index: 70,
     meta: {
       display: {
         iconType: 'elementUI',
@@ -270,8 +304,42 @@ const notifyManagement = [
     },
   },
   {
+    key: 'notifyManagement.dispatcherSupport',
+    index: 80,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '调度器支持',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/notify-settings/dispatcher-support',
+        component: () => import('@/views/items/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.notify_management.dispatcher_support',
+      },
+    },
+    node: {
+      parentKey: 'notifyManagement',
+    },
+  },
+  {
     key: 'notifyManagement.senderSupport',
-    index: 70,
+    index: 90,
     meta: {
       display: {
         iconType: 'elementUI',

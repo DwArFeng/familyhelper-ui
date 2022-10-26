@@ -3,19 +3,19 @@ import {
 } from '@/util/http';
 
 export function exists(key) {
-    return get('notify', `router-info/${key}/exists/`, {});
+    return get('notify', `dispatcher-info/${key}/exists/`, {});
 }
 
 export function inspect(key) {
-    return get('notify', `router-info/${key}/`, {});
+    return get('notify', `dispatcher-info/${key}/`, {});
 }
 
 export function insert(key, label, type, param, remark) {
-    let finalKey = {long_id: key};
+    let finalKey = {string_id: key};
     if (key === '') {
         finalKey = null;
     }
-    return post('notify', 'router-info/', {
+    return post('notify', 'dispatcher-info/', {
         key: finalKey,
         label,
         type,
@@ -25,13 +25,13 @@ export function insert(key, label, type, param, remark) {
 }
 
 export function remove(key) {
-    return del('notify', `router-info/${key}/`, {});
+    return del('notify', `dispatcher-info/${key}/`, {});
 }
 
 export function update(key, label, type, param, remark) {
-    return patch('notify', 'router-info/', {
+    return patch('notify', 'dispatcher-info/', {
         key: {
-            long_id: key,
+            string_id: key,
         },
         label,
         type,
@@ -41,7 +41,7 @@ export function update(key, label, type, param, remark) {
 }
 
 export function all(page, rows) {
-    return get('notify', 'router-info/all/', {
+    return get('notify', 'dispatcher-info/all/', {
         page,
         rows,
     });

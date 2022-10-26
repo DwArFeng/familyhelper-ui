@@ -2,21 +2,20 @@ import {
     del, get, patch, post,
 } from '@/util/http';
 
-export function exists(key) {
-    return get('notify', `sender-info/${key}/exists/`, {});
+export function exists(notifySettingKey, topicKey,) {
+    return get('notify', `sender-info/${notifySettingKey}%26${topicKey}/exists/`, {});
 }
 
-export function inspect(key) {
-    return get('notify', `sender-info/${key}/`, {});
+export function inspect(notifySettingKey, topicKey,) {
+    return get('notify', `sender-info/${notifySettingKey}%26${topicKey}/`, {});
 }
 
-export function insert(key, label, type, param, remark) {
-    let finalKey = {long_id: key};
-    if (key === '') {
-        finalKey = null;
-    }
+export function insert(notifySettingKey, topicKey, label, type, param, remark) {
     return post('notify', 'sender-info/', {
-        key: finalKey,
+        key: {
+            notify_setting_id: notifySettingKey === '' ? null : notifySettingKey,
+            topic_id: topicKey === '' ? null : topicKey,
+        },
         label,
         type,
         param,
@@ -24,14 +23,15 @@ export function insert(key, label, type, param, remark) {
     });
 }
 
-export function remove(key) {
-    return del('notify', `sender-info/${key}/`, {});
+export function remove(notifySettingKey, topicKey,) {
+    return del('notify', `sender-info/${notifySettingKey}%26${topicKey}/`, {});
 }
 
-export function update(key, label, type, param, remark) {
+export function update(notifySettingKey, topicKey, label, type, param, remark) {
     return patch('notify', 'sender-info/', {
         key: {
-            long_id: key,
+            notify_setting_id: notifySettingKey === '' ? null : notifySettingKey,
+            topic_id: topicKey === '' ? null : topicKey,
         },
         label,
         type,
