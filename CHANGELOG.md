@@ -67,6 +67,7 @@
 
 - 修复/优化通用组件的显示行为。
   - 修正 BorderLayoutPanel.vue 页边空白显示的问题。
+  - 修正 TitleLayoutPanel.vue 未设定边界时组件页边空白的显示问题。
 
 #### 功能移除
 

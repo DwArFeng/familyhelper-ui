@@ -4,7 +4,7 @@
     :class="{bordered:bordered}"
   >
     <div class="title" :class="{bordered:bordered}" v-if="title">{{ title }}</div>
-    <div class="content">
+    <div class="content" :class="{bordered:bordered}">
       <slot name="default"/>
     </div>
   </div>
@@ -55,7 +55,11 @@ export default {
 .content {
   width: 100%;
   height: 100%;
-  padding: 3px 10px;
+  padding: 3px 0;
   box-sizing: border-box;
+}
+
+.content.bordered{
+  padding: 3px 10px;
 }
 </style>
