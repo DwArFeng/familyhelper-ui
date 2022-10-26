@@ -4,7 +4,7 @@
       <!-- Header -->
       <el-card
         v-if="headerVisible"
-        class="box-card-header" body-style="height: calc(100% - 30px); padding: 15px">
+        class="box-card-header" body-style="height: 100%; padding: 15px; box-sizing:border-box">
         <slot name="header"/>
       </el-card>
       <!-- Center Area -->
@@ -13,20 +13,23 @@
         <el-card
           v-if="westVisible"
           class="box-card-west"
-          body-style="height: calc(100% - 30px); padding: 15px"
+          body-style="height: 100%; padding: 15px; box-sizing:border-box"
           :style="{width:westWidth}"
         >
           <slot name="west"/>
         </el-card>
         <!-- Main -->
-        <el-card class="box-card-main" body-style="height: calc(100% - 30px); padding: 15px">
+        <el-card
+          class="box-card-main"
+          body-style="height: 100%; padding: 15px; box-sizing:border-box"
+        >
           <slot/>
         </el-card>
         <!-- East -->
         <el-card
           v-if="eastVisible"
           class="box-card-east"
-          body-style="height: calc(100% - 30px); padding: 15px"
+          body-style="height: 100%; padding: 15px; box-sizing:border-box"
           :style="{width:eastWidth}"
         >
           <slot name="east"/>
@@ -35,7 +38,7 @@
       <!-- Footer -->
       <el-card
         v-if="footerVisible"
-        class="box-card-footer" body-style="height: calc(100% - 30px); padding: 15px">
+        class="box-card-footer" body-style="height: 100%; padding: 15px; box-sizing:border-box">
         <slot name="footer"/>
       </el-card>
     </div>
