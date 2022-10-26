@@ -24,17 +24,6 @@
           show-tooltip-when-overflow
         />
         <el-table-column
-          prop="enabled"
-          label="使能"
-          width="50px"
-          :formatter="booleanFormatter"
-        />
-        <el-table-column
-          prop="required_permission"
-          label="需求权限"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
           prop="remark"
           label="备注"
           show-tooltip-when-overflow
@@ -68,29 +57,6 @@
           :readonly="maintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
-      <el-form-item label="使能" prop="enabled">
-        <el-switch
-          class="focusable-switch"
-          tabindex="0"
-          v-model="maintainDialog.anchorEntity.enabled"
-          active-text="是"
-          inactive-text="否"
-          :disabled="maintainDialog.dialogMode === 'INSPECT'"
-        />
-      </el-form-item>
-      <el-form-item label="需求权限" prop="required_permission">
-        <el-input
-          ref="requiredPermissionInput"
-          v-model="maintainDialog.anchorEntity.required_permission"
-          :readonly="maintainDialog.mode === 'INSPECT'"
-        >
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="permissionSelectDialog.visible=true"
-          />
-        </el-input>
-      </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
           v-model="maintainDialog.anchorEntity.remark"
@@ -98,10 +64,6 @@
         />
       </el-form-item>
     </entity-maintain-dialog>
-    <permission-node-select-dialog
-      :visible.sync="permissionSelectDialog.visible"
-      @onPermissionNodeSelected="handlePermissionNodeSelected"
-    />
   </div>
 </template>
 
@@ -109,8 +71,6 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
-import PermissionNodeSelectDialog
-from '@/views/items/systemSettings/permissionNode/PermissionNodeSelectDialog.vue';
 
 import {
   all, insert, remove, update,
@@ -119,9 +79,7 @@ import resolveResponse from '@/util/response';
 
 export default {
   name: 'NotifySetting',
-  components: {
-    PermissionNodeSelectDialog, EntityMaintainDialog, TablePanel, BorderLayoutPanel,
-  },
+  components: { EntityMaintainDialog, TablePanel, BorderLayoutPanel },
   data() {
     return {
       loading: false,
@@ -146,21 +104,13 @@ export default {
             long_id: '',
           },
           label: '',
-          enabled: false,
-          required_permission: '',
           remark: '',
         },
         rules: {
           label: [
             { required: true, message: '名称不能为空', trigger: 'blur' },
           ],
-          required_permission: [
-            { required: true, message: '需求权限不能为空', trigger: 'blur' },
-          ],
         },
-      },
-      permissionSelectDialog: {
-        visible: false,
       },
     };
   },
@@ -197,8 +147,6 @@ export default {
       resolveResponse(insert(
         '',
         this.maintainDialog.anchorEntity.label,
-        this.maintainDialog.anchorEntity.enabled,
-        this.maintainDialog.anchorEntity.required_permission,
         this.maintainDialog.anchorEntity.remark,
       ))
         .then(() => {
@@ -227,8 +175,6 @@ export default {
       resolveResponse(update(
         this.maintainDialog.anchorEntity.key.long_id,
         this.maintainDialog.anchorEntity.label,
-        this.maintainDialog.anchorEntity.enabled,
-        this.maintainDialog.anchorEntity.required_permission,
         this.maintainDialog.anchorEntity.remark,
       ))
         .then(() => {
@@ -296,24 +242,11 @@ export default {
     syncAnchorEntity(entity) {
       this.maintainDialog.anchorEntity.key.long_id = entity.key.long_id;
       this.maintainDialog.anchorEntity.label = entity.label;
-      this.maintainDialog.anchorEntity.enabled = entity.enabled;
-      this.maintainDialog.anchorEntity.required_permission = entity.required_permission;
       this.maintainDialog.anchorEntity.remark = entity.remark;
     },
     showDialog(mode) {
       this.maintainDialog.mode = mode;
       this.maintainDialog.visible = true;
-    },
-    handlePermissionNodeSelected(permissionNode) {
-      this.maintainDialog.anchorEntity.required_permission = permissionNode.key.string_id;
-      this.$refs.requiredPermissionInput.focus();
-    },
-    booleanFormatter(row, column) {
-      const value = row[column.property];
-      if (value === null || value === undefined) {
-        return '';
-      }
-      return value ? '是' : '否';
     },
   },
   mounted() {
@@ -328,7 +261,4 @@ export default {
   width: 100%;
 }
 
-.focusable-switch:focus {
-  outline: none;
-}
 </style>

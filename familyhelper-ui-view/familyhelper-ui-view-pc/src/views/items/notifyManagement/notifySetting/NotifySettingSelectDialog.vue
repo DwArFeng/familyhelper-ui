@@ -14,7 +14,6 @@
     >
       <table-panel
         class="table-panel"
-        v-loading="loading"
         highlight-current-row
         :page-size.sync="table.pageSize"
         :entity-count="parseInt(table.entities.count)"
