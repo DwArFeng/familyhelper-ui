@@ -6,7 +6,6 @@
       :header-visible="true"
     >
       <table-panel
-        class="table"
         :page-size.sync="pageSize"
         :entity-count="parseInt(entities.count)"
         :current-page.sync="currentPage"
@@ -49,16 +48,6 @@
           label="冷却时间"
         />
         <el-table-column
-          prop="executor_type"
-          label="执行器类型"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          class-name="single-line"
-          prop="executor_param"
-          label="执行器参数"
-        />
-        <el-table-column
           prop="remark"
           label="备注"
           show-tooltip-when-overflow
@@ -75,7 +64,6 @@
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
-      label-width="100px"
       :mode="dialogMode"
       :visible.sync="dialogVisible"
       :entity="anchorEntity"
@@ -139,19 +127,6 @@
           :readonly="dialogMode === 'INSPECT'"
         />
       </el-form-item>
-      <el-form-item label="执行器类型" prop="executor_type">
-        <el-input
-          v-model="anchorEntity.executor_type"
-          :readonly="dialogMode === 'INSPECT'"
-        />
-      </el-form-item>
-      <el-form-item label="执行器参数" prop="executor_param">
-        <text-editor
-          class="text-editor"
-          v-model="anchorEntity.executor_param"
-          :readonly="dialogMode === 'INSPECT'"
-        />
-      </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
           v-model="anchorEntity.remark"
@@ -166,7 +141,6 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
-import TextEditor from '@/components/text/TextEditor.vue';
 
 import {
   all, exists, insert, remove, update,
@@ -175,9 +149,7 @@ import resolveResponse from '@/util/response';
 
 export default {
   name: 'Topic',
-  components: {
-    TextEditor, EntityMaintainDialog, BorderLayoutPanel, TablePanel,
-  },
+  components: { EntityMaintainDialog, BorderLayoutPanel, TablePanel },
   data() {
     const keyValidator = (rule, value, callback) => {
       Promise.resolve(value)
@@ -222,8 +194,6 @@ export default {
         priority: 0,
         preferred: false,
         cool_down_duration: 0,
-        executor_type: '',
-        executor_param: '',
         remark: '',
       },
       createRules: {
@@ -233,16 +203,10 @@ export default {
         label: [
           { required: true, message: '主题标签不能为空', trigger: 'blur' },
         ],
-        executor_type: [
-          { required: true, message: '执行器类型不能为空', trigger: 'blur' },
-        ],
       },
       editRules: {
         label: [
           { required: true, message: '主题标签不能为空', trigger: 'blur' },
-        ],
-        executor_type: [
-          { required: true, message: '执行器类型不能为空', trigger: 'blur' },
         ],
       },
       loading: false,
@@ -286,8 +250,6 @@ export default {
         this.anchorEntity.priority,
         this.anchorEntity.preferred,
         this.anchorEntity.cool_down_duration,
-        this.anchorEntity.executor_type,
-        this.anchorEntity.executor_param,
         this.anchorEntity.remark,
       ))
         .then(() => {
@@ -320,8 +282,6 @@ export default {
         this.anchorEntity.priority,
         this.anchorEntity.preferred,
         this.anchorEntity.cool_down_duration,
-        this.anchorEntity.executor_type,
-        this.anchorEntity.executor_param,
         this.anchorEntity.remark,
       ))
         .then(() => {
@@ -392,8 +352,6 @@ export default {
       this.anchorEntity.priority = entity.priority;
       this.anchorEntity.preferred = entity.preferred;
       this.anchorEntity.cool_down_duration = entity.cool_down_duration;
-      this.anchorEntity.executor_type = entity.executor_type;
-      this.anchorEntity.executor_param = entity.executor_param;
       this.anchorEntity.remark = entity.remark;
     },
     showDialog(mode) {
@@ -427,17 +385,6 @@ export default {
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-}
-
-/*noinspection CssUnusedSymbol*/
-.table >>> .single-line .cell {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.text-editor {
-  height: 350px;
 }
 
 .focusable-switch:focus {
