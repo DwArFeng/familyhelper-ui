@@ -8,17 +8,14 @@ export function inspect(key) {
     return get('notify', `topic/${key}/`, {});
 }
 
-export function insert(key, label, enabled, priority, preferred, coolDownDuration, remark) {
+export function insert(key, label, remark, preferred) {
     return post('notify', 'topic/', {
         key: {
             string_id: key,
         },
         label,
-        enabled,
-        priority,
-        preferred,
-        cool_down_duration: coolDownDuration,
         remark,
+        preferred
     });
 }
 
@@ -26,17 +23,14 @@ export function remove(key) {
     return del('notify', `topic/${key}/`, {});
 }
 
-export function update(key, label, enabled, priority, preferred, coolDownDuration, remark) {
+export function update(key, label, remark, preferred) {
     return patch('notify', 'topic/', {
         key: {
             string_id: key,
         },
         label,
-        enabled,
-        priority,
-        preferred,
-        cool_down_duration: coolDownDuration,
         remark,
+        preferred
     });
 }
 

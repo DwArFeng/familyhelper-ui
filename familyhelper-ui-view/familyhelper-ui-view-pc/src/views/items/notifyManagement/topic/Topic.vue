@@ -27,25 +27,9 @@
           show-tooltip-when-overflow
         />
         <el-table-column
-          prop="enabled"
-          label="使能"
-          width="50px"
-          :formatter="booleanFormatter"
-        />
-        <el-table-column
-          prop="priority"
-          label="优先级"
-          width="75px"
-        />
-        <el-table-column
           prop="preferred"
           label="首选"
-          width="50px"
           :formatter="booleanFormatter"
-        />
-        <el-table-column
-          prop="cool_down_duration"
-          label="冷却时间"
         />
         <el-table-column
           prop="remark"
@@ -87,29 +71,6 @@
           :readonly="dialogMode === 'INSPECT'"
         />
       </el-form-item>
-      <el-form-item label="使能" prop="enabled">
-        <el-switch
-          class="focusable-switch"
-          tabindex="0"
-          v-model="anchorEntity.enabled"
-          active-text="是"
-          inactive-text="否"
-          :disabled="dialogMode === 'INSPECT'"
-        />
-      </el-form-item>
-      <el-form-item label="优先级" prop="priority">
-        <el-input
-          v-model="anchorEntity.priority"
-          v-if="dialogMode === 'INSPECT'"
-          readonly
-        />
-        <el-input-number
-          v-model="anchorEntity.priority"
-          v-else
-          :min="0"
-          :max="10"
-        />
-      </el-form-item>
       <el-form-item label="首选" prop="preferred">
         <el-switch
           class="focusable-switch"
@@ -118,13 +79,6 @@
           active-text="是"
           inactive-text="否"
           :disabled="dialogMode === 'INSPECT'"
-        />
-      </el-form-item>
-      <el-form-item label="冷却时间" prop="cool_down_duration">
-        <el-input
-          v-model="anchorEntity.cool_down_duration"
-          oninput="this.value=this.value.replace(/[^\d.]/g,'');"
-          :readonly="dialogMode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
@@ -190,11 +144,8 @@ export default {
           string_id: '',
         },
         label: '',
-        enabled: false,
-        priority: 0,
-        preferred: false,
-        cool_down_duration: 0,
         remark: '',
+        preferred: false,
       },
       createRules: {
         'key.string_id': [
@@ -246,11 +197,8 @@ export default {
       resolveResponse(insert(
         this.anchorEntity.key.string_id,
         this.anchorEntity.label,
-        this.anchorEntity.enabled,
-        this.anchorEntity.priority,
-        this.anchorEntity.preferred,
-        this.anchorEntity.cool_down_duration,
         this.anchorEntity.remark,
+        this.anchorEntity.preferred,
       ))
         .then(() => {
           this.$message({
@@ -278,11 +226,8 @@ export default {
       resolveResponse(update(
         this.anchorEntity.key.string_id,
         this.anchorEntity.label,
-        this.anchorEntity.enabled,
-        this.anchorEntity.priority,
-        this.anchorEntity.preferred,
-        this.anchorEntity.cool_down_duration,
         this.anchorEntity.remark,
+        this.anchorEntity.preferred,
       ))
         .then(() => {
           this.$message({
@@ -348,11 +293,8 @@ export default {
     syncAnchorEntity(entity) {
       this.anchorEntity.key.string_id = entity.key.string_id;
       this.anchorEntity.label = entity.label;
-      this.anchorEntity.enabled = entity.enabled;
-      this.anchorEntity.priority = entity.priority;
-      this.anchorEntity.preferred = entity.preferred;
-      this.anchorEntity.cool_down_duration = entity.cool_down_duration;
       this.anchorEntity.remark = entity.remark;
+      this.anchorEntity.preferred = entity.preferred;
     },
     showDialog(mode) {
       this.dialogMode = mode;
