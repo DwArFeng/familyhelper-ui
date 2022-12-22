@@ -17,6 +17,14 @@
               </el-button>
               <el-divider direction="vertical"/>
               <el-button type="success" @click="handleNotifySettingSearch">刷新数据</el-button>
+              <el-divider direction="vertical"/>
+              <el-button
+                type="primary"
+                :disabled="west.applyChangesButton.disabled"
+                @click="handleApplyChanges"
+              >
+                应用变更
+              </el-button>
             </div>
           </template>
           <template v-slot:default>
@@ -61,12 +69,7 @@
         <header-layout-panel v-else>
           <template v-slot:header>
             <div class="header-container">
-              <el-button
-                type="primary"
-                @click="handleSaveRouterInfo"
-              >
-                保存路由器设置
-              </el-button>
+              <el-button type="primary" @click="handleSaveRouterInfo">保存路由器设置</el-button>
               <el-divider direction="vertical"/>
               <el-button type="success" @click="handleRouterInfoSearch">刷新数据</el-button>
             </div>
@@ -166,6 +169,7 @@ import {
   update as updateRouterInfo,
 } from '@/api/notify/routerInfo';
 import { exists as routerSupportExists } from '@/api/notify/routerSupport';
+import { resetRoute } from '@/api/notify/reset';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -240,6 +244,9 @@ export default {
               { required: true, message: '名称不能为空', trigger: 'blur' },
             ],
           },
+        },
+        applyChangesButton: {
+          disabled: false,
         },
       },
       center: {
@@ -488,6 +495,25 @@ export default {
         })
         .finally(() => {
           this.center.loading = false;
+        });
+    },
+    handleApplyChanges() {
+      this.west.applyChangesButton.disabled = true;
+      resolveResponse(resetRoute())
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '变更应用成功！后台状态刷新中，请不要频繁点击',
+            type: 'success',
+            center: true,
+          });
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.west.applyChangesButton.disabled = false;
+          }, 3000);
         });
     },
   },

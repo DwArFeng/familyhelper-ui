@@ -10,6 +10,14 @@
           <template v-slot:header>
             <div class="header-container">
               <el-button type="success" @click="handleWestSearch">刷新数据</el-button>
+              <el-divider direction="vertical"/>
+              <el-button
+                type="primary"
+                :disabled="west.applyChangesButton.disabled"
+                @click="handleApplyChanges"
+              >
+                应用变更
+              </el-button>
             </div>
           </template>
           <template v-slot:default>
@@ -163,6 +171,7 @@ import {
   update as updateSenderInfo,
 } from '@/api/notify/senderInfo';
 import { exists as senderSupportExists } from '@/api/notify/senderSupport';
+import { resetSend } from '@/api/notify/reset';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -228,7 +237,7 @@ export default {
             data: [],
           },
           currentPage: 0,
-          pageSize: 3,
+          pageSize: 5,
           selection: null,
         },
         topicTable: {
@@ -241,8 +250,11 @@ export default {
             data: [],
           },
           currentPage: 0,
-          pageSize: 3,
+          pageSize: 5,
           selection: null,
+        },
+        applyChangesButton: {
+          disabled: false,
         },
       },
       center: {
@@ -428,6 +440,25 @@ export default {
         })
         .finally(() => {
           this.center.loading = false;
+        });
+    },
+    handleApplyChanges() {
+      this.west.applyChangesButton.disabled = true;
+      resolveResponse(resetSend())
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '变更应用成功！后台状态刷新中，请不要频繁点击',
+            type: 'success',
+            center: true,
+          });
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.west.applyChangesButton.disabled = false;
+          }, 3000);
         });
     },
   },

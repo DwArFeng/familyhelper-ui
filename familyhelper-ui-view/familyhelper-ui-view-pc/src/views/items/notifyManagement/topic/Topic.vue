@@ -17,6 +17,14 @@
               </el-button>
               <el-divider direction="vertical"/>
               <el-button type="success" @click="handleTopicSearch">刷新数据</el-button>
+              <el-divider direction="vertical"/>
+              <el-button
+                type="primary"
+                :disabled="west.applyChangesButton.disabled"
+                @click="handleApplyChanges"
+              >
+                应用变更
+              </el-button>
             </div>
           </template>
           <template v-slot:default>
@@ -197,6 +205,7 @@ import {
   update as updateDispatcherInfo,
 } from '@/api/notify/dispatcherInfo';
 import { exists as dispatcherSupportExists } from '@/api/notify/dispatcherSupport';
+import { resetDispatch } from '@/api/notify/reset';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -302,6 +311,9 @@ export default {
               { required: true, message: '主题标签不能为空', trigger: 'blur' },
             ],
           },
+        },
+        applyChangesButton: {
+          disabled: false,
         },
       },
       center: {
@@ -553,6 +565,25 @@ export default {
         })
         .finally(() => {
           this.center.loading = false;
+        });
+    },
+    handleApplyChanges() {
+      this.west.applyChangesButton.disabled = true;
+      resolveResponse(resetDispatch())
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '变更应用成功！后台状态刷新中，请不要频繁点击',
+            type: 'success',
+            center: true,
+          });
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.west.applyChangesButton.disabled = false;
+          }, 3000);
         });
     },
   },
