@@ -1,43 +1,34 @@
 <template>
-  <div class="permit-maintain-dialog-container">
-    <el-dialog
-      id="dialog"
-      append-to-body
-      destroy-on-close
-      title="权限管理"
-      top="6vh"
-      :visible.sync="dialog.watchedVisible"
-      :close-on-click-modal="false"
-    >
-      <div class="dialog-container">
-        <div class="header-container">
-          <el-form class="header-form" :inline="true" :model="form">
-            <el-form-item class="header-form-item" label="用户">
-              <account-selector v-model="form.userId" :filter="(d)=> d.key.string_id !== me"/>
-            </el-form-item>
-            <el-form-item class="header-form-item" label="权限等级">
-              <el-select v-model="form.permissionLevel" placeholder="权限等级">
-                <el-option
-                  v-for="indicator in plIndicator"
-                  :key="indicator.key"
-                  :label="indicator.label"
-                  :value="indicator.key"
-                  :disabled="!indicator.selectable"
-                />
-              </el-select>
-            </el-form-item>
-            <el-form-item class="header-form-item">
-              <el-button
-                type="primary"
-                :disabled="form.userId === ''"
-                @click="handleUpsertButtonClicked"
-              >
-                添加/更改
-              </el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-        <!--suppress JSUnresolvedFunction -->
+  <div class="permit-maintain-panel-container">
+    <header-layout-panel class="header-layout-panel">
+      <template v-slot:header>
+        <el-form class="header-form" :inline="true" :model="form">
+          <el-form-item class="header-form-item" label="用户">
+            <account-selector v-model="form.userId" :filter="(d)=> d.key.string_id !== me"/>
+          </el-form-item>
+          <el-form-item class="header-form-item" label="权限等级">
+            <el-select v-model="form.permissionLevel" placeholder="权限等级">
+              <el-option
+                v-for="indicator in plIndicator"
+                :key="indicator.key"
+                :label="indicator.label"
+                :value="indicator.key"
+                :disabled="!indicator.selectable"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item class="header-form-item">
+            <el-button
+              type="primary"
+              :disabled="form.userId === ''"
+              @click="handleUpsertButtonClicked"
+            >
+              添加/更改
+            </el-button>
+          </el-form-item>
+        </el-form>
+      </template>
+      <template v-slot:default>
         <table-panel
           class="table-container"
           :page-size.sync="table.pageSize"
@@ -77,63 +68,43 @@
             />
           </template>
         </table-panel>
-      </div>
-      <div class="footer-container" slot="footer">
-        <el-button @click="dialog.watchedVisible=false">
-          关闭窗口
-        </el-button>
-      </div>
-    </el-dialog>
+      </template>
+    </header-layout-panel>
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import TablePanel from '@/components/layout/TablePanel.vue';
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 import AccountSelector from '@/views/items/systemSettings/account/AccountSelector.vue';
-
-import resolveResponse from '@/util/response';
 import { childForAccountBookDisp } from '@/api/finance/poab';
 import { removePermission, upsertPermission } from '@/api/finance/accountBook';
+import resolveResponse from '@/util/response';
+import TablePanel from '@/components/layout/TablePanel.vue';
 
 // noinspection JSAnnotator
 export default {
-  name: 'PermitMaintainDialog',
-  components: { AccountSelector, TablePanel },
+  name: 'PermitMaintainPanel',
+  components: { TablePanel, AccountSelector, HeaderLayoutPanel },
   computed: {
     ...mapGetters('lnp', ['me']),
   },
   props: {
-    visible: {
-      type: Boolean,
-      default: false,
-    },
     accountBookId: {
       type: String,
       default: '',
     },
   },
   watch: {
-    visible(value) {
-      this.dialog.watchedVisible = value;
-    },
     accountBookId(value) {
       if (value === '') {
         return;
       }
       this.handleSearch();
     },
-    'dialog.watchedVisible': {
-      handler(value) {
-        this.$emit('update:visible', value);
-      },
-    },
   },
   data() {
     return {
-      dialog: {
-        watchedVisible: false,
-      },
       table: {
         pageSize: 15,
         entities: {
@@ -243,20 +214,19 @@ export default {
         });
     },
   },
+  mounted() {
+    if (this.accountBookId === '') {
+      return;
+    }
+    this.handleSearch();
+  },
 };
 </script>
 
 <style scoped>
-.dialog-container {
+.permit-maintain-panel-container {
+  height: 100%;
   width: 100%;
-  height: 68vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.header-container {
-  width: 100%;
-  margin-bottom: 5px;
 }
 
 .header-form {
@@ -280,6 +250,10 @@ export default {
 /*noinspection CssUnusedSymbol*/
 .header-form-item:nth-child(2) >>> .el-form-item__content {
   width: 100px;
+}
+
+.header-form-item{
+  margin-bottom: 0;
 }
 
 .header-form-item:last-child {

@@ -57,9 +57,9 @@
             <el-button
               class="card-button"
               size="mini"
-              icon="el-icon-lock"
+              icon="el-icon-help"
               :disabled="item.permission_level !== 0"
-              @click="handleItemToPermit(index, item)"
+              @click="handleItemToFunction(index, item)"
             />
             <el-button
               class="card-button"
@@ -128,9 +128,9 @@
         />
       </el-form-item>
     </entity-maintain-dialog>
-    <permit-maintain-dialog
-      :visible.sync="permitMaintainDialog.visible"
-      :account-book-id="permitMaintainDialog.accountBookId"
+    <function-maintain-dialog
+      :visible.sync="functionMaintainDialog.visible"
+      :account-book-id="functionMaintainDialog.accountBookId"
     />
   </div>
 </template>
@@ -139,8 +139,7 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardPanel from '@/components/layout/CardPanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
-import PermitMaintainDialog
-from '@/views/items/financeManagement/accountBook/PermitMaintainDialog.vue';
+import FunctionMaintainDialog from './FunctionMaintainDialog.vue';
 
 import resolveResponse from '@/util/response';
 import {
@@ -152,7 +151,10 @@ import { formatTimestamp } from '@/util/timestamp';
 export default {
   name: 'AccountBook',
   components: {
-    PermitMaintainDialog, CardPanel, BorderLayoutPanel, EntityMaintainDialog,
+    FunctionMaintainDialog,
+    CardPanel,
+    BorderLayoutPanel,
+    EntityMaintainDialog,
   },
   data() {
     return {
@@ -170,7 +172,7 @@ export default {
           ],
         },
       },
-      permitMaintainDialog: {
+      functionMaintainDialog: {
         visible: false,
         accountBookId: '',
       },
@@ -300,12 +302,12 @@ export default {
       this.entityMaintainDialog.mode = 'EDIT';
       this.entityMaintainDialog.visible = true;
     },
-    handleItemToPermit(index, item) {
+    handleItemToFunction(index, item) {
       Promise.resolve(item)
         .then((res) => {
           // noinspection JSUnresolvedVariable
           if (res.permission_level !== 0) {
-            this.$alert('您不是此账本的所有者，无权分配该账本的权限！', '权限不足', {
+            this.$alert('您不是此账本的所有者，无权编辑该账本的功能！', '权限不足', {
               confirmButtonText: '确定',
               type: 'warning',
               customClass: 'custom-message-box__w500',
@@ -314,8 +316,8 @@ export default {
           }
           return Promise.resolve(res.key.long_id);
         }).then(() => {
-          this.permitMaintainDialog.accountBookId = item.key.long_id;
-          this.permitMaintainDialog.visible = true;
+          this.functionMaintainDialog.accountBookId = item.key.long_id;
+          this.functionMaintainDialog.visible = true;
         }).catch(() => {
         });
     },

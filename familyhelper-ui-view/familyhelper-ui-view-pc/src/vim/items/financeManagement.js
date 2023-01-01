@@ -269,6 +269,40 @@ const financeManagement = [
       parentKey: 'financeManagement',
     },
   },
+  {
+    key: 'financeManagement.remindDriverSupport',
+    index: 71,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '提醒驱动支持',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/finance-management/remind-driver-support',
+        component: () => import('@/views/items/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.finance_management.remind_driver_support',
+      },
+    },
+    node: {
+      parentKey: 'financeManagement',
+    },
+  },
 ];
 
 export default financeManagement;
