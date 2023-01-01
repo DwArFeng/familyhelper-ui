@@ -6,7 +6,7 @@
       v-model="displayValue"
       readonly
     >
-      <span slot="prepend">当前个人最佳集合</span>
+      <span slot="prepend">当前笔记本</span>
       <el-button-group class="button-group" slot="append">
         <el-button
           class="button"
@@ -66,7 +66,7 @@ export default {
     },
     displayValue() {
       if (this.noteBook === null) {
-        return '（未选择个人最佳集合）';
+        return '（未选择笔记本）';
       }
       return this.noteBook.name;
     },
