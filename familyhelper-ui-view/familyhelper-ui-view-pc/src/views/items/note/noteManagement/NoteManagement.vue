@@ -168,10 +168,16 @@ import ItemNotePanel from '@/views/items/note/noteManagement/ItemNotePanel.vue';
 import ItemAttachmentPanel from '@/views/items/note/noteManagement/ItemAttachmentPanel.vue';
 
 import {
-  create as createNode, inspectDisp as inspectNode, update as updateNode, remove as removeNode,
+  create as createNode,
+  inspectDisp as inspectNode,
+  remove as removeNode,
+  update as updateNode,
 } from '@/api/note/noteNode';
 import {
-  create as createItem, inspectDisp as inspectItem, update as updateItem, remove as removeItem,
+  create as createItem,
+  inspectDisp as inspectItem,
+  remove as removeItem,
+  update as updateItem,
 } from '@/api/note/noteItem';
 import resolveResponse from '@/util/response';
 
@@ -266,8 +272,13 @@ export default {
   },
   methods: {
     handleNoteBookChanged(noteBook) {
-      this.parentSelection.noteBook = noteBook;
-      this.parentSelection.noteBookId = noteBook.key.long_id;
+      if (noteBook === null) {
+        this.parentSelection.noteBook = null;
+        this.parentSelection.noteBookId = '';
+      } else {
+        this.parentSelection.noteBook = noteBook;
+        this.parentSelection.noteBookId = noteBook.key.long_id;
+      }
     },
     handleCurrentChanged(node, data) {
       this.treePanel.selection.node = node;
