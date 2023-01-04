@@ -37,27 +37,48 @@
               :page-sizes="[15,20,30,50]"
               :table-data="west.table.entities.data"
               :table-selection.sync="west.table.selection"
+              :show-contextmenu="true"
+              :contextmenu-width="100"
               @onPagingAttributeChanged="handlePagingAttributeChanged"
               @onEntityInspect="handleShowNotifySettingInspectDialog"
               @onEntityEdit="handleShowNotifySettingEditDialog"
               @onEntityDelete="handleNotifySettingDelete"
             >
-              <el-table-column
-                prop="label"
-                label="名称"
-                show-tooltip-when-overflow
-              />
-              <el-table-column
-                prop="enabled"
-                label="使能"
-                width="50px"
-                :formatter="booleanFormatter"
-              />
-              <el-table-column
-                prop="remark"
-                label="备注"
-                show-tooltip-when-overflow
-              />
+              <template v-slot:default>
+                <el-table-column
+                  prop="label"
+                  label="名称"
+                  show-tooltip-when-overflow
+                />
+                <el-table-column
+                  prop="enabled"
+                  label="使能"
+                  width="50px"
+                  :formatter="booleanFormatter"
+                />
+                <el-table-column
+                  prop="remark"
+                  label="备注"
+                  show-tooltip-when-overflow
+                />
+              </template>
+              <template v-slot:contextmenu="{row,index,close}">
+                <ul>
+                  <li @click="handleNotifySettingCopyKeyContextmenuClicked(row,close)">
+                    复制主键
+                  </li>
+                  <el-divider/>
+                  <li @click="handleNotifySettingInspectContextmenuClicked(row,index,close)">
+                    查看...
+                  </li>
+                  <li @click="handleNotifySettingEditContextmenuClicked(row,index,close)">
+                    编辑...
+                  </li>
+                  <li @click="handleNotifySettingDeleteContextmenuClicked(row,index,close)">
+                    删除...
+                  </li>
+                </ul>
+              </template>
             </table-panel>
           </template>
         </header-layout-panel>
@@ -164,8 +185,8 @@ import {
 } from '@/api/notify/notifySetting';
 import {
   exists as existsRouterInfo,
-  inspect as inspectRouterInfo,
   insert as insertRouterInfo,
+  inspect as inspectRouterInfo,
   update as updateRouterInfo,
 } from '@/api/notify/routerInfo';
 import { exists as routerSupportExists } from '@/api/notify/routerSupport';
@@ -364,12 +385,19 @@ export default {
       this.syncAnchorNotifySetting(entity);
       this.showDialog('INSPECT');
     },
+    handleNotifySettingInspectContextmenuClicked(row, index, close) {
+      this.handleShowNotifySettingInspectDialog(index, row);
+      close();
+    },
     handleShowNotifySettingEditDialog(index, entity) {
       this.syncAnchorNotifySetting(entity);
       this.showDialog('EDIT');
     },
+    handleNotifySettingEditContextmenuClicked(row, index, close) {
+      this.handleShowNotifySettingEditDialog(index, row);
+      close();
+    },
     handleNotifySettingDelete(index, entity) {
-      this.west.loading = true;
       Promise.resolve()
         .then(() => this.$confirm('此操作将永久删除此通知设置。<br>'
           + '该操作不可恢复！<br>'
@@ -380,6 +408,10 @@ export default {
           customClass: 'custom-message-box__w500',
           type: 'warning',
         }).then(() => Promise.resolve()).catch(() => Promise.reject()))
+        .then(() => {
+          this.west.loading = true;
+          return Promise.resolve();
+        })
         .then(() => resolveResponse(removeNotifySetting(entity.key.long_id)))
         .then(() => {
           this.$message({
@@ -397,6 +429,10 @@ export default {
         .finally(() => {
           this.west.loading = false;
         });
+    },
+    handleNotifySettingDeleteContextmenuClicked(row, index, close) {
+      this.handleNotifySettingDelete(index, row);
+      close();
     },
     syncAnchorNotifySetting(entity) {
       this.west.maintainDialog.anchorEntity.key.long_id = entity.key.long_id;
@@ -516,6 +552,18 @@ export default {
           }, 3000);
         });
     },
+    handleNotifySettingCopyKeyContextmenuClicked(row, close) {
+      close();
+      navigator.clipboard.writeText(row.key.long_id)
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '复制成功',
+            type: 'success',
+            center: true,
+          });
+        });
+    },
   },
   mounted() {
     this.handleNotifySettingSearch();
@@ -606,5 +654,12 @@ export default {
   width: 0;
   height: 100%;
   flex-grow: 1;
+}
+
+/*noinspection CssUnusedSymbol*/
+.table >>> .contextmenu .el-divider--horizontal{
+  color: red;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 </style>
