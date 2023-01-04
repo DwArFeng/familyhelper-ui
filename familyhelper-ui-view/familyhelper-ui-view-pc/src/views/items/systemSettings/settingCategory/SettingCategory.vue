@@ -62,6 +62,14 @@
             @click="handleSearch"
           />
         </el-input>
+        <el-divider direction="vertical"/>
+        <el-button
+          type="primary"
+          :disabled="applyChangesButton.disabled"
+          @click="handleApplyChanges"
+        >
+          应用变更
+        </el-button>
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
@@ -128,6 +136,7 @@ import {
   all, exists, idLike, insert, remove, update,
 } from '@/api/settingrepo/settingCategory';
 import { exists as existsSupport } from '@/api/settingrepo/formatterSupport';
+import { resetFormat } from '@/api/settingrepo/reset';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -183,6 +192,9 @@ export default {
     return {
       idSearchBar: {
         value: '',
+      },
+      applyChangesButton: {
+        disabled: false,
       },
       loading: false,
       table: {
@@ -385,6 +397,25 @@ export default {
       this.entityDialog.anchorEntity.formatter_type = selection.key.string_id;
       // noinspection JSUnresolvedVariable
       this.entityDialog.anchorEntity.formatter_param = selection.example_param;
+    },
+    handleApplyChanges() {
+      this.applyChangesButton.disabled = true;
+      resolveResponse(resetFormat())
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '变更应用成功！后台状态刷新中，请不要频繁点击',
+            type: 'success',
+            center: true,
+          });
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          setTimeout(() => {
+            this.applyChangesButton.disabled = false;
+          }, 3000);
+        });
     },
   },
   mounted() {
