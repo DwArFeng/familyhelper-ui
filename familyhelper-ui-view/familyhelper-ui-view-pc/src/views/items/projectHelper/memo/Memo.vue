@@ -7,8 +7,10 @@
       <div class="west-container" slot="west" v-loading="memoTable.loading">
         <header-layout-panel>
           <template v-slot:header>
-            <div>
+            <div class="header-container">
               <el-button type="primary" @click="handleShowMemoCreateDialog">新建</el-button>
+              <el-divider direction="vertical"/>
+              <el-button type="success" @click="handleMemoSearch">刷新数据</el-button>
             </div>
           </template>
           <template v-slot:default>
@@ -59,7 +61,7 @@
         <div class="wrapper" v-else>
           <header-layout-panel>
             <template v-slot:header>
-              <div class="header">
+              <div class="header-container">
                 <el-button
                   class="item"
                   type="primary"
@@ -972,8 +974,14 @@ export default {
   flex-grow: 1;
 }
 
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 /*noinspection CssUnusedSymbol*/
-.header .el-divider{
+.header-container .el-divider--vertical {
   margin: 0 8px;
 }
 </style>
