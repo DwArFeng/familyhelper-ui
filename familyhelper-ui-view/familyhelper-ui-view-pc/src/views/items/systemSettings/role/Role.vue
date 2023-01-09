@@ -90,7 +90,7 @@
       @onEntityCreate="handleRoleCreate"
       @onEntityEdit="handleRoleEdit"
     >
-      <el-form-item label="账户ID" prop="key.string_id">
+      <el-form-item label="角色ID" prop="key.string_id">
         <el-input
           v-model="roleMaintainDialog.anchorEntity.key.string_id"
           oninput="this.value = this.value.toLowerCase()"
