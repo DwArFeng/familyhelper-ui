@@ -5,7 +5,7 @@
     tabindex="0"
     append-to-body
     destroy-on-close
-    title="选择账本"
+    title="选择工程"
     top="6vh"
     width="80%"
     :visible.sync="watchedVisible"
@@ -45,7 +45,7 @@
               <span class="iconfont project-property-icon" style="color:black">&#xfffb;</span>
               <!--suppress JSUnresolvedVariable -->
               <span class="project-property-text">
-                所有者: {{ item.owner_account.key.string_id }}
+                所有者: {{ item.owner_account.display_name }}
               </span>
             </div>
             <div class="project-property">
