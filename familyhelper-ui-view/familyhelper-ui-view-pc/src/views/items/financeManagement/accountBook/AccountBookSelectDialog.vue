@@ -45,7 +45,7 @@
               <span class="iconfont account-book-property-icon" style="color:black">&#xfffb;</span>
               <!--suppress JSUnresolvedVariable -->
               <span class="account-book-property-text">
-                所有者: {{ item.owner_account.key.string_id }}
+                所有者: {{ item.owner_account.display_name }}
               </span>
             </div>
             <div class="account-book-property">
