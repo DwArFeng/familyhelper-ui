@@ -104,6 +104,13 @@
           <el-button type="success" @click="handleSearch">
             刷新数据
           </el-button>
+          <el-divider direction="vertical"/>
+          <fund-change-type-selector
+            v-model="typeSelector.value"
+            placeholder="资金变更类型"
+            clearable
+            @change="handleSearch"
+          />
         </div>
       </header-layout-panel>
     </div>
@@ -133,19 +140,12 @@
           readonly
           v-if="maintainDialog.mode === 'INSPECT'"
         />
-        <el-select
+        <fund-change-type-selector
           class='fund-change-type-select'
           v-model="maintainDialog.anchorEntity.change_type"
           placeholder="请选择"
           v-else
-        >
-          <el-option
-            v-for="item in typeIndicator.entities.data"
-            :key="item.key.string_id"
-            :label="item.label"
-            :value="item.key.string_id"
-          />
-        </el-select>
+        />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
@@ -161,20 +161,24 @@
 import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
+import FundChangeTypeSelector
+from '@/views/items/financeManagement/fundChangeTypeIndicator/FundChangeTypeSelector.vue';
 
 import {
   childForAccountBookDescDisp as childForAccountBook,
+  childForAccountBookTypeEqualsDescDisp as childForAccountBookTypeEquals,
   record,
   remove,
   update,
 } from '@/api/finance/fundChange';
 import resolveResponse from '@/util/response';
-import { all as allFundChangeTypeIndicator } from '@/api/finance/fundChangeTypeIndicator';
 import { formatTimestamp } from '@/util/timestamp';
 
 export default {
   name: 'FundChangePanel',
-  components: { TablePanel, EntityMaintainDialog, HeaderLayoutPanel },
+  components: {
+    FundChangeTypeSelector, TablePanel, EntityMaintainDialog, HeaderLayoutPanel,
+  },
   props: {
     accountBook: {
       type: Object,
@@ -212,15 +216,6 @@ export default {
     };
     return {
       loading: false,
-      typeIndicator: {
-        entities: {
-          current_page: 0,
-          total_pages: 0,
-          rows: 0,
-          count: '0',
-          data: [],
-        },
-      },
       table: {
         currentPage: 0,
         pageSize: 10,
@@ -252,17 +247,12 @@ export default {
           formatted_change_type: '',
         },
       },
+      typeSelector: {
+        value: '',
+      },
     };
   },
   methods: {
-    initTypeIndicator() {
-      resolveResponse(allFundChangeTypeIndicator(0, 1000))
-        .then((res) => {
-          this.typeIndicator.entities = res;
-        })
-        .catch(() => {
-        });
-    },
     handlePagingAttributeChanged() {
       this.handleSearch();
     },
@@ -270,7 +260,11 @@ export default {
       if (this.accountBook === null) {
         return;
       }
-      this.lookupChildForAccountBook();
+      if (this.typeSelector.value === '') {
+        this.lookupChildForAccountBook();
+      } else {
+        this.childForAccountBookTypeEquals();
+      }
     },
     lookupChildForAccountBook() {
       this.loading = true;
@@ -282,6 +276,29 @@ export default {
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForAccountBook(
               this.accountBook.key.long_id, res.total_pages, this.table.pageSize,
+            ));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    childForAccountBookTypeEquals() {
+      this.loading = true;
+      resolveResponse(childForAccountBookTypeEquals(
+        this.accountBook.key.long_id, this.typeSelector.value, this.table.currentPage,
+        this.table.pageSize,
+      ))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(childForAccountBook(
+              this.accountBook.key.long_id, this.typeSelector.value, res.total_pages,
+              this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -480,9 +497,6 @@ export default {
       this.handleEntityDelete(index, row);
     },
   },
-  mounted() {
-    this.initTypeIndicator();
-  },
 };
 </script>
 
@@ -490,6 +504,17 @@ export default {
 .fund-change-panel-container {
   width: 100%;
   height: 100%;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/*noinspection CssUnusedSymbol*/
+.header-container .el-divider--vertical {
+  margin: 0 8px;
 }
 
 .center-panel-wrapper {
