@@ -2,6 +2,7 @@
   <div class="memo-container">
     <border-layout-panel
       class="border-layout-panel"
+      west-width="40%"
       :west-visible="true"
     >
       <div class="west-container" slot="west" v-loading="memoTable.loading">
@@ -33,6 +34,19 @@
                   label="简报"
                   show-tooltip-when-overflow
                 />
+                <el-table-column
+                  prop="star_flag"
+                  label="星标"
+                  width="50px"
+                  align="center"
+                  :resizable="false"
+                >
+                  <template v-slot:default="{row,column}">
+                    <i class="iconfont">
+                      {{ row[column.property] ? '\uffd4' : '\uffd5' }}
+                    </i>
+                  </template>
+                </el-table-column>
               </template>
               <template v-slot:operateColumn="{row}">
                 <el-button-group class=operate-column>
@@ -120,6 +134,12 @@
                     </el-form-item>
                     <el-form-item label="备注" style="width: 100%">
                       {{ memoDetail.entity.remark }}
+                    </el-form-item>
+                    <el-form-item label="星标" style="width: 50%">
+                      {{ memoDetail.entity.star_flag ? '是' : '否' }}
+                    </el-form-item>
+                    <el-form-item label="优先级" style="width: 50%">
+                      {{ memoDetail.entity.priority }}
                     </el-form-item>
                     <el-form-item label="创建日期" style="width: 50%">
                       {{ wrappedFormatTimestamp(memoDetail.entity.created_date) }}
@@ -259,6 +279,27 @@
           :readonly="maintainDialog.dialogMode === 'INSPECT'"
         />
       </el-form-item>
+      <el-form-item label="星标" prop="star_flag">
+        <el-switch
+          v-model="maintainDialog.anchorEntity.star_flag"
+          active-text="是"
+          inactive-text="否"
+          :disabled="maintainDialog.mode === 'INSPECT'"
+        />
+      </el-form-item>
+      <el-form-item label="优先级" prop="priority">
+        <el-input
+          v-model="maintainDialog.anchorEntity.priority"
+          v-if="maintainDialog.mode === 'INSPECT'"
+          readonly
+        />
+        <el-input-number
+          v-model="maintainDialog.anchorEntity.priority"
+          v-else
+          :min="0"
+          :max="10"
+        />
+      </el-form-item>
     </entity-maintain-dialog>
     <file-upload-dialog
       title="上传文件"
@@ -285,21 +326,25 @@ import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 import TitleLayoutPanel from '@/components/layout/TitleLayoutPanel.vue';
 
 import {
-  inspect as inspectMemo,
-  childForUserInProgress as childMemoForUserInProgress,
+  childForUserInProgressDefaultOrder as childMemoForUserInProgress,
   create as createMemo,
-  update as updateMemo,
-  remove as removeMemo,
   finish as finishMemo,
+  inspect as inspectMemo,
+  remove as removeMemo,
+  update as updateMemo,
 } from '@/api/project/memo';
 import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';
 import { dataSizePreset, formatUnit } from '@/util/number';
 import {
-  childForMemo, childForMemoCreatedDateAsc,
+  childForMemo,
+  childForMemoCreatedDateAsc,
   childForMemoInspectedDateDesc,
-  childForMemoModifiedDateDesc, childForMemoOriginNameAsc,
-  download, remove, upload,
+  childForMemoModifiedDateDesc,
+  childForMemoOriginNameAsc,
+  download,
+  remove,
+  upload,
 } from '@/api/project/memoFile';
 import { fileType } from '@/util/file';
 
@@ -376,6 +421,8 @@ export default {
           long_id: '',
           profile: '',
           remark: '',
+          star_flag: false,
+          priority: 0,
         },
         rules: {
           profile: [
@@ -627,6 +674,8 @@ export default {
       this.maintainDialog.anchorEntity.long_id = entity.key.long_id;
       this.maintainDialog.anchorEntity.profile = entity.profile;
       this.maintainDialog.anchorEntity.remark = entity.remark;
+      this.maintainDialog.anchorEntity.star_flag = entity.star_flag;
+      this.maintainDialog.anchorEntity.priority = entity.priority;
     },
     showDialog(mode) {
       this.maintainDialog.dialogMode = mode;
@@ -640,6 +689,8 @@ export default {
         this.me,
         this.maintainDialog.anchorEntity.profile,
         this.maintainDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.star_flag,
+        this.maintainDialog.anchorEntity.priority,
       ))
         .then(() => {
           this.$message({
@@ -665,6 +716,8 @@ export default {
         this.maintainDialog.anchorEntity.long_id,
         this.maintainDialog.anchorEntity.profile,
         this.maintainDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.star_flag,
+        this.maintainDialog.anchorEntity.priority,
       ))
         .then(() => {
           this.$message({

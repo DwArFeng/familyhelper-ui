@@ -6,6 +6,20 @@
   "description": "家庭帮手",
   "glyphs": [
     {
+      "icon_id": "18170317",
+      "name": "星,星星,星形,半星,实星",
+      "font_class": "star-full",
+      "unicode": "ffd4",
+      "unicode_decimal": 65492
+    },
+    {
+      "icon_id": "18170318",
+      "name": "星,星星,星形,半星,实星",
+      "font_class": "star",
+      "unicode": "ffd5",
+      "unicode_decimal": 65493
+    },
+    {
       "icon_id": "4936605",
       "name": "file-fill",
       "font_class": "file-fill1",

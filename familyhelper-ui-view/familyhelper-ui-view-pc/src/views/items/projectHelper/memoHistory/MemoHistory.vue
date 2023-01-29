@@ -2,6 +2,7 @@
   <div class="memo-history-container">
     <border-layout-panel
       class="border-layout-panel"
+      west-width="40%"
       :west-visible="true"
     >
       <div class="west-container" slot="west" v-loading="memoTable.loading">
@@ -59,6 +60,19 @@
                   :resizable="false"
                   :formatter="statusFormatter"
                 />
+                <el-table-column
+                  prop="star_flag"
+                  label="星标"
+                  width="50px"
+                  align="center"
+                  :resizable="false"
+                >
+                  <template v-slot:default="{row,column}">
+                    <i class="iconfont">
+                      {{ row[column.property] ? '\uffd4' : '\uffd5' }}
+                    </i>
+                  </template>
+                </el-table-column>
               </template>
               <template v-slot:operateColumn="{row}">
                 <el-button-group class=operate-column>
@@ -118,6 +132,12 @@
                     </el-form-item>
                     <el-form-item label="备注" style="width: 100%">
                       {{ memoDetail.entity.remark }}
+                    </el-form-item>
+                    <el-form-item label="星标" style="width: 50%">
+                      {{ memoDetail.entity.star_flag ? '是' : '否' }}
+                    </el-form-item>
+                    <el-form-item label="优先级" style="width: 50%">
+                      {{ memoDetail.entity.priority }}
                     </el-form-item>
                     <el-form-item label="创建日期" style="width: 50%">
                       {{ wrappedFormatTimestamp(memoDetail.entity.created_date) }}
@@ -230,10 +250,10 @@ import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 import TitleLayoutPanel from '@/components/layout/TitleLayoutPanel.vue';
 
 import {
+  childForUserDefaultOrder as childMemoForUser,
+  childForUserFinishedDefaultOrder as childMemoForUserFinished,
+  childForUserInProgressDefaultOrder as childMemoForUserInProgress,
   inspect as inspectMemo,
-  childForUser as childMemoForUser,
-  childForUserInProgress as childMemoForUserInProgress,
-  childForUserFinished as childMemoForUserFinished,
   remove as removeMemo,
   removeFinishedMemos,
 } from '@/api/project/memo';
@@ -241,10 +261,13 @@ import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';
 import { dataSizePreset, formatUnit } from '@/util/number';
 import {
-  childForMemo, childForMemoCreatedDateAsc,
+  childForMemo,
+  childForMemoCreatedDateAsc,
   childForMemoInspectedDateDesc,
-  childForMemoModifiedDateDesc, childForMemoOriginNameAsc,
-  download, remove,
+  childForMemoModifiedDateDesc,
+  childForMemoOriginNameAsc,
+  download,
+  remove,
 } from '@/api/project/memoFile';
 import { fileType } from '@/util/file';
 
