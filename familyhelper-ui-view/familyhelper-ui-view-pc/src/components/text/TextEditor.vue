@@ -114,12 +114,15 @@ export default {
 .text-editor-container {
   height: 100%;
   width: 100%;
+  background: #F5F7FA;
   display: flex;
   flex-direction: column;
 }
 
 .header {
   width: 100%;
+  height: 40px;
+  line-height: 40px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
