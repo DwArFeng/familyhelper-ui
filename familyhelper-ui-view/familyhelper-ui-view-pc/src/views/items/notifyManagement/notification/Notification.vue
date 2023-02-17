@@ -39,10 +39,16 @@
           :formatter="timestampFormatter"
         />
         <el-table-column
-          prop="message"
-          label="消息"
+          prop="subject"
+          label="主题"
           show-tooltip-when-overflow
-        />
+        >
+          <template v-slot="{row,column}">
+            <div class="subject-column" @click="handleShowDetailDialog(row)">
+              {{ formatSubject(row[column.property]) }}
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column
           prop="remark"
           label="备注"
@@ -97,6 +103,31 @@
         />
       </div>
     </border-layout-panel>
+    <el-dialog
+      append-to-body
+      destroy-on-close
+      close-on-click-modal
+      title="通知详情"
+      top="9vh"
+      :visible.sync="detailDialog.visible"
+    >
+      <div class="detail-wrapper">
+        <div>{{formatSubject(detailDialog.subject)}}</div>
+        <el-divider/>
+        <div class="detail-body-wrapper">
+          <el-empty
+            v-if="isStringEmpty(detailDialog.body)"
+            class="detail-body empty-body"
+            description="没有正文"
+          />
+          <text-editor
+            v-else class="detail-body text-editor"
+            v-model="detailDialog.body"
+            readonly
+          />
+        </div>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -105,9 +136,15 @@ import { mapActions, mapGetters } from 'vuex';
 
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
+import TextEditor from '@/components/text/TextEditor.vue';
 
 import {
-  remove, childForUser, childForUserUnread, read, readAll, removeAll,
+  childForUser,
+  childForUserUnread,
+  read,
+  readAll,
+  remove,
+  removeAll,
 } from '@/api/clannad/notification';
 import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';
@@ -115,7 +152,9 @@ import { formatTimestamp } from '@/util/timestamp';
 // noinspection JSAnnotator
 export default {
   name: 'Notification',
-  components: { BorderLayoutPanel, TablePanel },
+  components: {
+    TextEditor, BorderLayoutPanel, TablePanel,
+  },
   computed: {
     ...mapGetters('lnp', ['me']),
   },
@@ -139,6 +178,11 @@ export default {
         value: false,
       },
       loading: false,
+      detailDialog: {
+        visible: false,
+        subject: '',
+        body: '',
+      },
     };
   },
   methods: {
@@ -305,6 +349,24 @@ export default {
           this.loading = false;
         });
     },
+    handleShowDetailDialog(row) {
+      this.detailDialog.subject = row.subject;
+      this.detailDialog.body = row.body;
+      this.detailDialog.visible = true;
+      if (row.read_flag) {
+        return;
+      }
+      resolveResponse(read(row.key.long_id))
+        .then(() => {
+          this.handleSearch();
+        });
+    },
+    formatSubject(subject) {
+      return this.isStringEmpty(subject) ? '（无主题）' : subject;
+    },
+    isStringEmpty(val) {
+      return val === null || val === undefined || val === '';
+    },
     ...mapActions('notification', ['updateUnreadCount']),
   },
   mounted() {
@@ -338,5 +400,38 @@ export default {
 
 .notification-table .table-button {
   padding: 7px;
+}
+
+.notification-table .subject-column {
+  width: fit-content;
+  max-width: 100%;
+  text-decoration: underline;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/*noinspection CssUnusedSymbol*/
+.detail-wrapper .el-divider {
+  margin: 5px 0;
+}
+
+.detail-body-wrapper{
+  height: 600px;
+  width: 100%;
+}
+
+.detail-body-wrapper .detail-body{
+  height: 100%;
+  width: 100%;
+}
+
+.detail-body-wrapper .empty-body >>> p {
+  user-select: none;
 }
 </style>
