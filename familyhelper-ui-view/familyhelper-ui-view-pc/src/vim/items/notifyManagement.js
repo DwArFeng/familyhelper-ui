@@ -236,14 +236,14 @@ const notifyManagement = [
     },
   },
   {
-    key: 'notifyManagement.sendHistory',
+    key: 'notifyManagement.notifyHistory',
     index: 60,
     meta: {
       display: {
         iconType: 'elementUI',
         iconContent: '',
         labelType: 'elementUI',
-        labelContent: '发送历史',
+        labelContent: '通知历史',
       },
       menu: {
         shown: true,
@@ -257,12 +257,12 @@ const notifyManagement = [
       },
       router: {
         required: true,
-        path: 'app/notify-settings/sender-history',
-        component: () => import('@/views/items/notifyManagement/sendHistory/SendHistory.vue'),
+        path: 'app/notify-settings/notify-history',
+        component: () => import('@/views/items/notifyManagement/notifyHistory/NotifyHistory.vue'),
       },
       permission: {
         required: true,
-        node: 'ui.pc.menu_visible.notify_management.send_history',
+        node: 'ui.pc.menu_visible.notify_management.notify_history',
       },
     },
     node: {
