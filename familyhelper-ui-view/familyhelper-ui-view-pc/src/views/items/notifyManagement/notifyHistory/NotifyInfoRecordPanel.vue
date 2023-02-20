@@ -79,11 +79,12 @@
 
 <script>
 import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
-import { childForNotifySettingDisp as childForNotifySetting } from '@/api/notify/notifyInfoRecord';
-import resolveResponse from '@/util/response';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import TextEditor from '@/components/text/TextEditor.vue';
+
+import { childForNotifySettingDisp as childForNotifySetting } from '@/api/notify/notifyInfoRecord';
+import resolveResponse from '@/util/response';
 
 export default {
   name: 'NotifyInfoRecordPanel',
@@ -94,6 +95,11 @@ export default {
     notifyHistoryId: {
       type: String,
       required: true,
+    },
+  },
+  watch: {
+    notifyHistoryId() {
+      this.handleSearch();
     },
   },
   data() {
@@ -121,19 +127,14 @@ export default {
       },
     };
   },
-  watch: {
-    notifyHistoryId(value) {
-      if (value === '') {
-        return;
-      }
-      this.handleSearch();
-    },
-  },
   methods: {
     handlePagingAttributeChanged() {
       this.handleSearch();
     },
     handleSearch() {
+      if (this.notifyHistoryId === '') {
+        return;
+      }
       this.lookupChildForNotifySetting();
     },
     lookupChildForNotifySetting() {
@@ -191,9 +192,6 @@ export default {
     },
   },
   mounted() {
-    if (this.notifyHistoryId === '') {
-      return;
-    }
     this.handleSearch();
   },
 };
