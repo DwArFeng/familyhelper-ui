@@ -140,7 +140,7 @@ export default {
     handleSearch() {
       switch (this.mode) {
         case 'ASSET_BOM':
-          this.lookupAllOwned();
+          this.lookupAllPermitted();
           break;
         case 'ASSETS_REPORT':
           this.lookupAllPermitted();

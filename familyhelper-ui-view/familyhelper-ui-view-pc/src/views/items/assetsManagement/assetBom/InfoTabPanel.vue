@@ -3,8 +3,20 @@
     <header-layout-panel>
       <template v-slot:header>
         <div class="header">
-          <el-button type="primary" @click="handleEntityEdit">编辑属性</el-button>
-          <el-button type="primary" @click="itemCoverEditDialog.visible=true">编辑封面</el-button>
+          <el-button
+            type="primary"
+            :disabled="readOnly"
+            @click="handleEntityEdit"
+          >
+            编辑属性
+          </el-button>
+          <el-button
+            type="primary"
+            :disabled="readOnly"
+            @click="itemCoverEditDialog.visible=true"
+          >
+            编辑封面
+          </el-button>
         </div>
       </template>
       <template v-slot:default>
