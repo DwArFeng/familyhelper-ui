@@ -225,7 +225,6 @@
                           size="mini"
                           icon="el-icon-download"
                           type="success"
-                          :disabled="inspectTableButtonDisabled(row)"
                           @click="handleMemoFileDownload(row)"
                         />
                       </el-button-group>

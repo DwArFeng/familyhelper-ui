@@ -122,7 +122,6 @@
                 size="mini"
                 icon="el-icon-download"
                 type="success"
-                :disabled="inspectTableButtonDisabled(row)"
                 @click="handleItemFileDownload(row)"
               />
               <el-button
