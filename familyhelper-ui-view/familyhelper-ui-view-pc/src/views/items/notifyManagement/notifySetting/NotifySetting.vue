@@ -658,7 +658,6 @@ export default {
 
 /*noinspection CssUnusedSymbol*/
 .table >>> .contextmenu .el-divider--horizontal{
-  color: red;
   margin-top: 1px;
   margin-bottom: 1px;
 }
