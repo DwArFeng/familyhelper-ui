@@ -1,5 +1,37 @@
 const miscellaneous = [
   {
+    key: 'miscellaneous',
+    index: 150,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '杂项',
+      },
+      menu: {
+        shown: false,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: false,
+      },
+      permission: {
+        required: false,
+        node: '',
+      },
+    },
+    node: {
+      parentKey: null,
+    },
+  },
+  {
     key: 'miscellaneous.fileEditor',
     index: 0,
     meta: {
@@ -21,7 +53,7 @@ const miscellaneous = [
       },
       router: {
         required: true,
-        path: 'app/asset-management/asset-catalog',
+        path: 'app/miscellaneous/file-editor',
         component: () => import('@/views/items/miscellaneous/fileEditor/FileEditor.vue'),
       },
       permission: {
@@ -30,7 +62,7 @@ const miscellaneous = [
       },
     },
     node: {
-      parentKey: null,
+      parentKey: 'miscellaneous',
     },
   },
 ];
