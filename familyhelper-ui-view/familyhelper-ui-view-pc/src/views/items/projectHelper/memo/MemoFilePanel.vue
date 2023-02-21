@@ -164,6 +164,8 @@ import FileCreateDialog from '@/components/file/FileCreateDialog.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 
+import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+
 import {
   childForMemo, childForMemoCreatedDateAsc,
   childForMemoInspectedDateDesc,
@@ -174,7 +176,6 @@ import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
 import { dataSizePreset, formatUnit } from '@/util/number';
 import { formatTimestamp } from '@/util/timestamp';
-import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
 
 export default {
   name: 'MemoFilePanel',
