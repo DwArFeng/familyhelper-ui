@@ -61,7 +61,6 @@ export default {
   flex-direction: column;
   padding: 0;
   background-color: #FFFFFF;
-  color: #889AA4;
 }
 
 .router-container {
@@ -70,6 +69,7 @@ export default {
   box-sizing: border-box;
   flex-grow: 1;
   padding: 20px;
+  color: unset;
 }
 
 /*noinspection CssUnusedSymbol*/
