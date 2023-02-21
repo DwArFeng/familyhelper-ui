@@ -2,83 +2,93 @@
   <div class="role-container">
     <border-layout-panel
       class="border-layout-panel"
+      east-width="40%"
       :header-visible="true"
       :east-visible="true"
     >
-      <table-panel
-        :page-size.sync="roleTablePanel.pageSize"
-        :entity-count="parseInt(roleTablePanel.entities.count)"
-        :current-page.sync="roleTablePanel.currentPage"
-        :page-sizes="[15,20,30,50]"
-        :table-data="roleTablePanel.entities.data"
-        :table-selection.sync="roleTablePanel.selection"
-        @onPagingAttributeChanged="handleRolePagingAttributeChanged"
-        @onEntityInspect="handleShowRoleInspectDialog"
-        @onEntityEdit="handleShowRoleEditDialog"
-        @onEntityDelete="handleRoleDelete"
-      >
-        <el-table-column
-          prop="key.string_id"
-          label="角色ID"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="name"
-          label="显示名称"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="enabled"
-          label="启用"
-          :formatter="enabledFormatter"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
-      </table-panel>
-      <table-panel
-        slot="east"
-        :page-size.sync="pexpTablePanel.pageSize"
-        :entity-count="parseInt(pexpTablePanel.entities.count)"
-        :current-page.sync="pexpTablePanel.currentPage"
-        :page-sizes="[15,20,30,50]"
-        :table-data="pexpTablePanel.entities.data"
-        :table-selection.sync="pexpTablePanel.selection"
-        @onPagingAttributeChanged="handlePexpPagingAttributeChanged"
-        @onEntityInspect="handleShowPexpInspectDialog"
-        @onEntityEdit="handleShowPexpEditDialog"
-        @onEntityDelete="handlePexpDelete"
-      >
-        <el-table-column
-          prop="content"
-          label="表达式"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
-      </table-panel>
-      <div class="header-container" slot="header">
-        <el-button
-          type="primary"
-          @click="handleShowRoleCreateDialog"
+      <template v-slot:default>
+        <table-panel
+          v-loading="roleTablePanel.loading"
+          :page-size.sync="roleTablePanel.pageSize"
+          :entity-count="parseInt(roleTablePanel.entities.count)"
+          :current-page.sync="roleTablePanel.currentPage"
+          :page-sizes="[15,20,30,50]"
+          :table-data="roleTablePanel.entities.data"
+          :table-selection.sync="roleTablePanel.selection"
+          @onPagingAttributeChanged="handleRolePagingAttributeChanged"
+          @onEntityInspect="handleShowRoleInspectDialog"
+          @onEntityEdit="handleShowRoleEditDialog"
+          @onEntityDelete="handleRoleDelete"
         >
-          新建角色
-        </el-button>
-        <el-divider direction="vertical"/>
-        <el-button
-          type="primary"
-          :disabled="roleTablePanel.selection === null"
-          @click="handleShowPexpCreateDialog"
+          <el-table-column
+            prop="key.string_id"
+            label="角色ID"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="name"
+            label="显示名称"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="enabled"
+            label="启用"
+            :formatter="enabledFormatter"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="remark"
+            label="备注"
+            show-tooltip-when-overflow
+          />
+        </table-panel>
+      </template>
+      <template v-slot:east>
+        <table-panel
+          v-loading="pexpTablePanel.loading"
+          :page-size.sync="pexpTablePanel.pageSize"
+          :entity-count="parseInt(pexpTablePanel.entities.count)"
+          :current-page.sync="pexpTablePanel.currentPage"
+          :page-sizes="[15,20,30,50]"
+          :table-data="pexpTablePanel.entities.data"
+          :table-selection.sync="pexpTablePanel.selection"
+          @onPagingAttributeChanged="handlePexpPagingAttributeChanged"
+          @onEntityInspect="handleShowPexpInspectDialog"
+          @onEntityEdit="handleShowPexpEditDialog"
+          @onEntityDelete="handlePexpDelete"
         >
-          新建权限表达式
-        </el-button>
-      </div>
+          <el-table-column
+            prop="content"
+            label="表达式"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="remark"
+            label="备注"
+            show-tooltip-when-overflow
+          />
+        </table-panel>
+      </template>
+      <template v-slot:header>
+        <div class="header-container">
+          <el-button
+            type="primary"
+            @click="handleShowRoleCreateDialog"
+          >
+            新建角色
+          </el-button>
+          <el-divider direction="vertical"/>
+          <el-button
+            type="primary"
+            :disabled="roleTablePanel.selection === null"
+            @click="handleShowPexpCreateDialog"
+          >
+            新建权限表达式
+          </el-button>
+          <el-divider direction="vertical"/>
+          <el-button type="success" @click="handleRoleSearch">刷新数据</el-button>
+        </div>
+      </template>
     </border-layout-panel>
     <entity-maintain-dialog
       :mode="roleMaintainDialog.dialogMode"
@@ -87,6 +97,7 @@
       :create-rules="roleMaintainDialog.createRules"
       :edit-rules="roleMaintainDialog.editRules"
       :close-on-click-modal="false"
+      :loading="roleMaintainDialog.loading"
       @onEntityCreate="handleRoleCreate"
       @onEntityEdit="handleRoleEdit"
     >
@@ -127,6 +138,7 @@
       :create-rules="pexpMaintainDialog.rules"
       :edit-rules="pexpMaintainDialog.rules"
       :close-on-click-modal="false"
+      :loading="pexpMaintainDialog.loading"
       @onEntityCreate="handlePexpCreate"
       @onEntityEdit="handlePexpEdit"
     >
@@ -212,6 +224,7 @@ export default {
     };
     return {
       roleTablePanel: {
+        loading: false,
         entities: {
           current_page: 0,
           total_pages: 0,
@@ -248,8 +261,10 @@ export default {
             { required: true, message: '名称不能为空', trigger: 'blur' },
           ],
         },
+        loading: false,
       },
       pexpTablePanel: {
+        loading: false,
         entities: {
           current_page: 0,
           total_pages: 0,
@@ -275,6 +290,7 @@ export default {
             { required: true, message: '表达式不能为空', trigger: 'blur' },
           ],
         },
+        loading: false,
       },
     };
   },
@@ -287,6 +303,7 @@ export default {
       this.lookupAllRole();
     },
     lookupAllRole() {
+      this.roleTablePanel.loading = true;
       resolveResponse(allRole(this.roleTablePanel.currentPage, this.roleTablePanel.pageSize))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
@@ -297,6 +314,9 @@ export default {
         })
         .then(this.updateRoleTableView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.roleTablePanel.loading = false;
         });
     },
     updateRoleTableView(res) {
@@ -304,6 +324,7 @@ export default {
       this.roleTablePanel.currentPage = res.current_page;
     },
     handleRoleCreate() {
+      this.roleMaintainDialog.loading = true;
       resolveResponse(insertRole(
         this.roleMaintainDialog.anchorEntity.key.string_id,
         this.roleMaintainDialog.anchorEntity.name,
@@ -326,9 +347,13 @@ export default {
           this.roleMaintainDialog.dialogVisible = false;
         })
         .catch(() => {
+        })
+        .finally(() => {
+          this.roleMaintainDialog.loading = false;
         });
     },
     handleRoleEdit() {
+      this.roleMaintainDialog.loading = true;
       Promise.resolve()
         .then(() => {
           const roleKeyToUpdate = this.roleMaintainDialog.anchorEntity.key.string_id;
@@ -393,6 +418,9 @@ export default {
           this.roleMaintainDialog.dialogVisible = false;
         })
         .catch(() => {
+        })
+        .finally(() => {
+          this.roleMaintainDialog.loading = false;
         });
     },
     handleShowRoleCreateDialog() {
@@ -408,6 +436,7 @@ export default {
     },
     handleRoleDelete(node, entity) {
       const roleKeyToDelete = entity.key.string_id;
+      this.roleTablePanel.loading = true;
       this.checkInfluenced(roleKeyToDelete)
         .then((res) => {
           if (res) {
@@ -467,6 +496,9 @@ export default {
           this.handleRoleSearch();
         })
         .catch(() => {
+        })
+        .finally(() => {
+          this.roleTablePanel.loading = false;
         });
     },
     syncAnchorRole(entity) {
@@ -498,6 +530,7 @@ export default {
       this.lookupChildPexpForRole();
     },
     lookupChildPexpForRole() {
+      this.pexpTablePanel.loading = true;
       resolveResponse(
         childPexpForRole(
           this.roleTablePanel.selection.key.string_id,
@@ -519,6 +552,9 @@ export default {
       })
         .then(this.updatePexpTableView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.pexpTablePanel.loading = false;
         });
     },
     updatePexpTableView(res) {
@@ -527,22 +563,44 @@ export default {
     },
     handlePexpCreate() {
       const roleKey = this.roleTablePanel.selection.key.string_id;
-      this.checkInfluenced(roleKey)
+      this.pexpMaintainDialog.loading = true;
+      new Promise((resolve, reject) => {
+        this.$confirm('此操作将增加一条权限表达式。<br>'
+          + '<div style="color: #b22222"><b>请务必保证权限表达式合法规范</b></div>'
+          + '<b>不规范的权限表达式可能导致前端界面、后台出错，甚至崩溃！</b><br>'
+          + '是否继续?',
+        '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          dangerouslyUseHTMLString: true,
+          customClass: 'custom-message-box__w500',
+          type: 'warning',
+        }).then(() => { resolve(); }).catch(() => { reject(); });
+      })
+        .then(() => this.checkInfluenced(roleKey))
         .then((res) => {
           if (res) {
-            return this.$confirm('您似乎在编辑一个您所属的角色的权限表达式。<br>'
-              + '<div style="color: #b22222"><b>如果继续，您将会被注销，并且根据其余的角色重新分配权限</b></div>'
-              + '<b>您有可能失去系统的部分权限，且可能无法自行恢复</b><br>'
-              + '是否继续?',
-            '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              dangerouslyUseHTMLString: true,
-              customClass: 'custom-message-box__w500',
-              type: 'warning',
-            })
-              .then(() => Promise.resolve(true))
-              .catch(() => Promise.reject());
+            return new Promise((resolve, reject) => {
+              setTimeout(
+                () => {
+                  this.$confirm('您似乎在编辑一个您所属的角色的权限表达式。<br>'
+                    + '<div style="color: #b22222"><b>如果继续，您将会被注销，'
+                    + '并且根据其余的角色重新分配权限</b></div>'
+                    + '<b>您有可能失去系统的部分权限，且可能无法自行恢复</b><br>'
+                    + '是否继续?',
+                  '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    dangerouslyUseHTMLString: true,
+                    customClass: 'custom-message-box__w500',
+                    type: 'warning',
+                  })
+                    .then(() => { resolve(true); })
+                    .catch(() => { reject(); });
+                },
+                300,
+              );
+            });
           }
           return Promise.resolve(false);
         })
@@ -581,26 +639,51 @@ export default {
           this.pexpMaintainDialog.dialogVisible = false;
         })
         .catch(() => {
+        })
+        .finally(() => {
+          this.pexpMaintainDialog.loading = false;
         });
     },
     handlePexpEdit() {
       const roleKey = this.roleTablePanel.selection.key.string_id;
-      this.checkInfluenced(roleKey)
+      this.pexpMaintainDialog.loading = true;
+      new Promise((resolve, reject) => {
+        this.$confirm('此操作将修改本条权限表达式。<br>'
+          + '<div style="color: #b22222"><b>请务必保证权限表达式合法规范</b></div>'
+          + '<b>不规范的权限表达式可能导致前端界面、后台出错，甚至崩溃！</b><br>'
+          + '是否继续?',
+        '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          dangerouslyUseHTMLString: true,
+          customClass: 'custom-message-box__w500',
+          type: 'warning',
+        }).then(() => { resolve(); }).catch(() => { reject(); });
+      })
+        .then(() => this.checkInfluenced(roleKey))
         .then((res) => {
           if (res) {
-            return this.$confirm('您似乎在编辑一个您所属的角色的权限表达式。<br>'
-              + '<div style="color: #b22222"><b>如果继续，您将会被注销，并且根据其余的角色重新分配权限</b></div>'
-              + '<b>您有可能失去系统的部分权限，且可能无法自行恢复</b><br>'
-              + '是否继续?',
-            '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              dangerouslyUseHTMLString: true,
-              customClass: 'custom-message-box__w500',
-              type: 'warning',
-            })
-              .then(() => Promise.resolve(true))
-              .catch(() => Promise.reject());
+            return new Promise((resolve, reject) => {
+              setTimeout(
+                () => {
+                  this.$confirm('您似乎在编辑一个您所属的角色的权限表达式。<br>'
+                    + '<div style="color: #b22222"><b>如果继续，您将会被注销，'
+                    + '并且根据其余的角色重新分配权限</b></div>'
+                    + '<b>您有可能失去系统的部分权限，且可能无法自行恢复</b><br>'
+                    + '是否继续?',
+                  '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    dangerouslyUseHTMLString: true,
+                    customClass: 'custom-message-box__w500',
+                    type: 'warning',
+                  })
+                    .then(() => { resolve(true); })
+                    .catch(() => { reject(); });
+                },
+                300,
+              );
+            });
           }
           return Promise.resolve(false);
         })
@@ -639,6 +722,9 @@ export default {
           this.pexpMaintainDialog.dialogVisible = false;
         })
         .catch(() => {
+        })
+        .finally(() => {
+          this.pexpMaintainDialog.loading = false;
         });
     },
     handleShowPexpCreateDialog() {
@@ -655,22 +741,51 @@ export default {
     handlePexpDelete(node, entity) {
       const roleKey = this.roleTablePanel.selection.key.string_id;
       const pexpKeyToDelete = entity.key.long_id;
-      return this.checkInfluenced(roleKey)
+      this.pexpTablePanel.loading = true;
+      new Promise((resolve, reject) => {
+        this.$confirm('此操作将删除本条权限表达式。<br>'
+          + '<b>删除权限表达式有可能导致角色意外提权！</b><br>'
+          + '是否继续?',
+        '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          dangerouslyUseHTMLString: true,
+          customClass: 'custom-message-box__w500',
+          type: 'warning',
+        }).then(() => {
+          resolve();
+        }).catch(() => {
+          reject();
+        });
+      })
+        .then(() => this.checkInfluenced(roleKey))
         .then((res) => {
           if (res) {
-            return this.$confirm('您似乎在编辑一个您所属的角色的权限表达式。<br>'
-              + '<div style="color: #b22222"><b>如果继续，您将会被注销，并且根据其余的角色重新分配权限</b></div>'
-              + '<b>您有可能失去系统的部分权限，且可能无法自行恢复</b><br>'
-              + '是否继续?',
-            '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
-              dangerouslyUseHTMLString: true,
-              customClass: 'custom-message-box__w500',
-              type: 'warning',
-            })
-              .then(() => Promise.resolve(true))
-              .catch(() => Promise.reject());
+            return new Promise((resolve, reject) => {
+              setTimeout(
+                () => {
+                  this.$confirm('您似乎在编辑一个您所属的角色的权限表达式。<br>'
+                    + '<div style="color: #b22222"><b>如果继续，您将会被注销，'
+                    + '并且根据其余的角色重新分配权限</b></div>'
+                    + '<b>您有可能失去系统的部分权限，且可能无法自行恢复</b><br>'
+                    + '是否继续?',
+                  '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    dangerouslyUseHTMLString: true,
+                    customClass: 'custom-message-box__w500',
+                    type: 'warning',
+                  })
+                    .then(() => {
+                      resolve(true);
+                    })
+                    .catch(() => {
+                      reject();
+                    });
+                },
+                300,
+              );
+            });
           }
           return Promise.resolve(false);
         })
@@ -701,6 +816,9 @@ export default {
           this.handlePexpSearch();
         })
         .catch(() => {
+        })
+        .finally(() => {
+          this.pexpTablePanel.loading = false;
         });
     },
     syncAnchorPexp(entity) {
