@@ -201,6 +201,40 @@ const projectHelper = [
       parentKey: 'projectHelper',
     },
   },
+  {
+    key: 'projectHelper.memoEditor',
+    index: 50,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '备忘录编辑器',
+      },
+      menu: {
+        shown: false,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/project-helper/memo-editor',
+        component: () => import('@/views/items/projectHelper/memoEditor/MemoEditor.vue'),
+      },
+      permission: {
+        required: false,
+        node: '',
+      },
+    },
+    node: {
+      parentKey: 'projectHelper',
+    },
+  },
 ];
 
 export default projectHelper;
