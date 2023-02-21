@@ -6,36 +6,58 @@
       :header-visible="true"
     >
       <table-panel
+        class="table"
         :page-size.sync="pageSize"
         :entity-count="parseInt(entities.count)"
         :current-page.sync="currentPage"
         :page-sizes="[15,20,30,50]"
         :table-data="entities.data"
+        :show-contextmenu="true"
+        :contextmenu-width="100"
         @onPagingAttributeChanged="handlePagingAttributeChanged"
         @onEntityInspect="handleShowEntityInspectDialog"
         @onEntityEdit="handleShowEntityEditDialog"
         @onEntityDelete="handleEntityDelete"
       >
-        <el-table-column
-          prop="key.string_id"
-          label="权限节点"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="group_key.string_id"
-          label="权限组"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="name"
-          label="名称"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
+        <template v-slot:default>
+          <el-table-column
+            prop="key.string_id"
+            label="权限节点"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="group_key.string_id"
+            label="权限组"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="name"
+            label="名称"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="remark"
+            label="备注"
+            show-tooltip-when-overflow
+          />
+        </template>
+        <template v-slot:contextmenu="{row,index,close}">
+          <ul>
+            <li @click="handleCopyKeyContextmenuClicked(row,close)">
+              复制主键
+            </li>
+            <el-divider/>
+            <li @click="handleInspectContextmenuClicked(row,index,close)">
+              查看...
+            </li>
+            <li @click="handleEditContextmenuClicked(row,index,close)">
+              编辑...
+            </li>
+            <li @click="handleDeleteContextmenuClicked(row,index,close)">
+              删除...
+            </li>
+          </ul>
+        </template>
       </table-panel>
       <div class="header-container" slot="header">
         <el-button
@@ -313,9 +335,17 @@ export default {
       this.syncAnchorEntity(entity);
       this.showDialog('INSPECT');
     },
+    handleInspectContextmenuClicked(row, index, close) {
+      this.handleShowEntityInspectDialog(index, row);
+      close();
+    },
     handleShowEntityEditDialog(index, entity) {
       this.syncAnchorEntity(entity);
       this.showDialog('EDIT');
+    },
+    handleEditContextmenuClicked(row, index, close) {
+      this.handleShowEntityEditDialog(index, row);
+      close();
     },
     handleEntityDelete(node, entity) {
       Promise.resolve(entity.key.string_id)
@@ -346,6 +376,10 @@ export default {
         .catch(() => {
         });
     },
+    handleDeleteContextmenuClicked(row, index, close) {
+      this.handleEntityDelete(index, row);
+      close();
+    },
     syncAnchorEntity(entity) {
       this.anchorEntity.key.string_id = entity.key.string_id;
       if (entity.group_key == null) {
@@ -361,6 +395,18 @@ export default {
       this.$nextTick(() => {
         this.dialogVisible = true;
       });
+    },
+    handleCopyKeyContextmenuClicked(row, close) {
+      close();
+      navigator.clipboard.writeText(row.key.string_id)
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '复制成功',
+            type: 'success',
+            center: true,
+          });
+        });
     },
   },
   mounted() {
@@ -389,5 +435,11 @@ export default {
 /*noinspection CssUnusedSymbol*/
 .id-search-bar >>> .el-input-group__prepend {
   padding: 0 10px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.table >>> .contextmenu .el-divider--horizontal{
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 </style>
