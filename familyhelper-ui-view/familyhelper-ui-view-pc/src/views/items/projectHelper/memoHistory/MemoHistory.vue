@@ -42,9 +42,10 @@
               :current-page.sync="table.currentPage"
               :page-sizes="[15,20,30,50]"
               :table-data="table.entities.data"
-              :show-contextmenu="false"
               :table-selection.sync="table.selection"
               :operate-column-width="49"
+              :show-contextmenu="true"
+              :contextmenu-width="100"
               @onPagingAttributeChanged="handlePagingAttributeChanged"
             >
               <template v-slot:default>
@@ -84,6 +85,13 @@
                     @click="handleEntityDelete(row)"
                   />
                 </el-button-group>
+              </template>
+              <template v-slot:contextmenu="{row,index,close}">
+                <ul>
+                  <li @click="handleIndependentEditContextmenuClicked(row,close)">
+                    独立编辑
+                  </li>
+                </ul>
               </template>
             </table-panel>
           </template>
@@ -326,6 +334,13 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    handleIndependentEditContextmenuClicked(row, close) {
+      close();
+      this.$router.push({
+        name: 'projectHelper.memoEditor',
+        query: { 'memo-id': row.key.long_id },
+      });
     },
   },
   mounted() {
