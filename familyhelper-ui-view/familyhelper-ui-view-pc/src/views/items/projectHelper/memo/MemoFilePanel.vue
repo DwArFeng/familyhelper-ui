@@ -407,13 +407,13 @@ export default {
     handleFileInspect(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: PROJECT_MEMO_FILE, action: 'inspect', id: row.key.long_id },
+        query: { type: PROJECT_MEMO_FILE, id: row.key.long_id, action: 'inspect' },
       });
     },
     handleFileEdit(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: PROJECT_MEMO_FILE, action: 'edit', id: row.key.long_id },
+        query: { type: PROJECT_MEMO_FILE, id: row.key.long_id, action: 'edit' },
       });
     },
     handleFileDownload(row) {

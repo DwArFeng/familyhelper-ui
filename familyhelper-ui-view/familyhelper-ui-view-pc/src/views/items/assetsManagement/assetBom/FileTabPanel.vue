@@ -426,13 +426,13 @@ export default {
     handleItemFileInspect(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: ASSETS_ITEM_FILE, action: 'inspect', id: row.key.long_id },
+        query: { type: ASSETS_ITEM_FILE, id: row.key.long_id, action: 'inspect' },
       });
     },
     handleItemFileEdit(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
-        query: { type: ASSETS_ITEM_FILE, action: 'edit', id: row.key.long_id },
+        query: { type: ASSETS_ITEM_FILE, id: row.key.long_id, action: 'edit' },
       });
     },
     handleUploadConfirmed(files, callback) {
