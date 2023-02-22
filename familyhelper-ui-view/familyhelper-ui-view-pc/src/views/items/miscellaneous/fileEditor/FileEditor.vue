@@ -1,316 +1,58 @@
 <template>
-  <div class="file-editor-container" v-loading="loading">
-    <div class="editor-header">
-      <div class="file-indicator">
-        <!--suppress JSUnresolvedVariable -->
-        <i class="iconfont icon">{{ fileIndicator.originName | fileType }}</i>
-        <span>{{ fileIndicator.originName }}</span>
-      </div>
-      <div class="button">
-        <el-button v-if="editable" type="primary" @click="handleCommitButtonClicked">提交</el-button>
-        <el-button v-if="editable" type="danger" @click="handleResetButtonClicked">重置</el-button>
-      </div>
-    </div>
-    <el-divider/>
-    <div class="editor-body">
-      <photo-sub-editor
-        v-if="photoSubEditorUsing"
-        :url="fileIndicator.url"
-      />
-      <pdf-sub-editor
-        v-else-if="pdfSubEditorUsing"
-        :url="fileIndicator.url"
-      />
-      <rtf-sub-editor
-        v-else-if="rtfSubEditorUsing"
-        ref="rtfSubEditor"
-        :blob="fileIndicator.blob"
-        :readonly="query.action==='inspect'"
-      />
-      <txt-sub-editor
-        v-else-if="txtSubEditorUsing"
-        ref="txtSubEditor"
-        :blob="fileIndicator.blob"
-        :readonly="query.action==='inspect'"
-      />
-      <mmd-sub-editor
-        v-else-if="mmdSubEditorUsing"
-        ref="mmdSubEditor"
-        :blob="fileIndicator.blob"
-        :readonly="query.action==='inspect'"
-      />
-      <div class="placeholder" v-else>
-        未能找到扩展名为 {{ extension }} 的{{ query.action === 'inspect' ? '查看器' : '编辑器' }}
-      </div>
-    </div>
+  <div class="file-editor-container">
+    <file-edit-panel
+      :type="fileEditPanel.type"
+      :id="fileEditPanel.id"
+      :mode="fileEditPanel.mode"
+    />
   </div>
 </template>
 
 <script>
-import PhotoSubEditor
-from '@/views/items/miscellaneous/fileEditor/photoSubEditor/PhotoSubEditor.vue';
-import PdfSubEditor from '@/views/items/miscellaneous/fileEditor/pdfSubEditor/PdfSubEditor.vue';
-import RtfSubEditor from '@/views/items/miscellaneous/fileEditor/rtfSubEditor/RtfSubEditor.vue';
-import TxtSubEditor from '@/views/items/miscellaneous/fileEditor/txtSubEditor/TxtSubEditor.vue';
-import MmdSubEditor from '@/views/items/miscellaneous/fileEditor/mmdSubEditor/MmdSubEditor.vue';
-
-import {
-  download as downloadAssetsItemFile,
-  inspect as inspectAssetsItemFile,
-  update as updateAssetsItemFile,
-} from '@/api/assets/itemFile';
-import {
-  download as downloadProjectMemoFile,
-  inspect as inspectProjectMemoFile,
-  update as updateProjectMemoFile,
-} from '@/api/project/memoFile';
-import {
-  download as downloadNoteAttachmentFile,
-  inspect as inspectNoteAttachmentFile,
-  update as updateNoteAttachmentFile,
-} from '@/api/note/attachmentFile';
-
-import { fileExtension, fileType } from '@/util/file';
-import resolveResponse from '@/util/response';
-
-import {
-  ASSETS_ITEM_FILE,
-  PROJECT_MEMO_FILE,
-  NOTE_ATTACHMENT_FILE,
-} from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import FileEditPanel from '@/views/items/miscellaneous/fileEditor/FileEditPanel.vue';
 
 export default {
   name: 'FileEditor',
   components: {
-    PhotoSubEditor, PdfSubEditor, RtfSubEditor, TxtSubEditor, MmdSubEditor,
-  },
-  computed: {
-    editable() {
-      return fileType(this.fileIndicator.originName) === 0 && this.query.action === 'edit';
-    },
-    extension() {
-      return fileExtension(this.fileIndicator.originName).toUpperCase();
-    },
-    photoSubEditorUsing() {
-      return this.subEditor.photoEditorExtensions.indexOf(this.extension) >= 0 && this.query.action === 'inspect';
-    },
-    pdfSubEditorUsing() {
-      return this.subEditor.pdfEditorExtensions.indexOf(this.extension) >= 0 && this.query.action === 'inspect';
-    },
-    rtfSubEditorUsing() {
-      return this.subEditor.rtfEditorExtensions.indexOf(this.extension) >= 0;
-    },
-    txtSubEditorUsing() {
-      return this.subEditor.txtEditorExtensions.indexOf(this.extension) >= 0;
-    },
-    mmdSubEditorUsing() {
-      return this.subEditor.mmdEditorExtensions.indexOf(this.extension) >= 0;
-    },
+    FileEditPanel,
   },
   watch: {
     $route(val) {
       if (val.name !== 'miscellaneous.fileEditor') {
         return;
       }
-      const { type, action, id } = this.$route.query;
-      let inspectFlag = false;
-      if (this.query.type !== type) {
-        this.query.type = type;
-        inspectFlag = true;
-      }
-      if (this.query.action !== action) {
-        this.query.action = action;
-        inspectFlag = true;
-      }
-      if (this.query.id !== id) {
-        this.query.id = id;
-        inspectFlag = true;
-      }
-      if (inspectFlag) {
-        this.handleInspect();
-      }
-    },
-  },
-  filters: {
-    fileType(fileName) {
-      const typeIndex = fileType(fileName);
-      switch (typeIndex) {
-        case 0:
-          return '\uffe4';
-        case 1:
-          return '\uffe3';
-        default:
-          return '\uffe5';
-      }
+      const { type, id, action } = this.$route.query;
+      this.fileEditPanel.type = type;
+      this.fileEditPanel.id = id;
+      this.fileEditPanel.mode = this.parseMode(action);
     },
   },
   data() {
     return {
-      fileIndicator: {
-        originName: '',
-        blob: null,
-        url: '',
-      },
-      query: {
+      fileEditPanel: {
         type: '',
-        action: '',
         id: '',
-      },
-      util: {
-        supportedTypes: [ASSETS_ITEM_FILE, PROJECT_MEMO_FILE, NOTE_ATTACHMENT_FILE],
-      },
-      loading: false,
-      subEditor: {
-        photoEditorExtensions: ['JPG', 'PNG', 'GIF'],
-        pdfEditorExtensions: ['PDF'],
-        rtfEditorExtensions: ['RTF'],
-        txtEditorExtensions: ['TXT'],
-        mmdEditorExtensions: ['MMD'],
+        mode: '',
       },
     };
   },
   methods: {
-    handleInspect() {
-      const { type, id } = this.query;
-      switch (type) {
-        case ASSETS_ITEM_FILE:
-          this.inspectAssetsItemFile(id);
-          break;
-        case PROJECT_MEMO_FILE:
-          this.inspectProjectMemoFile(id);
-          break;
-        case NOTE_ATTACHMENT_FILE:
-          this.inspectNoteAttachmentFile(id);
-          break;
+    parseMode(action) {
+      switch (action) {
+        case 'inspect':
+          return 'INSPECT';
+        case 'edit':
+          return 'EDIT';
         default:
-          break;
-      }
-    },
-    inspectAssetsItemFile(id) {
-      this.loading = true;
-      if (this.fileIndicator.url !== '') {
-        window.URL.revokeObjectURL(this.fileIndicator.url);
-      }
-      resolveResponse(inspectAssetsItemFile(id))
-        .then((res) => {
-          // noinspection JSUnresolvedVariable
-          this.fileIndicator.originName = res.origin_name;
-        })
-        .then(() => downloadAssetsItemFile(id))
-        .then((blob) => {
-          this.fileIndicator.blob = blob;
-          this.fileIndicator.url = window.URL.createObjectURL(blob);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-    inspectProjectMemoFile(id) {
-      this.loading = true;
-      if (this.fileIndicator.url !== '') {
-        window.URL.revokeObjectURL(this.fileIndicator.url);
-      }
-      resolveResponse(inspectProjectMemoFile(id))
-        .then((res) => {
-          // noinspection JSUnresolvedVariable
-          this.fileIndicator.originName = res.origin_name;
-        })
-        .then(() => downloadProjectMemoFile(id))
-        .then((blob) => {
-          this.fileIndicator.blob = blob;
-          this.fileIndicator.url = window.URL.createObjectURL(blob);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-    inspectNoteAttachmentFile(id) {
-      this.loading = true;
-      if (this.fileIndicator.url !== '') {
-        window.URL.revokeObjectURL(this.fileIndicator.url);
-      }
-      resolveResponse(inspectNoteAttachmentFile(id))
-        .then((res) => {
-          // noinspection JSUnresolvedVariable
-          this.fileIndicator.originName = res.origin_name;
-        })
-        .then(() => downloadNoteAttachmentFile(id))
-        .then((blob) => {
-          this.fileIndicator.blob = blob;
-          this.fileIndicator.url = window.URL.createObjectURL(blob);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-    handleCommitButtonClicked() {
-      this.commitFile();
-    },
-    handleResetButtonClicked() {
-      this.handleInspect();
-    },
-    commitFile() {
-      let blob = null;
-      if (this.rtfSubEditorUsing) {
-        blob = this.$refs.rtfSubEditor.contentToBlob();
-      } else if (this.txtSubEditorUsing) {
-        blob = this.$refs.txtSubEditor.contentToBlob();
-      }
-      if (blob === null) {
-        return;
-      }
-      const formData = new FormData();
-      formData.append('file', blob, this.fileIndicator.originName);
-      switch (this.query.type) {
-        case ASSETS_ITEM_FILE:
-          resolveResponse(updateAssetsItemFile(this.query.id, formData))
-            .then(() => {
-              this.$message({
-                showClose: true,
-                message: '项目文件提交成功',
-                type: 'success',
-                center: true,
-              });
-            });
-          break;
-        case PROJECT_MEMO_FILE:
-          resolveResponse(updateProjectMemoFile(this.query.id, formData))
-            .then(() => {
-              this.$message({
-                showClose: true,
-                message: '备忘录文件提交成功',
-                type: 'success',
-                center: true,
-              });
-            });
-          break;
-        case NOTE_ATTACHMENT_FILE:
-          resolveResponse(updateNoteAttachmentFile(this.query.id, formData))
-            .then(() => {
-              this.$message({
-                showClose: true,
-                message: '附件文件提交成功',
-                type: 'success',
-                center: true,
-              });
-            });
-          break;
-        default:
-          break;
+          return '';
       }
     },
   },
   mounted() {
-    const { type, action, id } = this.$route.query;
-    this.query.type = type;
-    this.query.action = action;
-    this.query.id = id;
-    this.handleInspect();
-  },
-  destroyed() {
-    if (this.fileIndicator.url !== '') {
-      window.URL.revokeObjectURL(this.fileIndicator.url);
-    }
+    const { type, id, action } = this.$route.query;
+    this.fileEditPanel.type = type;
+    this.fileEditPanel.id = id;
+    this.fileEditPanel.mode = this.parseMode(action);
   },
 };
 </script>
@@ -319,48 +61,5 @@ export default {
 .file-editor-container {
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-/*noinspection CssUnusedSymbol*/
-.file-editor-container .el-divider {
-  margin: 5px 0;
-}
-
-.file-editor-container .editor-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.file-editor-container .editor-header .file-indicator {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.file-editor-container .editor-header .icon {
-  font-size: 32px;
-  user-select: none;
-}
-
-.file-editor-container .editor-body {
-  height: 0;
-  flex-grow: 1;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #BFBFBF;
-  user-select: none;
 }
 </style>
