@@ -8,6 +8,7 @@
       :title="title"
       :visible.sync="watchedVisible"
       :close-on-click-modal="closeOnClickModal"
+      :custom-class="customClass"
       @keydown.ctrl.enter.native="handleHotKeyDown"
     >
       <el-form
@@ -116,6 +117,10 @@ export default {
     top: {
       type: String,
       default: '15vh',
+    },
+    customClass: {
+      type: String,
+      default: '',
     },
   },
   watch: {

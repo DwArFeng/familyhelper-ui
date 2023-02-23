@@ -12,6 +12,7 @@
 
 - 优化组件结构。
   - src/components/text/TextEditor.vue。
+  - src/components/entity/EntityMaintainDialog.vue。
 
 - 优化页面。
   - 资金管理 -> 资金变更记录增加资金变更类型筛选器。
