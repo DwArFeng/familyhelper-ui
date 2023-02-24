@@ -57,7 +57,7 @@ export function childForUserFinishedDefaultOrder(userKey, page, rows) {
     });
 }
 
-export function create(userKey, profile, remark, starFlag, priority) {
+export function create(userKey, profile, remark, starFlag, priority, expectedFinishDate, brief) {
     return post('project', 'memo/create', {
         user_key: {
             string_id: userKey,
@@ -66,10 +66,12 @@ export function create(userKey, profile, remark, starFlag, priority) {
         remark,
         star_flag: starFlag,
         priority,
+        expected_finish_date: expectedFinishDate,
+        brief,
     });
 }
 
-export function update(memoKey, profile, remark, starFlag, priority) {
+export function update(memoKey, profile, remark, starFlag, priority, expectedFinishDate, brief) {
     return post('project', 'memo/update', {
         memo_key: {
             long_id: memoKey,
@@ -78,6 +80,8 @@ export function update(memoKey, profile, remark, starFlag, priority) {
         remark,
         star_flag: starFlag,
         priority,
+        expected_finish_date: expectedFinishDate,
+        brief,
     });
 }
 

@@ -32,7 +32,7 @@
               <template v-slot:default>
                 <el-table-column
                   prop="profile"
-                  label="简报"
+                  label="概要"
                   show-tooltip-when-overflow
                 />
                 <el-table-column
@@ -86,6 +86,8 @@
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
+      custom-class="entity-maintain-dialog"
+      top="12vh"
       label-width="100px"
       mode="CREATE"
       :visible.sync="maintainDialog.dialogVisible"
@@ -97,16 +99,14 @@
       @onEntityCreate="handleEntityCreate"
       @onEntityEdit="handleEntityEdit"
     >
-      <el-form-item label="简报" prop="profile">
+      <el-form-item label="概要" prop="profile">
         <el-input
           v-model="maintainDialog.anchorEntity.profile"
-          :readonly="maintainDialog.dialogMode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
           v-model="maintainDialog.anchorEntity.remark"
-          :readonly="maintainDialog.dialogMode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="星标" prop="star_flag">
@@ -114,20 +114,31 @@
           v-model="maintainDialog.anchorEntity.star_flag"
           active-text="是"
           inactive-text="否"
-          :disabled="maintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="优先级" prop="priority">
-        <el-input
-          v-model="maintainDialog.anchorEntity.priority"
-          v-if="maintainDialog.mode === 'INSPECT'"
-          readonly
-        />
         <el-input-number
+          class="short-bar"
           v-model="maintainDialog.anchorEntity.priority"
-          v-else
           :min="0"
           :max="10"
+        />
+      </el-form-item>
+      <el-form-item label="预期完成时间" prop="expected_finish_date">
+        <el-date-picker
+          class="short-bar"
+          v-model="maintainDialog.anchorEntity.expected_finish_date"
+          type="datetime"
+          placeholder="选择时间"
+          :picker-options="maintainDialog.pickerOptions"
+        />
+      </el-form-item>
+      <el-form-item label="简报" prop="brief">
+        <el-input
+          v-model="maintainDialog.anchorEntity.brief"
+          type="textarea"
+          resize="none"
+          :rows="6"
         />
       </el-form-item>
     </entity-maintain-dialog>
@@ -193,6 +204,7 @@ export default {
         selection: null,
       },
       maintainDialog: {
+        loading: false,
         dialogVisible: false,
         dialogMode: 'CREATE',
         anchorEntity: {
@@ -201,13 +213,48 @@ export default {
           remark: '',
           star_flag: false,
           priority: 0,
+          expected_finish_date: null,
+          brief: '',
         },
         rules: {
           profile: [
-            { required: true, message: '简报不能为空', trigger: 'blur' },
+            { required: true, message: '概要不能为空', trigger: 'blur' },
           ],
         },
-        loading: false,
+        pickerOptions: {
+          shortcuts: [
+            {
+              text: '今天',
+              onClick(picker) {
+                picker.$emit('pick', new Date());
+              },
+            },
+            {
+              text: '明天',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() + 3600 * 1000 * 24);
+                picker.$emit('pick', date);
+              },
+            },
+            {
+              text: '一周后',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() + 3600 * 1000 * 24 * 7);
+                picker.$emit('pick', date);
+              },
+            },
+            {
+              text: '30天后',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() + 3600 * 1000 * 24 * 30);
+                picker.$emit('pick', date);
+              },
+            },
+          ],
+        },
       },
       memoEditPanel: {
         memoId: '',
@@ -267,6 +314,8 @@ export default {
         this.maintainDialog.anchorEntity.remark,
         this.maintainDialog.anchorEntity.star_flag,
         this.maintainDialog.anchorEntity.priority,
+        this.maintainDialog.anchorEntity.expected_finish_date,
+        this.maintainDialog.anchorEntity.brief,
       ))
         .then(() => {
           this.$message({
@@ -408,5 +457,10 @@ export default {
 .center-container {
   width: 100%;
   height: 100%;
+}
+
+/*noinspection CssUnusedSymbol*/
+.entity-maintain-dialog .short-bar{
+  width: 200px;
 }
 </style>
