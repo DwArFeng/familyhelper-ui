@@ -284,7 +284,7 @@ export default {
         .then(() => {
           this.handleSearch();
           this.maintainDialog.dialogVisible = false;
-          this.$emit('onMemoUpdated');
+          this.$emit('onMemoPropertyUpdated');
         })
         .catch(() => {
         })

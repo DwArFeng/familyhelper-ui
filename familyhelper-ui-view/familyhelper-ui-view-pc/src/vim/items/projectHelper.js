@@ -235,6 +235,40 @@ const projectHelper = [
       parentKey: 'projectHelper',
     },
   },
+  {
+    key: 'projectHelper.memoRemindDriverSupport',
+    index: 60,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '备忘录提醒驱动器支持',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/project-helper/memo-remind-driver-support',
+        component: () => import('@/views/items/projectHelper/memoRemindDriverSupport/MemoRemindDriverSupport.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.project_helper.memo_remind_driver_support',
+      },
+    },
+    node: {
+      parentKey: 'projectHelper',
+    },
+  },
 ];
 
 export default projectHelper;
