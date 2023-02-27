@@ -7,7 +7,7 @@
     <parent>
         <artifactId>familyhelper-ui-component</artifactId>
         <groupId>com.dwarfeng</groupId>
-        <version>1.0.8.a-SNAPSHOT</version>
+        <version>1.0.8.a</version>
     </parent>
 
     <packaging>pom</packaging>
