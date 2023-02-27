@@ -277,7 +277,7 @@ const financeManagement = [
         iconType: 'elementUI',
         iconContent: '',
         labelType: 'elementUI',
-        labelContent: '提醒驱动支持',
+        labelContent: '提醒驱动器支持',
       },
       menu: {
         shown: true,
