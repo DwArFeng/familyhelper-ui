@@ -296,7 +296,7 @@ export default {
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(childForAccountBook(
+            return resolveResponse(childForAccountBookTypeEquals(
               this.accountBook.key.long_id, this.typeSelector.value, res.total_pages,
               this.table.pageSize,
             ));
