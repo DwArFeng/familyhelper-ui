@@ -50,6 +50,7 @@
           <el-table-column
             prop="remark"
             label="备注"
+            show-tooltip-when-overflow
           />
         </table-panel>
       </template>
@@ -57,30 +58,30 @@
     <entity-maintain-dialog
       label-width="100px"
       top="9vh"
-      :mode="entityDialog.mode"
-      :visible.sync="entityDialog.visible"
-      :entity="entityDialog.anchorEntity"
-      :create-rules="entityDialog.createRules"
-      :edit-rules="entityDialog.editRules"
+      :mode="maintainDialog.mode"
+      :visible.sync="maintainDialog.visible"
+      :entity="maintainDialog.anchorEntity"
+      :create-rules="maintainDialog.createRules"
+      :edit-rules="maintainDialog.editRules"
       :close-on-click-modal="false"
       @onEntityCreate="handleEntityCreate"
       @onEntityEdit="handleEntityEdit"
     >
       <el-form-item label="使能" prop="enabled">
         <el-switch
-          v-model="entityDialog.anchorEntity.enabled"
+          v-model="maintainDialog.anchorEntity.enabled"
           active-text="是"
           inactive-text="否"
-          :disabled="entityDialog.mode === 'INSPECT'"
+          :disabled="maintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="类型" prop="type">
         <el-input
-          v-model="entityDialog.anchorEntity.type"
-          :readonly="entityDialog.mode === 'INSPECT'"
+          v-model="maintainDialog.anchorEntity.type"
+          :readonly="maintainDialog.mode === 'INSPECT'"
         >
           <el-button
-            v-if="entityDialog.mode !== 'INSPECT'"
+            v-if="maintainDialog.mode !== 'INSPECT'"
             slot="append"
             icon="el-icon-search"
             @click="supportDialog.visible = true"
@@ -90,15 +91,15 @@
       <el-form-item label="参数" prop="param">
         <text-editor
           class="text-editor"
-          v-model="entityDialog.anchorEntity.param"
-          :readonly="entityDialog.mode === 'INSPECT'"
+          v-model="maintainDialog.anchorEntity.param"
+          :readonly="maintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
       <el-form-item label="提醒范围" prop="remind_scope_type">
         <el-select
-          v-model="entityDialog.anchorEntity.remind_scope_type"
+          v-model="maintainDialog.anchorEntity.remind_scope_type"
           placeholder="请选择"
-          :disabled="entityDialog.mode === 'INSPECT'"
+          :disabled="maintainDialog.mode === 'INSPECT'"
         >
           <el-option
             v-for="indicator in remindScopeIndicators"
@@ -110,8 +111,8 @@
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
-          v-model="entityDialog.anchorEntity.remark"
-          :readonly="entityDialog.mode === 'INSPECT'"
+          v-model="maintainDialog.anchorEntity.remark"
+          :readonly="maintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
     </entity-maintain-dialog>
@@ -194,7 +195,7 @@ export default {
         currentPage: 0,
         pageSize: 15,
       },
-      entityDialog: {
+      maintainDialog: {
         visible: false,
         mode: 'CREATE',
         anchorEntity: {
@@ -260,11 +261,11 @@ export default {
       resolveResponse(insert(
         '',
         this.accountBookId,
-        this.entityDialog.anchorEntity.enabled,
-        this.entityDialog.anchorEntity.type,
-        this.entityDialog.anchorEntity.param,
-        this.entityDialog.anchorEntity.remind_scope_type,
-        this.entityDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.enabled,
+        this.maintainDialog.anchorEntity.type,
+        this.maintainDialog.anchorEntity.param,
+        this.maintainDialog.anchorEntity.remind_scope_type,
+        this.maintainDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
@@ -279,20 +280,20 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.entityDialog.visible = false;
+          this.maintainDialog.visible = false;
         })
         .catch(() => {
         });
     },
     handleEntityEdit() {
       resolveResponse(update(
-        this.entityDialog.anchorEntity.key.long_id,
+        this.maintainDialog.anchorEntity.key.long_id,
         this.accountBookId,
-        this.entityDialog.anchorEntity.enabled,
-        this.entityDialog.anchorEntity.type,
-        this.entityDialog.anchorEntity.param,
-        this.entityDialog.anchorEntity.remind_scope_type,
-        this.entityDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.enabled,
+        this.maintainDialog.anchorEntity.type,
+        this.maintainDialog.anchorEntity.param,
+        this.maintainDialog.anchorEntity.remind_scope_type,
+        this.maintainDialog.anchorEntity.remark,
       ))
         .then(() => {
           this.$message({
@@ -307,7 +308,7 @@ export default {
           return Promise.resolve();
         })
         .then(() => {
-          this.entityDialog.visible = false;
+          this.maintainDialog.visible = false;
         })
         .catch(() => {
         });
@@ -350,22 +351,22 @@ export default {
         });
     },
     syncAnchorEntity(entity) {
-      this.entityDialog.anchorEntity.key.long_id = entity.key.long_id;
-      this.entityDialog.anchorEntity.enabled = entity.enabled;
-      this.entityDialog.anchorEntity.type = entity.type;
-      this.entityDialog.anchorEntity.param = entity.param;
-      this.entityDialog.anchorEntity.remind_scope_type = entity.remind_scope_type;
-      this.entityDialog.anchorEntity.remark = entity.remark;
+      this.maintainDialog.anchorEntity.key.long_id = entity.key.long_id;
+      this.maintainDialog.anchorEntity.enabled = entity.enabled;
+      this.maintainDialog.anchorEntity.type = entity.type;
+      this.maintainDialog.anchorEntity.param = entity.param;
+      this.maintainDialog.anchorEntity.remind_scope_type = entity.remind_scope_type;
+      this.maintainDialog.anchorEntity.remark = entity.remark;
     },
     showDialog(mode) {
-      this.entityDialog.mode = mode;
+      this.maintainDialog.mode = mode;
       this.$nextTick(() => {
-        this.entityDialog.visible = true;
+        this.maintainDialog.visible = true;
       });
     },
     handleSupportSelected(selection) {
-      this.entityDialog.anchorEntity.type = selection.key.string_id;
-      this.entityDialog.anchorEntity.param = selection.example_param;
+      this.maintainDialog.anchorEntity.type = selection.key.string_id;
+      this.maintainDialog.anchorEntity.param = selection.example_param;
     },
     booleanFormatter(row, column) {
       const value = row[column.property];
