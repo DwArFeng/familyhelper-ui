@@ -215,7 +215,7 @@ export default {
           enabled: false,
           type: '',
           param: '',
-          message: 0,
+          message: '',
           remark: '',
         },
         createRules: {
