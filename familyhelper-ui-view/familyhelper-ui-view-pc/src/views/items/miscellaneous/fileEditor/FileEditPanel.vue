@@ -28,8 +28,11 @@
       </div>
       <el-divider/>
       <div class="editor-body" tabindex="0" @keydown.ctrl.s.prevent="handleCommitHotKeyDown">
+        <div class="placeholder" v-if="loading">
+          正在加载文件，请稍候
+        </div>
         <photo-sub-editor
-          v-if="photoSubEditorUsing"
+          v-else-if="photoSubEditorUsing"
           :url="fileIndicator.url"
         />
         <pdf-sub-editor
@@ -54,9 +57,6 @@
           :blob="fileIndicator.blob"
           :readonly="mode==='INSPECT'"
         />
-        <div class="placeholder" v-else-if="loading">
-          正在加载文件，请稍候
-        </div>
         <div class="placeholder" v-else>
           未能找到扩展名为 {{ extension }} 的{{ mode === 'INSPECT' ? '查看器' : '编辑器' }}
         </div>
@@ -363,6 +363,7 @@ export default {
 .file-edit-panel-container {
   height: 100%;
   width: 100%;
+  background: #FFFFFF;
 }
 
 .main-container {

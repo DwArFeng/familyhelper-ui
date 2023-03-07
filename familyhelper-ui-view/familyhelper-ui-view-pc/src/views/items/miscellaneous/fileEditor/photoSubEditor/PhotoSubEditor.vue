@@ -1,6 +1,6 @@
 <template>
 <div class="photo-sub-editor-container">
-  <el-image class="image" fit="contain" :src="url" :preview-src-list="[url]"/>
+  <el-image class="image" fit="contain" :src="url" :preview-src-list="[url]" :z-index="10000"/>
 </div>
 </template>
 

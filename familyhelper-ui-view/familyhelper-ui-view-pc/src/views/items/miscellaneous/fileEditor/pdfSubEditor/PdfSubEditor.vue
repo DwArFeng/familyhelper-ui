@@ -1,12 +1,13 @@
 <template>
 <div class="pdf-sub-editor-container">
-  <el-pagination
-    class="editor-header"
-    layout="prev, pager, next, jumper"
-    :current-page.sync="currentPage"
-    :total="pageCount"
-    :page-size="1"
-  />
+  <div class="editor-header">
+    <el-pagination
+      layout="prev, pager, next, jumper"
+      :current-page.sync="currentPage"
+      :total="pageCount"
+      :page-size="1"
+    />
+  </div>
   <overlay-scrollbars class="scroll-bar editor-body">
     <pdf
       :src="url"
@@ -45,6 +46,14 @@ export default {
 .pdf-sub-editor-container{
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editor-header{
+  width: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
