@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 新增组件结构。
+  - src/components/layout/FloatyDialog.vue。
+
 - 优化页面。
   - 杂项 -> 文件编辑器内容优化。
 

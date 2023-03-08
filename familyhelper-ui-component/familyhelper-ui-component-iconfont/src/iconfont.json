@@ -6,6 +6,83 @@
   "description": "家庭帮手",
   "glyphs": [
     {
+      "icon_id": "2136168",
+      "name": "透明",
+      "font_class": "touming",
+      "unicode": "ffc9",
+      "unicode_decimal": 65481
+    },
+    {
+      "icon_id": "1567415",
+      "name": "arrows",
+      "font_class": "arrows",
+      "unicode": "ffcb",
+      "unicode_decimal": 65483
+    },
+    {
+      "icon_id": "1567611",
+      "name": "resize_1",
+      "font_class": "resize_",
+      "unicode": "ffca",
+      "unicode_decimal": 65482
+    },
+    {
+      "icon_id": "5127615",
+      "name": "x",
+      "font_class": "close",
+      "unicode": "ffd0",
+      "unicode_decimal": 65488
+    },
+    {
+      "icon_id": "5127606",
+      "name": "window",
+      "font_class": "window",
+      "unicode": "ffd1",
+      "unicode_decimal": 65489
+    },
+    {
+      "icon_id": "5127608",
+      "name": "windows",
+      "font_class": "windows",
+      "unicode": "ffd2",
+      "unicode_decimal": 65490
+    },
+    {
+      "icon_id": "20113425",
+      "name": "bxs-dock-left",
+      "font_class": "bxs-dock-left",
+      "unicode": "ffce",
+      "unicode_decimal": 65486
+    },
+    {
+      "icon_id": "20113427",
+      "name": "bxs-dock-bottom",
+      "font_class": "bxs-dock-bottom",
+      "unicode": "ffcd",
+      "unicode_decimal": 65485
+    },
+    {
+      "icon_id": "20113430",
+      "name": "bxs-dock-top",
+      "font_class": "bxs-dock-top",
+      "unicode": "ffcf",
+      "unicode_decimal": 65487
+    },
+    {
+      "icon_id": "20113433",
+      "name": "bxs-dock-right",
+      "font_class": "bxs-dock-right",
+      "unicode": "ffcc",
+      "unicode_decimal": 65484
+    },
+    {
+      "icon_id": "27402288",
+      "name": "窗口",
+      "font_class": "chuangkou",
+      "unicode": "ffd3",
+      "unicode_decimal": 65491
+    },
+    {
       "icon_id": "18170317",
       "name": "星,星星,星形,半星,实星",
       "font_class": "star-full",

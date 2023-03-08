@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2850115 */
-  src: url('iconfont.woff2?t=1675003019388') format('woff2'),
-       url('iconfont.woff?t=1675003019388') format('woff'),
-       url('iconfont.ttf?t=1675003019388') format('truetype');
+  src: url('iconfont.woff2?t=1678064827167') format('woff2'),
+       url('iconfont.woff?t=1678064827167') format('woff'),
+       url('iconfont.ttf?t=1678064827167') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,50 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-touming:before {
+  content: "\ffc9";
+}
+
+.icon-arrows:before {
+  content: "\ffcb";
+}
+
+.icon-resize_:before {
+  content: "\ffca";
+}
+
+.icon-close:before {
+  content: "\ffd0";
+}
+
+.icon-window:before {
+  content: "\ffd1";
+}
+
+.icon-windows:before {
+  content: "\ffd2";
+}
+
+.icon-bxs-dock-left:before {
+  content: "\ffce";
+}
+
+.icon-bxs-dock-bottom:before {
+  content: "\ffcd";
+}
+
+.icon-bxs-dock-top:before {
+  content: "\ffcf";
+}
+
+.icon-bxs-dock-right:before {
+  content: "\ffcc";
+}
+
+.icon-chuangkou:before {
+  content: "\ffd3";
 }
 
 .icon-star-full:before {
