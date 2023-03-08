@@ -42,6 +42,15 @@
                 :value="item.value"
               />
             </el-select>
+            <div v-if="mode==='DEFAULT'" style="flex-grow: 1"/>
+            <el-button
+              class="item icon-button"
+              v-if="mode==='DEFAULT'"
+              type="info"
+              @click="handlePanelFloatyButtonClicked"
+            >
+              <i class="iconfont">&#xffd3;</i>
+            </el-button>
           </div>
         </template>
         <template v-slot:default>
@@ -53,6 +62,8 @@
             :page-sizes="[10,15,20,30]"
             :table-data="table.entities.data"
             :operate-column-width="130"
+            :show-contextmenu="true"
+            :contextmenu-width="100"
           >
             <template v-slot:default>
               <el-table-column
@@ -113,7 +124,7 @@
                   size="mini"
                   icon="el-icon-search"
                   type="success"
-                  :disabled="inspectTableButtonDisabled(row)"
+                  :disabled="!fileRowInspectEnabled(row)"
                   @click="handleFileInspect(row)"
                 />
                 <el-button
@@ -121,7 +132,7 @@
                   size="mini"
                   icon="el-icon-edit"
                   type="primary"
-                  :disabled="editTableButtonDisabled(row)"
+                  :disabled="!fileRowEditEnabled(row)"
                   @click="handleFileEdit(row)"
                 />
                 <el-button
@@ -136,10 +147,49 @@
                   size="mini"
                   icon="el-icon-delete"
                   type="danger"
-                  :disabled="deleteTableButtonDisabled()"
+                  :disabled="!fileRowDeleteEnabled"
                   @click="handleFileDelete(row)"
                 />
               </el-button-group>
+            </template>
+            <template v-slot:contextmenu="{row,index,close}">
+              <ul>
+                <li
+                  v-if="fileRowInspectEnabled(row)"
+                  @click="handleFileInspectFloatyContextmenuClicked(row,close)"
+                >
+                  弹窗查看...
+                </li>
+                <li
+                  v-if="fileRowEditEnabled(row)"
+                  @click="handleFileEditFloatyContextmenuClicked(row,close)"
+                >
+                  弹窗编辑...
+                </li>
+                <el-divider v-if="fileRowInspectEnabled(row)||fileRowEditEnabled(row)"/>
+                <li
+                  v-if="fileRowInspectEnabled(row)"
+                  @click="handleFileInspectContextmenuClicked(row,close)"
+                >
+                  查看...
+                </li>
+                <li
+                  v-if="fileRowEditEnabled(row)"
+                  @click="handleFileEditContextmenuClicked(row,close)"
+                >
+                  编辑...
+                </li>
+                <el-divider v-if="fileRowInspectEnabled(row)||fileRowEditEnabled(row)"/>
+                <li @click="handleFileDownloadContextmenuClicked(row,close)">
+                  下载...
+                </li>
+                <li
+                  v-if="fileRowDeleteEnabled"
+                  @click="handleFileDeleteContextmenuClicked(row,close)"
+                >
+                  删除...
+                </li>
+              </ul>
             </template>
           </table-panel>
         </template>
@@ -191,24 +241,31 @@ export default {
       type: Boolean,
       required: true,
     },
+    mode: {
+      type: String,
+      default: 'DEFAULT',
+      validator(value) {
+        return ['DEFAULT', 'FLOATY'].indexOf(value) !== -1;
+      },
+    },
   },
   computed: {
-    inspectTableButtonDisabled() {
+    fileRowInspectEnabled() {
       return (row) => {
         // noinspection JSUnresolvedVariable
         const typeIndex = fileType(row.origin_name);
-        return typeIndex < 0;
+        return typeIndex >= 0;
       };
     },
-    editTableButtonDisabled() {
+    fileRowEditEnabled() {
       return (row) => {
         // noinspection JSUnresolvedVariable
         const typeIndex = fileType(row.origin_name);
-        return typeIndex !== 0 || this.readonly;
+        return typeIndex === 0 && !this.readonly;
       };
     },
-    deleteTableButtonDisabled() {
-      return () => this.readonly;
+    fileRowDeleteEnabled() {
+      return () => !this.readonly;
     },
   },
   watch: {
@@ -410,11 +467,19 @@ export default {
         query: { type: PROJECT_MEMO_FILE, id: row.key.long_id, action: 'inspect' },
       });
     },
+    handleFileInspectContextmenuClicked(row, close) {
+      close();
+      this.handleFileInspect(row);
+    },
     handleFileEdit(row) {
       this.$router.push({
         name: 'miscellaneous.fileEditor',
         query: { type: PROJECT_MEMO_FILE, id: row.key.long_id, action: 'edit' },
       });
+    },
+    handleFileEditContextmenuClicked(row, close) {
+      close();
+      this.handleFileEdit(row);
     },
     handleFileDownload(row) {
       download(row.key.long_id)
@@ -428,6 +493,10 @@ export default {
           link.click();
           window.URL.revokeObjectURL(link.href);
         });
+    },
+    handleFileDownloadContextmenuClicked(row, close) {
+      close();
+      this.handleFileDownload(row);
     },
     handleFileDelete(row) {
       this.$confirm('此操作将永久删除此备忘录文件。<br>'
@@ -461,6 +530,10 @@ export default {
         .finally(() => {
           this.loading = false;
         });
+    },
+    handleFileDeleteContextmenuClicked(row, close) {
+      close();
+      this.handleFileDelete(row);
     },
     handleUploadConfirmed(files, callback) {
       const promises = [];
@@ -512,6 +585,27 @@ export default {
           callback(false);
         });
     },
+    handlePanelFloatyButtonClicked() {
+      this.$emit('onPanelFloatyButtonClicked');
+    },
+    handleFileInspectFloatyContextmenuClicked(row, close) {
+      close();
+      const floatyInfo = {
+        id: row.key.long_id,
+        originName: row.origin_name,
+        mode: 'INSPECT',
+      };
+      this.$emit('onFileFloaty', floatyInfo);
+    },
+    handleFileEditFloatyContextmenuClicked(row, close) {
+      close();
+      const floatyInfo = {
+        id: row.key.long_id,
+        originName: row.origin_name,
+        mode: 'EDIT',
+      };
+      this.$emit('onFileFloaty', floatyInfo);
+    },
   },
   mounted() {
     this.handleSearch();
@@ -523,6 +617,7 @@ export default {
 .memo-file-panel-container {
   height: 100%;
   width: 100%;
+  background: #FFFFFF;
 }
 
 .placeholder {
@@ -559,6 +654,11 @@ export default {
   width: 110px;
 }
 
+.header-container .icon-button {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
 .table .icon-wrapper {
   height: 32px;
   line-height: 32px;
@@ -571,5 +671,11 @@ export default {
 
 .table .table-button {
   padding: 7px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.table >>> .contextmenu .el-divider--horizontal{
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 </style>

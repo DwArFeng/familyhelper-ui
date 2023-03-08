@@ -80,6 +80,7 @@
       </div>
       <div class="center-container">
         <memo-edit-panel
+          user-preference-setting-category="ui_preference.pc.project_helper.memo.memo_edit_panel"
           :memo-id="memoEditPanel.memoId"
           @onMemoUpdated="handleSearch"
         />

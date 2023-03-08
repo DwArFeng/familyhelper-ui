@@ -22,6 +22,15 @@
               刷新数据
             </el-button>
             <el-divider direction="vertical"/>
+            <div v-if="mode==='DEFAULT'" style="flex-grow: 1"/>
+            <el-button
+              class="item icon-button"
+              v-if="mode==='DEFAULT'"
+              type="info"
+              @click="handlePanelFloatyButtonClicked"
+            >
+              <i class="iconfont">&#xffd3;</i>
+            </el-button>
           </div>
         </template>
         <template v-slot:default>
@@ -159,6 +168,13 @@ export default {
     readonly: {
       type: Boolean,
       required: true,
+    },
+    mode: {
+      type: String,
+      default: 'DEFAULT',
+      validator(value) {
+        return ['DEFAULT', 'FLOATY'].indexOf(value) !== -1;
+      },
     },
   },
   watch: {
@@ -387,6 +403,9 @@ export default {
       this.maintainDialog.anchorEntity.type = selection.key.string_id;
       this.maintainDialog.anchorEntity.param = selection.example_param;
     },
+    handlePanelFloatyButtonClicked() {
+      this.$emit('onPanelFloatyButtonClicked');
+    },
   },
   mounted() {
     this.handleSearch();
@@ -398,6 +417,7 @@ export default {
 .memo-remind-panel-container {
   height: 100%;
   width: 100%;
+  background: #FFFFFF;
 }
 
 .placeholder {
@@ -428,6 +448,11 @@ export default {
 /*noinspection CssUnusedSymbol*/
 .header-container .el-divider--vertical {
   margin: 0 8px;
+}
+
+.header-container .icon-button {
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 /*noinspection CssUnusedSymbol*/
