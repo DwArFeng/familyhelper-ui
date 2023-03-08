@@ -42,7 +42,6 @@ export function childForProjectDisp(projectKey, page, rows) {
     });
 }
 
-
 export function create(projectKey, type, name, remark, totalMissionCount) {
     return post('project', 'task/create', {
         project_key: {

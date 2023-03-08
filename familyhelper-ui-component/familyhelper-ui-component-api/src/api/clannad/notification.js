@@ -10,7 +10,6 @@ export function inspect(key) {
     return get('clannad', `notification/${key}/`, {});
 }
 
-
 export function remove(key) {
     return del('clannad', `notification/${key}/`, {});
 }
