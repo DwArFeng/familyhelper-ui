@@ -45,6 +45,7 @@
       :initial-dock-status="panelFloaty.initialDockStatus"
       :initial-content-opacity="panelFloaty.initialContentOpacity"
       @onVisualFieldAdjusted="handlePanelFloatyVisualFieldAdjusted"
+      @onClosed="handlePanelFloatyClosed"
     >
       <memo-info-panel
         v-if="panelFloaty.type===0"
@@ -172,8 +173,11 @@ export default {
       this.$emit('onMemoFileUpdated');
     },
     handlePanelFloatyButtonClicked(type) {
-      this.panelFloaty.type = type;
-      this.panelFloaty.visible = true;
+      let changeFlag = false;
+      if (this.panelFloaty.type !== type) {
+        changeFlag = true;
+        this.panelFloaty.type = type;
+      }
       switch (type) {
         case 0:
           this.panelFloaty.title = '概览浮动窗口';
@@ -187,6 +191,13 @@ export default {
         default:
           this.panelFloaty.title = '浮动窗口';
           break;
+      }
+      if (!this.panelFloaty.visible) {
+        changeFlag = true;
+        this.panelFloaty.visible = true;
+      }
+      if (!changeFlag) {
+        return;
       }
       this.updateUserPreference();
     },
@@ -214,6 +225,9 @@ export default {
       this.fileFloaty.initialWidth = visualField.width;
       this.fileFloaty.initialDockStatus = visualField.dockStatus;
       this.fileFloaty.initialContentOpacity = visualField.contentOpacity;
+      this.updateUserPreference();
+    },
+    handlePanelFloatyClosed() {
       this.updateUserPreference();
     },
     loadUserPreference() {
