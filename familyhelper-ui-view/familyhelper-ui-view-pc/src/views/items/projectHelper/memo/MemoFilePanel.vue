@@ -64,6 +64,7 @@
             :operate-column-width="130"
             :show-contextmenu="true"
             :contextmenu-width="100"
+            @onPagingAttributeChanged="handlePagingAttributeChanged"
           >
             <template v-slot:default>
               <el-table-column
@@ -216,6 +217,9 @@ import TablePanel from '@/components/layout/TablePanel.vue';
 
 import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
 
+import { fileType } from '@/util/file';
+import { dataSizePreset, formatUnit } from '@/util/number';
+import { formatTimestamp } from '@/util/timestamp';
 import {
   childForMemo, childForMemoCreatedDateAsc,
   childForMemoInspectedDateDesc,
@@ -223,9 +227,6 @@ import {
   upload,
 } from '@/api/project/memoFile';
 import resolveResponse from '@/util/response';
-import { fileType } from '@/util/file';
-import { dataSizePreset, formatUnit } from '@/util/number';
-import { formatTimestamp } from '@/util/timestamp';
 
 export default {
   name: 'MemoFilePanel',
@@ -454,6 +455,9 @@ export default {
     updateTableView(res) {
       this.table.entities = res;
       this.table.currentPage = res.current_page;
+    },
+    handlePagingAttributeChanged() {
+      this.handleSearch();
     },
     unitFormatter(row, column) {
       return formatUnit(row[column.property], dataSizePreset);

@@ -100,8 +100,8 @@ import FloatyDialog from '@/components/layout/FloatyDialog.vue';
 import FileEditPanel from '@/views/items/miscellaneous/fileEditor/FileEditPanel.vue';
 
 import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
-import resolveResponse from '@/util/response';
 import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
+import resolveResponse from '@/util/response';
 
 import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
 
@@ -124,7 +124,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    userPreferenceSettingCategory: {
+    upsc: {
       type: String,
       default: '',
     },
@@ -217,11 +217,11 @@ export default {
       this.updateUserPreference();
     },
     loadUserPreference() {
-      if (this.userPreferenceSettingCategory === '') {
+      if (this.upsc === '') {
         return;
       }
       this.loading = true;
-      resolveResponse(operateInspect(this.userPreferenceSettingCategory, [this.me]))
+      resolveResponse(operateInspect(this.upsc, [this.me]))
         .then((res) => {
           if (res !== null) {
             this.resumeUserPreference(JSON.parse(res.value));
@@ -265,14 +265,14 @@ export default {
       this.fileFloaty.initialContentOpacity = userPreference.fileFloaty.initialContentOpacity;
     },
     updateUserPreference() {
-      if (this.userPreferenceSettingCategory === '') {
+      if (this.upsc === '') {
         return;
       }
       if (this.loading) {
         return;
       }
       resolveResponse(
-        operatePut(this.userPreferenceSettingCategory,
+        operatePut(this.upsc,
           [this.me],
           JSON.stringify(this.getUserPreference()),
           `更新时间: ${formatTimestamp(currentTimestamp())}`),

@@ -101,7 +101,8 @@
         <memo-edit-panel
           :memo-id="memoEditPanel.memoId"
           :readonly="memoEditPanel.readonly"
-          @onMemoUpdated="handleSearch"
+          :upsc="memoEditPanel.upsc"
+          @onMemoPropertyUpdated="handleSearch"
         />
       </div>
     </border-layout-panel>
@@ -176,6 +177,7 @@ export default {
       memoEditPanel: {
         memoId: '',
         readonly: false,
+        upsc: 'ui_preference.pc.project_helper.memo_history.memo_edit_panel',
       },
     };
   },

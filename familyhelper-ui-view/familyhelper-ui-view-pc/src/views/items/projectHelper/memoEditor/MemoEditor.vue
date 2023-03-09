@@ -3,7 +3,11 @@
     <div v-if="loading" class="placeholder">正在加载，请稍后...</div>
     <div v-else-if="memo.userId!==me" class="placeholder">此条备忘录不是您的备忘录，您无权访问</div>
     <div v-else class="main-container">
-      <memo-edit-panel :memo-id="memo.memoId" :readonly="memo.status===1"/>
+      <memo-edit-panel
+        :memo-id="memo.memoId"
+        :readonly="memo.status===1"
+        :upsc="memoEditPanel.upsc"
+      />
     </div>
   </div>
 </template>
@@ -51,6 +55,9 @@ export default {
         memoId: '',
         userId: '',
         status: 0,
+      },
+      memoEditPanel: {
+        upsc: 'ui_preference.pc.project_helper.memo_editor.memo_edit_panel',
       },
     };
   },

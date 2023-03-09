@@ -80,9 +80,9 @@
       </div>
       <div class="center-container">
         <memo-edit-panel
-          user-preference-setting-category="ui_preference.pc.project_helper.memo.memo_edit_panel"
           :memo-id="memoEditPanel.memoId"
-          @onMemoUpdated="handleSearch"
+          :upsc="memoEditPanel.upsc"
+          @onMemoPropertyUpdated="handleSearch"
         />
       </div>
     </border-layout-panel>
@@ -98,7 +98,6 @@
       :close-on-click-modal="false"
       :loading="maintainDialog.loading"
       @onEntityCreate="handleEntityCreate"
-      @onEntityEdit="handleEntityEdit"
     >
       <el-form-item label="概要" prop="profile">
         <el-input
@@ -159,7 +158,6 @@ import {
   create,
   finish,
   remove,
-  update,
 } from '@/api/project/memo';
 import resolveResponse from '@/util/response';
 
@@ -259,6 +257,7 @@ export default {
       },
       memoEditPanel: {
         memoId: '',
+        upsc: 'ui_preference.pc.project_helper.memo.memo_edit_panel',
       },
     };
   },
@@ -322,33 +321,6 @@ export default {
           this.$message({
             showClose: true,
             message: '备忘录创建成功',
-            type: 'success',
-            center: true,
-          });
-        })
-        .then(() => {
-          this.handleSearch();
-          this.maintainDialog.dialogVisible = false;
-        })
-        .catch(() => {
-        })
-        .finally(() => {
-          this.maintainDialog.loading = false;
-        });
-    },
-    handleEntityEdit() {
-      this.maintainDialog.loading = true;
-      resolveResponse(update(
-        this.maintainDialog.anchorEntity.long_id,
-        this.maintainDialog.anchorEntity.profile,
-        this.maintainDialog.anchorEntity.remark,
-        this.maintainDialog.anchorEntity.star_flag,
-        this.maintainDialog.anchorEntity.priority,
-      ))
-        .then(() => {
-          this.$message({
-            showClose: true,
-            message: '备忘录更新成功',
             type: 'success',
             center: true,
           });
