@@ -504,7 +504,10 @@ export default {
       // 为 document 移除相关侦听。
       document.removeEventListener('mousemove', this.handleMoving);
       document.removeEventListener('mouseup', this.handleStopMove);
-      // 抛出事件。
+      // 根据条件抛出事件。
+      if (this.positionCopyEquals()) {
+        return;
+      }
       this.$emit('onVisualFieldAdjusted', this.visualField);
     },
     handleStartResize($event, resizeHandle) {
@@ -557,8 +560,23 @@ export default {
       // 为 document 移除相关侦听。
       document.removeEventListener('mousemove', this.handleResizing);
       document.removeEventListener('mouseup', this.handleStopResize);
-      // 抛出事件。
+      // 根据条件抛出事件。
+      if (this.positionCopyEquals() && this.sizeCopyEquals()) {
+        return;
+      }
       this.$emit('onVisualFieldAdjusted', this.visualField);
+    },
+    positionCopyEquals() {
+      if (this.position.x !== this.positionCopy.x) {
+        return false;
+      }
+      return this.position.y === this.positionCopy.y;
+    },
+    sizeCopyEquals() {
+      if (this.size.height !== this.sizeCopy.height) {
+        return false;
+      }
+      return this.size.width === this.sizeCopy.width;
     },
     inspectCursorStyle($event) {
       return window.getComputedStyle($event.target, '::after').getPropertyValue('cursor');
