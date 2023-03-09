@@ -12,26 +12,47 @@
         :current-page.sync="currentPage"
         :page-sizes="[15,20,30,50]"
         :table-data="entities.data"
+        :show-contextmenu="true"
+        :contextmenu-width="100"
         @onPagingAttributeChanged="handlePagingAttributeChanged"
         @onEntityInspect="handleShowEntityInspectDialog"
         @onEntityEdit="handleShowEntityEditDialog"
         @onEntityDelete="handleEntityDelete"
       >
-        <el-table-column
-          prop="key.string_id"
-          label="设置节点"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="value"
-          label="值"
-          class-name="single-line"
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
+        <template v-slot:default>
+          <el-table-column
+            prop="key.string_id"
+            label="设置节点"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="value"
+            label="值"
+            class-name="single-line"
+          />
+          <el-table-column
+            prop="remark"
+            label="备注"
+            show-tooltip-when-overflow
+          />
+        </template>
+        <template v-slot:contextmenu="{row,index,close}">
+          <ul>
+            <li @click="handleEntityCopyKeyContextmenuClicked(row,close)">
+              复制节点
+            </li>
+            <el-divider/>
+            <li @click="handleEntityInspectContextmenuClicked(row,index,close)">
+              查看...
+            </li>
+            <li @click="handleEntityEditContextmenuClicked(row,index,close)">
+              编辑...
+            </li>
+            <li @click="handleEntityDeleteContextmenuClicked(row,index,close)">
+              删除...
+            </li>
+          </ul>
+        </template>
       </table-panel>
       <div class="header-container" slot="header">
         <el-button
@@ -264,12 +285,20 @@ export default {
         .catch(() => {
         });
     },
+    handleEntityEditContextmenuClicked(row, index, close) {
+      close();
+      this.handleShowEntityEditDialog(index, row);
+    },
     handleShowEntityCreateDialog() {
       this.showDialog('CREATE');
     },
     handleShowEntityInspectDialog(index, entity) {
       this.syncAnchorEntity(entity);
       this.showDialog('INSPECT');
+    },
+    handleEntityInspectContextmenuClicked(row, index, close) {
+      close();
+      this.handleShowEntityInspectDialog(index, row);
     },
     handleShowEntityEditDialog(index, entity) {
       this.syncAnchorEntity(entity);
@@ -304,6 +333,10 @@ export default {
         .catch(() => {
         });
     },
+    handleEntityDeleteContextmenuClicked(row, index, close) {
+      close();
+      this.handleEntityDelete(index, row);
+    },
     syncAnchorEntity(entity) {
       this.anchorEntity.key.string_id = entity.key.string_id;
       this.anchorEntity.value = entity.value;
@@ -314,6 +347,18 @@ export default {
       this.$nextTick(() => {
         this.dialogVisible = true;
       });
+    },
+    handleEntityCopyKeyContextmenuClicked(row, close) {
+      close();
+      navigator.clipboard.writeText(row.key.string_id)
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '复制成功',
+            type: 'success',
+            center: true,
+          });
+        });
     },
   },
   mounted() {
@@ -353,5 +398,11 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/*noinspection CssUnusedSymbol*/
+.table >>> .contextmenu .el-divider--horizontal {
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 </style>
