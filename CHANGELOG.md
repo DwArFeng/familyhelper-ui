@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 文案优化。
+  - 属性编辑 -> 编辑属性。
+
 - 新增组件结构。
   - src/components/layout/FloatyDialog.vue。
 

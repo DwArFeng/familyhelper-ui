@@ -10,7 +10,7 @@
               :disabled="readonly"
               @click="handleShowEditDialog"
             >
-              属性编辑
+              编辑属性
             </el-button>
             <el-button type="success" @click="handleSearch">刷新数据</el-button>
           </div>
