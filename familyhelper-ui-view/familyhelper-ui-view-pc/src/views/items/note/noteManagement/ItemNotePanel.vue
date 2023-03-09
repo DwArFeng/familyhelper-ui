@@ -1,42 +1,58 @@
 <template>
-  <div class="item-note-panel-container" v-loading="loading">
-    <header-layout-panel>
-      <template v-slot:header>
-        <div class="header">
-          <el-switch
-            class="switch"
-            v-model="header.editorEditable"
-            active-text="编辑"
-            inactive-text="只读"
-            :disabled="readOnly"
-          />
-          <div class="placeholder"/>
-          <el-button
-            type="primary"
-            :disabled="editorReadOnly"
-            @click="uploadNoteFile"
+  <div class="item-note-panel-container">
+    <div class="placeholder" v-if="itemId===''">请选择项目</div>
+    <div v-else class="main-container" v-loading="loading">
+      <header-layout-panel>
+        <template v-slot:header>
+          <div class="header-container">
+            <el-switch
+              class="switch"
+              v-model="header.editorEditable"
+              active-text="编辑"
+              inactive-text="只读"
+              :disabled="readonly"
+            />
+            <div style="flex-grow: 1"/>
+            <el-button
+              type="primary"
+              :disabled="editorReadOnly"
+              @click="handleCommitButtonClicked"
+            >
+              提交
+            </el-button>
+            <el-button
+              type="danger"
+              :disabled="editorReadOnly"
+              @click="handleResetButtonClicked"
+            >
+              重置
+            </el-button>
+            <el-divider direction="vertical"/>
+            <el-button
+              class="item icon-button"
+              v-if="mode==='DEFAULT'"
+              type="info"
+              @click="handlePanelFloatyButtonClicked"
+            >
+              <i class="iconfont">&#xffd3;</i>
+            </el-button>
+          </div>
+        </template>
+        <template v-slot:default>
+          <div
+            class="editor-wrapper"
+            tabindex="0"
+            @keydown.ctrl.s.prevent="handleCommitHotKeyDown"
           >
-            提交
-          </el-button>
-          <el-button
-            type="danger"
-            :disabled="editorReadOnly"
-            @click="downloadNoteFile"
-          >
-            重置
-          </el-button>
-        </div>
-      </template>
-      <template v-slot:default>
-        <div class="editor-wrapper">
-          <ckeditor
-            :editor="editor.editorClass"
-            v-model="editor.content"
-            @ready="handleEditorReady"
-          />
-        </div>
-      </template>
-    </header-layout-panel>
+            <ckeditor
+              :editor="editor.editorClass"
+              v-model="editor.content"
+              @ready="handleEditorReady"
+            />
+          </div>
+        </template>
+      </header-layout-panel>
+    </div>
   </div>
 </template>
 
@@ -56,19 +72,26 @@ export default {
       type: String,
       default: '',
     },
-    readOnly: {
+    readonly: {
       type: Boolean,
       default: false,
+    },
+    mode: {
+      type: String,
+      default: 'DEFAULT',
+      validator(value) {
+        return ['DEFAULT', 'FLOATY'].indexOf(value) !== -1;
+      },
     },
   },
   computed: {
     editorReadOnly() {
-      return this.readOnly || !this.header.editorEditable;
+      return this.readonly || !this.header.editorEditable;
     },
   },
   watch: {
     itemId() {
-      this.updateView();
+      this.handleSearch();
     },
     editorReadOnly(value) {
       this.editor.instance.isReadOnly = value;
@@ -81,6 +104,7 @@ export default {
   },
   data() {
     return {
+      loading: false,
       header: {
         editorEditable: false,
       },
@@ -89,7 +113,12 @@ export default {
         content: '',
         instance: null,
       },
-      loading: false,
+      hotKey: {
+        commit: {
+          coolDown: false,
+          timeoutHandle: null,
+        },
+      },
     };
   },
   methods: {
@@ -105,11 +134,34 @@ export default {
       });
       this.editor.instance.isReadOnly = this.editorReadOnly;
     },
-    updateView() {
+    handleSearch() {
       if (this.itemId === '') {
         return;
       }
       this.downloadNoteFile();
+    },
+    handleResetButtonClicked() {
+      this.downloadNoteFile();
+    },
+    handleCommitButtonClicked() {
+      this.uploadNoteFile();
+    },
+    handleCommitHotKeyDown() {
+      if (this.editorReadOnly) {
+        return;
+      }
+      if (this.hotKey.commit.coolDown) {
+        return;
+      }
+      this.hotKey.commit.coolDown = true;
+      this.uploadNoteFile();
+      this.hotKey.commit.timeoutHandle = setTimeout(
+        () => {
+          this.hotKey.commit.coolDown = false;
+          this.hotKey.commit.timeoutHandle = null;
+        },
+        1000,
+      );
     },
     downloadNoteFile() {
       this.loading = true;
@@ -137,6 +189,7 @@ export default {
             type: 'success',
             center: true,
           });
+          this.$emit('onItemNoteCommitted');
         })
         .catch(() => {
         })
@@ -144,9 +197,12 @@ export default {
           this.loading = false;
         });
     },
+    handlePanelFloatyButtonClicked() {
+      this.$emit('onPanelFloatyButtonClicked');
+    },
   },
   mounted() {
-    this.updateView();
+    this.handleSearch();
   },
 };
 </script>
@@ -155,23 +211,51 @@ export default {
 .item-note-panel-container {
   width: 100%;
   height: 100%;
+  background: #FFFFFF;
 }
 
-.header {
+.placeholder {
   width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #BFBFBF;
+  user-select: none;
+}
+
+.main-container {
+  width: 100%;
+  height: 100%;
+}
+
+.header-container {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-.header .placeholder {
-  width: 0;
-  flex-grow: 1;
+/*noinspection CssUnusedSymbol*/
+.header-container .el-divider--vertical {
+  margin: 0 8px;
+}
+
+.header-container .icon-button {
+  padding-left: 12px;
+  padding-right: 12px;
 }
 
 .editor-wrapper {
   height: 100%;
   width: 100%;
+}
+
+.editor-wrapper:focus {
+  outline: none;
 }
 
 /*noinspection CssUnusedSymbol*/
