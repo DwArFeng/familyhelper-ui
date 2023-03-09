@@ -12,31 +12,52 @@
         :current-page.sync="table.currentPage"
         :page-sizes="[15,20,30,50]"
         :table-data="table.entities.data"
+        :show-contextmenu="true"
+        :contextmenu-width="100"
         @onPagingAttributeChanged="handlePagingAttributeChanged"
         @onEntityInspect="handleShowEntityInspectDialog"
         @onEntityEdit="handleShowEntityEditDialog"
         @onEntityDelete="handleEntityDelete"
       >
-        <el-table-column
-          prop="key.string_id"
-          label="设置类型"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="formatter_type"
-          label="格式化器类型"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="formatter_param"
-          label="格式化器参数"
-          class-name="single-line"
-        />
-        <el-table-column
-          prop="remark"
-          label="备注"
-          show-tooltip-when-overflow
-        />
+        <template v-slot:default>
+          <el-table-column
+            prop="key.string_id"
+            label="设置类型"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="formatter_type"
+            label="格式化器类型"
+            show-tooltip-when-overflow
+          />
+          <el-table-column
+            prop="formatter_param"
+            label="格式化器参数"
+            class-name="single-line"
+          />
+          <el-table-column
+            prop="remark"
+            label="备注"
+            show-tooltip-when-overflow
+          />
+        </template>
+        <template v-slot:contextmenu="{row,index,close}">
+          <ul>
+            <li @click="handleEntityCopyKeyContextmenuClicked(row,close)">
+              复制类型
+            </li>
+            <el-divider/>
+            <li @click="handleEntityInspectContextmenuClicked(row,index,close)">
+              查看...
+            </li>
+            <li @click="handleEntityEditContextmenuClicked(row,index,close)">
+              编辑...
+            </li>
+            <li @click="handleEntityDeleteContextmenuClicked(row,index,close)">
+              删除...
+            </li>
+          </ul>
+        </template>
       </table-panel>
       <div class="header-container" slot="header">
         <el-button
@@ -348,9 +369,17 @@ export default {
       this.syncAnchorEntity(entity);
       this.showDialog('INSPECT');
     },
+    handleEntityInspectContextmenuClicked(row, index, close) {
+      close();
+      this.handleShowEntityInspectDialog(index, row);
+    },
     handleShowEntityEditDialog(index, entity) {
       this.syncAnchorEntity(entity);
       this.showDialog('EDIT');
+    },
+    handleEntityEditContextmenuClicked(row, index, close) {
+      close();
+      this.handleShowEntityEditDialog(index, row);
     },
     handleEntityDelete(category, entity) {
       Promise.resolve(entity.key.string_id)
@@ -380,6 +409,10 @@ export default {
         })
         .catch(() => {
         });
+    },
+    handleEntityDeleteContextmenuClicked(row, index, close) {
+      close();
+      this.handleEntityDelete(index, row);
     },
     syncAnchorEntity(entity) {
       this.entityDialog.anchorEntity.key.string_id = entity.key.string_id;
@@ -417,6 +450,18 @@ export default {
           }, 3000);
         });
     },
+    handleEntityCopyKeyContextmenuClicked(row, close) {
+      close();
+      navigator.clipboard.writeText(row.key.string_id)
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '复制成功',
+            type: 'success',
+            center: true,
+          });
+        });
+    },
   },
   mounted() {
     this.handleSearch();
@@ -447,9 +492,15 @@ export default {
 }
 
 /*noinspection CssUnusedSymbol*/
-.table >>> .single-line .cell{
+.table >>> .single-line .cell {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/*noinspection CssUnusedSymbol*/
+.table >>> .contextmenu .el-divider--horizontal {
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 </style>
