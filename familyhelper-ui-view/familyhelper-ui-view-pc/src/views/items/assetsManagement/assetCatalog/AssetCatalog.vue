@@ -4,106 +4,138 @@
       class="border-layout-panel"
       :header-visible="true"
     >
-      <card-panel
-        title-prop="name"
-        card-width="calc(20% - 18px)"
-        :data="cardPanel.entities.data"
-        :maxCard="1000"
-        :show-contextmenu="true"
-        :contextmenu-width="110"
-        @onAddonClicked="handleAssetCatalogToCreate"
-      >
-        <template v-slot:default="{index,item}">
-          <div class="asset-catalog-card-container">
-            <div class="asset-catalog-property">
-              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xfffa;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="asset-catalog-property-text">
+      <template v-slot:header>
+        <div class="header-container">
+          <el-switch
+            v-model="inspectAllSwitch.inspectAll"
+            active-text="看所有的"
+            inactive-text="看自己的"
+            @change="handleInspectAllSwitchChanged"
+          />
+          <el-divider direction="vertical"/>
+          <el-button
+            type="success"
+            size="medium"
+            @click="handleSearch"
+          >
+            刷新数据
+          </el-button>
+        </div>
+      </template>
+      <template v-slot:default>
+        <card-panel
+          title-prop="name"
+          card-width="calc(20% - 18px)"
+          :data="cardPanel.entities.data"
+          :maxCard="1000"
+          :show-contextmenu="true"
+          :contextmenu-width="110"
+          @onAddonClicked="handleAssetCatalogToCreate"
+        >
+          <template v-slot:default="{index,item}">
+            <div class="asset-catalog-card-container">
+              <div class="asset-catalog-property">
+                <span
+                  class="iconfont asset-catalog-property-icon"
+                  style="color:black"
+                >
+                  &#xfffa;
+                </span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="asset-catalog-property-text">
                 权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
-            </div>
-            <div class="asset-catalog-property">
-              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xfffb;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="asset-catalog-property-text">
+              </div>
+              <div class="asset-catalog-property">
+                <span
+                  class="iconfont asset-catalog-property-icon"
+                  style="color:black"
+                >
+                  &#xfffb;
+                </span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="asset-catalog-property-text">
                 所有者: {{ item.owner_account.display_name }}
               </span>
-            </div>
-            <div class="asset-catalog-property">
-              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xffe7;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="asset-catalog-property-text">
+              </div>
+              <div class="asset-catalog-property">
+                <span
+                  class="iconfont asset-catalog-property-icon"
+                  style="color:black"
+                >
+                  &#xffe7;
+                </span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="asset-catalog-property-text">
                 项目总数: {{ item.item_count }}
               </span>
-            </div>
-            <div class="asset-catalog-property">
-              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xffef;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="asset-catalog-property-text">
+              </div>
+              <div class="asset-catalog-property">
+                <span
+                  class="iconfont asset-catalog-property-icon"
+                  style="color:black"
+                >
+                  &#xffef;
+                </span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="asset-catalog-property-text">
                 创建日期: {{ formatTimestamp(item.created_date) }}
               </span>
+              </div>
             </div>
-          </div>
-        </template>
-        <template v-slot:header="{index,item}">
-          <el-button-group class="asset-catalog-control-button-group">
-            <el-button
-              class="card-button"
-              size="mini"
-              icon="el-icon-edit"
-              :disabled="item.permission_level !== 0"
-              @click="handleItemToEdit(index, item)"
-            />
-            <el-button
-              class="card-button"
-              size="mini"
-              icon="el-icon-lock"
-              :disabled="item.permission_level !== 0"
-              @click="handleItemToPermit(index, item)"
-            />
-            <el-button
-              class="card-button"
-              size="mini"
-              icon="el-icon-delete"
-              :disabled="item.permission_level !== 0"
-              @click="handleItemToDelete(index, item)"
-            />
-          </el-button-group>
-        </template>
-        <template v-slot:contextmenu="{index,item,close}">
-          <ul class="my-contextmenu">
-            <!--suppress JSUnresolvedVariable -->
-            <li
-              :class="{disabled:item.permission_level !== 0}"
-              @click="handleEditMenuItemClicked(index,item,close,$event)"
-            >
-              编辑...
-            </li>
-            <!--suppress JSUnresolvedVariable -->
-            <li
-              :class="{disabled:item.permission_level !== 0}"
-              @click="handlePermitMenuItemClicked(index,item,close,$event)"
-            >
-              分配权限...
-            </li>
-            <!--suppress JSUnresolvedVariable -->
-            <li
-              :class="{disabled:item.permission_level !== 0}"
-              @click="handleDeleteMenuItemClicked(index,item,close,$event)"
-            >
-              删除...
-            </li>
-          </ul>
-        </template>
-      </card-panel>
-      <div class="header-container" slot="header">
-        <el-switch
-          v-model="inspectAllSwitch.inspectAll"
-          active-text="看所有的"
-          inactive-text="看自己的"
-          @change="handleInspectAllSwitchChanged"
-        />
-      </div>
+          </template>
+          <template v-slot:header="{index,item}">
+            <el-button-group class="asset-catalog-control-button-group">
+              <el-button
+                class="card-button"
+                size="mini"
+                icon="el-icon-edit"
+                :disabled="item.permission_level !== 0"
+                @click="handleItemToEdit(index, item)"
+              />
+              <el-button
+                class="card-button"
+                size="mini"
+                icon="el-icon-lock"
+                :disabled="item.permission_level !== 0"
+                @click="handleItemToPermit(index, item)"
+              />
+              <el-button
+                class="card-button"
+                size="mini"
+                icon="el-icon-delete"
+                :disabled="item.permission_level !== 0"
+                @click="handleItemToDelete(index, item)"
+              />
+            </el-button-group>
+          </template>
+          <template v-slot:contextmenu="{index,item,close}">
+            <ul class="my-contextmenu">
+              <!--suppress JSUnresolvedVariable -->
+              <li
+                :class="{disabled:item.permission_level !== 0}"
+                @click="handleEditMenuItemClicked(index,item,close,$event)"
+              >
+                编辑...
+              </li>
+              <!--suppress JSUnresolvedVariable -->
+              <li
+                :class="{disabled:item.permission_level !== 0}"
+                @click="handlePermitMenuItemClicked(index,item,close,$event)"
+              >
+                分配权限...
+              </li>
+              <!--suppress JSUnresolvedVariable -->
+              <li
+                :class="{disabled:item.permission_level !== 0}"
+                @click="handleDeleteMenuItemClicked(index,item,close,$event)"
+              >
+                删除...
+              </li>
+            </ul>
+          </template>
+        </card-panel>
+      </template>
     </border-layout-panel>
     <entity-maintain-dialog
       :mode="entityMaintainDialog.mode"
@@ -144,7 +176,7 @@ from '@/views/items/assetsManagement/assetCatalog/PermitMaintainDialog.vue';
 
 import resolveResponse from '@/util/response';
 import {
-  allPermittedDisp, allOwnedDisp, create, update, remove,
+  allOwnedDisp, allPermittedDisp, create, remove, update,
 } from '@/api/assets/assetCatalog';
 
 import { formatTimestamp } from '@/util/timestamp';
@@ -451,6 +483,11 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+/*noinspection CssUnusedSymbol*/
+.header-container .el-divider--vertical {
+  margin: 0 8px;
 }
 
 .asset-catalog-control-button-group {
