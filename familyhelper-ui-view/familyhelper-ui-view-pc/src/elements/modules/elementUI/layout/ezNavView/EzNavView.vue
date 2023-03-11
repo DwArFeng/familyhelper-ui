@@ -172,9 +172,10 @@ export default {
   components: { EditorNavBar, VimLabel, Draggable },
   computed: {
     ...mapGetters('vimEzNav', [
-      'navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta', 'loading', 'itemBack',
+      'navItems', 'annotation', 'pinnedNavItems', 'activeNavItems', 'itemMeta', 'loading',
+      'itemBack', 'backing',
     ]),
-    ...mapGetters('vim', ['isCurrent', 'item']),
+    ...mapGetters('vim', ['isCurrent', 'currentKey', 'item']),
     ...mapGetters('lnp', ['hasPermission']),
   },
   data() {
@@ -318,10 +319,74 @@ export default {
         .catch(() => {
         });
     },
+    addHotKeyListener() {
+      document.body.addEventListener('keydown', this.handleHotKeyDown);
+    },
+    removeHotKeyListener() {
+      document.body.removeEventListener('keydown', this.handleHotKeyDown);
+    },
+    handleHotKeyDown($event) {
+      // ctrl + alt + leftArrow
+      if ($event.keyCode === 37 && $event.ctrlKey && $event.altKey) {
+        this.mayBackward();
+      }
+      // ctrl + alt + rightArrow
+      if ($event.keyCode === 39 && $event.ctrlKey && $event.altKey) {
+        this.mayForward();
+      }
+    },
+    mayBackward() {
+      if (this.loading) {
+        return;
+      }
+      if (this.backing) {
+        return;
+      }
+      const index = this.currentIndex();
+      if (index < 0) {
+        return;
+      }
+      if (index === 0) {
+        return;
+      }
+      this.jumpToIndex(index - 1);
+    },
+    mayForward() {
+      if (this.loading) {
+        return;
+      }
+      if (this.backing) {
+        return;
+      }
+      const index = this.currentIndex();
+      if (index < 0) {
+        return;
+      }
+      if (index === this.navItems.length - 1) {
+        return;
+      }
+      this.jumpToIndex(index + 1);
+    },
+    currentIndex() {
+      const navItemKeys = this.navItems.map((item) => item.key);
+      return navItemKeys.indexOf(this.currentKey);
+    },
+    jumpToIndex(index) {
+      const itemKey = this.navItems[index].key;
+      const { params, query } = this.itemMeta(itemKey);
+      const location = { name: itemKey, params, query };
+      this.$router.push(location);
+    },
     ...mapMutations('vimEzNav', [
       'removeItemKey', 'pin', 'unpin', 'clearActive', 'pushItemKey', 'updatePinnedItemKeys',
       'updateActiveItemKeys', 'clearAll', 'setBacking',
     ]),
+  },
+  mounted() {
+    this.addHotKeyListener();
+  },
+  destroyed() {
+    this.removeHotKeyListener();
   },
 };
 </script>
