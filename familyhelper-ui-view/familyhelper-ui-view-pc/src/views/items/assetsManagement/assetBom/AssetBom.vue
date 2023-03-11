@@ -5,77 +5,58 @@
       :header-visible="true"
       :west-visible="true"
     >
-      <template v-slot:default>
-        <div class="placeholder" v-if="treePanel.selection.data.key.long_id === ''">
-          请选择项目
+      <template v-slot:header>
+        <div class="header-container">
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="headerButtonDisabled"
+            @click="handleShowEntityCreateDialogParent"
+          >
+            新建项目
+          </el-button>
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="headerButtonDisabled"
+            @click="handleShowEntityCreateDialogChild"
+          >
+            新建子项目
+          </el-button>
+          <el-divider direction="vertical"/>
+          <asset-catalog-indicator mode="ASSET_BOM" @change="handleAssetCatalogChanged"/>
         </div>
-        <el-tabs
-          class="asset-tabs"
-          tab-position="left"
-          v-model="assetTabs.activeName"
-          v-else
-        >
-          <el-tab-pane label="信息" name="info">
-            <info-tab-panel
-              ref="infoTabPanel"
-              :item-id="assetTabs.itemId"
-              :read-only="readOnly"
-              @onEntityEdit="handleShowEntityEditDialog"
-            />
-          </el-tab-pane>
-          <el-tab-pane label="资料" name="file">
-            <file-tab-panel :item-id="assetTabs.itemId" :read-only="readOnly"/>
-          </el-tab-pane>
-          <el-tab-pane label="参数" name="params">
-            <params-tab-panel/>
-          </el-tab-pane>
-        </el-tabs>
       </template>
-      <asset-bom-tree-panel
-        class="tree-container"
-        slot="west"
-        ref="assetBomTreePanel"
-        mode="ASSET_BOM"
-        :asset-catalog-key="parentSelection.assetCatalogId"
-        :read-only="readOnly"
-        @onCurrentChanged="handleCurrentChanged"
-        @onEntityDelete="handleEntityDelete"
-      />
-      <div class="header-container" slot="header">
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="headerButtonDisabled"
-          @click="handleShowEntityCreateDialogParent"
-        >
-          新建项目
-        </el-button>
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="headerButtonDisabled"
-          @click="handleShowEntityCreateDialogChild"
-        >
-          新建子项目
-        </el-button>
-        <el-divider direction="vertical"/>
-        <asset-catalog-indicator mode="ASSET_BOM" @change="handleAssetCatalogChanged"/>
-      </div>
+      <template v-slot:west>
+        <asset-bom-tree-panel
+          class="tree-container"
+          ref="assetBomTreePanel"
+          mode="ASSET_BOM"
+          :asset-catalog-key="parentSelection.assetCatalogId"
+          :read-only="readonly"
+          @onCurrentChanged="handleCurrentChanged"
+          @onEntityDelete="handleEntityDelete"
+        />
+      </template>
+      <template v-slot:default>
+        <item-edit-panel
+          :item-id="itemEditPanel.itemId"
+          :readonly="readonly"
+          :upsc="itemEditPanel.upsc"
+          @onItemPropertyUpdated="handleItemPropertyUpdated"
+        />
+      </template>
     </border-layout-panel>
     <entity-maintain-dialog
       label-width="100px"
-      inspect-title="查看项目"
       create-title="创建项目"
-      edit-title="编辑项目"
+      mode="CREATE"
       :visible.sync="maintainDialog.visible"
-      :mode="maintainDialog.mode"
       :entity="maintainDialog.anchorEntity"
       :create-rules="maintainDialog.rules"
-      :edit-rules="maintainDialog.rules"
       :close-on-click-modal="false"
       :loading="maintainDialog.loading"
       @onEntityCreate="handleEntityCreate"
-      @onEntityEdit="handleEntityEdit"
     >
       <el-form-item label="名称" prop="name">
         <el-input
@@ -90,7 +71,7 @@
           placeholder="请选择"
         >
           <el-option
-            v-for="item in typeIndicator.entities.data"
+            v-for="item in itemTypeIndicator"
             :key="item.key.string_id"
             :label="item.label"
             :value="item.key.string_id"
@@ -105,7 +86,7 @@
           multiple
         >
           <el-option
-            v-for="item in label.entities.data"
+            v-for="item in label"
             :key="item.key.string_id"
             :label="item.label"
             :value="item.key.string_id"
@@ -119,7 +100,7 @@
           placeholder="请选择"
         >
           <el-option
-            v-for="item in lifeCycle.entities.data"
+            v-for="item in lifeCycleIndicator"
             :key="item.key"
             :label="item.label"
             :value="item.key"
@@ -138,36 +119,38 @@
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import AssetBomTreePanel from '@/views/items/assetsManagement/assetBom/AssetBomTreePanel.vue';
-import InfoTabPanel from '@/views/items/assetsManagement/assetBom/InfoTabPanel.vue';
-import ParamsTabPanel from '@/views/items/assetsManagement/assetBom/ParamsTabPanel.vue';
-import FileTabPanel from '@/views/items/assetsManagement/assetBom/FileTabPanel.vue';
 import AssetCatalogIndicator
 from '@/views/items/assetsManagement/assetCatalog/AssetCatalogIndicator.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
+import ItemEditPanel from '@/views/items/assetsManagement/assetBom/ItemEditPanel.vue';
 
-import resolveResponse from '@/util/response';
 import {
-  create, inspectDisp, remove, update,
+  create, inspectDisp, remove,
 } from '@/api/assets/item';
-import { all as allTypeIndicator } from '@/api/assets/itemTypeIndicator';
-import { all as allLabel, allExists as allLabelExists } from '@/api/assets/itemLabel';
+import {
+  all as inspectItemTypeIndicator,
+} from '@/api/assets/itemTypeIndicator';
+import {
+  all as inspectLabel,
+  allExists as allLabelExists,
+} from '@/api/assets/itemLabel';
+import resolveResponse from '@/util/response';
+import { inspectDisp as inspectItem } from '@/api/note/noteItem';
 
 export default {
   name: 'AssetBom',
   components: {
+    ItemEditPanel,
     EntityMaintainDialog,
     AssetCatalogIndicator,
-    FileTabPanel,
-    ParamsTabPanel,
-    InfoTabPanel,
     BorderLayoutPanel,
     AssetBomTreePanel,
   },
   computed: {
     headerButtonDisabled() {
-      return this.parentSelection.assetCatalogId === '' || this.readOnly;
+      return this.parentSelection.assetCatalogId === '' || this.readonly;
     },
-    readOnly() {
+    readonly() {
       if (this.parentSelection.assetCatalog === null) {
         return true;
       }
@@ -194,6 +177,8 @@ export default {
         });
     };
     return {
+      itemTypeIndicator: [],
+      label: [],
       parentSelection: {
         assetCatalogId: '',
         assetCatalog: null,
@@ -226,34 +211,12 @@ export default {
         },
         loading: false,
       },
-      typeIndicator: {
-        entities: {
-          current_page: 0,
-          total_pages: 0,
-          rows: 0,
-          count: '0',
-          data: [],
-        },
-      },
-      label: {
-        entities: {
-          current_page: 0,
-          total_pages: 0,
-          rows: 0,
-          count: '0',
-          data: [],
-        },
-      },
-      lifeCycle: {
-        entities: {
-          data: [
-            { key: 0, label: '准备中' },
-            { key: 1, label: '使用中' },
-            { key: 2, label: '禁用中' },
-            { key: 3, label: '已废弃' },
-          ],
-        },
-      },
+      lifeCycleIndicator: [
+        { key: 0, label: '准备中' },
+        { key: 1, label: '使用中' },
+        { key: 2, label: '禁用中' },
+        { key: 3, label: '已废弃' },
+      ],
       treePanel: {
         selection: {
           node: null,
@@ -267,45 +230,71 @@ export default {
         },
         appendChild: false,
       },
-      assetTabs: {
-        activeName: 'info',
+      itemEditPanel: {
         itemId: '',
+        upsc: 'ui_preference.pc.assert_management.assert_bom.item_edit_panel',
       },
     };
   },
   methods: {
-    handleTypeIndicatorSearch() {
-      this.lookupAllTypeIndicator();
+    handleSearch() {
+      this.handleItemTypeIndicatorSearch();
+      this.handleLabelSearch();
     },
-    lookupAllTypeIndicator() {
-      resolveResponse(allTypeIndicator(0, 1000))
-        .then(this.updateTypeIndicatorObject)
+    handleItemTypeIndicatorSearch() {
+      this.lookupAllItemTypeIndicator();
+    },
+    lookupAllItemTypeIndicator() {
+      this.loading += 1;
+      resolveResponse(inspectItemTypeIndicator(0, 1000))
+        .then(this.updateItemTypeIndicatorView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.loading -= 1;
         });
     },
-    updateTypeIndicatorObject(res) {
-      this.typeIndicator.entities = res;
+    updateItemTypeIndicatorView(res) {
+      this.itemTypeIndicator.splice(0, this.itemTypeIndicator.length);
+      res.data.forEach((data) => this.itemTypeIndicator.push(data));
     },
     handleLabelSearch() {
       this.lookupAllLabel();
     },
     lookupAllLabel() {
-      resolveResponse(allLabel(0, 1000))
-        .then(this.updateLabelObject)
+      this.loading += 1;
+      resolveResponse(inspectLabel(0, 1000))
+        .then(this.updateLabelView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.loading -= 1;
         });
     },
-    updateLabelObject(res) {
-      this.label.entities = res;
+    updateLabelView(res) {
+      this.label.splice(0, this.label.length);
+      res.data.forEach((data) => this.label.push(data));
     },
     handleAssetCatalogChanged(assetCatalog) {
-      this.parentSelection.assetCatalog = assetCatalog;
-      this.parentSelection.assetCatalogId = assetCatalog.key.long_id;
+      const oldAssertCatalogId = this.parentSelection.assetCatalogId;
+      if (assetCatalog === null) {
+        this.parentSelection.assetCatalog = null;
+        this.parentSelection.assetCatalogId = '';
+      } else {
+        this.parentSelection.assetCatalog = assetCatalog;
+        this.parentSelection.assetCatalogId = assetCatalog.key.long_id;
+      }
+      if (oldAssertCatalogId === this.parentSelection.assetCatalogId) {
+        return;
+      }
+      this.treePanel.selection.node = null;
+      this.treePanel.selection.data = null;
+      this.itemEditPanel.itemId = '';
     },
     handleCurrentChanged(node, data) {
       this.treePanel.selection.node = node;
       this.treePanel.selection.data = data;
-      this.assetTabs.itemId = data.key.long_id;
+      this.itemEditPanel.itemId = data.key.long_id;
       this.syncAnchorEntity(data);
     },
     handleShowEntityCreateDialogParent() {
@@ -327,31 +316,9 @@ export default {
     handleShowEntityEditDialog() {
       this.showDialog('EDIT');
     },
-    handleEntityDelete(node, entity, accept) {
-      this.$confirm('此操作将永久删除此项目，此项目的子项目将会一同被删除。<br>'
-        + '<b>此操作不可恢复</b><br>'
-        + '是否继续?',
-      '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        dangerouslyUseHTMLString: true,
-        customClass: 'custom-message-box__w500',
-        type: 'warning',
-      }).then(() => Promise.resolve()).catch(() => Promise.reject())
-        .then(() => resolveResponse(remove(entity.key.long_id)))
-        .then(() => {
-          accept();
-        })
-        .then(() => {
-          this.$message({
-            showClose: true,
-            message: `项目 ${entity.name} 删除成功`,
-            type: 'success',
-            center: true,
-          });
-        })
-        .catch(() => {
-        });
+    showDialog(mode) {
+      this.maintainDialog.mode = mode;
+      this.maintainDialog.visible = true;
     },
     syncAnchorEntity(entity) {
       this.maintainDialog.anchorEntity.long_id = entity.key.long_id;
@@ -366,10 +333,6 @@ export default {
       this.maintainDialog.anchorEntity.type = entity.item_type;
       this.maintainDialog.anchorEntity.life_cycle = entity.life_cycle;
       this.maintainDialog.anchorEntity.remark = entity.remark;
-    },
-    showDialog(mode) {
-      this.maintainDialog.mode = mode;
-      this.maintainDialog.visible = true;
     },
     handleEntityCreate() {
       this.maintainDialog.loading = true;
@@ -413,41 +376,46 @@ export default {
           this.maintainDialog.loading = false;
         });
     },
-    handleEntityEdit() {
-      this.maintainDialog.loading = true;
-      resolveResponse(update(
-        this.maintainDialog.anchorEntity.long_id,
-        this.maintainDialog.anchorEntity.parent_long_id,
-        this.maintainDialog.anchorEntity.label_keys,
-        this.maintainDialog.anchorEntity.name,
-        this.maintainDialog.anchorEntity.type,
-        this.maintainDialog.anchorEntity.life_cycle,
-        this.maintainDialog.anchorEntity.remark,
-      ))
+    handleItemPropertyUpdated() {
+      resolveResponse(inspectItem(this.itemEditPanel.itemId))
+        .then((res) => {
+          this.$refs.assetBomTreePanel.update(res);
+        })
+        .catch(() => {
+        });
+    },
+    handleEntityDelete(node, entity, accept) {
+      this.$confirm('此操作将永久删除此项目，此项目的子项目将会一同被删除。<br>'
+        + '<b>此操作不可恢复</b><br>'
+        + '是否继续?',
+      '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        dangerouslyUseHTMLString: true,
+        customClass: 'custom-message-box__w500',
+        type: 'warning',
+      }).then(() => Promise.resolve()).catch(() => Promise.reject())
+        .then(() => resolveResponse(remove(entity.key.long_id)))
+        .then(() => {
+          accept();
+        })
         .then(() => {
           this.$message({
             showClose: true,
-            message: `项目 ${this.maintainDialog.anchorEntity.name} 更新成功`,
+            message: `项目 ${entity.name} 删除成功`,
             type: 'success',
             center: true,
           });
-        })
-        .then(() => resolveResponse(inspectDisp(this.maintainDialog.anchorEntity.long_id)))
-        .then((res) => {
-          this.$refs.assetBomTreePanel.update(res);
-          this.$refs.infoTabPanel.updateView();
-          this.maintainDialog.visible = false;
+          if (entity.key.long_id === this.itemEditPanel.itemId) {
+            this.itemEditPanel.itemId = '';
+          }
         })
         .catch(() => {
-        })
-        .finally(() => {
-          this.maintainDialog.loading = false;
         });
     },
   },
   mounted() {
-    this.handleTypeIndicatorSearch();
-    this.handleLabelSearch();
+    this.handleSearch();
   },
 };
 </script>
@@ -473,33 +441,5 @@ export default {
 
 .asset-bom-select {
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #BFBFBF;
-  user-select: none;
-}
-
-.asset-tabs {
-  width: 100%;
-  height: 100%;
-}
-
-/*noinspection CssUnusedSymbol*/
-.asset-tabs >>> .el-tabs__content {
-  height: 100%;
-}
-
-/*noinspection CssUnusedSymbol*/
-.asset-tabs >>> .el-tab-pane {
-  height: 100%;
 }
 </style>

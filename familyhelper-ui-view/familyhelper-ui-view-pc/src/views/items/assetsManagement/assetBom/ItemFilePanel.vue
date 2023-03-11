@@ -1,50 +1,68 @@
 <template>
-  <div class="file-tab-panel-container" v-loading="loading">
+<div class="item-file-panel-container">
+  <div class="placeholder" v-if="itemId===''">请选择项目</div>
+  <div v-else class="main-container" v-loading="loading">
     <header-layout-panel>
       <template v-slot:header>
-        <div class="header">
+        <div class="header-container">
           <el-button
             class="item"
             type="primary"
-            :disabled="readOnly"
+            :disabled="readonly"
             @click="uploadDialog.visible=true"
           >
-            上传
+            上传附件
           </el-button>
           <el-button
             class="item"
             type="primary"
-            :disabled="readOnly"
+            :disabled="readonly"
             @click="createDialog.visible=true"
           >
-            新建
+            新建附件
           </el-button>
           <el-button
             class="item"
             type="success"
             @click="handleSearch"
           >
-            刷新
+            刷新附件
           </el-button>
-          <el-select class="item select" v-model="select.model" @change="handleSearch">
+          <el-divider direction="vertical"/>
+          <el-select
+            class="select"
+            v-model="orderSelector.model"
+            @change="handleSearch"
+          >
             <el-option
-              v-for="item in select.options"
+              v-for="item in orderSelector.options"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             />
           </el-select>
+          <div v-if="mode==='DEFAULT'" style="flex-grow: 1"/>
+          <el-button
+            class="item icon-button"
+            v-if="mode==='DEFAULT'"
+            type="info"
+            @click="handlePanelFloatyButtonClicked"
+          >
+            <i class="iconfont">&#xffd3;</i>
+          </el-button>
         </div>
       </template>
       <template v-slot:default>
         <table-panel
-          class="table-panel"
-          :page-size.sync="tablePanel.pageSize"
-          :entity-count="parseInt(tablePanel.entities.count)"
-          :current-page.sync="tablePanel.currentPage"
+          class="table"
+          :page-size.sync="table.pageSize"
+          :entity-count="parseInt(table.entities.count)"
+          :current-page.sync="table.currentPage"
           :page-sizes="[10,15,20,30]"
-          :table-data="tablePanel.entities.data"
+          :table-data="table.entities.data"
           :operate-column-width="130"
+          :show-contextmenu="true"
+          :contextmenu-width="100"
           @onPagingAttributeChanged="handlePagingAttributeChanged"
         >
           <template v-slot:default>
@@ -106,48 +124,88 @@
                 size="mini"
                 icon="el-icon-search"
                 type="success"
-                :disabled="inspectTableButtonDisabled(row)"
-                @click="handleItemFileInspect(row)"
+                :disabled="!fileRowInspectEnabled(row)"
+                @click="handleFileInspect(row)"
               />
               <el-button
                 class="table-button"
                 size="mini"
                 icon="el-icon-edit"
                 type="primary"
-                :disabled="editTableButtonDisabled(row) || readOnly"
-                @click="handleItemFileEdit(row)"
+                :disabled="!fileRowEditEnabled(row)"
+                @click="handleFileEdit(row)"
               />
               <el-button
                 class="table-button"
                 size="mini"
                 icon="el-icon-download"
                 type="success"
-                @click="handleItemFileDownload(row)"
+                @click="handleFileDownload(row)"
               />
               <el-button
                 class="table-button"
                 size="mini"
                 icon="el-icon-delete"
                 type="danger"
-                :disabled="readOnly"
-                @click="handleItemFileDelete(row)"
+                :disabled="!fileRowDeleteEnabled"
+                @click="handleFileDelete(row)"
               />
             </el-button-group>
+          </template>
+          <template v-slot:contextmenu="{row,index,close}">
+            <ul>
+              <li
+                v-if="fileRowInspectEnabled(row)"
+                @click="handleFileInspectFloatyContextmenuClicked(row,close)"
+              >
+                弹窗查看...
+              </li>
+              <li
+                v-if="fileRowEditEnabled(row)"
+                @click="handleFileEditFloatyContextmenuClicked(row,close)"
+              >
+                弹窗编辑...
+              </li>
+              <el-divider v-if="fileRowInspectEnabled(row)||fileRowEditEnabled(row)"/>
+              <li
+                v-if="fileRowInspectEnabled(row)"
+                @click="handleFileInspectContextmenuClicked(row,close)"
+              >
+                查看...
+              </li>
+              <li
+                v-if="fileRowEditEnabled(row)"
+                @click="handleFileEditContextmenuClicked(row,close)"
+              >
+                编辑...
+              </li>
+              <el-divider v-if="fileRowInspectEnabled(row)||fileRowEditEnabled(row)"/>
+              <li @click="handleFileDownloadContextmenuClicked(row,close)">
+                下载...
+              </li>
+              <li
+                v-if="fileRowDeleteEnabled"
+                @click="handleFileDeleteContextmenuClicked(row,close)"
+              >
+                删除...
+              </li>
+            </ul>
           </template>
         </table-panel>
       </template>
     </header-layout-panel>
-    <file-upload-dialog
-      title="上传文件"
-      :visible.sync="uploadDialog.visible"
-      @onConfirmed="handleUploadConfirmed"
-    />
-    <file-create-dialog
-      title="新建文件"
-      :visible.sync="createDialog.visible"
-      @onConfirmed="handleCreateConfirmed"
-    />
   </div>
+  <file-upload-dialog
+    title="上传文件"
+    :visible.sync="uploadDialog.visible"
+    @onConfirmed="handleUploadConfirmed"
+  />
+  <file-create-dialog
+    title="新建文件"
+    :visible.sync="createDialog.visible"
+    @onConfirmed="handleCreateConfirmed"
+  />
+</div>
 </template>
 
 <script>
@@ -174,7 +232,7 @@ import { fileType } from '@/util/file';
 import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
 
 export default {
-  name: 'FileTabPanel',
+  name: 'ItemFilePanel',
   components: {
     HeaderLayoutPanel, FileCreateDialog, FileUploadDialog, TablePanel,
   },
@@ -183,25 +241,35 @@ export default {
       type: String,
       default: '',
     },
-    readOnly: {
+    readonly: {
       type: Boolean,
       default: false,
     },
+    mode: {
+      type: String,
+      default: 'DEFAULT',
+      validator(value) {
+        return ['DEFAULT', 'FLOATY'].indexOf(value) !== -1;
+      },
+    },
   },
   computed: {
-    inspectTableButtonDisabled() {
+    fileRowInspectEnabled() {
       return (row) => {
         // noinspection JSUnresolvedVariable
         const typeIndex = fileType(row.origin_name);
-        return typeIndex < 0;
+        return typeIndex >= 0;
       };
     },
-    editTableButtonDisabled() {
+    fileRowEditEnabled() {
       return (row) => {
         // noinspection JSUnresolvedVariable
         const typeIndex = fileType(row.origin_name);
-        return typeIndex !== 0;
+        return typeIndex === 0 && !this.readonly;
       };
+    },
+    fileRowDeleteEnabled() {
+      return () => !this.readonly;
     },
   },
   watch: {
@@ -224,7 +292,18 @@ export default {
   },
   data() {
     return {
-      tablePanel: {
+      loading: false,
+      orderSelector: {
+        model: 'default',
+        options: [
+          { value: 'default', label: '默认' },
+          { value: 'inspected_date_desc', label: '最近浏览' },
+          { value: 'modified_date_desc', label: '最近编辑' },
+          { value: 'origin_name_asc', label: '文件名称' },
+          { value: 'created_date_asc', label: '创建时间' },
+        ],
+      },
+      table: {
         entities: {
           current_page: 0,
           total_pages: 0,
@@ -235,23 +314,12 @@ export default {
         currentPage: 0,
         pageSize: 10,
       },
-      select: {
-        model: 'default',
-        options: [
-          { value: 'default', label: '默认' },
-          { value: 'inspected_date_desc', label: '最近浏览' },
-          { value: 'modified_date_desc', label: '最近编辑' },
-          { value: 'origin_name_asc', label: '文件名称' },
-          { value: 'created_date_asc', label: '创建时间' },
-        ],
-      },
       uploadDialog: {
         visible: false,
       },
       createDialog: {
         visible: false,
       },
-      loading: false,
     };
   },
   methods: {
@@ -259,9 +327,9 @@ export default {
       if (this.itemId === '') {
         return;
       }
-      switch (this.select.model) {
+      switch (this.orderSelector.model) {
         case 'default':
-          this.lookupChildForItem();
+          this.lookupDefault();
           break;
         case 'inspected_date_desc':
           this.lookupInspectedDateDesc();
@@ -276,19 +344,19 @@ export default {
           this.lookupCreatedDateAsc();
           break;
         default:
-          this.lookupChildForItem();
+          this.lookupDefault();
           break;
       }
     },
-    lookupChildForItem() {
+    lookupDefault() {
       resolveResponse(
-        childForItem(this.itemId, this.tablePanel.currentPage, this.tablePanel.pageSize),
+        childForItem(this.itemId, this.table.currentPage, this.table.pageSize),
       )
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForItem(
-              this.itemId, res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -299,13 +367,13 @@ export default {
     },
     lookupInspectedDateDesc() {
       resolveResponse(childForItemInspectedDateDesc(
-        this.itemId, this.tablePanel.currentPage, this.tablePanel.pageSize,
+        this.itemId, this.table.currentPage, this.table.pageSize,
       ))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForItemInspectedDateDesc(childForItem(
-              this.itemId, res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -316,13 +384,13 @@ export default {
     },
     lookupModifiedDateDesc() {
       resolveResponse(childForItemModifiedDateDesc(
-        this.itemId, this.tablePanel.currentPage, this.tablePanel.pageSize,
+        this.itemId, this.table.currentPage, this.table.pageSize,
       ))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForItemModifiedDateDesc(childForItem(
-              this.itemId, res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -333,13 +401,13 @@ export default {
     },
     lookupOriginNameAsc() {
       resolveResponse(childForItemOriginNameAsc(
-        this.itemId, this.tablePanel.currentPage, this.tablePanel.pageSize,
+        this.itemId, this.table.currentPage, this.table.pageSize,
       ))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForItemOriginNameAsc(childForItem(
-              this.itemId, res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -350,13 +418,13 @@ export default {
     },
     lookupCreatedDateAsc() {
       resolveResponse(childForItemCreatedDateAsc(
-        this.itemId, this.tablePanel.currentPage, this.tablePanel.pageSize,
+        this.itemId, this.table.currentPage, this.table.pageSize,
       ))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForItemCreatedDateAsc(childForItem(
-              this.itemId, res.total_pages, this.tablePanel.pageSize,
+              this.itemId, res.total_pages, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -366,8 +434,8 @@ export default {
         });
     },
     updateTableView(res) {
-      this.tablePanel.entities = res;
-      this.tablePanel.currentPage = res.current_page;
+      this.table.entities = res;
+      this.table.currentPage = res.current_page;
     },
     handlePagingAttributeChanged() {
       this.handleSearch();
@@ -378,11 +446,31 @@ export default {
     timestampFormatter(row, column) {
       return formatTimestamp(row[column.property]);
     },
-    handleItemFileDownload(itemFileInfo) {
-      download(itemFileInfo.key.long_id)
+    handleFileInspect(row) {
+      this.$router.push({
+        name: 'miscellaneous.fileEditor',
+        query: { type: ASSETS_ITEM_FILE, id: row.key.long_id, action: 'inspect' },
+      });
+    },
+    handleFileInspectContextmenuClicked(row, close) {
+      close();
+      this.handleFileInspect(row);
+    },
+    handleFileEdit(row) {
+      this.$router.push({
+        name: 'miscellaneous.fileEditor',
+        query: { type: ASSETS_ITEM_FILE, id: row.key.long_id, action: 'edit' },
+      });
+    },
+    handleFileEditContextmenuClicked(row, close) {
+      close();
+      this.handleFileEdit(row);
+    },
+    handleFileDownload(attachmentFileInfo) {
+      download(attachmentFileInfo.key.long_id)
         .then((blob) => {
           // noinspection JSUnresolvedVariable
-          const fileName = itemFileInfo.origin_name;
+          const fileName = attachmentFileInfo.origin_name;
           const link = document.createElement('a');
           // noinspection JSCheckFunctionSignatures
           link.href = window.URL.createObjectURL(blob);
@@ -391,7 +479,11 @@ export default {
           window.URL.revokeObjectURL(link.href);
         });
     },
-    handleItemFileDelete(itemFileInfo) {
+    handleFileDownloadContextmenuClicked(row, close) {
+      close();
+      this.handleFileDownload(row);
+    },
+    handleFileDelete(attachmentFileInfo) {
       this.$confirm('此操作将永久删除此项目文件。<br>'
         + '该操作不可恢复！<br>'
         + '是否继续?', '提示', {
@@ -405,7 +497,7 @@ export default {
         .then(() => {
           this.loading = true;
         })
-        .then(() => resolveResponse(remove(itemFileInfo.key.long_id)))
+        .then(() => resolveResponse(remove(attachmentFileInfo.key.long_id)))
         .then(() => {
           this.$message({
             showClose: true,
@@ -423,17 +515,9 @@ export default {
           this.loading = false;
         });
     },
-    handleItemFileInspect(row) {
-      this.$router.push({
-        name: 'miscellaneous.fileEditor',
-        query: { type: ASSETS_ITEM_FILE, id: row.key.long_id, action: 'inspect' },
-      });
-    },
-    handleItemFileEdit(row) {
-      this.$router.push({
-        name: 'miscellaneous.fileEditor',
-        query: { type: ASSETS_ITEM_FILE, id: row.key.long_id, action: 'edit' },
-      });
+    handleFileDeleteContextmenuClicked(row, close) {
+      close();
+      this.handleFileDelete(row);
     },
     handleUploadConfirmed(files, callback) {
       const promises = [];
@@ -453,6 +537,7 @@ export default {
         })
         .then(() => {
           this.handleSearch();
+          this.$emit('onItemFileUpdated');
         })
         .then(() => {
           callback(true);
@@ -475,6 +560,7 @@ export default {
         })
         .then(() => {
           this.handleSearch();
+          this.$emit('onItemFileUpdated');
         })
         .then(() => {
           callback(true);
@@ -482,6 +568,27 @@ export default {
         .catch(() => {
           callback(false);
         });
+    },
+    handlePanelFloatyButtonClicked() {
+      this.$emit('onPanelFloatyButtonClicked');
+    },
+    handleFileInspectFloatyContextmenuClicked(row, close) {
+      close();
+      const floatyInfo = {
+        id: row.key.long_id,
+        originName: row.origin_name,
+        mode: 'INSPECT',
+      };
+      this.$emit('onFileFloaty', floatyInfo);
+    },
+    handleFileEditFloatyContextmenuClicked(row, close) {
+      close();
+      const floatyInfo = {
+        id: row.key.long_id,
+        originName: row.origin_name,
+        mode: 'EDIT',
+      };
+      this.$emit('onFileFloaty', floatyInfo);
     },
   },
   mounted() {
@@ -491,42 +598,68 @@ export default {
 </script>
 
 <style scoped>
-.file-tab-panel-container {
+.item-file-panel-container{
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  background: #FFFFFF;
 }
 
-.header {
+.placeholder {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #BFBFBF;
+  user-select: none;
+}
+
+.main-container {
+  width: 100%;
+  height: 100%;
+}
+
+.header-container {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-.table-panel {
-  height: 0;
-  flex-grow: 1;
+/*noinspection CssUnusedSymbol*/
+.header-container .el-divider--vertical {
+  margin: 0 8px;
 }
 
-.table-panel .icon-wrapper {
+.header-container .select {
+  width: 110px;
+}
+
+.header-container .icon-button {
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+.table .icon-wrapper {
   height: 32px;
   line-height: 32px;
 }
 
-.table-panel .icon {
+.table .icon {
   font-size: 32px;
   user-select: none;
 }
 
-.table-panel .table-button {
+.table .table-button {
   padding: 7px;
 }
 
-.header .item:not(:first-child) {
-  margin-left: 10px;
-}
-
-.header .select {
-  width: 110px;
+/*noinspection CssUnusedSymbol*/
+.table >>> .contextmenu .el-divider--horizontal{
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 </style>
