@@ -127,7 +127,7 @@
 import getDeepProperty from '@/util/objects';
 
 export default {
-  name: 'CardListPanel',
+  name: 'CardPanel',
   props: {
     cardWidth: {
       type: [Number, String],
