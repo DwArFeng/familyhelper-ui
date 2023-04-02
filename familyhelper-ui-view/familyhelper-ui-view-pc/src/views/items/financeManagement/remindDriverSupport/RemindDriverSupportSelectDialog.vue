@@ -3,7 +3,7 @@
     <el-dialog
       tabindex="0"
       id="dialog"
-      title="模板选择"
+      title="驱动器选择"
       append-to-body
       destroy-on-close
       :visible.sync="watchedVisible"

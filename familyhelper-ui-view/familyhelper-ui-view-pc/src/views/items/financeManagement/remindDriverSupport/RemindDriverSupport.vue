@@ -47,7 +47,7 @@
           刷新
         </el-button>
         <div class="tooltip">
-          路由器的支持与程序相关，仅可查看，不能更改
+          驱动器的支持与程序相关，仅可查看，不能更改
         </div>
       </div>
     </border-layout-panel>
