@@ -100,6 +100,40 @@ const life = [
     },
   },
   {
+    key: 'life.activityDataSet',
+    index: 20,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '活动数据集合',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/life/activity-data-set',
+        component: () => import('@/views/items/life/activityDataSet/ActivityDataSet.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.life.activity_data_set',
+      },
+    },
+    node: {
+      parentKey: 'life',
+    },
+  },
+  {
     key: 'life.activityTypeIndicator',
     index: 40,
     meta: {
