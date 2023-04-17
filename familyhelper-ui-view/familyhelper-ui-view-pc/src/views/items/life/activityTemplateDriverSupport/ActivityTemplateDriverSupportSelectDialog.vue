@@ -4,7 +4,6 @@
       tabindex="0"
       id="dialog"
       title="驱动器选择"
-      append-to-body
       destroy-on-close
       :visible.sync="watchedVisible"
       :close-on-click-modal="false"

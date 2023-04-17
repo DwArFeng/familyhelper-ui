@@ -3,7 +3,6 @@
     class="pb-set-select-dialog-container"
     ref="dialog"
     tabindex="0"
-    append-to-body
     destroy-on-close
     title="选择个人最佳集合"
     top="6vh"

@@ -3,7 +3,6 @@
     <el-dialog
       id="dialog"
       tabindex="0"
-      append-to-body
       destroy-on-close
       title="选择缺少的元数据项"
       :close-on-click-modal="false"

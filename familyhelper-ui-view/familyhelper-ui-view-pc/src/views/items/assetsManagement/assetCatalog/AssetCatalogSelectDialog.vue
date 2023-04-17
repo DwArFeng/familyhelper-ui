@@ -1,87 +1,92 @@
 <template>
-  <el-dialog
-    class="asset-catalog-select-dialog-container"
-    ref="dialog"
-    tabindex="0"
-    append-to-body
-    destroy-on-close
-    title="选择资产目录"
-    top="6vh"
-    width="80%"
-    :visible.sync="watchedVisible"
-    :close-on-click-modal="false"
-    @open="handleOpen"
-    @close="handleClose"
-    @closed="handleClosed"
-    @keydown.native="handleHotKeyDown"
-  >
-    <div class="body-wrapper">
-      <card-panel
-        title-prop="name"
-        class="card-list-container"
-        card-width="calc(20% - 18px)"
-        select-mode="SINGLE"
-        :data="entities.data"
-        :maxCard="1000"
-        :inspect-button-visible="false"
-        :edit-button-visible="false"
-        :delete-button-visible="false"
-        :addon-button-visible="false"
-        :inspect-menu-item-visible="false"
-        :edit-menu-item-visible="false"
-        :delete-menu-item-visible="false"
-        @onSelectionChanged="handleSelectionChanged"
-      >
-        <template v-slot:default="{index,item}">
-          <div class="asset-catalog-container">
-            <div class="asset-catalog-property">
-              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xfffa;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="asset-catalog-property-text">
+  <div class="asset-catalog-select-dialog-container">
+    <el-dialog
+      ref="dialog"
+      tabindex="0"
+      append-to-body
+      destroy-on-close
+      title="选择资产目录"
+      top="8vh"
+      width="80%"
+      :visible.sync="watchedVisible"
+      :close-on-click-modal="false"
+      @open="handleOpen"
+      @close="handleClose"
+      @closed="handleClosed"
+      @keydown.native="handleHotKeyDown"
+    >
+      <div class="body-wrapper">
+        <card-panel
+          title-prop="name"
+          class="card-list-container"
+          card-width="calc(20% - 18px)"
+          select-mode="SINGLE"
+          :data="entities.data"
+          :maxCard="1000"
+          :inspect-button-visible="false"
+          :edit-button-visible="false"
+          :delete-button-visible="false"
+          :addon-button-visible="false"
+          :inspect-menu-item-visible="false"
+          :edit-menu-item-visible="false"
+          :delete-menu-item-visible="false"
+          @onSelectionChanged="handleSelectionChanged"
+        >
+          <template v-slot:default="{index,item}">
+            <div class="asset-catalog-container">
+              <div class="asset-catalog-property">
+                <span class="iconfont asset-catalog-property-icon"
+                      style="color:black">&#xfffa;</span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="asset-catalog-property-text">
                 权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
-            </div>
-            <div class="asset-catalog-property">
-              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xfffb;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="asset-catalog-property-text">
+              </div>
+              <div class="asset-catalog-property">
+                <span class="iconfont asset-catalog-property-icon"
+                      style="color:black">&#xfffb;</span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="asset-catalog-property-text">
                 所有者: {{ item.owner_account.display_name }}
               </span>
-            </div>
-            <div class="asset-catalog-property">
-              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xffe7;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="asset-catalog-property-text">
+              </div>
+              <div class="asset-catalog-property">
+                <span class="iconfont asset-catalog-property-icon"
+                      style="color:black">&#xffe7;</span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="asset-catalog-property-text">
                 项目总数: {{ item.item_count }}
               </span>
-            </div>
-            <div class="asset-catalog-property">
-              <span class="iconfont asset-catalog-property-icon" style="color:black">&#xffef;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="asset-catalog-property-text">
+              </div>
+              <div class="asset-catalog-property">
+                <span class="iconfont asset-catalog-property-icon"
+                      style="color:black">&#xffef;</span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="asset-catalog-property-text">
                 创建日期: {{ formatTimestamp(item.created_date) }}
               </span>
+              </div>
             </div>
-          </div>
-        </template>
-      </card-panel>
-      <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
-    </div>
-    <div class="footer-container" slot="footer">
-      <el-button
-        type="primary"
-        :disabled="isConfirmButtonDisabled"
-        @click="handleConfirm"
-      >
-        确定
-      </el-button>
-      <el-button
-        @click="watchedVisible = false"
-      >
-        取消
-      </el-button>
-    </div>
-  </el-dialog>
+          </template>
+        </card-panel>
+        <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
+      </div>
+      <div class="footer-container" slot="footer">
+        <el-button
+          type="primary"
+          :disabled="isConfirmButtonDisabled"
+          @click="handleConfirm"
+        >
+          确定
+        </el-button>
+        <el-button
+          @click="watchedVisible = false"
+        >
+          取消
+        </el-button>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -222,7 +227,7 @@ export default {
 
 .card-list-container {
   width: 100%;
-  height: 68vh;
+  height: 60vh !important;
 }
 
 /*noinspection CssUnusedSymbol*/

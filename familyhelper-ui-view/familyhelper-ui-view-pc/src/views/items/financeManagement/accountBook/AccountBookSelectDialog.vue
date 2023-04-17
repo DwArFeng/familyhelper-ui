@@ -1,87 +1,92 @@
 <template>
-  <el-dialog
-    class="account-book-select-dialog-container"
-    ref="dialog"
-    tabindex="0"
-    append-to-body
-    destroy-on-close
-    title="选择账本"
-    top="6vh"
-    width="80%"
-    :visible.sync="watchedVisible"
-    :close-on-click-modal="false"
-    @open="handleOpen"
-    @close="handleClose"
-    @closed="handleClosed"
-    @keydown.native="handleHotKeyDown"
-  >
-    <div class="body-wrapper">
-      <card-panel
-        title-prop="name"
-        class="card-list-container"
-        card-width="calc(20% - 18px)"
-        select-mode="SINGLE"
-        :data="entities.data"
-        :maxCard="1000"
-        :inspect-button-visible="false"
-        :edit-button-visible="false"
-        :delete-button-visible="false"
-        :addon-button-visible="false"
-        :inspect-menu-item-visible="false"
-        :edit-menu-item-visible="false"
-        :delete-menu-item-visible="false"
-        @onSelectionChanged="handleSelectionChanged"
-      >
-        <template v-slot:default="{index,item}">
-          <div class="account-book-container">
-            <div class="account-book-property">
-              <span class="iconfont account-book-property-icon" style="color:black">&#xfffa;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="account-book-property-text">
+  <div class="account-book-select-dialog-container">
+    <el-dialog
+      class="account-book-select-dialog-container"
+      ref="dialog"
+      tabindex="0"
+      destroy-on-close
+      title="选择账本"
+      top="8vh"
+      width="80%"
+      :visible.sync="watchedVisible"
+      :close-on-click-modal="false"
+      @open="handleOpen"
+      @close="handleClose"
+      @closed="handleClosed"
+      @keydown.native="handleHotKeyDown"
+    >
+      <div class="body-wrapper">
+        <card-panel
+          title-prop="name"
+          class="card-list-container"
+          card-width="calc(20% - 18px)"
+          select-mode="SINGLE"
+          :data="entities.data"
+          :maxCard="1000"
+          :inspect-button-visible="false"
+          :edit-button-visible="false"
+          :delete-button-visible="false"
+          :addon-button-visible="false"
+          :inspect-menu-item-visible="false"
+          :edit-menu-item-visible="false"
+          :delete-menu-item-visible="false"
+          @onSelectionChanged="handleSelectionChanged"
+        >
+          <template v-slot:default="{index,item}">
+            <div class="account-book-container">
+              <div class="account-book-property">
+                <span class="iconfont account-book-property-icon"
+                      style="color:black">&#xfffa;</span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="account-book-property-text">
                 权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
-            </div>
-            <div class="account-book-property">
-              <span class="iconfont account-book-property-icon" style="color:black">&#xfffb;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="account-book-property-text">
+              </div>
+              <div class="account-book-property">
+                <span class="iconfont account-book-property-icon"
+                      style="color:black">&#xfffb;</span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="account-book-property-text">
                 所有者: {{ item.owner_account.display_name }}
               </span>
-            </div>
-            <div class="account-book-property">
-              <span class="iconfont account-book-property-icon" style="color:black">&#xfff9;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="account-book-property-text">
+              </div>
+              <div class="account-book-property">
+                <span class="iconfont account-book-property-icon"
+                      style="color:black">&#xfff9;</span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="account-book-property-text">
                 余额: {{ item.total_value }}
               </span>
-            </div>
-            <div class="account-book-property">
-              <span class="iconfont account-book-property-icon" style="color:black">&#xffef;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="account-book-property-text">
+              </div>
+              <div class="account-book-property">
+                <span class="iconfont account-book-property-icon"
+                      style="color:black">&#xffef;</span>
+                <!--suppress JSUnresolvedVariable -->
+                <span class="account-book-property-text">
                 记录日期: {{ formatTimestamp(item.last_recorded_date) }}
               </span>
+              </div>
             </div>
-          </div>
-        </template>
-      </card-panel>
-      <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
-    </div>
-    <div class="footer-container" slot="footer">
-      <el-button
-        type="primary"
-        :disabled="isConfirmButtonDisabled"
-        @click="handleConfirm"
-      >
-        确定
-      </el-button>
-      <el-button
-        @click="watchedVisible = false"
-      >
-        取消
-      </el-button>
-    </div>
-  </el-dialog>
+          </template>
+        </card-panel>
+        <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
+      </div>
+      <div class="footer-container" slot="footer">
+        <el-button
+          type="primary"
+          :disabled="isConfirmButtonDisabled"
+          @click="handleConfirm"
+        >
+          确定
+        </el-button>
+        <el-button
+          @click="watchedVisible = false"
+        >
+          取消
+        </el-button>
+      </div>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -222,7 +227,7 @@ export default {
 
 .card-list-container {
   width: 100%;
-  height: 68vh;
+  height: 60vh !important;
 }
 
 /*noinspection CssUnusedSymbol*/

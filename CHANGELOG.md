@@ -13,6 +13,20 @@
   - 资金管理 -> 提醒驱动器支持文案优化。
   - 资金管理 -> 提醒驱动器支持选择对话框文案优化。
 
+- 优化部分对话框的生成结构。
+  - AccountBookSelectDialog。
+  - ActivityTemplateDriverSupportSelectDialog。
+  - AssetCatalogSelectDialog。
+  - DispatcherSupportSelectDialog。
+  - MemoRemindDriverSupportSelectDialog。
+  - MetaIndicatorSelectDialog。
+  - NoteBookSelectDialog。
+  - PbSetSelectDialog。
+  - ProjectSelectDialog。
+  - RemindDriverSupportSelectDialog。
+  - RouterSupportSelectDialog。
+  - SenderSupportSelectDialog。
+
 #### Bug修复
 
 - 修复组件问题。
