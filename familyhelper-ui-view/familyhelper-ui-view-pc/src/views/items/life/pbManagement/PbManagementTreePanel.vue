@@ -29,8 +29,10 @@
       @onCurrentChanged="handleCurrentChanged"
     >
       <template v-slot:default="{node,data}">
-        <div class="icon-wrapper"><i class="iconfont">{{iconValue(data)}}</i></div>
-        <div class="label">{{ node.label }}</div>
+        <div class="item-container">
+          <div class="icon-wrapper"><i class="iconfont">{{ iconValue(data) }}</i></div>
+          <div class="label">{{ node.label }}</div>
+        </div>
       </template>
       <template v-slot:operateArea="{node,data}">
         <el-button
@@ -48,8 +50,14 @@
 <script>
 import TreePanel from '@/components/layout/TreePanel.vue';
 
-import { childForPbSetRootDisp as childNodeForPbSetRoot, childForParentDisp as childNodeForParent } from '@/api/life/pbNode';
-import { childForPbSetRootDisp as childItemForPbSetRoot, childForPbNodeDisp as childItemForPbNode } from '@/api/life/pbItem';
+import {
+  childForParentDisp as childNodeForParent,
+  childForPbSetRootDisp as childNodeForPbSetRoot,
+} from '@/api/life/pbNode';
+import {
+  childForPbNodeDisp as childItemForPbNode,
+  childForPbSetRootDisp as childItemForPbSetRoot,
+} from '@/api/life/pbItem';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -255,6 +263,14 @@ export default {
 .tree-panel {
   height: 0;
   flex-grow: 1;
+}
+
+.tree-panel .item-container {
+  height: 28px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .tree-panel .button{

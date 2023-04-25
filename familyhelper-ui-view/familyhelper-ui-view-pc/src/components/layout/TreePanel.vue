@@ -1,68 +1,68 @@
 <template>
   <div class="tree-panel-container">
-    <div class="slot-header">
-      <slot name="header"></slot>
-    </div>
-    <div class="tree-container">
-      <overlay-scrollbars class="scroll-bar">
-        <el-tree
-          class="tree"
-          ref="tree"
-          :data="treeData"
-          :props="treeProps"
-          :lazy="lazy"
-          :accordion="accordion"
-          :load="loadHandler"
-          :expand-on-click-node="false"
-          :check-on-click-node="true"
-          :node-key="nodeKey"
-          :highlight-current="true"
-          @current-change="handleCurrentChanged"
-        >
-          <template v-slot="{node,data}">
-            <div class="tree-node">
+    <overlay-scrollbars class="scroll-bar">
+      <el-tree
+        class="tree-panel"
+        ref="tree"
+        :data="treeData"
+        :props="treeProps"
+        :lazy="lazy"
+        :accordion="accordion"
+        :load="loadHandler"
+        :expand-on-click-node="false"
+        :check-on-click-node="true"
+        :node-key="nodeKey"
+        :highlight-current="true"
+        @current-change="handleCurrentChanged"
+      >
+        <template v-slot="{node,data}">
+          <div class="tree-node">
+            <div class="tree-node-content">
               <slot :node="node" :data="data">
-                <div class="icon-wrapper"><i class="el-icon-menu"/></div>
-                <div class="label">{{ node.label }}</div>
+                <div class="item-container">
+                  <div class="icon-wrapper"><i class="el-icon-menu"/></div>
+                  <div class="label">{{ node.label }}</div>
+                </div>
               </slot>
-              <div
-                v-if="operateAreaVisible"
-                @mouseenter="handleMouseEntered"
-                @mouseleave="handleMouseLeft"
-              >
-                <slot name="operateArea" :node="node" :data="data">
-                  <el-button-group>
-                    <el-button
-                      class="tree-node-button"
-                      size="mini"
-                      icon="el-icon-search"
-                      type="success"
-                      v-if="inspectButtonVisible"
-                      @click="handleEntityInspect(node, data)"
-                    />
-                    <el-button
-                      class="tree-node-button"
-                      size="mini"
-                      icon="el-icon-edit"
-                      v-if="editButtonVisible"
-                      @click="handleEntityEdit(node, data)"
-                    />
-                    <el-button
-                      class="tree-node-button"
-                      type="danger"
-                      size="mini"
-                      icon="el-icon-delete"
-                      v-if="deleteButtonVisible"
-                      @click="handleEntityDelete(node,data)"
-                    />
-                  </el-button-group>
-                </slot>
-              </div>
             </div>
-          </template>
+            <div
+              class="tree-node-operate-area"
+              v-if="operateAreaVisible"
+              @mouseenter="operateAreaHover=true"
+              @mouseleave="operateAreaHover=false"
+            >
+              <slot name="operateArea" :node="node" :data="data">
+                <el-button-group>
+                  <el-button
+                    class="tree-node-button"
+                    size="mini"
+                    icon="el-icon-search"
+                    type="success"
+                    v-if="inspectButtonVisible"
+                    @click="handleEntityInspect(node, data)"
+                  />
+                  <el-button
+                    class="tree-node-button"
+                    size="mini"
+                    icon="el-icon-edit"
+                    v-if="editButtonVisible"
+                    @click="handleEntityEdit(node, data)"
+                  />
+                  <el-button
+                    class="tree-node-button"
+                    type="danger"
+                    size="mini"
+                    icon="el-icon-delete"
+                    v-if="deleteButtonVisible"
+                    @click="handleEntityDelete(node,data)"
+                  />
+                </el-button-group>
+              </slot>
+            </div>
+          </div>
+        </template>
         </el-tree>
       </overlay-scrollbars>
-    </div>
   </div>
 </template>
 
@@ -139,12 +139,6 @@ export default {
       };
       this.$emit('onEntityDelete', node, data, accept);
     },
-    handleMouseEntered() {
-      this.operateAreaHover = true;
-    },
-    handleMouseLeft() {
-      this.operateAreaHover = false;
-    },
     getNode(data) {
       return this.$refs.tree.getNode(data);
     },
@@ -160,36 +154,26 @@ export default {
     remove(nodeRef) {
       this.$refs.tree.remove(nodeRef);
     },
+    nodeMap() {
+      return this.$refs.tree.store.nodesMap;
+    },
   },
 };
 </script>
 
 <style scoped>
 .tree-panel-container {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
-.slot-header {
-  width: 100%;
-  height: auto;
-}
-
-.tree-container {
-  height: 0;
-  width: 100%;
-  flex-grow: 1;
-}
-
-.tree {
+.tree-panel {
   display: inline-block;
   min-width: 100%;
 }
 
 /*noinspection CssUnusedSymbol*/
-.tree >>> .el-tree-node__content {
+.tree-panel >>> .el-tree-node__content {
   height: 100%;
   margin-bottom: 2px;
 }
@@ -198,10 +182,27 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
-.tree-node .icon-wrapper{
+.tree-node-content {
+  height: 100%;
+  width: 0;
+  flex-grow: 1;
+}
+
+.tree-node-operate-area {
+  height: 100%;
+}
+
+.tree-panel .item-container {
+  height: 28px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.tree-node .icon-wrapper {
   margin-right: 5px;
   font-size: 18px;
 }
