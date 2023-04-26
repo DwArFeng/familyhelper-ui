@@ -19,10 +19,7 @@
           <div class="tree-node">
             <div class="tree-node-content">
               <slot :node="node" :data="data">
-                <div class="item-container">
-                  <div class="icon-wrapper"><i class="el-icon-menu"/></div>
-                  <div class="label">{{ node.label }}</div>
-                </div>
+                <default-tree-default-slot :label="node.label"/>
               </slot>
             </div>
             <div
@@ -32,31 +29,16 @@
               @mouseleave="operateAreaHover=false"
             >
               <slot name="operateArea" :node="node" :data="data">
-                <el-button-group>
-                  <el-button
-                    class="tree-node-button"
-                    size="mini"
-                    icon="el-icon-search"
-                    type="success"
-                    v-if="inspectButtonVisible"
-                    @click="handleEntityInspect(node, data)"
-                  />
-                  <el-button
-                    class="tree-node-button"
-                    size="mini"
-                    icon="el-icon-edit"
-                    v-if="editButtonVisible"
-                    @click="handleEntityEdit(node, data)"
-                  />
-                  <el-button
-                    class="tree-node-button"
-                    type="danger"
-                    size="mini"
-                    icon="el-icon-delete"
-                    v-if="deleteButtonVisible"
-                    @click="handleEntityDelete(node,data)"
-                  />
-                </el-button-group>
+                <default-tree-operate-area-slot
+                  :node="node"
+                  :data="data"
+                  :inspectButtonVisible="inspectButtonVisible"
+                  :editButtonVisible="editButtonVisible"
+                  :deleteButtonVisible="deleteButtonVisible"
+                  @onEntityInspect="handleEntityInspect"
+                  @onEntityEdit="handleEntityEdit"
+                  @onEntityDelete="handleEntityDelete"
+                />
               </slot>
             </div>
           </div>
@@ -67,8 +49,12 @@
 </template>
 
 <script>
+import DefaultTreeDefaultSlot from '@/components/layout/DefaultTreeDefaultSlot.vue';
+import DefaultTreeOperateAreaSlot from '@/components/layout/DefaultTreeOperateAreaSlot.vue';
+
 export default {
   name: 'TreePanel',
+  components: { DefaultTreeOperateAreaSlot, DefaultTreeDefaultSlot },
   props: {
     treeData: {
       type: Array,
@@ -192,32 +178,5 @@ export default {
 
 .tree-node-operate-area {
   height: 100%;
-}
-
-.tree-panel .item-container {
-  height: 28px;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.tree-node .icon-wrapper {
-  margin-right: 5px;
-  font-size: 18px;
-}
-
-.tree-node .label {
-  flex: 1;
-  margin-right: 20px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-}
-
-.tree-node-button {
-  padding: 7px
 }
 </style>

@@ -6,6 +6,7 @@
 
 - 优化组件结构。
   - src/components/layout/TreePanel.vue。
+  - src/components/layout/LazySearchTreePanel.vue。
 
 - 实现日常生活一级菜单。
   - 活动数据集合二级菜单。
