@@ -1,6 +1,4 @@
-import {
-    del, get, patch, post,
-} from '@/util/http';
+import {del, get, patch, post,} from '@/util/http';
 
 export function exists(key) {
     return get('system', `permission-group/${key}/exists`, {});
@@ -70,6 +68,14 @@ export function childForParent(parentKey, page, rows) {
     });
 }
 
+export function nameLike(pattern, page, rows) {
+    return get('system', 'permission-group/name-like', {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function inspectDisp(key) {
     return get('system', `permission-group/${key}/disp`, {});
 }
@@ -83,6 +89,18 @@ export function childForParentDisp(parentKey, page, rows) {
 
 export function childForRootDisp(page, rows) {
     return get('system', 'permission-group/root/child/disp', {
+        page,
+        rows,
+    });
+}
+
+export function pathFromRoot(key) {
+    return get('system', `permission-group/${key}/path-from-root/`, {});
+}
+
+export function nameLikeDisp(pattern, page, rows) {
+    return get('system', 'permission-group/name-like/disp', {
+        pattern,
         page,
         rows,
     });

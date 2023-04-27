@@ -1,28 +1,16 @@
 <template>
   <div class="permission-group-tree-panel-container">
-    <el-input
-      placeholder="请输入子部件的名称"
-      class="item-search-panel"
-      v-model="itemNameToSearch"
-      clearable
-    >
-      <el-button
-        slot="append"
-        icon="el-icon-search"
-        @click="handleTreeSearch"
-      />
-    </el-input>
-    <tree-panel
-      class="tree-panel"
+    <lazy-search-tree-panel
       ref="treePanel"
-      v-cloak
-      node-key="node_key"
-      :tree-data="treeData"
-      :tree-props="treeProps"
-      :lazy="true"
-      :accordion="true"
+      key-field="tree_node_key"
+      label-field="name"
+      is-leaf-field="has_no_child"
+      accordion
+      :search-option-handler="handleSearchOption"
+      :load-root-handler="handleLoadRoot"
+      :load-child-handler="handleLoadChild"
+      :query-path-handler="handleQueryPath"
       :inspect-button-visible="false"
-      :load-handler="handleLoad"
       @onCurrentChanged="handleCurrentChanged"
       @onEntityInspect="handleEntityInspect"
       @onEntityEdit="handleEntityEdit"
@@ -32,14 +20,14 @@
 </template>
 
 <script>
-import TreePanel from '@/components/layout/TreePanel.vue';
+import LazySearchTreePanel from '@/components/layout/LazySearchTreePanel.vue';
 
+import { childForParentDisp, nameLikeDisp, pathFromRoot } from '@/api/system/permissionGroup';
 import resolveResponse from '@/util/response';
-import { childForParentDisp } from '@/api/system/permissionGroup';
 
 export default {
   name: 'PermissionGroupTreePanel',
-  components: { TreePanel },
+  components: { LazySearchTreePanel },
   props: {
     mode: {
       type: String,
@@ -49,74 +37,51 @@ export default {
       default: 'DEFAULT',
     },
   },
-  data() {
-    return {
-      itemNameToSearch: '',
-      treeData: [],
-      treeProps: {
-        children: 'children',
-        label: (data) => data.name,
-        isLeaf: (data) => data.has_no_child,
-      },
-    };
-  },
   methods: {
-    inspectRoot() {
+    handleSearchOption(pattern, accept) {
+      // 如果 pattern 是空字符串，则接受空数组。
+      if (pattern === '') {
+        accept([]);
+      }
+      resolveResponse(nameLikeDisp(pattern, 0, 1000))
+        .then(this.appendEntitiesProperties)
+        .then((res) => {
+          accept(res);
+        });
+    },
+    handleLoadRoot(accept) {
       resolveResponse(childForParentDisp('', 0, 1000))
-        .then(this.appendEntitiesNodeKey)
+        .then(this.appendEntitiesProperties)
         .then((res) => {
-          this.treeData = res.data;
+          accept(res);
         });
     },
-    handleTreeSearch() {
-      if (this.itemNameToSearch === '') {
-        this.treeData = [];
-        this.treeSelection = {
-          node: null,
-          data: {
-            key: {
-              string_id: '',
-            },
-            parent_permission_group: {
-              key: {
-                string_id: '',
-              },
-              parent_key: {
-                string_id: '',
-              },
-              name: '',
-              remark: '',
-            },
-            name: '',
-            remark: '',
-            has_no_child: true,
-          },
-        };
-        this.inspectRoot();
-      }
-    },
-    handleLoad(node, resolve) {
-      if (node.level === 0) {
-        return;
-      }
-
-      const permissionGroup = node.data;
-      resolveResponse(childForParentDisp(permissionGroup.key.string_id, 0, 1000))
-        .then(this.appendEntitiesNodeKey)
+    handleLoadChild(key, accept) {
+      resolveResponse(childForParentDisp(key, 0, 1000))
+        .then(this.appendEntitiesProperties)
         .then((res) => {
-          resolve(res.data);
+          accept(res);
         });
     },
-    appendEntitiesNodeKey(res) {
-      res.data.forEach((permissionGroup) => {
-        this.$set(permissionGroup, 'node_key', permissionGroup.key.string_id);
+    handleQueryPath(key, accept) {
+      resolveResponse(pathFromRoot(key))
+        .then((res) => {
+          const path = [];
+          res.forEach((k) => {
+            path.push(k.string_id);
+          });
+          accept(path);
+        });
+    },
+    appendEntitiesProperties(res) {
+      const entities = [];
+      res.data.forEach((entity) => {
+        this.$set(entity, 'tree_node_key', entity.key.string_id);
+        entities.push(entity);
       });
-      return Promise.resolve(res);
+      return Promise.resolve(entities);
     },
     handleCurrentChanged(node, data) {
-      if (this.buttonHover) {
-        return;
-      }
       this.$emit('onCurrentChanged', node, data);
     },
     handleEntityInspect(node, data) {
@@ -129,36 +94,34 @@ export default {
       this.$emit('onEntityDelete', node, data, accept);
     },
     appendRoot(permissionGroup) {
-      this.appendPermissionGroupNodeKey(permissionGroup);
-      this.treeData.push(permissionGroup);
+      this.appendEntityProperties(permissionGroup);
+      this.$refs.treePanel.appendRoot(permissionGroup);
     },
     append(nodeRef, permissionGroup) {
-      this.appendPermissionGroupNodeKey(permissionGroup);
+      this.appendEntityProperties(permissionGroup);
       this.$refs.treePanel.append(nodeRef, permissionGroup);
     },
     insertBefore(nodeRef, permissionGroup) {
-      this.appendPermissionGroupNodeKey(permissionGroup);
+      this.appendEntityProperties(permissionGroup);
       this.$refs.treePanel.insertBefore(nodeRef, permissionGroup);
     },
     insertAfter(nodeRef, permissionGroup) {
-      this.appendPermissionGroupNodeKey(permissionGroup);
+      this.appendEntityProperties(permissionGroup);
       this.$refs.treePanel.insertAfter(nodeRef, permissionGroup);
     },
     update(permissionGroup) {
-      this.appendPermissionGroupNodeKey(permissionGroup);
+      this.appendEntityProperties(permissionGroup);
       const node = this.$refs.treePanel.getNode(permissionGroup);
-      this.$set(node, 'data', permissionGroup);
+      const { data } = node;
+      this.syncPermissionGroup(data, permissionGroup);
     },
-    remove(permissionGroup) {
-      this.appendPermissionGroupNodeKey(permissionGroup);
-      this.$refs.treePanel.remove(permissionGroup);
+    syncPermissionGroup(target, neoValue) {
+      this.$set(target, 'name', neoValue.name);
+      this.$set(target, 'remark', neoValue.remark);
     },
-    appendPermissionGroupNodeKey(permissionGroup) {
-      this.$set(permissionGroup, 'node_key', permissionGroup.key.string_id);
+    appendEntityProperties(entity) {
+      this.$set(entity, 'tree_node_key', entity.key.string_id);
     },
-  },
-  mounted() {
-    this.inspectRoot();
   },
 };
 </script>
@@ -169,15 +132,5 @@ export default {
   flex-direction: column;
   height: 100%;
   width: 100%;
-}
-
-.item-search-panel {
-  width: 100%;
-  margin-bottom: 5px;
-}
-
-.tree-panel {
-  height: 0;
-  flex-grow: 1;
 }
 </style>

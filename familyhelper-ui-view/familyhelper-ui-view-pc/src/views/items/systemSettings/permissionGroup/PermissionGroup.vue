@@ -2,104 +2,109 @@
   <div class="permission-group-container">
     <border-layout-panel
       class="border-layout-panel"
+      west-width="350px"
       :header-visible="true"
       :west-visible="true"
     >
-      <permission-group-tree-panel
-        class="tree-container"
-        slot="west"
-        ref="permissionGroupTreePanel"
-        mode="PERMISSION_GROUP"
-        @onCurrentChanged="handleCurrentChanged"
-        @onEntityEdit="handleShowEntityEditDialog"
-        @onEntityDelete="handleEntityDelete"
-      />
-      <div class="header-container" slot="header">
-        <el-button
-          class="header-button"
-          type="primary"
-          @click="handleShowEntityCreateDialogParent"
-        >
-          新建权限组
-        </el-button>
-        <el-button
-          class="header-button"
-          type="primary"
-          @click="handleShowEntityCreateDialogChild"
-        >
-          新建子权限组
-        </el-button>
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="treeSelection.data.key.string_id === ''"
-          @click="handleShowPermissionAttachDialogVisible"
-        >
-          关联权限节点
-        </el-button>
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="permissionToUnattach.length === 0"
-          @click="handleUnattachPermission"
-        >
-          取消关联权限节点
-        </el-button>
-      </div>
-      <div class="center-container">
-        <el-form class="detail-form" inline>
-          <el-form-item label="权限组ID" style="width: 33%">
-            {{ treeSelection.data.key.string_id }}
-          </el-form-item>
-          <!--suppress JSIncompatibleTypesComparison -->
-          <el-form-item label="父权限组ID" style="width: 33%">
-            {{
-              treeSelection.data.parent_permission_group === null ?
-                '(根节点)' : treeSelection.data.parent_permission_group.key.string_id
-            }}
-          </el-form-item>
-          <el-form-item label="名称" style="width: 33%">
-            {{ treeSelection.data.name }}
-          </el-form-item>
-          <el-form-item label="备注" style="width: 100%">
-            {{ treeSelection.data.remark }}
-          </el-form-item>
-        </el-form>
-        <el-divider class="divider"/>
-        <table-panel
-          class="permission-table-panel"
-          :page-size.sync="permissionPageSize"
-          :entity-count="parseInt(permissionEntities.count)"
-          :current-page.sync="permissionCurrentPage"
-          :page-sizes="[15,20,30,50]"
-          :table-data="permissionEntities.data"
-          :inspect-button-visible="false"
-          :edit-button-visible="false"
-          :delete-button-visible="false"
-          @onPagingAttributeChanged="handleUnattachPagingAttributeChanged"
-          @onSelectionChanged="handleUnattachSelectionChanged"
-        >
-          <el-table-column
-            type="selection"
-            width="55"
-          />
-          <el-table-column
-            prop="key.string_id"
-            label="权限节点"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="name"
-            label="名称"
-            show-overflow-tooltip
-          />
-          <el-table-column
-            prop="remark"
-            label="备注"
-            show-overflow-tooltip
-          />
-        </table-panel>
-      </div>
+      <template v-slot:header>
+        <div class="header-container" slot="header">
+          <el-button
+            class="header-button"
+            type="primary"
+            @click="handleShowEntityCreateDialogParent"
+          >
+            新建权限组
+          </el-button>
+          <el-button
+            class="header-button"
+            type="primary"
+            @click="handleShowEntityCreateDialogChild"
+          >
+            新建子权限组
+          </el-button>
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="treeSelection.data.key.string_id === ''"
+            @click="handleShowPermissionAttachDialogVisible"
+          >
+            关联权限节点
+          </el-button>
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="permissionToUnattach.length === 0"
+            @click="handleUnattachPermission"
+          >
+            取消关联权限节点
+          </el-button>
+        </div>
+      </template>
+      <template v-slot:west>
+        <permission-group-tree-panel
+          ref="permissionGroupTreePanel"
+          mode="PERMISSION_GROUP"
+          @onCurrentChanged="handleCurrentChanged"
+          @onEntityEdit="handleShowEntityEditDialog"
+          @onEntityDelete="handleEntityDelete"
+        />
+      </template>
+      <template v-slot:default>
+        <div class="center-container">
+          <el-form class="detail-form" inline>
+            <el-form-item label="权限组ID" style="width: 33%">
+              {{ treeSelection.data.key.string_id }}
+            </el-form-item>
+            <!--suppress JSIncompatibleTypesComparison -->
+            <el-form-item label="父权限组ID" style="width: 33%">
+              {{
+                treeSelection.data.parent_permission_group === null ?
+                  '(根节点)' : treeSelection.data.parent_permission_group.key.string_id
+              }}
+            </el-form-item>
+            <el-form-item label="名称" style="width: 33%">
+              {{ treeSelection.data.name }}
+            </el-form-item>
+            <el-form-item label="备注" style="width: 100%">
+              {{ treeSelection.data.remark }}
+            </el-form-item>
+          </el-form>
+          <el-divider class="divider"/>
+          <table-panel
+            class="permission-table-panel"
+            :page-size.sync="permissionPageSize"
+            :entity-count="parseInt(permissionEntities.count)"
+            :current-page.sync="permissionCurrentPage"
+            :page-sizes="[15,20,30,50]"
+            :table-data="permissionEntities.data"
+            :inspect-button-visible="false"
+            :edit-button-visible="false"
+            :delete-button-visible="false"
+            @onPagingAttributeChanged="handleUnattachPagingAttributeChanged"
+            @onSelectionChanged="handleUnattachSelectionChanged"
+          >
+            <el-table-column
+              type="selection"
+              width="55"
+            />
+            <el-table-column
+              prop="key.string_id"
+              label="权限节点"
+              show-overflow-tooltip
+            />
+            <el-table-column
+              prop="name"
+              label="名称"
+              show-overflow-tooltip
+            />
+            <el-table-column
+              prop="remark"
+              label="备注"
+              show-overflow-tooltip
+            />
+          </table-panel>
+        </div>
+      </template>
     </border-layout-panel>
     <entity-maintain-dialog
       label-width="120px"
@@ -543,6 +548,11 @@ export default {
     handleCurrentChanged(node, data) {
       this.treeSelection.node = node;
       this.treeSelection.data = data;
+
+      if (data === null) {
+        return;
+      }
+
       if (data.key.string_id !== '') {
         this.inspectChildPermission(data.key.string_id);
       }
@@ -673,11 +683,6 @@ export default {
 .permission-group-container {
   height: 100%;
   width: 100%;
-}
-
-.tree-container {
-  width: calc(25vw - 230px - 20px + 80px);
-  height: 100%;
 }
 
 .header-container {
