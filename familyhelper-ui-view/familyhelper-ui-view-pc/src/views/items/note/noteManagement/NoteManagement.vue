@@ -2,6 +2,7 @@
   <div class="note-management-container">
     <border-layout-panel
       class="border-layout-panel"
+      west-width="350px"
       :header-visible="true"
       :west-visible="true"
     >
@@ -45,10 +46,8 @@
         </div>
       </template>
       <template v-slot:west>
-        <note-management-tree-panel
-          class="tree-container"
-          ref="noteManagementTreePanel"
-          mode="NOTE_MANAGEMENT"
+        <note-tree-panel
+          ref="noteTreePanel"
           :note-book-key="parentSelection.noteBookId"
           :readonly="readonly"
           @onCurrentChanged="handleCurrentChanged"
@@ -59,6 +58,7 @@
         <div class="placeholder" v-show="treePanel.selection.data === null">
           请选择节点或项目
         </div>
+        <!--suppress JSUnresolvedReference -->
         <node-edit-panel
           v-show="treePanel.selection.data !== null && treePanel.selection.data.display_type===0"
           :node-id="nodeEditPanel.nodeId"
@@ -66,6 +66,7 @@
           :upsc="nodeEditPanel.upsc"
           @onNodePropertyUpdated="handleNodePropertyUpdated"
         />
+        <!--suppress JSUnresolvedReference -->
         <item-edit-panel
           v-show="treePanel.selection.data !== null && treePanel.selection.data.display_type===1"
           :item-id="itemEditPanel.itemId"
@@ -127,7 +128,6 @@
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import NoteBookIndicator from '@/views/items/note/noteBook/NoteBookIndicator.vue';
-import NoteManagementTreePanel from '@/views/items/note/noteManagement/NoteManagementTreePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import ItemEditPanel from '@/views/items/note/noteManagement/ItemEditPanel.vue';
 import NodeEditPanel from '@/views/items/note/noteManagement/NodeEditPanel.vue';
@@ -143,14 +143,15 @@ import {
   remove as removeItem,
 } from '@/api/note/noteItem';
 import resolveResponse from '@/util/response';
+import NoteTreePanel from '@/views/items/note/noteManagement/NoteTreePanel.vue';
 
 export default {
   name: 'NoteManagement',
   components: {
+    NoteTreePanel,
     NodeEditPanel,
     ItemEditPanel,
     EntityMaintainDialog,
-    NoteManagementTreePanel,
     NoteBookIndicator,
     BorderLayoutPanel,
   },
@@ -169,6 +170,7 @@ export default {
       if (data === null) {
         return false;
       }
+      // noinspection JSUnresolvedReference
       return data.display_type === 1;
     },
   },
@@ -249,6 +251,14 @@ export default {
     handleCurrentChanged(node, data) {
       this.treePanel.selection.node = node;
       this.treePanel.selection.data = data;
+
+      if (data === null) {
+        this.nodeEditPanel.nodeId = '';
+        this.itemEditPanel.itemId = '';
+        return;
+      }
+
+      // noinspection JSUnresolvedReference
       if (data.display_type === 0) {
         this.nodeEditPanel.nodeId = data.key.long_id;
       } else {
@@ -323,6 +333,7 @@ export default {
       this.itemMaintainDialog.visible = true;
     },
     syncAnchorEntity(entity) {
+      // noinspection JSUnresolvedReference
       if (entity.display_type === 0) {
         this.syncAnchorNode(entity);
       } else {
@@ -370,14 +381,14 @@ export default {
         .then((res) => {
           const parentId = this.nodeMaintainDialog.anchorEntity.parent_long_id;
           if (parentId === '') {
-            this.$refs.noteManagementTreePanel.appendRootNode(res);
+            this.$refs.noteTreePanel.appendRootNoteNode(res);
           } else {
             const { node } = this.treePanel.selection;
             if (this.treePanel.appendChild) {
-              this.$refs.noteManagementTreePanel.appendNode(node, res);
+              this.$refs.noteTreePanel.appendNoteNode(node, res);
               this.$set(node, 'isLeaf', false);
             } else {
-              this.$refs.noteManagementTreePanel.insertNodeAfter(node, res);
+              this.$refs.noteTreePanel.insertNoteNodeAfter(node, res);
             }
           }
           this.nodeMaintainDialog.visible = false;
@@ -409,14 +420,14 @@ export default {
         .then((res) => {
           const nodeId = this.itemMaintainDialog.anchorEntity.node_long_id;
           if (nodeId === '') {
-            this.$refs.noteManagementTreePanel.appendRootItem(res);
+            this.$refs.noteTreePanel.appendRootNoteItem(res);
           } else {
             const { node } = this.treePanel.selection;
             if (this.treePanel.appendChild) {
-              this.$refs.noteManagementTreePanel.appendItem(node, res);
+              this.$refs.noteTreePanel.appendNoteItem(node, res);
               this.$set(node, 'isLeaf', false);
             } else {
-              this.$refs.noteManagementTreePanel.insertItemAfter(node, res);
+              this.$refs.noteTreePanel.insertNoteItemAfter(node, res);
             }
           }
           this.itemMaintainDialog.visible = false;
@@ -430,7 +441,7 @@ export default {
     handleNodePropertyUpdated() {
       resolveResponse(inspectNode(this.nodeEditPanel.nodeId))
         .then((res) => {
-          this.$refs.noteManagementTreePanel.updateNode(res);
+          this.$refs.noteTreePanel.updateNoteNode(res);
         })
         .catch(() => {
         });
@@ -438,12 +449,13 @@ export default {
     handleItemPropertyUpdated() {
       resolveResponse(inspectItem(this.itemEditPanel.itemId))
         .then((res) => {
-          this.$refs.noteManagementTreePanel.updateItem(res);
+          this.$refs.noteTreePanel.updateNoteItem(res);
         })
         .catch(() => {
         });
     },
     handleEntityDelete(node, entity, accept) {
+      // noinspection JSUnresolvedReference
       if (entity.display_type === 0) {
         this.handleNoteNodeDelete(node, entity, accept);
       } else {

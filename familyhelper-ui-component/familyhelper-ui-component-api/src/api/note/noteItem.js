@@ -29,6 +29,14 @@ export function childForNoteBookRoot(noteBookKey, page, rows) {
     });
 }
 
+export function childForNoteBookNameLike(noteBookKey, pattern, page, rows) {
+    return get('note', `note-book/${noteBookKey}/note-item/name-like/`, {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function inspectDisp(key) {
     return get('note', `note-item/${key}/disp/`, {});
 }
@@ -48,7 +56,15 @@ export function childForNoteNodeDisp(noteNodeKey, page, rows) {
 }
 
 export function childForNoteBookRootDisp(noteBookKey, page, rows) {
-    return get('note', `note-book/${noteBookKey}/note-item/root/disp`, {
+    return get('note', `note-book/${noteBookKey}/note-item/root/disp/`, {
+        page,
+        rows,
+    });
+}
+
+export function childForNoteBookNameLikeDisp(noteBookKey, pattern, page, rows) {
+    return get('note', `note-book/${noteBookKey}/note-item/name-like/disp/`, {
+        pattern,
         page,
         rows,
     });
@@ -61,7 +77,7 @@ export function create(setKey, nodeKey, name, remark) {
     if (nodeKey === '') {
         finalNodeKey = null;
     }
-    return post('note', 'note-item/create', {
+    return post('note', 'note-item/create/', {
         book_key: {
             long_id: setKey
         },
@@ -78,7 +94,7 @@ export function update(key, nodeKey, name, remark) {
     if (nodeKey === '') {
         finalNodeKey = null;
     }
-    return post('note', 'note-item/update', {
+    return post('note', 'note-item/update/', {
         key: {
             long_id: key,
         },
@@ -89,7 +105,7 @@ export function update(key, nodeKey, name, remark) {
 }
 
 export function remove(key) {
-    return post('note', 'note-item/remove', {
+    return post('note', 'note-item/remove/', {
         long_id: key,
     });
 }
@@ -100,4 +116,8 @@ export function downloadNoteFile(key) {
 
 export function uploadNoteFile(noteItemKey, formData) {
     return postFormData('note', `note-item/${noteItemKey}/upload-note-file/`, formData);
+}
+
+export function pathFromRoot(key) {
+    return get('note', `note-item/${key}/path-from-root/`, {});
 }

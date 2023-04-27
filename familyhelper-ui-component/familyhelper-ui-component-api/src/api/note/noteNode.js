@@ -36,6 +36,14 @@ export function childForParent(parentKey, page, rows) {
     });
 }
 
+export function childForNoteBookNameLike(noteBookKey, pattern, page, rows) {
+    return get('note', `note-book/${noteBookKey}/note-node/name-like/`, {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function inspectDisp(key) {
     return get('note', `note-node/${key}/disp/`, {});
 }
@@ -55,14 +63,22 @@ export function childForNoteBookDisp(noteBookKey, page, rows) {
 }
 
 export function childForNoteBookRootDisp(noteBookKey, page, rows) {
-    return get('note', `note-book/${noteBookKey}/note-node/root/disp`, {
+    return get('note', `note-book/${noteBookKey}/note-node/root/disp/`, {
         page,
         rows,
     });
 }
 
 export function childForParentDisp(parentKey, page, rows) {
-    return get('note', `note-node/${parentKey}/child/disp`, {
+    return get('note', `note-node/${parentKey}/child/disp/`, {
+        page,
+        rows,
+    });
+}
+
+export function childForNoteBookNameLikeDisp(noteBookKey, pattern, page, rows) {
+    return get('note', `note-book/${noteBookKey}/note-node/name-like/disp/`, {
+        pattern,
         page,
         rows,
     });
@@ -75,7 +91,7 @@ export function create(setKey, parentKey, name, remark) {
     if (parentKey === '') {
         finalParentKey = null;
     }
-    return post('note', 'note-node/create', {
+    return post('note', 'note-node/create/', {
         book_key: {
             long_id: setKey,
         },
@@ -92,7 +108,7 @@ export function update(key, parentKey, name, remark) {
     if (parentKey === '') {
         finalParentKey = null;
     }
-    return post('note', 'note-node/update', {
+    return post('note', 'note-node/update/', {
         key: {
             long_id: key,
         },
@@ -103,7 +119,11 @@ export function update(key, parentKey, name, remark) {
 }
 
 export function remove(key) {
-    return post('note', 'note-node/remove', {
+    return post('note', 'note-node/remove/', {
         long_id: key,
     });
+}
+
+export function pathFromRoot(key) {
+    return get('note', `note-node/${key}/path-from-root/`, {});
 }
