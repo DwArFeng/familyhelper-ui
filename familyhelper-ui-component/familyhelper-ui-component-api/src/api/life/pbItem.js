@@ -29,6 +29,14 @@ export function childForPbSetRoot(pbSetKey, page, rows) {
     });
 }
 
+export function childForPbSetNameLike(pbSetKey, pattern, page, rows) {
+    return get('life', `pb-set/${pbSetKey}/pb-item/name-like/`, {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function inspectDisp(key) {
     return get('life', `pb-item/${key}/disp/`, {});
 }
@@ -49,6 +57,14 @@ export function childForPbNodeDisp(pbNodeKey, page, rows) {
 
 export function childForPbSetRootDisp(pbSetKey, page, rows) {
     return get('life', `pb-set/${pbSetKey}/pb-item/root/disp`, {
+        page,
+        rows,
+    });
+}
+
+export function childForPbSetNameLikeDisp(pbSetKey, pattern, page, rows) {
+    return get('life', `pb-set/${pbSetKey}/pb-item/name-like/disp/`, {
+        pattern,
         page,
         rows,
     });
@@ -96,4 +112,8 @@ export function remove(key) {
     return post('life', 'pb-item/remove', {
         long_id: key,
     });
+}
+
+export function pathFromRoot(key) {
+    return get('life', `pb-item/${key}/path-from-root/`, {});
 }

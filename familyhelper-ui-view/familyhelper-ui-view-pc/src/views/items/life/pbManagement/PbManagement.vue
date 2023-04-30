@@ -2,13 +2,63 @@
   <div class="pb-management-container">
     <border-layout-panel
       class="border-layout-panel"
+      west-width="350px"
       :header-visible="true"
       :west-visible="true"
     >
+      <template v-slot:header>
+        <div class="header-container">
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="noPbSetSelected || readOnly"
+            @click="handleShowNodeCreateDialogParent"
+          >
+            新建节点
+          </el-button>
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="noPbSetSelected || readOnly || treeItemSelected"
+            @click="handleShowNodeCreateDialogChild"
+          >
+            新建子节点
+          </el-button>
+          <el-divider direction="vertical"/>
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="noPbSetSelected || readOnly"
+            @click="handleShowItemCreateDialogParent"
+          >
+            新建项目
+          </el-button>
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="noPbSetSelected || readOnly || treeItemSelected"
+            @click="handleShowItemCreateDialogChild"
+          >
+            新建子项目
+          </el-button>
+          <el-divider direction="vertical"/>
+          <pb-set-indicator mode="PB_MANAGEMENT" @change="handlePbSetChanged"/>
+        </div>
+      </template>
+      <template v-slot:west>
+        <pb-tree-panel
+          ref="pbManagementTreePanel"
+          :pb-set-key="parentSelection.pbSetId"
+          :read-only="readOnly"
+          @onCurrentChanged="handleCurrentChanged"
+          @onEntityDelete="handleEntityDelete"
+        />
+      </template>
       <template v-slot:default>
         <div class="placeholder" v-if="treePanel.selection.data === null">
           请选择节点或项目
         </div>
+        <!--suppress JSUnresolvedReference -->
         <el-tabs
           class="asset-tabs"
           tab-position="left"
@@ -47,53 +97,6 @@
           </el-tab-pane>
         </el-tabs>
       </template>
-      <pb-management-tree-panel
-        class="tree-container"
-        slot="west"
-        ref="pbManagementTreePanel"
-        mode="PB_MANAGEMENT"
-        :pb-set-key="parentSelection.pbSetId"
-        :read-only="readOnly"
-        @onCurrentChanged="handleCurrentChanged"
-        @onEntityDelete="handleEntityDelete"
-      />
-      <div class="header-container" slot="header">
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="noPbSetSelected || readOnly"
-          @click="handleShowNodeCreateDialogParent"
-        >
-          新建节点
-        </el-button>
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="noPbSetSelected || readOnly || treeItemSelected"
-          @click="handleShowNodeCreateDialogChild"
-        >
-          新建子节点
-        </el-button>
-        <el-divider direction="vertical"/>
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="noPbSetSelected || readOnly"
-          @click="handleShowItemCreateDialogParent"
-        >
-          新建项目
-        </el-button>
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="noPbSetSelected || readOnly || treeItemSelected"
-          @click="handleShowItemCreateDialogChild"
-        >
-          新建子项目
-        </el-button>
-        <el-divider direction="vertical"/>
-        <pb-set-indicator mode="PB_MANAGEMENT" @change="handlePbSetChanged"/>
-      </div>
     </border-layout-panel>
     <entity-maintain-dialog
       label-width="100px"
@@ -175,7 +178,7 @@
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import PbSetIndicator from '@/views/items/life/pbSet/PbSetIndicator.vue';
-import PbManagementTreePanel from '@/views/items/life/pbManagement/PbManagementTreePanel.vue';
+import PbTreePanel from '@/views/items/life/pbManagement/PbTreePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import NodeOverlookPanel from '@/views/items/life/pbManagement/NodeOverlookPanel.vue';
 import ItemOverlookPanel from '@/views/items/life/pbManagement/ItemOverlookPanel.vue';
@@ -196,7 +199,7 @@ export default {
     ItemOverlookPanel,
     NodeOverlookPanel,
     EntityMaintainDialog,
-    PbManagementTreePanel,
+    PbTreePanel,
     PbSetIndicator,
     BorderLayoutPanel,
   },
@@ -215,6 +218,7 @@ export default {
       if (data === null) {
         return false;
       }
+      // noinspection JSUnresolvedReference
       return data.display_type === 1;
     },
   },
@@ -287,6 +291,14 @@ export default {
     handleCurrentChanged(node, data) {
       this.treePanel.selection.node = node;
       this.treePanel.selection.data = data;
+
+      if (data === null) {
+        this.nodeTabs.nodeId = '';
+        this.itemTabs.itemId = '';
+        return;
+      }
+
+      // noinspection JSUnresolvedReference
       if (data.display_type === 0) {
         this.nodeTabs.nodeId = data.key.long_id;
       } else {
@@ -361,6 +373,7 @@ export default {
       this.itemMaintainDialog.visible = true;
     },
     syncAnchorEntity(entity) {
+      // noinspection JSUnresolvedReference
       if (entity.display_type === 0) {
         this.syncAnchorNode(entity);
       } else {
@@ -410,14 +423,14 @@ export default {
         .then((res) => {
           const parentId = this.nodeMaintainDialog.anchorEntity.parent_long_id;
           if (parentId === '') {
-            this.$refs.pbManagementTreePanel.appendRootNode(res);
+            this.$refs.pbManagementTreePanel.appendRootPbNode(res);
           } else {
             const { node } = this.treePanel.selection;
             if (this.treePanel.appendChild) {
-              this.$refs.pbManagementTreePanel.appendNode(node, res);
+              this.$refs.pbManagementTreePanel.appendPbNode(node, res);
               this.$set(node, 'isLeaf', false);
             } else {
-              this.$refs.pbManagementTreePanel.insertNodeAfter(node, res);
+              this.$refs.pbManagementTreePanel.insertPbNodeAfter(node, res);
             }
           }
           this.nodeMaintainDialog.visible = false;
@@ -446,7 +459,7 @@ export default {
         })
         .then(() => resolveResponse(inspectNode(this.nodeMaintainDialog.anchorEntity.long_id)))
         .then((res) => {
-          this.$refs.pbManagementTreePanel.updateNode(res);
+          this.$refs.pbManagementTreePanel.updatePbNode(res);
           this.$refs.nodeOverlookPanel.updateView();
           this.nodeMaintainDialog.visible = false;
         })
@@ -479,14 +492,14 @@ export default {
         .then((res) => {
           const nodeId = this.itemMaintainDialog.anchorEntity.node_long_id;
           if (nodeId === '') {
-            this.$refs.pbManagementTreePanel.appendRootItem(res);
+            this.$refs.pbManagementTreePanel.appendRootPbItem(res);
           } else {
             const { node } = this.treePanel.selection;
             if (this.treePanel.appendChild) {
-              this.$refs.pbManagementTreePanel.appendItem(node, res);
+              this.$refs.pbManagementTreePanel.appendPbItem(node, res);
               this.$set(node, 'isLeaf', false);
             } else {
-              this.$refs.pbManagementTreePanel.insertItemAfter(node, res);
+              this.$refs.pbManagementTreePanel.insertPbItemAfter(node, res);
             }
           }
           this.itemMaintainDialog.visible = false;
@@ -517,7 +530,7 @@ export default {
         })
         .then(() => resolveResponse(inspectItem(this.itemMaintainDialog.anchorEntity.long_id)))
         .then((res) => {
-          this.$refs.pbManagementTreePanel.updateItem(res);
+          this.$refs.pbManagementTreePanel.updatePbItem(res);
           this.$refs.itemOverlookPanel.updateView();
           this.itemMaintainDialog.visible = false;
         })
@@ -528,6 +541,7 @@ export default {
         });
     },
     handleEntityDelete(node, entity, accept) {
+      // noinspection JSUnresolvedReference
       if (entity.display_type === 0) {
         this.handlePbNodeDelete(node, entity, accept);
       } else {

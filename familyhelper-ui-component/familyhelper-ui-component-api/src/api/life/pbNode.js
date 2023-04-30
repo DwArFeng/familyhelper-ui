@@ -36,6 +36,14 @@ export function childForParent(parentKey, page, rows) {
     });
 }
 
+export function childForPbSetNameLike(pbSetKey, pattern, page, rows) {
+    return get('life', `pb-set/${pbSetKey}/pb-node/name-like/`, {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function inspectDisp(key) {
     return get('life', `pb-node/${key}/disp/`, {});
 }
@@ -63,6 +71,14 @@ export function childForPbSetRootDisp(pbSetKey, page, rows) {
 
 export function childForParentDisp(parentKey, page, rows) {
     return get('life', `pb-node/${parentKey}/child/disp`, {
+        page,
+        rows,
+    });
+}
+
+export function childForPbSetNameLikeDisp(pbSetKey, pattern, page, rows) {
+    return get('life', `pb-set/${pbSetKey}/pb-node/name-like/disp/`, {
+        pattern,
         page,
         rows,
     });
@@ -106,4 +122,8 @@ export function remove(key) {
     return post('life', 'pb-node/remove', {
         long_id: key,
     });
+}
+
+export function pathFromRoot(key) {
+    return get('life', `pb-node/${key}/path-from-root/`, {});
 }
