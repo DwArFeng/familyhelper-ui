@@ -38,6 +38,14 @@ export function childForParent(parentKey, page, rows) {
     });
 }
 
+export function childForAssetCatalogNameLike(assetCatalogKey, pattern, page, rows) {
+    return get('assets', `asset-catalog/${assetCatalogKey}/item/name-like/`, {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function inspectDisp(key) {
     return get('assets', `item/${key}/disp/`, {});
 }
@@ -57,14 +65,22 @@ export function childForAssetCatalogDisp(assetCatalogKey, page, rows) {
 }
 
 export function childForAssetCatalogRootDisp(assetCatalogKey, page, rows) {
-    return get('assets', `asset-catalog/${assetCatalogKey}/item/root/disp`, {
+    return get('assets', `asset-catalog/${assetCatalogKey}/item/root/disp/`, {
         page,
         rows,
     });
 }
 
 export function childForParentDisp(parentKey, page, rows) {
-    return get('assets', `item/${parentKey}/child/disp`, {
+    return get('assets', `item/${parentKey}/child/disp/`, {
+        page,
+        rows,
+    });
+}
+
+export function childForAssetCatalogNameLikeDisp(assetCatalogKey, pattern, page, rows) {
+    return get('assets', `asset-catalog/${assetCatalogKey}/item/name-like/disp/`, {
+        pattern,
         page,
         rows,
     });
@@ -78,7 +94,7 @@ export function create(assetCatalogKey, parentKey, labelKeys, name, type, lifeCy
         finalParentKey = null;
     }
     const finalLabelKeys = labelKeys.map((key) => ({string_id: key}));
-    return post('assets', 'item/create', {
+    return post('assets', 'item/create/', {
         asset_catalog_key: {
             long_id: assetCatalogKey,
         },
@@ -99,7 +115,7 @@ export function update(itemKey, parentKey, labelKeys, name, type, lifeCycle, rem
         finalParentKey = null;
     }
     const finalLabelKeys = labelKeys.map((key) => ({string_id: key}));
-    return post('assets', 'item/update', {
+    return post('assets', 'item/update/', {
         item_key: {
             long_id: itemKey,
         },
@@ -113,7 +129,11 @@ export function update(itemKey, parentKey, labelKeys, name, type, lifeCycle, rem
 }
 
 export function remove(key) {
-    return post('assets', 'item/remove', {
+    return post('assets', 'item/remove/', {
         long_id: key,
     });
+}
+
+export function pathFromRoot(key) {
+    return get('assets', `item/${key}/path-from-root/`, {});
 }

@@ -2,6 +2,7 @@
   <div class="asset-bom-container">
     <border-layout-panel
       class="border-layout-panel"
+      west-width="350px"
       :header-visible="true"
       :west-visible="true"
     >
@@ -28,8 +29,7 @@
         </div>
       </template>
       <template v-slot:west>
-        <asset-bom-tree-panel
-          class="tree-container"
+        <asset-tree-panel
           ref="assetBomTreePanel"
           mode="ASSET_BOM"
           :asset-catalog-key="parentSelection.assetCatalogId"
@@ -118,7 +118,7 @@
 
 <script>
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
-import AssetBomTreePanel from '@/views/items/assetsManagement/assetBom/AssetBomTreePanel.vue';
+import AssetTreePanel from '@/views/items/assetsManagement/assetBom/AssetTreePanel.vue';
 import AssetCatalogIndicator
 from '@/views/items/assetsManagement/assetCatalog/AssetCatalogIndicator.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
@@ -126,6 +126,7 @@ import ItemEditPanel from '@/views/items/assetsManagement/assetBom/ItemEditPanel
 
 import {
   create, inspectDisp, remove,
+  inspectDisp as inspectItem,
 } from '@/api/assets/item';
 import {
   all as inspectItemTypeIndicator,
@@ -135,7 +136,6 @@ import {
   allExists as allLabelExists,
 } from '@/api/assets/itemLabel';
 import resolveResponse from '@/util/response';
-import { inspectDisp as inspectItem } from '@/api/note/noteItem';
 
 export default {
   name: 'AssetBom',
@@ -144,7 +144,7 @@ export default {
     EntityMaintainDialog,
     AssetCatalogIndicator,
     BorderLayoutPanel,
-    AssetBomTreePanel,
+    AssetTreePanel,
   },
   computed: {
     headerButtonDisabled() {
@@ -294,6 +294,12 @@ export default {
     handleCurrentChanged(node, data) {
       this.treePanel.selection.node = node;
       this.treePanel.selection.data = data;
+
+      if (data === null) {
+        this.itemEditPanel.itemId = '';
+        return;
+      }
+
       this.itemEditPanel.itemId = data.key.long_id;
       this.syncAnchorEntity(data);
     },
@@ -432,11 +438,6 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.tree-container {
-  width: calc(25vw - 230px - 20px + 80px);
-  height: 100%;
 }
 
 .asset-bom-select {
