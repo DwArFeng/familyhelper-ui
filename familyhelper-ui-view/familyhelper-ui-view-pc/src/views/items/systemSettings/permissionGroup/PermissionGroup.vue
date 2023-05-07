@@ -25,7 +25,7 @@
           <el-button
             class="header-button"
             type="primary"
-            :disabled="treeSelection.data.key.string_id === ''"
+            :disabled="permissionGroupId === ''"
             @click="handleShowPermissionAttachDialogVisible"
           >
             关联权限节点
@@ -50,59 +50,69 @@
         />
       </template>
       <template v-slot:default>
-        <div class="center-container">
-          <el-form class="detail-form" inline>
-            <el-form-item label="权限组ID" style="width: 33%">
-              {{ treeSelection.data.key.string_id }}
-            </el-form-item>
-            <!--suppress JSIncompatibleTypesComparison -->
-            <el-form-item label="父权限组ID" style="width: 33%">
-              {{
-                treeSelection.data.parent_permission_group === null ?
-                  '(根节点)' : treeSelection.data.parent_permission_group.key.string_id
-              }}
-            </el-form-item>
-            <el-form-item label="名称" style="width: 33%">
-              {{ treeSelection.data.name }}
-            </el-form-item>
-            <el-form-item label="备注" style="width: 100%">
-              {{ treeSelection.data.remark }}
-            </el-form-item>
-          </el-form>
-          <el-divider class="divider"/>
-          <table-panel
-            class="permission-table-panel"
-            :page-size.sync="permissionPageSize"
-            :entity-count="parseInt(permissionEntities.count)"
-            :current-page.sync="permissionCurrentPage"
-            :page-sizes="[15,20,30,50]"
-            :table-data="permissionEntities.data"
-            :inspect-button-visible="false"
-            :edit-button-visible="false"
-            :delete-button-visible="false"
-            @onPagingAttributeChanged="handleUnattachPagingAttributeChanged"
-            @onSelectionChanged="handleUnattachSelectionChanged"
-          >
-            <el-table-column
-              type="selection"
-              width="55"
-            />
-            <el-table-column
-              prop="key.string_id"
-              label="权限节点"
-              show-overflow-tooltip
-            />
-            <el-table-column
-              prop="name"
-              label="名称"
-              show-overflow-tooltip
-            />
-            <el-table-column
-              prop="remark"
-              label="备注"
-              show-overflow-tooltip
-            />
-          </table-panel>
+        <div class="center-container-wrapper">
+          <div class="placeholder" v-if="permissionGroupId===''">
+            请选择权限组
+          </div>
+          <div class="center-container" v-else>
+            <el-form
+              class="detail-form"
+              label-position="left"
+              label-width="80px"
+              inline
+            >
+              <el-form-item label="权限组ID" style="width: 50%">
+                {{ treeSelection.data.key.string_id }}
+              </el-form-item>
+              <!--suppress JSIncompatibleTypesComparison -->
+              <el-form-item label="父权限组ID" style="width: 50%">
+                {{
+                  treeSelection.data.parent_permission_group === null ?
+                    '(根节点)' : treeSelection.data.parent_permission_group.key.string_id
+                }}
+              </el-form-item>
+              <el-form-item label="名称" style="width: 100%">
+                {{ treeSelection.data.name }}
+              </el-form-item>
+              <el-form-item label="备注" style="width: 100%">
+                {{ treeSelection.data.remark }}
+              </el-form-item>
+            </el-form>
+            <el-divider class="divider"/>
+            <table-panel
+              class="permission-table-panel"
+              :page-size.sync="permissionPageSize"
+              :entity-count="parseInt(permissionEntities.count)"
+              :current-page.sync="permissionCurrentPage"
+              :page-sizes="[15,20,30,50]"
+              :table-data="permissionEntities.data"
+              :inspect-button-visible="false"
+              :edit-button-visible="false"
+              :delete-button-visible="false"
+              @onPagingAttributeChanged="handleUnattachPagingAttributeChanged"
+              @onSelectionChanged="handleUnattachSelectionChanged"
+            >
+              <el-table-column
+                type="selection"
+                width="55"
+              />
+              <el-table-column
+                prop="key.string_id"
+                label="权限节点"
+                show-overflow-tooltip
+              />
+              <el-table-column
+                prop="name"
+                label="名称"
+                show-overflow-tooltip
+              />
+              <el-table-column
+                prop="remark"
+                label="备注"
+                show-overflow-tooltip
+              />
+            </table-panel>
+          </div>
         </div>
       </template>
     </border-layout-panel>
@@ -220,6 +230,14 @@ export default {
     BorderLayoutPanel,
     EntityMaintainDialog,
   },
+  computed: {
+    permissionGroupId() {
+      if (this.treeSelection.data) {
+        return this.treeSelection.data.key.string_id;
+      }
+      return '';
+    },
+  },
   data() {
     const keyValidator = (rule, value, callback) => {
       Promise.resolve(value)
@@ -280,24 +298,7 @@ export default {
       },
       treeSelection: {
         node: null,
-        data: {
-          key: {
-            string_id: '',
-          },
-          parent_permission_group: {
-            key: {
-              string_id: '',
-            },
-            parent_key: {
-              string_id: '',
-            },
-            name: '',
-            remark: '',
-          },
-          name: '',
-          remark: '',
-          has_no_child: true,
-        },
+        data: null,
       },
       dialogVisible: false,
       dialogMode: 'CREATE',
@@ -361,17 +362,6 @@ export default {
       resolveResponse(childForParentDisp('', 0, 1000))
         .then((res) => {
           this.treeData = res.data;
-        });
-    },
-    handleLoad(node, resolve) {
-      if (node.level === 0) {
-        return;
-      }
-
-      const bill = node.data;
-      resolveResponse(childForParentDisp(bill.key.string_id, 0, 1000))
-        .then((res) => {
-          resolve(res.data);
         });
     },
     handleEntityCreate() {
@@ -670,7 +660,7 @@ export default {
         });
     },
     handleUnattachPagingAttributeChanged() {
-      this.inspectChildPermission(this.treeSelection.data.key.string_id);
+      this.inspectChildPermission(this.permissionGroupId);
     },
   },
   mounted() {
@@ -692,6 +682,24 @@ export default {
   flex-wrap: wrap;
 }
 
+.center-container-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #BFBFBF;
+  user-select: none;
+}
+
 .center-container {
   display: flex;
   flex-direction: column;
@@ -699,19 +707,35 @@ export default {
   height: 100%;
 }
 
+.detail-form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .detail-form >>> label {
+  width: 240px;
   color: #99a9bf;
+  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
 .detail-form >>> .el-form-item__content {
-  padding-right: 20px;
+  width: 0;
+  margin-right: 5px;
+  flex-grow: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
 .detail-form >>> .el-form-item {
   margin-right: 0;
   margin-bottom: 0;
+  width: 51%;
+  white-space: nowrap;
+  display: flex;
+  flex-direction: row;
 }
 
 .divider {
