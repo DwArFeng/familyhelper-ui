@@ -1,32 +1,57 @@
 <template>
+  <!--suppress VueUnrecognizedDirective -->
   <div class="lazy-search-tree-panel-container" v-loading="loading">
     <header-layout-panel>
       <template v-slot:header>
         <div class="header-container">
-          <el-select
-            class="flex-item expand select"
-            v-model="select.value"
-            filterable
-            remote
-            clearable
-            :loading="select.loading"
-            :placeholder="placeholder"
-            :value-key="keyField"
-            :popper-append-to-body="false"
-            :remote-method="wrappedSearchOptionHandler"
-            @change="handleSelectChanged"
-          >
-            <el-option
-              v-for="option in select.options"
-              :key="option[keyField]"
-              :label="option[labelField]"
-              :value="option"
+          <div class="flex-item expand select-wrapper">
+            <transition name="tooltip">
+              <div
+                class="tooltip"
+                ref="tooltip"
+                v-show="tooltip.visible"
+                :style="tooltipStyle"
+              >
+                <div class="content-wrapper">
+                  <div v-if="tooltip.loading" class="content">
+                    <i class="el-icon-loading"/>
+                    <span>{{ loadingText }}</span>
+                  </div>
+                  <div v-else class="content">
+                    <i class="el-icon-aim"/>
+                    <span>{{ tooltip.content }}</span>
+                  </div>
+                </div>
+              </div>
+            </transition>
+            <el-select
+              class="select"
+              ref="select"
+              v-model="select.value"
+              filterable
+              remote
+              clearable
+              :loading="select.loading"
+              :placeholder="placeholder"
+              :value-key="keyField"
+              :popper-append-to-body="false"
+              :remote-method="wrappedSearchOptionHandler"
+              :loading-text="loadingText"
+              @change="handleSelectChanged"
             >
-              <slot name="default" :node="null" :data="option">
-                <default-tree-default-slot :label="option[labelField]"/>
-              </slot>
-            </el-option>
-          </el-select>
+              <el-option
+                ref="option"
+                v-for="(option,index) in select.options"
+                :key="index"
+                :label="option[labelField]"
+                :value="option"
+              >
+                <slot name="default" :node="null" :data="option">
+                  <default-tree-default-slot :label="option[labelField]"/>
+                </slot>
+              </el-option>
+            </el-select>
+          </div>
           <el-button
             class="flex-item search-button"
             icon="el-icon-refresh"
@@ -50,6 +75,7 @@
             :highlight-current="true"
             @current-change="handleCurrentChanged"
           >
+            <!--suppress VueUnrecognizedSlot -->
             <template v-slot:default="{node, data}">
               <div class="tree-node">
                 <div class="tree-node-content">
@@ -154,6 +180,23 @@ export default {
         accept([]);
       },
     },
+    loadingText: {
+      type: String,
+      default: '正在加载',
+    },
+    pathDelimiter: {
+      type: String,
+      default: '/',
+    },
+  },
+  computed: {
+    tooltipStyle() {
+      return {
+        top: `${this.tooltip.top}px`,
+        left: `${this.tooltip.left}px`,
+        width: `${this.tooltip.width}px`,
+      };
+    },
   },
   data() {
     return {
@@ -166,6 +209,17 @@ export default {
       tree: {
         root: [],
         operateAreaHover: false,
+      },
+      tooltip: {
+        loading: true,
+        visible: false,
+        timer: null,
+        anchorIndex: 0,
+        content: '',
+        top: 0,
+        left: 0,
+        width: 100,
+        unwatchHandle: null,
       },
     };
   },
@@ -222,7 +276,7 @@ export default {
         // 遍历查询得到的路径，确认节点是否被加载，获取第一个没被加载的节点的索引。
         for (; offset < path.length; offset += 1) {
           // 获取节点的 key。
-          const key = path[offset];
+          const key = path[offset][this.keyField];
           // 如果节点没有被加载，跳出循环。
           if (!nodeMap[key]) {
             break;
@@ -236,7 +290,8 @@ export default {
         // 如果 offset 等于 path.length，说明所有节点都被加载。
         if (offset === path.length) {
           // 遍历查询得到的路径，展开所有节点。
-          path.forEach((key) => {
+          path.forEach((entity) => {
+            const key = entity[this.keyField];
             const node = nodeMap[key];
             node.expand();
           });
@@ -264,7 +319,7 @@ export default {
         // 构造 accept 函数的构造函数。
         const acceptProvider = (index) => (children) => {
           // 向 childInfo 中添加节点信息，并减少 remain 的值。
-          childInfos[index - offset] = { key: path[index], children };
+          childInfos[index - offset] = { key: path[index][this.keyField], children };
           remainCount -= 1;
           // 如果 remainCount 大于 0，说明还有子节点没有被加载，不进行操作。
           if (remainCount > 0) {
@@ -284,7 +339,8 @@ export default {
             });
           });
           // 展开节点。
-          path.forEach((key) => {
+          path.forEach((entity) => {
+            const key = entity[this.keyField];
             const node = nodeMap[key];
             node.expand();
           });
@@ -306,7 +362,7 @@ export default {
           // 构造 accept 函数。
           const accept = acceptProvider(index);
           // 调用 loadChildHandler 加载子节点。
-          this.loadChildHandler(path[index], accept);
+          this.loadChildHandler(path[index][this.keyField], accept);
         }
       };
       // 调用 queryPathHandler 查询路径。
@@ -320,7 +376,9 @@ export default {
       }
       // 获取树的节点映射。
       const nodeMap = this.nodeMap();
-      path.forEach((key) => {
+      path.forEach((entity) => {
+        // 获取节点的 key。
+        const key = entity[this.keyField];
         // 获取节点。
         const node = nodeMap[key];
         // 获取节点的 id。
@@ -392,9 +450,79 @@ export default {
       this.handleSearch();
       this.$emit('onCurrentChanged', null, null);
     },
+    handleHoverIndexChanged(index) {
+      // 隐藏 tooltip。
+      this.tooltip.visible = false;
+      if (this.tooltip.timer) {
+        clearTimeout(this.tooltip.timer);
+        this.tooltip.timer = null;
+      }
+
+      // 如果 index 等于 -1，不进行操作。
+      if (index === -1) {
+        return;
+      }
+
+      this.tooltip.timer = setTimeout(() => {
+        // 获得 option。
+        const option = this.select.options[index];
+        // 设置 tooltip 的 index。
+        this.tooltip.index = index;
+        // 加载 tooltip 内容。
+        this.tooltip.loading = true;
+        // 设置 tooltip 的显示状态。
+        this.tooltip.visible = true;
+        // 调整 tooltip 的位置以及尺寸。
+        this.adjustTooltipStyle()
+          .then(() => new Promise((resolve) => {
+            this.queryPathHandler(option[this.keyField], (accept) => {
+              resolve(accept);
+            });
+          }))
+          .then((path) => {
+            let pathString = this.pathDelimiter;
+            // 遍历 path，拼接 pathString。
+            path.forEach((entity) => {
+              pathString += entity[this.labelField] + this.pathDelimiter;
+            });
+            pathString += option[this.labelField];
+            // 设置 tooltip 内容。
+            this.tooltip.content = pathString;
+            // 设置 tooltip 加载状态。
+            this.tooltip.loading = false;
+            // 调整 tooltip 的位置以及尺寸。
+            return this.adjustTooltipStyle();
+          });
+      }, 500);
+    },
+    adjustTooltipStyle() {
+      return this.$nextTick()
+        .then(() => {
+          const optionEl = this.$refs.option[this.tooltip.index].$el;
+          // 获取 optionEl 的位置，作为参考位置。
+          const refTop = optionEl.getBoundingClientRect().top;
+          const refLeft = optionEl.getBoundingClientRect().left;
+          // 调整 tooltip 的位置以及尺寸。
+          this.tooltip.top = refTop - 2 - this.$refs.tooltip.offsetHeight;
+          this.tooltip.left = refLeft + 10;
+          // noinspection JSUnresolvedReference
+          this.tooltip.width = optionEl.offsetWidth - 20;
+          // 返回一个 Promise 对象。
+          return Promise.resolve();
+        });
+    },
   },
   mounted() {
     this.handleSearch();
+    this.tooltip.unwatchHandle = this.$watch(
+      () => this.$refs.select.$data.hoverIndex,
+      (value) => {
+        this.handleHoverIndexChanged(value);
+      },
+    );
+  },
+  beforeDestroy() {
+    this.tooltip.unwatchHandle();
   },
 };
 </script>
@@ -418,6 +546,71 @@ export default {
 
 .header-container .flex-item:not(:last-child) {
   margin-right: 5px;
+}
+
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+
+.select-wrapper .tooltip {
+  box-sizing: border-box;
+  position: fixed;
+  z-index: 6000;
+  padding: 2px 0;
+  color: #606266;
+  background: white;
+  border: solid 1px #DCDFE6;
+  pointer-events: none;
+}
+
+/*noinspection CssUnusedSymbol*/
+.tooltip-enter-active, .tooltip-leave-active {
+  transition: opacity .3s;
+}
+
+/*noinspection CssUnusedSymbol*/
+.tooltip-enter-to, .tooltip-leave {
+  opacity: 1;
+}
+
+/*noinspection CssUnusedSymbol*/
+.tooltip-enter, .tooltip-leave-to {
+  opacity: 0;
+}
+
+.select-wrapper .tooltip .content-wrapper {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.select-wrapper .tooltip .content-wrapper .content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.select-wrapper .tooltip i {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.select-wrapper .tooltip .content-wrapper .content span {
+  width: 0;
+  flex-grow: 1;
+  font-size: 12px;
+  word-break: break-all;
+}
+
+.select {
+  height: 100%;
+  width: 100%;
 }
 
 .select >>> input {

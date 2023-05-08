@@ -86,6 +86,14 @@ export function childForAssetCatalogNameLikeDisp(assetCatalogKey, pattern, page,
     });
 }
 
+export function pathFromRoot(key) {
+    return get('assets', `item/${key}/path-from-root/`, {});
+}
+
+export function pathFromRootDisp(key) {
+    return get('assets', `item/${key}/path-from-root/disp/`, {});
+}
+
 export function create(assetCatalogKey, parentKey, labelKeys, name, type, lifeCycle, remark) {
     let finalParentKey = {
         long_id: parentKey,
@@ -132,8 +140,4 @@ export function remove(key) {
     return post('assets', 'item/remove/', {
         long_id: key,
     });
-}
-
-export function pathFromRoot(key) {
-    return get('assets', `item/${key}/path-from-root/`, {});
 }

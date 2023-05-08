@@ -23,6 +23,7 @@
         <template v-slot:default="{data}">
           <div class="item-container">
             <div class="icon-wrapper"><i class="iconfont">{{ iconValue(data) }}</i></div>
+            <!--suppress JSUnresolvedReference -->
             <div class="label">{{ data.name }}</div>
           </div>
         </template>
@@ -47,13 +48,13 @@ import {
   childForPbSetNameLikeDisp as childNodeForPbSetNameLike,
   childForPbSetRootDisp as childNodeForPbSetRoot,
   childForParentDisp as childNodeForParent,
-  pathFromRoot as nodePathFromRoot,
+  nodePathFromRootDisp as nodePathFromRoot,
+  itemPathFromRootDisp as itemPathFromRoot,
 } from '@/api/life/pbNode';
 import {
   childForPbSetNameLikeDisp as childItemForPbNodeNameLike,
   childForPbSetRootDisp as childItemForPbSetRoot,
   childForPbNodeDisp as childItemForPbNode,
-  pathFromRoot as itemPathFromRoot,
 } from '@/api/life/pbItem';
 import resolveResponse from '@/util/response';
 
@@ -80,6 +81,7 @@ export default {
   computed: {
     iconValue() {
       return (entity) => {
+        // noinspection JSUnresolvedReference
         if (entity.display_type === 0) {
           return '\uffd6';
         }
@@ -174,11 +176,13 @@ export default {
         promise = resolveResponse(itemPathFromRoot(key.substring(2)));
       }
       promise.then((res) => {
-        const path = [];
-        res.forEach((k) => {
-          path.push(`0_${k.long_id}`);
+        const entities = [];
+        res.data.forEach((noteNode) => {
+          this.$set(noteNode, 'tree_node_key', `0_${noteNode.key.long_id}`);
+          this.$set(noteNode, 'display_type', 0);
+          entities.push(noteNode);
         });
-        accept(path);
+        accept(entities);
       });
     },
     appendEntitiesProperties(res) {

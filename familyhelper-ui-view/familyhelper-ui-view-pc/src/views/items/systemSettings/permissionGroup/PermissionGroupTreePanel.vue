@@ -22,7 +22,7 @@
 <script>
 import LazySearchTreePanel from '@/components/layout/LazySearchTreePanel.vue';
 
-import { childForParentDisp, nameLikeDisp, pathFromRoot } from '@/api/system/permissionGroup';
+import { childForParentDisp, nameLikeDisp, pathFromRootDisp } from '@/api/system/permissionGroup';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -64,13 +64,10 @@ export default {
         });
     },
     handleQueryPath(key, accept) {
-      resolveResponse(pathFromRoot(key))
+      resolveResponse(pathFromRootDisp(key))
+        .then(this.appendEntitiesProperties)
         .then((res) => {
-          const path = [];
-          res.forEach((k) => {
-            path.push(k.string_id);
-          });
-          accept(path);
+          accept(res);
         });
     },
     appendEntitiesProperties(res) {

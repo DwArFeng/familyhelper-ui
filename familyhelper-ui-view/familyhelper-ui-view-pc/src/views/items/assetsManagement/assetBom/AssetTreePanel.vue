@@ -100,12 +100,9 @@ export default {
     },
     handleQueryPath(key, accept) {
       resolveResponse(pathFromRoot(key))
+        .then(this.appendEntitiesProperties)
         .then((res) => {
-          const path = [];
-          res.forEach((k) => {
-            path.push(k.long_id);
-          });
-          accept(path);
+          accept(res);
         });
     },
     appendEntitiesProperties(res) {

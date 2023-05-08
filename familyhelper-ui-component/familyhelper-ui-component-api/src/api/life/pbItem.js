@@ -113,7 +113,3 @@ export function remove(key) {
         long_id: key,
     });
 }
-
-export function pathFromRoot(key) {
-    return get('life', `pb-item/${key}/path-from-root/`, {});
-}

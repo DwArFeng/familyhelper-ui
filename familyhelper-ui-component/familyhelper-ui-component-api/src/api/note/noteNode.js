@@ -84,6 +84,22 @@ export function childForNoteBookNameLikeDisp(noteBookKey, pattern, page, rows) {
     });
 }
 
+export function nodePathFromRoot(key) {
+    return get('note', `note-node/${key}/path-from-root/`, {});
+}
+
+export function nodePathFromRootDisp(key) {
+    return get('note', `note-node/${key}/path-from-root/disp/`, {});
+}
+
+export function itemPathFromRoot(key) {
+    return get('note', `note-item/${key}/path-from-root/`, {});
+}
+
+export function itemPathFromRootDisp(key) {
+    return get('note', `note-item/${key}/path-from-root/disp/`, {});
+}
+
 export function create(setKey, parentKey, name, remark) {
     let finalParentKey = {
         long_id: parentKey,
@@ -122,8 +138,4 @@ export function remove(key) {
     return post('note', 'note-node/remove/', {
         long_id: key,
     });
-}
-
-export function pathFromRoot(key) {
-    return get('note', `note-node/${key}/path-from-root/`, {});
 }

@@ -94,14 +94,18 @@ export function childForRootDisp(page, rows) {
     });
 }
 
-export function pathFromRoot(key) {
-    return get('system', `permission-group/${key}/path-from-root/`, {});
-}
-
 export function nameLikeDisp(pattern, page, rows) {
     return get('system', 'permission-group/name-like/disp', {
         pattern,
         page,
         rows,
     });
+}
+
+export function pathFromRoot(key) {
+    return get('system', `permission-group/${key}/path-from-root/`, {});
+}
+
+export function pathFromRootDisp(key) {
+    return get('system', `permission-group/${key}/path-from-root/disp/`, {});
 }

@@ -117,7 +117,3 @@ export function downloadNoteFile(key) {
 export function uploadNoteFile(noteItemKey, formData) {
     return postFormData('note', `note-item/${noteItemKey}/upload-note-file/`, formData);
 }
-
-export function pathFromRoot(key) {
-    return get('note', `note-item/${key}/path-from-root/`, {});
-}
