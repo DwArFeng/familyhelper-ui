@@ -38,6 +38,7 @@
               :remote-method="wrappedSearchOptionHandler"
               :loading-text="loadingText"
               @change="handleSelectChanged"
+              @visible-change="handleSelectVisibleChanged"
             >
               <el-option
                 ref="option"
@@ -197,6 +198,9 @@ export default {
         width: `${this.tooltip.width}px`,
       };
     },
+    shouldTooltipHide() {
+      return this.tooltip.anchorIndex === -1 || !this.select.dropdownVisible;
+    },
   },
   data() {
     return {
@@ -205,6 +209,7 @@ export default {
         loading: false,
         value: '',
         options: [],
+        dropdownVisible: false,
       },
       tree: {
         root: [],
@@ -214,12 +219,14 @@ export default {
         loading: true,
         visible: false,
         timer: null,
-        anchorIndex: 0,
+        anchorIndex: -1,
         content: '',
         top: 0,
         left: 0,
         width: 100,
-        unwatchHandle: null,
+        hoverIndexUnwatchHandle: null,
+        horizontalScrollUnwatchHandle: null,
+        verticalScrollUnwatchHandle: null,
       },
     };
   },
@@ -451,54 +458,76 @@ export default {
       this.$emit('onCurrentChanged', null, null);
     },
     handleHoverIndexChanged(index) {
-      // 隐藏 tooltip。
+      this.tooltip.anchorIndex = index;
+      this.updateTooltip();
+    },
+    handleSelectVisibleChanged(visible) {
+      this.select.dropdownVisible = visible;
+      this.updateTooltip();
+    },
+    updateTooltip() {
+      // 首先隐藏 tooltip。
+      this.hideTooltip();
+
+      // 如果 tooltip 不可见，不进行操作（不显示 tooltip）。
+      if (this.shouldTooltipHide) {
+        return;
+      }
+
+      // 设置延迟防抖，并在延迟结束后显示 tooltip。
+      this.tooltip.timer = setTimeout(
+        () => { this.showTooltip(); }, 500,
+      );
+    },
+    showTooltip() {
+      // 获得 option。
+      const option = this.select.options[this.tooltip.anchorIndex];
+      // 加载 tooltip 内容。
+      this.tooltip.loading = true;
+      // 设置 tooltip 的显示状态。
+      this.tooltip.visible = true;
+      // 调整 tooltip 的位置以及尺寸。
+      this.adjustTooltipStyle()
+        .then(() => new Promise((resolve) => {
+          this.queryPathHandler(option[this.keyField], (accept) => {
+            resolve(accept);
+          });
+        }))
+        .then((path) => {
+          let pathString = this.pathDelimiter;
+          // 遍历 path，拼接 pathString。
+          path.forEach((entity) => {
+            pathString += entity[this.labelField] + this.pathDelimiter;
+          });
+          pathString += option[this.labelField];
+          // 设置 tooltip 内容。
+          this.tooltip.content = pathString;
+          // 设置 tooltip 加载状态。
+          this.tooltip.loading = false;
+          // 调整 tooltip 的位置以及尺寸。
+          return this.adjustTooltipStyle();
+        });
+    },
+    hideTooltip() {
       this.tooltip.visible = false;
       if (this.tooltip.timer) {
         clearTimeout(this.tooltip.timer);
         this.tooltip.timer = null;
       }
-
-      // 如果 index 等于 -1，不进行操作。
-      if (index === -1) {
-        return;
-      }
-
-      this.tooltip.timer = setTimeout(() => {
-        // 获得 option。
-        const option = this.select.options[index];
-        // 设置 tooltip 的 index。
-        this.tooltip.index = index;
-        // 加载 tooltip 内容。
-        this.tooltip.loading = true;
-        // 设置 tooltip 的显示状态。
-        this.tooltip.visible = true;
-        // 调整 tooltip 的位置以及尺寸。
-        this.adjustTooltipStyle()
-          .then(() => new Promise((resolve) => {
-            this.queryPathHandler(option[this.keyField], (accept) => {
-              resolve(accept);
-            });
-          }))
-          .then((path) => {
-            let pathString = this.pathDelimiter;
-            // 遍历 path，拼接 pathString。
-            path.forEach((entity) => {
-              pathString += entity[this.labelField] + this.pathDelimiter;
-            });
-            pathString += option[this.labelField];
-            // 设置 tooltip 内容。
-            this.tooltip.content = pathString;
-            // 设置 tooltip 加载状态。
-            this.tooltip.loading = false;
-            // 调整 tooltip 的位置以及尺寸。
-            return this.adjustTooltipStyle();
-          });
-      }, 500);
     },
     adjustTooltipStyle() {
+      // 如果 tooltip.anchorIndex 等于 -1，不进行操作。
+      if (this.tooltip.anchorIndex === -1) {
+        return Promise.resolve();
+      }
       return this.$nextTick()
         .then(() => {
-          const optionEl = this.$refs.option[this.tooltip.index].$el;
+          // 如果 tooltip.anchorIndex 等于 -1，不进行操作。
+          if (this.tooltip.anchorIndex === -1) {
+            return Promise.resolve();
+          }
+          // 获取指定的索引对应的 optionEl。
+          const optionEl = this.$refs.option[this.tooltip.anchorIndex].$el;
           // 获取 optionEl 的位置，作为参考位置。
           const refTop = optionEl.getBoundingClientRect().top;
           const refLeft = optionEl.getBoundingClientRect().left;
@@ -514,15 +543,34 @@ export default {
   },
   mounted() {
     this.handleSearch();
-    this.tooltip.unwatchHandle = this.$watch(
+    // 使用 hack 的方式，监听 select 的 hoverIndex 属性，以此实现对 select 下拉框 hover 索引的监听。
+    this.tooltip.hoverIndexUnwatchHandle = this.$watch(
       () => this.$refs.select.$data.hoverIndex,
       (value) => {
         this.handleHoverIndexChanged(value);
       },
     );
+
+    // 使用 hack 的方式，监听 select 下拉框的滚动条，以此实现对 select 下拉框横向滚动的监听。
+    this.tooltip.horizontalScrollUnwatchHandle = this.$watch(
+      () => this.$refs.select.$refs.scrollbar.moveX,
+      () => {
+        this.updateTooltip();
+      },
+    );
+
+    // 使用 hack 的方式，监听 select 下拉框的滚动条，以此实现对 select 下拉框纵向滚动的监听。
+    this.tooltip.verticalScrollUnwatchHandle = this.$watch(
+      () => this.$refs.select.$refs.scrollbar.moveY,
+      () => {
+        this.updateTooltip();
+      },
+    );
   },
   beforeDestroy() {
-    this.tooltip.unwatchHandle();
+    this.tooltip.hoverIndexUnwatchHandle();
+    this.tooltip.horizontalScrollUnwatchHandle();
+    this.tooltip.verticalScrollUnwatchHandle();
   },
 };
 </script>
