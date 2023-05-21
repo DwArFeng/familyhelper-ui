@@ -134,6 +134,40 @@ const life = [
     },
   },
   {
+    key: 'life.activityDataManagement',
+    index: 30,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '活动数据管理',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/life/activity-data-management',
+        component: () => import('@/views/items/life/activityDataManagement/ActivityDataManagement.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.life.activity_data_management',
+      },
+    },
+    node: {
+      parentKey: 'life',
+    },
+  },
+  {
     key: 'life.activityTypeIndicator',
     index: 40,
     meta: {

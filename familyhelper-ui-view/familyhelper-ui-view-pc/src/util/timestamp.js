@@ -35,3 +35,24 @@ export function formatShortTimestamp(timestamp) {
   const DD = (date.getDate() < 10 ? `0${date.getDate()}` : date.getDate());
   return `${YY + MM + DD}`;
 }
+
+/**
+ * 将持续时间格式化为易读的形式。
+ * @param duration 持续时间，单位毫秒。
+ * @returns {string} 格式化后的持续时间。
+ */
+export function formatDuration(duration) {
+  if (duration < 1000) {
+    return `${duration}毫秒`;
+  }
+  if (duration < 60 * 1000) {
+    return `${(duration / 1000).toFixed(0)}秒`;
+  }
+  if (duration < 3600 * 1000) {
+    return `${(duration / 60 / 1000).toFixed(0)}分钟`;
+  }
+  if (duration < 24 * 3600 * 1000) {
+    return `${(duration / 3600 / 1000).toFixed(0)}小时`;
+  }
+  return `${(duration / 24 / 3600 / 1000).toFixed(0)}天`;
+}
