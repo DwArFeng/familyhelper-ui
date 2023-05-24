@@ -14,7 +14,6 @@
 </template>
 
 <script>
-
 import NodeOverlookPanel from '@/views/items/life/activityDataManagement/NodeOverlookPanel.vue';
 
 export default {

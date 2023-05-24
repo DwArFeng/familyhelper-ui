@@ -3,7 +3,6 @@
 </template>
 
 <script>
-
 import VimLayout from './VimLayout.vue';
 
 export default {

@@ -14,7 +14,6 @@
 </template>
 
 <script>
-
 import NodeOverlookPanel from '@/views/items/note/noteManagement/NodeOverlookPanel.vue';
 
 export default {

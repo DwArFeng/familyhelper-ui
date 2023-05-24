@@ -73,7 +73,6 @@
 </template>
 
 <script>
-
 import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
