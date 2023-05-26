@@ -40,6 +40,7 @@
           :edit-button-visible="false"
           :delete-button-visible="false"
           :operate-column-width="50"
+          @onPagingAttributeChanged="handlePagingAttributeChanged"
         >
           <template v-slot:default>
             <el-table-column
