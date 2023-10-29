@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- PC 端代码格式优化。
+  - src/views/items/meAndClannad/profileTypeIndicator/CategoryMaintainPanel.vue。
+
 - 优化组件结构。
   - src/components/layout/TreePanel.vue。
   - src/components/layout/LazySearchTreePanel.vue。

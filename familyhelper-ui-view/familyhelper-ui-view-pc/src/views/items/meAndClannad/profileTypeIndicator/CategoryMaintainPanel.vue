@@ -167,7 +167,7 @@ export default {
         this.category, this.tablePanel.currentPage, this.tablePanel.pageSize,
       ))
         .then((res) => {
-        // 当查询的页数大于总页数，自动查询最后一页。
+          // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForCategory(
               this.category, res.total_pages, this.tablePanel.pageSize,
