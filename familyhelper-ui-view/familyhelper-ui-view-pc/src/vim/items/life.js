@@ -202,6 +202,40 @@ const life = [
     },
   },
   {
+    key: 'life.activityTemplateManagement',
+    index: 50,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '活动模板管理',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/life/activity-template-management',
+        component: () => import('@/views/items/life/activityTemplateManagement/ActivityTemplateManagement.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.life.activity_template_management',
+      },
+    },
+    node: {
+      parentKey: 'life',
+    },
+  },
+  {
     key: 'life.activityTemplateDriverSupport',
     index: 70,
     meta: {

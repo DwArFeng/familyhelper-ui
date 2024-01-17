@@ -54,7 +54,7 @@ export default {
       type: String,
       validator(value) {
         return [
-          'ACTIVITY_DATA_MANAGEMENT', 'DEFAULT',
+          'ACTIVITY_DATA_MANAGEMENT', 'ACTIVITY_DATA_ITEM_SELECT_DIALOG', 'DEFAULT',
         ].indexOf(value) !== -1;
       },
       default: 'DEFAULT',

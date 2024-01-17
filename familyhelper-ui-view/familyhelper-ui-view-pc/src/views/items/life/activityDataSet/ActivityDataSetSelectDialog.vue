@@ -8,6 +8,7 @@
       title="选择笔记本"
       top="8vh"
       width="80%"
+      :append-to-body="mode=== 'ACTIVITY_DATA_ITEM_SELECT_DIALOG'"
       :visible.sync="watchedVisible"
       :close-on-click-modal="false"
       @open="handleOpen"
@@ -110,7 +111,7 @@ export default {
       type: String,
       validator(value) {
         return [
-          'ACTIVITY_DATA_MANAGEMENT', 'DEFAULT',
+          'ACTIVITY_DATA_MANAGEMENT', 'ACTIVITY_DATA_ITEM_SELECT_DIALOG', 'DEFAULT',
         ].indexOf(value) !== -1;
       },
       default: 'DEFAULT',
