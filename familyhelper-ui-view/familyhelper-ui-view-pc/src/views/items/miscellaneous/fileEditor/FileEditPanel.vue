@@ -93,6 +93,11 @@ import {
   inspect as inspectLifeActivityTemplateFile,
   update as updateLifeActivityTemplateFile,
 } from '@/api/life/activityTemplateFile';
+import {
+  download as downloadLifeActivityFile,
+  inspect as inspectLifeActivityFile,
+  update as updateLifeActivityFile,
+} from '@/api/life/activityFile';
 
 import { fileExtension, fileType } from '@/util/file';
 import resolveResponse from '@/util/response';
@@ -102,6 +107,7 @@ import {
   NOTE_ATTACHMENT_FILE,
   PROJECT_MEMO_FILE,
   LIFE_ACTIVITY_TEMPLATE_FILE,
+  LIFE_ACTIVITY_FILE,
 } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
 
 export default {
@@ -215,6 +221,9 @@ export default {
         case LIFE_ACTIVITY_TEMPLATE_FILE:
           this.inspectLifeActivityTemplateFile(this.id);
           break;
+        case LIFE_ACTIVITY_FILE:
+          this.inspectLifeActivityFile(this.id);
+          break;
         default:
           break;
       }
@@ -287,6 +296,25 @@ export default {
           this.fileIndicator.originName = res.origin_name;
         })
         .then(() => downloadLifeActivityTemplateFile(id))
+        .then((blob) => {
+          this.fileIndicator.blob = blob;
+          this.fileIndicator.url = window.URL.createObjectURL(blob);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    inspectLifeActivityFile(id) {
+      this.loading = true;
+      if (this.fileIndicator.url !== '') {
+        window.URL.revokeObjectURL(this.fileIndicator.url);
+      }
+      resolveResponse(inspectLifeActivityFile(id))
+        .then((res) => {
+          // noinspection JSUnresolvedVariable
+          this.fileIndicator.originName = res.origin_name;
+        })
+        .then(() => downloadLifeActivityFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
           this.fileIndicator.url = window.URL.createObjectURL(blob);
@@ -370,6 +398,17 @@ export default {
           break;
         case LIFE_ACTIVITY_TEMPLATE_FILE:
           resolveResponse(updateLifeActivityTemplateFile(this.id, formData))
+            .then(() => {
+              this.$message({
+                showClose: true,
+                message: '活动模板文件提交成功',
+                type: 'success',
+                center: true,
+              });
+            });
+          break;
+        case LIFE_ACTIVITY_FILE:
+          resolveResponse(updateLifeActivityFile(this.id, formData))
             .then(() => {
               this.$message({
                 showClose: true,

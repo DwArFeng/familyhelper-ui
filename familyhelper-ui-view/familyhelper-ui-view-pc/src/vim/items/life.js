@@ -236,6 +236,40 @@ const life = [
     },
   },
   {
+    key: 'life.activityManagement',
+    index: 60,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '活动管理',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/life/activity-management',
+        component: () => import('@/views/items/life/activityManagement/ActivityManagement.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.life.activity_management',
+      },
+    },
+    node: {
+      parentKey: 'life',
+    },
+  },
+  {
     key: 'life.activityTemplateDriverSupport',
     index: 70,
     meta: {
