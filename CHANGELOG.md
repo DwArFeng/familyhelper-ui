@@ -15,6 +15,9 @@
 
 #### Bug修复
 
+- 修正 familyhelper-ui-view-pc 模块中的拼写错误的文件名。
+  - filtTypeConstants.js -> fileTypeConstants.js。
+
 - 修复分页查询当前页数大于数据总页数时，查询行为不正常的 bug。
 
 #### 功能移除

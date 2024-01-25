@@ -229,7 +229,7 @@ import {
 import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
 
-import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
   name: 'ItemFilePanel',

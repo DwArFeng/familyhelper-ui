@@ -106,7 +106,7 @@ import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
 import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 import resolveResponse from '@/util/response';
 
-import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 import FileEditPanel from '@/views/items/miscellaneous/fileEditor/FileEditPanel.vue';
 
 // noinspection JSAnnotator

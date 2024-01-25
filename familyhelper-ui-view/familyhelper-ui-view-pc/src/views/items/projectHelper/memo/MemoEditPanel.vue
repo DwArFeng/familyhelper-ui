@@ -104,7 +104,7 @@ import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
 import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 import resolveResponse from '@/util/response';
 
-import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 // noinspection JSAnnotator
 export default {

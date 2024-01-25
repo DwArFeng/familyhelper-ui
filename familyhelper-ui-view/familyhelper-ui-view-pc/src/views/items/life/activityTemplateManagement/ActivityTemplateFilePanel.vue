@@ -233,7 +233,7 @@ import { fileType } from '@/util/file';
 
 import {
   LIFE_ACTIVITY_TEMPLATE_FILE,
-} from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+} from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
   name: 'ActivityTemplateFilePanel',

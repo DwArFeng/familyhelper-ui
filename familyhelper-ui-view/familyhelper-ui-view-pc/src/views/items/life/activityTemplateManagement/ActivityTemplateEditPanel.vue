@@ -183,7 +183,7 @@ import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
 import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 import resolveResponse from '@/util/response';
 
-import { LIFE_ACTIVITY_TEMPLATE_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import { LIFE_ACTIVITY_TEMPLATE_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
   name: 'ActivityTemplateEditPanel',

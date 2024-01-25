@@ -229,7 +229,7 @@ import {
 import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
 
-import { NOTE_ATTACHMENT_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import { NOTE_ATTACHMENT_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
   name: 'ItemAttachmentPanel',

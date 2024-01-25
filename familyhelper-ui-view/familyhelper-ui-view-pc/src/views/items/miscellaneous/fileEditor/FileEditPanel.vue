@@ -108,7 +108,7 @@ import {
   PROJECT_MEMO_FILE,
   LIFE_ACTIVITY_TEMPLATE_FILE,
   LIFE_ACTIVITY_FILE,
-} from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+} from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
   name: 'FileEditPanel',

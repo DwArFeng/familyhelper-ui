@@ -215,7 +215,7 @@ import FileCreateDialog from '@/components/file/FileCreateDialog.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 
-import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import { PROJECT_MEMO_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 import { fileType } from '@/util/file';
 import { dataSizePreset, formatUnit } from '@/util/number';

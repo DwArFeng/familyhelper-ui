@@ -231,7 +231,7 @@ import {
 import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
 
-import { LIFE_ACTIVITY_FILE } from '@/views/items/miscellaneous/fileEditor/filtTypeConstants';
+import { LIFE_ACTIVITY_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
   name: 'ActivityFilePanel',
