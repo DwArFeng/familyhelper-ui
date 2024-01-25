@@ -136,6 +136,7 @@
       @opened="handleRoleAssignDialogOpened"
       @keydown.ctrl.enter.native="handleResetRoleRelation"
     >
+      <!--suppress JSValidateTypes -->
       <el-transfer
         v-model="roleAssignDialog.selectedRoles"
         :titles="['待选角色','已选角色']"

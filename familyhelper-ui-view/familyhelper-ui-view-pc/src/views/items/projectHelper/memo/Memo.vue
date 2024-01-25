@@ -43,6 +43,7 @@
                   :resizable="false"
                 >
                   <template v-slot:default="{row,column}">
+                    <!--suppress JSUnresolvedReference -->
                     <i class="iconfont">
                       {{ row[column.property] ? '\uffd4' : '\uffd5' }}
                     </i>
@@ -67,7 +68,7 @@
                   />
                 </el-button-group>
               </template>
-              <template v-slot:contextmenu="{row,index,close}">
+              <template v-slot:contextmenu="{row,close}">
                 <ul>
                   <li @click="handleIndependentEditContextmenuClicked(row,close)">
                     独立编辑
@@ -125,6 +126,7 @@
         />
       </el-form-item>
       <el-form-item label="预期完成时间" prop="expected_finish_date">
+        <!--suppress JSValidateTypes -->
         <el-date-picker
           class="short-bar"
           v-model="maintainDialog.anchorEntity.expected_finish_date"

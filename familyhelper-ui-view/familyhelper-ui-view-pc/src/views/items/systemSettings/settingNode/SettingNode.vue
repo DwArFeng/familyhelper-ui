@@ -77,12 +77,15 @@
           @keydown.enter.native="handleSearch"
           @clear="handleSearch"
         >
-          <span slot="prepend">设置节点</span>
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="handleSearch"
-          />
+          <template v-slot:prepend>
+            设置节点
+          </template>
+          <template v-slot:append>
+            <el-button
+              icon="el-icon-search"
+              @click="handleSearch"
+            />
+          </template>
         </el-input>
       </div>
     </border-layout-panel>

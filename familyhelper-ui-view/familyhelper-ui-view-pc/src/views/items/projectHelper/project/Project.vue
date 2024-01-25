@@ -32,7 +32,7 @@
           :contextmenu-width="110"
           @onAddonClicked="handleProjectToCreate"
         >
-          <template v-slot:default="{index,item}">
+          <template v-slot:default="{item}">
             <div class="project-card-container">
               <div class="project-property">
                 <span
@@ -86,6 +86,7 @@
           </template>
           <template v-slot:header="{index,item}">
             <el-button-group class="project-control-button-group">
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"
@@ -93,6 +94,7 @@
                 :disabled="item.permission_level !== 0"
                 @click="handleItemToEdit(index, item)"
               />
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"
@@ -100,6 +102,7 @@
                 :disabled="item.permission_level !== 0"
                 @click="handleItemToPermit(index, item)"
               />
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"

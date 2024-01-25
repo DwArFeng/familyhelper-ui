@@ -34,7 +34,7 @@
           :contextmenu-width="110"
           @onAddonClicked="handleActivityDataSetToCreate"
         >
-          <template v-slot:default="{index,item}">
+          <template v-slot:default="{item}">
             <div class="activity-data-set-card-container">
               <div class="activity-data-set-property">
                 <span
@@ -74,6 +74,7 @@
           </template>
           <template v-slot:header="{index,item}">
             <el-button-group class="activity-data-set-control-button-group">
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"
@@ -81,6 +82,7 @@
                 :disabled="item.permission_level !== 0"
                 @click="handleItemToEdit(index, item)"
               />
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"
@@ -88,6 +90,7 @@
                 :disabled="item.permission_level !== 0"
                 @click="handleItemToPermit(index, item)"
               />
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"

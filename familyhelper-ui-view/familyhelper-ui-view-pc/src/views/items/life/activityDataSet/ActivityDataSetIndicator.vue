@@ -46,6 +46,7 @@ import resolveResponse from '@/util/response';
 
 const SETTINGREPO_CATEGORY_ID = 'life.default_activity_data_set';
 
+// noinspection JSAnnotator
 export default {
   name: 'ActivityDataSetIndicator',
   components: { ActivityDataSetSelectDialog },

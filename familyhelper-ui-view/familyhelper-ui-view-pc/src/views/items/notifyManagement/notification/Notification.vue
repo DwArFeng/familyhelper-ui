@@ -44,6 +44,7 @@
           show-tooltip-when-overflow
         >
           <template v-slot="{row,column}">
+            <!--suppress JSUnresolvedReference -->
             <div class="subject-column" @click="handleShowDetailDialog(row)">
               {{ formatSubject(row[column.property]) }}
             </div>
@@ -353,6 +354,7 @@ export default {
       this.detailDialog.subject = row.subject;
       this.detailDialog.body = row.body;
       this.detailDialog.visible = true;
+      // noinspection JSUnresolvedReference
       if (row.read_flag) {
         return;
       }

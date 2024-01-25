@@ -1,5 +1,6 @@
 <template>
   <div class="account-book-panel-container">
+    <!--suppress JSUnresolvedReference -->
     <div class="placeholder" v-if="selection.accountBookId===''">
       请选择一个账本（๑╹◡╹)ﾉ
     </div>
@@ -9,6 +10,7 @@
           <title-layout-panel class="details" title="账本详情" bordered>
             <el-form class="account-book-detail" label-position="left" inline label-width="60px">
               <el-form-item label="名称" style="width: 50%">
+                <!--suppress JSUnresolvedReference -->
                 <span>{{ selection.accountBook.name }}</span>
               </el-form-item>
               <el-form-item label="所有者" style="width: 50%">
@@ -16,6 +18,7 @@
                 <span>{{ selection.accountBook.owner_account.key.string_id }}</span>
               </el-form-item>
               <el-form-item label="备注" style="width: 100%">
+                <!--suppress JSUnresolvedReference -->
                 <span>{{ selection.accountBook.remark }}</span>
               </el-form-item>
             </el-form>
@@ -252,10 +255,10 @@ export default {
 
       if (indexPoint >= 0) {
         // 若为小数，截取需要使用的unit单位
-        n = n.substring(0, indexPoint) + n.substr(indexPoint + 1, 2);
+        n = n.substring(0, indexPoint) + n.substring(indexPoint + 1, 2);
       }
 
-      unit = unit.substr(unit.length - n.length); // 若为整数，截取需要使用的unit单位
+      unit = unit.substring(unit.length - n.length); // 若为整数，截取需要使用的unit单位
       for (let i = 0; i < n.length; i += 1) {
         // noinspection JSCheckFunctionSignatures
         str += '零壹贰叁肆伍陆柒捌玖'.charAt(n.charAt(i)) + unit.charAt(i); // 遍历转化为大写的数字

@@ -5,6 +5,20 @@
       :header-visible="true"
       :west-visible="true"
     >
+      <template v-slot:header>
+        <div class="header-container">
+          <el-button
+            class="header-button"
+            type="primary"
+            :disabled="headerButtonDisabled"
+            @click="handleShowEntityCreateDialog"
+          >
+            新建任务
+          </el-button>
+          <el-divider direction="vertical"/>
+          <project-indicator mode="TASK_VIEW" @change="handleProjectChanged"/>
+        </div>
+      </template>
       <template v-slot:default>
         <div class="placeholder" v-if="taskTabs.taskId === ''">
           请选择项目
@@ -32,26 +46,15 @@
           </el-tab-pane>
         </el-tabs>
       </template>
-      <task-list-panel
-        class="list-container"
-        slot="west"
-        ref="taskViewListPanel"
-        mode="TASK_VIEW"
-        :project-key="parentSelection.projectId"
-        @onCurrentChanged="handleCurrentChanged"
-      />
-      <div class="header-container" slot="header">
-        <el-button
-          class="header-button"
-          type="primary"
-          :disabled="headerButtonDisabled"
-          @click="handleShowEntityCreateDialog"
-        >
-          新建任务
-        </el-button>
-        <el-divider direction="vertical"/>
-        <project-indicator mode="TASK_VIEW" @change="handleProjectChanged"/>
-      </div>
+      <template v-slot:west>
+        <task-list-panel
+          class="list-container"
+          ref="taskViewListPanel"
+          mode="TASK_VIEW"
+          :project-key="parentSelection.projectId"
+          @onCurrentChanged="handleCurrentChanged"
+        />
+      </template>
     </border-layout-panel>
     <entity-maintain-dialog
       inspect-title="查看任务"

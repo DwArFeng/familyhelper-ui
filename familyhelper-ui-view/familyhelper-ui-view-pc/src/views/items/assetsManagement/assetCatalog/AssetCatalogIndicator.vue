@@ -6,19 +6,23 @@
       v-model="displayValue"
       readonly
     >
-      <span slot="prepend">当前资产目录</span>
-      <el-button-group class="button-group" slot="append">
-        <el-button
-          class="button"
-          icon="el-icon-search"
-          @click="handleShowDialog"
-        />
-        <el-button
-          class="button"
-          icon="el-icon-refresh"
-          @click="fetchSettingrepo"
-        />
-      </el-button-group>
+      <template v-slot:prepend>
+        <span>当前资产目录</span>
+      </template>
+      <template v-slot:append>
+        <el-button-group class="button-group">
+          <el-button
+            class="button"
+            icon="el-icon-search"
+            @click="handleShowDialog"
+          />
+          <el-button
+            class="button"
+            icon="el-icon-refresh"
+            @click="fetchSettingrepo"
+          />
+        </el-button-group>
+      </template>
     </el-input>
     <asset-catalog-select-dialog
       :mode="mode"
@@ -149,11 +153,11 @@ export default {
   padding: 0 10px;
 }
 
-.button-group{
+.button-group {
   display: flex;
 }
 
-.button-group .button{
+.button-group .button {
   padding-left: 10px;
   padding-right: 10px;
 }

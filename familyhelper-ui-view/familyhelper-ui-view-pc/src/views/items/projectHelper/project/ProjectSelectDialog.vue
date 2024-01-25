@@ -31,7 +31,7 @@
         :delete-menu-item-visible="false"
         @onSelectionChanged="handleSelectionChanged"
       >
-        <template v-slot:default="{index,item}">
+        <template v-slot:default="{item}">
           <div class="project-container">
             <div class="project-property">
               <span class="iconfont project-property-icon" style="color:black">&#xfffa;</span>

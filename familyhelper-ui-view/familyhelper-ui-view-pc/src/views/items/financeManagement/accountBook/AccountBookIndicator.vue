@@ -6,19 +6,23 @@
       v-model="displayValue"
       readonly
     >
-      <span slot="prepend">当前账本</span>
-      <el-button-group class="button-group" slot="append">
-        <el-button
-          class="button"
-          icon="el-icon-search"
-          @click="handleShowDialog"
-        />
-        <el-button
-          class="button"
-          icon="el-icon-refresh"
-          @click="fetchSettingrepo"
-        />
-      </el-button-group>
+      <template v-slot:prepend>
+        <span>当前账本</span>
+      </template>
+      <template v-slot:append>
+        <el-button-group class="button-group">
+          <el-button
+            class="button"
+            icon="el-icon-search"
+            @click="handleShowDialog"
+          />
+          <el-button
+            class="button"
+            icon="el-icon-refresh"
+            @click="fetchSettingrepo"
+          />
+        </el-button-group>
+      </template>
     </el-input>
     <account-book-select-dialog
       :mode="mode"

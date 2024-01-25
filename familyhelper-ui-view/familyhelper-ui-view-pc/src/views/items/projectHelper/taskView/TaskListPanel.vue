@@ -6,11 +6,12 @@
       v-model="taskNameToSearch"
       clearable
     >
-      <el-button
-        slot="append"
-        icon="el-icon-search"
-        @click="handleListSearch"
-      />
+      <template v-slot:append>
+        <el-button
+          icon="el-icon-search"
+          @click="handleListSearch"
+        />
+      </template>
     </el-input>
     <overlay-scrollbars class="scroll-bar">
       <el-collapse v-loading="listLoading" v-model="listActiveName">

@@ -17,7 +17,7 @@
         @onItemToEdit="handleShowRecordDialog"
         @keydown.ctrl.enter.native="handleCardPanelHotKeyDown"
       >
-        <template v-slot:default="{index,item}">
+        <template v-slot:default="{item}">
           <!--suppress JSUnresolvedVariable -->
           <corner-light-panel
             class="balance-record-card-wrapper"
@@ -348,9 +348,6 @@ export default {
     formatTimestamp(timestamp) {
       return formatTimestamp(timestamp);
     },
-    handleShowAccountBookSelectDialog() {
-      this.accountBookSelectDialog.visible = true;
-    },
     handleAccountBookChanged(accountBook) {
       if (accountBook === null) {
         this.parentSelection.accountBook = null;
@@ -547,10 +544,10 @@ export default {
 
       if (indexPoint >= 0) {
         // 若为小数，截取需要使用的unit单位
-        n = n.substring(0, indexPoint) + n.substr(indexPoint + 1, 2);
+        n = n.substring(0, indexPoint) + n.substring(indexPoint + 1, 2);
       }
 
-      unit = unit.substr(unit.length - n.length); // 若为整数，截取需要使用的unit单位
+      unit = unit.substring(unit.length - n.length); // 若为整数，截取需要使用的unit单位
       for (let i = 0; i < n.length; i += 1) {
         // noinspection JSCheckFunctionSignatures
         str += '零壹贰叁肆伍陆柒捌玖'.charAt(n.charAt(i)) + unit.charAt(i); // 遍历转化为大写的数字

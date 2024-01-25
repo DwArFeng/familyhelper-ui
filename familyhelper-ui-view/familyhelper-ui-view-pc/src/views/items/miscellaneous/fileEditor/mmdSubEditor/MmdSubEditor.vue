@@ -113,9 +113,9 @@ export default {
     };
   },
   methods: {
-    contentToBlob() {
-      return new Blob([this.content], { type: 'text/plain' });
-    },
+    // contentToBlob() {
+    //   return new Blob([this.content], { type: 'text/plain' });
+    // },
     handleLoaded(vueCom) {
       const { canvas } = vueCom;
       // noinspection JSUnresolvedFunction

@@ -4,6 +4,7 @@
       <template v-slot:header>
         <el-form class="header-form" :inline="true" :model="form">
           <el-form-item class="header-form-item" label="用户">
+            <!--suppress JSUnresolvedReference -->
             <account-selector v-model="form.userId" :filter="(d)=> d.key.string_id !== me"/>
           </el-form-item>
           <el-form-item class="header-form-item" label="权限等级">

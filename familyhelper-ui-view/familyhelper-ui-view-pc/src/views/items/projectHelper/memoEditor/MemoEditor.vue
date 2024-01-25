@@ -1,6 +1,7 @@
 <template>
   <div class="memo-editor-container" v-loading="loading">
     <div v-if="loading" class="placeholder">正在加载，请稍后...</div>
+    <!--suppress JSUnresolvedReference -->
     <div v-else-if="memo.userId!==me" class="placeholder">此条备忘录不是您的备忘录，您无权访问</div>
     <div v-else class="main-container">
       <memo-edit-panel

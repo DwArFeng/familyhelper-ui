@@ -76,12 +76,15 @@
           @keydown.enter.native="handleSearch"
           @clear="handleSearch"
         >
-          <span slot="prepend">权限节点</span>
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="handleSearch"
-          />
+          <template v-slot:prepend>
+            <span>权限节点</span>
+          </template>
+          <template v-slot:append>
+            <el-button
+              icon="el-icon-search"
+              @click="handleSearch"
+            />
+          </template>
         </el-input>
       </div>
     </border-layout-panel>
@@ -428,7 +431,7 @@ export default {
   flex-wrap: wrap;
 }
 
-.id-search-bar{
+.id-search-bar {
   width: 400px;
 }
 
@@ -438,7 +441,7 @@ export default {
 }
 
 /*noinspection CssUnusedSymbol*/
-.table >>> .contextmenu .el-divider--horizontal{
+.table >>> .contextmenu .el-divider--horizontal {
   margin-top: 1px;
   margin-bottom: 1px;
 }

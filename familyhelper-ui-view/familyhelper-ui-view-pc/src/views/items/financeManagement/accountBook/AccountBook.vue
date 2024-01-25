@@ -32,7 +32,7 @@
           :contextmenu-width="110"
           @onAddonClicked="handleAccountBookToCreate"
         >
-          <template v-slot:default="{index,item}">
+          <template v-slot:default="{item}">
             <div class="account-book-card-container">
               <div class="account-book-property">
                 <span
@@ -86,6 +86,7 @@
           </template>
           <template v-slot:header="{index,item}">
             <el-button-group class="account-book-control-button-group">
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"
@@ -93,6 +94,7 @@
                 :disabled="item.permission_level !== 0"
                 @click="handleItemToEdit(index, item)"
               />
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"
@@ -100,6 +102,7 @@
                 :disabled="item.permission_level !== 0"
                 @click="handleItemToFunction(index, item)"
               />
+              <!--suppress JSUnresolvedReference -->
               <el-button
                 class="card-button"
                 size="mini"
@@ -171,12 +174,13 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardPanel from '@/components/layout/CardPanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
-import FunctionMaintainDialog from './FunctionMaintainDialog.vue';
+import FunctionMaintainDialog
+from '@/views/items/financeManagement/accountBook/FunctionMaintainDialog.vue';
 
-import resolveResponse from '@/util/response';
 import {
   allOwnedDisp, allPermittedDisp, create, remove, update,
 } from '@/api/finance/accountBook';
+import resolveResponse from '@/util/response';
 
 import { formatTimestamp } from '@/util/timestamp';
 

@@ -113,12 +113,6 @@ export default {
     handleItemPropertyUpdated() {
       this.$emit('onItemPropertyUpdated');
     },
-    handleItemNoteCommitted() {
-      this.$emit('onItemNoteCommitted');
-    },
-    handleItemAttachmentUpdated() {
-      this.$emit('onItemAttachmentUpdated');
-    },
     handlePanelFloatyButtonClicked(type) {
       let changeFlag = false;
       if (this.panelFloaty.type !== type) {

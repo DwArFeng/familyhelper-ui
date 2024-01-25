@@ -15,11 +15,12 @@
                 placeholder="通知设置名称过滤"
                 @keyup.enter.native="handleNotifySettingSearch"
               >
-                <el-button
-                  slot="append"
-                  icon="el-icon-search"
-                  @click="handleNotifySettingSearch"
-                />
+                <template v-slot:append>
+                  <el-button
+                    icon="el-icon-search"
+                    @click="handleNotifySettingSearch"
+                  />
+                </template>
               </el-input>
               <el-input
                 class="item"
@@ -27,11 +28,12 @@
                 placeholder="主题名称过滤"
                 @keyup.enter.native="handleTopicSearch"
               >
-                <el-button
-                  slot="append"
-                  icon="el-icon-search"
-                  @click="handleTopicSearch"
-                />
+                <template v-slot:append>
+                  <el-button
+                    icon="el-icon-search"
+                    @click="handleTopicSearch"
+                  />
+                </template>
               </el-input>
               <account-selector
                 class="item"

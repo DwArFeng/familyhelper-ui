@@ -76,12 +76,15 @@
           @keydown.enter.native="handleSearch"
           @clear="handleSearch"
         >
-          <span slot="prepend">设置类型</span>
-          <el-button
-            slot="append"
-            icon="el-icon-search"
-            @click="handleSearch"
-          />
+          <template v-slot:prepend>
+            <span>设置类型</span>
+          </template>
+          <template v-slot:append>
+            <el-button
+              icon="el-icon-search"
+              @click="handleSearch"
+            />
+          </template>
         </el-input>
         <el-divider direction="vertical"/>
         <el-button
@@ -116,12 +119,13 @@
           v-model="entityDialog.anchorEntity.formatter_type"
           :readonly="entityDialog.mode === 'INSPECT'"
         >
-          <el-button
-            v-if="entityDialog.mode !== 'INSPECT'"
-            slot="append"
-            icon="el-icon-search"
-            @click="supportDialog.visible = true"
-          />
+          <template v-slot:append>
+            <el-button
+              v-if="entityDialog.mode !== 'INSPECT'"
+              icon="el-icon-search"
+              @click="supportDialog.visible = true"
+            />
+          </template>
         </el-input>
       </el-form-item>
       <el-form-item label="格式化器参数" prop="formatter_param">

@@ -13,12 +13,14 @@
     :loading="loading"
   >
     <el-form-item label="名称" prop="name">
+      <!--suppress JSUnresolvedReference -->
       <el-input
         v-model="createDialog.formModel.name"
         placeholder="必填"
       />
     </el-form-item>
     <el-form-item label="类型" prop="type">
+      <!--suppress JSUnresolvedReference -->
       <el-select
         class='task-view-select'
         v-model="createDialog.formModel.type"
@@ -33,12 +35,14 @@
       </el-select>
     </el-form-item>
     <el-form-item label="总任务数" prop="totalMissionCount">
+      <!--suppress JSUnresolvedReference -->
       <el-input-number
         v-model="createDialog.formModel.totalMissionCount"
         :min="1"
       />
     </el-form-item>
     <el-form-item label="备注" prop="remark">
+      <!--suppress JSUnresolvedReference -->
       <el-input
         v-model="createDialog.formModel.remark"
       />
@@ -77,7 +81,7 @@ export default {
   watch: {
     visible(value) {
       if (value) {
-        this.syncData();
+        // this.syncData();
       }
       this.watchedVisible = value;
     },

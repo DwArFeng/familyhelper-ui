@@ -152,7 +152,7 @@
               />
             </el-button-group>
           </template>
-          <template v-slot:contextmenu="{row,index,close}">
+          <template v-slot:contextmenu="{row,close}">
             <ul>
               <li
                 v-if="fileRowInspectEnabled(row)"
@@ -574,6 +574,7 @@ export default {
     },
     handleFileInspectFloatyContextmenuClicked(row, close) {
       close();
+      // noinspection JSUnresolvedReference
       const floatyInfo = {
         id: row.key.long_id,
         originName: row.origin_name,
@@ -583,6 +584,7 @@ export default {
     },
     handleFileEditFloatyContextmenuClicked(row, close) {
       close();
+      // noinspection JSUnresolvedReference
       const floatyInfo = {
         id: row.key.long_id,
         originName: row.origin_name,

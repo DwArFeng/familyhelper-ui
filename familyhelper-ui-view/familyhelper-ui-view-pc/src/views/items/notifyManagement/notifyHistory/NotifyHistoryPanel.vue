@@ -162,6 +162,7 @@ export default {
     syncAnchorEntity(entity) {
       let label;
 
+      // noinspection JSUnresolvedReference
       const notifySetting = entity.notify_setting;
       if (notifySetting === null || notifySetting === undefined) {
         label = '（未知）';

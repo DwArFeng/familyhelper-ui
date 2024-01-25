@@ -100,6 +100,7 @@ export default {
         .then(() => resolveResponse(exists(this.me)))
         .then((res) => {
           if (res) {
+            // noinspection JSCheckFunctionSignatures
             return download(this.me)
               .then((blob) => window.URL.createObjectURL(blob));
           }
@@ -127,6 +128,7 @@ export default {
               .then(() => download(this.me))
               .then((blob) => {
                 this.neoAvatar.blobToUpdate = blob;
+                // noinspection JSCheckFunctionSignatures
                 return Promise.resolve(window.URL.createObjectURL(blob));
               });
           }

@@ -132,12 +132,13 @@
           v-model="maintainDialog.anchorEntity.type"
           :readonly="maintainDialog.mode === 'INSPECT'"
         >
-          <el-button
-            v-if="maintainDialog.mode !== 'INSPECT'"
-            slot="append"
-            icon="el-icon-search"
-            @click="supportDialog.visible = true"
-          />
+          <template v-slot:append>
+            <el-button
+              v-if="maintainDialog.mode !== 'INSPECT'"
+              icon="el-icon-search"
+              @click="supportDialog.visible = true"
+            />
+          </template>
         </el-input>
       </el-form-item>
       <el-form-item label="参数" prop="param">

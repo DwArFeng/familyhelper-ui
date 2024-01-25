@@ -126,14 +126,13 @@
               :rules="center.form.rules"
             >
               <el-form-item class="validated" label="类型" prop="type">
-                <el-input
-                  v-model="center.form.model.type"
-                >
-                  <el-button
-                    slot="append"
-                    icon="el-icon-search"
-                    @click="center.senderSupportDialog.visible = true"
-                  />
+                <el-input v-model="center.form.model.type">
+                  <template v-slot:append>
+                    <el-button
+                      icon="el-icon-search"
+                      @click="center.senderSupportDialog.visible = true"
+                    />
+                  </template>
                 </el-input>
               </el-form-item>
               <el-form-item label="参数" prop="param">

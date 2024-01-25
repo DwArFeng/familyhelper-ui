@@ -7,6 +7,7 @@
         <template v-slot:header>
           <div class="header-container">
             <div class="label with-margin">用户</div>
+            <!--suppress JSUnresolvedReference -->
             <account-selector
               class="account-selector with-margin"
               v-model="accountSelector.userId"

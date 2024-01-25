@@ -75,9 +75,6 @@ export default {
         this.accountBookSelection.accountBookId = accountBook.key.long_id;
       }
     },
-    handleShowAccountBookSelectDialog() {
-      this.accountBookSelectDialog.visible = true;
-    },
   },
 };
 </script>

@@ -262,6 +262,7 @@
       @opened="handleGuestAssignDialogOpened"
       @keydown.ctrl.enter.native="handleResetGuestRelation"
     >
+      <!--suppress JSValidateTypes -->
       <el-transfer
         v-model="guestAssignDialog.selectedGuests"
         :titles="['待选用户','已选用户']"

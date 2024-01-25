@@ -32,7 +32,7 @@
         :delete-menu-item-visible="false"
         @onSelectionChanged="handleSelectionChanged"
       >
-        <template v-slot:default="{index,item}">
+        <template v-slot:default="{item}">
           <div class="asset-catalog-container">
             <div class="asset-catalog-property">
                 <span class="iconfont asset-catalog-property-icon"

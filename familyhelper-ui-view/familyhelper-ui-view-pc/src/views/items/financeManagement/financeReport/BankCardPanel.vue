@@ -1,5 +1,6 @@
 <template>
   <div class="bank-card-panel-container">
+    <!--suppress JSUnresolvedReference -->
     <div class="placeholder" v-if="selection.accountBookId===''">
       请选择一个账本（๑╹◡╹)ﾉ
     </div>
@@ -20,6 +21,7 @@
                   <span>{{ detail.bankCard.account_book.owner_account.key.string_id }}</span>
                 </el-form-item>
                 <el-form-item label="备注" style="width: 100%">
+                  <!--suppress JSUnresolvedReference -->
                   <span>{{ selection.accountBook.remark }}</span>
                 </el-form-item>
               </el-form>
@@ -266,10 +268,10 @@ export default {
 
       if (indexPoint >= 0) {
         // 若为小数，截取需要使用的unit单位
-        n = n.substring(0, indexPoint) + n.substr(indexPoint + 1, 2);
+        n = n.substring(0, indexPoint) + n.substring(indexPoint + 1, 2);
       }
 
-      unit = unit.substr(unit.length - n.length); // 若为整数，截取需要使用的unit单位
+      unit = unit.substring(unit.length - n.length); // 若为整数，截取需要使用的unit单位
       for (let i = 0; i < n.length; i += 1) {
         // noinspection JSCheckFunctionSignatures
         str += '零壹贰叁肆伍陆柒捌玖'.charAt(n.charAt(i)) + unit.charAt(i); // 遍历转化为大写的数字

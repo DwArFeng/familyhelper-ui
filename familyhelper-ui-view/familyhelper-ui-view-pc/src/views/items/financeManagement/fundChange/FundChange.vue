@@ -6,29 +6,34 @@
       east-width="45%"
       :east-visible="header.showBillFilePanel"
     >
-      <div class="header-container" slot="header">
-        <account-book-indicator mode="FUND_CHANGE" @change="handleAccountBookChanged"/>
-        <el-divider direction="vertical"/>
-        <el-switch
-          v-loading="uiPreference.loading"
-          v-model="header.showBillFilePanel"
-          active-text="显示票据"
-          inactive-text="隐藏票据"
-          active-color="#409EFF"
-          inactive-color="#409EFF"
-          :disabled="header.switchDisabled"
-          @change="handleSwitchChanged"
+      <template v-slot:header>
+        <div class="header-container">
+          <account-book-indicator mode="FUND_CHANGE" @change="handleAccountBookChanged"/>
+          <el-divider direction="vertical"/>
+          <el-switch
+            v-loading="uiPreference.loading"
+            v-model="header.showBillFilePanel"
+            active-text="显示票据"
+            inactive-text="隐藏票据"
+            active-color="#409EFF"
+            inactive-color="#409EFF"
+            :disabled="header.switchDisabled"
+            @change="handleSwitchChanged"
+          />
+        </div>
+      </template>
+      <template v-slot:default>
+        <fund-change-panel
+          :account-book="header.accountBook"
+          :fund-change-selection.sync="center.fundChange"
         />
-      </div>
-      <fund-change-panel
-        :account-book="header.accountBook"
-        :fund-change-selection.sync="center.fundChange"
-      />
-      <bill-file-panel
-        slot="east"
-        :account-book="header.accountBook"
-        :fund-change="center.fundChange"
-      />
+      </template>
+      <template v-slot:east>
+        <bill-file-panel
+          :account-book="header.accountBook"
+          :fund-change="center.fundChange"
+        />
+      </template>
     </border-layout-panel>
   </div>
 </template>

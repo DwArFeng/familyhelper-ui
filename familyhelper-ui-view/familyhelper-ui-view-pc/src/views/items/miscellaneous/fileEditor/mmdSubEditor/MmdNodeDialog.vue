@@ -12,10 +12,12 @@
         <div class="row label-editor">
           <div class="edit-zone">
             <div class="control">
+              <!--suppress JSUnresolvedReference -->
               <dialog-toggle-button
                 v-model="value.fontWeight" :icon="'\uffda'"
                 :values="['normal','bold']"
               />
+              <!--suppress JSUnresolvedReference -->
               <dialog-toggle-button
                 v-model="value.fontStyle" :icon="'\uffdc'"
                 :values="['normal','italic']"

@@ -21,6 +21,7 @@
           >
             <template v-slot:default="{row}">
               <div class="image-wrapper">
+                <!--suppress JSUnresolvedReference -->
                 <el-image class="image" fit="cover" :src="row.url" :preview-src-list="[row.url]"/>
               </div>
             </template>

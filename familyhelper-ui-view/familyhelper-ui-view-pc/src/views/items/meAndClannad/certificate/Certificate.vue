@@ -5,14 +5,17 @@
       east-width="55%"
       :east-visible="true"
     >
-      <certificate-panel
-        :ui-preference.sync="uiPreference"
-        :certificate-selection.sync="center.certificate"
-      />
-      <certificate-file-panel
-        slot="east"
-        :certificate="center.certificate"
-      />
+      <template v-slot:default>
+        <certificate-panel
+          :ui-preference.sync="uiPreference"
+          :certificate-selection.sync="center.certificate"
+        />
+      </template>
+      <template v-slot:east>
+        <certificate-file-panel
+          :certificate="center.certificate"
+        />
+      </template>
     </border-layout-panel>
   </div>
 </template>
@@ -86,25 +89,11 @@ export default {
           }
           return Promise.resolve();
         })
-        .catch(() => {})
+        .catch(() => {
+        })
         .finally(() => {
           this.uiPreference.loading = false;
         });
-    },
-    handleAccountBookChanged(accountBook) {
-      if (accountBook === null) {
-        this.header.accountBook = null;
-      } else {
-        this.header.accountBook = accountBook;
-      }
-    },
-    handleSwitchChanged() {
-      this.uiPreference.data.showBillFilePanel = this.header.showBillFilePanel;
-      // 防抖。
-      this.header.switchDisabled = true;
-      setTimeout(() => {
-        this.header.switchDisabled = false;
-      }, 1000);
     },
   },
   mounted() {

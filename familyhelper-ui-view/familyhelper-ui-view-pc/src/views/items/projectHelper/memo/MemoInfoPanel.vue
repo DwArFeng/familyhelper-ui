@@ -111,6 +111,7 @@
         />
       </el-form-item>
       <el-form-item label="预期完成时间" prop="expected_finish_date">
+        <!--suppress JSValidateTypes -->
         <el-date-picker
           class="short-bar"
           v-model="maintainDialog.anchorEntity.expected_finish_date"

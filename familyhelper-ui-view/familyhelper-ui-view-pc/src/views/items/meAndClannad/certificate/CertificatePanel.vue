@@ -39,6 +39,7 @@
               type="success"
               @click="handleShowEntityInspectDialog($index, row)"
             />
+            <!--suppress JSUnresolvedReference -->
             <el-button
               class="table-button"
               size="mini"
@@ -47,6 +48,7 @@
               :disabled="row.permission_level !== 0"
               @click="handleShowEntityEditDialog($index, row)"
             />
+            <!--suppress JSUnresolvedReference -->
             <el-button
               class="table-button"
               size="mini"
@@ -55,6 +57,7 @@
               :disabled="row.permission_level !== 0"
               @click="handleItemToPermit($index, row)"
             />
+            <!--suppress JSUnresolvedReference -->
             <el-button
               class="table-button"
               size="mini"

@@ -33,7 +33,7 @@
           :delete-menu-item-visible="false"
           @onSelectionChanged="handleSelectionChanged"
         >
-          <template v-slot:default="{index,item}">
+          <template v-slot:default="{item}">
             <div class="activity-data-set-container">
               <div class="activity-data-set-property">
                 <span
@@ -54,6 +54,7 @@
                 >
                   &#xfffb;
                 </span>
+                <!--suppress JSUnresolvedReference -->
                 <span class="activity-data-set-property-text">
                   所有者: {{ item.owner_account.display_name }}
                 </span>
@@ -65,6 +66,7 @@
                 >
                   &#xffe7;
                 </span>
+                <!--suppress JSUnresolvedReference -->
                 <span class="activity-data-set-property-text">
                   项目总数: {{ item.item_count }}
                 </span>

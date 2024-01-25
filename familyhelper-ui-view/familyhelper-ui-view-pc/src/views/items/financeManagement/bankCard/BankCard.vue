@@ -13,7 +13,7 @@
         :addon-button-visible="addonButtonVisible"
         @onAddonClicked="handleBankCardToCreate"
       >
-        <template v-slot:default="{index,item}">
+        <template v-slot:default="{item}">
           <div class="bank-card-card-container">
             <div class="bank-card-property">
               <span class="iconfont bank-card-property-icon" style="color:black">&#xffee;</span>
@@ -362,9 +362,6 @@ export default {
     },
     formatTimestamp(timestamp) {
       return formatTimestamp(timestamp);
-    },
-    handleShowAccountBookSelectDialog() {
-      this.accountBookSelectDialog.visible = true;
     },
     handleAccountBookChanged(accountBook) {
       if (accountBook === null) {

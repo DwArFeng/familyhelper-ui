@@ -290,9 +290,6 @@ export default {
         .long_id;
       this.showNodeDialog('CREATE');
     },
-    handleShowNodeEditDialog() {
-      this.showNodeDialog('EDIT');
-    },
     handleShowItemCreateDialogParent() {
       this.treePanel.appendChild = false;
       // noinspection JSIncompatibleTypesComparison
@@ -318,9 +315,6 @@ export default {
       this.itemMaintainDialog.anchorEntity.node_long_id = this.treePanel.selection.data.key
         .long_id;
       this.showItemDialog('CREATE');
-    },
-    handleShowItemEditDialog() {
-      this.showItemDialog('EDIT');
     },
     showNodeDialog(mode) {
       this.nodeMaintainDialog.mode = mode;

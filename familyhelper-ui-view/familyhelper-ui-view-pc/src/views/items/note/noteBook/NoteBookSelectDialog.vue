@@ -31,7 +31,7 @@
         :delete-menu-item-visible="false"
         @onSelectionChanged="handleSelectionChanged"
       >
-        <template v-slot:default="{index,item}">
+        <template v-slot:default="{item}">
           <div class="note-book-container">
             <div class="note-book-property">
               <span class="iconfont note-book-property-icon" style="color:black">&#xfffa;</span>

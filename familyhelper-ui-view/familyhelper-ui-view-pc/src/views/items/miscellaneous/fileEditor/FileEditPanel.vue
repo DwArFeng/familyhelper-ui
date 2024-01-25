@@ -241,6 +241,7 @@ export default {
         .then(() => downloadAssetsItemFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
+          // noinspection JSCheckFunctionSignatures
           this.fileIndicator.url = window.URL.createObjectURL(blob);
         })
         .finally(() => {
@@ -260,6 +261,7 @@ export default {
         .then(() => downloadProjectMemoFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
+          // noinspection JSCheckFunctionSignatures
           this.fileIndicator.url = window.URL.createObjectURL(blob);
         })
         .finally(() => {
@@ -279,6 +281,7 @@ export default {
         .then(() => downloadNoteAttachmentFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
+          // noinspection JSCheckFunctionSignatures
           this.fileIndicator.url = window.URL.createObjectURL(blob);
         })
         .finally(() => {
@@ -298,6 +301,7 @@ export default {
         .then(() => downloadLifeActivityTemplateFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
+          // noinspection JSCheckFunctionSignatures
           this.fileIndicator.url = window.URL.createObjectURL(blob);
         })
         .finally(() => {
@@ -317,6 +321,7 @@ export default {
         .then(() => downloadLifeActivityFile(id))
         .then((blob) => {
           this.fileIndicator.blob = blob;
+          // noinspection JSCheckFunctionSignatures
           this.fileIndicator.url = window.URL.createObjectURL(blob);
         })
         .finally(() => {
