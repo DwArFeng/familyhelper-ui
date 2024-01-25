@@ -12,6 +12,14 @@
               inactive-text="只读"
               :disabled="readonly"
             />
+            <el-divider direction="vertical"/>
+            <el-button
+              type="primary"
+              :disabled="readonly"
+              @click="handleSaveAsAttachmentButtonClicked"
+            >
+              另存为附件
+            </el-button>
             <div style="flex-grow: 1"/>
             <el-button
               type="primary"
@@ -53,20 +61,30 @@
         </template>
       </header-layout-panel>
     </div>
+    <file-create-dialog
+      title="另存为附件"
+      mode="SPECIFIED"
+      :visible.sync="attachmentCreateDialog.visible"
+      :specified-extensions="['.rtf']"
+      @onConfirmed="handleAttachmentCreateConfirmed"
+    />
   </div>
 </template>
 
 <script>
 import ClassicEditor from '@/elements/modules/ckeditor/bin/ckeditor';
 import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
+import FileCreateDialog from '@/components/file/FileCreateDialog.vue';
 
 import { downloadNoteFile, uploadNoteFile } from '@/api/note/noteItem';
 import resolveResponse from '@/util/response';
+
 import { formatTimestamp } from '@/util/timestamp';
+import { upload } from '@/api/note/attachmentFile';
 
 export default {
   name: 'ItemNotePanel',
-  components: { HeaderLayoutPanel },
+  components: { FileCreateDialog, HeaderLayoutPanel },
   props: {
     itemId: {
       type: String,
@@ -118,6 +136,9 @@ export default {
           coolDown: false,
           timeoutHandle: null,
         },
+      },
+      attachmentCreateDialog: {
+        visible: false,
       },
     };
   },
@@ -199,6 +220,29 @@ export default {
     },
     handlePanelFloatyButtonClicked() {
       this.$emit('onPanelFloatyButtonClicked');
+    },
+    handleSaveAsAttachmentButtonClicked() {
+      this.attachmentCreateDialog.visible = true;
+    },
+    handleAttachmentCreateConfirmed(file, callback) {
+      const blob = new Blob([this.editor.content], { type: 'text/plain' });
+      const { name } = file;
+      const formData = new FormData();
+      formData.append('file', blob, name);
+      resolveResponse(upload(this.itemId, formData))
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '另存为附件成功',
+            type: 'success',
+            center: true,
+          });
+          this.$emit('onSaveAsAttachmentCompleted');
+          callback(true);
+        })
+        .catch(() => {
+          callback(false);
+        });
     },
   },
   mounted() {

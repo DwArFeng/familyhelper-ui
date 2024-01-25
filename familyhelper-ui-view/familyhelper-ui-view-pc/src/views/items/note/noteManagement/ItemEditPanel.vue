@@ -17,10 +17,12 @@
           :readonly="readonly"
           @onItemNoteCommitted="handleItemNoteCommitted"
           @onPanelFloatyButtonClicked="handlePanelFloatyButtonClicked(1)"
+          @onSaveAsAttachmentCompleted="handleSaveAsAttachmentCompleted"
         />
       </el-tab-pane>
       <el-tab-pane label="附件" name="attachment">
         <item-attachment-panel
+          ref="itemAttachmentPanel"
           mode="DEFAULT"
           :item-id="itemId"
           :readonly="readonly"
@@ -61,8 +63,10 @@
         :item-id="itemId"
         :readonly="readonly"
         @onItemNoteCommitted="handleItemNoteCommitted"
+        @onSaveAsAttachmentCompleted="handleSaveAsAttachmentCompleted"
       />
       <item-attachment-panel
+        ref="floatyItemAttachmentPanel"
         v-if="panelFloaty.type===2"
         mode="FLOATY"
         :item-id="itemId"
@@ -173,6 +177,13 @@ export default {
     },
     handleItemNoteCommitted() {
       this.$emit('onItemNoteCommitted');
+    },
+    handleSaveAsAttachmentCompleted() {
+      this.$emit('onSaveAsAttachmentCompleted');
+      this.$refs.itemAttachmentPanel.handleSearch();
+      if (this.$refs.floatyItemAttachmentPanel) {
+        this.$refs.floatyItemAttachmentPanel.handleSearch();
+      }
     },
     handleItemAttachmentUpdated() {
       this.$emit('onItemAttachmentUpdated');
