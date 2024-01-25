@@ -227,7 +227,6 @@ export default {
     },
     handleCancelButtonClicked() {
       this.watchedVisible = false;
-      this.files.splice(0, this.files.length);
     },
   },
 };
