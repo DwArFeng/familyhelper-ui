@@ -269,7 +269,7 @@ export default {
       };
     },
     fileRowDeleteEnabled() {
-      return () => !this.readonly;
+      return !this.readonly;
     },
   },
   watch: {
