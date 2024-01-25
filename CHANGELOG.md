@@ -4,6 +4,11 @@
 
 #### 功能构建
 
+- 执行 npm update，升级前端依赖。
+  - familyhelper-ui-component-ckeditor5。
+  - familyhelper-ui-view-mobile。
+  - familyhelper-ui-view-pc。
+
 - 依赖升级。
   - 升级 `spring` 依赖版本为 `5.3.31` 以规避漏洞。
   - 升级 `slf4j` 依赖版本为 `1.7.5` 以规避漏洞。
