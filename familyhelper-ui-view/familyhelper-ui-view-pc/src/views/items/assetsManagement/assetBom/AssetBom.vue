@@ -11,7 +11,7 @@
           <el-button
             class="header-button"
             type="primary"
-            :disabled="headerButtonDisabled"
+            :disabled="headerParentButtonDisabled"
             @click="handleShowEntityCreateDialogParent"
           >
             新建项目
@@ -19,7 +19,7 @@
           <el-button
             class="header-button"
             type="primary"
-            :disabled="headerButtonDisabled"
+            :disabled="headerChildButtonDisabled"
             @click="handleShowEntityCreateDialogChild"
           >
             新建子项目
@@ -125,16 +125,10 @@ import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import ItemEditPanel from '@/views/items/assetsManagement/assetBom/ItemEditPanel.vue';
 
 import {
-  create, inspectDisp, remove,
-  inspectDisp as inspectItem,
+  create, inspectDisp, inspectDisp as inspectItem, remove,
 } from '@/api/assets/item';
-import {
-  all as inspectItemTypeIndicator,
-} from '@/api/assets/itemTypeIndicator';
-import {
-  all as inspectLabel,
-  allExists as allLabelExists,
-} from '@/api/assets/itemLabel';
+import { all as inspectItemTypeIndicator } from '@/api/assets/itemTypeIndicator';
+import { all as inspectLabel, allExists as allLabelExists } from '@/api/assets/itemLabel';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -147,8 +141,16 @@ export default {
     AssetTreePanel,
   },
   computed: {
-    headerButtonDisabled() {
-      return this.parentSelection.assetCatalogId === '' || this.readonly;
+    headerParentButtonDisabled() {
+      const nonAssetCatalogId = this.parentSelection.assetCatalogId === '';
+      const { readonly } = this;
+      return nonAssetCatalogId || readonly;
+    },
+    headerChildButtonDisabled() {
+      const nonAssetCatalogId = this.parentSelection.assetCatalogId === '';
+      const { readonly } = this;
+      const nonParentId = !this.treePanel.selection.data?.key?.long_id;
+      return nonAssetCatalogId || readonly || nonParentId;
     },
     readonly() {
       if (this.parentSelection.assetCatalog === null) {
@@ -220,13 +222,7 @@ export default {
       treePanel: {
         selection: {
           node: null,
-          data: {
-            key: {
-              long_id: '',
-            },
-            parent_key: null,
-            has_no_child: true,
-          },
+          data: null,
         },
         appendChild: false,
       },
@@ -305,12 +301,12 @@ export default {
     },
     handleShowEntityCreateDialogParent() {
       this.treePanel.appendChild = false;
-      // noinspection JSIncompatibleTypesComparison
-      if (this.treePanel.selection.data.parent_key === null) {
-        this.maintainDialog.anchorEntity.parent_long_id = '';
+      const parentId = this.treePanel.selection.data?.parent_key?.long_id;
+      const { anchorEntity } = this.maintainDialog;
+      if (parentId) {
+        anchorEntity.parent_long_id = this.treePanel.selection.data.parent_key.long_id;
       } else {
-        this.maintainDialog.anchorEntity.parent_long_id = this
-          .treePanel.selection.data.parent_key.long_id;
+        anchorEntity.parent_long_id = '';
       }
       this.showDialog('CREATE');
     },

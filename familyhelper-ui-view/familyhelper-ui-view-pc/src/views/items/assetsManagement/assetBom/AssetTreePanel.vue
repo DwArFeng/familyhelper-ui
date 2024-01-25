@@ -124,7 +124,7 @@ export default {
     },
     appendRoot(item) {
       this.appendEntityProperties(item);
-      this.treeData.push(item);
+      this.$refs.treePanel.appendRoot(item);
     },
     append(nodeRef, item) {
       this.appendEntityProperties(item);
