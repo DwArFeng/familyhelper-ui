@@ -203,7 +203,7 @@ export default {
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForActivityDataNodeDisp(
               this.treePanel.selection.data.key.long_id,
-              res.total_pages, this.record.table.pageSize,
+              res.total_pages - 1, this.record.table.pageSize,
             ));
           }
           return Promise.resolve(res);

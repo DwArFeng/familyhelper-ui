@@ -86,7 +86,8 @@
           :readonly="accountMaintainDialog.dialogMode === 'INSPECT'"
         />
       </el-form-item>
-      <el-form-item label="启用" prop="enabled" v-if="accountMaintainDialog.dialogMode !== 'CREATE'">
+      <el-form-item label="启用" prop="enabled"
+                    v-if="accountMaintainDialog.dialogMode !== 'CREATE'">
         <el-switch
           class="focusable-switch"
           tabindex="0"
@@ -212,18 +213,22 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 
 import {
-  all as allAccount, exists, register, remove, resetPassword, resetRoleRelation, update,
+  all as allAccount,
+  exists,
+  register,
+  remove,
+  resetPassword,
+  resetRoleRelation,
+  update,
 } from '@/api/system/account';
-import {
-  all as allRole, childForAccount as childRoleForAccount,
-} from '@/api/system/role';
+import { all as allRole, childForAccount as childRoleForAccount } from '@/api/system/role';
 import resolveResponse from '@/util/response';
 
 // noinspection JSAnnotator
@@ -361,7 +366,9 @@ export default {
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(allAccount(res.total_pages, this.accountTablePanel.pageSize));
+            return resolveResponse(
+              allAccount(res.total_pages - 1, this.accountTablePanel.pageSize),
+            );
           }
           return Promise.resolve(res);
         })

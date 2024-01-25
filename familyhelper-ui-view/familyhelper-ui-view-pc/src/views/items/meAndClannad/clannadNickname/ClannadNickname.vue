@@ -184,7 +184,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForSubjectUser(
-              this.me, res.total_pages, this.tablePanel.pageSize,
+              this.me, res.total_pages - 1, this.tablePanel.pageSize,
             ));
           }
           return Promise.resolve(res);

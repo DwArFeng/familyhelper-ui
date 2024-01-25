@@ -299,7 +299,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(allNotifySetting(
-              res.total_pages, this.west.notifySettingTable.pageSize,
+              res.total_pages - 1, this.west.notifySettingTable.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -327,7 +327,7 @@ export default {
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(allTopic(res.total_pages, this.west.topicTable.pageSize));
+            return resolveResponse(allTopic(res.total_pages - 1, this.west.topicTable.pageSize));
           }
           return Promise.resolve(res);
         })

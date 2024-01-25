@@ -376,7 +376,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(allNotifySetting(
-              res.total_pages, this.west.notifySettingTable.pageSize,
+              res.total_pages - 1, this.west.notifySettingTable.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -398,7 +398,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(labelLikeNotifySetting(
-              this.west.notifySettingSelector.value, res.total_pages,
+              this.west.notifySettingSelector.value, res.total_pages - 1,
               this.west.notifySettingTable.pageSize,
             ));
           }
@@ -431,7 +431,7 @@ export default {
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(allTopic(res.total_pages, this.west.topicTable.pageSize));
+            return resolveResponse(allTopic(res.total_pages - 1, this.west.topicTable.pageSize));
           }
           return Promise.resolve(res);
         })
@@ -452,7 +452,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(labelLikeTopic(
-              this.west.topicSelector.value, res.total_pages, this.west.topicTable.pageSize,
+              this.west.topicSelector.value, res.total_pages - 1, this.west.topicTable.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -499,7 +499,7 @@ export default {
               this.west.notifySettingTable.selection.key.long_id,
               this.west.topicTable.selection.key.string_id,
               this.selectedAccount,
-              res.total_pages, this.center.table.pageSize,
+              res.total_pages - 1, this.center.table.pageSize,
             ));
           }
           return Promise.resolve(res);

@@ -356,7 +356,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForMemo(
-              this.memoId, res.total_pages, this.table.pageSize,
+              this.memoId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -377,7 +377,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForMemoInspectedDateDesc(childForMemo(
-              this.memoId, res.total_pages, this.table.pageSize,
+              this.memoId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -398,7 +398,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForMemoModifiedDateDesc(childForMemo(
-              this.memoId, res.total_pages, this.table.pageSize,
+              this.memoId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -419,7 +419,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForMemoOriginNameAsc(childForMemo(
-              this.memoId, res.total_pages, this.table.pageSize,
+              this.memoId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -440,7 +440,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForMemoCreatedDateAsc(childForMemo(
-              this.memoId, res.total_pages, this.table.pageSize,
+              this.memoId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);

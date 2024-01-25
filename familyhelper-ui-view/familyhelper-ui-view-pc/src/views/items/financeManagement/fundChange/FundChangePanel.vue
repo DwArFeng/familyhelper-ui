@@ -275,7 +275,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForAccountBook(
-              this.accountBook.key.long_id, res.total_pages, this.table.pageSize,
+              this.accountBook.key.long_id, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -297,7 +297,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForAccountBookTypeEquals(
-              this.accountBook.key.long_id, this.typeSelector.value, res.total_pages,
+              this.accountBook.key.long_id, this.typeSelector.value, res.total_pages - 1,
               this.table.pageSize,
             ));
           }

@@ -360,7 +360,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForActivityTemplate(
-              this.activityTemplateId, res.total_pages, this.table.pageSize,
+              this.activityTemplateId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -377,7 +377,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForActivityTemplateInspectedDateDesc(childForActivityTemplate(
-              this.activityTemplateId, res.total_pages, this.table.pageSize,
+              this.activityTemplateId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -394,7 +394,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForActivityTemplateModifiedDateDesc(childForActivityTemplate(
-              this.activityTemplateId, res.total_pages, this.table.pageSize,
+              this.activityTemplateId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -411,7 +411,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForActivityTemplateOriginNameAsc(childForActivityTemplate(
-              this.activityTemplateId, res.total_pages, this.table.pageSize,
+              this.activityTemplateId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -428,7 +428,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForActivityTemplateCreatedDateAsc(childForActivityTemplate(
-              this.activityTemplateId, res.total_pages, this.table.pageSize,
+              this.activityTemplateId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);

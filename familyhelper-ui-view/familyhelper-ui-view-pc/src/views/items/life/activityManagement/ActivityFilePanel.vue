@@ -358,7 +358,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForActivity(
-              this.activityId, res.total_pages, this.table.pageSize,
+              this.activityId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -375,7 +375,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForActivityInspectedDateDesc(childForActivity(
-              this.activityId, res.total_pages, this.table.pageSize,
+              this.activityId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -392,7 +392,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForActivityModifiedDateDesc(childForActivity(
-              this.activityId, res.total_pages, this.table.pageSize,
+              this.activityId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -409,7 +409,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForActivityOriginNameAsc(childForActivity(
-              this.activityId, res.total_pages, this.table.pageSize,
+              this.activityId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -426,7 +426,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return childForActivityCreatedDateAsc(childForActivity(
-              this.activityId, res.total_pages, this.table.pageSize,
+              this.activityId, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);

@@ -523,7 +523,9 @@ export default {
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(childForGroup(key, res.total_pages, this.permissionPageSize));
+            return resolveResponse(
+              childForGroup(key, res.total_pages - 1, this.permissionPageSize),
+            );
           }
           return Promise.resolve(res);
         })
@@ -555,7 +557,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(
-              childForGroup('', res.total_pages, this.permissionToAttachPageSize),
+              childForGroup('', res.total_pages - 1, this.permissionToAttachPageSize),
             );
           }
           return Promise.resolve(res);
@@ -615,7 +617,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(
-              childForGroup('', res.total_pages, this.permissionToAttachPageSize),
+              childForGroup('', res.total_pages - 1, this.permissionToAttachPageSize),
             );
           }
           return Promise.resolve(res);

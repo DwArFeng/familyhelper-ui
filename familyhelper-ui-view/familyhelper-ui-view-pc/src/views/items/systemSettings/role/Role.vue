@@ -308,7 +308,7 @@ export default {
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(allRole(res.total_pages, this.roleTablePanel.pageSize));
+            return resolveResponse(allRole(res.total_pages - 1, this.roleTablePanel.pageSize));
           }
           return Promise.resolve(res);
         })
@@ -543,7 +543,7 @@ export default {
           return resolveResponse(
             childPexpForRole(
               this.roleTablePanel.selection.key.string_id,
-              res.total_pages,
+              res.total_pages - 1,
               this.pexpTablePanel.pageSize,
             ),
           );

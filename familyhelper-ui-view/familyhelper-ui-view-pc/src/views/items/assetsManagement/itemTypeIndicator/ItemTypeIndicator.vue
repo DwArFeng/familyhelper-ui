@@ -155,7 +155,7 @@ export default {
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(all(res.total_pages, this.pageSize));
+            return resolveResponse(all(res.total_pages - 1, this.pageSize));
           }
           return Promise.resolve(res);
         })

@@ -200,7 +200,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForItemRecordedDateAscDisp(
-              this.itemId, res.total_pages, this.record.table.pageSize,
+              this.itemId, res.total_pages - 1, this.record.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -219,7 +219,7 @@ export default {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForItemRecordedDateDescDisp(
-              this.itemId, res.total_pages, this.record.table.pageSize,
+              this.itemId, res.total_pages - 1, this.record.table.pageSize,
             ));
           }
           return Promise.resolve(res);

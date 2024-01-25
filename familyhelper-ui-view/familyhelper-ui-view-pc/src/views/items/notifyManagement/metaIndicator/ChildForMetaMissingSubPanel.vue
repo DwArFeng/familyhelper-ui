@@ -110,15 +110,6 @@ export default {
     lookupMetaMissing() {
       this.loading = true;
       resolveResponse(metaMissing(this.notifySettingId, this.topicId, this.accountId))
-        .then((res) => {
-          // 当查询的页数大于总页数，自动查询最后一页。
-          if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(metaMissing(
-              this.notifySettingId, this.topicId, this.accountId,
-            ));
-          }
-          return Promise.resolve(res);
-        })
         .then(this.updateTableView)
         .catch(() => {
         })
