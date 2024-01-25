@@ -4,6 +4,20 @@
 
 #### 功能构建
 
+- 去除 familyhelper-ui-view-pc 模块中对话框组件不必要的外层 div。
+  - src/views/items/financeManagement/remindDriverSupport/RemindDriverSupportSelectDialog.vue。
+  - src/views/items/notifyManagement/dispatcherSupport/DispatcherSupportSelectDialog.vue。
+  - src/views/items/assetsManagement/assetCatalog/AssetCatalogSelectDialog.vue。
+  - src/views/items/life/pbSet/PbSetSelectDialog.vue。
+  - src/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue。
+  - src/views/items/notifyManagement/metaIndicator/MetaIndicatorSelectDialog.vue。
+  - src/views/items/note/noteBook/NoteBookSelectDialog.vue。
+  - src/views/items/life/activityTemplateDriverSupport/ActivityTemplateDriverSupportSelectDialog.vue。
+  - src/views/items/notifyManagement/routerSupport/RouterSupportSelectDialog.vue。
+  - src/views/items/notifyManagement/senderSupport/SenderSupportSelectDialog.vue。
+  - src/views/items/projectHelper/memoRemindDriverSupport/MemoRemindDriverSupportSelectDialog.vue。
+  - src/views/items/projectHelper/project/ProjectSelectDialog.vue。
+
 - 执行 npm update，升级前端依赖。
   - familyhelper-ui-component-ckeditor5。
   - familyhelper-ui-view-mobile。

@@ -208,6 +208,11 @@ export default {
 </script>
 
 <style scoped>
+/*noinspection CssUnusedSymbol*/
+.pb-set-select-dialog-container >>> .el-dialog {
+  margin-bottom: 0 !important;
+}
+
 .body-wrapper {
   width: 100%;
   display: flex;
@@ -217,11 +222,6 @@ export default {
 .card-list-container {
   width: 100%;
   height: 68vh;
-}
-
-/*noinspection CssUnusedSymbol*/
-.pb-set-select-dialog-container >>> .el-dialog {
-  margin-bottom: 0 !important;
 }
 
 .pb-set-container {

@@ -1,39 +1,38 @@
 <template>
-  <div class="meta-indicator-select-dialog-container">
-    <el-dialog
-      id="dialog"
-      tabindex="0"
-      destroy-on-close
-      title="选择缺少的元数据项"
-      :close-on-click-modal="false"
-      :visible.sync="watchedVisible"
-      @keydown.ctrl.enter.native="handleHotKeyDown"
-    >
-      <div class="main-container">
-        <child-for-meta-missing-sub-panel
-          :notify-setting-id="notifySettingId"
-          :topic-id="topicId"
-          :account-id="accountId"
-          @onSelectionChanged="handleSelectionChanged"
-        />
-      </div>
-      <div class="footer-container" slot="footer">
-        <el-button
-          type="primary"
-          :disabled="loading || notConfirmable"
-          @click="handleConfirm"
-        >
-          确认
-        </el-button>
-        <el-button
-          :disabled="loading"
-          @click="watchedVisible=false"
-        >
-          取消
-        </el-button>
-      </div>
-    </el-dialog>
-  </div>
+  <el-dialog
+    class="meta-indicator-select-dialog-container"
+    id="dialog"
+    tabindex="0"
+    destroy-on-close
+    title="选择缺少的元数据项"
+    :close-on-click-modal="false"
+    :visible.sync="watchedVisible"
+    @keydown.ctrl.enter.native="handleHotKeyDown"
+  >
+    <div class="main-container">
+      <child-for-meta-missing-sub-panel
+        :notify-setting-id="notifySettingId"
+        :topic-id="topicId"
+        :account-id="accountId"
+        @onSelectionChanged="handleSelectionChanged"
+      />
+    </div>
+    <div class="footer-container" slot="footer">
+      <el-button
+        type="primary"
+        :disabled="loading || notConfirmable"
+        @click="handleConfirm"
+      >
+        确认
+      </el-button>
+      <el-button
+        :disabled="loading"
+        @click="watchedVisible=false"
+      >
+        取消
+      </el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script>

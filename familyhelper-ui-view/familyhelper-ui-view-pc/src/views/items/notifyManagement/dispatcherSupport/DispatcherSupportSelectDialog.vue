@@ -1,65 +1,64 @@
 <template>
-  <div class="dispatcher-support-select-dialog-container">
-    <el-dialog
-      tabindex="0"
-      id="dialog"
-      title="模板选择"
-      destroy-on-close
-      :visible.sync="watchedVisible"
-      :close-on-click-modal="false"
-      @keydown.ctrl.enter.native="handleHotKeyDown"
+  <el-dialog
+    class="dispatcher-support-select-dialog-container"
+    tabindex="0"
+    id="dialog"
+    title="模板选择"
+    destroy-on-close
+    :visible.sync="watchedVisible"
+    :close-on-click-modal="false"
+    @keydown.ctrl.enter.native="handleHotKeyDown"
+  >
+    <table-panel
+      class="table"
+      v-loading="loading"
+      highlight-current-row
+      :page-size.sync="table.pageSize"
+      :entity-count="parseInt(table.entities.count)"
+      :current-page.sync="table.currentPage"
+      :page-sizes="[5,15]"
+      :table-data="table.entities.data"
+      :operate-column-visible="false"
+      :table-selection.sync="table.selection"
+      @onPagingAttributeChanged="handlePagingAttributeChanged"
     >
-      <table-panel
-        class="table"
-        v-loading="loading"
-        highlight-current-row
-        :page-size.sync="table.pageSize"
-        :entity-count="parseInt(table.entities.count)"
-        :current-page.sync="table.currentPage"
-        :page-sizes="[5,15]"
-        :table-data="table.entities.data"
-        :operate-column-visible="false"
-        :table-selection.sync="table.selection"
-        @onPagingAttributeChanged="handlePagingAttributeChanged"
+      <el-table-column
+        prop="label"
+        label="名称"
+        show-tooltip-when-overflow
+      />
+      <el-table-column
+        prop="key.string_id"
+        label="ID"
+        show-tooltip-when-overflow
+      />
+      <el-table-column
+        prop="description"
+        label="描述"
+        show-tooltip-when-overflow
+      />
+      <el-table-column
+        prop="example_param"
+        label="参数示例"
+        show-tooltip-when-overflow
+      />
+    </table-panel>
+    <div slot="footer">
+      <el-button
+        type="primary"
+        :disabled="loading || table.selection === null"
+        @click="handleConfirmed"
       >
-        <el-table-column
-          prop="label"
-          label="名称"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="key.string_id"
-          label="ID"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="description"
-          label="描述"
-          show-tooltip-when-overflow
-        />
-        <el-table-column
-          prop="example_param"
-          label="参数示例"
-          show-tooltip-when-overflow
-        />
-      </table-panel>
-      <div slot="footer">
-        <el-button
-          type="primary"
-          :disabled="loading || table.selection === null"
-          @click="handleConfirmed"
-        >
-          确认
-        </el-button>
-        <el-button
-          :disabled="loading"
-          @click="handleCanceled"
-        >
-          取消
-        </el-button>
-      </div>
-    </el-dialog>
-  </div>
+        确认
+      </el-button>
+      <el-button
+        :disabled="loading"
+        @click="handleCanceled"
+      >
+        取消
+      </el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
