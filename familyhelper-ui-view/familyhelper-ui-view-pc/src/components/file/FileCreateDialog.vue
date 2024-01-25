@@ -1,70 +1,78 @@
 <template>
-  <div class="file-create-dialog-container">
-    <el-dialog
-      append-to-body
-      destroy-on-close
-      :title="title"
-      :visible.sync="watchedVisible"
-      :close-on-click-modal="false"
-      @keydown.ctrl.enter.native="handleHotKeyDown"
-    >
-      <div>
-        <div class="placeholder" v-if="permittedIndicators.length === 0">
-          您没有创建任何类型文件的权限！
-        </div>
-        <!--suppress HtmlUnknownAttribute -->
-        <div
-          class="editor-container"
-          v-else
-          v-loading="loading"
-          element-loading-text="作者偷懒没有做进度显示，长时间转圈是正常现象，请耐心等待"
-        >
-          <div class="type-selector">
-            <el-tooltip
-              v-for="(indicator, index) in permittedIndicators"
-              placement="top"
-              :open-delay="1000"
-              :content="indicator.description"
-              :key="index"
-            >
-              <div
-                class="item"
-                :class="index === selectedIndex ? 'selected' : 'unselected'"
-                @click="selectedIndex=index"
-              >
-                <i class="iconfont">{{ indicator.icon }}</i>
-                <span>{{ indicator.label }}</span>
-              </div>
-            </el-tooltip>
-          </div>
-          <!--suppress RegExpDuplicateCharacterInClass, RegExpRedundantEscape -->
-          <el-input
-            class="input"
-            placeholder="请输入文件名称（不用输入后缀名），注意不要输入非法字符"
-            v-model="fileName"
-            oninput="this.value = this.value.replace(/[&\|\\\*^%$'&quot;#@\-:;，。？！\,@\$]/g,'')"
+  <el-dialog
+    class="file-create-dialog-container"
+    append-to-body
+    destroy-on-close
+    :title="title"
+    :visible.sync="watchedVisible"
+    :close-on-click-modal="false"
+    @keydown.ctrl.enter.native="handleHotKeyDown"
+  >
+    <div>
+      <div
+        class="placeholder"
+        v-if="validIndicators.length === 0 && mode==='PERMITTED'"
+      >
+        您没有创建任何类型文件的权限！
+      </div>
+      <div
+        class="placeholder"
+        v-else-if="validIndicators.length === 0 && mode==='SPECIFIED'"
+      >
+        您在此处不能创建任何类型的文件！
+      </div>
+      <!--suppress HtmlUnknownAttribute -->
+      <div
+        class="editor-container"
+        v-else
+        v-loading="loading"
+        element-loading-text="作者偷懒没有做进度显示，长时间转圈是正常现象，请耐心等待"
+      >
+        <div class="type-selector">
+          <el-tooltip
+            v-for="(indicator, index) in validIndicators"
+            placement="top"
+            :open-delay="1000"
+            :content="indicator.description"
+            :key="index"
           >
-            <template slot="append">{{ currentIndicator.extension }}</template>
-          </el-input>
+            <div
+              class="item"
+              :class="index === selectedIndex ? 'selected' : 'unselected'"
+              @click="selectedIndex=index"
+            >
+              <i class="iconfont">{{ indicator.icon }}</i>
+              <span>{{ indicator.label }}</span>
+            </div>
+          </el-tooltip>
         </div>
-      </div>
-      <div slot="footer">
-        <el-button
-          type="primary"
-          :disabled="loading || fileName === ''"
-          @click="handleConfirmButtonClicked"
+        <!--suppress RegExpDuplicateCharacterInClass, RegExpRedundantEscape -->
+        <el-input
+          class="input"
+          placeholder="请输入文件名称（不用输入后缀名），注意不要输入非法字符"
+          v-model="fileName"
+          oninput="this.value = this.value.replace(/[&\|\\\*^%$'&quot;#@:;，。？！\,@\$]/g,'')"
         >
-          确认
-        </el-button>
-        <el-button
-          :disabled="loading"
-          @click="handleCancelButtonClicked"
-        >
-          取消
-        </el-button>
+          <template slot="append">{{ currentIndicator.extension }}</template>
+        </el-input>
       </div>
-    </el-dialog>
-  </div>
+    </div>
+    <div slot="footer">
+      <el-button
+        type="primary"
+        :disabled="loading || fileName === ''"
+        @click="handleConfirmButtonClicked"
+      >
+        确认
+      </el-button>
+      <el-button
+        :disabled="loading"
+        @click="handleCancelButtonClicked"
+      >
+        取消
+      </el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
@@ -85,6 +93,17 @@ export default {
       type: String,
       default: '上传文件',
     },
+    mode: {
+      type: String,
+      default: 'PERMITTED',
+      validator(value) {
+        return ['PERMITTED', 'SPECIFIED'].indexOf(value) !== -1;
+      },
+    },
+    specifiedExtensions: {
+      type: Array,
+      default: () => [],
+    },
   },
   watch: {
     visible(value) {
@@ -98,6 +117,15 @@ export default {
     currentIndicator() {
       return this.indicators[this.selectedIndex];
     },
+    validIndicators() {
+      switch (this.mode) {
+        case 'SPECIFIED':
+          return this.specificIndicators;
+        case 'PERMITTED':
+        default:
+          return this.permittedIndicators;
+      }
+    },
     permittedIndicators() {
       return this.indicators.filter((indicator) => {
         const { required, node } = indicator.permission;
@@ -105,6 +133,12 @@ export default {
           return true;
         }
         return this.hasPermission(node);
+      });
+    },
+    specificIndicators() {
+      return this.indicators.filter((indicator) => {
+        const { extension } = indicator;
+        return this.specifiedExtensions.includes(extension);
       });
     },
     ...mapGetters('lnp', ['hasPermission']),
