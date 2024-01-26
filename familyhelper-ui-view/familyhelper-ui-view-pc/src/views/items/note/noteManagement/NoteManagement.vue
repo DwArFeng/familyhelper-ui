@@ -11,7 +11,7 @@
           <el-button
             class="header-button"
             type="primary"
-            :disabled="isNoteBookSelected || readonly"
+            :disabled="nonNoteBookSelected || readonly"
             @click="handleShowNodeCreateDialogParent"
           >
             新建节点
@@ -19,7 +19,7 @@
           <el-button
             class="header-button"
             type="primary"
-            :disabled="isNoteBookSelected || readonly || treeItemSelected"
+            :disabled="nonNoteBookSelected || readonly || nonNodeSelected"
             @click="handleShowNodeCreateDialogChild"
           >
             新建子节点
@@ -28,7 +28,7 @@
           <el-button
             class="header-button"
             type="primary"
-            :disabled="isNoteBookSelected || readonly"
+            :disabled="nonNoteBookSelected || readonly"
             @click="handleShowItemCreateDialogParent"
           >
             新建项目
@@ -36,7 +36,7 @@
           <el-button
             class="header-button"
             type="primary"
-            :disabled="isNoteBookSelected || readonly || treeItemSelected"
+            :disabled="nonNoteBookSelected || readonly || nonNodeSelected"
             @click="handleShowItemCreateDialogChild"
           >
             新建子项目
@@ -156,7 +156,7 @@ export default {
     BorderLayoutPanel,
   },
   computed: {
-    isNoteBookSelected() {
+    nonNoteBookSelected() {
       return this.parentSelection.noteBookId === '';
     },
     readonly() {
@@ -165,13 +165,13 @@ export default {
       }
       return this.parentSelection.noteBook.permission_level === 1;
     },
-    treeItemSelected() {
+    nonNodeSelected() {
       const { data } = this.treePanel.selection;
-      if (data === null) {
-        return false;
+      if (!data) {
+        return true;
       }
       // noinspection JSUnresolvedReference
-      return data.display_type === 1;
+      return data.display_type !== 0;
     },
   },
   data() {
