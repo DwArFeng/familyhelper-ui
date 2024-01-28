@@ -14,12 +14,12 @@
             <div class="control">
               <!--suppress JSUnresolvedReference -->
               <dialog-toggle-button
-                v-model="value.fontWeight" :icon="'\uffda'"
+                v-model="watchedValue.fontWeight" :icon="'\uffda'"
                 :values="['normal','bold']"
               />
               <!--suppress JSUnresolvedReference -->
               <dialog-toggle-button
-                v-model="value.fontStyle" :icon="'\uffdc'"
+                v-model="watchedValue.fontStyle" :icon="'\uffdc'"
                 :values="['normal','italic']"
               />
             </div>
@@ -83,10 +83,17 @@ export default {
     watchedVisible(value) {
       this.$emit('update:visible', value);
     },
+    value(value) {
+      this.watchedValue = value;
+    },
+    watchedValue(value) {
+      this.$emit('change', value);
+    },
   },
   data() {
     return {
       watchedVisible: false,
+      watchedValue: null,
       foo: 'false',
     };
   },

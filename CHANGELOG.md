@@ -4,7 +4,35 @@
 
 #### 功能构建
 
-- (无)
+- familyhelper-ui-view-mobile 模块前端依赖升级。
+  - 升级 `eslint-plugin-vue` 依赖版本为 `^8.7.1` 并解决兼容性问题，以应用其新功能。
+  - 升级 `axios` 依赖版本为 `^1.6.7` 以规避漏洞。
+  - 升级 `core-js` 依赖版本为 `^3.35.1` 以规避漏洞。
+  - 升级 `vue` 依赖版本为 `^2.7.16` 以规避漏洞。
+  - 升级 `@vue/cli-plugin-babel` 依赖版本为 `^4.5.19` 以规避漏洞。
+  - 升级 `@vue/cli-plugin-eslint` 依赖版本为 `^4.5.19` 以规避漏洞。
+  - 升级 `@vue/cli-plugin-router` 依赖版本为 `^4.5.19` 以规避漏洞。
+  - 升级 `@vue/cli-service` 依赖版本为 `^4.5.19` 以规避漏洞。
+  - 升级 `@vue/eslint-config-airbnb` 依赖版本为 `^5.3.0` 以规避漏洞。
+  - 升级 `eslint` 依赖版本为 `^6.8.0` 以规避漏洞。
+  - 升级 `eslint-plugin-import` 依赖版本为 `^2.29.1` 以规避漏洞。
+  - 升级 `vue-template-compiler` 依赖版本为 `^2.7.16` 以规避漏洞。
+
+- familyhelper-ui-view-pc 模块前端依赖升级。
+  - 升级 `eslint-plugin-vue` 依赖版本为 `^8.7.1` 并解决兼容性问题，以应用其新功能。
+  - 升级 `axios` 依赖版本为 `^1.6.7` 以规避漏洞。
+  - 升级 `core-js` 依赖版本为 `^3.35.1` 以规避漏洞。
+  - 升级 `echarts` 依赖版本为 `^5.4.3` 以规避漏洞。
+  - 升级 `element-ui` 依赖版本为 `^2.15.14` 以规避漏洞。
+  - 升级 `vue` 依赖版本为 `^2.7.16` 以规避漏洞。
+  - 升级 `@vue/cli-plugin-babel` 依赖版本为 `^4.5.19` 以规避漏洞。
+  - 升级 `@vue/cli-plugin-eslint` 依赖版本为 `^4.5.19` 以规避漏洞。
+  - 升级 `@vue/cli-plugin-router` 依赖版本为 `^4.5.19` 以规避漏洞。
+  - 升级 `@vue/cli-service` 依赖版本为 `^4.5.19` 以规避漏洞。
+  - 升级 `@vue/eslint-config-airbnb` 依赖版本为 `^5.3.0` 以规避漏洞。
+  - 升级 `eslint` 依赖版本为 `^6.8.0` 以规避漏洞。
+  - 升级 `eslint-plugin-import` 依赖版本为 `^2.29.1` 以规避漏洞。
+  - 升级 `vue-template-compiler` 依赖版本为 `^2.7.16` 以规避漏洞。
 
 #### Bug修复
 
