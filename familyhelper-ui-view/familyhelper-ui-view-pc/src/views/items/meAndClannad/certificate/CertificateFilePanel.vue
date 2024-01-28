@@ -99,7 +99,11 @@ import TablePanel from '@/components/layout/TablePanel.vue';
 import ImageUploadEditDialog from '@/components/image/ImageUploadEditDialog.vue';
 
 import {
-  childForCertificate, download, remove, upload,
+  childForCertificate,
+  downloadFile,
+  downloadThumbnail,
+  remove,
+  upload,
 } from '@/api/clannad/certificateFile';
 import resolveResponse from '@/util/response';
 import { formatTimestamp } from '@/util/timestamp';
@@ -123,6 +127,13 @@ export default {
     certificate() {
       this.handleSearch();
     },
+    $route(val) {
+      if (val.name === 'meAndClannad.certificate') {
+        this.mayShowNotify();
+      } else {
+        this.mayCloseNotify();
+      }
+    },
   },
   data() {
     return {
@@ -135,6 +146,10 @@ export default {
       },
       uploadDialog: {
         visible: false,
+      },
+      notify: {
+        show: false,
+        handle: null,
       },
     };
   },
@@ -170,7 +185,7 @@ export default {
         .then((res) => {
           const promises = [];
           res.data.forEach((certificateFileInfo) => {
-            promises.push(download(certificateFileInfo.key.long_id).then(((blob) => {
+            promises.push(downloadThumbnail(certificateFileInfo.key.long_id).then(((blob) => {
               const neoCertificateFileInfo = certificateFileInfo;
               // noinspection JSCheckFunctionSignatures
               neoCertificateFileInfo.url = window.URL.createObjectURL(blob);
@@ -240,7 +255,7 @@ export default {
         });
     },
     handleFileDownload(fileInfo) {
-      download(fileInfo.key.long_id)
+      downloadFile(fileInfo.key.long_id)
         .then((blob) => {
           // noinspection JSUnresolvedVariable
           const fileName = fileInfo.origin_name;
@@ -252,9 +267,40 @@ export default {
           window.URL.revokeObjectURL(link.href);
         });
     },
+    mayShowNotify() {
+      if (this.notify.show) {
+        return;
+      }
+      this.notify.show = true;
+      this.notify.handle = this.$notify({
+        title: '使用提示',
+        customClass: 'custom-message-box__w450',
+        message: '<div style="line-height: 20px">'
+          + '显示内容使用的是缩略图，清晰度较低，仅供预览。<br>'
+          + '<b>请勿截屏或使用浏览器的保存图片功能！</b><br>如需下载原图，请点击下载按钮。'
+          + '</div>',
+        dangerouslyUseHTMLString: true,
+        type: 'info',
+        center: true,
+        position: 'bottom-right',
+        offset: 75,
+        duration: 0,
+        onClose: () => {
+          this.notify.show = false;
+          this.notify.handle = null;
+        },
+      });
+    },
+    mayCloseNotify() {
+      if (!this.notify.show) {
+        return;
+      }
+      this.notify.handle.close();
+    },
   },
   mounted() {
     this.handleSearch();
+    this.mayShowNotify();
   },
 };
 </script>

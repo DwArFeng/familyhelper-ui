@@ -17,8 +17,12 @@ export function childForCertificate(certificateKey, page, rows) {
     });
 }
 
-export function download(key) {
-    return getBlob('clannad', `certificate-file/${key}/download/`, {});
+export function downloadFile(key) {
+    return getBlob('clannad', `certificate-file/${key}/download-file/`, {});
+}
+
+export function downloadThumbnail(key) {
+    return getBlob('clannad', `certificate-file/${key}/download-thumbnail/`, {});
 }
 
 export function upload(certificateKey, formData) {
