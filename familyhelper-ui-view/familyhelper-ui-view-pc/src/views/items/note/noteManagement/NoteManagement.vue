@@ -173,6 +173,14 @@ export default {
       // noinspection JSUnresolvedReference
       return data.display_type !== 0;
     },
+    treeItemSelected() {
+      const { data } = this.treePanel.selection;
+      if (!data === null) {
+        return false;
+      }
+      // noinspection JSUnresolvedReference
+      return data.display_type === 1;
+    },
   },
   data() {
     return {
