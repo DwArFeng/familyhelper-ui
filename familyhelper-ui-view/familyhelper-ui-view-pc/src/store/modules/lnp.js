@@ -9,7 +9,7 @@ import { notifyHandler } from '@/elements';
 
 import uuid from '@/util/uuid';
 
-import { login, logout, postpone } from '@/api/system/login';
+import { dynamicLogin, logout, postpone } from '@/api/system/login';
 import { currentDate } from '@/api/system/time';
 import { lookupForUser } from '@/api/system/permission';
 import { currentTimestamp } from '@/util/timestamp';
@@ -85,7 +85,7 @@ const mutations = {
 const actions = {
   // eslint-disable-next-line no-shadow
   login({ state, commit, dispatch }, { accountId, password }) {
-    return resolveResponse(login(accountId, password))
+    return resolveResponse(dynamicLogin(accountId, password, '家庭助手 PC 端登录'))
       .then((res) => {
         commit('setLoginInfo', res);
       })
@@ -95,6 +95,7 @@ const actions = {
       })
       .then((res) => {
         commit('setServiceDateOffset', res - currentTimestamp());
+        // noinspection JSUnresolvedReference
         return resolveResponse(lookupForUser(state.accountId));
       })
       .then((res) => {
@@ -106,6 +107,7 @@ const actions = {
       })
       .then(() => {
         if (vim.addons.ezNav.enabled) {
+          // noinspection JSUnresolvedReference
           return dispatch('vimEzNav/restorePersistenceData', state.accountId, { root: true });
         }
         return Promise.resolve();
@@ -119,6 +121,7 @@ const actions = {
       commit('setOnlineFlag', false);
       router.push({ path: '/login' });
     });
+    // noinspection JSUnresolvedReference
     return resolveResponse(postpone(state.token), errorHandlerMap)
       .then((res) => {
         commit('setLoginInfo', res);
@@ -132,9 +135,11 @@ const actions = {
   },
   // eslint-disable-next-line no-shadow
   logout({ state, commit, dispatch }) {
+    // noinspection JSUnresolvedReference
     return Promise.resolve()
       .then(() => {
         if (vim.addons.ezNav.enabled) {
+          // noinspection JSUnresolvedReference
           return dispatch('vimEzNav/savePersistenceData', state.accountId, { root: true })
             .then(() => dispatch('vimEzNav/clearAll', null, { root: true }));
         }
