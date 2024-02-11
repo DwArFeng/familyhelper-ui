@@ -15,7 +15,8 @@
 
 #### Bug修复
 
-- (无)
+- 修正拼写错误。
+  - 修正 `permissionGroup/PermissionGroup.vue` 中的拼写错误。
 
 #### 功能移除
 

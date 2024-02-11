@@ -33,8 +33,8 @@
           <el-button
             class="header-button"
             type="primary"
-            :disabled="permissionToUnattach.length === 0"
-            @click="handleUnattachPermission"
+            :disabled="permissionToDetach.length === 0"
+            @click="handleDetachPermission"
           >
             取消关联权限节点
           </el-button>
@@ -89,8 +89,8 @@
               :operate-column-visible="false"
               :show-contextmenu="true"
               :contextmenu-width="100"
-              @onPagingAttributeChanged="handleUnattachPagingAttributeChanged"
-              @onSelectionChanged="handleUnattachSelectionChanged"
+              @onPagingAttributeChanged="handleDetachPagingAttributeChanged"
+              @onSelectionChanged="handleDetachSelectionChanged"
             >
               <template v-slot:default>
                 <el-table-column
@@ -365,7 +365,7 @@ export default {
       permissionToAttachCurrentPage: 0,
       permissionToAttachPageSize: 15,
       permissionToAttach: [],
-      permissionToUnattach: [],
+      permissionToDetach: [],
       permissionAttachDialogVisible: false,
       appendChild: false,
     };
@@ -642,12 +642,12 @@ export default {
         .catch(() => {
         });
     },
-    handleUnattachSelectionChanged(selection) {
-      this.permissionToUnattach = selection;
+    handleDetachSelectionChanged(selection) {
+      this.permissionToDetach = selection;
     },
-    handleUnattachPermission() {
+    handleDetachPermission() {
       const promises = [];
-      this.permissionToUnattach.forEach((permission) => {
+      this.permissionToDetach.forEach((permission) => {
         promises.push(
           resolveResponse(updatePermission(
             permission.key.string_id,
@@ -674,7 +674,7 @@ export default {
         .catch(() => {
         });
     },
-    handleUnattachPagingAttributeChanged() {
+    handleDetachPagingAttributeChanged() {
       this.inspectChildPermission(this.permissionGroupId);
     },
     handleCopyKeyContextmenuClicked(row, close) {
