@@ -148,10 +148,11 @@
       </el-form-item>
     </entity-maintain-dialog>
     <el-dialog
+      class="permission-attach-dialog"
       append-to-body
       destroy-on-close
       title="关联权限节点"
-      top="6vh"
+      top="5vh"
       width="80%"
       :visible.sync="permissionAttachDialogVisible"
       @keydown.ctrl.enter.native="handleAttachPermission"
@@ -176,14 +177,17 @@
         <el-table-column
           prop="key.string_id"
           label="权限节点"
+          show-tooltip-when-overflow
         />
         <el-table-column
           prop="name"
           label="名称"
+          show-tooltip-when-overflow
         />
         <el-table-column
           prop="remark"
           label="备注"
+          show-tooltip-when-overflow
         />
       </table-panel>
       <div class="footer-container" slot="footer">
@@ -746,6 +750,11 @@ export default {
 
 .permission-table-panel {
   flex-grow: 1;
+}
+
+/*noinspection CssUnusedSymbol*/
+.permission-attach-dialog >>> .el-dialog {
+  margin-bottom: 0 !important;
 }
 
 .permission-to-attach-table-panel {
