@@ -86,31 +86,40 @@
               :current-page.sync="permissionCurrentPage"
               :page-sizes="[15,20,30,50]"
               :table-data="permissionEntities.data"
-              :inspect-button-visible="false"
-              :edit-button-visible="false"
-              :delete-button-visible="false"
+              :operate-column-visible="false"
+              :show-contextmenu="true"
+              :contextmenu-width="100"
               @onPagingAttributeChanged="handleUnattachPagingAttributeChanged"
               @onSelectionChanged="handleUnattachSelectionChanged"
             >
-              <el-table-column
-                type="selection"
-                width="55"
-              />
-              <el-table-column
-                prop="key.string_id"
-                label="权限节点"
-                show-overflow-tooltip
-              />
-              <el-table-column
-                prop="name"
-                label="名称"
-                show-overflow-tooltip
-              />
-              <el-table-column
-                prop="remark"
-                label="备注"
-                show-overflow-tooltip
-              />
+              <template v-slot:default>
+                <el-table-column
+                  type="selection"
+                  width="55"
+                />
+                <el-table-column
+                  prop="key.string_id"
+                  label="权限节点"
+                  show-overflow-tooltip
+                />
+                <el-table-column
+                  prop="name"
+                  label="名称"
+                  show-overflow-tooltip
+                />
+                <el-table-column
+                  prop="remark"
+                  label="备注"
+                  show-overflow-tooltip
+                />
+              </template>
+              <template v-slot:contextmenu="{row,close}">
+                <ul>
+                  <li @click="handleCopyKeyContextmenuClicked(row,close)">
+                    复制主键
+                  </li>
+                </ul>
+              </template>
             </table-panel>
           </div>
         </div>
@@ -667,6 +676,18 @@ export default {
     },
     handleUnattachPagingAttributeChanged() {
       this.inspectChildPermission(this.permissionGroupId);
+    },
+    handleCopyKeyContextmenuClicked(row, close) {
+      close();
+      navigator.clipboard.writeText(row.key.string_id)
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: '复制成功',
+            type: 'success',
+            center: true,
+          });
+        });
     },
   },
   mounted() {
