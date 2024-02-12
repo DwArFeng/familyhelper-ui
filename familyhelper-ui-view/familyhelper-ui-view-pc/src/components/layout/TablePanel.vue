@@ -2,6 +2,7 @@
   <div class="table-panel-container">
     <div class="table-container">
       <el-table
+        ref="elTable"
         class=table
         height="100%"
         stripe
@@ -47,8 +48,16 @@
                   size="mini"
                   icon="el-icon-delete"
                   type="danger"
-                  v-if="deleteButtonVisible"
+                  v-if="deleteButtonVisible && deleteButtonBubbling"
                   @click="handleEntityDelete(scope.$index, scope.row)"
+                />
+                <el-button
+                  class="table-button"
+                  size="mini"
+                  icon="el-icon-delete"
+                  type="danger"
+                  v-if="deleteButtonVisible && !deleteButtonBubbling"
+                  @click.stop="handleEntityDelete(scope.$index, scope.row)"
                 />
               </el-button-group>
             </slot>
@@ -99,12 +108,14 @@
     </div>
     <el-pagination
       class="pagination"
+      :class="{compact:paginationStyle==='COMPACT'}"
       background
-      layout="total, sizes, prev, pager, next, jumper"
+      :layout="paginationLayout"
       :page-sizes="pageSizes"
       :page-size.sync="watchedPageSize"
       :total="entityCount"
       :current-page.sync="watchedCurrentPage"
+      :pager-count="paginationPagerCount"
       @current-change="handleCurrentPageChanged"
       @size-change="handlePageSizeChanged"
     />
@@ -183,6 +194,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    deleteButtonBubbling: {
+      type: Boolean,
+      default: true,
+    },
     rowClassName: {
       type: [String, Function],
       default: '',
@@ -190,6 +205,13 @@ export default {
     cellClassName: {
       type: [String, Function],
       default: '',
+    },
+    paginationAdjustStrategy: {
+      type: String,
+      default: 'FORCE_NORMAL',
+      validator(value) {
+        return ['FORCE_NORMAL', 'FORCE_COMPACT', 'AUTO'].indexOf(value) >= 0;
+      },
     },
   },
   watch: {
@@ -206,6 +228,29 @@ export default {
       if (value.indexOf(this.watchedTableSelection) < 0) {
         this.$emit('update:tableSelection', null);
       }
+    },
+  },
+  computed: {
+    paginationStyle() {
+      if (this.paginationAdjustStrategy === 'FORCE_NORMAL') {
+        return 'NORMAL';
+      } if (this.paginationAdjustStrategy === 'FORCE_COMPACT') {
+        return 'COMPACT';
+      }
+      const totalPages = Math.ceil(this.entityCount / this.pageSize);
+      return totalPages >= 7 ? 'COMPACT' : 'NORMAL';
+    },
+    paginationPagerCount() {
+      if (this.paginationStyle === 'COMPACT') {
+        return 5;
+      }
+      return 7;
+    },
+    paginationLayout() {
+      if (this.paginationStyle === 'COMPACT') {
+        return 'sizes, pager, jumper';
+      }
+      return 'total, sizes, prev, pager, next, jumper';
     },
   },
   data() {
@@ -338,6 +383,25 @@ export default {
   text-align: center;
   padding: 0;
   margin-top: 2px;
+}
+
+.pagination.compact >>> .el-pager li {
+  margin: 0 1px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.pagination.compact >>> .el-pagination__sizes {
+  margin: 0 6px 0 0;
+}
+
+/*noinspection CssUnusedSymbol*/
+.pagination.compact >>> .el-pagination__sizes .el-input {
+  margin: 0;
+}
+
+/*noinspection CssUnusedSymbol*/
+.pagination.compact >>> .el-pagination__jump {
+  margin: 0 0 0 6px;
 }
 
 .table-button {

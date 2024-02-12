@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化 familyhelper-ui-view-pc 模块通用组件。
+  - src/components/layout/TablePanel 增加分页组件调整策略以及紧凑展示模式。
+
 - familyhelper-ui-view-pc 模块 views/item 下通用组件优化。
   - activityDataSet/ActivityDataSetIndicator.vue 文案优化。
   - activityDataSet/ActivityDataSetSelectDialog.vue 文案优化。
