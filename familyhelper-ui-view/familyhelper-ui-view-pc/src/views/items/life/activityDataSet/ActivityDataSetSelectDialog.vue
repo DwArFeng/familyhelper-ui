@@ -1,97 +1,95 @@
 <template>
-  <div class="activity-data-set-select-dialog-container">
-    <el-dialog
-      class="dialog"
-      ref="dialog"
-      tabindex="0"
-      destroy-on-close
-      title="选择笔记本"
-      top="8vh"
-      width="80%"
-      :append-to-body="mode=== 'ACTIVITY_DATA_ITEM_SELECT_DIALOG'"
-      :visible.sync="watchedVisible"
-      :close-on-click-modal="false"
-      @open="handleOpen"
-      @close="handleClose"
-      @closed="handleClosed"
-      @keydown.native="handleHotKeyDown"
-    >
-      <div class="body-wrapper">
-        <card-panel
-          title-prop="name"
-          class="card-list-container"
-          card-width="calc(20% - 18px)"
-          select-mode="SINGLE"
-          :data="entities.data"
-          :maxCard="1000"
-          :inspect-button-visible="false"
-          :edit-button-visible="false"
-          :delete-button-visible="false"
-          :addon-button-visible="false"
-          :inspect-menu-item-visible="false"
-          :edit-menu-item-visible="false"
-          :delete-menu-item-visible="false"
-          @onSelectionChanged="handleSelectionChanged"
-        >
-          <template v-slot:default="{item}">
-            <div class="activity-data-set-container">
-              <div class="activity-data-set-property">
+  <el-dialog
+    class="activity-data-set-select-dialog-container"
+    ref="dialog"
+    tabindex="0"
+    destroy-on-close
+    title="选择笔记本"
+    top="8vh"
+    width="80%"
+    :append-to-body="mode=== 'ACTIVITY_DATA_ITEM_SELECT_DIALOG'"
+    :visible.sync="watchedVisible"
+    :close-on-click-modal="false"
+    @open="handleOpen"
+    @close="handleClose"
+    @closed="handleClosed"
+    @keydown.native="handleHotKeyDown"
+  >
+    <div class="body-wrapper">
+      <card-panel
+        title-prop="name"
+        class="card-list-container"
+        card-width="calc(20% - 18px)"
+        select-mode="SINGLE"
+        :data="entities.data"
+        :maxCard="1000"
+        :inspect-button-visible="false"
+        :edit-button-visible="false"
+        :delete-button-visible="false"
+        :addon-button-visible="false"
+        :inspect-menu-item-visible="false"
+        :edit-menu-item-visible="false"
+        :delete-menu-item-visible="false"
+        @onSelectionChanged="handleSelectionChanged"
+      >
+        <template v-slot:default="{item}">
+          <div class="activity-data-set-container">
+            <div class="activity-data-set-property">
                 <span
                   class="iconfont activity-data-set-property-icon"
                   style="color:black"
                 >
                   &#xfffa;
                 </span>
-                <!--suppress JSUnresolvedReference -->
-                <span class="activity-data-set-property-text">
+              <!--suppress JSUnresolvedReference -->
+              <span class="activity-data-set-property-text">
                   权限: {{ item.permission_level | permissionLabelFilter }}
                 </span>
-              </div>
-              <div class="activity-data-set-property">
+            </div>
+            <div class="activity-data-set-property">
                 <span
                   class="iconfont activity-data-set-property-icon"
                   style="color:black"
                 >
                   &#xfffb;
                 </span>
-                <!--suppress JSUnresolvedReference -->
-                <span class="activity-data-set-property-text">
+              <!--suppress JSUnresolvedReference -->
+              <span class="activity-data-set-property-text">
                   所有者: {{ item.owner_account.display_name }}
                 </span>
-              </div>
-              <div class="activity-data-set-property">
+            </div>
+            <div class="activity-data-set-property">
                 <span
                   class="iconfont activity-data-set-property-icon"
                   style="color:black"
                 >
                   &#xffe7;
                 </span>
-                <!--suppress JSUnresolvedReference -->
-                <span class="activity-data-set-property-text">
+              <!--suppress JSUnresolvedReference -->
+              <span class="activity-data-set-property-text">
                   项目总数: {{ item.item_count }}
                 </span>
-              </div>
             </div>
-          </template>
-        </card-panel>
-        <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
-      </div>
-      <div class="footer-container" slot="footer">
-        <el-button
-          type="primary"
-          :disabled="isConfirmButtonDisabled"
-          @click="handleConfirm"
-        >
-          确定
-        </el-button>
-        <el-button
-          @click="watchedVisible = false"
-        >
-          取消
-        </el-button>
-      </div>
-    </el-dialog>
-  </div>
+          </div>
+        </template>
+      </card-panel>
+      <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
+    </div>
+    <div class="footer-container" slot="footer">
+      <el-button
+        type="primary"
+        :disabled="isConfirmButtonDisabled"
+        @click="handleConfirm"
+      >
+        确定
+      </el-button>
+      <el-button
+        @click="watchedVisible = false"
+      >
+        取消
+      </el-button>
+    </div>
+  </el-dialog>
 </template>
 
 <script>
@@ -243,7 +241,7 @@ export default {
 }
 
 /*noinspection CssUnusedSymbol*/
-.dialog >>> .el-dialog {
+.activity-data-set-select-dialog-container >>> .el-dialog {
   margin-bottom: 0 !important;
 }
 

@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 去除 familyhelper-ui-view-pc 模块中对话框组件不必要的外层 div。
+  - src/views/items/life/activityDataSet/ActivityDataSetSelectDialog.vue。
+
 - 实现系统设置一级菜单。
   - 账户安全二级菜单。
 
