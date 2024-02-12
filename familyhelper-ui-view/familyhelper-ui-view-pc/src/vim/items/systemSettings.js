@@ -66,6 +66,40 @@ const systemSettings = [
     },
   },
   {
+    key: 'systemSettings.accountSecurity',
+    index: 0,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '账户安全',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/system-settings/account-security',
+        component: () => import('@/views/items/systemSettings/accountSecurity/AccountSecurity.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.system_settings.account_security',
+      },
+    },
+    node: {
+      parentKey: 'systemSettings',
+    },
+  },
+  {
     key: 'systemSettings.role',
     index: 10,
     meta: {
