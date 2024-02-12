@@ -70,7 +70,7 @@ export default {
     },
     displayValue() {
       if (this.activityDataSet === null) {
-        return '（未选择笔记本）';
+        return '（未选择数据集合）';
       }
       return this.activityDataSet.name;
     },

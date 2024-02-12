@@ -4,7 +4,7 @@
     ref="dialog"
     tabindex="0"
     destroy-on-close
-    title="选择笔记本"
+    title="选择数据集合"
     top="8vh"
     width="80%"
     :append-to-body="mode=== 'ACTIVITY_DATA_ITEM_SELECT_DIALOG'"

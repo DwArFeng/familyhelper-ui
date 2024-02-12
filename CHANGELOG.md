@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- familyhelper-ui-view-pc 模块 views/item 下通用组件优化。
+  - activityDataSet/ActivityDataSetIndicator.vue 文案优化。
+  - activityDataSet/ActivityDataSetSelectDialog.vue 文案优化。
+
 - 去除 familyhelper-ui-view-pc 模块中对话框组件不必要的外层 div。
   - src/views/items/life/activityDataSet/ActivityDataSetSelectDialog.vue。
 
