@@ -18,6 +18,7 @@
         @row-contextmenu="mayOpenMenu"
       >
         <slot name="default"/>
+        <!--suppress JSValidateTypes -->
         <el-table-column v-if="operateColumnVisible" label="操作" :width="operateColumnWidth">
           <template v-slot="scope">
             <slot
@@ -116,7 +117,6 @@
       :total="entityCount"
       :current-page.sync="watchedCurrentPage"
       :pager-count="paginationPagerCount"
-      @current-change="handleCurrentPageChanged"
       @size-change="handlePageSizeChanged"
     />
   </div>
@@ -218,6 +218,10 @@ export default {
     currentPage(value) {
       this.watchedCurrentPage = value + 1;
     },
+    watchedCurrentPage(value) {
+      this.$emit('update:currentPage', value - 1);
+      this.$emit('onPagingAttributeChanged', value - 1);
+    },
     pageSize(value) {
       this.watchedPageSize = value;
     },
@@ -234,7 +238,8 @@ export default {
     paginationStyle() {
       if (this.paginationAdjustStrategy === 'FORCE_NORMAL') {
         return 'NORMAL';
-      } if (this.paginationAdjustStrategy === 'FORCE_COMPACT') {
+      }
+      if (this.paginationAdjustStrategy === 'FORCE_COMPACT') {
         return 'COMPACT';
       }
       const totalPages = Math.ceil(this.entityCount / this.pageSize);
@@ -255,7 +260,7 @@ export default {
   },
   data() {
     return {
-      watchedCurrentPage: 0,
+      watchedCurrentPage: 1,
       watchedPageSize: 0,
       watchedTableSelection: null,
       contextmenu: {
@@ -268,10 +273,6 @@ export default {
     };
   },
   methods: {
-    handleCurrentPageChanged() {
-      this.$emit('update:currentPage', this.watchedCurrentPage - 1);
-      this.$emit('onPagingAttributeChanged', this.watchedCurrentPage - 1);
-    },
     handlePageSizeChanged() {
       this.$emit('update:pageSize', this.watchedPageSize);
       this.$emit('onPagingAttributeChanged', this.watchedPageSize);

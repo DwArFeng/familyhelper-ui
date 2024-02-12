@@ -28,6 +28,9 @@
 
 #### Bug修复
 
+- 修复组件 bug。
+  - 修复表格面板组件首次换页时，当前页面属性更新行为异常的 bug。
+
 - 修正拼写错误。
   - 修正 `permissionGroup/PermissionGroup.vue` 中的拼写错误。
 
