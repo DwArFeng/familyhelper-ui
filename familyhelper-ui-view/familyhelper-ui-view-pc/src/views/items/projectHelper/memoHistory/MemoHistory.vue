@@ -51,7 +51,7 @@
               <template v-slot:default>
                 <el-table-column
                   prop="profile"
-                  label="简报"
+                  label="概要"
                   show-tooltip-when-overflow
                 />
                 <el-table-column
