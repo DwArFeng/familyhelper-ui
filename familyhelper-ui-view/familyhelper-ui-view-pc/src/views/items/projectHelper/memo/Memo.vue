@@ -9,9 +9,30 @@
         <header-layout-panel>
           <template v-slot:header>
             <div class="header-container">
-              <el-button type="primary" @click="handleShowCreateDialog">新建</el-button>
-              <el-divider direction="vertical"/>
-              <el-button type="success" @click="handleSearch">刷新数据</el-button>
+              <div class="header-row">
+                <el-input
+                  class="profile-search-bar"
+                  v-model="profileSearchBar.value"
+                  clearable
+                  @keydown.enter.native="handleSearch"
+                  @clear="handleSearch"
+                >
+                  <template v-slot:prepend>
+                    <span>概要</span>
+                  </template>
+                  <template v-slot:append>
+                    <el-button
+                      icon="el-icon-search"
+                      @click="handleSearch"
+                    />
+                  </template>
+                </el-input>
+              </div>
+              <div class="header-row">
+                <el-button type="primary" @click="handleShowCreateDialog">新建</el-button>
+                <el-divider direction="vertical"/>
+                <el-button type="success" @click="handleSearch">刷新数据</el-button>
+              </div>
             </div>
           </template>
           <template v-slot:default>
@@ -157,6 +178,7 @@ import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 
 import {
   childForUserInProgressDefaultOrder as childForUserInProgress,
+  childForUserInProgressProfileLikeDefaultOrder as childForUserInProgressProfileLike,
   create,
   finish,
   remove,
@@ -192,6 +214,9 @@ export default {
   data() {
     return {
       westLoading: false,
+      profileSearchBar: {
+        value: '',
+      },
       table: {
         entities: {
           current_page: 0,
@@ -268,7 +293,12 @@ export default {
       this.handleSearch();
     },
     handleSearch() {
-      this.lookupChildForUserInProgress(this.me);
+      const pattern = this.profileSearchBar.value;
+      if (!pattern) {
+        this.lookupChildForUserInProgress(this.me);
+      } else {
+        this.lookupChildForUserInProgressProfileLike(this.me, pattern);
+      }
     },
     lookupChildForUserInProgress(user) {
       this.westLoading = true;
@@ -280,6 +310,27 @@ export default {
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForUserInProgress(
               user, res.total_pages - 1, this.table.pageSize,
+            ));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.westLoading = false;
+        });
+    },
+    lookupChildForUserInProgressProfileLike(user, pattern) {
+      this.westLoading = true;
+      resolveResponse(childForUserInProgressProfileLike(
+        user, pattern, this.table.currentPage, this.table.pageSize,
+      ))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(childForUserInProgressProfileLike(
+              user, pattern, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -415,14 +466,31 @@ export default {
 }
 
 .west-container .header-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.west-container .header-container .header-row {
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
+.west-container .header-container .header-row:not(:last-child){
+  margin-bottom: 5px;
+}
+
 /*noinspection CssUnusedSymbol*/
 .west-container .header-container .el-divider--vertical {
   margin: 0 8px;
+}
+
+.west-container .header-container .profile-search-bar {
+  width: 0;
+  margin-right: 5px;
+  flex-grow: 1;
 }
 
 .west-container .table .table-button {
@@ -435,7 +503,7 @@ export default {
 }
 
 /*noinspection CssUnusedSymbol*/
-.entity-maintain-dialog .short-bar{
+.entity-maintain-dialog .short-bar {
   width: 200px;
 }
 </style>

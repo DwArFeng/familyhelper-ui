@@ -57,6 +57,30 @@ export function childForUserFinishedDefaultOrder(userKey, page, rows) {
     });
 }
 
+export function childForUserProfileLikeDefaultOrder(userKey, pattern, page, rows) {
+    return get('project', `user/${userKey}/memo/profile-like/default-order`, {
+        pattern,
+        page,
+        rows,
+    });
+}
+
+export function childForUserInProgressProfileLikeDefaultOrder(userKey, pattern, page, rows) {
+    return get('project', `user/${userKey}/memo/in-progress/profile-like/default-order`, {
+        pattern,
+        page,
+        rows,
+    });
+}
+
+export function childForUserFinishedProfileLikeDefaultOrder(userKey, pattern, page, rows) {
+    return get('project', `user/${userKey}/memo/finished/profile-like/default-order`, {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function create(userKey, profile, remark, starFlag, priority, expectedFinishDate, brief) {
     return post('project', 'memo/create', {
         user_key: {

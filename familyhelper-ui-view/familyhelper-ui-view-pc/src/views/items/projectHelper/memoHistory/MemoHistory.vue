@@ -9,28 +9,48 @@
         <header-layout-panel>
           <template v-slot:header>
             <div class="header-container">
-              <el-button
-                type="success"
-                @click="handleSearch"
-              >
-                刷新数据
-              </el-button>
-              <el-divider direction="vertical"/>
-              <el-button
-                type="danger"
-                @click="handleRemoveFinished"
-              >
-                删除已完成
-              </el-button>
-              <el-divider direction="vertical"/>
-              <el-select class="selector" v-model="statusSelector.value" @change="handleSearch">
-                <el-option
-                  v-for="item in statusSelector.options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                />
-              </el-select>
+              <div class="header-row">
+                <el-input
+                  class="profile-search-bar"
+                  v-model="profileSearchBar.value"
+                  clearable
+                  @keydown.enter.native="handleSearch"
+                  @clear="handleSearch"
+                >
+                  <template v-slot:prepend>
+                    <span>概要</span>
+                  </template>
+                  <template v-slot:append>
+                    <el-button
+                      icon="el-icon-search"
+                      @click="handleSearch"
+                    />
+                  </template>
+                </el-input>
+                <el-select class="selector" v-model="statusSelector.value" @change="handleSearch">
+                  <el-option
+                    v-for="item in statusSelector.options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+              <div class="header-row">
+                <el-button
+                  type="success"
+                  @click="handleSearch"
+                >
+                  刷新数据
+                </el-button>
+                <el-divider direction="vertical"/>
+                <el-button
+                  type="danger"
+                  @click="handleRemoveFinished"
+                >
+                  删除已完成
+                </el-button>
+              </div>
             </div>
           </template>
           <template v-slot:default>
@@ -122,6 +142,9 @@ import {
   childForUserDefaultOrder as childForUserDefault,
   childForUserFinishedDefaultOrder as childForUserFinished,
   childForUserInProgressDefaultOrder as childForUserInProgress,
+  childForUserProfileLikeDefaultOrder as childForUserDefaultProfileLike,
+  childForUserFinishedProfileLikeDefaultOrder as childForUserFinishedProfileLike,
+  childForUserInProgressProfileLikeDefaultOrder as childForUserInProgressProfileLike,
   remove,
   removeFinishedMemos,
 } from '@/api/project/memo';
@@ -155,6 +178,9 @@ export default {
   data() {
     return {
       westLoading: false,
+      profileSearchBar: {
+        value: '',
+      },
       statusSelector: {
         value: 0,
         options: [
@@ -187,16 +213,31 @@ export default {
       this.handleSearch();
     },
     handleSearch() {
-      switch (this.statusSelector.value) {
-        case 0:
-          this.lookupChildForUserDefault(this.me);
-          break;
-        case 1:
-          this.lookupChildForUserInProgress(this.me);
-          break;
-        case 2:
-        default:
-          this.lookupChildForUserFinished(this.me);
+      const pattern = this.profileSearchBar.value;
+      if (!pattern) {
+        switch (this.statusSelector.value) {
+          case 0:
+            this.lookupChildForUserDefault(this.me);
+            break;
+          case 1:
+            this.lookupChildForUserInProgress(this.me);
+            break;
+          case 2:
+          default:
+            this.lookupChildForUserFinished(this.me);
+        }
+      } else {
+        switch (this.statusSelector.value) {
+          case 0:
+            this.lookupChildForUserDefaultProfileLike(this.me, pattern);
+            break;
+          case 1:
+            this.lookupChildForUserInProgressProfileLike(this.me, pattern);
+            break;
+          case 2:
+          default:
+            this.lookupChildForUserFinishedProfileLike(this.me, pattern);
+        }
       }
     },
     lookupChildForUserDefault(user) {
@@ -251,6 +292,69 @@ export default {
           if (res.current_page > res.total_pages && res.total_pages > 0) {
             return resolveResponse(childForUserFinished(
               user, res.total_pages - 1, this.table.pageSize,
+            ));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.westLoading = false;
+        });
+    },
+    lookupChildForUserDefaultProfileLike(user, pattern) {
+      this.westLoading = true;
+      resolveResponse(childForUserDefaultProfileLike(
+        user, pattern, this.table.currentPage, this.table.pageSize,
+      ))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(childForUserDefaultProfileLike(
+              user, pattern, res.total_pages - 1, this.table.pageSize,
+            ));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.westLoading = false;
+        });
+    },
+    lookupChildForUserInProgressProfileLike(user, pattern) {
+      this.westLoading = true;
+      resolveResponse(childForUserInProgressProfileLike(
+        user, pattern, this.table.currentPage, this.table.pageSize,
+      ))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(childForUserInProgressProfileLike(
+              user, pattern, res.total_pages - 1, this.table.pageSize,
+            ));
+          }
+          return Promise.resolve(res);
+        })
+        .then(this.updateTableView)
+        .catch(() => {
+        })
+        .finally(() => {
+          this.westLoading = false;
+        });
+    },
+    lookupChildForUserFinishedProfileLike(user, pattern) {
+      this.westLoading = true;
+      resolveResponse(childForUserFinishedProfileLike(
+        user, pattern, this.table.currentPage, this.table.pageSize,
+      ))
+        .then((res) => {
+          // 当查询的页数大于总页数，自动查询最后一页。
+          if (res.current_page > res.total_pages && res.total_pages > 0) {
+            return resolveResponse(childForUserFinishedProfileLike(
+              user, pattern, res.total_pages - 1, this.table.pageSize,
             ));
           }
           return Promise.resolve(res);
@@ -364,14 +468,35 @@ export default {
 }
 
 .west-container .header-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.west-container .header-container .header-row {
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
+.west-container .header-container .header-row:not(:last-child){
+  margin-bottom: 5px;
+}
+
 /*noinspection CssUnusedSymbol*/
 .west-container .header-container .el-divider--vertical {
   margin: 0 8px;
+}
+
+.west-container .header-container .profile-search-bar {
+  width: 0;
+  margin-right: 5px;
+  flex-grow: 1;
+}
+
+.west-container .header-container .selector{
+  width: 100px;
 }
 
 .west-container .table .table-button {
