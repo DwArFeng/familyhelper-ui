@@ -282,7 +282,7 @@ export default {
       this.$emit('update:tableSelection', this.watchedTableSelection);
     },
     syncProps() {
-      this.watchedCurrentPage = this.currentPage;
+      this.watchedCurrentPage = this.currentPage + 1;
       this.watchedPageSize = this.pageSize;
     },
     handleEntityInspect(index, entity) {
