@@ -302,6 +302,9 @@ export default {
     this.handleSearch();
     this.mayShowNotify();
   },
+  beforeDestroy() {
+    this.mayCloseNotify();
+  },
 };
 </script>
 
