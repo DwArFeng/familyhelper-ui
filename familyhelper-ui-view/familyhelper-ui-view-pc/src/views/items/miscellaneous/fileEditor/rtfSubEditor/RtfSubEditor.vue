@@ -66,6 +66,7 @@ export default {
     },
     handleEditorReady(editor) {
       this.editor = editor;
+      // noinspection JSUnresolvedReference
       const toolbarElement = this.editor.ui.view.toolbar.element;
       this.editor.on('change:isReadOnly', (evt, propertyName, isReadOnly) => {
         if (isReadOnly) {

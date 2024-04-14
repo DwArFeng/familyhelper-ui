@@ -272,6 +272,7 @@ export default {
         return;
       }
       this.notify.show = true;
+      // noinspection JSCheckFunctionSignatures
       this.notify.handle = this.$notify({
         title: '使用提示',
         customClass: 'custom-message-box__w450',

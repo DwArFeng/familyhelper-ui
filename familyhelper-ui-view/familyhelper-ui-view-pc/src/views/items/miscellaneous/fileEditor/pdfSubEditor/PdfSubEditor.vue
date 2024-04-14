@@ -9,6 +9,7 @@
     />
   </div>
   <overlay-scrollbars class="scroll-bar editor-body">
+    <!--suppress JSUnresolvedReference -->
     <pdf
       :src="url"
       :page="currentPage "
