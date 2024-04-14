@@ -29,22 +29,24 @@
         element-loading-text="作者偷懒没有做进度显示，长时间转圈是正常现象，请耐心等待"
       >
         <div class="type-selector">
-          <el-tooltip
+          <div
+            class="item-wrapper"
+            :class="index === selectedIndex ? 'selected' : 'unselected'"
             v-for="(indicator, index) in validIndicators"
-            placement="top"
-            :open-delay="1000"
-            :content="indicator.description"
             :key="index"
+            @click="selectedIndex = index"
           >
-            <div
-              class="item"
-              :class="index === selectedIndex ? 'selected' : 'unselected'"
-              @click="selectedIndex=index"
+            <el-tooltip
+              placement="top"
+              :open-delay="1000"
+              :content="indicator.description"
             >
-              <i class="iconfont">{{ indicator.icon }}</i>
-              <span>{{ indicator.label }}</span>
-            </div>
-          </el-tooltip>
+              <div class="item">
+                <i class="iconfont">{{ indicator.icon }}</i>
+                <span>{{ indicator.label }}</span>
+              </div>
+            </el-tooltip>
+          </div>
         </div>
         <!--suppress RegExpDuplicateCharacterInClass, RegExpRedundantEscape -->
         <el-input
@@ -79,7 +81,6 @@
 import { mapGetters } from 'vuex';
 
 import { fileType } from '@/util/file';
-import { dataSizePreset, formatUnit } from '@/util/number';
 
 // noinspection JSAnnotator
 export default {
@@ -197,19 +198,11 @@ export default {
     };
   },
   methods: {
-    handleFileLoaded(files) {
-      files.forEach((file) => {
-        this.files.push({ blob: file.blob, name: file.name });
-      });
-    },
     handleConfirmButtonClicked() {
       this.handleConfirm();
     },
     handleHotKeyDown() {
       this.handleConfirm();
-    },
-    wrappedFormatUnit(size) {
-      return formatUnit(size, dataSizePreset);
     },
     handleConfirm() {
       this.loading = true;
@@ -250,44 +243,49 @@ export default {
   margin-bottom: 15px;
 }
 
-.type-selector .item {
+.type-selector .item-wrapper {
   height: 100px;
   width: 85px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
   background: rgba(0, 0, 0, .025);
   cursor: pointer;
 }
 
-.type-selector .item:hover {
+.type-selector .item-wrapper:hover {
   background: rgba(0, 0, 0, .05);
 }
 
 /*noinspection CssUnusedSymbol*/
-.item.unselected {
+.item-wrapper.unselected {
   padding: 2px;
 }
 
 /*noinspection CssUnusedSymbol*/
-.item.selected {
+.item-wrapper.selected {
   padding: 0;
   border-style: solid;
   border-width: 2px;
   border-color: #409EFF;
 }
 
-.type-selector .item:not(:nth-child(1)) {
+.type-selector .item-wrapper:not(:nth-child(1)) {
   margin-left: 10px;
 }
 
-.type-selector .item i {
+.type-selector .item-wrapper .item{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.type-selector .item-wrapper .item i {
   font-size: 48px;
   user-select: none;
 }
 
-.type-selector .item span {
+.type-selector .item-wrapper .item span {
   user-select: none;
   margin-bottom: 10px;
 }
