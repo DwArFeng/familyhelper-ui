@@ -8,6 +8,18 @@
         <format>dir</format>
     </formats>
 
+    <fileSets>
+        <fileSet>
+            <outputDirectory>conf/familyhelper-ui/logging</outputDirectory>
+            <directory>../familyhelper-ui-node/src/main/resources/logging</directory>
+            <includes>
+                <include>README.md</include>
+                <include>*.xml</include>
+            </includes>
+            <fileMode>0644</fileMode>
+        </fileSet>
+    </fileSets>
+
     <files>
         <file>
             <outputDirectory>webapps</outputDirectory>

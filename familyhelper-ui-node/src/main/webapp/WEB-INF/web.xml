@@ -1,11 +1,24 @@
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-         version="3.0">
+<web-app
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0"
+>
 
-    <!--定义了WEB应用的名字-->
-    <display-name>familyhelper-webapi</display-name>
+    <!--定义 WEB 应用的显示名称。-->
+    <display-name>familyhelper-ui</display-name>
 
-    <!-- 页面编码拦截器 -->
+    <!-- 配置 Log4j ContextLoaderListener 及其对应参数。 -->
+    <context-param>
+        <param-name>log4jConfiguration</param-name>
+        <param-value>conf/familyhelper-ui/logging/settings.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+    </listener>
+
+    <!-- 配置页面编码拦截，并应用在所有请求上。 -->
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -23,8 +36,7 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <!-- spring mvc 的servlet -->
-    <!-- DispatcherServlet在初始化后会直接在/WEB-INF/下找 SpringMVC.xml文件,servlet-name标签的参数定义要和XML文件对应 -->
+    <!-- 配置 SpringMVC 框架的 DispatcherServlet，并应用在所有请求上。 -->
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -39,7 +51,7 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <!-- 默认首页 -->
+    <!-- 配置默认首页。 -->
     <welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>
     </welcome-file-list>

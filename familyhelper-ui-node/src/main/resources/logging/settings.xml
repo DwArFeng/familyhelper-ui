@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <properties>
+        <!--############################################### Console ###############################################-->
+        <!-- 控制台输出文本的编码 -->
+        <property name="console.encoding">UTF-8</property>
+        <!-- 控制台输出的日志级别 -->
+        <property name="console.level">INFO</property>
+        <!--############################################# Rolling file ############################################-->
+        <!-- 滚动文件的目录 -->
+        <property name="rolling_file.dir">logs/familyhelper-webapi</property>
+        <!-- 滚动文件的编码 -->
+        <property name="rolling_file.encoding">UTF-8</property>
+        <!-- 滚动文件的触发间隔（小时） -->
+        <property name="rolling_file.triggering.interval">1</property>
+        <!-- 滚动文件的触发大小 -->
+        <property name="rolling_file.triggering.size">40MB</property>
+        <!-- 滚动文件的最大数量 -->
+        <property name="rolling_file.rollover.max">100</property>
+        <!-- 滚动文件的删除时间 -->
+        <property name="rolling_file.rollover.delete_age">7D</property>
+    </properties>
+
+    <Appenders>
+        <!--############################################### Console ###############################################-->
+        <Console name="std.console" target="SYSTEM_OUT" follow="true">
+            <ThresholdFilter level="${console.level}" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{DEFAULT}] [%p] [%t] [%c{1.}]: %m%n" charset="${console.encoding}"/>
+        </Console>
+        <Async name="sync.console">
+            <AppenderRef ref="std.console"/>
+        </Async>
+        <!--############################################# Rolling file ############################################-->
+        <RollingFile
+                name="std.debug.rolling_file" fileName="${rolling_file.dir}/debug.log"
+                filePattern="${rolling_file.dir}/%d{yyyy-MM}/debug-%d{MM-dd-yyyy}-%i.log.gz"
+        >
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{DEFAULT}] [%p] [%t] [%c{1.}]: %m%n" charset="${rolling_file.encoding}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${rolling_file.triggering.interval}" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${rolling_file.triggering.size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${rolling_file.rollover.max}">
+                <Delete basePath="${rolling_file.dir}" maxDepth="2">
+                    <IfFileName glob="*/*debug*.log.gz"/>
+                    <IfLastModified age="${rolling_file.rollover.delete_age}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile
+                name="std.info.rolling_file" fileName="${rolling_file.dir}/info.log"
+                filePattern="${rolling_file.dir}/%d{yyyy-MM}/info-%d{MM-dd-yyyy}-%i.log.gz"
+        >
+            <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{DEFAULT}] [%p] [%t] [%c{1.}]: %m%n" charset="${rolling_file.encoding}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${rolling_file.triggering.interval}" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${rolling_file.triggering.size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${rolling_file.rollover.max}">
+                <Delete basePath="${rolling_file.dir}" maxDepth="2">
+                    <IfFileName glob="*/*info*.log.gz"/>
+                    <IfLastModified age="${rolling_file.rollover.delete_age}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile
+                name="std.warn.rolling_file" fileName="${rolling_file.dir}/warn.log"
+                filePattern="${rolling_file.dir}/%d{yyyy-MM}/warn-%d{MM-dd-yyyy}-%i.log.gz"
+        >
+            <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{DEFAULT}] [%p] [%t] [%c{1.}]: %m%n" charset="${rolling_file.encoding}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${rolling_file.triggering.interval}" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${rolling_file.triggering.size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${rolling_file.rollover.max}">
+                <Delete basePath="${rolling_file.dir}" maxDepth="2">
+                    <IfFileName glob="*/*warn*.log.gz"/>
+                    <IfLastModified age="${rolling_file.rollover.delete_age}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <RollingFile
+                name="std.error.rolling_file" fileName="${rolling_file.dir}/error.log"
+                filePattern="${rolling_file.dir}/%d{yyyy-MM}/error-%d{MM-dd-yyyy}-%i.log.gz"
+        >
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{DEFAULT}] [%p] [%t] [%c{1.}]: %m%n" charset="${rolling_file.encoding}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="${rolling_file.triggering.interval}" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="${rolling_file.triggering.size}"/>
+            </Policies>
+            <DefaultRolloverStrategy max="${rolling_file.rollover.max}">
+                <Delete basePath="${rolling_file.dir}" maxDepth="2">
+                    <IfFileName glob="*/*error*.log.gz"/>
+                    <IfLastModified age="${rolling_file.rollover.delete_age}"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+        <Async name="sync.console">
+            <AppenderRef ref="std.console"/>
+        </Async>
+        <Async name="sync.debug.rolling_file">
+            <AppenderRef ref="std.debug.rolling_file"/>
+        </Async>
+        <Async name="sync.info.rolling_file">
+            <AppenderRef ref="std.info.rolling_file"/>
+        </Async>
+        <Async name="sync.warn.rolling_file">
+            <AppenderRef ref="std.warn.rolling_file"/>
+        </Async>
+        <Async name="sync.error.rolling_file">
+            <AppenderRef ref="std.error.rolling_file"/>
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <!--############################################# Root logger #############################################-->
+        <Root level="ALL">
+            <appender-ref ref="sync.console"/>
+            <appender-ref ref="sync.debug.rolling_file"/>
+            <appender-ref ref="sync.info.rolling_file"/>
+            <appender-ref ref="sync.warn.rolling_file"/>
+            <appender-ref ref="sync.error.rolling_file"/>
+        </Root>
+    </Loggers>
+</Configuration>
