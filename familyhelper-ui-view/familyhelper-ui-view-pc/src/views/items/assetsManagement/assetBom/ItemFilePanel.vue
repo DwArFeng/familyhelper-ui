@@ -1,214 +1,218 @@
 <template>
-<div class="item-file-panel-container">
-  <div class="placeholder" v-if="itemId===''">请选择项目</div>
-  <div v-else class="main-container" v-loading="loading">
-    <header-layout-panel>
-      <template v-slot:header>
-        <div class="header-container">
-          <el-button
-            class="item"
-            type="primary"
-            :disabled="readonly"
-            @click="uploadDialog.visible=true"
-          >
-            上传附件
-          </el-button>
-          <el-button
-            class="item"
-            type="primary"
-            :disabled="readonly"
-            @click="createDialog.visible=true"
-          >
-            新建附件
-          </el-button>
-          <el-button
-            class="item"
-            type="success"
-            @click="handleSearch"
-          >
-            刷新附件
-          </el-button>
-          <el-divider direction="vertical"/>
-          <el-select
-            class="select"
-            v-model="orderSelector.model"
-            @change="handleSearch"
-          >
-            <el-option
-              v-for="item in orderSelector.options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-          <div v-if="mode==='DEFAULT'" style="flex-grow: 1"/>
-          <el-button
-            class="item icon-button"
-            v-if="mode==='DEFAULT'"
-            type="info"
-            @click="handlePanelFloatyButtonClicked"
-          >
-            <i class="iconfont">&#xffd3;</i>
-          </el-button>
-        </div>
-      </template>
-      <template v-slot:default>
-        <table-panel
-          class="table"
-          :page-size.sync="table.pageSize"
-          :entity-count="parseInt(table.entities.count)"
-          :current-page.sync="table.currentPage"
-          :page-sizes="[10,15,20,30]"
-          :table-data="table.entities.data"
-          :operate-column-width="130"
-          :show-contextmenu="true"
-          :contextmenu-width="100"
-          @onPagingAttributeChanged="handlePagingAttributeChanged"
-        >
-          <template v-slot:default>
-            <el-table-column
-              label="图标"
-              width="53px"
-              :resizable="false"
+  <div class="item-file-panel-container">
+    <div class="placeholder" v-if="itemId===''">请选择项目</div>
+    <div v-else class="main-container" v-loading="loading">
+      <header-layout-panel>
+        <template v-slot:header>
+          <div class="header-container">
+            <el-button
+              class="item"
+              type="primary"
+              :disabled="readonly"
+              @click="uploadDialog.visible=true"
             >
-              <template v-slot:default="{row}">
-                <div class="icon-wrapper">
-                  <!--suppress JSUnresolvedVariable -->
-                  <i class="iconfont icon">{{ row.origin_name | fileType }}</i>
-                </div>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="origin_name"
-              label="文件名称"
-              show-tooltip-when-overflow
-            />
-            <el-table-column
-              prop="length"
-              label="大小"
-              width="95px"
-              show-tooltip-when-overflow
-              :formatter="unitFormatter"
-            />
-            <el-table-column
-              prop="inspected_date"
-              label="查看日期"
-              width="180px"
-              show-tooltip-when-overflow
-              :formatter="timestampFormatter"
-            />
-            <el-table-column
-              prop="modified_date"
-              label="编辑日期"
-              width="180px"
-              show-tooltip-when-overflow
-              :formatter="timestampFormatter"
-            />
-            <el-table-column
-              prop="created_date"
-              label="创建日期"
-              width="180px"
-              show-tooltip-when-overflow
-              :formatter="timestampFormatter"
-            />
-            <el-table-column
-              prop="remark"
-              label="备注"
-              show-tooltip-when-overflow
-            />
-          </template>
-          <template v-slot:operateColumn="{row}">
-            <el-button-group class=operate-column>
-              <el-button
-                class="table-button"
-                size="mini"
-                icon="el-icon-search"
-                type="success"
-                :disabled="!fileRowInspectEnabled(row)"
-                @click="handleFileInspect(row)"
+              上传附件
+            </el-button>
+            <el-button
+              class="item"
+              type="primary"
+              :disabled="readonly"
+              @click="createDialog.visible=true"
+            >
+              新建附件
+            </el-button>
+            <el-button
+              class="item"
+              type="success"
+              @click="handleSearch"
+            >
+              刷新附件
+            </el-button>
+            <el-divider direction="vertical"/>
+            <el-select
+              class="select"
+              v-model="orderSelector.model"
+              @change="handleSearch"
+            >
+              <el-option
+                v-for="item in orderSelector.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
               />
-              <el-button
-                class="table-button"
-                size="mini"
-                icon="el-icon-edit"
-                type="primary"
-                :disabled="!fileRowEditEnabled(row)"
-                @click="handleFileEdit(row)"
+            </el-select>
+            <div v-if="mode==='DEFAULT'" style="flex-grow: 1"/>
+            <el-button
+              class="item icon-button"
+              v-if="mode==='DEFAULT'"
+              type="info"
+              @click="handlePanelFloatyButtonClicked"
+            >
+              <i class="iconfont">&#xffd3;</i>
+            </el-button>
+          </div>
+        </template>
+        <template v-slot:default>
+          <table-panel
+            class="table"
+            :page-size.sync="table.pageSize"
+            :entity-count="parseInt(table.entities.count)"
+            :current-page.sync="table.currentPage"
+            :page-sizes="[10,15,20,30]"
+            :table-data="table.entities.data"
+            :operate-column-width="130"
+            :show-contextmenu="true"
+            :contextmenu-width="100"
+            @onPagingAttributeChanged="handlePagingAttributeChanged"
+          >
+            <template v-slot:default>
+              <el-table-column
+                label="图标"
+                width="53px"
+                :resizable="false"
+              >
+                <template v-slot:default="{row}">
+                  <div class="icon-wrapper">
+                    <!--suppress JSUnresolvedVariable -->
+                    <i class="iconfont icon">{{ row.origin_name | fileType }}</i>
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="origin_name"
+                label="文件名称"
+                show-tooltip-when-overflow
               />
-              <el-button
-                class="table-button"
-                size="mini"
-                icon="el-icon-download"
-                type="success"
-                @click="handleFileDownload(row)"
+              <el-table-column
+                prop="length"
+                label="大小"
+                width="95px"
+                show-tooltip-when-overflow
+                :formatter="unitFormatter"
               />
-              <el-button
-                class="table-button"
-                size="mini"
-                icon="el-icon-delete"
-                type="danger"
-                :disabled="!fileRowDeleteEnabled"
-                @click="handleFileDelete(row)"
+              <el-table-column
+                prop="inspected_date"
+                label="查看日期"
+                width="180px"
+                show-tooltip-when-overflow
+                :formatter="timestampFormatter"
               />
-            </el-button-group>
-          </template>
-          <template v-slot:contextmenu="{row,close}">
-            <ul>
-              <li
-                v-if="fileRowInspectEnabled(row)"
-                @click="handleFileInspectFloatyContextmenuClicked(row,close)"
-              >
-                弹窗查看...
-              </li>
-              <li
-                v-if="fileRowEditEnabled(row)"
-                @click="handleFileEditFloatyContextmenuClicked(row,close)"
-              >
-                弹窗编辑...
-              </li>
-              <el-divider v-if="fileRowInspectEnabled(row)||fileRowEditEnabled(row)"/>
-              <li
-                v-if="fileRowInspectEnabled(row)"
-                @click="handleFileInspectContextmenuClicked(row,close)"
-              >
-                查看...
-              </li>
-              <li
-                v-if="fileRowEditEnabled(row)"
-                @click="handleFileEditContextmenuClicked(row,close)"
-              >
-                编辑...
-              </li>
-              <el-divider v-if="fileRowInspectEnabled(row)||fileRowEditEnabled(row)"/>
-              <li @click="handleFileDownloadContextmenuClicked(row,close)">
-                下载...
-              </li>
-              <li
-                v-if="fileRowDeleteEnabled"
-                @click="handleFileDeleteContextmenuClicked(row,close)"
-              >
-                删除...
-              </li>
-            </ul>
-          </template>
-        </table-panel>
-      </template>
-    </header-layout-panel>
+              <el-table-column
+                prop="modified_date"
+                label="编辑日期"
+                width="180px"
+                show-tooltip-when-overflow
+                :formatter="timestampFormatter"
+              />
+              <el-table-column
+                prop="created_date"
+                label="创建日期"
+                width="180px"
+                show-tooltip-when-overflow
+                :formatter="timestampFormatter"
+              />
+              <el-table-column
+                prop="remark"
+                label="备注"
+                show-tooltip-when-overflow
+              />
+            </template>
+            <template v-slot:operateColumn="{row}">
+              <el-button-group class=operate-column>
+                <el-button
+                  class="table-button"
+                  size="mini"
+                  icon="el-icon-search"
+                  type="success"
+                  :disabled="!fileRowInspectEnabled(row)"
+                  @click="handleFileInspect(row)"
+                />
+                <el-button
+                  class="table-button"
+                  size="mini"
+                  icon="el-icon-edit"
+                  type="primary"
+                  :disabled="!fileRowEditEnabled(row)"
+                  @click="handleFileEdit(row)"
+                />
+                <el-button
+                  class="table-button"
+                  size="mini"
+                  icon="el-icon-download"
+                  type="success"
+                  @click="handleFileDownload(row)"
+                />
+                <el-button
+                  class="table-button"
+                  size="mini"
+                  icon="el-icon-delete"
+                  type="danger"
+                  :disabled="!fileRowDeleteEnabled"
+                  @click="handleFileDelete(row)"
+                />
+              </el-button-group>
+            </template>
+            <template v-slot:contextmenu="{row,close}">
+              <ul>
+                <li
+                  v-if="fileRowInspectEnabled(row)"
+                  @click="handleFileInspectFloatyContextmenuClicked(row,close)"
+                >
+                  弹窗查看...
+                </li>
+                <li
+                  v-if="fileRowEditEnabled(row)"
+                  @click="handleFileEditFloatyContextmenuClicked(row,close)"
+                >
+                  弹窗编辑...
+                </li>
+                <el-divider v-if="fileRowInspectEnabled(row)||fileRowEditEnabled(row)"/>
+                <li
+                  v-if="fileRowInspectEnabled(row)"
+                  @click="handleFileInspectContextmenuClicked(row,close)"
+                >
+                  查看...
+                </li>
+                <li
+                  v-if="fileRowEditEnabled(row)"
+                  @click="handleFileEditContextmenuClicked(row,close)"
+                >
+                  编辑...
+                </li>
+                <el-divider v-if="fileRowInspectEnabled(row)||fileRowEditEnabled(row)"/>
+                <li @click="handleFileDownloadContextmenuClicked(row,close)">
+                  下载...
+                </li>
+                <li
+                  v-if="fileRowDeleteEnabled"
+                  @click="handleFileDeleteContextmenuClicked(row,close)"
+                >
+                  删除...
+                </li>
+              </ul>
+            </template>
+          </table-panel>
+        </template>
+      </header-layout-panel>
+    </div>
+    <file-upload-dialog
+      title="上传文件"
+      :visible.sync="uploadDialog.visible"
+      @onConfirmed="handleUploadConfirmed"
+    />
+    <file-create-dialog
+      title="新建文件"
+      :visible.sync="createDialog.visible"
+      @onConfirmed="handleCreateConfirmed"
+    />
   </div>
-  <file-upload-dialog
-    title="上传文件"
-    :visible.sync="uploadDialog.visible"
-    @onConfirmed="handleUploadConfirmed"
-  />
-  <file-create-dialog
-    title="新建文件"
-    :visible.sync="createDialog.visible"
-    @onConfirmed="handleCreateConfirmed"
-  />
-</div>
 </template>
 
 <script>
+import axios from 'axios';
+
+import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
+
 import TablePanel from '@/components/layout/TablePanel.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
 import FileCreateDialog from '@/components/file/FileCreateDialog.vue';
@@ -222,14 +226,13 @@ import {
   childForItemInspectedDateDesc,
   childForItemModifiedDateDesc,
   childForItemOriginNameAsc,
-  download,
   remove,
+  requestItemFileStreamVoucher,
   upload,
+  uploadStream,
 } from '@/api/assets/itemFile';
 import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
-
-import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
   name: 'ItemFilePanel',
@@ -467,16 +470,22 @@ export default {
       this.handleFileEdit(row);
     },
     handleFileDownload(attachmentFileInfo) {
-      download(attachmentFileInfo.key.long_id)
-        .then((blob) => {
-          // noinspection JSUnresolvedVariable
-          const fileName = attachmentFileInfo.origin_name;
-          const link = document.createElement('a');
-          // noinspection JSCheckFunctionSignatures
-          link.href = window.URL.createObjectURL(blob);
-          link.download = fileName;
-          link.click();
-          window.URL.revokeObjectURL(link.href);
+      resolveResponse(requestItemFileStreamVoucher(attachmentFileInfo.key.long_id))
+        .then((voucherKey) => {
+          // 进行提示。
+          this.$message({
+            showClose: true,
+            message: '后台正在准备文件，文件越大，准备时间越长，请耐心等待...',
+            type: 'success',
+            center: true,
+            duration: 10000,
+          });
+          // 执行下载。
+          const iframe = document.createElement('iframe');
+          iframe.setAttribute('hidden', 'hidden');
+          document.body.appendChild(iframe);
+          const url = `${axios.defaults.baseURL}/assets/item-file/download-by-voucher?voucher-id=${voucherKey.long_id}`;
+          iframe.setAttribute('src', url);
         });
     },
     handleFileDownloadContextmenuClicked(row, close) {
@@ -524,7 +533,7 @@ export default {
       files.forEach((file) => {
         const formData = new FormData();
         formData.append('file', file.blob, file.name);
-        promises.push(resolveResponse(upload(this.itemId, formData)));
+        promises.push(resolveResponse(uploadStream(this.itemId, formData)));
       });
       Promise.all(promises)
         .then(() => {
@@ -600,7 +609,7 @@ export default {
 </script>
 
 <style scoped>
-.item-file-panel-container{
+.item-file-panel-container {
   height: 100%;
   width: 100%;
   background: #FFFFFF;
@@ -660,7 +669,7 @@ export default {
 }
 
 /*noinspection CssUnusedSymbol*/
-.table >>> .contextmenu .el-divider--horizontal{
+.table >>> .contextmenu .el-divider--horizontal {
   margin-top: 1px;
   margin-bottom: 1px;
 }

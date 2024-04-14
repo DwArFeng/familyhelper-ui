@@ -45,6 +45,10 @@ export function childForItemCreatedDateAsc(itemKey, page, rows) {
     });
 }
 
+export function requestItemFileStreamVoucher(itemFileKey) {
+    return post('assets', `item-file/${itemFileKey}/request-item-file-stream-voucher/`, {});
+}
+
 export function download(key) {
     return getBlob('assets', `item-file/${key}/download/`, {});
 }
@@ -53,8 +57,16 @@ export function upload(itemKey, formData) {
     return postFormData('assets', `item/${itemKey}/item-file/upload/`, formData);
 }
 
+export function uploadStream(itemId, formData) {
+    return postFormData('assets', `item/${itemId}/item-file/upload-stream/`, formData);
+}
+
 export function update(itemFileKey, formData) {
     return postFormData('assets', `/item-file/${itemFileKey}/update/`, formData);
+}
+
+export function updateStream(itemFileId, formData) {
+    return postFormData('assets', `/item-file/${itemFileId}/update-stream/`, formData);
 }
 
 export function remove(key) {
