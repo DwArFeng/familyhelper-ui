@@ -94,20 +94,22 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import ImageUploadEditDialog from '@/components/image/ImageUploadEditDialog.vue';
 
+import { dataSizePreset, formatUnit } from '@/util/number';
+import { formatTimestamp } from '@/util/timestamp';
 import {
   childForCertificate,
-  downloadFile,
   downloadThumbnail,
   remove,
-  upload,
+  requestCertificateFileStreamVoucher,
+  uploadStream,
 } from '@/api/clannad/certificateFile';
 import resolveResponse from '@/util/response';
-import { formatTimestamp } from '@/util/timestamp';
-import { dataSizePreset, formatUnit } from '@/util/number';
 
 export default {
   name: 'CertificateFilePanel',
@@ -209,7 +211,7 @@ export default {
     handleImageUploadConfirmed(fileName, blob) {
       const formData = new FormData();
       formData.append('file', blob, fileName);
-      resolveResponse(upload(this.certificate.key.long_id, formData))
+      resolveResponse(uploadStream(this.certificate.key.long_id, formData))
         .then(() => {
           this.$message({
             showClose: true,
@@ -255,16 +257,22 @@ export default {
         });
     },
     handleFileDownload(fileInfo) {
-      downloadFile(fileInfo.key.long_id)
-        .then((blob) => {
-          // noinspection JSUnresolvedVariable
-          const fileName = fileInfo.origin_name;
-          const link = document.createElement('a');
-          // noinspection JSCheckFunctionSignatures
-          link.href = window.URL.createObjectURL(blob);
-          link.download = fileName;
-          link.click();
-          window.URL.revokeObjectURL(link.href);
+      resolveResponse(requestCertificateFileStreamVoucher(fileInfo.key.long_id))
+        .then((voucherKey) => {
+          // 进行提示。
+          this.$message({
+            showClose: true,
+            message: '后台正在准备文件，文件越大，准备时间越长，请耐心等待...',
+            type: 'success',
+            center: true,
+            duration: 10000,
+          });
+          // 执行下载。
+          const iframe = document.createElement('iframe');
+          iframe.setAttribute('hidden', 'hidden');
+          document.body.appendChild(iframe);
+          const url = `${axios.defaults.baseURL}/clannad/certificate-file/download-file-by-voucher?voucher-id=${voucherKey.long_id}`;
+          iframe.setAttribute('src', url);
         });
     },
     mayShowNotify() {

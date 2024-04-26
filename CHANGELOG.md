@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化页面。
+  - 我与家庭 -> 证件管理右侧证件照片面板支持大文件上传/下载。
+
 - 优化 `src/api/assets/itemFile.js` 模块中部分 api 的代码结构。
   - src/api/assets/itemFile.js。
 

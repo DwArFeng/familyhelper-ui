@@ -21,12 +21,20 @@ export function downloadFile(key) {
     return getBlob('clannad', `certificate-file/${key}/download-file/`, {});
 }
 
+export function requestCertificateFileStreamVoucher(certificateFileKey) {
+    return post('clannad', `certificate-file/${certificateFileKey}/request-certificate-file-stream-voucher/`, {});
+}
+
 export function downloadThumbnail(key) {
     return getBlob('clannad', `certificate-file/${key}/download-thumbnail/`, {});
 }
 
 export function upload(certificateKey, formData) {
     return postFormData('clannad', `certificate/${certificateKey}/certificate-file/upload/`, formData);
+}
+
+export function uploadStream(certificateKey, formData) {
+    return postFormData('clannad', `certificate/${certificateKey}/certificate-file/upload-stream/`, formData);
 }
 
 export function remove(key) {
