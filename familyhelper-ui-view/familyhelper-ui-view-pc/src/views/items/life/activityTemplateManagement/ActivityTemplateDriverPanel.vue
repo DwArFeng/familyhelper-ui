@@ -66,6 +66,16 @@
               />
               <el-table-column
                 prop="generate_flag"
+                label="提醒活动"
+                :formatter="booleanFormatter"
+              />
+              <el-table-column
+                prop="remind_scope_type"
+                label="提醒范围"
+                :formatter="remindScopeTypeFormatter"
+              />
+              <el-table-column
+                prop="generate_flag"
                 label="生成活动"
                 :formatter="booleanFormatter"
               />
@@ -147,6 +157,28 @@
           v-model="maintainDialog.anchorEntity.param"
           :readonly="maintainDialog.mode === 'INSPECT'"
         />
+      </el-form-item>
+      <el-form-item label="提醒活动" prop="remind_flag">
+        <el-switch
+          v-model="maintainDialog.anchorEntity.remind_flag"
+          active-text="是"
+          inactive-text="否"
+          :disabled="maintainDialog.mode === 'INSPECT'"
+        />
+      </el-form-item>
+      <el-form-item label="提醒范围" prop="remind_scope_type">
+        <el-select
+          v-model="maintainDialog.anchorEntity.remind_scope_type"
+          placeholder="请选择"
+          :disabled="maintainDialog.mode === 'INSPECT' || !maintainDialog.anchorEntity.remind_flag"
+        >
+          <el-option
+            v-for="indicator in remindScopeIndicators"
+            :key="indicator.key"
+            :label="indicator.label"
+            :value="indicator.key"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item label="生成活动" prop="generate_flag">
         <el-switch
@@ -265,6 +297,8 @@ export default {
           enabled: false,
           type: '',
           param: '',
+          remind_flag: false,
+          remind_scope_type: 0,
           generate_flag: false,
           remark: '',
         },
@@ -282,6 +316,11 @@ export default {
       supportDialog: {
         visible: false,
       },
+      remindScopeIndicators: [
+        { key: 0, label: '仅自己' },
+        { key: 1, label: '写权限者' },
+        { key: 2, label: '读权限者' },
+      ],
     };
   },
   methods: {
@@ -328,6 +367,16 @@ export default {
       }
       return value ? '是' : '否';
     },
+    remindScopeTypeFormatter(row, column) {
+      const value = row[column.property];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const indicator of this.remindScopeIndicators) {
+        if (indicator.key === value) {
+          return indicator.label;
+        }
+      }
+      return '（未知）';
+    },
     handleShowEntityCreateDialog() {
       this.showDialog('CREATE');
     },
@@ -360,8 +409,10 @@ export default {
         this.maintainDialog.anchorEntity.enabled,
         this.maintainDialog.anchorEntity.type,
         this.maintainDialog.anchorEntity.param,
+        this.maintainDialog.anchorEntity.remind_flag,
         this.maintainDialog.anchorEntity.generate_flag,
         this.maintainDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.remind_scope_type,
       ))
         .then(() => {
           this.$message({
@@ -388,8 +439,10 @@ export default {
         this.maintainDialog.anchorEntity.enabled,
         this.maintainDialog.anchorEntity.type,
         this.maintainDialog.anchorEntity.param,
+        this.maintainDialog.anchorEntity.remind_flag,
         this.maintainDialog.anchorEntity.generate_flag,
         this.maintainDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.remind_scope_type,
       ))
         .then(() => {
           this.$message({

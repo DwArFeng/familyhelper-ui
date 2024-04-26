@@ -8,7 +8,9 @@ export function inspect(key) {
     return get('life', `activity-template-driver-info/${key}/`, {});
 }
 
-export function insert(key, activityTemplateKey, enabled, type, param, generateFlag, remark) {
+export function insert(
+    key, activityTemplateKey, enabled, type, param, remindFlag, generateFlag, remark, remindScopeType
+) {
     let finalKey = {long_id: key};
     if (key === '') {
         finalKey = null;
@@ -23,8 +25,10 @@ export function insert(key, activityTemplateKey, enabled, type, param, generateF
         enabled,
         type,
         param,
+        remind_flag: remindFlag,
         generate_flag: generateFlag,
         remark,
+        remind_scope_type: remindScopeType,
     });
 }
 
@@ -32,7 +36,9 @@ export function remove(key) {
     return del('life', `activity-template-driver-info/${key}/`, {});
 }
 
-export function update(key, activityTemplateKey, enabled, type, param, generateFlag, remark) {
+export function update(
+    key, activityTemplateKey, enabled, type, param, remindFlag, generateFlag, remark, remindScopeType
+) {
     let finalActivityTemplateKey = {long_id: activityTemplateKey};
     if (activityTemplateKey === '') {
         finalActivityTemplateKey = null;
@@ -45,8 +51,10 @@ export function update(key, activityTemplateKey, enabled, type, param, generateF
         enabled,
         type,
         param,
+        remind_flag: remindFlag,
         generate_flag: generateFlag,
         remark,
+        remind_scope_type: remindScopeType,
     });
 }
 
