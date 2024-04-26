@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 优化 `src/api/assets/itemFile.js` 模块中部分 api 的代码结构。
+  - src/api/assets/itemFile.js。
 
 #### Bug修复
 

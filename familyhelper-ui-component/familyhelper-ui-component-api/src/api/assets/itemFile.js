@@ -45,12 +45,12 @@ export function childForItemCreatedDateAsc(itemKey, page, rows) {
     });
 }
 
-export function requestItemFileStreamVoucher(itemFileKey) {
-    return post('assets', `item-file/${itemFileKey}/request-item-file-stream-voucher/`, {});
-}
-
 export function download(key) {
     return getBlob('assets', `item-file/${key}/download/`, {});
+}
+
+export function requestItemFileStreamVoucher(itemFileKey) {
+    return post('assets', `item-file/${itemFileKey}/request-item-file-stream-voucher/`, {});
 }
 
 export function upload(itemKey, formData) {
