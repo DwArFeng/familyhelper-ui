@@ -211,6 +211,10 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+import { LIFE_ACTIVITY_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
+
 import TablePanel from '@/components/layout/TablePanel.vue';
 import FileUploadDialog from '@/components/file/FileUploadDialog.vue';
 import FileCreateDialog from '@/components/file/FileCreateDialog.vue';
@@ -224,14 +228,13 @@ import {
   childForActivityInspectedDateDesc,
   childForActivityModifiedDateDesc,
   childForActivityOriginNameAsc,
-  download,
   remove,
+  requestActivityFileStreamVoucher,
   upload,
+  uploadStream,
 } from '@/api/life/activityFile';
 import resolveResponse from '@/util/response';
 import { fileType } from '@/util/file';
-
-import { LIFE_ACTIVITY_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
   name: 'ActivityFilePanel',
@@ -469,16 +472,22 @@ export default {
       this.handleFileEdit(row);
     },
     handleFileDownload(attachmentFileInfo) {
-      download(attachmentFileInfo.key.long_id)
-        .then((blob) => {
-          // noinspection JSUnresolvedVariable
-          const fileName = attachmentFileInfo.origin_name;
-          const link = document.createElement('a');
-          // noinspection JSCheckFunctionSignatures
-          link.href = window.URL.createObjectURL(blob);
-          link.download = fileName;
-          link.click();
-          window.URL.revokeObjectURL(link.href);
+      resolveResponse(requestActivityFileStreamVoucher(attachmentFileInfo.key.long_id))
+        .then((voucherKey) => {
+          // 进行提示。
+          this.$message({
+            showClose: true,
+            message: '后台正在准备文件，文件越大，准备时间越长，请耐心等待...',
+            type: 'success',
+            center: true,
+            duration: 10000,
+          });
+          // 执行下载。
+          const iframe = document.createElement('iframe');
+          iframe.setAttribute('hidden', 'hidden');
+          document.body.appendChild(iframe);
+          const url = `${axios.defaults.baseURL}/life/activity-file/download-by-voucher?voucher-id=${voucherKey.long_id}`;
+          iframe.setAttribute('src', url);
         });
     },
     handleFileDownloadContextmenuClicked(row, close) {
@@ -526,7 +535,7 @@ export default {
       files.forEach((file) => {
         const formData = new FormData();
         formData.append('file', file.blob, file.name);
-        promises.push(resolveResponse(upload(this.activityId, formData)));
+        promises.push(resolveResponse(uploadStream(this.activityId, formData)));
       });
       Promise.all(promises)
         .then(() => {

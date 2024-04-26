@@ -49,12 +49,24 @@ export function download(key) {
     return getBlob('life', `activity-file/${key}/download/`, {});
 }
 
+export function requestActivityFileStreamVoucher(activityFileKey) {
+    return post('life', `activity-file/${activityFileKey}/request-activity-file-stream-voucher/`, {});
+}
+
 export function upload(activityKey, formData) {
     return postFormData('life', `activity/${activityKey}/activity-file/upload/`, formData);
 }
 
+export function uploadStream(activityKey, formData) {
+    return postFormData('life', `activity/${activityKey}/activity-file/upload-stream/`, formData);
+}
+
 export function update(activityFileKey, formData) {
     return postFormData('life', `/activity-file/${activityFileKey}/update/`, formData);
+}
+
+export function updateStream(activityFileKey, formData) {
+    return postFormData('life', `/activity-file/${activityFileKey}/update-stream/`, formData);
 }
 
 export function remove(key) {
