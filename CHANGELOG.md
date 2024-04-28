@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 依赖升级。
+  - 升级 `slf4j` 依赖版本为 `1.7.36` 以规避漏洞。
+
 - familyhelper-ui-view-pc 模块 views/item 下通用组件优化。
   - miscellaneous/fileEditor/FileEditPanel.vue 文件编辑未保存时提交按钮强调显示。
 

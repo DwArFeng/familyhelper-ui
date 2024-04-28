@@ -27,7 +27,7 @@
         <!-- 进行版本声明 -->
         <!-- 集中定义依赖版本号 -->
         <spring.version>5.3.31</spring.version>
-        <slf4j.version>1.7.5</slf4j.version>
+        <slf4j.version>1.7.36</slf4j.version>
         <log4j2.version>2.17.2</log4j2.version>
         <!-- Maven 插件版本声明 -->
         <maven-clean-plugin.version>2.5</maven-clean-plugin.version>
