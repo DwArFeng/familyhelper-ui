@@ -12,6 +12,7 @@
       </el-tab-pane>
       <el-tab-pane label="笔记" name="note">
         <item-note-panel
+          ref="itemNotePanel"
           mode="DEFAULT"
           :item-id="itemId"
           :readonly="readonly"
@@ -59,6 +60,7 @@
       />
       <item-note-panel
         v-if="panelFloaty.type===1"
+        ref="floatyItemNotePanel"
         mode="FLOATY"
         :item-id="itemId"
         :readonly="readonly"
@@ -175,8 +177,14 @@ export default {
     handleItemPropertyUpdated() {
       this.$emit('onItemPropertyUpdated');
     },
-    handleItemNoteCommitted() {
+    handleItemNoteCommitted(mode) {
       this.$emit('onItemNoteCommitted');
+      // 根据 mode, 同步另一个笔记面板。
+      if (mode === 'FLOATY') {
+        this.$refs.itemNotePanel.handleSearch();
+      } else if (this.$refs.floatyItemNotePanel) {
+        this.$refs.floatyItemNotePanel.handleSearch();
+      }
     },
     handleSaveAsAttachmentCompleted() {
       this.$emit('onSaveAsAttachmentCompleted');

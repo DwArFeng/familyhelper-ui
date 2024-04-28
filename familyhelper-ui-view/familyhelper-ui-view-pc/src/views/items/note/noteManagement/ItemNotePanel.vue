@@ -219,7 +219,7 @@ export default {
             center: true,
           });
           this.editor.backupContent = this.editor.content;
-          this.$emit('onItemNoteCommitted');
+          this.$emit('onItemNoteCommitted', this.mode);
         })
         .catch(() => {
         })
