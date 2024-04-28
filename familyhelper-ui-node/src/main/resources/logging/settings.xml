@@ -8,7 +8,7 @@
         <property name="console.level">INFO</property>
         <!--############################################# Rolling file ############################################-->
         <!-- 滚动文件的目录 -->
-        <property name="rolling_file.dir">logs/familyhelper-webapi</property>
+        <property name="rolling_file.dir">logs/familyhelper-ui</property>
         <!-- 滚动文件的编码 -->
         <property name="rolling_file.encoding">UTF-8</property>
         <!-- 滚动文件的触发间隔（小时） -->
