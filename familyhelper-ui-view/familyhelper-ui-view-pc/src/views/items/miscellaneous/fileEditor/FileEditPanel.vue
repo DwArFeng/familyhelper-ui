@@ -169,15 +169,16 @@ export default {
       }
       return false;
     },
+    paramCombination() {
+      return {
+        type: this.type,
+        id: this.id,
+        mode: this.mode,
+      };
+    },
   },
   watch: {
-    type() {
-      this.handleInspect();
-    },
-    mode() {
-      this.handleInspect();
-    },
-    id() {
+    paramCombination() {
       this.handleInspect();
     },
   },

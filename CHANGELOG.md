@@ -21,7 +21,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复 familyhelper-ui-view-pc 模块 views/item 下通用组件的 bug。
+  - miscellaneous/fileEditor/FileEditPanel.vue 中 `type`，`id`，`mode` 同时变化时，文件多次下载的 bug。
 
 #### 功能移除
 
