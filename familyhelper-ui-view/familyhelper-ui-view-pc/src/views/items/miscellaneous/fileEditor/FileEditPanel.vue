@@ -13,10 +13,12 @@
         <div class="operate-area">
           <el-button
             v-if="editable"
+            class="confirm-button"
             type="primary"
             @click="handleCommitButtonClicked"
           >
-            提交
+            <span class="unsaved-emphasis" v-if="contentChanged"/>
+            <span class="text">提交</span>
           </el-button>
           <el-button
             v-if="editable"
@@ -44,18 +46,21 @@
           ref="rtfSubEditor"
           :blob="fileIndicator.blob"
           :readonly="mode==='INSPECT'"
+          :contented-changed.sync="contentChangedIndicator.rtf"
         />
         <txt-sub-editor
           v-else-if="txtSubEditorUsing"
           ref="txtSubEditor"
           :blob="fileIndicator.blob"
           :readonly="mode==='INSPECT'"
+          :contented-changed.sync="contentChangedIndicator.txt"
         />
         <mmd-sub-editor
           v-else-if="mmdSubEditorUsing"
           ref="mmdSubEditor"
           :blob="fileIndicator.blob"
           :readonly="mode==='INSPECT'"
+          :contented-changed.sync="contentChangedIndicator.mmd"
         />
         <div class="placeholder" v-else>
           未能找到扩展名为 {{ extension }} 的{{ mode === 'INSPECT' ? '查看器' : '编辑器' }}
@@ -154,6 +159,16 @@ export default {
     mmdSubEditorUsing() {
       return this.subEditor.mmdEditorExtensions.indexOf(this.extension) >= 0;
     },
+    contentChanged() {
+      if (this.rtfSubEditorUsing) {
+        return this.contentChangedIndicator.rtf;
+      } if (this.txtSubEditorUsing) {
+        return this.contentChangedIndicator.txt;
+      } if (this.mmdSubEditorUsing) {
+        return this.contentChangedIndicator.mmd;
+      }
+      return false;
+    },
   },
   watch: {
     type() {
@@ -199,6 +214,11 @@ export default {
           coolDown: false,
           timeoutHandle: null,
         },
+      },
+      contentChangedIndicator: {
+        rtf: false,
+        txt: false,
+        mmd: false,
       },
     };
   },
@@ -478,6 +498,32 @@ export default {
 .main-container .editor-header .icon {
   font-size: 32px;
   user-select: none;
+}
+
+.main-container .editor-header .operate-area{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.main-container .editor-header .operate-area .confirm-button {
+  height: 40px;
+  width: 70px;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-container .editor-header .confirm-button .unsaved-emphasis {
+  background: #fff;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  margin-left: -6px;
 }
 
 .main-container .editor-body {

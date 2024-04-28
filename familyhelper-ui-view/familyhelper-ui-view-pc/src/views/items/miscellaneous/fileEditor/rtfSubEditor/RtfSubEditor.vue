@@ -27,6 +27,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    contentedChanged: {
+      type: Boolean,
+      default: false,
+    },
   },
   watch: {
     blob() {
@@ -38,6 +42,9 @@ export default {
       }
       this.editor.isReadOnly = value;
     },
+    content() {
+      this.syncContentChanged();
+    },
   },
   data() {
     return {
@@ -45,23 +52,28 @@ export default {
       editor: null,
       content: '',
       busyFlag: false,
+      backupContent: '',
     };
   },
   methods: {
     syncBlob() {
       if (this.blob === null) {
         this.content = '';
+        this.backupContent = '';
       }
       this.busyFlag = true;
       this.blob.text()
         .then((text) => {
           this.content = text;
+          this.backupContent = text;
         })
         .finally(() => {
           this.busyFlag = false;
         });
     },
     contentToBlob() {
+      this.backupContent = this.content;
+      this.$emit('update:contentedChanged', false);
       return new Blob([this.content], { type: 'text/plain' });
     },
     handleEditorReady(editor) {
@@ -76,6 +88,9 @@ export default {
         }
       });
       this.editor.isReadOnly = this.readonly;
+    },
+    syncContentChanged() {
+      this.$emit('update:contentedChanged', this.content !== this.backupContent);
     },
   },
   mounted() {

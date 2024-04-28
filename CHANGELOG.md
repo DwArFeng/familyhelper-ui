@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- familyhelper-ui-view-pc 模块 views/item 下通用组件优化。
+  - miscellaneous/fileEditor/FileEditPanel.vue 文件编辑未保存时提交按钮强调显示。
+
 - 增加页面功能。
   - 日常生活 -> 活动模板管理右侧驱动页签下驱动面板支持提醒功能及提醒范围。
 

@@ -52,6 +52,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    contentedChanged: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     overlayStyle() {
