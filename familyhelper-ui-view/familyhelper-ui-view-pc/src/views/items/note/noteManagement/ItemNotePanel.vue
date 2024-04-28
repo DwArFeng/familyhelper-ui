@@ -22,11 +22,13 @@
             </el-button>
             <div style="flex-grow: 1"/>
             <el-button
+              class="confirm-button"
               type="primary"
               :disabled="editorReadOnly"
               @click="handleCommitButtonClicked"
             >
-              提交
+              <span class="unsaved-emphasis" v-if="contentChanged"/>
+              <span class="text">提交</span>
             </el-button>
             <el-button
               type="danger"
@@ -106,6 +108,9 @@ export default {
     editorReadOnly() {
       return this.readonly || !this.header.editorEditable;
     },
+    contentChanged() {
+      return this.editor.content !== this.editor.backupContent;
+    },
   },
   watch: {
     itemId() {
@@ -130,6 +135,7 @@ export default {
         editorClass: ClassicEditor,
         content: '',
         instance: null,
+        backupContent: '',
       },
       hotKey: {
         commit: {
@@ -163,7 +169,7 @@ export default {
       this.downloadNoteFile();
     },
     handleResetButtonClicked() {
-      this.downloadNoteFile();
+      this.editor.content = this.editor.backupContent;
     },
     handleCommitButtonClicked() {
       this.uploadNoteFile();
@@ -191,6 +197,7 @@ export default {
         .then((blob) => blob.text())
         .then((text) => {
           this.editor.content = text;
+          this.editor.backupContent = text;
         })
         .catch(() => {
         })
@@ -211,6 +218,7 @@ export default {
             type: 'success',
             center: true,
           });
+          this.editor.backupContent = this.editor.content;
           this.$emit('onItemNoteCommitted');
         })
         .catch(() => {
@@ -292,6 +300,26 @@ export default {
 .header-container .icon-button {
   padding-left: 12px;
   padding-right: 12px;
+}
+
+.header-container .confirm-button {
+  height: 40px;
+  width: 70px;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-container .confirm-button  .unsaved-emphasis {
+  background: #fff;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  margin-left: -6px;
 }
 
 .editor-wrapper {
