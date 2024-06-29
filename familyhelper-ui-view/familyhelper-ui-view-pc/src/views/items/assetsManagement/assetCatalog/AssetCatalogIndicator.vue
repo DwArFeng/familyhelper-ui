@@ -38,11 +38,10 @@ import { mapGetters } from 'vuex';
 import AssetCatalogSelectDialog
 from '@/views/items/assetsManagement/assetCatalog/AssetCatalogSelectDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import { exists, inspectDisp } from '@/api/assets/assetCatalog';
 
 import resolveResponse from '@/util/response';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
 const SETTINGREPO_CATEGORY_ID = 'assets_management.default_asset_catalog';
 
@@ -97,7 +96,6 @@ export default {
         SETTINGREPO_CATEGORY_ID,
         [this.me],
         this.assetCatalogId,
-        `更新时间: ${formatTimestamp(currentTimestamp())}`,
       ))
         .catch(() => {
         });

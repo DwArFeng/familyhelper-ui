@@ -3,8 +3,7 @@
 
 import vim from '@/vim';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 
 import resolveResponse from '@/util/response';
 
@@ -235,7 +234,6 @@ const actions = {
       SETTINGREPO_CATEGORY_ID,
       [accountId],
       JSON.stringify(persistenceData),
-      `更新时间: ${formatTimestamp(currentTimestamp())}`,
     ));
   },
   restorePersistenceData: ({ commit }, accountId) => {
@@ -333,7 +331,6 @@ const beforeUnloadHook = (store) => {
     SETTINGREPO_CATEGORY_ID,
     [accountId],
     JSON.stringify(persistenceData),
-    `更新时间: ${formatTimestamp(currentTimestamp())}`,
   ))
     .catch(() => {
     });

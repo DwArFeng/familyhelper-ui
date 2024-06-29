@@ -61,8 +61,7 @@ import ItemOverlookPanel from '@/views/items/life/activityDataManagement/ItemOve
 import ItemRecordPanel from '@/views/items/life/activityDataManagement/ItemRecordPanel.vue';
 import FloatyDialog from '@/components/layout/FloatyDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import resolveResponse from '@/util/response';
 
 // noinspection JSAnnotator
@@ -199,10 +198,11 @@ export default {
         return;
       }
       resolveResponse(
-        operatePut(this.upsc,
+        operatePut(
+          this.upsc,
           [this.me],
           JSON.stringify(this.getUserPreference()),
-          `更新时间: ${formatTimestamp(currentTimestamp())}`),
+        ),
       ).then(() => {
         this.$message({
           showClose: true,

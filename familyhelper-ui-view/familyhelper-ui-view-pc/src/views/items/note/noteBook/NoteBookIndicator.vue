@@ -38,11 +38,10 @@ import { mapGetters } from 'vuex';
 import NoteBookSelectDialog
 from '@/views/items/note/noteBook/NoteBookSelectDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import { exists, inspectDisp } from '@/api/note/noteBook';
 
 import resolveResponse from '@/util/response';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
 const SETTINGREPO_CATEGORY_ID = 'note.default_note_book';
 
@@ -97,7 +96,6 @@ export default {
         SETTINGREPO_CATEGORY_ID,
         [this.me],
         this.noteBookId,
-        `更新时间: ${formatTimestamp(currentTimestamp())}`,
       ))
         .catch(() => {
         });

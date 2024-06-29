@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- 更新 `familyhelper-ui-component-api` 模块部分接口以适配新的网络接口版本。
+  - 新增 src/api/settingrepo/textNode.js。
+  - 更新 src/api/settingrepo/settingNode.js。
 
 #### Bug修复
 

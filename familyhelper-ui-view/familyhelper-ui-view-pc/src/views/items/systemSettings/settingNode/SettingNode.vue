@@ -12,12 +12,13 @@
         :current-page.sync="currentPage"
         :page-sizes="[15,20,30,50]"
         :table-data="entities.data"
+        :edit-button-visible="false"
+        :delete-button-visible="false"
+        :operate-column-width="49"
         :show-contextmenu="true"
         :contextmenu-width="100"
         @onPagingAttributeChanged="handlePagingAttributeChanged"
         @onEntityInspect="handleShowEntityInspectDialog"
-        @onEntityEdit="handleShowEntityEditDialog"
-        @onEntityDelete="handleEntityDelete"
       >
         <template v-slot:default>
           <el-table-column
@@ -26,9 +27,16 @@
             show-tooltip-when-overflow
           />
           <el-table-column
-            prop="value"
-            label="值"
-            class-name="single-line"
+            prop="type"
+            label="类型"
+            width="110px"
+            :formatter="typeFormatter"
+          />
+          <el-table-column
+            prop="last_modified_date"
+            label="最近更新日期"
+            show-tooltip-when-overflow
+            :formatter="timestampFormatter"
           />
           <el-table-column
             prop="remark"
@@ -45,23 +53,10 @@
             <li @click="handleEntityInspectContextmenuClicked(row,index,close)">
               查看...
             </li>
-            <li @click="handleEntityEditContextmenuClicked(row,index,close)">
-              编辑...
-            </li>
-            <li @click="handleEntityDeleteContextmenuClicked(row,index,close)">
-              删除...
-            </li>
           </ul>
         </template>
       </table-panel>
       <div class="header-container" slot="header">
-        <el-button
-          class="insert-button"
-          type="primary"
-          @click="handleShowEntityCreateDialog"
-        >
-          新建设置
-        </el-button>
         <el-button
           class="insert-button"
           type="success"
@@ -90,32 +85,36 @@
       </div>
     </border-layout-panel>
     <entity-maintain-dialog
-      :mode="dialogMode"
+      mode="INSPECT"
+      label-width="100px"
       :visible.sync="dialogVisible"
       :entity="anchorEntity"
       :create-rules="createRules"
       :close-on-click-modal="false"
-      @onEntityCreate="handleEntityCreate"
-      @onEntityEdit="handleEntityEdit"
     >
       <el-form-item label="设置节点" prop="key.string_id">
         <el-input
           v-model="anchorEntity.key.string_id"
           oninput="this.value = this.value.toLowerCase()"
-          :disabled="dialogMode !== 'CREATE'"
+          disabled
         />
       </el-form-item>
-      <el-form-item label="值" prop="value">
-        <text-editor
-          class="text-editor"
-          v-model="anchorEntity.value"
-          :readonly="dialogMode === 'INSPECT'"
+      <el-form-item label="类型" prop="type">
+        <el-input
+          v-model="anchorEntity.formatted_type"
+          readonly
+        />
+      </el-form-item>
+      <el-form-item label="最近更新日期" prop="last_modified_date">
+        <el-input
+          v-model="anchorEntity.formatted_last_modified_date"
+          readonly
         />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
         <el-input
           v-model="anchorEntity.remark"
-          :readonly="dialogMode === 'INSPECT'"
+          readonly
         />
       </el-form-item>
     </entity-maintain-dialog>
@@ -126,17 +125,17 @@
 import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import TablePanel from '@/components/layout/TablePanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
-import TextEditor from '@/components/text/TextEditor.vue';
 
 import {
-  all, exists, idLike, insert, remove, update,
+  all, exists, idLike,
 } from '@/api/settingrepo/settingNode';
 import resolveResponse from '@/util/response';
+import { formatTimestamp } from '@/util/timestamp';
 
 export default {
   name: 'SettingNode',
   components: {
-    TextEditor, EntityMaintainDialog, BorderLayoutPanel, TablePanel,
+    EntityMaintainDialog, BorderLayoutPanel, TablePanel,
   },
   data() {
     const keyValidator = (rule, value, callback) => {
@@ -172,13 +171,15 @@ export default {
       currentPage: 0,
       pageSize: 15,
       dialogVisible: false,
-      dialogMode: 'CREATE',
       anchorEntity: {
         key: {
           string_id: '',
         },
-        value: '',
+        type: 0,
+        last_modified_date: 0,
         remark: '',
+        formatted_type: '',
+        formatted_last_modified_date: '',
       },
       createRules: {
         'key.string_id': [
@@ -240,61 +241,6 @@ export default {
       this.entities = res;
       this.currentPage = res.current_page;
     },
-    handleEntityCreate() {
-      resolveResponse(insert(
-        this.anchorEntity.key.string_id,
-        this.anchorEntity.value,
-        this.anchorEntity.remark,
-      ))
-        .then(() => {
-          this.$message({
-            showClose: true,
-            message: `设置节点 ${this.anchorEntity.key.string_id} 创建成功`,
-            type: 'success',
-            center: true,
-          });
-        })
-        .then(() => {
-          this.handleSearch();
-          return Promise.resolve();
-        })
-        .then(() => {
-          this.dialogVisible = false;
-        })
-        .catch(() => {
-        });
-    },
-    handleEntityEdit() {
-      resolveResponse(update(
-        this.anchorEntity.key.string_id,
-        this.anchorEntity.value,
-        this.anchorEntity.remark,
-      ))
-        .then(() => {
-          this.$message({
-            showClose: true,
-            message: `设置节点 ${this.anchorEntity.key.string_id} 更新成功`,
-            type: 'success',
-            center: true,
-          });
-        })
-        .then(() => {
-          this.handleSearch();
-          return Promise.resolve();
-        })
-        .then(() => {
-          this.dialogVisible = false;
-        })
-        .catch(() => {
-        });
-    },
-    handleEntityEditContextmenuClicked(row, index, close) {
-      close();
-      this.handleShowEntityEditDialog(index, row);
-    },
-    handleShowEntityCreateDialog() {
-      this.showDialog('CREATE');
-    },
     handleShowEntityInspectDialog(index, entity) {
       this.syncAnchorEntity(entity);
       this.showDialog('INSPECT');
@@ -303,47 +249,28 @@ export default {
       close();
       this.handleShowEntityInspectDialog(index, row);
     },
-    handleShowEntityEditDialog(index, entity) {
-      this.syncAnchorEntity(entity);
-      this.showDialog('EDIT');
-    },
-    handleEntityDelete(node, entity) {
-      Promise.resolve(entity.key.string_id)
-        .then((res) => this.$confirm('此操作将永久删除此设置节点。<br>'
-          + '<div style="color: #b22222"><b>如果您不知道删除该节点后会产生什么后果，'
-          + '请不要进行操作！</b></div>'
-          + '<b>错误的操作可能导致前端界面、后台出错，甚至崩溃！</b><br>'
-          + '是否继续?',
-        '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          dangerouslyUseHTMLString: true,
-          customClass: 'custom-message-box__w500',
-          type: 'warning',
-        }).then(() => Promise.resolve(res)).catch(() => Promise.reject()))
-        .then((res) => resolveResponse(remove(res)).then(() => res))
-        .then((res) => {
-          this.$message({
-            showClose: true,
-            message: `设置节点 ${res} 删除成功`,
-            type: 'success',
-            center: true,
-          });
-        })
-        .then(() => {
-          this.handleSearch();
-        })
-        .catch(() => {
-        });
-    },
-    handleEntityDeleteContextmenuClicked(row, index, close) {
-      close();
-      this.handleEntityDelete(index, row);
-    },
     syncAnchorEntity(entity) {
       this.anchorEntity.key.string_id = entity.key.string_id;
-      this.anchorEntity.value = entity.value;
+      this.anchorEntity.type = entity.type;
+      this.anchorEntity.last_modified_date = entity.last_modified_date;
       this.anchorEntity.remark = entity.remark;
+      switch (entity.type) {
+        case 0:
+          this.anchorEntity.formatted_type = '文本';
+          break;
+        case 1:
+          this.anchorEntity.formatted_type = '长文本';
+          break;
+        case 2:
+          this.anchorEntity.formatted_type = '图片';
+          break;
+        case 3:
+          this.anchorEntity.formatted_type = '图片列表';
+          break;
+        default:
+          this.anchorEntity.formatted_type = '（未知）';
+      }
+      this.anchorEntity.formatted_last_modified_date = formatTimestamp(entity.last_modified_date);
     },
     showDialog(mode) {
       this.dialogMode = mode;
@@ -362,6 +289,24 @@ export default {
             center: true,
           });
         });
+    },
+    timestampFormatter(row, column) {
+      return formatTimestamp(row[column.property]);
+    },
+    typeFormatter(row, column) {
+      const value = row[column.property];
+      switch (value) {
+        case 0:
+          return '文本';
+        case 1:
+          return '长文本';
+        case 2:
+          return '图片';
+        case 3:
+          return '图片列表';
+        default:
+          return '（未知）';
+      }
     },
   },
   mounted() {
@@ -390,10 +335,6 @@ export default {
 /*noinspection CssUnusedSymbol*/
 .id-search-bar >>> .el-input-group__prepend {
   padding: 0 10px;
-}
-
-.text-editor{
-  height: 300px;
 }
 
 /*noinspection CssUnusedSymbol*/

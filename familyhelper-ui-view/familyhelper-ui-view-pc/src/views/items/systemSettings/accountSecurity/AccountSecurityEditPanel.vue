@@ -89,8 +89,7 @@ from '@/views/items/systemSettings/accountSecurity/DeriveHistoryPanel.vue';
 import LoginStatePanel from '@/views/items/systemSettings/accountSecurity/LoginStatePanel.vue';
 import FloatyDialog from '@/components/layout/FloatyDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import resolveResponse from '@/util/response';
 
 export default {
@@ -233,10 +232,11 @@ export default {
         return;
       }
       resolveResponse(
-        operatePut(this.upsc,
+        operatePut(
+          this.upsc,
           [this.me],
           JSON.stringify(this.getUserPreference()),
-          `更新时间: ${formatTimestamp(currentTimestamp())}`),
+        ),
       ).then(() => {
         this.$message({
           showClose: true,

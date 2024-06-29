@@ -38,11 +38,10 @@ import { mapGetters } from 'vuex';
 import AccountBookSelectDialog
 from '@/views/items/financeManagement/accountBook/AccountBookSelectDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import { exists, inspectDisp } from '@/api/finance/accountBook';
 
 import resolveResponse from '@/util/response';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
 const SETTINGREPO_CATEGORY_ID = 'finance_management.default_account_book';
 
@@ -97,7 +96,6 @@ export default {
         SETTINGREPO_CATEGORY_ID,
         [this.me],
         this.accountBookId,
-        `更新时间: ${formatTimestamp(currentTimestamp())}`,
       ))
         .catch(() => {
         });

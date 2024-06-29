@@ -38,10 +38,9 @@ import { mapGetters } from 'vuex';
 import ActivityDataSetSelectDialog
 from '@/views/items/life/activityDataSet/ActivityDataSetSelectDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import { exists, inspectDisp } from '@/api/life/activityDataSet';
 
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 import resolveResponse from '@/util/response';
 
 const SETTINGREPO_CATEGORY_ID = 'life.default_activity_data_set';
@@ -97,7 +96,6 @@ export default {
         SETTINGREPO_CATEGORY_ID,
         [this.me],
         this.activityDataSetId,
-        `更新时间: ${formatTimestamp(currentTimestamp())}`,
       ))
         .catch(() => {
         });

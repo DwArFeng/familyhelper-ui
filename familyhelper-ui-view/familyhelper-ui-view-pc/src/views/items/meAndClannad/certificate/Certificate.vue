@@ -27,9 +27,8 @@ import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CertificatePanel from '@/views/items/meAndClannad/certificate/CertificatePanel.vue';
 import CertificateFilePanel from '@/views/items/meAndClannad/certificate/CertificateFilePanel.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import resolveResponse from '@/util/response';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
 const SETTINGREPO_UI_PREFERENCE_ID = 'ui_preference.pc.me_and_clannad.certificate';
 
@@ -51,10 +50,11 @@ export default {
           return;
         }
         resolveResponse(
-          operatePut(SETTINGREPO_UI_PREFERENCE_ID,
+          operatePut(
+            SETTINGREPO_UI_PREFERENCE_ID,
             [this.me],
             JSON.stringify(this.uiPreference.data),
-            `更新时间: ${formatTimestamp(currentTimestamp())}`),
+          ),
         ).then(() => {
           this.$message({
             showClose: true,

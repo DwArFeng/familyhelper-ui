@@ -102,8 +102,7 @@ import ItemFilePanel from '@/views/items/assetsManagement/assetBom/ItemFilePanel
 import ItemParamsPanel from '@/views/items/assetsManagement/assetBom/ItemParamsPanel.vue';
 import FloatyDialog from '@/components/layout/FloatyDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import resolveResponse from '@/util/response';
 
 import { ASSETS_ITEM_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
@@ -292,10 +291,11 @@ export default {
         return;
       }
       resolveResponse(
-        operatePut(this.upsc,
+        operatePut(
+          this.upsc,
           [this.me],
           JSON.stringify(this.getUserPreference()),
-          `更新时间: ${formatTimestamp(currentTimestamp())}`),
+        ),
       ).then(() => {
         this.$message({
           showClose: true,

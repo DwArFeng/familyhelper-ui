@@ -47,9 +47,8 @@ from '@/views/items/financeManagement/accountBook/AccountBookIndicator.vue';
 import FundChangePanel from '@/views/items/financeManagement/fundChange/FundChangePanel.vue';
 import BillFilePanel from '@/views/items/financeManagement/fundChange/BillFilePanel.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import resolveResponse from '@/util/response';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
 const SETTINGREPO_UI_PREFERENCE_ID = 'ui_preference.pc.finance_management.fund_change';
 
@@ -72,10 +71,11 @@ export default {
           return;
         }
         resolveResponse(
-          operatePut(SETTINGREPO_UI_PREFERENCE_ID,
+          operatePut(
+            SETTINGREPO_UI_PREFERENCE_ID,
             [this.me],
             JSON.stringify(this.uiPreference.data),
-            `更新时间: ${formatTimestamp(currentTimestamp())}`),
+          ),
         ).then(() => {
           this.$message({
             showClose: true,

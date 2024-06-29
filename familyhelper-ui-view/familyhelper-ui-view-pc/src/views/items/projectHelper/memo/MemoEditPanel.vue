@@ -100,7 +100,7 @@ import MemoRemindPanel from '@/views/items/projectHelper/memo/MemoRemindPanel.vu
 import FloatyDialog from '@/components/layout/FloatyDialog.vue';
 import FileEditPanel from '@/views/items/miscellaneous/fileEditor/FileEditPanel.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 import resolveResponse from '@/util/response';
 
@@ -286,10 +286,12 @@ export default {
         return;
       }
       resolveResponse(
-        operatePut(this.upsc,
+        operatePut(
+          this.upsc,
           [this.me],
           JSON.stringify(this.getUserPreference()),
-          `更新时间: ${formatTimestamp(currentTimestamp())}`),
+          `更新时间: ${formatTimestamp(currentTimestamp())}`,
+        ),
       ).then(() => {
         this.$message({
           showClose: true,

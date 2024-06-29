@@ -38,11 +38,10 @@ import { mapGetters } from 'vuex';
 import ProjectSelectDialog
 from '@/views/items/projectHelper/project/ProjectSelectDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import { exists, inspectDisp } from '@/api/project/project';
 
 import resolveResponse from '@/util/response';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
 const SETTINGREPO_CATEGORY_ID = 'project_helper.default_project';
 
@@ -95,7 +94,6 @@ export default {
         SETTINGREPO_CATEGORY_ID,
         [this.me],
         this.projectId,
-        `更新时间: ${formatTimestamp(currentTimestamp())}`,
       ))
         .catch(() => {
         });

@@ -38,11 +38,10 @@ import { mapGetters } from 'vuex';
 import PbSetSelectDialog
 from '@/views/items/life/pbSet/PbSetSelectDialog.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import { exists, inspectDisp } from '@/api/life/pbSet';
 
 import resolveResponse from '@/util/response';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
 
 const SETTINGREPO_CATEGORY_ID = 'life.default_pb_set';
 
@@ -97,7 +96,6 @@ export default {
         SETTINGREPO_CATEGORY_ID,
         [this.me],
         this.pbSetId,
-        `更新时间: ${formatTimestamp(currentTimestamp())}`,
       ))
         .catch(() => {
         });

@@ -144,8 +144,7 @@ import ActivityFilePanel from '@/views/items/life/activityManagement/ActivityFil
 import FloatyDialog from '@/components/layout/FloatyDialog.vue';
 import FileEditPanel from '@/views/items/miscellaneous/fileEditor/FileEditPanel.vue';
 
-import { operateInspect, operatePut } from '@/api/settingrepo/settingNode';
-import { currentTimestamp, formatTimestamp } from '@/util/timestamp';
+import { operateInspect, operatePut } from '@/api/settingrepo/textNode';
 import resolveResponse from '@/util/response';
 
 import { LIFE_ACTIVITY_FILE } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
@@ -334,10 +333,11 @@ export default {
         return;
       }
       resolveResponse(
-        operatePut(this.upsc,
+        operatePut(
+          this.upsc,
           [this.me],
           JSON.stringify(this.getUserPreference()),
-          `更新时间: ${formatTimestamp(currentTimestamp())}`),
+        ),
       ).then(() => {
         this.$message({
           showClose: true,
