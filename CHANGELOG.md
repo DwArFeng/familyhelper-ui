@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- familyhelper-ui-view-pc 模块前端依赖新增。
+  - 增加依赖 `js-base64` 以应用其新功能，版本为 `^3.7.7`。
+
 - 更新 `familyhelper-ui-component-api` 模块部分接口以适配新的网络接口版本。
   - 新增 src/api/settingrepo/textNode.js。
   - 更新 src/api/settingrepo/settingNode.js。

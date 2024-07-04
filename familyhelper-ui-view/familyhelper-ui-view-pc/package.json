@@ -15,6 +15,7 @@
     "core-js": "^3.35.1",
     "echarts": "^5.4.3",
     "element-ui": "^2.15.14",
+    "js-base64": "^3.7.7",
     "overlayscrollbars": "^1.13.0",
     "overlayscrollbars-vue": "^0.2.2",
     "screenfull": "^5.1.0",
