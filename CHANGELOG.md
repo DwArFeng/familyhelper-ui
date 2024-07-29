@@ -6,6 +6,7 @@
 
 - 增加组件功能。
   - Header 布局面板增加 `applyContainerHeight` 属性，以控制组件的高度是否自适应，该更新属于不兼容更新。
+  - 标题布局面板增加 `applyContainerHeight` 属性，以控制组件的高度是否自适应，该更新属于不兼容更新。
 
 - familyhelper-ui-view-pc 模块前端依赖新增。
   - 增加依赖 `js-base64` 以应用其新功能，版本为 `^3.7.7`。

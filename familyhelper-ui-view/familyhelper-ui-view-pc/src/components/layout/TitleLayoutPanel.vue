@@ -1,10 +1,7 @@
 <template>
-  <div
-    class="title-layout-panel-container"
-    :class="{bordered:bordered}"
-  >
+  <div class="title-layout-panel-container" :class="{bordered:bordered}">
     <div class="title" :class="{bordered:bordered}" v-if="title">{{ title }}</div>
-    <div class="content" :class="{bordered:bordered}">
+    <div class="content" :class="{bordered:bordered, expand:!applyContainerHeight}">
       <slot name="default"/>
     </div>
   </div>
@@ -18,6 +15,10 @@ export default {
       type: String,
     },
     bordered: {
+      type: Boolean,
+      default: false,
+    },
+    applyContainerHeight: {
       type: Boolean,
       default: false,
     },
@@ -54,12 +55,17 @@ export default {
 
 .content {
   width: 100%;
-  height: 100%;
   padding: 3px 0;
   box-sizing: border-box;
 }
 
 .content.bordered{
   padding: 3px 10px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.content.expand{
+  height: 0;
+  flex-grow: 1;
 }
 </style>
