@@ -366,8 +366,6 @@ export default {
   flex-direction: column;
   height: 100%;
   width: 100%;
-  /**解决分页控件被选中时边框实现不全的问题。*/
-  padding-bottom: 1px;
 }
 
 .table-container {
@@ -384,6 +382,28 @@ export default {
   text-align: center;
   padding: 0;
   margin-top: 2px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.pagination >>> .el-pagination__total {
+  height: 28px;
+  line-height: 29px;
+}
+
+.pagination >>> .el-pagination__sizes input {
+  height: 28px;
+  line-height: 26px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.pagination >>> .el-pagination__jump {
+  height: 28px;
+  line-height: 27px;
+}
+
+.pagination >>> .el-pagination__jump input {
+  height: 28px;
+  line-height: 28px;
 }
 
 .pagination.compact >>> .el-pager li {
@@ -407,10 +427,6 @@ export default {
 
 .table-button {
   padding: 7px
-}
-
-.operate-column {
-  /*display: flex;*/
 }
 
 .contextmenu {
