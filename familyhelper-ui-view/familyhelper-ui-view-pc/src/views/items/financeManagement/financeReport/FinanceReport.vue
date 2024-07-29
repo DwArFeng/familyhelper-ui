@@ -100,7 +100,7 @@ export default {
 
 .finance-report-main-body {
   width: 100%;
-  flex-grow: 1;
+  height: 100%;
 }
 
 /*noinspection CssUnusedSymbol*/

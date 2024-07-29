@@ -264,8 +264,7 @@ export default {
 
 .table-container {
   width: 100%;
-  height: 0;
-  flex-grow: 1;
+  height: 100%;
 }
 
 .table-button {

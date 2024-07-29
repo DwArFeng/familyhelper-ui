@@ -352,6 +352,11 @@ export default {
   padding-right: 12px;
 }
 
+.table-container {
+  width: 100%;
+  height: 100%;
+}
+
 .table-button {
   padding: 7px
 }

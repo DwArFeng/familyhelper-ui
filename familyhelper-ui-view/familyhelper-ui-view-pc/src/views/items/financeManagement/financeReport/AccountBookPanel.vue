@@ -7,7 +7,7 @@
     <div class="account-book-body" v-else>
       <div class="west-body-grid">
         <div class="details-wrapper">
-          <title-layout-panel class="details" title="账本详情" bordered>
+          <title-layout-panel class="details" title="账本详情" bordered apply-container-height>
             <el-form class="account-book-detail" label-position="left" inline label-width="60px">
               <el-form-item label="名称" style="width: 50%">
                 <!--suppress JSUnresolvedReference -->
@@ -23,7 +23,7 @@
               </el-form-item>
             </el-form>
           </title-layout-panel>
-          <title-layout-panel class="details" title="余额" bordered>
+          <title-layout-panel class="details" title="余额" bordered apply-container-height>
             <div class="balance-container">
               <div
                 class="balance-label"
@@ -39,7 +39,7 @@
               </div>
             </div>
           </title-layout-panel>
-          <title-layout-panel class="details" title="图表" bordered>
+          <title-layout-panel class="details" title="图表" bordered expand>
             <balance-chart
               class="account-book-chart"
               :show-title="false"

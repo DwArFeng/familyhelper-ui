@@ -9,7 +9,7 @@
       :visible.sync="watchedVisible"
       :close-on-click-modal="false"
     >
-      <header-layout-panel>
+      <header-layout-panel apply-container-height>
         <template v-slot:header>
           <div class="header">
             <div>

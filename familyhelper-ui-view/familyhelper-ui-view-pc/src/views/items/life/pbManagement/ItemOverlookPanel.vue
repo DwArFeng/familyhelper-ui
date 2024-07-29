@@ -15,7 +15,7 @@
       </template>
       <template v-slot:default>
         <div class="overlook-wrapper">
-          <title-layout-panel class="details" title="属性" bordered>
+          <title-layout-panel class="details" title="属性" bordered apply-container-height>
             <el-form
               class="property-form"
               label-position="left"

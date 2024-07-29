@@ -11,7 +11,8 @@
         </div>
         <div class="fund-change-body-grid-main" v-else>
           <div class="details-wrapper">
-            <title-layout-panel class="details" title="资金变更详情" bordered>
+            <title-layout-panel class="details" title="资金变更详情" bordered
+                                apply-container-height>
               <el-form class="fund-change-detail" label-position="left" inline label-width="70px">
                 <el-form-item label="变更类型" style="width: 50%">
                   <span>{{ formatChangeType(detail.fundChange) }}</span>
@@ -26,7 +27,7 @@
                 </el-form-item>
               </el-form>
             </title-layout-panel>
-            <title-layout-panel class="details" title="变更金额" bordered>
+            <title-layout-panel class="details" title="变更金额" bordered apply-container-height>
               <div class="balance-container">
                 <div
                   class="balance-label"
@@ -57,58 +58,60 @@
       <div class="fund-change-body-grid">
         <div class="details-wrapper">
           <title-layout-panel class="details" title="资金变更列表" bordered>
-            <el-select
-              class='fund-change-type-select'
-              v-model="detail.change_type"
-              placeholder="选择资金变更类型以查看图表"
-              @change="handleChangeTypeChanged"
-            >
-              <el-option
-                v-for="item in fundChangeTypeIndicator.entities.data"
-                :key="item.key.string_id"
-                :label="item.label"
-                :value="item.key.string_id"
-              />
-            </el-select>
-            <table-panel
-              class="fund-change-table"
-              :page-size.sync="table.pageSize"
-              :entity-count="parseInt(table.entities.count)"
-              :current-page.sync="table.currentPage"
-              :page-sizes="[15,20,30,50]"
-              :table-data="table.entities.data"
-              :edit-button-visible="false"
-              :delete-button-visible="false"
-              @onPagingAttributeChanged="handleTablePagingAttributeChanged"
-              @onEntityInspect="handleEntityInspect"
-            >
-              <!--suppress HtmlDeprecatedAttribute -->
-              <el-table-column
-                prop="delta"
-                label="变更金额"
-                align="right"
-                show-tooltip-when-overflow
-                :formatter="balanceNumberFormatter"
-              />
-              <el-table-column
-                prop="change_type"
-                label="资金变更类型"
-                show-tooltip-when-overflow
-                :formatter="changeTypeFormatter"
-              />
-              <el-table-column
-                prop="happened_date"
-                label="记录日期"
-                width="180px"
-                show-tooltip-when-overflow
-                :formatter="timestampFormatter"
-              />
-              <el-table-column
-                prop="remark"
-                label="备注"
-                show-tooltip-when-overflow
-              />
-            </table-panel>
+            <div class="fund-change-list-wrapper">
+              <el-select
+                class='fund-change-type-select'
+                v-model="detail.change_type"
+                placeholder="选择资金变更类型以查看图表"
+                @change="handleChangeTypeChanged"
+              >
+                <el-option
+                  v-for="item in fundChangeTypeIndicator.entities.data"
+                  :key="item.key.string_id"
+                  :label="item.label"
+                  :value="item.key.string_id"
+                />
+              </el-select>
+              <table-panel
+                class="fund-change-table"
+                :page-size.sync="table.pageSize"
+                :entity-count="parseInt(table.entities.count)"
+                :current-page.sync="table.currentPage"
+                :page-sizes="[15,20,30,50]"
+                :table-data="table.entities.data"
+                :edit-button-visible="false"
+                :delete-button-visible="false"
+                @onPagingAttributeChanged="handleTablePagingAttributeChanged"
+                @onEntityInspect="handleEntityInspect"
+              >
+                <!--suppress HtmlDeprecatedAttribute -->
+                <el-table-column
+                  prop="delta"
+                  label="变更金额"
+                  align="right"
+                  show-tooltip-when-overflow
+                  :formatter="balanceNumberFormatter"
+                />
+                <el-table-column
+                  prop="change_type"
+                  label="资金变更类型"
+                  show-tooltip-when-overflow
+                  :formatter="changeTypeFormatter"
+                />
+                <el-table-column
+                  prop="happened_date"
+                  label="记录日期"
+                  width="180px"
+                  show-tooltip-when-overflow
+                  :formatter="timestampFormatter"
+                />
+                <el-table-column
+                  prop="remark"
+                  label="备注"
+                  show-tooltip-when-overflow
+                />
+              </table-panel>
+            </div>
           </title-layout-panel>
         </div>
       </div>
@@ -461,14 +464,22 @@ export default {
   height: 100%;
 }
 
-.fund-change-table {
+.fund-change-list-wrapper {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .fund-change-type-select {
   width: 100%;
   margin-bottom: 5px;
+}
+
+.fund-change-table {
+  width: 100%;
+  height: 0;
+  flex-grow: 1;
 }
 
 .details-wrapper {

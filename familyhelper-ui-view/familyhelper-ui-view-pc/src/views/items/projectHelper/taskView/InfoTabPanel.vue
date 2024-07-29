@@ -10,7 +10,7 @@
       </template>
       <template v-slot:default>
         <div class="details-wrapper">
-          <title-layout-panel class="details" title="基础属性" bordered>
+          <title-layout-panel class="details" title="基础属性" bordered apply-container-height>
             <el-form
               class="property-form"
               label-position="left"
@@ -50,7 +50,7 @@
               </el-form-item>
             </el-form>
           </title-layout-panel>
-          <title-layout-panel class="details" title="前置任务" bordered grow>
+          <title-layout-panel class="details" title="前置任务" bordered apply-container-height>
             <div style="background: #7BBDFF;height: 100%;width: 100%"/>
           </title-layout-panel>
         </div>

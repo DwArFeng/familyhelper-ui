@@ -11,7 +11,7 @@
         </div>
         <div class="bank-card-body-grid-main" v-else>
           <div class="details-wrapper">
-            <title-layout-panel class="details" title="银行卡详情" bordered>
+            <title-layout-panel class="details" title="银行卡详情" bordered apply-container-height>
               <el-form class="bank-card-detail" label-position="left" inline label-width="60px">
                 <el-form-item label="名称" style="width: 50%">
                   <span>{{ detail.bankCard.name }}</span>
@@ -26,7 +26,7 @@
                 </el-form-item>
               </el-form>
             </title-layout-panel>
-            <title-layout-panel class="details" title="余额" bordered>
+            <title-layout-panel class="details" title="余额" bordered apply-container-height>
               <div class="balance-container">
                 <div
                   class="balance-label"
