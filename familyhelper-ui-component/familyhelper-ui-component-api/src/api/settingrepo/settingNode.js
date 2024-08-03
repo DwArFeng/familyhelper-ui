@@ -23,6 +23,21 @@ export function idLike(pattern, page, rows) {
     });
 }
 
+export function reachable(page, rows) {
+    return get('settingrepo', 'setting-node/reachable/', {
+        page,
+        rows,
+    });
+}
+
+export function idLikeReachable(pattern, page, rows) {
+    return get('settingrepo', 'setting-node/id-like-reachable/', {
+        pattern,
+        page,
+        rows,
+    });
+}
+
 export function operateInspect(category, args) {
     return post('settingrepo', 'setting-node/inspect/', {
         category,
