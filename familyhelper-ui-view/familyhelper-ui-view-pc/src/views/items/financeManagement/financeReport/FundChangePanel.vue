@@ -293,12 +293,26 @@ export default {
         });
     },
     convertCurrency(value) {
-      const maxValue = 999999999999.99;
-      if (parseFloat(value) > maxValue) {
-        return '数字太大了';
+      if (value === '-') {
+        return '';
       }
 
-      let n = value;
+      let lead = '';
+      let absoluteValue;
+      if (value.substring(0, 1) === '-') {
+        lead = '负';
+        absoluteValue = value.substring(1);
+      } else {
+        lead = '';
+        absoluteValue = value;
+      }
+
+      const maxValue = 999999999999.99;
+      if (parseFloat(absoluteValue) > maxValue) {
+        throw new Error(`参数 value 的绝对值超过解析范围: value=${value}, maxValue=${maxValue}`);
+      }
+
+      let n = absoluteValue;
 
       if (n === '') {
         return '';
@@ -309,13 +323,19 @@ export default {
 
       let unit = '千百拾亿千百拾万千百拾元角分';
       let str = '';
-      n += '00';
 
       const indexPoint = n.indexOf('.'); // 如果是小数，截取小数点前面的位数
 
       if (indexPoint >= 0) {
-        // 若为小数，截取需要使用的unit单位
-        n = n.substring(0, indexPoint) + n.substring(indexPoint + 1, 2);
+        // 去除小数点，并转化为定点数（*100）。
+        const integerPart = n.substring(0, indexPoint);
+        let decimalPart = n.substring(indexPoint + 1, n.length);
+        if (decimalPart.length === 1) {
+          decimalPart += '0';
+        }
+        n = integerPart + decimalPart;
+      } else {
+        n += '00';
       }
 
       unit = unit.substring(unit.length - n.length); // 若为整数，截取需要使用的unit单位
@@ -325,7 +345,7 @@ export default {
       }
 
       // noinspection RegExpSingleCharAlternation
-      return str.replace(/零(千|百|拾|角)/g, '零')
+      return lead + str.replace(/零(千|百|拾|角)/g, '零')
         .replace(/(零)+/g, '零')
         .replace(/零(万|亿|元)/g, '$1')
         .replace(/(亿)万|壹(拾)/g, '$1$2')
