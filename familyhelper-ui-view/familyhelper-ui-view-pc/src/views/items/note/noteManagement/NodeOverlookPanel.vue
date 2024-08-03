@@ -25,7 +25,7 @@
                 inline
                 :model="node"
               >
-                <el-form-item label="名称" style="width: 33%">
+                <el-form-item label="名称" style="width: 100%">
                   {{ node.name }}
                 </el-form-item>
                 <el-form-item label="备注" style="width: 100%">
