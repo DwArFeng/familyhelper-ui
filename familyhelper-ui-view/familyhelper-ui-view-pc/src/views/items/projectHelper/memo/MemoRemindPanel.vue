@@ -452,8 +452,7 @@ export default {
 }
 
 .header-container .icon-button {
-  padding-left: 12px;
-  padding-right: 12px;
+  padding: 11px;
 }
 
 /*noinspection CssUnusedSymbol*/
