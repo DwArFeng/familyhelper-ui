@@ -3,6 +3,7 @@
     class="remind-driver-support-select-dialog-container"
     tabindex="0"
     id="dialog"
+    append-to-body
     title="驱动器选择"
     destroy-on-close
     :visible.sync="watchedVisible"
