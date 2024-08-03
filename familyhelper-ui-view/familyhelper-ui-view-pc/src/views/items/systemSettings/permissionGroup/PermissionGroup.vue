@@ -164,6 +164,7 @@
       top="5vh"
       width="80%"
       :visible.sync="permissionAttachDialogVisible"
+      :close-on-click-modal="false"
       @keydown.ctrl.enter.native="handleAttachPermission"
     >
       <table-panel
