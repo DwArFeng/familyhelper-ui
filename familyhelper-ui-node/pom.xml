@@ -77,7 +77,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ../familyhelper-ui-view/familyhelper-ui-view-pc/dist
+                                        ../familyhelper-ui-view/packages/webapp-pc/dist
                                     </directory>
                                     <filtering>false</filtering>
                                 </resource>
@@ -97,7 +97,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ../familyhelper-ui-view/familyhelper-ui-view-mobile/dist
+                                        ../familyhelper-ui-view/packages/webapp-mobile/dist
                                     </directory>
                                     <filtering>false</filtering>
                                 </resource>

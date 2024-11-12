@@ -1,0 +1,10 @@
+# non-package dependencies
+../component-api
+../component-ckeditor
+../component-iconfont
+
+# scripts
+scripts
+
+# vue.config.js
+vue.config.js

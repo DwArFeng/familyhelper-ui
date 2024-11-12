@@ -1,0 +1,7 @@
+# pnpm 的工作空间配置文件
+#
+# packages/* 表示所有 packages 目录下的所有目录均为 pnpm 的工作空间。
+# 详情可以查看文档：https://pnpm.io/pnpm-workspace_yaml。
+#
+packages:
+  - 'packages/*'

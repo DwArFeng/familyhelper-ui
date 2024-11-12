@@ -1,0 +1,15 @@
+{
+  "name": "@dwarfeng/familyhelper-ui-component-iconfont",
+  "version": "0.0.0",
+  "private": true,
+  "description": "家庭助手 UI - 组件 - Iconfont",
+  "scripts": {
+    "generate-config": "node scripts/generate-config.js"
+  },
+  "packageManager": "pnpm@9.9.0",
+  "browserify": {
+    "transform": [
+      "vueify"
+    ]
+  }
+}

@@ -1,8 +1,0 @@
-# Api src files
-src/api
-
-# Iconfont src files
-src/elements/modules/iconfont/src
-
-# CKEditor bin files
-src/elements/modules/ckeditor/bin

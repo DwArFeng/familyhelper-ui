@@ -25,8 +25,102 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <modules>
-        <module>familyhelper-ui-view-pc</module>
-        <module>familyhelper-ui-view-mobile</module>
-    </modules>
+    <build>
+        <plugins>
+            <!-- Maven 执行插件，用于执行 pnpm 指令。 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <executions>
+                    <!-- Install all packages dependencies -->
+                    <execution>
+                        <id>pnpm install</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>pnpm</executable>
+                            <arguments>
+                                <argument>install</argument>
+                                <argument>--frozen-lockfile</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Lint all webapp packages dependencies -->
+                    <execution>
+                        <id>pnpm run set-webapp-dependencies</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>pnpm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>set-webapp-dependencies</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Lint all packages -->
+                    <execution>
+                        <id>pnpm run lint</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>pnpm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>lint</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                    <!-- Build all packages -->
+                    <execution>
+                        <id>pnpm run build</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>pnpm</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Maven 清理插件，用于清理输出文件。 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>dist</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>packages/component-api/dist</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>packages/component-ckeditor/dist</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>packages/component-iconfont/dist</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>packages/webapp-mobile/dist</directory>
+                        </fileset>
+                        <fileset>
+                            <directory>packages/webapp-pc/dist</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
