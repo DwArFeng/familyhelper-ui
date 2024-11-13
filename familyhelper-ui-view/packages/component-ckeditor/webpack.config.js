@@ -5,13 +5,24 @@
 
 'use strict';
 
-/* eslint-env node */
-
 const path = require('node:path');
 const webpack = require('webpack');
 const {bundler, styles} = require('@ckeditor/ckeditor5-dev-utils');
 const CKEditorWebpackPlugin = require('@ckeditor/ckeditor5-dev-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
+
+const cKEditorWebpackPlugin = new CKEditorWebpackPlugin({
+    // UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
+    // When changing the built-in language, remember to also change it in the editor's configuration (src/ckeditor.js).
+    language: 'zh-cn',
+    additionalLanguages: 'all'
+});
+
+// noinspection JSUnresolvedReference
+const webPackBannerPlugin = new webpack.BannerPlugin({
+    banner: bundler.getLicenseBanner(),
+    raw: true
+})
 
 module.exports = {
     devtool: 'source-map',
@@ -40,18 +51,7 @@ module.exports = {
             })
         ]
     },
-    plugins: [
-        new CKEditorWebpackPlugin({
-            // UI language. Language codes follow the https://en.wikipedia.org/wiki/ISO_639-1 format.
-            // When changing the built-in language, remember to also change it in the editor's configuration (src/ckeditor.js).
-            language: 'zh-cn',
-            additionalLanguages: 'all'
-        }),
-        new webpack.BannerPlugin({
-            banner: bundler.getLicenseBanner(),
-            raw: true
-        })
-    ],
+    plugins: [cKEditorWebpackPlugin, webPackBannerPlugin],
     module: {
         rules: [
             {

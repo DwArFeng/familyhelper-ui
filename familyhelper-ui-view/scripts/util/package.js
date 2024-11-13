@@ -76,6 +76,5 @@ function parsePackageInfos() {
     return packageInfos;
 }
 
-
 // 导出模块。
 module.exports = {packageInfos}

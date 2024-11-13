@@ -8,7 +8,7 @@ export function fileExtension(fileName) {
   if (index < 0) {
     return '?';
   }
-  return fileName.substr(index + 1);
+  return fileName.substring(index + 1);
 }
 
 export function fileType(fileName) {
