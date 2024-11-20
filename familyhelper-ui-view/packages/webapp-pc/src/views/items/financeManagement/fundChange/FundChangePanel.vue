@@ -19,18 +19,20 @@
               prop="delta"
               label="变更金额"
               align="right"
+              width="110px"
               show-tooltip-when-overflow
               :formatter="deltaFormatter"
             />
             <el-table-column
               prop="change_type"
               label="资金变更类型"
+              width="120px"
               show-tooltip-when-overflow
               :formatter="changeTypeFormatter"
             />
             <el-table-column
               prop="happened_date"
-              label="记录日期"
+              label="变更日期"
               width="180px"
               show-tooltip-when-overflow
               :formatter="timestampFormatter"
@@ -155,6 +157,32 @@
           :readonly="maintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
+      <el-form-item label="变更日期" prop="happened_date">
+        <el-input
+          v-model="maintainDialog.anchorEntity.formatted_happened_date"
+          readonly
+          v-if="maintainDialog.mode === 'INSPECT'"
+        />
+        <el-date-picker
+          class="form-date-picker"
+          v-else
+          v-model="maintainDialog.anchorEntity.happened_date"
+          type="datetime"
+          placeholder="请选择变更日期，不填写默认为当前时间"
+          :picker-options="maintainDialog.pickerOptions"
+          :editable="true"
+        />
+      </el-form-item>
+      <el-form-item
+        v-if="maintainDialog.mode === 'INSPECT'"
+        label="记录日期"
+        prop="formatted_happened_date"
+      >
+        <el-input
+          v-model="maintainDialog.anchorEntity.formatted_happened_date"
+          readonly
+        />
+      </el-form-item>
     </entity-maintain-dialog>
   </div>
 </template>
@@ -247,6 +275,68 @@ export default {
           change_type: '',
           remark: '',
           formatted_change_type: '',
+          happened_date: null,
+          formatted_happened_date: '（当前时间）',
+        },
+        pickerOptions: {
+          shortcuts: [
+            {
+              text: '一天前',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24);
+                picker.$emit('pick', date);
+              },
+            },
+            {
+              text: '两天前',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24 * 2);
+                picker.$emit('pick', date);
+              },
+            },
+            {
+              text: '三天前',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24 * 3);
+                picker.$emit('pick', date);
+              },
+            },
+            {
+              text: '四天前',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24 * 4);
+                picker.$emit('pick', date);
+              },
+            },
+            {
+              text: '五天前',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24 * 5);
+                picker.$emit('pick', date);
+              },
+            },
+            {
+              text: '一周前',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+                picker.$emit('pick', date);
+              },
+            },
+            {
+              text: '两周前',
+              onClick(picker) {
+                const date = new Date();
+                date.setTime(date.getTime() - 3600 * 1000 * 24 * 7 * 2);
+                picker.$emit('pick', date);
+              },
+            },
+          ],
         },
       },
       typeSelector: {
@@ -322,6 +412,7 @@ export default {
         this.maintainDialog.anchorEntity.delta,
         this.maintainDialog.anchorEntity.change_type,
         this.maintainDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.happened_date,
       ))
         .then(() => {
           this.$message({
@@ -347,6 +438,7 @@ export default {
         this.maintainDialog.anchorEntity.delta,
         this.maintainDialog.anchorEntity.change_type,
         this.maintainDialog.anchorEntity.remark,
+        this.maintainDialog.anchorEntity.happened_date,
       ))
         .then(() => {
           this.$message({
@@ -391,6 +483,8 @@ export default {
         });
     },
     handleShowEntityRecordDialog() {
+      // 去除 happened_date 的值，这样更加符合用户的预期。
+      this.maintainDialog.anchorEntity.happened_date = null;
       this.showDialog('CREATE');
     },
     handleShowEntityInspectDialog(index, entity) {
@@ -415,6 +509,10 @@ export default {
       } else {
         this.maintainDialog.anchorEntity.formatted_change_type = '（未指定）';
       }
+      this.maintainDialog.anchorEntity.happened_date = entity.happened_date;
+      this.maintainDialog.anchorEntity.formatted_happened_date = this.formatHappenedDate(
+        entity.happened_date,
+      );
     },
     showDialog(mode) {
       this.maintainDialog.mode = mode;
@@ -498,6 +596,12 @@ export default {
       close();
       this.handleEntityDelete(index, row);
     },
+    formatHappenedDate(happenedDate) {
+      if (happenedDate === null) {
+        return '（当前时间）';
+      }
+      return formatTimestamp(happenedDate);
+    },
   },
 };
 </script>
@@ -570,5 +674,9 @@ export default {
 .center-panel {
   width: 100%;
   height: 100%;
+}
+
+.form-date-picker {
+  width: 100%;
 }
 </style>

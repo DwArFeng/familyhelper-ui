@@ -1,8 +1,6 @@
 // noinspection NpmUsedModulesInstalled,JSUnusedGlobalSymbols
 
-import {
-    get, post,
-} from '@/util/http';
+import {get, post,} from '@/util/http';
 
 export function exists(key) {
     return get('finance', `fund-change/${key}/exists/`, {});
@@ -90,7 +88,7 @@ export function childForAccountBookTypeEqualsDescDisp(accountBookKey, pattern, p
     });
 }
 
-export function record(accountBookKey, delta, changeType, remark) {
+export function record(accountBookKey, delta, changeType, remark, happenedDate) {
     return post('finance', 'fund-change/record', {
         account_book_key: {
             long_id: accountBookKey,
@@ -98,10 +96,11 @@ export function record(accountBookKey, delta, changeType, remark) {
         delta,
         change_type: changeType,
         remark,
+        happened_date: happenedDate,
     });
 }
 
-export function update(key, delta, changeType, remark) {
+export function update(key, delta, changeType, remark, happenedDate) {
     return post('finance', 'fund-change/update', {
         fund_change_key: {
             long_id: key,
@@ -109,6 +108,7 @@ export function update(key, delta, changeType, remark) {
         delta,
         change_type: changeType,
         remark,
+        happened_date: happenedDate,
     });
 }
 
