@@ -235,6 +235,108 @@ const meAndClannad = [
       parentKey: 'meAndClannad',
     },
   },
+  {
+    key: 'meAndClannad.messageSend',
+    index: 60,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '留言发送',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/me-and-clannad/message-send',
+        component: () => import('@/views/items/meAndClannad/messageSend/MessageSend.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.me_and_clannad.message_send',
+      },
+    },
+    node: {
+      parentKey: 'meAndClannad',
+    },
+  },
+  {
+    key: 'meAndClannad.messageReceive',
+    index: 70,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '留言接收',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/me-and-clannad/message-receive',
+        component: () => import('@/views/items/meAndClannad/messageReceive/MessageReceive.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.me_and_clannad.message_receive',
+      },
+    },
+    node: {
+      parentKey: 'meAndClannad',
+    },
+  },
+  {
+    key: 'meAndClannad.messageAuthorize',
+    index: 80,
+    meta: {
+      display: {
+        iconType: 'elementUI',
+        iconContent: '',
+        labelType: 'elementUI',
+        labelContent: '留言授权',
+      },
+      menu: {
+        shown: true,
+      },
+      ezNav: {
+        shown: true,
+        closedBehavior: {
+          type: 'back',
+          data: null,
+        },
+      },
+      router: {
+        required: true,
+        path: 'app/me-and-clannad/message-authorize',
+        component: () => import('@/views/items/meAndClannad/messageAuthorize/MessageAuthorize.vue'),
+      },
+      permission: {
+        required: true,
+        node: 'ui.pc.menu_visible.me_and_clannad.message_authorize',
+      },
+    },
+    node: {
+      parentKey: 'meAndClannad',
+    },
+  },
 ];
 
 // noinspection JSUnusedGlobalSymbols

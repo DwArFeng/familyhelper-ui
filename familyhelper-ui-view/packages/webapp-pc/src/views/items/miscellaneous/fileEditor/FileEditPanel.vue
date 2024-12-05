@@ -103,6 +103,11 @@ import {
   inspect as inspectLifeActivityFile,
   update as updateLifeActivityFile,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/life/activityFile';
+import {
+  download as downloadClannadMessageAttachment,
+  inspect as inspectClannadMessageAttachment,
+  update as updateClannadMessageAttachment,
+} from '@dwarfeng/familyhelper-ui-component-api/src/api/clannad/messageAttachment';
 
 import { fileExtension, fileType } from '@/util/file';
 import resolveResponse from '@/util/response';
@@ -113,6 +118,7 @@ import {
   PROJECT_MEMO_FILE,
   LIFE_ACTIVITY_TEMPLATE_FILE,
   LIFE_ACTIVITY_FILE,
+  CLANNAD_MESSAGE_ATTACHMENT,
 } from '@/views/items/miscellaneous/fileEditor/fileTypeConstants';
 
 export default {
@@ -245,6 +251,9 @@ export default {
         case LIFE_ACTIVITY_FILE:
           this.inspectLifeActivityFile(this.id);
           break;
+        case CLANNAD_MESSAGE_ATTACHMENT:
+          this.inspectClannadMessageAttachment(this.id);
+          break;
         default:
           break;
       }
@@ -349,6 +358,26 @@ export default {
           this.loading = false;
         });
     },
+    inspectClannadMessageAttachment(id) {
+      this.loading = true;
+      if (this.fileIndicator.url !== '') {
+        window.URL.revokeObjectURL(this.fileIndicator.url);
+      }
+      resolveResponse(inspectClannadMessageAttachment(id))
+        .then((res) => {
+          // noinspection JSUnresolvedVariable
+          this.fileIndicator.originName = res.origin_name;
+        })
+        .then(() => downloadClannadMessageAttachment(id))
+        .then((blob) => {
+          this.fileIndicator.blob = blob;
+          // noinspection JSCheckFunctionSignatures
+          this.fileIndicator.url = window.URL.createObjectURL(blob);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
     handleCommitButtonClicked() {
       this.commitFile();
     },
@@ -439,6 +468,17 @@ export default {
               this.$message({
                 showClose: true,
                 message: '活动模板文件提交成功',
+                type: 'success',
+                center: true,
+              });
+            });
+          break;
+        case CLANNAD_MESSAGE_ATTACHMENT:
+          resolveResponse(updateClannadMessageAttachment(this.id, formData))
+            .then(() => {
+              this.$message({
+                showClose: true,
+                message: '留言附件提交成功',
                 type: 'success',
                 center: true,
               });
