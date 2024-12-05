@@ -278,6 +278,7 @@ export default {
       this.$emit('onPagingAttributeChanged', this.watchedPageSize);
     },
     handleRowClick(row) {
+      this.$emit('onRowClick', row);
       this.watchedTableSelection = row;
       this.$emit('update:tableSelection', this.watchedTableSelection);
     },
