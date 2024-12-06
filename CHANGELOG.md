@@ -21,7 +21,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复 `familyhelper-ui-view` 模块中的错误配置。
+  - packages/webapp-mobile/vue.config.js。
 
 #### 功能移除
 
