@@ -47,9 +47,9 @@
                             </arguments>
                         </configuration>
                     </execution>
-                    <!-- Lint all webapp packages dependencies -->
+                    <!-- Build all packages -->
                     <execution>
-                        <id>pnpm run set-webapp-dependencies</id>
+                        <id>pnpm run build</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
@@ -58,7 +58,7 @@
                             <executable>pnpm</executable>
                             <arguments>
                                 <argument>run</argument>
-                                <argument>set-webapp-dependencies</argument>
+                                <argument>build</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -74,21 +74,6 @@
                             <arguments>
                                 <argument>run</argument>
                                 <argument>lint</argument>
-                            </arguments>
-                        </configuration>
-                    </execution>
-                    <!-- Build all packages -->
-                    <execution>
-                        <id>pnpm run build</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>exec</goal>
-                        </goals>
-                        <configuration>
-                            <executable>pnpm</executable>
-                            <arguments>
-                                <argument>run</argument>
-                                <argument>build</argument>
                             </arguments>
                         </configuration>
                     </execution>

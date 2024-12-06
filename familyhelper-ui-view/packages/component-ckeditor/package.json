@@ -5,7 +5,6 @@
   "description": "家庭助手 UI - 组件 - Ckeditor",
   "scripts": {
     "generate-config": "node scripts/generate-config.js",
-    "set-webapp-dependencies": "node scripts/set-webapp-dependencies.js",
     "build": "node scripts/build.js"
   },
   "devDependencies": {
