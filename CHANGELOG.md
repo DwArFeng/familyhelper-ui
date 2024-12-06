@@ -7,6 +7,7 @@
 - 优化 `familyhelper-ui-view` 模块结构。
   - 优化 `scripts` 以及 `packages/*/scripts` 脚本。
   - 优化 `pom.xml` 配置。
+  - 添加 `README.md` 文件，提供项目的基本信息和使用说明。
 
 - 实现我与家庭一级菜单。
   - 实现留言发送二级菜单。
