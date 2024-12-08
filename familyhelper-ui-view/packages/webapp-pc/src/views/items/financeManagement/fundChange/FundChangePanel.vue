@@ -110,11 +110,30 @@
           </el-button>
           <el-divider direction="vertical"/>
           <fund-change-type-selector
+            class="fund-change-type-selector"
             v-model="typeSelector.value"
             placeholder="资金变更类型"
             clearable
             @change="handleSearch"
           />
+          <el-divider direction="vertical"/>
+          <el-input
+            class="remark-search-bar"
+            v-model="remarkSearchBar.value"
+            clearable
+            @keydown.enter.native="handleSearch"
+            @clear="handleSearch"
+          >
+            <template v-slot:prepend>
+              <span>备注</span>
+            </template>
+            <template v-slot:append>
+              <el-button
+                icon="el-icon-search"
+                @click="handleSearch"
+              />
+            </template>
+          </el-input>
         </div>
       </header-layout-panel>
     </div>
@@ -163,6 +182,7 @@
           readonly
           v-if="maintainDialog.mode === 'INSPECT'"
         />
+        <!--suppress JSValidateTypes -->
         <el-date-picker
           class="form-date-picker"
           v-else
@@ -195,8 +215,7 @@ import FundChangeTypeSelector
 from '@/views/items/financeManagement/fundChangeTypeIndicator/FundChangeTypeSelector.vue';
 
 import {
-  childForAccountBookDescDisp as childForAccountBook,
-  childForAccountBookTypeEqualsDescDisp as childForAccountBookTypeEquals,
+  childForAccountBookWithConditionDisplayDisp,
   record,
   remove,
   update,
@@ -245,7 +264,7 @@ export default {
       }
     };
     return {
-      loading: false,
+      loading: 0,
       table: {
         currentPage: 0,
         pageSize: 10,
@@ -342,6 +361,9 @@ export default {
       typeSelector: {
         value: '',
       },
+      remarkSearchBar: {
+        value: '',
+      },
     };
   },
   methods: {
@@ -352,44 +374,25 @@ export default {
       if (this.accountBook === null) {
         return;
       }
-      if (this.typeSelector.value === '') {
-        this.lookupChildForAccountBook();
-      } else {
-        this.childForAccountBookTypeEquals();
-      }
+      this.lookupChildForAccountBookWithConditionDisplay();
     },
-    lookupChildForAccountBook() {
-      this.loading = true;
-      resolveResponse(childForAccountBook(
-        this.accountBook.key.long_id, this.table.currentPage, this.table.pageSize,
-      ))
-        .then((res) => {
-          // 当查询的页数大于总页数，自动查询最后一页。
-          if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(childForAccountBook(
-              this.accountBook.key.long_id, res.total_pages - 1, this.table.pageSize,
-            ));
-          }
-          return Promise.resolve(res);
-        })
-        .then(this.updateTableView)
-        .catch(() => {
-        })
-        .finally(() => {
-          this.loading = false;
-        });
-    },
-    childForAccountBookTypeEquals() {
-      this.loading = true;
-      resolveResponse(childForAccountBookTypeEquals(
-        this.accountBook.key.long_id, this.typeSelector.value, this.table.currentPage,
+    lookupChildForAccountBookWithConditionDisplay() {
+      this.loading += 1;
+      resolveResponse(childForAccountBookWithConditionDisplayDisp(
+        this.accountBook.key.long_id,
+        this.typeSelector.value,
+        this.remarkSearchBar.value,
+        this.table.currentPage,
         this.table.pageSize,
       ))
         .then((res) => {
           // 当查询的页数大于总页数，自动查询最后一页。
           if (res.current_page > res.total_pages && res.total_pages > 0) {
-            return resolveResponse(childForAccountBookTypeEquals(
-              this.accountBook.key.long_id, this.typeSelector.value, res.total_pages - 1,
+            return resolveResponse(childForAccountBookWithConditionDisplayDisp(
+              this.accountBook.key.long_id,
+              this.typeSelector.value,
+              this.remarkSearchBar.value,
+              res.total_pages - 1,
               this.table.pageSize,
             ));
           }
@@ -399,7 +402,7 @@ export default {
         .catch(() => {
         })
         .finally(() => {
-          this.loading = false;
+          this.loading -= 1;
         });
     },
     updateTableView(res) {
@@ -616,11 +619,26 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
+  row-gap: 5px;
 }
 
 /*noinspection CssUnusedSymbol*/
 .header-container .el-divider--vertical {
   margin: 0 8px;
+}
+
+.header-container .fund-change-type-selector{
+  width: 130px;
+}
+
+.header-container .remark-search-bar {
+  width: 250px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.header-container .remark-search-bar >>> .el-input-group__prepend {
+  padding: 0 10px;
 }
 
 .center-panel-wrapper {

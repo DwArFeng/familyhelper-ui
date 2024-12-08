@@ -47,6 +47,15 @@ export function childForAccountBookTypeEqualsDesc(accountBookKey, pattern, page,
     });
 }
 
+export function childForAccountBookWithConditionDisplay(accountBookKey, changeType, remarkPattern, page, rows) {
+    return get('finance', `account-book/${accountBookKey}/fund-change/with-condition-display`, {
+        "change-type:": changeType,
+        "remark-pattern": remarkPattern,
+        page,
+        rows,
+    });
+}
+
 export function inspectDisp(key) {
     return get('finance', `fund-change/${key}/disp/`, {});
 }
@@ -83,6 +92,15 @@ export function childForAccountBookTypeEqualsDisp(accountBookKey, pattern, page,
 export function childForAccountBookTypeEqualsDescDisp(accountBookKey, pattern, page, rows) {
     return get('finance', `account-book/${accountBookKey}/fund-change/type-equals-desc/disp`, {
         pattern,
+        page,
+        rows,
+    });
+}
+
+export function childForAccountBookWithConditionDisplayDisp(accountBookKey, changeType, remarkPattern, page, rows) {
+    return get('finance', `account-book/${accountBookKey}/fund-change/with-condition-display/disp`, {
+        "change-type": changeType,
+        "remark-pattern": remarkPattern,
         page,
         rows,
     });
