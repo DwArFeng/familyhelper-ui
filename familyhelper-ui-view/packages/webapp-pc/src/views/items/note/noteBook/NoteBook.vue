@@ -6,13 +6,6 @@
     >
       <template v-slot:header>
         <div class="header-container">
-          <el-switch
-            v-model="inspectAllSwitch.inspectAll"
-            active-text="看所有的"
-            inactive-text="看自己的"
-            @change="handleInspectAllSwitchChanged"
-          />
-          <el-divider direction="vertical"/>
           <el-button
             type="success"
             size="medium"
@@ -20,69 +13,110 @@
           >
             刷新数据
           </el-button>
+          <el-divider direction="vertical"/>
+          <el-switch
+            v-model="inspectAllSwitch.inspectAll"
+            active-text="看所有的"
+            inactive-text="看自己的"
+            @change="handleSearch"
+          />
+          <el-divider direction="vertical"/>
+          <el-switch
+            v-model="favoredOnlySwitch.favoredOnly"
+            active-text="只看收藏"
+            inactive-text="看所有的"
+            @change="handleSearch"
+          />
+          <el-divider direction="vertical"/>
+          <el-input
+            class="name-search-bar"
+            v-model="nameSearchBar.namePattern"
+            clearable
+            @keydown.enter.native="handleSearch"
+            @clear="handleSearch"
+          >
+            <template v-slot:prepend>
+              <span>笔记名称</span>
+            </template>
+            <template v-slot:append>
+              <el-button
+                icon="el-icon-search"
+                @click="handleSearch"
+              />
+            </template>
+          </el-input>
         </div>
       </template>
       <template v-slot:default>
         <card-panel
+          v-loading="cardPanel.loading"
           title-prop="name"
           card-width="calc(20% - 18px)"
           :data="cardPanel.entities.data"
           :maxCard="1000"
           :show-contextmenu="true"
-          :contextmenu-width="110"
+          :contextmenu-width="120"
           @onAddonClicked="handleNoteBookToCreate"
         >
           <template v-slot:default="{item}">
-            <div class="note-book-card-container">
-              <div class="note-book-property">
+            <!--suppress JSUnresolvedReference -->
+            <corner-light-panel
+              class="note-book-card-container-wrapper"
+              light-bevel-edge="40px"
+              light-color="#E6A23C"
+              :show-south-east="item.favorite"
+            >
+              <div class="note-book-card-container">
+                <div class="note-book-property">
                 <span
                   class="iconfont note-book-property-icon"
                   style="color:black"
                 >
                   &#xfffa;
                 </span>
-                <!--suppress JSUnresolvedVariable -->
-                <span class="note-book-property-text">
+                  <!--suppress JSUnresolvedVariable -->
+                  <span class="note-book-property-text">
                 权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
-              </div>
-              <div class="note-book-property">
+                </div>
+                <div class="note-book-property">
                 <span
                   class="iconfont note-book-property-icon"
                   style="color:black"
                 >
                   &#xfffb;
                 </span>
-                <!--suppress JSUnresolvedVariable -->
-                <span class="note-book-property-text">
+                  <!--suppress JSUnresolvedVariable -->
+                  <span class="note-book-property-text">
                 所有者: {{ item.owner_account.display_name }}
               </span>
-              </div>
-              <div class="note-book-property">
+                </div>
+                <div class="note-book-property">
                 <span
                   class="iconfont note-book-property-icon"
                   style="color:black"
                 >
                   &#xffe7;
                 </span>
-                <!--suppress JSUnresolvedVariable -->
-                <span class="note-book-property-text">
+                  <!--suppress JSUnresolvedVariable -->
+                  <span class="note-book-property-text">
                 项目总数: {{ item.item_count }}
               </span>
-              </div>
-              <div class="note-book-property">
+                </div>
+                <div class="note-book-property">
                 <span
                   class="iconfont note-book-property-icon"
                   style="color:black"
                 >
                   &#xffef;
                 </span>
-                <!--suppress JSUnresolvedVariable -->
-                <span class="note-book-property-text">
+                  <!--suppress JSUnresolvedVariable -->
+                  <span class="note-book-property-text">
                 最新更新日期: {{ formatTimestamp(item.last_modified_date) }}
               </span>
+                </div>
               </div>
-            </div>
+            </corner-light-panel>
           </template>
           <template v-slot:header="{index,item}">
             <el-button-group class="note-book-control-button-group">
@@ -135,6 +169,13 @@
               >
                 删除...
               </li>
+              <el-divider/>
+              <!--suppress JSUnresolvedVariable -->
+              <li
+                @click="handleChangeFavoredMenuItemClicked(index,item,close)"
+              >
+                收藏/取消收藏
+              </li>
             </ul>
           </template>
         </card-panel>
@@ -162,6 +203,14 @@
           :readonly="entityMaintainDialog.mode === 'INSPECT'"
         />
       </el-form-item>
+      <el-form-item label="收藏" prop="favorite">
+        <el-switch
+          v-model="entityMaintainDialog.anchorEntity.favorite"
+          active-text="是"
+          inactive-text="否"
+          :disabled="entityMaintainDialog.mode === 'INSPECT'"
+        />
+      </el-form-item>
     </entity-maintain-dialog>
     <permit-maintain-dialog
       :visible.sync="permitMaintainDialog.visible"
@@ -175,18 +224,29 @@ import BorderLayoutPanel from '@/components/layout/BorderLayoutPanel.vue';
 import CardPanel from '@/components/layout/CardPanel.vue';
 import EntityMaintainDialog from '@/components/entity/EntityMaintainDialog.vue';
 import PermitMaintainDialog from '@/views/items/note/noteBook/PermitMaintainDialog.vue';
+import CornerLightPanel from '@/components/layout/CornerLightPanel.vue';
 
-import resolveResponse from '@/util/response';
 import {
-  allOwnedDisp, allPermittedDisp, create, remove, update,
+  changeFavored,
+  create,
+  remove,
+  update,
+  userOwned,
+  userOwnedWithConditionDisplayDisp,
+  userPermittedWithConditionDisplayDisp,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook';
+import resolveResponse from '@/util/response';
 
 import { formatTimestamp } from '@/util/timestamp';
 
 export default {
   name: 'NoteBook',
   components: {
-    PermitMaintainDialog, CardPanel, BorderLayoutPanel, EntityMaintainDialog,
+    CornerLightPanel,
+    PermitMaintainDialog,
+    CardPanel,
+    BorderLayoutPanel,
+    EntityMaintainDialog,
   },
   data() {
     return {
@@ -197,6 +257,7 @@ export default {
           long_id: '',
           name: '',
           remark: '',
+          favorite: false,
         },
         rules: {
           name: [
@@ -209,6 +270,7 @@ export default {
         noteBookId: '',
       },
       cardPanel: {
+        loading: 0,
         maxCard: 100,
         entities: {
           current_page: 0,
@@ -221,6 +283,12 @@ export default {
       inspectAllSwitch: {
         inspectAll: true,
       },
+      favoredOnlySwitch: {
+        favoredOnly: false,
+      },
+      nameSearchBar: {
+        namePattern: '',
+      },
     };
   },
   methods: {
@@ -232,22 +300,41 @@ export default {
       }
     },
     lookupAllPermitted() {
-      resolveResponse(allPermittedDisp(0, 1000))
+      this.cardPanel.loading += 1;
+      resolveResponse(userPermittedWithConditionDisplayDisp(
+        this.nameSearchBar.namePattern,
+        this.favoredOnlySwitch.favoredOnly,
+        0,
+        1000,
+      ))
         .then(this.updateCardListView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.cardPanel.loading -= 1;
         });
     },
     lookupAllOwned() {
-      resolveResponse(allOwnedDisp(0, 1000))
+      this.cardPanel.loading += 1;
+      resolveResponse(userOwnedWithConditionDisplayDisp(
+        this.nameSearchBar.namePattern,
+        this.favoredOnlySwitch.favoredOnly,
+        0,
+        1000,
+      ))
         .then(this.updateCardListView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.cardPanel.loading -= 1;
         });
     },
     updateCardListView(res) {
       this.cardPanel.entities = res;
     },
     handleNoteBookToCreate() {
-      resolveResponse(allOwnedDisp(0, 1000))
+      this.cardPanel.loading += 1;
+      resolveResponse(userOwned(0, 1000))
         .then((res) => {
           if (res.count >= this.cardPanel.maxCard) {
             this.$alert(
@@ -269,12 +356,16 @@ export default {
           this.entityMaintainDialog.visible = true;
         })
         .catch(() => {
+        })
+        .finally(() => {
+          this.cardPanel.loading -= 1;
         });
     },
     handleNoteBookCreate() {
       resolveResponse(create(
         this.entityMaintainDialog.anchorEntity.name,
         this.entityMaintainDialog.anchorEntity.remark,
+        this.entityMaintainDialog.anchorEntity.favorite,
       ))
         .then(() => {
           this.$message({
@@ -299,6 +390,7 @@ export default {
         this.entityMaintainDialog.anchorEntity.long_id,
         this.entityMaintainDialog.anchorEntity.name,
         this.entityMaintainDialog.anchorEntity.remark,
+        this.entityMaintainDialog.anchorEntity.favorite,
       ))
         .then(() => {
           this.$message({
@@ -331,6 +423,7 @@ export default {
       this.entityMaintainDialog.anchorEntity.long_id = item.key.long_id;
       this.entityMaintainDialog.anchorEntity.name = item.name;
       this.entityMaintainDialog.anchorEntity.remark = item.remark;
+      this.entityMaintainDialog.anchorEntity.favorite = item.favorite;
       this.entityMaintainDialog.mode = 'EDIT';
       this.entityMaintainDialog.visible = true;
     },
@@ -394,9 +487,6 @@ export default {
     formatTimestamp(timestamp) {
       return formatTimestamp(timestamp);
     },
-    handleInspectAllSwitchChanged() {
-      this.handleSearch();
-    },
     resolvePermissionLabel(permissionLevel) {
       switch (permissionLevel) {
         case 0:
@@ -431,6 +521,30 @@ export default {
       close();
       this.handleItemToEdit(index, item);
     },
+    handleChangeFavoredMenuItemClicked(index, item, close) {
+      close();
+      this.handleChangeFavored(index, item);
+    },
+    handleChangeFavored(index, item) {
+      this.cardPanel.loading += 1;
+      resolveResponse(changeFavored(item.key.long_id))
+        .then(() => {
+          this.$message({
+            showClose: true,
+            message: `笔记本 ${item.name} 收藏状态修改成功`,
+            type: 'success',
+            center: true,
+          });
+        })
+        .then(() => {
+          this.handleSearch();
+        })
+        .catch(() => {
+        })
+        .finally(() => {
+          this.cardPanel.loading -= 1;
+        });
+    },
   },
   mounted() {
     this.handleSearch();
@@ -440,6 +554,11 @@ export default {
 
 <style scoped>
 .note-book-container {
+  width: 100%;
+  height: 100%;
+}
+
+.note-book-card-container-wrapper {
   width: 100%;
   height: 100%;
 }
@@ -492,6 +611,15 @@ export default {
   margin: 0 8px;
 }
 
+.header-container .name-search-bar {
+  width: 400px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.header-container .name-search-bar >>> .el-input-group__prepend {
+  padding: 0 10px;
+}
+
 .note-book-control-button-group {
   display: flex;
 }
@@ -521,5 +649,11 @@ export default {
 .my-contextmenu li.disabled {
   color: grey;
   cursor: not-allowed;
+}
+
+/*noinspection CssUnusedSymbol*/
+.my-contextmenu .el-divider--horizontal {
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 </style>

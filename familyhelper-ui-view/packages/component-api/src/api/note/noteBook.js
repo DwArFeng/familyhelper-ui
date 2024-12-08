@@ -1,8 +1,6 @@
 // noinspection NpmUsedModulesInstalled,JSUnusedGlobalSymbols
 
-import {
-    get, post,
-} from '@/util/http';
+import {get, post,} from '@/util/http';
 
 export function exists(key) {
     return get('note', `note-book/${key}/exists/`, {});
@@ -19,15 +17,26 @@ export function all(page, rows) {
     });
 }
 
-export function allPermitted(page, rows) {
-    return get('note', 'note-book/all-permitted/', {
+export function userOwned(page, rows) {
+    return get('note', 'note-book/user-owned/', {
         page,
         rows,
     });
 }
 
-export function allOwned(page, rows) {
-    return get('note', 'note-book/all-owned/', {
+export function userPermittedWithConditionDisplay(pattern, onlyFavored, page, rows) {
+    return get('note', 'note-book/user-permitted-with-condition-display/', {
+        pattern,
+        "only-favored": onlyFavored,
+        page,
+        rows,
+    });
+}
+
+export function userOwnedWithConditionDisplay(pattern, onlyFavored, page, rows) {
+    return get('note', 'note-book/user-owned-with-condition-display/', {
+        pattern,
+        "only-favored": onlyFavored,
         page,
         rows,
     });
@@ -37,34 +46,54 @@ export function inspectDisp(key) {
     return get('note', `note-book/${key}/disp/`, {});
 }
 
-export function allPermittedDisp(page, rows) {
-    return get('note', 'note-book/all-permitted/disp/', {
+export function allDisp(page, rows) {
+    return get('note', 'note-book/all/disp/', {
         page,
         rows,
     });
 }
 
-export function allOwnedDisp(page, rows) {
-    return get('note', 'note-book/all-owned/disp/', {
+export function userOwnedDisp(page, rows) {
+    return get('note', 'note-book/user-owned/disp/', {
         page,
         rows,
     });
 }
 
-export function create(name, remark) {
+export function userPermittedWithConditionDisplayDisp(pattern, onlyFavored, page, rows) {
+    return get('note', 'note-book/user-permitted-with-condition-display/disp/', {
+        pattern,
+        "only-favored": onlyFavored,
+        page,
+        rows,
+    });
+}
+
+export function userOwnedWithConditionDisplayDisp(pattern, onlyFavored, page, rows) {
+    return get('note', 'note-book/user-owned-with-condition-display/disp/', {
+        pattern,
+        "only-favored": onlyFavored,
+        page,
+        rows,
+    });
+}
+
+export function create(name, remark, favorite) {
     return post('note', 'note-book/create', {
         name,
         remark,
+        favorite,
     });
 }
 
-export function update(key, name, remark) {
+export function update(key, name, remark, favorite) {
     return post('note', 'note-book/update', {
         note_book_key: {
             long_id: key,
         },
         name,
         remark,
+        favorite,
     });
 }
 
@@ -93,6 +122,14 @@ export function removePermission(noteBookKey, userKey) {
         },
         user_key: {
             string_id: userKey,
+        },
+    });
+}
+
+export function changeFavored(noteBookKey){
+    return post('note', 'note-book/change-favored', {
+        note_book_key: {
+            long_id: noteBookKey,
         },
     });
 }

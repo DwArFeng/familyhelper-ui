@@ -14,58 +14,115 @@
     @closed="handleClosed"
     @keydown.native="handleHotKeyDown"
   >
-    <div class="body-wrapper">
-      <card-panel
-        title-prop="name"
-        class="card-list-container"
-        card-width="calc(20% - 18px)"
-        select-mode="SINGLE"
-        :data="entities.data"
-        :maxCard="1000"
-        :inspect-button-visible="false"
-        :edit-button-visible="false"
-        :delete-button-visible="false"
-        :addon-button-visible="false"
-        :inspect-menu-item-visible="false"
-        :edit-menu-item-visible="false"
-        :delete-menu-item-visible="false"
-        @onSelectionChanged="handleSelectionChanged"
-      >
-        <template v-slot:default="{item}">
-          <div class="note-book-container">
-            <div class="note-book-property">
-              <span class="iconfont note-book-property-icon" style="color:black">&#xfffa;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="note-book-property-text">
+    <header-layout-panel class="body-wrapper">
+      <template v-slot:header>
+        <div class="header-container">
+          <el-button
+            type="success"
+            size="medium"
+            @click="handleSearch"
+          >
+            刷新数据
+          </el-button>
+          <el-divider direction="vertical"/>
+          <el-switch
+            v-model="favoredOnly"
+            active-text="只看收藏"
+            inactive-text="看所有的"
+            @change="handleSearch"
+          />
+          <el-divider direction="vertical"/>
+          <el-input
+            class="name-search-bar"
+            v-model="namePattern"
+            clearable
+            @keydown.enter.native="handleSearch"
+            @clear="handleSearch"
+          >
+            <template v-slot:prepend>
+              <span>笔记名称</span>
+            </template>
+            <template v-slot:append>
+              <el-button
+                icon="el-icon-search"
+                @click="handleSearch"
+              />
+            </template>
+          </el-input>
+        </div>
+      </template>
+      <template v-slot:default>
+        <div class="body-container">
+          <card-panel
+            title-prop="name"
+            class="card-list-container"
+            v-loading="cardLoading"
+            card-width="calc(20% - 18px)"
+            select-mode="SINGLE"
+            :data="entities.data"
+            :maxCard="1000"
+            :inspect-button-visible="false"
+            :edit-button-visible="false"
+            :delete-button-visible="false"
+            :addon-button-visible="false"
+            :inspect-menu-item-visible="false"
+            :edit-menu-item-visible="false"
+            :delete-menu-item-visible="false"
+            @onSelectionChanged="handleSelectionChanged"
+          >
+            <template v-slot:default="{item}">
+              <!--suppress JSUnresolvedReference -->
+              <corner-light-panel
+                class="note-book-card-container-wrapper"
+                light-bevel-edge="40px"
+                light-color="#E6A23C"
+                :show-south-east="item.favorite"
+              >
+                <div class="note-book-card-container">
+                  <div class="note-book-property">
+                    <span
+                      class="iconfont note-book-property-icon" style="color:black"
+                    >&#xfffa;</span>
+                    <!--suppress JSUnresolvedVariable -->
+                    <span class="note-book-property-text">
                 权限: {{ resolvePermissionLabel(item.permission_level) }}
               </span>
-            </div>
-            <div class="note-book-property">
-              <span class="iconfont note-book-property-icon" style="color:black">&#xfffb;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="note-book-property-text">
+                  </div>
+                  <div class="note-book-property">
+                    <span
+                      class="iconfont note-book-property-icon" style="color:black"
+                    >&#xfffb;</span>
+                    <!--suppress JSUnresolvedVariable -->
+                    <span class="note-book-property-text">
                 所有者: {{ item.owner_account.display_name }}
               </span>
-            </div>
-            <div class="note-book-property">
-              <span class="iconfont note-book-property-icon" style="color:black">&#xffe7;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="note-book-property-text">
+                  </div>
+                  <div class="note-book-property">
+                    <span
+                      class="iconfont note-book-property-icon" style="color:black"
+                    >&#xffe7;</span>
+                    <!--suppress JSUnresolvedVariable -->
+                    <span class="note-book-property-text">
                 项目总数: {{ item.item_count }}
               </span>
-            </div>
-            <div class="note-book-property">
-              <span class="iconfont note-book-property-icon" style="color:black">&#xffef;</span>
-              <!--suppress JSUnresolvedVariable -->
-              <span class="note-book-property-text">
+                  </div>
+                  <div class="note-book-property">
+                    <span
+                      class="iconfont note-book-property-icon" style="color:black"
+                    >&#xffef;</span>
+                    <!--suppress JSUnresolvedVariable -->
+                    <span class="note-book-property-text">
                 创建日期: {{ formatTimestamp(item.created_date) }}
               </span>
-            </div>
-          </div>
-        </template>
-      </card-panel>
-      <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
-    </div>
+                  </div>
+                </div>
+              </corner-light-panel>
+            </template>
+          </card-panel>
+          <el-checkbox v-model="checkboxValue">设为默认</el-checkbox>
+        </div>
+      </template>
+    </header-layout-panel>
     <div class="footer-container" slot="footer">
       <el-button
         type="primary"
@@ -85,17 +142,20 @@
 
 <script>
 import CardPanel from '@/components/layout/CardPanel.vue';
+import HeaderLayoutPanel from '@/components/layout/HeaderLayoutPanel.vue';
 
-import resolveResponse from '@/util/response';
 import {
-  allOwnedDisp,
-  allPermittedDisp,
+  userPermittedWithConditionDisplayDisp,
+  userOwnedWithConditionDisplayDisp,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook';
+import resolveResponse from '@/util/response';
+
 import { formatTimestamp } from '@/util/timestamp';
+import CornerLightPanel from '@/components/layout/CornerLightPanel.vue';
 
 export default {
   name: 'NoteBookSelectDialog',
-  components: { CardPanel },
+  components: { CornerLightPanel, HeaderLayoutPanel, CardPanel },
   props: {
     visible: {
       type: Boolean,
@@ -126,6 +186,7 @@ export default {
   },
   data() {
     return {
+      cardLoading: 0,
       entities: {
         current_page: 0,
         total_pages: 0,
@@ -136,6 +197,8 @@ export default {
       watchedVisible: false,
       selection: null,
       checkboxValue: false,
+      favoredOnly: false,
+      namePattern: '',
     };
   },
   methods: {
@@ -147,15 +210,33 @@ export default {
       }
     },
     lookupAllPermitted() {
-      resolveResponse(allPermittedDisp(0, 1000))
+      this.cardLoading += 1;
+      resolveResponse(userPermittedWithConditionDisplayDisp(
+        this.namePattern,
+        this.favoredOnly,
+        0,
+        1000,
+      ))
         .then(this.updateCardListView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.cardLoading -= 1;
         });
     },
     lookupAllOwned() {
-      resolveResponse(allOwnedDisp(0, 1000))
+      this.cardLoading += 1;
+      resolveResponse(userOwnedWithConditionDisplayDisp(
+        this.namePattern,
+        this.favoredOnly,
+        0,
+        1000,
+      ))
         .then(this.updateCardListView)
         .catch(() => {
+        })
+        .finally(() => {
+          this.cardLoading -= 1;
         });
     },
     resolvePermissionLabel(permissionLevel) {
@@ -216,7 +297,34 @@ export default {
   margin-bottom: 0 !important;
 }
 
-.body-wrapper {
+.body-wrapper >>> .main-container-wrapper.expand{
+  height: unset;
+  flex-grow: unset;
+}
+
+.header-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+/*noinspection CssUnusedSymbol*/
+.header-container .el-divider--vertical {
+  margin: 0 8px;
+}
+
+.header-container .name-search-bar {
+  width: 400px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.header-container .name-search-bar >>> .el-input-group__prepend {
+  padding: 0 10px;
+}
+
+.body-container{
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -224,10 +332,15 @@ export default {
 
 .card-list-container {
   width: 100%;
-  height: 60vh !important;
+  height: 500px !important;
 }
 
-.note-book-container {
+.note-book-card-container-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.note-book-card-container {
   width: 100%;
   height: 100%;
   padding-left: 15px;
