@@ -369,7 +369,7 @@ export default {
   width: 100%;
 }
 
-.table-container {
+.table-panel-container .table-container {
   width: 100%;
   height: 0;
   flex-grow: 1;
@@ -379,50 +379,50 @@ export default {
   min-width: 100%;
 }
 
-.pagination {
+.table-panel-container .pagination {
   text-align: center;
   padding: 0;
   margin-top: 2px;
 }
 
 /*noinspection CssUnusedSymbol*/
-.pagination >>> .el-pagination__total {
+.table-panel-container .pagination >>> .el-pagination__total {
   height: 28px;
   line-height: 29px;
 }
 
-.pagination >>> .el-pagination__sizes input {
+.table-panel-container .pagination >>> .el-pagination__sizes input {
   height: 28px;
   line-height: 26px;
 }
 
 /*noinspection CssUnusedSymbol*/
-.pagination >>> .el-pagination__jump {
+.table-panel-container .pagination >>> .el-pagination__jump {
   height: 28px;
   line-height: 27px;
 }
 
-.pagination >>> .el-pagination__jump input {
+.table-panel-container .pagination >>> .el-pagination__jump input {
   height: 28px;
   line-height: 28px;
 }
 
-.pagination.compact >>> .el-pager li {
+.table-panel-container .pagination.compact >>> .el-pager li {
   margin: 0 1px;
 }
 
 /*noinspection CssUnusedSymbol*/
-.pagination.compact >>> .el-pagination__sizes {
+.table-panel-container .pagination.compact >>> .el-pagination__sizes {
   margin: 0 6px 0 0;
 }
 
 /*noinspection CssUnusedSymbol*/
-.pagination.compact >>> .el-pagination__sizes .el-input {
+.table-panel-container .pagination.compact >>> .el-pagination__sizes .el-input {
   margin: 0;
 }
 
 /*noinspection CssUnusedSymbol*/
-.pagination.compact >>> .el-pagination__jump {
+.table-panel-container .pagination.compact >>> .el-pagination__jump {
   margin: 0 0 0 6px;
 }
 
