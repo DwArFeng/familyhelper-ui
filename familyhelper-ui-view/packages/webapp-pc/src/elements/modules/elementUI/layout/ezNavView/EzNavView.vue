@@ -29,6 +29,7 @@
         </div>
       </div>
     </div>
+    <!--suppress JSUnresolvedReference -->
     <ul
       v-if="contextmenu.visible"
       ref="contextmenu"

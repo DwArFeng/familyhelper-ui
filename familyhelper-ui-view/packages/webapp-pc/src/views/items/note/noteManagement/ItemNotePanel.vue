@@ -54,6 +54,7 @@
             tabindex="0"
             @keydown.ctrl.s.prevent="handleCommitHotKeyDown"
           >
+            <!--suppress HtmlUnknownTag -->
             <ckeditor
               :editor="editor.editorClass"
               v-model="editor.content"

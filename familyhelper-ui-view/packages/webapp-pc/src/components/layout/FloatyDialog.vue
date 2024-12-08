@@ -71,6 +71,7 @@
         >
           <i class="iconfont">&#xffca;</i>
         </div>
+        <!--suppress JSUnresolvedReference -->
         <div
           class="content-panel-item content-panel-body"
           v-show="!showContentMask || adjustStatus===0"

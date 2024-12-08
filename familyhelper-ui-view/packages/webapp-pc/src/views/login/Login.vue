@@ -1,5 +1,6 @@
 <template>
   <div class="page-forbidden-container" v-cloak :style="backgroundImageStyle">
+    <!--suppress HtmlUnknownAttribute -->
     <div class="login-panel" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.1)">
       <div class="login-banner">
         <span class="login-panel-text">赵扶风开发制作</span>

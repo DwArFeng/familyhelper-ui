@@ -49,6 +49,7 @@
             <i class="iconfont">&#xffe6;</i>
           </el-button>
         </div>
+        <!--suppress HtmlUnknownTag -->
         <vue-cropper
           class="cropper"
           ref="cropper"

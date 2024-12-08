@@ -4,6 +4,7 @@
       正在渲染数据，请稍候...
     </div>
     <div v-show="!busyFlag" class="editor">
+      <!--suppress HtmlUnknownTag -->
       <ckeditor
         :editor="editorClass"
         v-model="content"
