@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 依赖升级。
+  - 升级 `spring` 依赖版本为 `5.3.39` 以规避漏洞。
+
 - 优化 `familyhelper-ui-view` 模块结构。
   - 优化 `scripts` 以及 `packages/*/scripts` 脚本。
   - 优化 `pom.xml` 配置。
