@@ -1,42 +1,42 @@
 // noinspection DuplicatedCode
 
 // 导入依赖模块。
-const fs = require('node:fs');
-const formatDate = require('date-fns/format').format;
-const PathUtil = require('./path');
-const ConfigUtil = require('./config');
-const ScriptsConfig = require('../config/scripts');
+const fs = require('node:fs')
+const formatDate = require('date-fns/format').format
+const PathUtil = require('./path')
+const ConfigUtil = require('./config')
+const ScriptsConfig = require('../config/scripts')
 
 // 读取 package.json。
 const packageJson = JSON.parse(
-    fs.readFileSync(PathUtil.parsePath('package.json'), {encoding: 'utf-8'})
-);
+  fs.readFileSync(PathUtil.parsePath('package.json'), { encoding: 'utf-8' }),
+)
 
 /**
  * 模块的名称。
  *
  * @type {string}
  */
-const moduleName = packageJson.name;
+const moduleName = packageJson.name
 
 /**
  * 日志等级的顺序，从低到高。
  *
  * @type {string[]}
  */
-const logLevelOrder = ['debug', 'info', 'warn', 'error'];
+const logLevelOrder = ['debug', 'info', 'warn', 'error']
 
 /**
  * 模块的默认脚本配置。
  */
-const scriptsConfig = ConfigUtil.parseConfig(ScriptsConfig.defaultConfig, ScriptsConfig.configPath);
+const scriptsConfig = ConfigUtil.parseConfig(ScriptsConfig.defaultConfig, ScriptsConfig.configPath)
 
 /**
  * 当前日志等级的索引。
  *
  * @type {number}
  */
-const currentLogLevelIndex = logLevelOrder.indexOf(scriptsConfig.commons.logLevel.toLowerCase());
+const currentLogLevelIndex = logLevelOrder.indexOf(scriptsConfig.commons.logLevel.toLowerCase())
 
 /**
  * 以 Debug 日志级别记录日志。
@@ -46,15 +46,15 @@ const currentLogLevelIndex = logLevelOrder.indexOf(scriptsConfig.commons.logLeve
  * @param message 日志消息。
  */
 function debug(message) {
-    // 如果日志级别大于 debug，则不记录日志。
-    if (currentLogLevelIndex > logLevelOrder.indexOf('debug')) {
-        return
-    }
+  // 如果日志级别大于 debug，则不记录日志。
+  if (currentLogLevelIndex > logLevelOrder.indexOf('debug')) {
+    return
+  }
 
-    // 生成记录日志的消息。
-    const logMessage = `[${formatNow()}] [DEBUG] [${moduleName}]: ${message}`;
-    // 控制台输出日志。
-    console.debug(logMessage);
+  // 生成记录日志的消息。
+  const logMessage = `[${formatNow()}] [DEBUG] [${moduleName}]: ${message}`
+  // 控制台输出日志。
+  console.debug(logMessage)
 }
 
 /**
@@ -65,14 +65,14 @@ function debug(message) {
  * @param message 日志消息。
  */
 function info(message) {
-    // 如果日志级别大于 info，则不记录日志。
-    if (currentLogLevelIndex > logLevelOrder.indexOf('info')) {
-        return
-    }
-    // 生成记录日志的消息。
-    const logMessage = `[${formatNow()}] [INFO] [${moduleName}]: ${message}`;
-    // 控制台输出日志。
-    console.info(logMessage);
+  // 如果日志级别大于 info，则不记录日志。
+  if (currentLogLevelIndex > logLevelOrder.indexOf('info')) {
+    return
+  }
+  // 生成记录日志的消息。
+  const logMessage = `[${formatNow()}] [INFO] [${moduleName}]: ${message}`
+  // 控制台输出日志。
+  console.info(logMessage)
 }
 
 /**
@@ -83,14 +83,14 @@ function info(message) {
  * @param message 日志消息。
  */
 function warn(message) {
-    // 如果日志级别大于 warn，则不记录日志。
-    if (currentLogLevelIndex > logLevelOrder.indexOf('warn')) {
-        return
-    }
-    // 生成记录日志的消息。
-    const logMessage = `[${formatNow()}] [WARN] [${moduleName}]: ${message}`;
-    // 控制台输出日志。
-    console.warn(logMessage);
+  // 如果日志级别大于 warn，则不记录日志。
+  if (currentLogLevelIndex > logLevelOrder.indexOf('warn')) {
+    return
+  }
+  // 生成记录日志的消息。
+  const logMessage = `[${formatNow()}] [WARN] [${moduleName}]: ${message}`
+  // 控制台输出日志。
+  console.warn(logMessage)
 }
 
 /**
@@ -101,14 +101,14 @@ function warn(message) {
  * @param message 日志消息。
  */
 function error(message) {
-    // 如果日志级别大于 error，则不记录日志。
-    if (currentLogLevelIndex > logLevelOrder.indexOf('error')) {
-        return
-    }
-    // 生成记录日志的消息。
-    const logMessage = `[${formatNow()}] [ERROR] [${moduleName}]: ${message}`;
-    // 控制台输出日志。
-    console.error(logMessage);
+  // 如果日志级别大于 error，则不记录日志。
+  if (currentLogLevelIndex > logLevelOrder.indexOf('error')) {
+    return
+  }
+  // 生成记录日志的消息。
+  const logMessage = `[${formatNow()}] [ERROR] [${moduleName}]: ${message}`
+  // 控制台输出日志。
+  console.error(logMessage)
 }
 
 /**
@@ -119,10 +119,13 @@ function error(message) {
  * @returns {string}
  */
 function formatNow() {
-    return formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS');
+  return formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
 }
 
 // 导出模块。
 module.exports = {
-    debug, info, warn, error
+  debug,
+  info,
+  warn,
+  error,
 }

@@ -1,5 +1,5 @@
 // 导入依赖模块。
-const path = require('node:path');
+const path = require('node:path')
 
 /**
  * 解析路径。
@@ -10,8 +10,8 @@ const path = require('node:path');
  * @returns {string} 解析后获得的绝对路径。
  */
 const parsePath = function (relativePath) {
-    return path.join(__dirname, '../../', relativePath);
+  return path.join(__dirname, '../../', relativePath)
 }
 
 // 导出模块。
-module.exports = {parsePath}
+module.exports = { parsePath }

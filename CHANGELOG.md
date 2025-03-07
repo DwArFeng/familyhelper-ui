@@ -4,6 +4,11 @@
 
 #### 功能构建
 
+- `component-iconfont` 子模块优化。
+  - 建立构建脚本格式化机制。
+  - 建立代码格式化机制。
+  - 建立代码检查机制。
+
 - `component-ckeditor` 子模块优化。
   - 添加 `@ckeditor/ckeditor5-core`，消除模块打包时的警告输出。
   - 建立构建脚本格式化机制。

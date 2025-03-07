@@ -4,7 +4,12 @@
   "private": true,
   "description": "家庭助手 UI - 组件 - Iconfont",
   "scripts": {
-    "generate-config": "node scripts/generate-config.js"
+    "generate-config": "node scripts/generate-config.js",
+    "check": "node scripts/check.js",
+    "check-format": "node scripts/check-format.js"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.2"
   },
   "packageManager": "pnpm@9.9.0"
 }

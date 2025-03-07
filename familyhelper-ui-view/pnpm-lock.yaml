@@ -120,7 +120,11 @@ importers:
         specifier: ^4.9.1
         version: 4.10.0(webpack@4.47.0)
 
-  packages/component-iconfont: {}
+  packages/component-iconfont:
+    devDependencies:
+      prettier:
+        specifier: ^3.4.2
+        version: 3.5.3
 
 packages:
 
