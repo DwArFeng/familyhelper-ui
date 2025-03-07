@@ -7,15 +7,15 @@
  * }}
  */
 const defaultConfig = {
-    // 通用配置。
-    commons: {
-        /**
-         * 日志等级。
-         *
-         * @type {'debug' | 'info' | 'warn' | 'error'}
-         */
-        logLevel: "info",
-    },
+  // 通用配置。
+  commons: {
+    /**
+     * 日志等级。
+     *
+     * @type {'debug' | 'info' | 'warn' | 'error'}
+     */
+    logLevel: 'info',
+  },
 }
 
 /**
@@ -26,4 +26,4 @@ const defaultConfig = {
 const configPath = 'scripts-config.json'
 
 // 导出模块。
-module.exports = {defaultConfig, configPath}
+module.exports = { defaultConfig, configPath }

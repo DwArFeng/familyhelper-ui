@@ -5,22 +5,22 @@ const LogUtil = require('./util/log.js')
 const ExecUtil = require('./util/exec.js')
 
 // 运行脚本。
-LogUtil.info('构建开始...')
+LogUtil.info('开始 check...')
 run()
   .then(() => {
-    LogUtil.info('构建完成')
+    LogUtil.info('check 完成')
   })
   .catch((e) => {
-    LogUtil.error(`构建失败, 将抛出异常, 异常信息如下: ${e.message}`)
+    LogUtil.error(`check 失败, 将抛出异常, 异常信息如下: ${e.message}`)
     LogUtil.error(`\n${e.stack}`)
     throw e
   })
 
 async function run() {
   // 执行指令。
-  LogUtil.info('执行指令: webpack --mode production...')
+  LogUtil.info('执行指令: prettier --check "src/" "sample/"...')
   try {
-    await ExecUtil.exec('webpack --mode production')
+    await ExecUtil.exec('prettier --check "src/" "sample/"')
     LogUtil.debug('执行指令成功')
   } catch (e) {
     LogUtil.error(`执行指令失败, 将抛出异常, 异常信息如下: ${e.message}`)

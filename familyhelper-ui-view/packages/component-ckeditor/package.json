@@ -5,7 +5,9 @@
   "description": "家庭助手 UI - 组件 - Ckeditor",
   "scripts": {
     "generate-config": "node scripts/generate-config.js",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "check": "node scripts/check.js",
+    "check-format": "node scripts/check-format.js"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-adapter-ckfinder": "^31.1.0",
@@ -39,7 +41,8 @@
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^4.2.3",
     "webpack": "^4.46.0",
-    "webpack-cli": "^4.9.1"
+    "webpack-cli": "^4.9.1",
+    "prettier": "^3.4.2"
   },
   "packageManager": "pnpm@9.9.0",
   "browserify": {
