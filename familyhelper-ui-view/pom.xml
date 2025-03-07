@@ -62,9 +62,9 @@
                             </arguments>
                         </configuration>
                     </execution>
-                    <!-- Lint all packages -->
+                    <!-- Check all packages -->
                     <execution>
-                        <id>pnpm run lint</id>
+                        <id>pnpm run check</id>
                         <phase>generate-resources</phase>
                         <goals>
                             <goal>exec</goal>
@@ -73,7 +73,7 @@
                             <executable>pnpm</executable>
                             <arguments>
                                 <argument>run</argument>
-                                <argument>lint</argument>
+                                <argument>check</argument>
                             </arguments>
                         </configuration>
                     </execution>

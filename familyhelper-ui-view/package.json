@@ -5,8 +5,8 @@
   "description": "家庭助手 UI",
   "scripts": {
     "generate-config": "node scripts/generate-config.js",
-    "lint": "node scripts/lint.js",
-    "build": "node scripts/build.js"
+    "build": "node scripts/build.js",
+    "check": "node scripts/check.js"
   },
   "devDependencies": {
     "date-fns": "^3.6.0",

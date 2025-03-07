@@ -6,19 +6,19 @@ const PathUtil = require('./util/path')
 const { readFileSync } = require('node:fs')
 
 // 运行脚本。
-LogUtil.info('开始 lint...')
+LogUtil.info('开始 check...')
 run()
   .then(() => {
-    LogUtil.info('lint 完成')
+    LogUtil.info('check 完成')
   })
   .catch((e) => {
-    LogUtil.error(`lint 失败, 将异常退出, 异常信息如下: ${e.message}`)
+    LogUtil.error(`check 失败, 将异常退出, 异常信息如下: ${e.message}`)
     LogUtil.error(`\n${e.stack}`)
     process.exit(1)
   })
 
 async function run() {
-  //  lint所有包。
+  // Check 所有包。
   await executePackages(PackageUtil.packageInfos)
 }
 
@@ -48,15 +48,15 @@ async function executeSinglePackage(packageInfo) {
   )
 
   // 如果 package.json 文件中不存在脚本，则跳过。
-  if (!pkg.scripts || !pkg.scripts['lint']) {
+  if (!pkg.scripts || !pkg.scripts['check']) {
     return
   }
 
-  // 执行 lint 脚本。
+  // 执行 check 脚本。
   try {
-    await ExecUtil.spawn('pnpm', ['lint'], PathUtil.parsePath(`packages/${packageName}`))
+    await ExecUtil.spawn('pnpm', ['check'], PathUtil.parsePath(`packages/${packageName}`))
   } catch (e) {
-    LogUtil.error(`包 ${packageName} 执行 lint 脚本失败, 将抛出异常, 异常信息如下: ${e.message}`)
+    LogUtil.error(`包 ${packageName} 执行 check 脚本失败, 将抛出异常, 异常信息如下: ${e.message}`)
     LogUtil.error(`\n${e.stack}`)
     throw e
   }
