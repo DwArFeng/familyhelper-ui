@@ -4,6 +4,14 @@
 
 ## 项目结构
 
+项目结构示意如下：
+
+```
+. - 根目录
+├─── packages - monorepo 子模块
+└─── scripts - 构建脚本
+```
+
 该项目是一个 monorepo 项目，使用 pnpm workspace 管理，所有的 package 都在 `packages` 目录下。
 
 `packages` 目录下的项目可以分为以下几类：
