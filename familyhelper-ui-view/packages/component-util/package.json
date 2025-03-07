@@ -1,0 +1,24 @@
+{
+  "name": "@dwarfeng/familyhelper-ui-component-util",
+  "version": "0.0.0",
+  "private": true,
+  "description": "家庭助手 UI - 组件 - UTIL",
+  "scripts": {
+    "generate-config": "node scripts/generate-config.js",
+    "check": "node scripts/check.js",
+    "check-format": "node scripts/check-format.js",
+    "check-lint": "node scripts/check-lint.js",
+    "check-type": "node scripts/check-type.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.13.1",
+    "axios": "^1.7.9",
+    "eslint": "^9.20.1",
+    "prettier": "^3.4.2",
+    "typescript": "~5.7.3",
+    "typescript-eslint": "^8.24.1"
+  },
+  "packageManager": "pnpm@9.9.0"
+}
