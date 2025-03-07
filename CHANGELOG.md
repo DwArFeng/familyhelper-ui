@@ -9,6 +9,8 @@
   - 建立代码格式化机制。
   - 建立代码检查机制。
 
+- `component-iconfont` 子模块回归。
+
 - `component-ckeditor` 子模块回归。
 
 - 优化 `familyhelper-ui-view` 模块打包机制。
