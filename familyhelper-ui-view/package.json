@@ -9,7 +9,8 @@
     "build": "node scripts/build.js"
   },
   "devDependencies": {
-    "date-fns": "^3.6.0"
+    "date-fns": "^3.6.0",
+    "prettier": "^3.4.2"
   },
   "packageManager": "pnpm@9.12.3"
 }
