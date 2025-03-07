@@ -8,7 +8,8 @@
 
 #### Bug修复
 
-- (无)
+- 修复 `familyhelper-ui-view` 模块的脚本 bug。
+  - 修复 `packages` 目录不存在时无法执行 pnpm 指令的 bug。
 
 #### 功能移除
 

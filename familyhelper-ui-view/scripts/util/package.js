@@ -8,6 +8,11 @@ const {readFileSync} = require("node:fs");
 const packageInfos = parsePackageInfos();
 
 function parsePackageInfos() {
+    // 如果不存在 packages 文件夹，则返回空数组。
+    if (!fs.existsSync(PathUtil.parsePath('packages'))) {
+        return []
+    }
+
     /**
      * @type {string[]}
      */
