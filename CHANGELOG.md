@@ -25,6 +25,7 @@
   - 建立代码检查机制。
 
 - `component-api` 子模块回归。
+  - `src/api/system` 目录下的 HTTP 客户端 API 回归。
   - `src/utils` 目录下的工具函数回归。
 
 - `component-iconfont` 子模块回归。
