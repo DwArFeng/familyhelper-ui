@@ -4,6 +4,8 @@
 
 #### 功能构建
 
+- `component-ckeditor` 子模块回归。
+
 - 优化 `familyhelper-ui-view` 模块打包机制。
   - 将打包机制由 `build -> lint` 更改为 `build -> check`，允许子模块引入更多的检查机制。
   - 修改对应的构建脚本。
