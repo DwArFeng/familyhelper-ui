@@ -6,10 +6,5 @@
   "scripts": {
     "generate-config": "node scripts/generate-config.js"
   },
-  "packageManager": "pnpm@9.9.0",
-  "browserify": {
-    "transform": [
-      "vueify"
-    ]
-  }
+  "packageManager": "pnpm@9.9.0"
 }
