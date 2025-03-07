@@ -13,7 +13,7 @@
 
 #### 功能移除
 
-- (无)
+- 移除 `familyhelper-ui-view` 模块旧版本 `packages` 目录。
 
 ---
 
