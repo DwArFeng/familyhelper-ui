@@ -1,0 +1,43 @@
+{
+  "name": "@dwarfeng/familyhelper-ui-webapp-pc",
+  "version": "0.0.0",
+  "private": true,
+  "description": "家庭助手 UI - Web 应用 - PC",
+  "scripts": {
+    "generate-config": "node scripts/generate-config.js",
+    "serve": "node scripts/serve.js",
+    "build": "node scripts/build.js",
+    "check": "node scripts/check.js",
+    "check-format": "node scripts/check-format.js",
+    "check-lint": "node scripts/check-lint.js",
+    "check-type": "node scripts/check-type.js"
+  },
+  "dependencies": {
+    "@dwarfeng/familyhelper-ui-component-api": "workspace:*",
+    "@dwarfeng/familyhelper-ui-component-util": "workspace:*",
+    "axios": "^1.7.9",
+    "js-base64": "^3.7.7",
+    "pinia": "^2.3.1",
+    "vue": "^3.5.13",
+    "vue-component-type-helpers": "^2.2.6",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.13.1",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/eslint-config-prettier": "^10.1.0",
+    "@vue/eslint-config-typescript": "^14.3.0",
+    "@vue/language-server": "^2.2.8",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.18.0",
+    "eslint-plugin-vue": "^9.32.0",
+    "jiti": "^2.4.2",
+    "prettier": "^3.4.2",
+    "typescript": "~5.7.3",
+    "vite": "^6.0.11",
+    "vite-plugin-vue-devtools": "^7.7.1",
+    "vue-tsc": "^2.2.8"
+  },
+  "packageManager": "pnpm@9.9.0"
+}
