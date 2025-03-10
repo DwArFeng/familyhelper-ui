@@ -38,6 +38,15 @@
   - VIM 框架回归。
 
 - `webapp-pc` 子模块回归。
+  - 组件 `AvatarPanel` 回归。
+  - 组件 `FloatyDialog` 回归。
+  - 组件 `MaintainDialog` 回归。
+  - 组件 `BorderLayoutPanel` 回归。
+  - 组件 `ComingSoon` 回归。
+  - 组件 `HeaderLayoutPanel` 回归。
+  - 组件 `TablePanel` 回归。
+  - 组件 `TextEditor` 回归。
+  - 组件 `LazySearchTreePanel` 回归。
   - 依赖回归。
   - VIM 框架回归。
 
