@@ -38,6 +38,11 @@
   - VIM 框架回归。
 
 - `webapp-pc` 子模块回归。
+  - 组件库 `ElementPlus` 回归。
+  - 组件库 `ElementPlusIcon` 回归。
+  - 组件库 `Iconfont` 回归。
+  - 组件库 `Jsoneditor` 回归。
+  - 组件库 `OverlayScrollbars` 回归。
   - 组件 `AvatarPanel` 回归。
   - 组件 `FloatyDialog` 回归。
   - 组件 `MaintainDialog` 回归。
