@@ -38,6 +38,7 @@
   - VIM 框架回归。
 
 - `webapp-pc` 子模块回归。
+  - 依赖回归。
   - VIM 框架回归。
 
 - `component-api` 子模块回归。
