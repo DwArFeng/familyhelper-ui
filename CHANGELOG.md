@@ -38,6 +38,7 @@
   - VIM 框架回归。
 
 - `webapp-pc` 子模块回归。
+  - 菜单 `首页` 回归。
   - 组件库 `ElementPlus` 回归。
   - 组件库 `ElementPlusIcon` 回归。
   - 组件库 `Iconfont` 回归。

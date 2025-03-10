@@ -1,17 +1,28 @@
 <template>
-  <div class="welcome-container">
-    <div class="placeholder">欢迎使用 VIM 框架</div>
+  <div class="readme-container">
+    <border-layout-panel class="border-layout-panel">
+      <div class="main-container">
+        <div class="placeholder">欢迎使用家庭助手，我们是幸福的一家人 （๑╹◡╹)ﾉ”</div>
+      </div>
+    </border-layout-panel>
   </div>
 </template>
 
 <script setup lang="ts">
+import BorderLayoutPanel from '@/components/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+
 defineOptions({
   name: 'WelcomeComponent',
 })
 </script>
 
 <style scoped>
-.welcome-container {
+.readme-container {
+  width: 100%;
+  height: 100%;
+}
+
+.main-container {
   width: 100%;
   height: 100%;
 }
