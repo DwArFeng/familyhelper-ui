@@ -143,7 +143,7 @@
         <ul class="contextmenu-body">
           <li class="iconfont" @click="handleDockTop">&#xffcf;</li>
           <li class="iconfont" @click="handleDockLeft">&#xffce;</li>
-          <li class="iconfont" @click="handleDockDown">&#xffcd;</li>
+          <li class="iconfont" @click="handleDockBottom">&#xffcd;</li>
           <li class="iconfont" @click="handleDockRight">&#xffcc;</li>
         </ul>
       </div>
@@ -842,7 +842,7 @@ function handleDockLeft(): void {
   emit('onVisualFieldAdjusted', visualField.value)
 }
 
-function handleDockDown(): void {
+function handleDockBottom(): void {
   // 如果窗口之前是未停靠状态，则备份视觉字段。
   if (dockStatus.value === 0) {
     backupVisualField()
