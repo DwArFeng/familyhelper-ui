@@ -174,7 +174,7 @@ const props = withDefaults(defineProps<Props>(), {
   deleteButtonVisible: true,
   highlightCurrentRow: false,
   operateColumnVisible: true,
-  operateColumnWidth: 103,
+  operateColumnWidth: 107,
   showContextmenu: false,
   contextmenuWidth: 85,
   inspectMenuItemVisible: true,
