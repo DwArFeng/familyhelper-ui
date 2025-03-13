@@ -176,6 +176,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 
+import type { DockStatus, VisualField } from './types.ts'
+
 defineOptions({
   name: 'FloatyDialog',
 })
@@ -196,7 +198,7 @@ type Props = {
   initialY?: number
   initialHeight?: number
   initialWidth?: number
-  initialDockStatus?: 0 | 1 | 2 | 3 | 4
+  initialDockStatus?: DockStatus
   initialContentOpacity?: number
 }
 
@@ -274,7 +276,9 @@ onMounted(() => {
 function handleClose(): void {
   watchedVisible.value = false
   operateOverride.value = false
-  emit('onClosed')
+  nextTick(() => {
+    emit('onClosed')
+  })
 }
 
 // -----------------------------------------------------------显示参数-----------------------------------------------------------
@@ -284,23 +288,6 @@ const height = ref<number>(props.initialHeight)
 const width = ref<number>(props.initialWidth)
 const dockStatus = ref<0 | 1 | 2 | 3 | 4>(props.initialDockStatus)
 const contentOpacity = ref<number>(props.initialContentOpacity)
-
-type VisualField = {
-  x: number
-  y: number
-  height: number
-  width: number
-  /*
-   * dockStatus 代码含义:
-   *   0: 没有停靠。
-   *   1: 上侧停靠。
-   *   2: 左侧停靠。
-   *   3: 下侧停靠。
-   *   4: 右侧停靠。
-   */
-  dockStatus: 0 | 1 | 2 | 3 | 4
-  contentOpacity: number
-}
 
 const visualField = computed<VisualField>(() => {
   return {
