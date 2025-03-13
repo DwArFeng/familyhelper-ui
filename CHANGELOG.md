@@ -10,6 +10,7 @@
   - 建立代码检查机制。
 
 - `webapp-pc` 子模块优化。
+  - 新增 `src/composables/userPreference.ts` 用户偏好 Composition API。
   - `src/components/dialog/floatyDialog/FloatyDialog.vue` 面板代码优化。
   - 建立构建脚本格式化机制。
   - 建立代码格式化机制。
