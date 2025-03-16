@@ -8,7 +8,7 @@ type UseGeneralMaintainDialogResult<T, CT> = {
   visible: Ref<boolean>
   item: Ref<CT>
   mode: Ref<'CREATE' | 'EDIT' | 'INSPECT'>
-  showCreateDialog: (retainOldItem: boolean) => void
+  showCreateDialog: () => void
   showEditDialog: (item: T) => void
   showInspectDialog: (item: T) => void
 }
@@ -20,7 +20,7 @@ type UseGeneralMaintainDialogResult<T, CT> = {
  * - `visible` 表示对话框是否可见，可直接用于对话框的 `visible` 属性，应使用 `v-model` 绑定。
  * - `item` 表示当前的 bean 对象，可直接用于对话框的 `item` 属性。
  * - `mode` 表示当前的对话框模式，可直接用于对话框的 `mode` 属性。
- * - `showCreateDialog` 方法用于显示创建对话框，参数为是否保留对话框中旧的 bean 对象。
+ * - `showCreateDialog` 方法用于显示创建对话框。
  * - `showEditDialog` 方法用于显示编辑对话框，参数为要编辑的 bean 对象。
  * - `showInspectDialog` 方法用于显示查看对话框，参数为要查看的 bean 对象。
  *
@@ -47,10 +47,7 @@ export function useGeneralMaintainDialog<T, CT>(
     _visible.value = true
   }
 
-  function showCreateDialog(retainOldItem: boolean): void {
-    if (!retainOldItem) {
-      _item.value = initialItem
-    }
+  function showCreateDialog(): void {
     showDialog('CREATE')
   }
 
@@ -238,7 +235,7 @@ type UseCreateOnlyMaintainDialogResult<CT> = {
   visible: Ref<boolean>
   item: Ref<CT>
   mode: ComputedRef<'CREATE'>
-  showDialog: (retainOldItem: boolean) => void
+  showDialog: () => void
 }
 
 /**
@@ -248,7 +245,7 @@ type UseCreateOnlyMaintainDialogResult<CT> = {
  * - `visible` 表示对话框是否可见，可直接用于对话框的 `visible` 属性，应使用 `v-model` 绑定。
  * - `item` 表示当前的 bean 对象，可直接用于对话框的 `item` 属性。
  * - `mode` 表示当前的对话框模式，该值恒为 `CREATE`，可直接用于对话框的 `mode` 属性。
- * - `showDialog` 方法用于显示创建对话框，参数为是否保留对话框中旧的 bean 对象。
+ * - `showDialog` 方法用于显示创建对话框。
  *
  * @template T bean 类型。
  * @template CT component bean 类型。
@@ -263,10 +260,7 @@ export function useCreateOnlyMaintainDialog<CT>(
   const _item = ref<CT>(initialItem)
   const _mode = computed<'CREATE'>(() => 'CREATE')
 
-  function showDialog(retainOldItem: boolean): void {
-    if (!retainOldItem) {
-      _item.value = initialItem
-    }
+  function showDialog(): void {
     _visible.value = true
   }
 
