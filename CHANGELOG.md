@@ -49,6 +49,7 @@
   - 组件库 `Iconfont` 回归。
   - 组件库 `Jsoneditor` 回归。
   - 组件库 `OverlayScrollbars` 回归。
+  - 组件 `FileSelector` 回归。
   - 组件 `AvatarPanel` 回归。
   - 组件 `FloatyDialog` 回归。
   - 组件 `MaintainDialog` 回归。
