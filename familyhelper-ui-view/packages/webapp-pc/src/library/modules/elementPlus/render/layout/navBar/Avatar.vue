@@ -45,8 +45,6 @@ import { computed } from 'vue'
 import type { NotificationStore } from '@/store/modules/notification.ts'
 import type { LnpStore } from '@/store/modules/lnp.ts'
 
-import { ElMessageBox } from 'element-plus'
-
 import AvatarPanel from '@/components/avatar/AvatarPanel.vue'
 
 defineOptions({
@@ -93,12 +91,8 @@ function handleWelcomeCommand(): void {
 }
 
 function handleNotificationCommand(): void {
-  ElMessageBox.alert('该功能还未实现，敬请期待', '提示', {
-    confirmButtonText: '确定',
-    dangerouslyUseHTMLString: true,
-    customClass: 'custom-message-box__w500',
-    type: 'info',
-  })
+  const router = vim.ctx().router().vueRouter()
+  router.push({ name: 'notifyManagement.notification' })
 }
 
 function handleLogoutCommand(): void {
