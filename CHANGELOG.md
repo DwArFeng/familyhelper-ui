@@ -65,6 +65,7 @@
   - VIM 框架回归。
 
 - `component-api` 子模块回归。
+  - `src/api/notify` 目录下的 HTTP 客户端 API 回归。
   - `src/api/settingrepo` 目录下的 HTTP 客户端 API 回归。
   - `src/api/clannad` 目录下的 HTTP 客户端 API 回归。
   - `src/api/system` 目录下的 HTTP 客户端 API 回归。
