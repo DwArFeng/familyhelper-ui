@@ -8,7 +8,8 @@
 
 #### Bug修复
 
-- (无)
+- `webapp-pc` 子模块 bug 修复。
+  - 修复 `src/store/modules/vimEzNav.js` 无法处理畸形持久化数据的 bug。
 
 #### 功能移除
 

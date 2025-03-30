@@ -247,10 +247,23 @@ const actions = {
       [accountId],
     ))
       .then((res) => {
+        // noinspection DuplicatedCode
         if (res === null) {
           return Promise.resolve();
         }
         const persistenceData = JSON.parse(res.value);
+        if (!persistenceData.pinnedItemKeys) {
+          persistenceData.pinnedItemKeys = [];
+        }
+        if (!persistenceData.activeItemKeys) {
+          persistenceData.activeItemKeys = [];
+        }
+        if (!persistenceData.itemMetaMap) {
+          persistenceData.itemMetaMap = {};
+        }
+        if (!persistenceData.itemBackMap) {
+          persistenceData.itemBackMap = {};
+        }
         switch (vim.addons.ezNav.restoreWhenLogin) {
           case 'restore-all':
             break;
@@ -304,10 +317,23 @@ const loadHook = (store) => {
     [accountId],
   ))
     .then((res) => {
+      // noinspection DuplicatedCode
       if (res === null) {
         return Promise.resolve();
       }
       const persistenceData = JSON.parse(res.value);
+      if (!persistenceData.pinnedItemKeys) {
+        persistenceData.pinnedItemKeys = [];
+      }
+      if (!persistenceData.activeItemKeys) {
+        persistenceData.activeItemKeys = [];
+      }
+      if (!persistenceData.itemMetaMap) {
+        persistenceData.itemMetaMap = {};
+      }
+      if (!persistenceData.itemBackMap) {
+        persistenceData.itemBackMap = {};
+      }
       store.commit('vimEzNav/restorePersistenceData', persistenceData);
       return Promise.resolve();
     })
