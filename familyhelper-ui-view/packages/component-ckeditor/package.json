@@ -5,9 +5,10 @@
   "description": "家庭助手 UI - 组件 - Ckeditor",
   "scripts": {
     "generate-config": "node scripts/generate-config.js",
-    "build": "node scripts/build.js",
     "check": "node scripts/check.js",
-    "check-format": "node scripts/check-format.js"
+    "check-format": "node scripts/check-format.js",
+    "check-lint": "node scripts/check-lint.js",
+    "check-type": "node scripts/check-type.js"
   },
   "devDependencies": {
     "@ckeditor/ckeditor5-adapter-ckfinder": "^31.1.0",
@@ -18,7 +19,6 @@
     "@ckeditor/ckeditor5-code-block": "^31.1.0",
     "@ckeditor/ckeditor5-core": "^31.1.0",
     "@ckeditor/ckeditor5-dev-utils": "^25.4.5",
-    "@ckeditor/ckeditor5-dev-webpack-plugin": "^25.4.5",
     "@ckeditor/ckeditor5-editor-classic": "^31.1.0",
     "@ckeditor/ckeditor5-essentials": "^31.1.0",
     "@ckeditor/ckeditor5-find-and-replace": "^31.1.0",
@@ -35,15 +35,12 @@
     "@ckeditor/ckeditor5-theme-lark": "^31.1.0",
     "@ckeditor/ckeditor5-typing": "^31.1.0",
     "@ckeditor/ckeditor5-word-count": "^31.1.0",
-    "css-loader": "^5.2.7",
-    "postcss": "^8.5.3",
-    "postcss-loader": "^4.3.0",
+    "@tsconfig/node22": "^22.0.1",
+    "@types/node": "^22.14.0",
+    "eslint": "^9.24.0",
     "prettier": "^3.5.3",
-    "raw-loader": "^4.0.2",
-    "style-loader": "^2.0.0",
-    "terser-webpack-plugin": "^4.2.3",
-    "webpack": "^4.47.0",
-    "webpack-cli": "^4.10.0"
+    "typescript": "~5.7.3",
+    "typescript-eslint": "^8.29.1"
   },
   "packageManager": "pnpm@9.9.0"
 }

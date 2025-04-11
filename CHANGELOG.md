@@ -4,7 +4,9 @@
 
 #### 功能构建
 
-- (无)
+- `component-ckeditor` 子模块优化。
+  - 使用 TypeScript 重写 `ckeditor5` 相关的代码。
+  - 使用 TypeScript 相关标准优化代码检查机制。
 
 #### Bug修复
 
@@ -12,7 +14,9 @@
 
 #### 功能移除
 
-- (无)
+- `component-ckeditor` 子模块功能移除。
+  - 去除 `webpack` 相关的 `ckeditor5` 依赖，并移除 `webpack` 相关的构建脚本。
+  - 去除子模块的 `sample` 目录及相关代码。
 
 ---
 
