@@ -4,6 +4,7 @@
  * @type
  * {{
  *   commons: {logLevel: 'debug' | 'info' | 'warn' | 'error'},
+ *   server: {open: boolean, host: string, port: number, https: boolean, hmr: boolean}
  * }}
  */
 const defaultConfig = {
@@ -15,6 +16,38 @@ const defaultConfig = {
      * @type {'debug' | 'info' | 'warn' | 'error'}
      */
     logLevel: 'info',
+  },
+  server: {
+    /**
+     * 是否自动打开浏览器。
+     *
+     * @type {boolean}
+     */
+    open: true,
+    /**
+     * 绑定的主机。
+     *
+     * @type {string}
+     */
+    host: '0.0.0.0',
+    /**
+     * 绑定的端口。
+     *
+     * @type {number}
+     */
+    port: 8088,
+    /**
+     * 是否启用 HTTPS。
+     *
+     * @type {boolean}
+     */
+    https: false,
+    /**
+     * 是否只启用热更新。
+     *
+     * @type {boolean}
+     */
+    hmr: false,
   },
 }
 

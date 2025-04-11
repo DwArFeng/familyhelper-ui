@@ -18,9 +18,9 @@ run()
 
 async function run() {
   // 执行指令。
-  LogUtil.info('执行指令: prettier --check src/...')
+  LogUtil.info('执行指令: prettier --check src/ dev/...')
   try {
-    await ExecUtil.exec('prettier --check src/')
+    await ExecUtil.exec('prettier --check src/ dev/')
     LogUtil.debug('执行指令成功')
   } catch (e) {
     LogUtil.error(`执行指令失败, 将抛出异常, 异常信息如下: ${e.message}`)

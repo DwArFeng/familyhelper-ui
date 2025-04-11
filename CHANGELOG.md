@@ -5,6 +5,7 @@
 #### 功能构建
 
 - `component-ckeditor` 子模块优化。
+  - 添加 `dev` 指令以及相关代码，提升模块开发的便捷性。
   - `ckeditor5` 相关代码使用 `^45.0.0` 版本进行重写。
   - 使用 TypeScript 重写 `ckeditor5` 相关的代码。
   - 使用 TypeScript 相关标准优化代码检查机制。

@@ -5,19 +5,33 @@
   "description": "家庭助手 UI - 组件 - Ckeditor",
   "scripts": {
     "generate-config": "node scripts/generate-config.js",
+    "dev": "node scripts/dev.js",
     "check": "node scripts/check.js",
     "check-format": "node scripts/check-format.js",
     "check-lint": "node scripts/check-lint.js",
     "check-type": "node scripts/check-type.js"
   },
   "devDependencies": {
+    "@ckeditor/ckeditor5-vue": "^7.3.0",
     "@tsconfig/node22": "^22.0.1",
     "@types/node": "^22.14.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.5.0",
+    "@vue/language-server": "^2.2.8",
+    "@vue/tsconfig": "^0.7.0",
     "ckeditor5": "^45.0.0",
     "eslint": "^9.24.0",
+    "eslint-plugin-vue": "~10.0.0",
+    "jiti": "^2.4.2",
+    "npm-run-all2": "^7.0.2",
     "prettier": "^3.5.3",
     "typescript": "~5.7.3",
-    "typescript-eslint": "^8.29.1"
+    "typescript-eslint": "^8.29.1",
+    "vite": "^6.2.4",
+    "vite-plugin-vue-devtools": "^7.7.2",
+    "vue": "^3.5.13",
+    "vue-tsc": "^2.2.8"
   },
   "packageManager": "pnpm@9.9.0"
 }
