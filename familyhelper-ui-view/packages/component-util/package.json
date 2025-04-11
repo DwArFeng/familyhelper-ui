@@ -11,14 +11,14 @@
     "check-type": "node scripts/check-type.js"
   },
   "devDependencies": {
-    "@eslint/js": "^9.20.0",
-    "@tsconfig/node22": "^22.0.0",
-    "@types/node": "^22.13.1",
-    "axios": "^1.7.9",
-    "eslint": "^9.20.1",
-    "prettier": "^3.4.2",
+    "@eslint/js": "^9.24.0",
+    "@tsconfig/node22": "^22.0.1",
+    "@types/node": "^22.14.0",
+    "axios": "^1.8.4",
+    "eslint": "^9.24.0",
+    "prettier": "^3.5.3",
     "typescript": "~5.7.3",
-    "typescript-eslint": "^8.24.1"
+    "typescript-eslint": "^8.29.1"
   },
   "packageManager": "pnpm@9.9.0"
 }
