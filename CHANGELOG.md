@@ -5,6 +5,7 @@
 #### 功能构建
 
 - `webapp-pc` 子模块依赖新增。
+  - 增加依赖 `pdfjs-dist` 以应用其新功能，版本为 `^5.1.91`。
   - 增加依赖 `@dwarfeng/familyhelper-ui-component-ckeditor` 以应用其新功能，版本为 `workspace:*`。
 
 - `webapp-mobile` 子模块优化。
