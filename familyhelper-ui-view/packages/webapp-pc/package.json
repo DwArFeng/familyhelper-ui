@@ -13,12 +13,14 @@
     "check-type": "node scripts/check-type.js"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-vue": "^7.3.0",
     "@dwarfeng/familyhelper-ui-component-api": "workspace:*",
     "@dwarfeng/familyhelper-ui-component-ckeditor": "workspace:*",
     "@dwarfeng/familyhelper-ui-component-iconfont": "workspace:*",
     "@dwarfeng/familyhelper-ui-component-util": "workspace:*",
     "@element-plus/icons-vue": "^2.3.1",
     "axios": "^1.8.4",
+    "ckeditor5": "^45.0.0",
     "element-plus": "^2.9.7",
     "js-base64": "^3.7.7",
     "jsoneditor": "^10.2.0",

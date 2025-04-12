@@ -216,6 +216,9 @@ importers:
 
   packages/webapp-pc:
     dependencies:
+      '@ckeditor/ckeditor5-vue':
+        specifier: ^7.3.0
+        version: 7.3.0(ckeditor5@45.0.0)(vue@3.5.13(typescript@5.7.3))
       '@dwarfeng/familyhelper-ui-component-api':
         specifier: workspace:*
         version: link:../component-api
@@ -234,6 +237,9 @@ importers:
       axios:
         specifier: ^1.8.4
         version: 1.8.4
+      ckeditor5:
+        specifier: ^45.0.0
+        version: 45.0.0
       element-plus:
         specifier: ^2.9.7
         version: 2.9.7(vue@3.5.13(typescript@5.7.3))
@@ -3240,6 +3246,10 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       '@ckeditor/ckeditor5-watchdog': 45.0.0
       es-toolkit: 1.32.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-document-outline@45.0.0':
     dependencies:
@@ -3393,6 +3403,10 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-fullscreen@45.0.0':
     dependencies:
@@ -3422,6 +3436,10 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-highlight@45.0.0':
     dependencies:
@@ -3430,6 +3448,10 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-horizontal-line@45.0.0':
     dependencies:
@@ -3439,6 +3461,10 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       '@ckeditor/ckeditor5-widget': 45.0.0
       ckeditor5: 45.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-html-embed@45.0.0':
     dependencies:
@@ -3448,6 +3474,10 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       '@ckeditor/ckeditor5-widget': 45.0.0
       ckeditor5: 45.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-html-support@45.0.0':
     dependencies:
