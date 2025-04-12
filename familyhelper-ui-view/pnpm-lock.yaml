@@ -219,6 +219,9 @@ importers:
       '@dwarfeng/familyhelper-ui-component-api':
         specifier: workspace:*
         version: link:../component-api
+      '@dwarfeng/familyhelper-ui-component-ckeditor':
+        specifier: workspace:*
+        version: link:../component-ckeditor
       '@dwarfeng/familyhelper-ui-component-iconfont':
         specifier: workspace:*
         version: link:../component-iconfont
@@ -3309,6 +3312,10 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
       es-toolkit: 1.32.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-font@45.0.0':
     dependencies:
@@ -3318,10 +3325,6 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
 
   '@ckeditor/ckeditor5-fullscreen@45.0.0':
     dependencies:
@@ -3351,6 +3354,10 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-highlight@45.0.0':
     dependencies:
@@ -3359,6 +3366,10 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-horizontal-line@45.0.0':
     dependencies:

@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- `webapp-pc` 子模块依赖新增。
+  - 增加依赖 `@dwarfeng/familyhelper-ui-component-ckeditor` 以应用其新功能，版本为 `workspace:*`。
+
 - `webapp-mobile` 子模块优化。
   - 优化库资产的打包策略，如动态引入的 `js` 与 `mjs` 资产文件。
 
