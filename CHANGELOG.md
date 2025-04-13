@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- `webapp-pc` 子模块优化。
+  - 优化库资产的打包策略，如动态引入的 `js` 与 `mjs` 资产文件。
+
 - `component-ckeditor` 子模功能新增。
   - 新增 `src/util/file.ts` 工具类。
 

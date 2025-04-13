@@ -47,25 +47,29 @@ export default defineConfig({
           const info: string[] = assertInfo.names[0].split('.')
           const extension: string = info[info.length - 1].toLowerCase()
           let assertSubDirectory: string
-          // 媒体资源。
+          // 媒体资产。
           if (['mp4', 'webm', 'ogg', 'mp3', 'wav', 'flac', 'aac'].indexOf(extension) >= 0) {
             assertSubDirectory = 'media'
           }
-          // 图片资源。
+          // 图片资产。
           else if (
             ['png', 'jpg', 'jpeg', 'gif', 'svg', 'ico', 'webp', 'avif'].indexOf(extension) >= 0
           ) {
             assertSubDirectory = 'img'
           }
-          // 字体。
+          // 字体资产。
           else if (['ttf', 'otf', 'woff', 'woff2', 'eot'].indexOf(extension) >= 0) {
             assertSubDirectory = 'font'
           }
-          // 样式。
+          // 样式资产。
           else if (['css'].indexOf(extension) >= 0) {
             assertSubDirectory = 'css'
           }
-          // 其它。
+          // 库资产。
+          else if (['js', 'mjs'].indexOf(extension) >= 0) {
+            assertSubDirectory = 'lib'
+          }
+          // 其它资产。
           else {
             assertSubDirectory = 'other'
           }
