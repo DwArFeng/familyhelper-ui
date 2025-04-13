@@ -45,6 +45,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
+
 import TablePanel from '@/components/table/tablePanel/TablePanel.vue'
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
