@@ -106,9 +106,7 @@ type Props = {
   visible: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  visible: false,
-})
+const props = defineProps<Props>()
 
 // -----------------------------------------------------------Emits 定义-----------------------------------------------------------
 type Emits = {

@@ -102,10 +102,7 @@ type Props = {
   loginHistoryId: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  visible: false,
-  loginHistoryId: '',
-})
+const props = defineProps<Props>()
 
 // -----------------------------------------------------------Emits 定义-----------------------------------------------------------
 type Emits = {

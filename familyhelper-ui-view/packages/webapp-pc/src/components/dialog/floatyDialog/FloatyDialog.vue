@@ -184,7 +184,7 @@ defineOptions({
 
 // -----------------------------------------------------------Props 定义-----------------------------------------------------------
 type Props = {
-  visible?: boolean
+  visible: boolean
   iconVisible?: boolean
   title?: string
   minHeight?: number
@@ -203,7 +203,6 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  visible: false,
   iconVisible: false,
   title: '',
   minHeight: 175,

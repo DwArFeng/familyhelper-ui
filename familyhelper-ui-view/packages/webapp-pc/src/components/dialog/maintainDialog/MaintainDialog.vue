@@ -53,7 +53,7 @@ defineOptions({
 
 // -----------------------------------------------------------Props 定义-----------------------------------------------------------
 type Props = {
-  visible?: boolean
+  visible: boolean
   item?: CT
   mode?: 'CREATE' | 'EDIT' | 'INSPECT'
   labelWidth?: string
@@ -74,7 +74,6 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  visible: false,
   mode: 'INSPECT',
   labelWidth: '80px',
   createTitle: '新建',
