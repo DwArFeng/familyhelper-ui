@@ -28,7 +28,7 @@ type Emits = {
   (e: 'update:modelValue', value: string): void
 }
 
-const emits = defineEmits<Emits>()
+const emit = defineEmits<Emits>()
 
 // -----------------------------------------------------------编辑器处理-----------------------------------------------------------
 const editorRef = ref<HTMLElement | null>()
@@ -57,7 +57,7 @@ const watchHandle = watch(
         // 设置内部变更标记。
         internalChangeFlag = true
         // 触发更新。
-        emits('update:modelValue', jsonString)
+        emit('update:modelValue', jsonString)
       },
     })
     // 设置字号。

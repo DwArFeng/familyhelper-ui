@@ -75,7 +75,7 @@ type Emits = {
   (e: 'update:modelValue', value: string): void
 }
 
-const emits = defineEmits<Emits>()
+const emit = defineEmits<Emits>()
 
 // -----------------------------------------------------------Slots 定义-----------------------------------------------------------
 type AddonSlotProps = {
@@ -101,7 +101,7 @@ watch(
 watch(
   () => watchedModelValue.value,
   (value) => {
-    emits('update:modelValue', value)
+    emit('update:modelValue', value)
   },
 )
 

@@ -32,7 +32,7 @@ type Emits = {
   (e: 'update:modelValue', value: string): void
 }
 
-const emits = defineEmits<Emits>()
+const emit = defineEmits<Emits>()
 
 // -----------------------------------------------------------值处理逻辑-----------------------------------------------------------
 const watchedModelValue = ref(props.modelValue)
@@ -47,7 +47,7 @@ watch(
 watch(
   () => watchedModelValue.value,
   (value) => {
-    emits('update:modelValue', value)
+    emit('update:modelValue', value)
   },
 )
 
