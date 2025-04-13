@@ -7,7 +7,7 @@
         v-model:current-page="routerSupportTableCurrentPage"
         :item-count="routerSupportTableItemCount"
         :page-sizes="[15, 20, 30, 50]"
-        :items="routerSupportItems"
+        :items="routerSupportTableItems"
         :edit-button-visible="false"
         :delete-button-visible="false"
         :operate-column-width="53"
@@ -101,7 +101,7 @@ const {
   currentPage: routerSupportTableCurrentPage,
   pageSize: routerSupportTablePageSize,
   itemCount: routerSupportTableItemCount,
-  items: routerSupportItems,
+  items: routerSupportTableItems,
   pagingInfo: routerSupportTablePagingInfo,
   updateByLookup: updateRouterSupportTableByLookup,
 } = useIdentityBackendPagingTablePanel<RouterSupport>(15)

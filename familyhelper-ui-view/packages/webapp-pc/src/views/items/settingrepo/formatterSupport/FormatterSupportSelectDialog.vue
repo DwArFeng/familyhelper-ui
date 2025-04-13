@@ -18,7 +18,7 @@
       highlight-current-row
       :item-count="formatterSupportTableItemCount"
       :page-sizes="[15, 20, 30, 50]"
-      :items="formatterSupportItems"
+      :items="formatterSupportTableItems"
       :operate-column-visible="false"
       @onPagingAttributeChanged="handleFormatterSupportTablePagingAttributeChanged"
       @onCurrentChanged="handleFormatterSupportTableCurrentChanged"
@@ -122,7 +122,7 @@ const {
   currentPage: formatterSupportTableCurrentPage,
   pageSize: formatterSupportTablePageSize,
   itemCount: formatterSupportTableItemCount,
-  items: formatterSupportItems,
+  items: formatterSupportTableItems,
   pagingInfo: formatterSupportTablePagingInfo,
   updateByLookup: updateFormatterSupportTableByLookup,
 } = useIdentityBackendPagingTablePanel<FormatterSupport>(15)

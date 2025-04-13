@@ -31,7 +31,7 @@
           v-model:page-size="settingNodeTablePageSize"
           :item-count="settingNodeTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="settingNodeItems"
+          :items="settingNodeTableItems"
           :show-contextmenu="true"
           :contextmenu-width="100"
           @onPagingAttributeChanged="handleSettingNodeTablePagingAttributeChanged"
@@ -204,7 +204,7 @@ const {
   currentPage: settingNodeTableCurrentPage,
   pageSize: settingNodeTablePageSize,
   itemCount: settingNodeTableItemCount,
-  items: settingNodeItems,
+  items: settingNodeTableItems,
   pagingInfo: settingNodeTablePagingInfo,
   updateByLookup: updateSettingNodeTableByLookup,
 } = useIdentityBackendPagingTablePanel<SettingNode>(15)

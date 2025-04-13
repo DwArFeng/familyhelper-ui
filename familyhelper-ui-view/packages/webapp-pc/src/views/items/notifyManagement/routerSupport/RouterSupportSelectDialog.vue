@@ -18,7 +18,7 @@
       highlight-current-row
       :item-count="routerSupportTableItemCount"
       :page-sizes="[15, 20, 30, 50]"
-      :items="routerSupportItems"
+      :items="routerSupportTableItems"
       :operate-column-visible="false"
       @onPagingAttributeChanged="handleRouterSupportTablePagingAttributeChanged"
       @onCurrentChanged="handleRouterSupportTableCurrentChanged"
@@ -122,7 +122,7 @@ const {
   currentPage: routerSupportTableCurrentPage,
   pageSize: routerSupportTablePageSize,
   itemCount: routerSupportTableItemCount,
-  items: routerSupportItems,
+  items: routerSupportTableItems,
   pagingInfo: routerSupportTablePagingInfo,
   updateByLookup: updateRouterSupportTableByLookup,
 } = useIdentityBackendPagingTablePanel<RouterSupport>(15)

@@ -29,7 +29,7 @@
           v-model:page-size="notificationTablePageSize"
           :item-count="notificationTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="notificationItems"
+          :items="notificationTableItems"
           :show-contextmenu="true"
           :edit-button-visible="false"
           :operate-column-width="80"
@@ -259,7 +259,7 @@ const {
   currentPage: notificationTableCurrentPage,
   pageSize: notificationTablePageSize,
   itemCount: notificationTableItemCount,
-  items: notificationItems,
+  items: notificationTableItems,
   pagingInfo: notificationTablePagingInfo,
   updateByLookup: updateNotificationTableByLookup,
 } = useIdentityBackendPagingTablePanel<Notification>(15)

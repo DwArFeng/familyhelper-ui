@@ -26,7 +26,7 @@
           highlight-current-row
           :item-count="notifySettingTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="notifySettingItems"
+          :items="notifySettingTableItems"
           :show-contextmenu="true"
           :contextmenu-width="100"
           @onPagingAttributeChanged="handleNotifySettingTablePagingAttributeChanged"
@@ -204,7 +204,7 @@ const {
   currentPage: notifySettingTableCurrentPage,
   pageSize: notifySettingTablePageSize,
   itemCount: notifySettingTableItemCount,
-  items: notifySettingItems,
+  items: notifySettingTableItems,
   pagingInfo: notifySettingTablePagingInfo,
   updateByLookup: updateNotifySettingTableByLookup,
 } = useIdentityBackendPagingTablePanel<NotifySetting>(15)

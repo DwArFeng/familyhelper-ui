@@ -38,7 +38,7 @@
             highlight-current-row
             :item-count="settingNodeTableItemCount"
             :page-sizes="[15, 20, 30, 50]"
-            :items="settingNodeItems"
+            :items="settingNodeTableItems"
             :operate-column-visible="false"
             @onPagingAttributeChanged="handleSettingNodeTablePagingAttributeChanged"
             @onCurrentChanged="handleSettingNodeTableCurrentChanged"
@@ -189,7 +189,7 @@ const {
   currentPage: settingNodeTableCurrentPage,
   pageSize: settingNodeTablePageSize,
   itemCount: settingNodeTableItemCount,
-  items: settingNodeItems,
+  items: settingNodeTableItems,
   pagingInfo: settingNodeTablePagingInfo,
   updateByLookup: updateSettingNodeTableByLookup,
 } = useIdentityBackendPagingTablePanel<SettingNode>(15)

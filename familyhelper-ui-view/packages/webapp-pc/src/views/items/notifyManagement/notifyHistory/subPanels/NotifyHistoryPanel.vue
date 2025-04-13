@@ -15,7 +15,7 @@
           pagination-adjust-strategy="FORCE_COMPACT"
           :item-count="notifyHistoryTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="notifyHistoryItems"
+          :items="notifyHistoryTableItems"
           :edit-button-visible="false"
           :operate-column-width="80"
           @onPagingAttributeChanged="handleNotifyHistoryTablePagingAttributeChanged"
@@ -125,7 +125,7 @@ const {
   currentPage: notifyHistoryTableCurrentPage,
   pageSize: notifyHistoryTablePageSize,
   itemCount: notifyHistoryTableItemCount,
-  items: notifyHistoryItems,
+  items: notifyHistoryTableItems,
   pagingInfo: notifyHistoryTablePagingInfo,
   updateByLookup: updateNotifyHistoryTableByLookup,
 } = useIdentityBackendPagingTablePanel<DispNotifyHistory>(15)

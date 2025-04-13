@@ -83,7 +83,7 @@
                   v-model:current-page="permissionTableCurrentPage"
                   :item-count="permissionTableItemCount"
                   :page-sizes="[1, 15, 20, 30, 50]"
-                  :items="permissionItems"
+                  :items="permissionTableItems"
                   :operate-column-visible="false"
                   :show-contextmenu="true"
                   :contextmenu-width="100"
@@ -160,7 +160,7 @@
         v-model:current-page="permissionToAttachTableCurrentPage"
         :item-count="permissionToAttachTableItemCount"
         :page-sizes="[1, 15, 20, 30, 50]"
-        :items="permissionToAttachItems"
+        :items="permissionToAttachTableItems"
         :inspect-button-visible="false"
         :edit-button-visible="false"
         :delete-button-visible="false"
@@ -548,7 +548,7 @@ const {
   currentPage: permissionTableCurrentPage,
   pageSize: permissionTablePageSize,
   itemCount: permissionTableItemCount,
-  items: permissionItems,
+  items: permissionTableItems,
   pagingInfo: permissionTablePagingInfo,
   updateByLookup: updatePermissionTableByLookup,
 } = useIdentityBackendPagingTablePanel<Permission>(15)
@@ -588,7 +588,7 @@ const {
   currentPage: permissionToAttachTableCurrentPage,
   pageSize: permissionToAttachTablePageSize,
   itemCount: permissionToAttachTableItemCount,
-  items: permissionToAttachItems,
+  items: permissionToAttachTableItems,
   updateByLookup: updatePermissionToAttachTableByLookup,
   pagingInfo: permissionToAttachTablePagingInfo,
 } = useIdentityBackendPagingTablePanel<Permission>(15)

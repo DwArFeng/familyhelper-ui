@@ -28,7 +28,7 @@
           v-model:page-size="roleTablePageSize"
           :item-count="roleTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="roleItems"
+          :items="roleTableItems"
           @onPagingAttributeChanged="handleRoleTablePagingAttributeChanged"
           @onCurrentChanged="handleRoleTableCurrentChanged"
           @onItemInspect="handleShowRoleInspectDialog"
@@ -53,7 +53,7 @@
           v-model:page-size="pexpTablePageSize"
           :item-count="pexpTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="pexpItems"
+          :items="pexpTableItems"
           @onPagingAttributeChanged="handlePexpTablePagingAttributeChanged"
           @onItemInspect="handleShowPexpInspectDialog"
           @onItemEdit="handleShowPexpEditDialog"
@@ -208,7 +208,7 @@ const {
   currentPage: roleTableCurrentPage,
   pageSize: roleTablePageSize,
   itemCount: roleTableItemCount,
-  items: roleItems,
+  items: roleTableItems,
   pagingInfo: roleTablePagingInfo,
   updateByLookup: updateRoleTableByLookup,
 } = useIdentityBackendPagingTablePanel<Role>(15)
@@ -491,7 +491,7 @@ const {
   currentPage: pexpTableCurrentPage,
   pageSize: pexpTablePageSize,
   itemCount: pexpTableItemCount,
-  items: pexpItems,
+  items: pexpTableItems,
   pagingInfo: pexpTablePagingInfo,
   updateByLookup: updatePexpTableByLookup,
 } = useIdentityBackendPagingTablePanel<Pexp>(15)

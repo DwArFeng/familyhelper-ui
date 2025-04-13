@@ -18,7 +18,7 @@
       highlight-current-row
       :item-count="senderSupportTableItemCount"
       :page-sizes="[15, 20, 30, 50]"
-      :items="senderSupportItems"
+      :items="senderSupportTableItems"
       :operate-column-visible="false"
       @onPagingAttributeChanged="handleSenderSupportTablePagingAttributeChanged"
       @onCurrentChanged="handleSenderSupportTableCurrentChanged"
@@ -122,7 +122,7 @@ const {
   currentPage: senderSupportTableCurrentPage,
   pageSize: senderSupportTablePageSize,
   itemCount: senderSupportTableItemCount,
-  items: senderSupportItems,
+  items: senderSupportTableItems,
   pagingInfo: senderSupportTablePagingInfo,
   updateByLookup: updateSenderSupportTableByLookup,
 } = useIdentityBackendPagingTablePanel<SenderSupport>(15)

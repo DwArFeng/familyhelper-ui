@@ -24,7 +24,7 @@
           highlight-current-row
           :item-count="topicTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="topicItems"
+          :items="topicTableItems"
           :show-contextmenu="true"
           :contextmenu-width="100"
           @onPagingAttributeChanged="handleTopicTablePagingAttributeChanged"
@@ -189,7 +189,7 @@ const {
   currentPage: topicTableCurrentPage,
   pageSize: topicTablePageSize,
   itemCount: topicTableItemCount,
-  items: topicItems,
+  items: topicTableItems,
   pagingInfo: topicTablePagingInfo,
   updateByLookup: updateTopicTableByLookup,
 } = useIdentityBackendPagingTablePanel<Topic>(15)

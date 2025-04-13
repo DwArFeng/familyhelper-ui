@@ -31,7 +31,7 @@
           v-model:page-size="permissionTablePageSize"
           :item-count="permissionTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="permissionItems"
+          :items="permissionTableItems"
           :show-contextmenu="true"
           :contextmenu-width="100"
           @onPagingAttributeChanged="handlePagingAttributeChanged"
@@ -184,7 +184,7 @@ const {
   currentPage: permissionTableCurrentPage,
   pageSize: permissionTablePageSize,
   itemCount: permissionTableItemCount,
-  items: permissionItems,
+  items: permissionTableItems,
   pagingInfo: permissionTablePagingInfo,
   updateByLookup: updatePermissionTableByLookup,
 } = useIdentityBackendPagingTablePanel<Permission>(15)

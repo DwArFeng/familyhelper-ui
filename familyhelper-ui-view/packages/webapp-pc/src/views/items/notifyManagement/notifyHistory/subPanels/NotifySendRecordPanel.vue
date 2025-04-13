@@ -15,7 +15,7 @@
             v-model:page-size="notifySendRecordTablePageSize"
             :item-count="notifySendRecordTableItemCount"
             :page-sizes="[15, 20, 30, 50]"
-            :items="notifySendRecordItems"
+            :items="notifySendRecordTableItems"
             :edit-button-visible="false"
             :delete-button-visible="false"
             :operate-column-width="53"
@@ -158,7 +158,7 @@ const {
   currentPage: notifySendRecordTableCurrentPage,
   pageSize: notifySendRecordTablePageSize,
   itemCount: notifySendRecordTableItemCount,
-  items: notifySendRecordItems,
+  items: notifySendRecordTableItems,
   pagingInfo: notifySendRecordTablePagingInfo,
   updateByLookup: updateNotifySendRecordTableByLookup,
 } = useIdentityBackendPagingTablePanel<DispNotifySendRecord>(15)

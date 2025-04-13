@@ -43,7 +43,7 @@
           v-model:page-size="settingCategoryTablePageSize"
           :item-count="settingCategoryTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="settingCategoryItems"
+          :items="settingCategoryTableItems"
           :show-contextmenu="true"
           :contextmenu-width="100"
           @onPagingAttributeChanged="handleSettingCategoryPagingAttributeChanged"
@@ -238,7 +238,7 @@ const {
   currentPage: settingCategoryTableCurrentPage,
   pageSize: settingCategoryTablePageSize,
   itemCount: settingCategoryTableItemCount,
-  items: settingCategoryItems,
+  items: settingCategoryTableItems,
   pagingInfo: settingCategoryTablePagingInfo,
   updateByLookup: updateSettingCategoryTableByLookup,
 } = useIdentityBackendPagingTablePanel<SettingCategory>(15)

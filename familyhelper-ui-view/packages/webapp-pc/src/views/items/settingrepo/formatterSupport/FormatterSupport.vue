@@ -7,7 +7,7 @@
         v-model:current-page="formatterSupportTableCurrentPage"
         :item-count="formatterSupportTableItemCount"
         :page-sizes="[15, 20, 30, 50]"
-        :items="formatterSupportItems"
+        :items="formatterSupportTableItems"
         :edit-button-visible="false"
         :delete-button-visible="false"
         :operate-column-width="53"
@@ -101,7 +101,7 @@ const {
   currentPage: formatterSupportTableCurrentPage,
   pageSize: formatterSupportTablePageSize,
   itemCount: formatterSupportTableItemCount,
-  items: formatterSupportItems,
+  items: formatterSupportTableItems,
   pagingInfo: formatterSupportTablePagingInfo,
   updateByLookup: updateFormatterSupportTableByLookup,
 } = useIdentityBackendPagingTablePanel<FormatterSupport>(15)

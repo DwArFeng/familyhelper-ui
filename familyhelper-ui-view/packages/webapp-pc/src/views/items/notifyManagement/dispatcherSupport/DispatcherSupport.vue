@@ -7,7 +7,7 @@
         v-model:current-page="dispatcherSupportTableCurrentPage"
         :item-count="dispatcherSupportTableItemCount"
         :page-sizes="[15, 20, 30, 50]"
-        :items="dispatcherSupportItems"
+        :items="dispatcherSupportTableItems"
         :edit-button-visible="false"
         :delete-button-visible="false"
         :operate-column-width="53"
@@ -101,7 +101,7 @@ const {
   currentPage: dispatcherSupportTableCurrentPage,
   pageSize: dispatcherSupportTablePageSize,
   itemCount: dispatcherSupportTableItemCount,
-  items: dispatcherSupportItems,
+  items: dispatcherSupportTableItems,
   pagingInfo: dispatcherSupportTablePagingInfo,
   updateByLookup: updateDispatcherSupportTableByLookup,
 } = useIdentityBackendPagingTablePanel<DispatcherSupport>(15)

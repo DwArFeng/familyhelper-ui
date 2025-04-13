@@ -37,7 +37,7 @@
             v-model:page-size="loginStateTablePageSize"
             :item-count="loginStateTableItemCount"
             :page-sizes="[10, 15, 20, 30]"
-            :items="loginStateItems"
+            :items="loginStateTableItems"
             :operate-column-width="84"
             :show-contextmenu="true"
             :contextmenu-width="100"
@@ -391,7 +391,7 @@ const {
   currentPage: loginStateTableCurrentPage,
   pageSize: loginStateTablePageSize,
   itemCount: loginStateTableItemCount,
-  items: loginStateItems,
+  items: loginStateTableItems,
   pagingInfo: loginStateTablePagingInfo,
   updateByLookup: updateLoginStateTableByLookup,
 } = useIdentityBackendPagingTablePanel<LoginState>(15)

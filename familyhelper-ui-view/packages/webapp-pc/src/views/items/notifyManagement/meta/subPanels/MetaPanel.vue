@@ -12,7 +12,7 @@
         v-model:page-size="metaTablePageSize"
         :item-count="metaTableItemCount"
         :page-sizes="[15, 20, 30, 50]"
-        :items="metaItems"
+        :items="metaTableItems"
         :operate-column-width="80"
         :inspect-button-visible="false"
         :edit-button-visible="true"
@@ -176,7 +176,7 @@ const {
   currentPage: metaTableCurrentPage,
   pageSize: metaTablePageSize,
   itemCount: metaTableItemCount,
-  items: metaItems,
+  items: metaTableItems,
   pagingInfo: metaTablePagingInfo,
   updateByLookup: updateMetaTableByLookup,
 } = useIdentityBackendPagingTablePanel<DispMeta>(15)

@@ -38,7 +38,7 @@
             highlight-current-row
             :item-count="settingCategoryTableItemCount"
             :page-sizes="[15, 20, 30, 50]"
-            :items="settingCategoryItems"
+            :items="settingCategoryTableItems"
             :operate-column-visible="false"
             @onPagingAttributeChanged="handleSettingCategoryTablePagingAttributeChanged"
             @onCurrentChanged="handleSettingCategoryTableCurrentChanged"
@@ -178,7 +178,7 @@ const {
   currentPage: settingCategoryTableCurrentPage,
   pageSize: settingCategoryTablePageSize,
   itemCount: settingCategoryTableItemCount,
-  items: settingCategoryItems,
+  items: settingCategoryTableItems,
   pagingInfo: settingCategoryTablePagingInfo,
   updateByLookup: updateSettingCategoryTableByLookup,
 } = useIdentityBackendPagingTablePanel<SettingCategory>(15)

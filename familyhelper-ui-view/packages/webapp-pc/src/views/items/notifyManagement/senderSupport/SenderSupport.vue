@@ -7,7 +7,7 @@
         v-model:current-page="senderSupportTableCurrentPage"
         :item-count="senderSupportTableItemCount"
         :page-sizes="[15, 20, 30, 50]"
-        :items="senderSupportItems"
+        :items="senderSupportTableItems"
         :edit-button-visible="false"
         :delete-button-visible="false"
         :operate-column-width="53"
@@ -101,7 +101,7 @@ const {
   currentPage: senderSupportTableCurrentPage,
   pageSize: senderSupportTablePageSize,
   itemCount: senderSupportTableItemCount,
-  items: senderSupportItems,
+  items: senderSupportTableItems,
   pagingInfo: senderSupportTablePagingInfo,
   updateByLookup: updateSenderSupportTableByLookup,
 } = useIdentityBackendPagingTablePanel<SenderSupport>(15)

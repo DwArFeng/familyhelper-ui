@@ -43,7 +43,7 @@
               highlight-current-row
               :item-count="notifySettingTableItemCount"
               :page-sizes="[15, 20, 30, 50]"
-              :items="notifySettingItems"
+              :items="notifySettingTableItems"
               :operate-column-visible="false"
               @onPagingAttributeChanged="handleNotifySettingTablePagingAttributeChanged"
               @onCurrentChanged="handleNotifySettingTableCurrentChanged"
@@ -67,7 +67,7 @@
               highlight-current-row
               :item-count="topicTableItemCount"
               :page-sizes="[15, 20, 30, 50]"
-              :items="topicItems"
+              :items="topicTableItems"
               :operate-column-visible="false"
               @onPagingAttributeChanged="handleTopicTablePagingAttributeChanged"
               @onCurrentChanged="handleTopicTableCurrentChanged"
@@ -245,7 +245,7 @@ const {
   currentPage: notifySettingTableCurrentPage,
   pageSize: notifySettingTablePageSize,
   itemCount: notifySettingTableItemCount,
-  items: notifySettingItems,
+  items: notifySettingTableItems,
   pagingInfo: notifySettingTablePagingInfo,
   updateByLookup: updateNotifySettingTableByLookup,
 } = useIdentityBackendPagingTablePanel<NotifySetting>(15)
@@ -272,7 +272,7 @@ const {
   currentPage: topicTableCurrentPage,
   pageSize: topicTablePageSize,
   itemCount: topicTableItemCount,
-  items: topicItems,
+  items: topicTableItems,
   pagingInfo: topicTablePagingInfo,
   updateByLookup: updateTopicTableByLookup,
 } = useIdentityBackendPagingTablePanel<Topic>(15)

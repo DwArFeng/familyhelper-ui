@@ -18,7 +18,7 @@
       highlight-current-row
       :item-count="dispatcherSupportTableItemCount"
       :page-sizes="[15, 20, 30, 50]"
-      :items="dispatcherSupportItems"
+      :items="dispatcherSupportTableItems"
       :operate-column-visible="false"
       @onPagingAttributeChanged="handleDispatcherSupportTablePagingAttributeChanged"
       @onCurrentChanged="handleDispatcherSupportTableCurrentChanged"
@@ -122,7 +122,7 @@ const {
   currentPage: dispatcherSupportTableCurrentPage,
   pageSize: dispatcherSupportTablePageSize,
   itemCount: dispatcherSupportTableItemCount,
-  items: dispatcherSupportItems,
+  items: dispatcherSupportTableItems,
   pagingInfo: dispatcherSupportTablePagingInfo,
   updateByLookup: updateDispatcherSupportTableByLookup,
 } = useIdentityBackendPagingTablePanel<DispatcherSupport>(15)

@@ -23,7 +23,7 @@
             v-model:page-size="deriveHistoryTablePageSize"
             :item-count="deriveHistoryTableItemCount"
             :page-sizes="[10, 15, 20, 30]"
-            :items="deriveHistoryItems"
+            :items="deriveHistoryTableItems"
             :operate-column-width="53"
             :inspect-button-visible="true"
             :edit-button-visible="false"
@@ -140,7 +140,7 @@ const {
   currentPage: deriveHistoryTableCurrentPage,
   pageSize: deriveHistoryTablePageSize,
   itemCount: deriveHistoryTableItemCount,
-  items: deriveHistoryItems,
+  items: deriveHistoryTableItems,
   pagingInfo: deriveHistoryTablePagingInfo,
   updateByLookup: updateDeriveHistoryTableByLookup,
 } = useIdentityBackendPagingTablePanel<DeriveHistory>(15)

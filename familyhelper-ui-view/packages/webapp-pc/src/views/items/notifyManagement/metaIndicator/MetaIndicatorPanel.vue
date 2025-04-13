@@ -19,7 +19,7 @@
           highlight-current-row
           :item-count="metaIndicatorTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
-          :items="metaIndicatorItems"
+          :items="metaIndicatorTableItems"
           @onPagingAttributeChanged="handleMetaIndicatorTablePagingAttributeChanged"
           @onItemInspect="handleShowMetaIndicatorInspectDialog"
           @onItemEdit="handleShowMetaIndicatorEditDialog"
@@ -155,7 +155,7 @@ const {
   currentPage: metaIndicatorTableCurrentPage,
   pageSize: metaIndicatorTablePageSize,
   itemCount: metaIndicatorTableItemCount,
-  items: metaIndicatorItems,
+  items: metaIndicatorTableItems,
   pagingInfo: metaIndicatorTablePagingInfo,
   updateByLookup: updateMetaIndicatorTableByLookup,
 } = useIdentityBackendPagingTablePanel<MetaIndicator>(15)

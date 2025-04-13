@@ -23,7 +23,7 @@
             v-model:page-size="loginHistoryTablePageSize"
             :item-count="loginHistoryTableItemCount"
             :page-sizes="[10, 15, 20, 30]"
-            :items="loginHistoryItems"
+            :items="loginHistoryTableItems"
             :operate-column-width="53"
             :inspect-button-visible="true"
             :edit-button-visible="false"
@@ -146,7 +146,7 @@ const {
   currentPage: loginHistoryTableCurrentPage,
   pageSize: loginHistoryTablePageSize,
   itemCount: loginHistoryTableItemCount,
-  items: loginHistoryItems,
+  items: loginHistoryTableItems,
   pagingInfo: loginHistoryTablePagingInfo,
   updateByLookup: updateLoginHistoryTableByLookup,
 } = useIdentityBackendPagingTablePanel<LoginHistory>(15)
