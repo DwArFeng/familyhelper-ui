@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- `component-api` 子模块回归。
+  - `src/api/note` 目录下的 HTTP 客户端 API 回归。
+
 - `webapp-pc` 子模块回归。
   - 菜单 `杂项` 回归。
   - 组件 `FileUploadDialog` 回归。
