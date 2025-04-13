@@ -6,6 +6,7 @@
 
 - `webapp-pc` 子模块回归。
   - 菜单 `杂项` 回归。
+  - 组件 `CornerLightPanel` 回归。
   - 组件 `CardPanel` 回归。
 
 - `webapp-pc` 子模块格式优化。
