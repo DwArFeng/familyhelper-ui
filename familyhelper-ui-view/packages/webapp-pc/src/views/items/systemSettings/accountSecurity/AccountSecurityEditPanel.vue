@@ -119,7 +119,7 @@ type TabsActiveName = 'overlook' | 'login_state' | 'login_history' | 'derive_his
 
 const tabsActiveName = ref<TabsActiveName>('overlook')
 
-// -----------------------------------------------------------悬浮面板-----------------------------------------------------------
+// -----------------------------------------------------------面板悬浮-----------------------------------------------------------
 const {
   visible: panelFloatyVisible,
   initialX: panelFloatyInitialX,
