@@ -6,7 +6,6 @@
     <div v-else class="main-container" v-loading="loading">
       <div class="editor-header">
         <div class="file-indicator">
-          <!--suppress JSUnresolvedVariable -->
           <i class="iconfont icon">{{ fileIndicatorIcon }}</i>
           <span>{{ fileName }}</span>
         </div>
