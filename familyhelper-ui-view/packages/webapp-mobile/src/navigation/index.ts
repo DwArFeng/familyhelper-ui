@@ -161,7 +161,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
 /**
  * 获取设置。
  *
- * @return 设置。
+ * @returns 设置。
  */
 function setting(): NavigationSetting {
   return {
@@ -175,7 +175,7 @@ function setting(): NavigationSetting {
 /**
  * 获取 Navigation 根节点键数组。
  *
- * @return Navigation 根节点键数组。
+ * @returns Navigation 根节点键数组。
  */
 function nodeRootKeys(): Readonly<string>[] {
   if (status === 'initializing') {

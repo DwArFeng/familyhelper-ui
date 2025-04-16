@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- 优化 `familyhelper-ui-view` 模块中 `ts` 与 `js` 的注释。
+  - 将文档注释中的 `@return` 替换为 `@returns`。
 
 #### Bug修复
 

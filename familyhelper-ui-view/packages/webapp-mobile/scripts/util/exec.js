@@ -9,7 +9,7 @@ const LogUtil = require('./log')
  * @param {string} command The command to run.
  * @param {string[]} args The command arguments.
  * @param {string} [cwd] The custom directory to run the command in.
- * @return {Promise<void>} A promise that resolves when the command has been executed successfully.
+ * @returns {Promise<void>} A promise that resolves when the command has been executed successfully.
  */
 async function spawn(command, args, cwd) {
   return new Promise((resolve, reject) => {
@@ -57,7 +57,7 @@ async function spawn(command, args, cwd) {
  *
  * @param {string} command The command to run.
  * @param {string} [cwd] The custom directory to run the command in.
- * @return {Promise<void>} A promise that resolves when the command has been executed successfully.
+ * @returns {Promise<void>} A promise that resolves when the command has been executed successfully.
  */
 async function exec(command, cwd) {
   return new Promise((resolve, reject) => {

@@ -256,7 +256,7 @@ function applyResponseInterceptor(axiosInstance: AxiosInstance): void {
  * 将 Axios 实例转换为 HttpClient。
  *
  * @param axiosInstance Axios 实例。
- * @return HttpClient。
+ * @returns HttpClient。
  */
 function axiosInstanceToHttpClient(axiosInstance: AxiosInstance): HttpClient {
   return {

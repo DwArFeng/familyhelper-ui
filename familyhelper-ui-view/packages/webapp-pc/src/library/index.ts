@@ -101,7 +101,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
 /**
  * 获取设置。
  *
- * @return 设置。
+ * @returns 设置。
  */
 function setting(): LibrarySetting {
   return {
@@ -112,7 +112,7 @@ function setting(): LibrarySetting {
 /**
  * 获取默认的 Visualizer。
  *
- * @return 默认的 Visualizer。
+ * @returns 默认的 Visualizer。
  */
 function defaultVisualizer(): Visualizer {
   if (status === 'initializing') {
@@ -128,7 +128,7 @@ function defaultVisualizer(): Visualizer {
 /**
  * 获取 Visualizer key 列表。
  *
- * @return Visualizer key 列表。
+ * @returns Visualizer key 列表。
  */
 function visualizerKeys(): Readonly<string[]> {
   if (status === 'initializing') {
@@ -140,7 +140,7 @@ function visualizerKeys(): Readonly<string[]> {
 /**
  * 获取 Visualizer 列表。
  *
- * @return Visualizer 列表。
+ * @returns Visualizer 列表。
  */
 function visualizers(): Readonly<Visualizer[]> {
   if (status === 'initializing') {

@@ -4,7 +4,7 @@
  * 将字符串转换为 kebab case。
  *
  * @param str 字符串。
- * @return kebab case 字符串。
+ * @returns kebab case 字符串。
  */
 export function toKebabCase(str: string): string {
   return str

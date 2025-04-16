@@ -31,7 +31,7 @@ type UseGeneralMaintainDialogResult<T, CT> = {
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
  * @param initialItem 初始的 component bean 对象。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityMaintainDialog
  */
 export function useGeneralMaintainDialog<T, CT>(
@@ -86,7 +86,7 @@ export function useGeneralMaintainDialog<T, CT>(
  *
  * @template T bean 类型。
  * @param initialItem 初始的 component bean 对象。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useIdentityMaintainDialog<T>(initialItem: T): UseGeneralMaintainDialogResult<T, T> {
   return useGeneralMaintainDialog<T, T>((t) => t, initialItem)
@@ -116,7 +116,7 @@ type UseInspectOnlyMaintainDialogResult<T, CT> = {
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
  * @param initialItem 初始的 component bean 对象。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityInspectOnlyMaintainDialog
  */
 export function useInspectOnlyMaintainDialog<T, CT>(
@@ -153,7 +153,7 @@ export function useInspectOnlyMaintainDialog<T, CT>(
  *
  * @template T bean 类型。
  * @param initialItem 初始的 component bean 对象。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useIdentityInspectOnlyMaintainDialog<T>(
   initialItem: T,
@@ -185,7 +185,7 @@ type UseEditOnlyMaintainDialogResult<T, CT> = {
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
  * @param initialItem 初始的 component bean 对象。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityEditOnlyMaintainDialog
  */
 export function useEditOnlyMaintainDialog<T, CT>(
@@ -222,7 +222,7 @@ export function useEditOnlyMaintainDialog<T, CT>(
  *
  * @template T bean 类型。
  * @param initialItem 初始的 component bean 对象。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useIdentityEditOnlyMaintainDialog<T>(
   initialItem: T,
@@ -250,7 +250,7 @@ type UseCreateOnlyMaintainDialogResult<CT> = {
  * @template T bean 类型。
  * @template CT component bean 类型。
  * @param initialItem 初始的 component bean 对象。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityCreateOnlyMaintainDialog
  */
 export function useCreateOnlyMaintainDialog<CT>(

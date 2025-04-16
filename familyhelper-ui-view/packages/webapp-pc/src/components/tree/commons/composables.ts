@@ -21,7 +21,7 @@ type UseTreeSelectionResult<CT> = {
  * - `node` 表示当前选中的节点，可以作为树的选区标准节点使用。
  *
  * @template CT component bean 类型。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useTreeSelection<CT>(): UseTreeSelectionResult<CT> {
   const _item = ref<CT | null>(null)

@@ -37,7 +37,7 @@ type UseGeneralLazySearchTreePanelResult<CT> = {
  * @param loadRootCaller 加载根 bean 的调用函数。
  * @param loadChildCaller 加载子 bean 的调用函数。
  * @param queryPathCaller 查询路径的调用函数。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityLazySearchTreePanel
  */
 export function useGeneralLazySearchTreePanel<T, CT>(
@@ -82,7 +82,7 @@ export function useGeneralLazySearchTreePanel<T, CT>(
  * @param loadRootCaller 加载根 bean 的调用函数。
  * @param loadChildCaller 加载子 bean 的调用函数。
  * @param queryPathCaller 查询路径的调用函数。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useIdentityLazySearchTreePanel<T>(
   searchOptionCaller: (pattern: string) => Promise<T[]> | T[],
@@ -154,7 +154,7 @@ type UseOperableGeneralLazySearchTreePanel<T, CT> = {
  * @param loadChildCaller 加载子 bean 的调用函数。
  * @param queryPathCaller 查询路径的调用函数。
  * @param lazySearchTreePanelRef 懒加载搜索树面板的引用。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityOperableGeneralLazySearchTreePanel
  */
 export function useOperableGeneralLazySearchTreePanel<T, CT>(
@@ -295,7 +295,7 @@ export function useOperableGeneralLazySearchTreePanel<T, CT>(
  * @param loadChildCaller 加载子 bean 的调用函数。
  * @param queryPathCaller 查询路径的调用函数。
  * @param lazySearchTreePanelRef 懒加载搜索树面板的引用。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useIdentityOperableGeneralLazySearchTreePanel<T>(
   searchOptionCaller: (pattern: string) => Promise<T[]> | T[],
@@ -414,7 +414,7 @@ type UseHybridLazySearchTreePanelResult<CT> = {
  * @param loadRootCaller 加载根 bean 的调用函数。
  * @param loadChildCaller 加载子 bean 的调用函数。
  * @param queryPathCaller 查询路径的调用函数。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useHybridLazySearchTreePanel<T, CT>(
   hybridBeanMaps: HybridBeanMap<T, CT>[],
@@ -479,7 +479,7 @@ type UseOperableHybridLazySearchTreePanelResult<T, CT> = {
  * @param loadChildCaller 加载子 bean 的调用函数。
  * @param queryPathCaller 查询路径的调用函数。
  * @param lazySearchTreePanelRef 懒加载搜索树面板的引用。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useOperableHybridLazySearchTreePanel<T, CT>(
   hybridBeanMaps: HybridBeanMap<T, CT>[],

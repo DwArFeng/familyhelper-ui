@@ -109,7 +109,7 @@ export type UseUserPreferenceFloatyDialogResult = {
  *   如果传入的用户偏好对象为 `null` 或 `undefined`，则使用初始的用户偏好设置。
  *
  * @param initialVisualField 初始的视觉字段。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useUserPreferenceFloatyDialog(
   initialVisualField: VisualField,

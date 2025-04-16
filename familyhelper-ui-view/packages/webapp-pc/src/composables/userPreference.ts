@@ -43,7 +43,7 @@ export type UseUserPreferenceResult = {
  * @param defaultUserPreference 用户偏好的默认值。
  * @param userPreferenceProvide 用户偏好获取函数。
  * @param userPreferenceApply 用户偏好应用函数。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useUserPreference<UP extends Record<string, unknown>>(
   upscProvider: () => string,

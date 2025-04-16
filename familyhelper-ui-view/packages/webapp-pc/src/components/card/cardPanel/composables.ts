@@ -25,7 +25,7 @@ type UseGeneralCardPanelResult<T, CT> = {
  * @template T bean 类型。
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityCardPanel
  */
 export function useGeneralCardPanel<T, CT>(
@@ -56,7 +56,7 @@ export function useGeneralCardPanel<T, CT>(
  *  调用此方法可以快速更新当前的 component bean 列表。
  *
  * @template T bean 类型。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useIdentityCardPanel<T>(): UseGeneralCardPanelResult<T, T> {
   return useGeneralCardPanel<T, T>((t) => t)

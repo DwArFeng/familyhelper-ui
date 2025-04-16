@@ -23,7 +23,7 @@
  * @param target 指定的对象。
  * @param propertyPath 属性路径字符串。
  * @param defaultResult 当属性找不到时返回的默认结果。
- * @return 对象的深层属性，或者是默认结果。
+ * @returns 对象的深层属性，或者是默认结果。
  */
 export function getDeepProperty<T, R>(
   target: T,

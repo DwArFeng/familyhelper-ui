@@ -38,7 +38,7 @@ type UseBackendPagingTablePanelResult<T, CT> = {
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
  * @param initialPageSize 初始的分页大小。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityBackendPagingTablePanel
  */
 export function useBackendPagingTablePanel<T, CT>(
@@ -92,7 +92,7 @@ export function useBackendPagingTablePanel<T, CT>(
  *
  * @template T bean 类型。
  * @param initialPageSize 初始的分页大小。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useIdentityBackendPagingTablePanel<T>(
   initialPageSize: number,
@@ -132,7 +132,7 @@ type UseFrontendPagingTablePanelResult<T, CT> = {
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
  * @param initialPageSize 初始的分页大小。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  * @see useIdentityFrontendPagingTablePanel
  */
 export function useFrontendPagingTablePanel<T, CT>(
@@ -200,7 +200,7 @@ export function useFrontendPagingTablePanel<T, CT>(
  *
  * @template T bean 类型。
  * @param initialPageSize 初始的分页大小。
- * @return 调用方法后的返回结果。
+ * @returns 调用方法后的返回结果。
  */
 export function useIdentityFrontendPagingTablePanel<T>(
   initialPageSize: number,

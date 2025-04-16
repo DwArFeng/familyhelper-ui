@@ -86,7 +86,7 @@ function init(ctx: VimApplicationContext) {
 /**
  * 获取设置。
  *
- * @return 设置。
+ * @returns 设置。
  */
 function setting(): ApiSetting {
   return {
@@ -103,7 +103,7 @@ function setting(): ApiSetting {
 /**
  * 获取基础 URL。
  *
- * @return 基础 URL。
+ * @returns 基础 URL。
  */
 function baseUrl(): string {
   if (status === 'initializing') {
