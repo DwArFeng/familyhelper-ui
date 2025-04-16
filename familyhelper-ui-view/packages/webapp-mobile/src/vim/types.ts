@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import type { App } from 'vue'
 import type { VimApi } from '@/api/types.ts'
 import type { VimLibrary } from '@/library/types.ts'

@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { ApiSetting, VimApi } from '@/api/types.ts'
 import {

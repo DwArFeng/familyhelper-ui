@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import vim from '@/vim'
 
 import type { Pres, ResponseMeta } from '@dwarfeng/familyhelper-ui-component-api/src/util/response'

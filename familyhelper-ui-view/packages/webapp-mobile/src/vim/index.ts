@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 // 导入 App 组件。
 import App from '@/App.vue'
 // 导入 createApp 函数。

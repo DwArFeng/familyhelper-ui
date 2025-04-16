@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { LibrarySetting, VimLibrary, VimLibraryModule, Visualizer } from '@/library/types.ts'
 import { defaultVisualizerKey } from '@/library/props.ts'

@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import vim from '@/vim'
 
 import type { VimRouterGuard } from '@/router/types.ts'

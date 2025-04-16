@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type {
   SimplyStore,

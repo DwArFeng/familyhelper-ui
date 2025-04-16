@@ -1,4 +1,4 @@
-// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 export type ExtensionInfo = {
   actionLevel: 'INSPECT' | 'EDIT'

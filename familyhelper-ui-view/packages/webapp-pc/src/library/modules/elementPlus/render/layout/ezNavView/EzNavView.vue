@@ -127,6 +127,7 @@
               :list="editorDialogPinnedNavigationNodes"
               :group="{ name: 'nav' }"
             >
+              <!--suppress VueUnrecognizedSlot -->
               <template v-slot:item="{ element, index }">
                 <div class="editor-nav-item" :key="element.key">
                   <editor-nav-bar
@@ -146,6 +147,7 @@
               :list="editorDialogActiveNavigationNodes"
               :group="{ name: 'nav' }"
             >
+              <!--suppress VueUnrecognizedSlot -->
               <template v-slot:item="{ element, index }">
                 <div class="editor-nav-item" :key="element.key">
                   <editor-nav-bar
