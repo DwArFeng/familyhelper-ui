@@ -10,7 +10,7 @@
 
     <groupId>com.dwarfeng</groupId>
     <artifactId>familyhelper-ui</artifactId>
-    <version>3.1.0.a</version>
+    <version>3.2.0.a-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
