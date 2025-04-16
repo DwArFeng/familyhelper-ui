@@ -28,6 +28,12 @@ const logLevelOrder = ['debug', 'info', 'warn', 'error']
 
 /**
  * 模块的默认脚本配置。
+ *
+ * @type
+ * {{
+ *   commons: {logLevel: 'debug' | 'info' | 'warn' | 'error'},
+ *   server: {open: boolean, host: string, port: number, https: boolean, hmr: boolean}
+ * }}
  */
 const scriptsConfig = ConfigUtil.parseConfig(ScriptsConfig.defaultConfig, ScriptsConfig.configPath)
 
@@ -43,7 +49,8 @@ const currentLogLevelIndex = logLevelOrder.indexOf(scriptsConfig.commons.logLeve
  *
  * 当前日志级别小于等于 debug 时，记录日志。
  *
- * @param message 日志消息。
+ * @param {string} message 日志消息。
+ * @returns {void}
  */
 function debug(message) {
   // 如果日志级别大于 debug，则不记录日志。
@@ -62,7 +69,8 @@ function debug(message) {
  *
  * 当前日志级别小于等于 info 时，记录日志。
  *
- * @param message 日志消息。
+ * @param {string} message 日志消息。
+ * @returns {void}
  */
 function info(message) {
   // 如果日志级别大于 info，则不记录日志。
@@ -80,7 +88,8 @@ function info(message) {
  *
  * 当前日志级别小于等于 warn 时，记录日志。
  *
- * @param message 日志消息。
+ * @param {string} message 日志消息。
+ * @returns {void}
  */
 function warn(message) {
   // 如果日志级别大于 warn，则不记录日志。
@@ -98,7 +107,8 @@ function warn(message) {
  *
  * 当前日志级别小于等于 error 时，记录日志。
  *
- * @param message 日志消息。
+ * @param {string} message 日志消息。
+ * @returns {void}
  */
 function error(message) {
   // 如果日志级别大于 error，则不记录日志。
@@ -116,7 +126,7 @@ function error(message) {
  *
  * 时间格式为：yyyy-MM-dd HH:mm:ss.SSS
  *
- * @returns {string}
+ * @returns {string} 格式化的当前时间。
  */
 function formatNow() {
   return formatDate(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')

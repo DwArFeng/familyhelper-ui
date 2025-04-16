@@ -44,7 +44,7 @@ export function formatShortTimestamp(timestamp: number): string {
  * 将持续时间格式化为易读的形式。
  *
  * @param duration 持续时间，单位毫秒。
- * @returns {string} 格式化后的持续时间。
+ * @returns 格式化后的持续时间。
  */
 export function formatDuration(duration: number): string {
   if (duration < 1000) {
