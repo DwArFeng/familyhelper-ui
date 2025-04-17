@@ -3,7 +3,7 @@
 import type { ComputedRef, Ref } from 'vue'
 import { computed, ref } from 'vue'
 
-import type { Extension, ExtensionFilter } from './types.ts'
+import type { ExtensionFilter } from './types.ts'
 
 // -----------------------------------------------------------特定扩展名-----------------------------------------------------------
 export type UseSpecifiedExtensionFileCreateDialogResult = {
@@ -26,11 +26,11 @@ export type UseSpecifiedExtensionFileCreateDialogResult = {
  * @returns 调用方法后的返回结果。
  */
 export function useSpecifiedExtensionFileCreateDialog(
-  specifiedExtension: Extension,
+  specifiedExtension: string,
 ): UseSpecifiedExtensionFileCreateDialogResult {
   const _visible = ref<boolean>(false)
   const _filter = computed<ExtensionFilter>(() => {
-    return (extension: Extension) => {
+    return (extension: string) => {
       return specifiedExtension === extension
     }
   })
@@ -61,11 +61,11 @@ export type UseSpecifiedExtensionsFileCreateDialogResult = {
  * @returns 调用方法后的返回结果。
  */
 export function useSpecifiedExtensionsFileCreateDialog(
-  specifiedExtensions: Extension[],
+  specifiedExtensions: string[],
 ): UseSpecifiedExtensionsFileCreateDialogResult {
   const _visible = ref<boolean>(false)
   const _filter = computed<ExtensionFilter>(() => {
-    return (extension: Extension) => {
+    return (extension: string) => {
       return specifiedExtensions.includes(extension)
     }
   })

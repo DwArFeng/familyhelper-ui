@@ -9,7 +9,7 @@
     @keydown.ctrl.enter="handleHotKeyDown"
   >
     <div>
-      <div class="placeholder" v-if="validIndicators.length === 0">
+      <div class="placeholder" v-if="validCreateInfos.length === 0">
         您没有创建任何类型文件的权限！
       </div>
       <div
@@ -22,14 +22,14 @@
           <div
             class="item-wrapper"
             :class="index === selectedIndex ? 'selected' : 'unselected'"
-            v-for="(indicator, index) in validIndicators"
+            v-for="(createInfo, index) in validCreateInfos"
             :key="index"
             @click="selectedIndex = index"
           >
-            <el-tooltip placement="top" :open-delay="1000" :content="indicator.description">
+            <el-tooltip placement="top" :open-delay="1000" :content="createInfo.description">
               <div class="item">
-                <i class="iconfont">{{ indicator.icon }}</i>
-                <span>{{ indicator.label }}</span>
+                <component class="icon" :is="useCreateIcon(createInfo.indicator)" />
+                <span>{{ createInfo.label }}</span>
               </div>
             </el-tooltip>
           </div>
@@ -41,7 +41,7 @@
           v-model="fileName"
           oninput="this.value = this.value.replace(/[&\|\\\*^%$'&quot;#@:;，。？！\,@\$]/g,'')"
         >
-          <template v-slot:append>{{ currentIndicator?.extension ?? '' }}</template>
+          <template v-slot:append>{{ currentCreateInfo?.extension ?? '' }}</template>
         </el-input>
       </div>
     </div>
@@ -49,7 +49,7 @@
       <div>
         <el-button
           type="primary"
-          :disabled="loading || fileName === '' || currentIndicator === null"
+          :disabled="loading || fileName === '' || currentCreateInfo === null"
           @click="handleConfirmButtonClicked"
         >
           确认
@@ -67,9 +67,12 @@ import type { LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, onMounted, ref, watch } from 'vue'
 
-import type { Extension, ExtensionFilter, FileCreateInfo } from './types.ts'
-import type { Indicator, PermissionSetting } from './indicators.ts'
-import { indicators } from './indicators.ts'
+import { useCreateIcon } from '@/composables/file.ts'
+
+import type { CreateInfo, CreatePermissionInfo } from '@/util/file.ts'
+import { getCreateInfos } from '@/util/file.ts'
+
+import type { ExtensionFilter, FileCreateInfo } from './types.ts'
 
 defineOptions({
   name: 'FileCreateDialog',
@@ -134,40 +137,40 @@ onMounted(() => {
 const selectedIndex = ref<number>(0)
 const fileName = ref<string>('')
 
-const currentIndicator = computed<Indicator | null>(() => {
+const currentCreateInfo = computed<CreateInfo | null>(() => {
   // 如果 selectedIndex 越界，则返回 null。
-  if (selectedIndex.value < 0 || selectedIndex.value >= validIndicators.value.length) {
+  if (selectedIndex.value < 0 || selectedIndex.value >= validCreateInfos.value.length) {
     return null
   }
-  // 否则返回当前选中的 Indicator。
-  return validIndicators.value[selectedIndex.value]
+  // 否则返回当前选中的 CreateInfo。
+  return validCreateInfos.value[selectedIndex.value]
 })
 
-const validIndicators = computed<Indicator[]>(() => {
-  return indicators
-    .filter((indicator) => {
-      const permissionSetting: PermissionSetting | undefined = indicator.permission
-      if (!permissionSetting) {
+const validCreateInfos = computed<CreateInfo[]>(() => {
+  return getCreateInfos()
+    .filter((createInfo) => {
+      const permissionInfo: CreatePermissionInfo | undefined = createInfo.permission
+      if (!permissionInfo) {
         return true
       }
-      const required: boolean = permissionSetting.required
+      const required: boolean = permissionInfo.required
       if (!required) {
         return true
       }
-      const node: string | undefined = permissionSetting.node
+      const node: string | undefined = permissionInfo.node
       if (node === undefined) {
         throw new Error('不应该执行到此处, 请联系开发人员')
       }
       return lnpStore.hasPermission(node)
     })
-    .filter((indicator) => {
-      const extension: Extension = indicator.extension
+    .filter((createInfo) => {
+      const extension: string = createInfo.extension
       return props.filter(extension)
     })
 })
 
 watch(
-  () => validIndicators.value,
+  () => validCreateInfos.value,
   () => {
     selectedIndex.value = 0
     fileName.value = ''
@@ -176,11 +179,11 @@ watch(
 
 // -----------------------------------------------------------对话框处理-----------------------------------------------------------
 function handleConfirmButtonClicked(): void {
-  if (props.loading || fileName.value === '' || currentIndicator.value === null) {
+  if (props.loading || fileName.value === '' || currentCreateInfo.value === null) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
   const blob: Blob = new Blob([])
-  const name: string = `${fileName.value}${currentIndicator.value.extension}`
+  const name: string = `${fileName.value}${currentCreateInfo.value.extension}`
   const fileCreateInfo: FileCreateInfo = { blob, name }
   emit('onConfirmed', fileCreateInfo)
 }
@@ -190,11 +193,11 @@ function handleCancelButtonClicked(): void {
 }
 
 function handleHotKeyDown(): void {
-  if (props.loading || fileName.value === '' || currentIndicator.value === null) {
+  if (props.loading || fileName.value === '' || currentCreateInfo.value === null) {
     return
   }
   const blob: Blob = new Blob([])
-  const name: string = `${fileName.value}${currentIndicator.value.extension}`
+  const name: string = `${fileName.value}${currentCreateInfo.value.extension}`
   const fileCreateInfo: FileCreateInfo = { blob, name }
   emit('onConfirmed', fileCreateInfo)
 }
@@ -255,7 +258,9 @@ function handleHotKeyDown(): void {
   justify-content: flex-end;
 }
 
-.type-selector .item-wrapper .item i {
+.type-selector .item-wrapper .item .icon {
+  height: 48px;
+  width: 48px;
   font-size: 48px;
   user-select: none;
 }

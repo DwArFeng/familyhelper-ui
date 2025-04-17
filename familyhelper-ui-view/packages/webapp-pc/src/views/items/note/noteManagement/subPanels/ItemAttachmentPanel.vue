@@ -65,7 +65,7 @@
               <el-table-column label="图标" width="53px" :resizable="false">
                 <template v-slot:default="{ row }">
                   <div class="icon-wrapper">
-                    <i class="iconfont icon">{{ attachmentFileInfoTableFileIndicatorIcon(row) }}</i>
+                    <component class="icon" :is="attachmentFileInfoTableFileIndicatorIcon(row)" />
                   </div>
                 </template>
               </el-table-column>
@@ -206,6 +206,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
+import type { VNode } from 'vue'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -217,6 +218,8 @@ import {
   Delete as DeleteIcon,
 } from '@element-plus/icons-vue'
 
+import { useDisplayIconWithDefaults } from '@/composables/file'
+
 import TablePanel from '@/components/table/tablePanel/TablePanel.vue'
 import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import FileUploadDialog from '@/components/file/fileUploadDialog/FileUploadDialog.vue'
@@ -226,9 +229,6 @@ import type { FileCreateInfo } from '@/components/file/fileCreateDialog/types.ts
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
 import type { FileEditMode } from '@/views/items/miscellaneous/fileEditor/type.ts'
-
-import type { ExtensionInfo } from './extensionInfos.ts'
-import { extensionInfo } from './extensionInfos.ts'
 
 import type { AttachmentFileInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/attachmentFile.ts'
 import {
@@ -250,6 +250,9 @@ import {
 } from '@dwarfeng/familyhelper-ui-component-util/src/util/number.ts'
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
 import { parseFileExtension } from '@dwarfeng/familyhelper-ui-component-util/src/util/file.ts'
+
+import type { EditInfo } from '@/util/file.ts'
+import { getEditInfo } from '@/util/file.ts'
 
 defineOptions({
   name: 'ItemAttachmentPanel',
@@ -426,36 +429,30 @@ function attachmentFileInfoTableTimestampFormatter(row: AttachmentFileInfo, colu
   return formatTimestamp((row as any)[column.property] as number)
 }
 
-function attachmentFileInfoTableFileIndicatorIcon(
-  attachmentFileInfo: AttachmentFileInfo,
-): '\uffe3' | '\uffe4' | '\uffe5' {
-  const _extension: string = parseFileExtension(attachmentFileInfo.origin_name)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
-    return '\uffe5'
-  }
-  if (_extensionInfo.actionLevel === 'INSPECT') {
-    return '\uffe3'
-  }
-  return '\uffe4'
+function attachmentFileInfoTableFileIndicatorIcon(attachmentFileInfo: AttachmentFileInfo): VNode {
+  const indicator: unknown = parseFileExtension(attachmentFileInfo.origin_name).toUpperCase()
+  return useDisplayIconWithDefaults(indicator, { type: 'iconfont', content: '\uffe5' })
 }
 
 function attachmentFileInfoTableFileRowInspectEnabled(row: AttachmentFileInfo): boolean {
-  const _extension: string = parseFileExtension(row.origin_name)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
+  const indicator: unknown = parseFileExtension(row.origin_name).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
     return false
   }
-  return _extensionInfo.actionLevel === 'INSPECT' || _extensionInfo.actionLevel === 'EDIT'
+  if (!editInfo) {
+    return false
+  }
+  return editInfo.actionLevel === 'INSPECT' || editInfo.actionLevel === 'EDIT'
 }
 
 function attachmentFileInfoTableFileRowEditEnabled(row: AttachmentFileInfo): boolean {
-  const _extension: string = parseFileExtension(row.origin_name)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
+  const indicator: unknown = parseFileExtension(row.origin_name).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
     return false
   }
-  return _extensionInfo.actionLevel === 'EDIT' && !props.readonly
+  return editInfo.actionLevel === 'EDIT' && !props.readonly
 }
 
 function attachmentFileInfoTableFileRowDeleteEnabled(): boolean {
@@ -691,6 +688,8 @@ defineExpose({
 }
 
 .table .icon {
+  height: 32px;
+  width: 32px;
   font-size: 32px;
   user-select: none;
 }

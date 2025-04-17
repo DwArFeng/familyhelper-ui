@@ -24,7 +24,7 @@
         <el-divider class="item" />
         <overlay-scrollbars-component class="scroll-bar body">
           <div class="file-detail" v-for="(file, index) in files" :key="index">
-            <i class="file-item iconfont icon">{{ fileIndicatorIcon(file) }}</i>
+            <component class="file-item icon" :is="fileIndicatorIcon(file)" />
             <span class="file-item name">{{ file.name }}</span>
             <span class="file-item size">{{ wrappedFormatUnit(file.size) }}</span>
             <el-button
@@ -54,15 +54,16 @@
 </template>
 
 <script setup lang="ts">
+import type { VNode } from 'vue'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import FileSelector from '@/components/file/fileSelector/FileSelector.vue'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 
+import { useDisplayIconWithDefaults } from '@/composables/file'
+
 import type { FileTester, FileTestResult } from './types.ts'
-import type { ExtensionInfo } from './extensionInfos.ts'
-import { extensionInfo } from './extensionInfos.ts'
 
 import {
   dataSizePreset,
@@ -130,16 +131,9 @@ onMounted(() => {
 // -----------------------------------------------------------逻辑处理-----------------------------------------------------------
 const files = ref<File[]>([])
 
-function fileIndicatorIcon(file: File): '\uffe3' | '\uffe4' | '\uffe5' {
-  const _extension: string = parseFileExtension(file.name)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
-    return '\uffe5'
-  }
-  if (_extensionInfo.actionLevel === 'INSPECT') {
-    return '\uffe3'
-  }
-  return '\uffe4'
+function fileIndicatorIcon(file: File): VNode {
+  const indicator: unknown = parseFileExtension(file.name).toUpperCase()
+  return useDisplayIconWithDefaults(indicator, { type: 'iconfont', content: '\uffe5' })
 }
 
 function wrappedFormatUnit(size: number): string {
@@ -209,6 +203,8 @@ function handleHotKeyDown(): void {
 }
 
 .file-detail .icon {
+  height: 32px;
+  width: 32px;
   font-size: 32px;
   user-select: none;
 }

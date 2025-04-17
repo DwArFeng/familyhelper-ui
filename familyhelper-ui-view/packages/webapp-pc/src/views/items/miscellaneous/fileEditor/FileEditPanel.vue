@@ -6,7 +6,7 @@
     <div v-else class="main-container" v-loading="loading">
       <div class="editor-header">
         <div class="file-indicator">
-          <i class="iconfont icon">{{ fileIndicatorIcon }}</i>
+          <component class="icon" :is="fileIndicatorIcon" />
           <span>{{ fileName }}</span>
         </div>
         <div class="operate-area">
@@ -70,9 +70,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, useTemplateRef, type VNode, watch } from 'vue'
 
 import { ElMessage } from 'element-plus'
+
+import { useDisplayIconWithDefaults } from '@/composables/file.ts'
 
 import PdfSubEditor from './subEditors/pdfSubEditor/PdfSubEditor.vue'
 import PhotoSubEditor from './subEditors/photoSubEditor/PhotoSubEditor.vue'
@@ -81,9 +83,10 @@ import TxtSubEditor from './subEditors/txtSubEditor/TxtSubEditor.vue'
 
 import { parseFileExtension } from '@dwarfeng/familyhelper-ui-component-util/src/util/file.ts'
 
+import type { EditInfo } from '@/util/file.ts'
+import { getEditInfo } from '@/util/file.ts'
+
 import type { FileEditMode, FileEditType } from './type.ts'
-import type { ExtensionInfo, SubEditor } from './extensionInfos.ts'
-import { extensionInfo } from './extensionInfos.ts'
 import type { FileHandler, InspectFileResult, UpdateFileResult } from './fileHandlers.ts'
 import { fileHandler } from './fileHandlers.ts'
 
@@ -113,25 +116,18 @@ const fileExtension = computed<string>(() => {
 })
 
 // -----------------------------------------------------------文件指示器-----------------------------------------------------------
-const fileIndicatorIcon = computed<'\uffe3' | '\uffe4' | '\uffe5'>(() => {
-  const _extension: string = parseFileExtension(fileName.value)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
-    return '\uffe5'
-  }
-  if (_extensionInfo.actionLevel === 'INSPECT') {
-    return '\uffe3'
-  }
-  return '\uffe4'
-})
+function fileIndicatorIcon(): VNode {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  return useDisplayIconWithDefaults(indicator, { type: 'iconfont', content: '\uffe5' })
+}
 
 const fileIndicatorOperateButtonVisible = computed<boolean>(() => {
-  const _extension: string = parseFileExtension(fileName.value)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
     return false
   }
-  return _extensionInfo.actionLevel === 'EDIT' && props.mode === 'EDIT'
+  return editInfo.actionLevel === 'EDIT' && props.mode === 'EDIT'
 })
 
 const fileIndicatorContentChanged = computed<boolean>(() => {
@@ -218,25 +214,25 @@ onMounted(() => {
 })
 
 // -----------------------------------------------------------子编辑器-----------------------------------------------------------
-const subEditorCurrent = computed<SubEditor | null>(() => {
-  const _extension: string = parseFileExtension(fileName.value)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
+const subEditorCurrent = computed<string | null>(() => {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
     return null
   }
-  return _extensionInfo.subEditor
+  return editInfo.subEditor
 })
 
 const subEditorReadonly = computed<boolean>(() => {
-  const _extension: string = parseFileExtension(fileName.value)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
     return true
   }
   if (props.mode === '' || props.mode === 'INSPECT') {
     return true
   }
-  return !(props.mode === 'EDIT') || !(_extensionInfo.actionLevel === 'EDIT')
+  return !(props.mode === 'EDIT') || !(editInfo.actionLevel === 'EDIT')
 })
 
 // -----------------------------------------------------------PDF 子编辑器-----------------------------------------------------------
@@ -325,12 +321,12 @@ function commitFile(): void {
   if (props.type === '' || props.id === '' || props.mode === '') {
     return
   }
-  const _extension: string = parseFileExtension(fileName.value)
-  const _extensionInfo: ExtensionInfo | null = extensionInfo(_extension)
-  if (!_extensionInfo) {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
     return
   }
-  if (_extensionInfo.actionLevel !== 'EDIT') {
+  if (editInfo.actionLevel !== 'EDIT') {
     return
   }
   if (subEditorReadonly.value) {
@@ -453,6 +449,8 @@ async function doCommitFile(): Promise<void> {
 }
 
 .main-container .editor-header .icon {
+  height: 32px;
+  width: 32px;
   font-size: 32px;
   user-select: none;
 }
