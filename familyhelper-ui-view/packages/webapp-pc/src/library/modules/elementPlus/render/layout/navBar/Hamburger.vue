@@ -36,7 +36,7 @@ const elementPlusStore = vim
   .vueStore<'element-plus', ElementPlusStore>('element-plus')
 
 // -----------------------------------------------------------菜单可视化处理-----------------------------------------------------------
-function toggleClick() {
+function toggleClick(): void {
   elementPlusStore.setMenuVisible(!elementPlusStore.menuVisible)
 }
 </script>

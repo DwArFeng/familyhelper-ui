@@ -199,7 +199,7 @@ const formLoginHistory = ref<FormLoginHistory>({
 const formLoginParamRecords = ref<LoginParamRecord[]>([])
 const formProtectorDetailRecords = ref<ProtectDetailRecord[]>([])
 
-function formatResponseCode(responseCode: LoginHistoryResponseCode) {
+function formatResponseCode(responseCode: LoginHistoryResponseCode): string {
   switch (responseCode) {
     case 0:
       return '通过'

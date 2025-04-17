@@ -31,7 +31,7 @@ const vimLibraryModule: VimLibraryModule = {
   provideVisualizer,
 }
 
-function init(ctx: VimApplicationContext) {
+function init(ctx: VimApplicationContext): void {
   ctx.app.use(ElementPLUS, {
     locale: zhCn,
   })

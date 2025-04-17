@@ -130,7 +130,7 @@ export function childForSendAccountStatusEqDisplay(
   accountId: StringIdKey,
   status: MessageStatus,
   pagingInfo: PagingInfo,
-) {
+): Prespa<Message> {
   return http.generalClient().get(
     'clannad',
     `account/send/${accountId.string_id}/message/display/status-eq/`,
@@ -143,7 +143,10 @@ export function childForSendAccountStatusEqDisplay(
   )
 }
 
-export function childForReceiveAccountDisplay(accountId: StringIdKey, pagingInfo: PagingInfo) {
+export function childForReceiveAccountDisplay(
+  accountId: StringIdKey,
+  pagingInfo: PagingInfo,
+): Prespa<Message> {
   return http.generalClient().get(
     'clannad',
     `account/receive/${accountId.string_id}/message/display/`,
@@ -220,7 +223,7 @@ export function childForSendAccountStatusEqDisplayDisp(
   accountId: StringIdKey,
   status: MessageStatus,
   pagingInfo: PagingInfo,
-) {
+): Prespa<DispMessage> {
   return http.generalClient().get(
     'clannad',
     `account/send/${accountId.string_id}/message/display/status-eq/disp/`,

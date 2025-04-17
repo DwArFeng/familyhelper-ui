@@ -73,7 +73,10 @@ export function allDisp(pagingInfo: PagingInfo): Prespa<DispNotifyHistory> {
   )
 }
 
-export function childForNotifySettingDisp(notifySettingKey: LongIdKey, pagingInfo: PagingInfo) {
+export function childForNotifySettingDisp(
+  notifySettingKey: LongIdKey,
+  pagingInfo: PagingInfo,
+): Prespa<DispNotifyHistory> {
   return http.generalClient().get(
     'notify',
     `notify-setting/${notifySettingKey.long_id}/notify-history/disp/`,

@@ -203,7 +203,7 @@ watch(
 )
 
 // -----------------------------------------------------------按钮事件处理-----------------------------------------------------------
-function handleFirstButtonClicked() {
+function handleFirstButtonClicked(): void {
   if (!formRef.value) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
@@ -226,11 +226,11 @@ function handleFirstButtonClicked() {
   }
 }
 
-function handleSecondButtonClicked() {
+function handleSecondButtonClicked(): void {
   watchedVisible.value = false
 }
 
-function handleHotKeyDown() {
+function handleHotKeyDown(): void {
   if (!formRef.value) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }

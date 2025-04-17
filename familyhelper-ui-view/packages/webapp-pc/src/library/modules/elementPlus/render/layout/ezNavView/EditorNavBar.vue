@@ -32,7 +32,7 @@ type Emits = {
 const emit = defineEmits<Emits>()
 
 // -----------------------------------------------------------事件处理-----------------------------------------------------------
-function handleDelete() {
+function handleDelete(): void {
   emit('onDelete')
 }
 </script>

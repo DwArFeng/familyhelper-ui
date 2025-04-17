@@ -39,7 +39,7 @@ const elementPlusStore = vim
   .vueStore<'element-plus', ElementPlusStore>('element-plus')
 
 // -----------------------------------------------------------全屏切换逻辑处理-----------------------------------------------------------
-function handleToggleFullScreen() {
+function handleToggleFullScreen(): void {
   elementPlusStore.setFullScreen(!elementPlusStore.fullScreen)
 }
 </script>

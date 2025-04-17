@@ -337,7 +337,7 @@ function handleItemTableCurrentChanged(current: TableItem | null): void {
   itemTableCurrentRow.value = current
 }
 
-function handleClickFileSelector() {
+function handleClickFileSelector(): void {
   const itemUpdateFileSelector = itemUpdateFileSelectorRef.value
   if (!itemUpdateFileSelector) {
     throw new Error('不应该执行到此处，请联系开发人员')
@@ -345,7 +345,7 @@ function handleClickFileSelector() {
   itemUpdateFileSelector.selectFile()
 }
 
-function handleShowChangeOrderDialog(row: TableItem) {
+function handleShowChangeOrderDialog(row: TableItem): void {
   showChangeOrderDialog(row)
 }
 
@@ -356,7 +356,7 @@ function changeOrderDialogItemMap(t: TableItem): ChangeOrderDialogItem {
   }
 }
 
-function handleItemUpdateFileSelectorSelected(files: File[]) {
+function handleItemUpdateFileSelectorSelected(files: File[]): void {
   if (!itemTableCurrentRow.value) {
     return
   }

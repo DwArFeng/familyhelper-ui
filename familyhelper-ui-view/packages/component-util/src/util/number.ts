@@ -27,7 +27,7 @@ const dataSizePreset: DataSizePreset = [
 ]
 export { dataSizePreset }
 
-export function formatUnit(number: number, preset: DataSizePreset, toFixed: number = 2) {
+export function formatUnit(number: number, preset: DataSizePreset, toFixed: number = 2): string {
   let lastValidValue: number = NaN
   let lastValidLabel: string = ''
   for (let i = 0; i < preset.length; i += 1) {

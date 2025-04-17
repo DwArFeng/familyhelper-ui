@@ -8,7 +8,7 @@ const vimLibraryModule: VimLibraryModule = {
   provideVisualizer,
 }
 
-function init(ctx: VimApplicationContext) {
+function init(ctx: VimApplicationContext): void {
   for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     ctx.app.component(key, component)
   }

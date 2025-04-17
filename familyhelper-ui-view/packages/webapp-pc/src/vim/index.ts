@@ -58,7 +58,7 @@ const vim: Vim = {
 /**
  * 初始化。
  */
-async function init() {
+async function init(): Promise<void> {
   // 判断状态。
   if (status !== 'initializing') {
     throw new Error('只能在 initializing 状态下初始化')

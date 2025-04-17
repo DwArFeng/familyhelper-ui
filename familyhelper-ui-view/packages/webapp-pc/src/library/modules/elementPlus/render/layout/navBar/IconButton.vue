@@ -28,7 +28,7 @@ type Emits = {
 const emit = defineEmits<Emits>()
 
 // 事件处理。
-function handleClick() {
+function handleClick(): void {
   emit('click')
 }
 </script>

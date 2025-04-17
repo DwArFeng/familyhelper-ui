@@ -8,7 +8,7 @@ const vimLibraryModule: VimLibraryModule = {
   provideVisualizer,
 }
 
-function init() {}
+function init(): void {}
 
 function provideVisualizer(): null {
   return null

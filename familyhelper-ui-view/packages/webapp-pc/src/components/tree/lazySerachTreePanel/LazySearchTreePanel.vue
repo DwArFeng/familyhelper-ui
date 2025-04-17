@@ -264,7 +264,7 @@ function handleLoadRoot(): void {
   props.loadRootHandler(accept)
 }
 
-function handleRefresh() {
+function handleRefresh(): void {
   searchBarValue.value = null
   searchBarOptions.value = []
   treeRoot.value = []

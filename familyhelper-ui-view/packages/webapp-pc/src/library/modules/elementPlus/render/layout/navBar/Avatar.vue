@@ -70,7 +70,7 @@ const notificationStyle = computed(() => {
 })
 
 // -----------------------------------------------------------下拉菜单命令处理-----------------------------------------------------------
-function handleCommand(key: string) {
+function handleCommand(key: string): void {
   switch (key) {
     case 'welcome':
       handleWelcomeCommand()

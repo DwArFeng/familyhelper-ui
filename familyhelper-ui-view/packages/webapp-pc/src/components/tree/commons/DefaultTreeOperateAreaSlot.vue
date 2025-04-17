@@ -63,15 +63,15 @@ type Emits = {
 const emit = defineEmits<Emits>()
 
 // -----------------------------------------------------------事件处理-----------------------------------------------------------
-function handleItemInspect() {
+function handleItemInspect(): void {
   emit('onItemInspect', props.item, props.node)
 }
 
-function handleItemEdit() {
+function handleItemEdit(): void {
   emit('onItemEdit', props.item, props.node)
 }
 
-function handleItemDelete() {
+function handleItemDelete(): void {
   emit('onItemDelete', props.item, props.node)
 }
 </script>

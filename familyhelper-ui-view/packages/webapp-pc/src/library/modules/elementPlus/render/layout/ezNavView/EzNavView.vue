@@ -223,7 +223,7 @@ function handleNavigation(nodeKey: string): void {
 }
 
 // 删除处理。
-function handleRemove(nodeKey: string) {
+function handleRemove(nodeKey: string): void {
   // 在导航栏中删除 nodeKey。
   navigationEzNavStore.removeNodeKey(nodeKey)
 
@@ -257,7 +257,7 @@ function handleCloseBack(nodeKey: string): void {
   vim.ctx().router().vueRouter().push(location)
 }
 
-function handleCloseDefault() {
+function handleCloseDefault(): void {
   vim.ctx().router().vueRouter().push({ name: vim.ctx().navigation().setting.defaultNavigationKey })
 }
 
@@ -281,7 +281,7 @@ const routerLinkRef = ref()
 const rootRef = ref()
 
 // 打开菜单。
-function openMenu(nodeKey: string, e: MouseEvent) {
+function openMenu(nodeKey: string, e: MouseEvent): void {
   contextmenu.value.nodeKey = nodeKey
 
   const menuMinWidth: number = 120
@@ -384,7 +384,7 @@ function handleNavigationContextMenuItemClicked(): void {
   handleNavigation(contextmenu.value.nodeKey)
 }
 
-function handleEditorConfirm() {
+function handleEditorConfirm(): void {
   navigationEzNavStore.setPinnedNodeKeys(
     editorDialogPinnedNavigationNodes.value.map((node) => node.key),
   )
@@ -434,15 +434,15 @@ function deepClean(): void {
 }
 
 // 添加快捷键监听。
-function addHotKeyListener() {
+function addHotKeyListener(): void {
   document.body.addEventListener('keydown', handleHotKeyDown)
 }
 
-function removeHotKeyListener() {
+function removeHotKeyListener(): void {
   document.body.removeEventListener('keydown', handleHotKeyDown)
 }
 
-function handleHotKeyDown($event: KeyboardEvent) {
+function handleHotKeyDown($event: KeyboardEvent): void {
   // ctrl + alt + leftArrow
   if ($event.key === 'ArrowLeft' && $event.ctrlKey && $event.altKey) {
     mayBackward()
@@ -453,7 +453,7 @@ function handleHotKeyDown($event: KeyboardEvent) {
   }
 }
 
-function mayBackward() {
+function mayBackward(): void {
   if (navigationEzNavStore.loading > 0) {
     return
   }

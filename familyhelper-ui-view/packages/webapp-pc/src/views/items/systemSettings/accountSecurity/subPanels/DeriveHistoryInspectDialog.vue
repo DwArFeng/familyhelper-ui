@@ -136,7 +136,7 @@ const formDeriveHistory = ref<FormDeriveHistory>({
   derive_remark: '',
 })
 
-function formatResponseCode(responseCode: DeriveHistoryResponseCode) {
+function formatResponseCode(responseCode: DeriveHistoryResponseCode): string {
   switch (responseCode) {
     case 0:
       return '通过'

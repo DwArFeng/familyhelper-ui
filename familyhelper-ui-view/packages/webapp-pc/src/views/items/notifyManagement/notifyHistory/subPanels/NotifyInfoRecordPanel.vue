@@ -145,7 +145,7 @@ const {
 } = useIdentityBackendPagingTablePanel<NotifyInfoRecord>(15)
 
 function notifyInfoRecordTableTypeFormatter(row: NotifyInfoRecord): string {
-  function formatType(type: NotifyInfoRecordType) {
+  function formatType(type: NotifyInfoRecordType): string {
     switch (type) {
       case 0:
         return '路由器信息'

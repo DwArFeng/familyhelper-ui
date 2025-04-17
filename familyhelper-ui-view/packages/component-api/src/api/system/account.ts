@@ -160,7 +160,7 @@ export function resetPassword(passwordResetInfo: AccountPasswordResetInfo): Pres
     .post('system', 'account/reset-password', passwordResetInfo, 'application/json;charset=UTF-8')
 }
 
-export function invalid(key: StringIdKey) {
+export function invalid(key: StringIdKey): Pres<null> {
   return http
     .generalClient()
     .post('system', 'account/invalid', key, 'application/json;charset=UTF-8')

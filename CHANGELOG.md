@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- 优化 `familyhelper-ui-view` 模块中的 `ts` 与 `vue` 的代码。
+  - 补充部分代码方法中缺失的返回类型标注。
+
 - 优化 `familyhelper-ui-view` 模块中 `ts` 与 `js` 的注释。
   - 将文档注释中的 `@return` 替换为 `@returns`。
 

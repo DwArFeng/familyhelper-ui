@@ -52,12 +52,12 @@ const dropdownPosition: ComputedRef<Record<string, string>> = computed(() => {
   }
 })
 
-function toggleDropdown(event: MouseEvent) {
+function toggleDropdown(event: MouseEvent): void {
   event.stopPropagation()
   dropdownVisible.value = !dropdownVisible.value
 }
 
-function handleClickOutside(event: MouseEvent) {
+function handleClickOutside(event: MouseEvent): void {
   if (avatarRef.value && !avatarRef.value.contains(event.target as Node)) {
     dropdownVisible.value = false
   }
@@ -72,7 +72,7 @@ onUnmounted(() => {
 })
 
 // -----------------------------------------------------------下拉菜单命令处理-----------------------------------------------------------
-function handleCommand(key: string) {
+function handleCommand(key: string): void {
   dropdownVisible.value = false
   switch (key) {
     case 'welcome':

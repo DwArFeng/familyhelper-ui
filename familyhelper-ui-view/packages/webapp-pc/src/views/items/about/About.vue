@@ -62,7 +62,7 @@ const gameTypes: number[] = [1]
 
 let hiddenButtonClickCount: number = 0
 
-function hiddenBricksClick() {
+function hiddenBricksClick(): void {
   hiddenButtonClickCount++
   if (hiddenButtonClickCount < 10) {
     return

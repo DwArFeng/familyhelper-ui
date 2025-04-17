@@ -21,7 +21,7 @@ export function exists(key: StringIdKey): Pres<boolean> {
   return http.generalClient().get('notify', `topic/${key.string_id}/exists/`, {}, 'json')
 }
 
-export function inspect(key: StringIdKey) {
+export function inspect(key: StringIdKey): Pres<Topic> {
   return http.generalClient().get('notify', `topic/${key.string_id}/`, {}, 'json')
 }
 

@@ -670,7 +670,7 @@ function handlePermissionAttachDialogAttachPermission(): void {
     })
 }
 
-function handlePermissionTableCopyKeyContextmenuClicked(row: Permission, close: () => void) {
+function handlePermissionTableCopyKeyContextmenuClicked(row: Permission, close: () => void): void {
   close()
   navigator.clipboard.writeText(row.key.string_id).then(() => {
     ElMessage({

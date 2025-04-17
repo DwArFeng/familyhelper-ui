@@ -85,12 +85,12 @@ const children = computed<Readonly<NavigationNodeInfo[]>>(() => {
 // -----------------------------------------------------------子菜单处理-----------------------------------------------------------
 const isOpen = ref(false)
 
-function toggleSubmenu() {
+function toggleSubmenu(): void {
   isOpen.value = !isOpen.value
 }
 
 // -----------------------------------------------------------选择处理-----------------------------------------------------------
-function handleSelect(nodeKey: string) {
+function handleSelect(nodeKey: string): void {
   emit('select', nodeKey)
 }
 </script>

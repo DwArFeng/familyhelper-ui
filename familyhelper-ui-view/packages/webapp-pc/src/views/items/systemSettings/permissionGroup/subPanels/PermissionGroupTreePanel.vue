@@ -132,28 +132,28 @@ async function queryPathCaller(ct: DispPermissionGroupTreeItem): Promise<DispPer
 function handleCurrentChanged(
   item: DispPermissionGroupTreeItem | null,
   node: TreeNode<DispPermissionGroupTreeItem> | null,
-) {
+): void {
   emit('onCurrentChanged', item, node)
 }
 
 function handleItemInspect(
   item: DispPermissionGroupTreeItem,
   node: TreeNode<DispPermissionGroupTreeItem>,
-) {
+): void {
   emit('onPermissionGroupInspect', item, node)
 }
 
 function handleItemEdit(
   item: DispPermissionGroupTreeItem,
   node: TreeNode<DispPermissionGroupTreeItem>,
-) {
+): void {
   emit('onPermissionGroupEdit', item, node)
 }
 
 function handleItemDelete(
   item: DispPermissionGroupTreeItem,
   node: TreeNode<DispPermissionGroupTreeItem>,
-) {
+): void {
   emit('onPermissionGroupDelete', item, node)
 }
 

@@ -121,7 +121,7 @@ const vimRoutes: RouteRecordRaw[] = [
  *
  * @param ctx VIM 应用上下文对象。
  */
-function init(ctx: VimApplicationContext) {
+function init(ctx: VimApplicationContext): void {
   // 检查状态。
   if (status !== 'initializing') {
     throw new Error('只能在 initializing 状态下初始化')

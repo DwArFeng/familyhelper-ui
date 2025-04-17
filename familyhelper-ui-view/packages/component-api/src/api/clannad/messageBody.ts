@@ -37,7 +37,7 @@ export function download(key: LongIdKey): Promise<Blob> {
   return http.generalClient().get('clannad', `message-body/${key.long_id}/download/`, {}, 'blob')
 }
 
-export function update(key: LongIdKey, formData: FormData) {
+export function update(key: LongIdKey, formData: FormData): Pres<null> {
   return http
     .generalClient()
     .post('clannad', `message-body/${key.long_id}/update/`, formData, 'multipart/form-data')
