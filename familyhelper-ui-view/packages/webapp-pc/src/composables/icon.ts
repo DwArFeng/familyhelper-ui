@@ -15,3 +15,15 @@ import { h } from 'vue'
 export function useIconfontButtonIcon(iconCharacter: string): VNode {
   return h('i', { class: 'iconfont' }, iconCharacter)
 }
+
+// -----------------------------------------------------------缺失图标-----------------------------------------------------------
+/**
+ * 使用缺失图标。
+ *
+ * 该方法可以创建一个缺失图标的占位符。
+ *
+ * @returns 缺失图标的占位符组件，可以用于渲染。
+ */
+export function useMissingIcon(): VNode {
+  return h('i', { style: { display: 'block', backgroundColor: 'magenta' } })
+}

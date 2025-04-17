@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- `webapp-pc` 子模块优化。
+  - `src/composables/icon.ts` 中新增缺失图标 Composition API。
+
 - 优化 `familyhelper-ui-view` 模块中的 `ts` 与 `vue` 的代码。
   - 补充部分代码方法中缺失的返回类型标注。
 
