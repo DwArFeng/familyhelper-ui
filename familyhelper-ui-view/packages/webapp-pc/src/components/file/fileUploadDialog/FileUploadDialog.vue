@@ -29,7 +29,7 @@
             <span class="file-item size">{{ wrappedFormatUnit(file.size) }}</span>
             <el-button
               class="file-item button"
-              icon="el-icon-delete"
+              :icon="DeleteIcon"
               type="danger"
               @click="files.splice(index, 1)"
             />
@@ -56,6 +56,8 @@
 <script setup lang="ts">
 import type { VNode } from 'vue'
 import { computed, onMounted, ref, watch } from 'vue'
+
+import { Delete as DeleteIcon } from '@element-plus/icons-vue'
 
 import FileSelector from '@/components/file/fileSelector/FileSelector.vue'
 

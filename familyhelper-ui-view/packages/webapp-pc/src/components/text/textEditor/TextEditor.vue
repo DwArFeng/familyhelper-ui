@@ -20,7 +20,7 @@
         <el-link
           class="item"
           type="primary"
-          icon="el-icon-document"
+          :icon="DocumentIcon"
           :underline="false"
           @click="handleCopy"
         >
@@ -51,7 +51,7 @@ import { onMounted, ref, watch } from 'vue'
 
 import { ElMessage } from 'element-plus'
 
-import { Histogram as HistogramIcon } from '@element-plus/icons-vue'
+import { Document as DocumentIcon, Histogram as HistogramIcon } from '@element-plus/icons-vue'
 
 import PlainSubEditor from './subEditors/PlainSubEditor.vue'
 import JsonSubEditor from '@/components/text/textEditor/subEditors/JsonSubEditor.vue'

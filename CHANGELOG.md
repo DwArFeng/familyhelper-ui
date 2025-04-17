@@ -18,7 +18,9 @@
 
 #### Bug修复
 
-- (无)
+- `webapp-pc` 子模块中 `vue` 模板 `element-plus` 组件 `:icon` 属性 bug 修复。
+  - src/components/file/fileUploadDialog/FileUploadDialog.vue。
+  - src/components/text/textEditor/TextEditor.vue。
 
 #### 功能移除
 
