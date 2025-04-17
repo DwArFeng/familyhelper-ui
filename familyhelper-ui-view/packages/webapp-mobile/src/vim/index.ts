@@ -282,7 +282,9 @@ function registerWindowBeforeUnloadHook(hook: () => void, order: number = 0): vo
 }
 
 /**
- * VIM 应用上下文。
+ * 获取 VIM 应用上下文。
+ *
+ * @returns VIM 应用上下文。
  */
 function ctx(): VimApplicationContext {
   if (status === 'initializing') {

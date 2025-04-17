@@ -415,6 +415,8 @@ function removeLnpStoreFireKickActionListener(): void {
 
 /**
  * 获取 Router。
+ *
+ * @returns Router。
  */
 function vimRouter(): Router {
   if (status === 'initializing') {

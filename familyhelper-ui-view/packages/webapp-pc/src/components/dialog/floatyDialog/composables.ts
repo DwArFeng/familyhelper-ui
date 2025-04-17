@@ -35,6 +35,7 @@ export type UseGeneralFloatyDialogResult = {
  *   因此，该方法常用于 `onVisualFieldAdjusted` 事件的响应函数。
  *
  * @param initialVisualField 初始的视觉字段。
+ * @returns 调用方法后的返回结果。
  */
 export function useGeneralFloatyDialog(
   initialVisualField: VisualField,

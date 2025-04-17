@@ -114,6 +114,8 @@ function baseUrl(): string {
 
 /**
  * 获取通用客户端。
+ *
+ * @returns 通用客户端。
  */
 function generalClient(): HttpClient {
   if (status === 'initializing') {
@@ -124,6 +126,8 @@ function generalClient(): HttpClient {
 
 /**
  * 获取公共客户端。
+ *
+ * @returns 公共客户端。
  */
 function publicClient(): HttpClient {
   if (status === 'initializing') {

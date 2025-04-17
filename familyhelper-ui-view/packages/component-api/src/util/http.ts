@@ -154,6 +154,8 @@ let generalClientCache: HttpClient | null = null
 
 /**
  * 获取通用客户端。
+ *
+ * @returns HttpClient 通用客户端。
  */
 function generalClient(): HttpClient {
   // 状态判断。
@@ -191,6 +193,8 @@ let publicClientCache: HttpClient | null = null
 
 /**
  * 获取公共客户端。
+ *
+ * @returns HttpClient 公共客户端。
  */
 function publicClient(): HttpClient {
   // 状态判断。

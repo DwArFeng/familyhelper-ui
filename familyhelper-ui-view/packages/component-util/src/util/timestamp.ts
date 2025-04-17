@@ -2,6 +2,8 @@
 
 /**
  * 获取当前的时间戳。
+ *
+ * @returns 当前的时间戳。
  */
 export function currentTimestamp(): number {
   return new Date().getTime()
@@ -11,6 +13,7 @@ export function currentTimestamp(): number {
  * 将时间戳格式化为 yyyy-mm-dd hh:mm:ss 的形式。
  *
  * @param timestamp 时间戳。
+ * @returns 格式化后的时间戳。
  */
 export function formatTimestamp(timestamp: number): string {
   // 时间戳为10位需*1000，时间戳为13位的话不需乘1000 var date = new Date(timestamp*1000);
@@ -29,6 +32,7 @@ export function formatTimestamp(timestamp: number): string {
  * 将时间戳格式化为 yyyy-mm-dd 的形式。
  *
  * @param timestamp 时间戳。
+ * @returns 格式化后的时间戳。
  */
 export function formatShortTimestamp(timestamp: number): string {
   // 时间戳为10位需*1000，时间戳为13位的话不需乘1000 var date = new Date(timestamp*1000);

@@ -4,9 +4,12 @@ const childProcess = require('child_process')
 const LogUtil = require('./log')
 
 /**
- * @param {string} command
- * @param {string[]} args
+ * Executes a command in a child process using spawn.
+ *
+ * @param {string} command - The command to execute.
+ * @param {string[]} args - The arguments to pass to the command.
  * @param {string} [cwd] - The custom directory to run the command in.
+ * @returns {Promise<void>} - A promise that resolves when the command has finished executing.
  */
 async function spawn(command, args, cwd) {
   return new Promise((resolve, reject) => {
@@ -50,8 +53,11 @@ async function spawn(command, args, cwd) {
 }
 
 /**
- * @param {string} command
+ * Executes a command in a child process using exec.
+ *
+ * @param {string} command - The command to execute.
  * @param {string} [cwd] - The custom directory to run the command in.
+ * @returns {Promise<void>} - A promise that resolves when the command has finished executing.
  */
 async function exec(command, cwd) {
   return new Promise((resolve, reject) => {

@@ -634,6 +634,8 @@ function maySavePersistenceData(): void {
 
 /**
  * 提供 Store Setup。
+ *
+ * @returns Store Setup。
  */
 function provideStoreSetup(): StoreSetup {
   return (): NavigationEzNavStore => ({

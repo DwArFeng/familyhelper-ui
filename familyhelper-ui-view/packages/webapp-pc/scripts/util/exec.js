@@ -4,12 +4,12 @@ const childProcess = require('child_process')
 const LogUtil = require('./log')
 
 /**
- * 启动一个子进程执行指定的命令。
+ * Executes a command in a child process using spawn.
  *
- * @param {string} command The command to run.
- * @param {string[]} args The command arguments.
- * @param {string} [cwd] The custom directory to run the command in.
- * @returns {Promise<void>} A promise that resolves when the command has been executed successfully.
+ * @param {string} command - The command to execute.
+ * @param {string[]} args - The arguments to pass to the command.
+ * @param {string} [cwd] - The custom directory to run the command in.
+ * @returns {Promise<void>} - A promise that resolves when the command has finished executing.
  */
 async function spawn(command, args, cwd) {
   return new Promise((resolve, reject) => {
@@ -53,11 +53,11 @@ async function spawn(command, args, cwd) {
 }
 
 /**
- * 执行指定的命令。
+ * Executes a command in a child process using exec.
  *
- * @param {string} command The command to run.
- * @param {string} [cwd] The custom directory to run the command in.
- * @returns {Promise<void>} A promise that resolves when the command has been executed successfully.
+ * @param {string} command - The command to execute.
+ * @param {string} [cwd] - The custom directory to run the command in.
+ * @returns {Promise<void>} - A promise that resolves when the command has finished executing.
  */
 async function exec(command, cwd) {
   return new Promise((resolve, reject) => {

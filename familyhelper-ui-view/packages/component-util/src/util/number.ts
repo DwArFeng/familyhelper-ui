@@ -1,9 +1,11 @@
 // noinspection JSUnusedGlobalSymbols
 
 /**
- * 输出带有前导0的数字。
+ * 输出带有前导 0 的数字。
+ *
  * @param number 指定的数字。
- * @param size 前导0与数字加起来的位数。
+ * @param size 前导 0 与数字加起来的位数。
+ * @returns 带有前导 0 的数字。
  */
 export function pad(number: number, size: number): string {
   let s = String(number)

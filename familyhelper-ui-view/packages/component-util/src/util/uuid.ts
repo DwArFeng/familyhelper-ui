@@ -1,7 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
 /**
- * Generate a UUIDv4
+ * 生成 UUID v4 字符串。
+ *
+ * @returns UUID v4 字符串。
  */
 export function uuid(): string {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

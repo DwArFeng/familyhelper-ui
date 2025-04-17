@@ -79,9 +79,11 @@ async function runParallel(maxConcurrency, packageInfos, iteratorFn) {
 }
 
 /**
- * @param {number} maxConcurrency
- * @param {Promise<void>} promise
- * @returns {Promise<void>}
+ * Blocks the execution if the maximum concurrency is reached.
+ *
+ * @param {number} maxConcurrency - The maximum concurrency.
+ * @param {Promise<void>} promise - The promise to execute.
+ * @returns {Promise<void>} - A promise that resolves when the concurrency limit is not reached.
  */
 async function blockIfReachMaxConcurrency(maxConcurrency, promise) {
   const e = promise.then(() => {
@@ -99,9 +101,12 @@ async function blockIfReachMaxConcurrency(maxConcurrency, promise) {
 }
 
 /**
- * @param {string} command
- * @param {string[]} args
+ * Executes a command in a child process using spawn.
+ *
+ * @param {string} command - The command to execute.
+ * @param {string[]} args - The arguments to pass to the command.
  * @param {string} [cwd] - The custom directory to run the command in.
+ * @returns {Promise<void>} - A promise that resolves when the command has finished executing.
  */
 async function spawn(command, args, cwd) {
   return new Promise((resolve, reject) => {
@@ -145,8 +150,11 @@ async function spawn(command, args, cwd) {
 }
 
 /**
- * @param {string} command
+ * Executes a command in a child process using exec.
+ *
+ * @param {string} command - The command to execute.
  * @param {string} [cwd] - The custom directory to run the command in.
+ * @returns {Promise<void>} - A promise that resolves when the command has finished executing.
  */
 async function exec(command, cwd) {
   return new Promise((resolve, reject) => {

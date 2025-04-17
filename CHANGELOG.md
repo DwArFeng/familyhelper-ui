@@ -12,6 +12,7 @@
   - 补充部分代码方法中缺失的返回类型标注。
 
 - 优化 `familyhelper-ui-view` 模块中 `ts` 与 `js` 的注释。
+  - 补充部分方法文档注释中的 `@returns` 注释块。
   - 优化文档注释中 `@param` 与 `@returns` 中的类型标注。
   - 将文档注释中的 `@return` 替换为 `@returns`。
 

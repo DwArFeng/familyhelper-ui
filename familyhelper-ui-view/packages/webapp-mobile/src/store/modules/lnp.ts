@@ -282,6 +282,8 @@ function restorePersistenceData(value: PersistenceData): void {
 
 /**
  * 提供 Store Setup。
+ *
+ * @returns Store Setup。
  */
 function provideStoreSetup(): StoreSetup {
   return (): LnpStore => ({
