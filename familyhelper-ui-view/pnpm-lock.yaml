@@ -96,7 +96,7 @@ importers:
         specifier: ^8.29.1
         version: 8.29.1(eslint@9.24.0(jiti@2.4.2))(typescript@5.7.3)
       vite:
-        specifier: ^6.2.4
+        specifier: ^6.2.6
         version: 6.2.6(@types/node@22.14.0)(jiti@2.4.2)(sugarss@2.0.0)(terser@5.39.0)
       vite-plugin-vue-devtools:
         specifier: ^7.7.2
@@ -3179,6 +3179,10 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       '@ckeditor/ckeditor5-widget': 45.0.0
       es-toolkit: 1.32.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-cloud-services@45.0.0':
     dependencies:
@@ -3403,10 +3407,6 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
 
   '@ckeditor/ckeditor5-fullscreen@45.0.0':
     dependencies:
@@ -3436,10 +3436,6 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
 
   '@ckeditor/ckeditor5-highlight@45.0.0':
     dependencies:
@@ -3448,10 +3444,6 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
 
   '@ckeditor/ckeditor5-horizontal-line@45.0.0':
     dependencies:
@@ -3461,10 +3453,6 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       '@ckeditor/ckeditor5-widget': 45.0.0
       ckeditor5: 45.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
 
   '@ckeditor/ckeditor5-html-embed@45.0.0':
     dependencies:
@@ -3474,10 +3462,6 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       '@ckeditor/ckeditor5-widget': 45.0.0
       ckeditor5: 45.0.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
 
   '@ckeditor/ckeditor5-html-support@45.0.0':
     dependencies:

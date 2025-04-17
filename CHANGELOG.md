@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- `component-ckeditor` 子模块依赖升级。
+  - 升级 `vite` 依赖版本为 `^6.2.6` 以规避漏洞。
+
 - `webapp-pc` 子模块优化。
   - 使用统一 API 维护文件的创建、展示、编辑等相关逻辑。
   - `src/composables/icon.ts` 中新增缺失图标 Composition API。
