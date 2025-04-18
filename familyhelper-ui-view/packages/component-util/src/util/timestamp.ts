@@ -1,4 +1,4 @@
-// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 /**
  * 获取当前的时间戳。
@@ -17,7 +17,6 @@ export function currentTimestamp(): number {
  */
 export function formatTimestamp(timestamp: number): string {
   // 时间戳为10位需*1000，时间戳为13位的话不需乘1000 var date = new Date(timestamp*1000);
-  // noinspection DuplicatedCode
   const date = new Date(timestamp)
   const YY = `${date.getFullYear()}-`
   const MM = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`
@@ -36,7 +35,6 @@ export function formatTimestamp(timestamp: number): string {
  */
 export function formatShortTimestamp(timestamp: number): string {
   // 时间戳为10位需*1000，时间戳为13位的话不需乘1000 var date = new Date(timestamp*1000);
-  // noinspection DuplicatedCode
   const date = new Date(timestamp)
   const YY = `${date.getFullYear()}-`
   const MM = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`

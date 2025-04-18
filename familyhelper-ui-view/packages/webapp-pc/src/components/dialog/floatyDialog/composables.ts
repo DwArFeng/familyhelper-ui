@@ -1,4 +1,4 @@
-// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { Ref } from 'vue'
 import { ref } from 'vue'
@@ -40,7 +40,6 @@ export type UseGeneralFloatyDialogResult = {
 export function useGeneralFloatyDialog(
   initialVisualField: VisualField,
 ): UseGeneralFloatyDialogResult {
-  // noinspection DuplicatedCode
   const _visible = ref<boolean>(false)
   const _initialX = ref<number>(initialVisualField.x)
   const _initialY = ref<number>(initialVisualField.y)
@@ -49,7 +48,6 @@ export function useGeneralFloatyDialog(
   const _initialDockStatus = ref<DockStatus>(initialVisualField.dockStatus)
   const _initialContentOpacity = ref<number>(initialVisualField.contentOpacity)
 
-  // noinspection DuplicatedCode
   function updateInitialVisualField(visualField: VisualField): void {
     _initialX.value = visualField.x
     _initialY.value = visualField.y
@@ -115,7 +113,6 @@ export type UseUserPreferenceFloatyDialogResult = {
 export function useUserPreferenceFloatyDialog(
   initialVisualField: VisualField,
 ): UseUserPreferenceFloatyDialogResult {
-  // noinspection DuplicatedCode
   const _visible = ref<boolean>(false)
   const _initialX = ref<number>(initialVisualField.x)
   const _initialY = ref<number>(initialVisualField.y)

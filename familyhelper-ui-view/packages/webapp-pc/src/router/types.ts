@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 import type { VimComponent } from '@/vim/types.ts'
 import type { Router } from 'vue-router'
 

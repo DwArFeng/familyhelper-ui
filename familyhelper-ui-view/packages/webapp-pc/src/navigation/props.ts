@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 import type { NavigationSetting } from '@/navigation/types.ts'
 
 /**

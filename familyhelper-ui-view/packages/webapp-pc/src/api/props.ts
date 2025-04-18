@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 import type { ApiSetting } from '@/api/types.ts'
 
 const developmentUrlPrefix: ApiSetting['developmentUrlPrefix'] =

@@ -1,4 +1,4 @@
-// noinspection DuplicatedCode
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type {
@@ -53,7 +53,6 @@ const navigation: VimNavigation = {
  */
 async function init(ctx: VimApplicationContext): Promise<void> {
   // 检查状态。
-  // noinspection DuplicatedCode
   if (status !== 'initializing') {
     throw new Error('只能在 initializing 状态下初始化')
   }

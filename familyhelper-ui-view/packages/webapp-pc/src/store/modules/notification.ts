@@ -48,7 +48,6 @@ function willUpdateUnreadCount(): ExecutableActionHandle<void, void, void> {
 }
 
 async function updateUnreadCount(): Promise<void> {
-  // noinspection DuplicatedCode
   if (!ctx) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
@@ -141,7 +140,6 @@ function initUnreadUpdateTimer(): void {
 }
 
 function mayUpdateUnreadCount(): void {
-  // noinspection DuplicatedCode
   if (!ctx) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }

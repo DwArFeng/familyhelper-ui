@@ -1,4 +1,4 @@
-// noinspection DuplicatedCode
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { App } from 'vue'
 import type { VimApi } from '@/api/types.ts'

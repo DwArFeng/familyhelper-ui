@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 import type { RouteLocationNormalizedGeneric } from 'vue-router'
 
 export function noGuardNameErrorText(to: RouteLocationNormalizedGeneric): string {

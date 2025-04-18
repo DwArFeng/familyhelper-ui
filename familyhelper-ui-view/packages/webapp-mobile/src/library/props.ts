@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 import type { LibrarySetting } from '@/library/types.ts'
 
 /**

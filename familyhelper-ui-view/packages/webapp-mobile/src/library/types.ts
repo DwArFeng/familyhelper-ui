@@ -1,4 +1,4 @@
-// noinspection DuplicatedCode
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { VimComponent, VimComponentModule } from '@/vim/types.ts'
 import type { VNode } from 'vue'

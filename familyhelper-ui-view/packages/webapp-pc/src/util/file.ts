@@ -1,4 +1,4 @@
-// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 export type Indicator = 'PDF' | 'JPG' | 'JPEG' | 'PNG' | 'GIF' | 'RTF' | 'TXT'
 

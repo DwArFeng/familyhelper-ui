@@ -1,4 +1,4 @@
-// noinspection DuplicatedCode
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { LibrarySetting, VimLibrary, VimLibraryModule, Visualizer } from '@/library/types.ts'
