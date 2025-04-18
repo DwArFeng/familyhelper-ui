@@ -59,6 +59,7 @@ async function doSyncBlob(): Promise<void> {
     const text: string = await props.baseBlob.text()
     content.value = text
     backupContent.value = text
+    emit('onContentChangeIndicatorChanged', false)
   } finally {
     loading.value -= 1
   }
