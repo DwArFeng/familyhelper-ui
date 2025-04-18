@@ -20,7 +20,7 @@
 
 #### Bug修复
 
-- (无)
+- 修复 `familyhelper-ui-view` 模块 `pom.xml` 中错误的插件配置。
 
 #### 功能移除
 

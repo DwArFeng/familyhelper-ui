@@ -86,18 +86,6 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>dist</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>packages/component-api/dist</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>packages/component-ckeditor/dist</directory>
-                        </fileset>
-                        <fileset>
-                            <directory>packages/component-iconfont/dist</directory>
-                        </fileset>
-                        <fileset>
                             <directory>packages/webapp-mobile/dist</directory>
                         </fileset>
                         <fileset>
