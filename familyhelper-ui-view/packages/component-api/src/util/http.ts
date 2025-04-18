@@ -45,15 +45,22 @@ export interface HttpClient {
   /**
    * GET 请求。
    *
+   * 该方法返回一个 Promise 对象，`Promise.resolve()` 时表示获取响应，
+   * `Promise.reject()` 时表示请求失败。
+   *
    * @param module 模块。
    * @param url URL。
    * @param params GET 参数。
    * @param responseType 响应类型。
+   * @returns 请求的 Promise 对象。
    */
   get<E>(module: string, url: string, params: GetParam, responseType: ResponseType): Promise<E>
 
   /**
    * POST 请求。
+   *
+   * 该方法返回一个 Promise 对象，`Promise.resolve()` 时表示获取响应，
+   * `Promise.reject()` 时表示请求失败。
    *
    * @param module 模块。
    * @param url URL。
@@ -65,6 +72,9 @@ export interface HttpClient {
   /**
    * PATCH 请求。
    *
+   * 该方法返回一个 Promise 对象，`Promise.resolve()` 时表示获取响应，
+   * `Promise.reject()` 时表示请求失败。
+   *
    * @param module 模块。
    * @param url URL。
    * @param params PATCH 参数。
@@ -74,6 +84,9 @@ export interface HttpClient {
 
   /**
    * DELETE 请求。
+   *
+   * 该方法返回一个 Promise 对象，`Promise.resolve()` 时表示获取响应，
+   * `Promise.reject()` 时表示请求失败。
    *
    * @param module 模块。
    * @param url URL。
@@ -90,6 +103,10 @@ export type GetParam = Record<string, string | number | boolean>
 
 /**
  * 响应类型。
+ *
+ * 该类型表示 HTTP 响应的类型，为字符串枚举，可能的值为：
+ * - `json`：表示响应类型为 JSON。
+ * - `blob`：表示响应类型为 Blob。
  */
 export type ResponseType = 'json' | 'blob'
 
@@ -110,6 +127,10 @@ export type DelParam = object | FormData
 
 /**
  * 内容类型。
+ *
+ * 该类型表示 HTTP 请求的内容类型，为字符串枚举，可能的值为：
+ * - `application/json;charset=UTF-8`：表示内容类型为 JSON。
+ * - `multipart/form-data`：表示内容类型为表单数据。
  */
 export type ContentType = 'application/json;charset=UTF-8' | 'multipart/form-data'
 
@@ -260,7 +281,7 @@ function applyResponseInterceptor(axiosInstance: AxiosInstance): void {
  * 将 Axios 实例转换为 HttpClient。
  *
  * @param axiosInstance Axios 实例。
- * @returns HttpClient。
+ * @returns 转换后的 HttpClient。
  */
 function axiosInstanceToHttpClient(axiosInstance: AxiosInstance): HttpClient {
   return {
