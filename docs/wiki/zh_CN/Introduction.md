@@ -17,11 +17,11 @@
 
 ## 文档
 
-该项目的文档位于 [docs](./docs) 目录下，包括：
+该项目的文档位于 [docs](../../../docs) 目录下，包括：
 
 ### wiki
 
 wiki 为项目的开发人员为本项目编写的详细文档，包含不同语言的版本，主要入口为：
 
-1. [简介](./docs/wiki/zh_CN/Introduction.md) - 镜像的 `README.md`，与本文件内容基本相同。
-2. [目录](./docs/wiki/zh_CN/Contents.md) - 文档目录。
+1. [简介](./Introduction.md) - 即本文件。
+2. [目录](./Contents.md) - 文档目录。

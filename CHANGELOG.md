@@ -4,6 +4,15 @@
 
 #### 功能构建
 
+- 更新 README.md。
+
+- Wiki 编写。
+  - 构建 wiki 目录结构。
+  - docs/wiki/en_US/Contents.md。
+  - docs/wiki/en_US/Introduction.md。
+  - docs/wiki/zh_CN/Contents.md。
+  - docs/wiki/zh_CN/Introduction.md。
+
 - 优化 `familyhelper-ui-view` 模块中 `ts` 与 `js` 的注释。
   - 优化部分文件的 noinspection 注释。
   - 优化部分代码注释中的内容。
