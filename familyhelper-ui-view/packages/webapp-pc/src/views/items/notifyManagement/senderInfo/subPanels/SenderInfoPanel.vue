@@ -89,8 +89,15 @@ watch(
   },
 )
 
+watch(
+  () => props.topic,
+  () => {
+    handleSenderInfoSearch()
+  },
+)
+
 function handleSenderInfoSearch(): void {
-  if (!props.notifySetting) {
+  if (!props.notifySetting || !props.topic) {
     return
   }
   handleInspectSenderInfo()
