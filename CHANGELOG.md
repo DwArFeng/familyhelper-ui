@@ -29,6 +29,9 @@
 
 #### 功能移除
 
+- 删除 `webapp-mobile` 子模块中多余的说明文件。
+  - src/README.md。
+
 - 删除 `webapp-pc` 子模块中多余的说明文件。
   - src/README.md。
 
