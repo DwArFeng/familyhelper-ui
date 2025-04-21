@@ -174,6 +174,11 @@ function updateReadonly(readonly: boolean): void {
 }
 
 /*noinspection CssUnusedSymbol*/
+.editor :deep(.ck-sticky-panel__content) {
+  border-bottom-width: 0 !important;
+}
+
+/*noinspection CssUnusedSymbol*/
 .editor :deep(.ck-editor__main) {
   height: 0;
   flex-grow: 1;
@@ -184,5 +189,17 @@ function updateReadonly(readonly: boolean): void {
 .editor :deep(.ck-content) {
   height: 100%;
   box-sizing: border-box;
+}
+
+/*noinspection CssUnusedSymbol*/
+.editor :deep(.ck-sticky-panel__placeholder) {
+  display: none !important;
+}
+
+/*noinspection CssUnusedSymbol*/
+.editor :deep(.ck-sticky-panel__content) {
+  width: 100% !important;
+  position: unset !important;
+  top: 0 !important;
 }
 </style>
