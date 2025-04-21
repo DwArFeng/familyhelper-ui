@@ -253,7 +253,7 @@ async function queryPathCaller(
     promise = resolveResponse(itemPathFromRootDisp(itemKey)).then((res) =>
       Promise.resolve(
         res.data.map((t) => ({
-          type: 'item',
+          type: 'node',
           bean: t,
         })),
       ),
