@@ -65,7 +65,7 @@ const baseRoute: RouteRecordRaw = {
 const vimLayoutRoute: RouteRecordRaw = {
   name: 'vim.layout',
   path: '/vim/layout',
-  component: () => import('@/views/vim/Layout.vue'),
+  component: () => import('@/views/vim/layout/Layout.vue'),
   children: [],
   meta: {
     guard: 'vim',
@@ -84,7 +84,7 @@ const vimRoutes: RouteRecordRaw[] = [
   {
     name: 'vim.login',
     path: '/vim/login',
-    component: () => import('@/views/vim/Login.vue'),
+    component: () => import('@/views/vim/login/Login.vue'),
     meta: {
       guard: 'simple',
     },
@@ -93,7 +93,7 @@ const vimRoutes: RouteRecordRaw[] = [
   {
     name: 'vim.pageForbidden',
     path: '/vim/page-forbidden',
-    component: () => import('@/views/vim/PageForbidden.vue'),
+    component: () => import('@/views/vim/pageForbidden/PageForbidden.vue'),
     meta: {
       guard: 'error',
     },
@@ -101,7 +101,7 @@ const vimRoutes: RouteRecordRaw[] = [
   {
     name: 'vim.pageNotFound',
     path: '/vim/page-not-found',
-    component: () => import('@/views/vim/PageNotFound.vue'),
+    component: () => import('@/views/vim/pageNotFound/PageNotFound.vue'),
     meta: {
       guard: 'error',
     },
@@ -109,7 +109,7 @@ const vimRoutes: RouteRecordRaw[] = [
   {
     name: 'vim.pageError',
     path: '/vim/page-error',
-    component: () => import('@/views/vim/PageError.vue'),
+    component: () => import('@/views/vim/pageError/PageError.vue'),
     meta: {
       guard: 'error',
     },

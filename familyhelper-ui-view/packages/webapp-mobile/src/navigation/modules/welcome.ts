@@ -35,7 +35,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/items/welcome/Welcome.vue'),
+      component: () => import('@/views/nodes/welcome/Welcome.vue'),
     },
     permission: {
       required: false,
