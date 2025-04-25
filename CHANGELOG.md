@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- `webapp-mobile` 子模块优化。
+  - 优化 `src/navigation/types.ts` 中的部分类型定义。
+
 - `webapp-pc` 子模块优化。
   - 优化 `src/navigation/types.ts` 中的部分类型定义。
 
