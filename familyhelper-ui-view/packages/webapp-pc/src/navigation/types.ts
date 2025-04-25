@@ -66,7 +66,7 @@ export type EzNavInfo = {
      *   none：不做任何操作。
      */
     type: 'back' | 'default' | 'none'
-    data: string | Record<string, string>
+    data: Record<string, string>
   }
 }
 
@@ -107,7 +107,7 @@ export type NavigationNodeSetting = {
   parentKey: string | null
   key: string
   index: number
-  display?: DisplaySetting
+  display: DisplaySetting
   menu?: MenuSetting
   ezNav?: EzNavSetting
   router?: RouterSetting
@@ -142,7 +142,7 @@ export type EzNavSetting = {
      *   none：不做任何操作。
      */
     type: 'back' | 'default' | 'none'
-    data: string | Record<string, string>
+    data: Record<string, string>
   }
 }
 
