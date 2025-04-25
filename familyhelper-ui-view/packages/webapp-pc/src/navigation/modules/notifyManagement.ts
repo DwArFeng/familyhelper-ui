@@ -52,7 +52,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'notify-management/notification',
-      component: () => import('@/views/items/notifyManagement/notification/Notification.vue'),
+      component: () => import('@/views/nodes/notifyManagement/notification/Notification.vue'),
     },
     permission: {
       required: true,
@@ -79,7 +79,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'notify-settings/notify-setting',
-      component: () => import('@/views/items/notifyManagement/notifySetting/NotifySetting.vue'),
+      component: () => import('@/views/nodes/notifyManagement/notifySetting/NotifySetting.vue'),
     },
     permission: {
       required: true,
@@ -106,7 +106,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'notify-settings/topic',
-      component: () => import('@/views/items/notifyManagement/topic/Topic.vue'),
+      component: () => import('@/views/nodes/notifyManagement/topic/Topic.vue'),
     },
     permission: {
       required: true,
@@ -134,7 +134,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'notify-settings/meta-indicator',
       component: () =>
-        import('@/views/items/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'),
+        import('@/views/nodes/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'),
     },
     permission: {
       required: true,
@@ -161,7 +161,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'notify-settings/meta',
-      component: () => import('@/views/items/notifyManagement/meta/Meta.vue'),
+      component: () => import('@/views/nodes/notifyManagement/meta/Meta.vue'),
     },
     permission: {
       required: true,
@@ -188,7 +188,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'notify-settings/sender-info',
-      component: () => import('@/views/items/notifyManagement/senderInfo/SenderInfo.vue'),
+      component: () => import('@/views/nodes/notifyManagement/senderInfo/SenderInfo.vue'),
     },
     permission: {
       required: true,
@@ -215,7 +215,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'notify-settings/notify-history',
-      component: () => import('@/views/items/notifyManagement/notifyHistory/NotifyHistory.vue'),
+      component: () => import('@/views/nodes/notifyManagement/notifyHistory/NotifyHistory.vue'),
     },
     permission: {
       required: true,
@@ -242,7 +242,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'notify-settings/router-support',
-      component: () => import('@/views/items/notifyManagement/routerSupport/RouterSupport.vue'),
+      component: () => import('@/views/nodes/notifyManagement/routerSupport/RouterSupport.vue'),
     },
     permission: {
       required: true,
@@ -270,7 +270,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'notify-settings/dispatcher-support',
       component: () =>
-        import('@/views/items/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
+        import('@/views/nodes/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
     },
     permission: {
       required: true,
@@ -297,7 +297,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'notify-settings/sender-support',
-      component: () => import('@/views/items/notifyManagement/senderSupport/SenderSupport.vue'),
+      component: () => import('@/views/nodes/notifyManagement/senderSupport/SenderSupport.vue'),
     },
     permission: {
       required: true,

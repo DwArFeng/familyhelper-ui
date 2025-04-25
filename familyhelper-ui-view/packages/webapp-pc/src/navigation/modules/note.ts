@@ -52,7 +52,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'note/note-book',
-      component: () => import('@/views/items/note/noteBook/NoteBook.vue'),
+      component: () => import('@/views/nodes/note/noteBook/NoteBook.vue'),
     },
     permission: {
       required: true,
@@ -79,7 +79,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'note/note-management',
-      component: () => import('@/views/items/note/noteManagement/NoteManagement.vue'),
+      component: () => import('@/views/nodes/note/noteManagement/NoteManagement.vue'),
     },
     permission: {
       required: true,

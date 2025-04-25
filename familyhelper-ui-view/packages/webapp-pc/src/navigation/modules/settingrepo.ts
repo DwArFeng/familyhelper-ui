@@ -52,7 +52,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/setting-category',
-      component: () => import('@/views/items/settingrepo/settingCategory/SettingCategory.vue'),
+      component: () => import('@/views/nodes/settingrepo/settingCategory/SettingCategory.vue'),
     },
     permission: {
       required: true,
@@ -79,7 +79,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/setting-node',
-      component: () => import('@/views/items/settingrepo/settingNode/SettingNode.vue'),
+      component: () => import('@/views/nodes/settingrepo/settingNode/SettingNode.vue'),
     },
     permission: {
       required: true,
@@ -106,7 +106,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/formatter-support',
-      component: () => import('@/views/items/settingrepo/formatterSupport/FormatterSupport.vue'),
+      component: () => import('@/views/nodes/settingrepo/formatterSupport/FormatterSupport.vue'),
     },
     permission: {
       required: true,
@@ -130,7 +130,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/setting-node-editor',
-      component: () => import('@/views/items/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+      component: () => import('@/views/nodes/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
     },
     permission: {
       required: true,
