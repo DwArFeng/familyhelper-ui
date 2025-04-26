@@ -4,7 +4,8 @@
 
 #### 功能构建
 
-- (无)
+- `component-api` 子模块回归。
+  - `src/api/assets` 目录下的 HTTP 客户端 API 回归。
 
 #### Bug修复
 
