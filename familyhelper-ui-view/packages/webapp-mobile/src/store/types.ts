@@ -65,12 +65,3 @@ export type StoreSetup = {
    */
   (): unknown
 }
-
-/**
- * Store Hook。
- */
-export type StoreHook = {
-  postConstructHook?: () => void
-  loadHook?: () => void
-  beforeUnloadHook?: () => void
-}

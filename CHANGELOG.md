@@ -39,6 +39,9 @@
 
 #### 功能移除
 
+- `webapp-mobile` 子模块功能移除。
+  - 移除 `src/store/types.ts` 中多余的类型定义。
+
 - `webapp-pc` 子模块功能移除。
   - 移除 `src/store/types.ts` 中多余的类型定义。
 

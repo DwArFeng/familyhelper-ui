@@ -1,13 +1,7 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { VimApplicationContext } from '@/vim/types.ts'
-import type {
-  SimplyStore,
-  SimplyStoreDefinition,
-  StoreHook,
-  VimStore,
-  VimStoreModule,
-} from '@/store/types.ts'
+import type { SimplyStore, SimplyStoreDefinition, VimStore, VimStoreModule } from '@/store/types.ts'
 import { createPinia, defineStore } from 'pinia'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
@@ -22,7 +16,7 @@ let status: 'initializing' | 'initialized' = 'initializing'
 /**
  * Store 定义。
  */
-const storeDefinitions: Record<string, SimplyStoreDefinition<string, unknown & StoreHook>> = {}
+const storeDefinitions: Record<string, SimplyStoreDefinition<string, unknown>> = {}
 
 /**
  * Store。
