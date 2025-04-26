@@ -1,18 +1,11 @@
-// noinspection DuplicatedCode
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { StoreSetup, VimStoreModule } from '@/store/types.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-/**
- * Page Error Store。
- */
-export type PageErrorStore = {
-  errorText: ComputedRef<string>
-  setErrorText: (value: string) => void
-}
-
+// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
 /**
  * VIM 应用上下文。
  */
@@ -24,7 +17,15 @@ function init(_ctx: VimApplicationContext): void {
   ctx.registerWindowBeforeUnloadHook(windowBeforeUnloadHook)
 }
 
-// -----------------------------------------------------------Pinia 定义开始-----------------------------------------------------------
+// -----------------------------------------------------------Store 定义-----------------------------------------------------------
+/**
+ * Page Error Store。
+ */
+export type PageErrorStore = {
+  errorText: ComputedRef<string>
+  setErrorText: (value: string) => void
+}
+
 // Store 区域。
 const _errorText = ref<string>('')
 
@@ -35,8 +36,7 @@ function setErrorText(value: string): void {
   _errorText.value = value
 }
 
-// -----------------------------------------------------------Pinia 定义结束-----------------------------------------------------------
-
+// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
 // 存储在 LocalStorage 中的持久化主键
 const PERSISTENCE_DATA_KEY = 'store.persistence_data.page_error'
 
@@ -79,6 +79,7 @@ function provideStoreSetup(): StoreSetup {
   })
 }
 
+// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
 /**
  * VIM Store 模块。
  */
@@ -87,5 +88,4 @@ const vimStoreModule: VimStoreModule = {
   provideStoreSetup,
 }
 
-// noinspection JSUnusedGlobalSymbols
 export default vimStoreModule

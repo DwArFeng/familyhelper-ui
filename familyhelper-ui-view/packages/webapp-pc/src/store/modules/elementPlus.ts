@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { StoreSetup, VimStoreModule } from '@/store/types.ts'
 
@@ -5,16 +7,7 @@ import { computed, type ComputedRef, ref } from 'vue'
 
 import screenfull from 'screenfull'
 
-/**
- * Element Plus Store。
- */
-export type ElementPlusStore = {
-  menuVisible: ComputedRef<boolean>
-  setMenuVisible: (value: boolean) => void
-  fullScreen: ComputedRef<boolean>
-  setFullScreen: (value: boolean) => void
-}
-
+// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
 /**
  * VIM 应用上下文。
  */
@@ -26,7 +19,17 @@ function init(_ctx: VimApplicationContext): void {
   ctx.registerWindowBeforeUnloadHook(windowUnloadHook)
 }
 
-// -----------------------------------------------------------Pinia 定义开始-----------------------------------------------------------
+// -----------------------------------------------------------Store 定义-----------------------------------------------------------
+/**
+ * Element Plus Store。
+ */
+export type ElementPlusStore = {
+  menuVisible: ComputedRef<boolean>
+  setMenuVisible: (value: boolean) => void
+  fullScreen: ComputedRef<boolean>
+  setFullScreen: (value: boolean) => void
+}
+
 // Store 区域。
 const _menuVisible = ref<boolean>(true)
 const _fullScreen = ref<boolean>(false)
@@ -65,8 +68,21 @@ function handleFullScreenChange(): void {
   setFullScreen(screenfull.isFullscreen)
 }
 
-// -----------------------------------------------------------Pinia 定义结束-----------------------------------------------------------
+/**
+ * 提供 Store Setup。
+ *
+ * @returns Store Setup。
+ */
+function provideStoreSetup(): StoreSetup {
+  return (): ElementPlusStore => ({
+    menuVisible,
+    setMenuVisible,
+    fullScreen,
+    setFullScreen,
+  })
+}
 
+// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
 let fullScreenHandler: () => void
 let f11KeyHandler: (event: KeyboardEvent) => void
 
@@ -110,20 +126,7 @@ function windowUnloadHook(): void {
   window.removeEventListener('keydown', f11KeyHandler)
 }
 
-/**
- * 提供 Store Setup。
- *
- * @returns Store Setup。
- */
-function provideStoreSetup(): StoreSetup {
-  return (): ElementPlusStore => ({
-    menuVisible,
-    setMenuVisible,
-    fullScreen,
-    setFullScreen,
-  })
-}
-
+// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
 /**
  * VIM Store 模块。
  */
@@ -132,5 +135,4 @@ const vimStoreModule: VimStoreModule = {
   provideStoreSetup,
 }
 
-// noinspection JSUnusedGlobalSymbols
 export default vimStoreModule

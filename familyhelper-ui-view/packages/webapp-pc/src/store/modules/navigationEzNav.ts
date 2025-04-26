@@ -1,4 +1,4 @@
-// noinspection DuplicatedCode
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { SimplyStore, StoreSetup, VimStoreModule } from '@/store/types.ts'
@@ -20,6 +20,19 @@ import { resolveResponse } from '@/util/response.ts'
 import type { LnpStore } from '@/store/modules/lnp.ts'
 import type { NavigationNodeInfo } from '@/navigation/types.ts'
 
+// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+/**
+ * VIM 应用上下文。
+ */
+let ctx: VimApplicationContext | null = null
+
+function init(_ctx: VimApplicationContext): void {
+  ctx = _ctx
+  ctx.registerVimInitializedHook(vimInitializedLoadHook)
+  ctx.registerWindowBeforeUnloadHook(windowBeforeUnloadHook)
+}
+
+// -----------------------------------------------------------Store 定义-----------------------------------------------------------
 /**
  * NavigationEzNav Store。
  */
@@ -63,18 +76,6 @@ export type NavigationEzNavLocateInfo = {
   to: NavigationEzNavLocation
 }
 
-/**
- * VIM 应用上下文。
- */
-let ctx: VimApplicationContext | null = null
-
-function init(_ctx: VimApplicationContext): void {
-  ctx = _ctx
-  ctx.registerVimInitializedHook(vimInitializedLoadHook)
-  ctx.registerWindowBeforeUnloadHook(windowBeforeUnloadHook)
-}
-
-// -----------------------------------------------------------Pinia 定义开始-----------------------------------------------------------
 // Store 区域。
 const _affixNodeKeys = ref<string[]>([])
 const _pinnedNodeKeys = ref<string[]>([])
@@ -319,8 +320,39 @@ function clearAll(): void {
   _nodeMetaMap.value = {}
 }
 
-// -----------------------------------------------------------Pinia 定义结束-----------------------------------------------------------
+/**
+ * 提供 Store Setup。
+ *
+ * @returns Store Setup。
+ */
+function provideStoreSetup(): StoreSetup {
+  return (): NavigationEzNavStore => ({
+    affixNodeKeys,
+    pinnedNodeKeys,
+    activeNodeKeys,
+    nodeMetaMap,
+    nodeBackMap,
+    loading,
+    backing,
+    setPinnedNodeKeys,
+    setActiveNodeKeys,
+    setBacking,
+    navigationNodes,
+    annotation,
+    nodeMeta,
+    nodeBack,
+    pushNodeKey,
+    pushLocation,
+    pushLocateInfo,
+    pin,
+    unpin,
+    removeNodeKey,
+    clearActive,
+    clearAll,
+  })
+}
 
+// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
 // 存储在 Localstorage 中的持久化主键
 const LOCAL_STORAGE_PERSISTENCE_DATA_KEY = 'store.persistence_data.eznav'
 // 存储在 Settingrepo 中的持久化主键
@@ -632,38 +664,7 @@ function maySavePersistenceData(): void {
   )
 }
 
-/**
- * 提供 Store Setup。
- *
- * @returns Store Setup。
- */
-function provideStoreSetup(): StoreSetup {
-  return (): NavigationEzNavStore => ({
-    affixNodeKeys,
-    pinnedNodeKeys,
-    activeNodeKeys,
-    nodeMetaMap,
-    nodeBackMap,
-    loading,
-    backing,
-    setPinnedNodeKeys,
-    setActiveNodeKeys,
-    setBacking,
-    navigationNodes,
-    annotation,
-    nodeMeta,
-    nodeBack,
-    pushNodeKey,
-    pushLocation,
-    pushLocateInfo,
-    pin,
-    unpin,
-    removeNodeKey,
-    clearActive,
-    clearAll,
-  })
-}
-
+// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
 /**
  * VIM Store 模块。
  */
@@ -672,5 +673,4 @@ const vimStoreModule: VimStoreModule = {
   provideStoreSetup,
 }
 
-// noinspection JSUnusedGlobalSymbols
 export default vimStoreModule

@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { StoreSetup, VimStoreModule } from '@/store/types.ts'
 
@@ -11,15 +13,7 @@ import { computed, type ComputedRef, ref } from 'vue'
 import { childForUserUnread } from '@dwarfeng/familyhelper-ui-component-api/src/api/clannad/notification.ts'
 import { resolveResponse } from '@/util/response.ts'
 
-/**
- * Notification Store。
- */
-export type NotificationStore = {
-  unreadCount: ComputedRef<number>
-  setUnreadCount: (value: number) => void
-  willUpdateUnreadCount: () => ExecutableActionHandle<void, void, void>
-}
-
+// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
 /**
  * VIM 应用上下文。
  */
@@ -32,7 +26,16 @@ function init(_ctx: VimApplicationContext): void {
   ctx.registerWindowBeforeUnloadHook(windowUnloadHook)
 }
 
-// -----------------------------------------------------------Pinia 定义开始-----------------------------------------------------------
+// -----------------------------------------------------------Store 定义-----------------------------------------------------------
+/**
+ * Notification Store。
+ */
+export type NotificationStore = {
+  unreadCount: ComputedRef<number>
+  setUnreadCount: (value: number) => void
+  willUpdateUnreadCount: () => ExecutableActionHandle<void, void, void>
+}
+
 // Store 区域。
 const _unreadCount = ref<number>(0)
 
@@ -62,7 +65,20 @@ async function updateUnreadCount(): Promise<void> {
   )
 }
 
-// -----------------------------------------------------------Pinia 定义结束-----------------------------------------------------------
+/**
+ * 提供 Store Setup。
+ *
+ * @returns Store Setup。
+ */
+function provideStoreSetup(): StoreSetup {
+  return (): NotificationStore => ({
+    unreadCount,
+    setUnreadCount,
+    willUpdateUnreadCount,
+  })
+}
+
+// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
 let unreadUpdateTimer: number
 
 let lnpStoreLoginActionHandle: () => void = () => {}
@@ -165,19 +181,6 @@ function windowUnloadHook(): void {
 }
 
 /**
- * 提供 Store Setup。
- *
- * @returns Store Setup。
- */
-function provideStoreSetup(): StoreSetup {
-  return (): NotificationStore => ({
-    unreadCount,
-    setUnreadCount,
-    willUpdateUnreadCount,
-  })
-}
-
-/**
  * VIM Store 模块。
  */
 const vimStoreModule: VimStoreModule = {
@@ -185,5 +188,4 @@ const vimStoreModule: VimStoreModule = {
   provideStoreSetup,
 }
 
-// noinspection JSUnusedGlobalSymbols
 export default vimStoreModule
