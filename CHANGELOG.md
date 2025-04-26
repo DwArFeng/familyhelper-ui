@@ -11,6 +11,7 @@
   - 优化 `src/navigation/types.ts` 中的部分类型定义。
 
 - `webapp-pc` 子模块优化。
+  - 优化 `src/navigation/modules` 目录中 `ts` 文件的注释。
   - 优化 `src/store/modules` 目录中 `ts` 文件的代码结构。
   - 优化 `src/store/types.ts` 中的部分类型定义。
   - 优化 `src/views` 的目录结构。
