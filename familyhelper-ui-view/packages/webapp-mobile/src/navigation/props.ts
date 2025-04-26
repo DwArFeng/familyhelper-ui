@@ -3,26 +3,36 @@
 import type { NavigationSetting } from '@/navigation/types.ts'
 
 /**
- * 默认导航键。
+ * 默认 Navigation key。
  *
- * 默认展示的页面。
+ * 该字段对应的值是一个字符串，表示默认的 Navigation 的 key。
+ *
+ * 该字段的值必须是一个 `./modules/*.ts` 文件中提供的
+ * `VimNavigationModule.provideNavigationNodeSettings()` 方法返回的 `NavigationNodeSetting[]`
+ * 中存在的 `NavigationNodeSetting.key` 字段对应的值。
  */
 const defaultNavigationKey: NavigationSetting['defaultNavigationKey'] = 'welcome'
 
 /**
- * ezNav 项目是否启用。
+ * 是否启用 EzNav。
+ *
+ * 该字段对应的值是一个布尔值，表示是否启用 EzNav。
  */
 const ezNavEnabled: NavigationSetting['ezNavEnabled'] = true
 
 /**
- * ezNav 项目最大的活动项目数。
+ * EzNav 最大活动项数量。
+ *
+ * 该字段对应的值是一个数字，表示 EzNav 最大活动项数量。
  */
 const ezNavMaxActiveItem: NavigationSetting['ezNavMaxActiveItem'] = 1000
 
 /**
- * ezNav 在登录后还原策略。
- *   restore-pinned:  还原固定的导航栏（默认）。
- *   restore-all:     还原所有的导航栏。
+ * EzNav 恢复登录时行为。
+ *
+ * 该字段对应的值是一个字符串枚举，表示 EzNav 恢复登录时行为，可能的值为：
+ * - `restore-pinned`：恢复固定项。
+ * - `restore-all`：恢复全部项。
  */
 const ezNavRestoreWhenLogin: NavigationSetting['ezNavRestoreWhenLogin'] = 'restore-pinned'
 

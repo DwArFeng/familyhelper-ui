@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- 优化 `familyhelper-ui-view` 模块中 `VIM` 模板的注释。
+  - 优化 `webapp-pc` 子模块中 `VIM` 模板的注释。
+  - 优化 `webapp-mobile` 子模块中 `VIM` 模板的注释。
+
 - `webapp-mobile` 子模块优化。
   - 优化 `src/navigation/modules` 目录中 `ts` 文件的注释。
   - 优化 `src/store/modules` 目录中 `ts` 文件的代码结构。
