@@ -1,4 +1,4 @@
-// noinspection DuplicatedCode
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { StoreSetup, VimStoreModule } from '@/store/types.ts'
@@ -7,6 +7,17 @@ import { computed, type ComputedRef, ref } from 'vue'
 
 import type { NavigationNodeInfo } from '@/navigation/types.ts'
 
+// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+/**
+ * VIM 应用上下文。
+ */
+let ctx: VimApplicationContext | null = null
+
+function init(_ctx: VimApplicationContext): void {
+  ctx = _ctx
+}
+
+// -----------------------------------------------------------Store 定义-----------------------------------------------------------
 /**
  * Navigation Store。
  */
@@ -19,16 +30,6 @@ export type NavigationStore = {
   setCurrentNodeKey: (value: string) => void
 }
 
-/**
- * VIM 应用上下文。
- */
-let ctx: VimApplicationContext | null = null
-
-function init(_ctx: VimApplicationContext): void {
-  ctx = _ctx
-}
-
-// -----------------------------------------------------------Pinia 定义开始-----------------------------------------------------------
 // Store 区域。
 const _currentNodeKey = ref<string>('')
 
@@ -95,8 +96,6 @@ function setCurrentNodeKey(value: string): void {
   _currentNodeKey.value = value
 }
 
-// -----------------------------------------------------------Pinia 定义结束-----------------------------------------------------------
-
 /**
  * 提供 Store Setup。
  *
@@ -113,6 +112,7 @@ function provideStoreSetup(): StoreSetup {
   })
 }
 
+// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
 /**
  * VIM Store 模块。
  */

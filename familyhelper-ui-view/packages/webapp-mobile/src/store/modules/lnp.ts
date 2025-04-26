@@ -1,4 +1,4 @@
-// noinspection DuplicatedCode
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import type { VimApplicationContext } from '@/vim/types.ts'
 import type { StoreSetup, VimStoreModule } from '@/store/types.ts'
@@ -27,6 +27,20 @@ import { defaultResponseBadHandler, resolveResponse } from '@/util/response.ts'
 import { currentTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
 import { uuid } from '@dwarfeng/familyhelper-ui-component-util/src/util/uuid.ts'
 
+// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+/**
+ * VIM 应用上下文。
+ */
+let ctx: VimApplicationContext | null = null
+
+function init(_ctx: VimApplicationContext): void {
+  ctx = _ctx
+  ctx.registerVimInitializedHook(vimInitializedLoadHook)
+  ctx.registerWindowLoadHook(windowLoadHook)
+  ctx.registerWindowBeforeUnloadHook(windowUnloadHook)
+}
+
+// -----------------------------------------------------------Store 定义-----------------------------------------------------------
 /**
  * Lnp Store。
  */
@@ -42,32 +56,6 @@ export type LnpStore = {
   willFireKick: () => ExecutableActionHandle<void, void, void>
 }
 
-/**
- * 持久化数据。
- */
-type PersistenceData = {
-  accountId: string
-  token: string
-  expireDate: number
-  serviceDateOffset: number
-  permissions: Record<string, string>
-  permissionUuid: string
-  onlineFlag: boolean
-}
-
-/**
- * VIM 应用上下文。
- */
-let ctx: VimApplicationContext | null = null
-
-function init(_ctx: VimApplicationContext): void {
-  ctx = _ctx
-  ctx.registerVimInitializedHook(vimInitializedLoadHook)
-  ctx.registerWindowLoadHook(windowLoadHook)
-  ctx.registerWindowBeforeUnloadHook(windowUnloadHook)
-}
-
-// -----------------------------------------------------------Pinia 定义开始-----------------------------------------------------------
 // Store 区域。
 const _accountId = ref<string>('')
 const _token = ref<string>('')
@@ -110,7 +98,7 @@ async function login(
   dynamicLoginInfo: Pick<DynamicLoginInfo, 'account_key' | 'password'>,
 ): Promise<void> {
   return resolveResponse(
-    dynamicLogin({ ...dynamicLoginInfo, remark: '家庭助手移动端登录', extra_params: {} }),
+    dynamicLogin({ ...dynamicLoginInfo, remark: '家庭助手 PC 端登录', extra_params: {} }),
   )
     .then((res) => setLoginInfo(res))
     .then(() => {
@@ -169,7 +157,36 @@ function setServiceDateOffset(value: number): void {
   _serviceDateOffset.value = value
 }
 
-// -----------------------------------------------------------Pinia 定义结束-----------------------------------------------------------
+/**
+ * 提供 Store Setup。
+ *
+ * @returns Store Setup。
+ */
+function provideStoreSetup(): StoreSetup {
+  return (): LnpStore => ({
+    isLogin,
+    me,
+    token,
+    hasPermission,
+    willLogin,
+    willLogout,
+    willFireKick,
+  })
+}
+
+// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
+/**
+ * 持久化数据。
+ */
+type PersistenceData = {
+  accountId: string
+  token: string
+  expireDate: number
+  serviceDateOffset: number
+  permissions: Record<string, string>
+  permissionUuid: string
+  onlineFlag: boolean
+}
 
 // 存储在 LocalStorage 中的持久化主键
 const LOCAL_STORAGE_PERSISTENCE_DATA_KEY = 'store.persistence_data.lnp'
@@ -280,23 +297,7 @@ function restorePersistenceData(value: PersistenceData): void {
   _onlineFlag.value = value.onlineFlag
 }
 
-/**
- * 提供 Store Setup。
- *
- * @returns Store Setup。
- */
-function provideStoreSetup(): StoreSetup {
-  return (): LnpStore => ({
-    isLogin,
-    me,
-    token,
-    hasPermission,
-    willLogin,
-    willLogout,
-    willFireKick,
-  })
-}
-
+// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
 /**
  * VIM Store 模块。
  */
