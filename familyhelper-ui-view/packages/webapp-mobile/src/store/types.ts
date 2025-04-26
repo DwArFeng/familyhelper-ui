@@ -16,24 +16,20 @@ import {
 export interface VimStore extends VimComponent {
   /**
    * 获取 Vue Store 定义。
-   *
-   * @param id Store ID。
    */
-  vueStoreDefinition<Id extends string, SS>(id: Id): SimplyStoreDefinition<Id, SS>
+  vueStoreDefinition: <ID extends string, SS>(id: ID) => SimplyStoreDefinition<ID, SS>
 
   /**
    * 获取 Vue Store。
-   *
-   * @param id Store ID。
    */
-  vueStore<Id extends string, SS>(id: Id): SimplyStore<Id, SS>
+  vueStore: <ID extends string, SS>(id: ID) => SimplyStore<ID, SS>
 }
 
 /**
  * 简化 Store 定义。
  */
-export type SimplyStoreDefinition<Id extends string, SS> = StoreDefinition<
-  Id,
+export type SimplyStoreDefinition<ID extends string, SS> = StoreDefinition<
+  ID,
   _ExtractStateFromSetupStore<SS>,
   _ExtractGettersFromSetupStore<SS>,
   _ExtractActionsFromSetupStore<SS>
@@ -42,8 +38,8 @@ export type SimplyStoreDefinition<Id extends string, SS> = StoreDefinition<
 /**
  * 简化 Store。
  */
-export type SimplyStore<Id extends string, SS> = Store<
-  Id,
+export type SimplyStore<ID extends string, SS> = Store<
+  ID,
   _ExtractStateFromSetupStore<SS>,
   _ExtractGettersFromSetupStore<SS>,
   _ExtractActionsFromSetupStore<SS>
