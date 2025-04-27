@@ -2,11 +2,11 @@
 
 import vim from '@/vim'
 
-import type { VimRouterGuard } from '@/router/types.ts'
+import { type VimRouterGuard } from '@/router/types.ts'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
-import type { NavigationStore } from '@/store/modules/navigation.ts'
-import type { NavigationEzNavStore } from '@/store/modules/navigationEzNav.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
+import { type NavigationStore } from '@/store/modules/navigation.ts'
+import { type NavigationEzNavStore } from '@/store/modules/navigationEzNav.ts'
 
 type VimRouterGuardMeta = {
   permissionRequired: boolean

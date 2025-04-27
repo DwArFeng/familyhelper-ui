@@ -1,27 +1,27 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { StoreSetup, VimStoreModule } from '@/store/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import { type StoreSetup, type VimStoreModule } from '@/store/types.ts'
 
-import type { ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 import { ExecutableActionHandleImpl } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-import type {
-  DynamicLoginInfo,
-  LoginResponse,
+import {
+  type DynamicLoginInfo,
+  type LoginResponse,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/login.ts'
 import {
   dynamicLogin,
   logout as apiLogout,
   postpone,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/login.ts'
-import type { Permission } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
+import { type Permission } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
 import { lookupForUser } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
 import { currentDate } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/time.ts'
 
-import type { ResponseBadHandler } from '@/util/response.ts'
+import { type ResponseBadHandler } from '@/util/response.ts'
 import { defaultResponseBadHandler, resolveResponse } from '@/util/response.ts'
 
 import { currentTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'

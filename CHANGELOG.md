@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- `webapp-mobile` 子模块依赖新增。
+  - 增加依赖 `eslint-import-resolver-typescript` 以应用其新功能，版本为 `^4.3.4`。
+  - 增加依赖 `eslint-plugin-import-x` 以应用其新功能，版本为 `^4.11.0`。
+
 - `component-util` 子模块优化。
   - 优化子模块的 lint 机制。
 
@@ -30,6 +34,7 @@
   - 优化 `webapp-mobile` 子模块中 `VIM` 模板的注释。
 
 - `webapp-mobile` 子模块优化。
+  - 优化子模块的 lint 机制，并按照新的规则调整代码及文档。
   - 优化 `src/navigation/modules` 目录中 `ts` 文件的注释。
   - 优化 `src/store/modules` 目录中 `ts` 文件的代码结构。
   - 优化 `src/store/types.ts` 中的部分类型定义。

@@ -1,15 +1,15 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { SimplyStore, StoreSetup, VimStoreModule } from '@/store/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import { type SimplyStore, type StoreSetup, type VimStoreModule } from '@/store/types.ts'
 
-import type { ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-import type {
-  TextNodeInspectInfo,
-  TextNodePutInfo,
+import {
+  type TextNodeInspectInfo,
+  type TextNodePutInfo,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
 import {
   operateInspect,
@@ -17,8 +17,8 @@ import {
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
 import { resolveResponse } from '@/util/response.ts'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
-import type { NavigationNodeInfo } from '@/navigation/types.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
+import { type NavigationNodeInfo } from '@/navigation/types.ts'
 
 // -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
 /**

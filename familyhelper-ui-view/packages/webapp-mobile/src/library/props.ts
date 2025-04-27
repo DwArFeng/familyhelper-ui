@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { LibrarySetting } from '@/library/types.ts'
+import { type LibrarySetting } from '@/library/types.ts'
 
 /**
  * 默认 Visualizer key。

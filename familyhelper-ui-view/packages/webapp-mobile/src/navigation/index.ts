@@ -1,13 +1,13 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type {
-  NavigationNodeInfo,
-  NavigationNodeSetting,
-  NavigationSetting,
-  RouterInfo,
-  VimNavigation,
-  VimNavigationModule,
+import { type VimApplicationContext } from '@/vim/types.ts'
+import {
+  type NavigationNodeInfo,
+  type NavigationNodeSetting,
+  type NavigationSetting,
+  type RouterInfo,
+  type VimNavigation,
+  type VimNavigationModule,
 } from '@/navigation/types.ts'
 import {
   defaultNavigationKey,

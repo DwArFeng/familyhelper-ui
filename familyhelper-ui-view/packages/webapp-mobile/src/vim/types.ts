@@ -1,11 +1,11 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { App } from 'vue'
-import type { VimApi } from '@/api/types.ts'
-import type { VimLibrary } from '@/library/types.ts'
-import type { VimNavigation } from '@/navigation/types.ts'
-import type { VimRouter } from '@/router/types.ts'
-import type { VimStore } from '@/store/types.ts'
+import { type App } from 'vue'
+import { type VimApi } from '@/api/types.ts'
+import { type VimLibrary } from '@/library/types.ts'
+import { type VimNavigation } from '@/navigation/types.ts'
+import { type VimRouter } from '@/router/types.ts'
+import { type VimStore } from '@/store/types.ts'
 
 /**
  * VIM API。

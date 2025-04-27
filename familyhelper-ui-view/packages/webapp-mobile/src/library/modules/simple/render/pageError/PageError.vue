@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { PageErrorStore } from '@/store/modules/pageError.ts'
+import { type PageErrorStore } from '@/store/modules/pageError.ts'
 
 import ErrorPanel from '../error/ErrorPanel.vue'
 

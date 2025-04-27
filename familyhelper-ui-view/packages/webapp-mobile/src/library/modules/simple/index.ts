@@ -1,15 +1,15 @@
 // noinspection DuplicatedCode
 
-import type {
-  Hyperscript,
-  NotifyType,
-  RenderType,
-  ResponseMeta,
-  VimLibraryModule,
-  Visualizer,
+import {
+  type Hyperscript,
+  type NotifyType,
+  type RenderType,
+  type ResponseMeta,
+  type VimLibraryModule,
+  type Visualizer,
 } from '@/library/types.ts'
 
-import type { VNode } from 'vue'
+import { type VNode } from 'vue'
 
 import './global.css'
 

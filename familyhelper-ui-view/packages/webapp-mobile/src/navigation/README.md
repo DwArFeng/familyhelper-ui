@@ -28,7 +28,7 @@ navigation 模块是 VIM 的核心模块之一，负责处理导航逻辑。
 ```ts
 import vim from '@/vim'
 
-import type { VimNavigation } from '@/navigation/types.ts'
+import { type VimNavigation } from '@/navigation/types.ts'
 
 function printNodeRootKeys(): void {
   const navigation: Omit<VimNavigation, "init"> = vim.ctx().navigation()
@@ -67,7 +67,7 @@ ts 文件需要默认导出一个 `VimNavigationModule` 类型的对象，VIM �
 对于每一个元素，其完整配置示例代码如下所示：
 
 ```ts
-import type { NavigationNodeSetting } from './types.ts'
+import { type NavigationNodeSetting } from './types.ts'
 
 const example: NavigationNodeSetting = {
   parentKey: 'parent_node.key',
@@ -116,7 +116,7 @@ const example: NavigationNodeSetting = {
 ```ts
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { NavigationNodeSetting, VimNavigationModule } from '@/navigation/types.ts'
+import { type NavigationNodeSetting, VimNavigationModule } from '@/navigation/types.ts'
 
 /**
  * VIM Navigation 模块。

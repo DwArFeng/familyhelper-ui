@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { RouteLocationNormalizedGeneric } from 'vue-router'
+import { type RouteLocationNormalizedGeneric } from 'vue-router'
 
 export function noGuardNameErrorText(to: RouteLocationNormalizedGeneric): string {
   return `URL ${to.fullPath} 对应的路由的元数据中未设置 guard。

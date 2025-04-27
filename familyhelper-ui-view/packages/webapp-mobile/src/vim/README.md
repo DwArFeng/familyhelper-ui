@@ -26,7 +26,7 @@ vim 对象是 VIM 的核心对象，包含了 VIM 的所有功能模块。开发
 ```typescript
 import vim from '@/vim'
 
-import type { VimApplicationContext } from '@/vim/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
 
 function vimUseDemo(): void {
   const ctx: VimApplicationContext = vim.ctx()

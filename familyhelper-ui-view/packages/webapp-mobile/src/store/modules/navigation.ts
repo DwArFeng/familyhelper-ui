@@ -1,11 +1,11 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { StoreSetup, VimStoreModule } from '@/store/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import { type StoreSetup, type VimStoreModule } from '@/store/types.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-import type { NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NavigationNodeInfo } from '@/navigation/types.ts'
 
 // -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
 /**
