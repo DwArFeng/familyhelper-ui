@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { LongIdKey } from '../subgrade/key'
-import type { Pres, Prespa } from '../../util/response'
-import type { PagingInfo } from '../../util/request'
+import { type LongIdKey } from '../subgrade/key'
+import { type Pres, type Prespa } from '../../util/response'
+import { type PagingInfo } from '../../util/request'
 
 export type AttachmentFileInfo = {
   key: LongIdKey

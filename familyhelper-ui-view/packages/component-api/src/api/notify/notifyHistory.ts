@@ -1,11 +1,11 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { LongIdKey } from '../subgrade/key'
-import type { Pres, Prespa } from '../../util/response'
-import type { PagingInfo } from '../../util/request'
+import { type LongIdKey } from '../subgrade/key'
+import { type Pres, type Prespa } from '../../util/response'
+import { type PagingInfo } from '../../util/request'
 
-import type { NotifySetting } from './notifySetting'
+import { type NotifySetting } from './notifySetting'
 
 export type NotifyHistory = {
   key: LongIdKey

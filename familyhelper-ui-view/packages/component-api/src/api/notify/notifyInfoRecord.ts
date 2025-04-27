@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { LongIdKey } from '../subgrade/key'
-import type { Pres, Prespa } from '../../util/response'
-import type { PagingInfo } from '../../util/request'
+import { type LongIdKey } from '../subgrade/key'
+import { type Pres, type Prespa } from '../../util/response'
+import { type PagingInfo } from '../../util/request'
 
 export type NotifyInfoRecordTypeRouteInfo = 0
 export type NotifyInfoRecordTypeDispatchInfo = 1
@@ -14,7 +14,7 @@ export type NotifyInfoRecordType =
   | NotifyInfoRecordTypeDispatchInfo
   | NotifyInfoRecordTypeSendInfo
 
-import type { DispNotifyHistory } from './notifyHistory'
+import { type DispNotifyHistory } from './notifyHistory'
 
 export type NotifyInfoRecordKey = {
   notify_history_id: string

@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import axios from 'axios'
 
 /**

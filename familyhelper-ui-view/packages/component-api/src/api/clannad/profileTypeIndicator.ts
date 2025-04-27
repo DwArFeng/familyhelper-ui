@@ -1,8 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { PagingInfo } from '../../util/request'
-import type { Pres, Prespa } from '../../util/response'
+import { type PagingInfo } from '../../util/request'
+import { type Pres, type Prespa } from '../../util/response'
 
 export type ProfileIndicatorKey = {
   category_id: string

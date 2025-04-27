@@ -4,6 +4,13 @@
 
 #### 功能构建
 
+- `component-api` 子模块优化。
+  - 优化子模块的 lint 机制，并按照新的规则调整代码。
+
+- `component-api` 子模块依赖新增。
+  - 增加依赖 `eslint-import-resolver-typescript` 以应用其新功能，版本为 `^4.3.4`。
+  - 增加依赖 `eslint-plugin-import-x` 以应用其新功能，版本为 `^4.11.0`。
+
 - 优化 `familyhelper-ui-view` 模块中 `VIM` 模板的注释。
   - 优化 `webapp-pc` 子模块中 `VIM` 模板的注释。
   - 优化 `webapp-mobile` 子模块中 `VIM` 模板的注释。

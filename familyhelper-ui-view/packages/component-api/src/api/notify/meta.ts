@@ -1,11 +1,11 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { Pres, Prespa } from '../../util/response'
+import { type Pres, type Prespa } from '../../util/response'
 
-import type { MetaIndicator } from './metaIndicator'
-import type { PagingInfo } from '../../util/request'
-import type { LongIdKey, StringIdKey } from '../subgrade/key'
+import { type MetaIndicator } from './metaIndicator'
+import { type PagingInfo } from '../../util/request'
+import { type LongIdKey, type StringIdKey } from '../subgrade/key'
 
 export type MetaKey = {
   notify_setting_id: string

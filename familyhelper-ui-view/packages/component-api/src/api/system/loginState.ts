@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { LongIdKey, StringIdKey } from '../subgrade/key'
-import type { PagingInfo } from '../../util/request'
-import type { Pres, Prespa } from '../../util/response'
+import { type LongIdKey, type StringIdKey } from '../subgrade/key'
+import { type PagingInfo } from '../../util/request'
+import { type Pres, type Prespa } from '../../util/response'
 
 export type LoginStateTypeDynamic = 0
 export type LoginStateTypeStatic = 10

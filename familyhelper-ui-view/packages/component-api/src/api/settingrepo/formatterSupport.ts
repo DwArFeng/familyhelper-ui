@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { StringIdKey } from '../subgrade/key'
-import type { PagingInfo } from '../../util/request'
-import type { Pres, Prespa } from '../../util/response'
+import { type StringIdKey } from '../subgrade/key'
+import { type PagingInfo } from '../../util/request'
+import { type Pres, type Prespa } from '../../util/response'
 
 export type FormatterSupport = {
   key: StringIdKey

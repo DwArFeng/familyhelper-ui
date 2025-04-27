@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { StringIdKey } from '../subgrade/key'
-import type { Pres, Prespa } from '../../util/response'
-import type { PagingInfo } from '../../util/request'
+import { type StringIdKey } from '../subgrade/key'
+import { type Pres, type Prespa } from '../../util/response'
+import { type PagingInfo } from '../../util/request'
 
 export type Topic = {
   key: StringIdKey

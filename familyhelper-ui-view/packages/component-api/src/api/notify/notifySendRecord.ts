@@ -1,13 +1,13 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { LongIdKey } from '../subgrade/key'
-import type { Pres, Prespa } from '../../util/response'
-import type { PagingInfo } from '../../util/request'
+import { type LongIdKey } from '../subgrade/key'
+import { type Pres, type Prespa } from '../../util/response'
+import { type PagingInfo } from '../../util/request'
 
-import type { Topic } from './topic'
-import type { DispAccount } from '../system/account'
-import type { DispNotifyHistory } from './notifyHistory'
+import { type Topic } from './topic'
+import { type DispAccount } from '../system/account'
+import { type DispNotifyHistory } from './notifyHistory'
 
 export type NotifySendRecordKey = {
   notify_history_id: string

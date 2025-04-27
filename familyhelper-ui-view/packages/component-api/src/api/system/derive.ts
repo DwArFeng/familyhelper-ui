@@ -1,8 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { LongIdKey } from '../subgrade/key'
-import type { Pres } from '../../util/response'
+import { type LongIdKey } from '../subgrade/key'
+import { type Pres } from '../../util/response'
 
 export type DynamicDeriveInfo = {
   login_state_key: LongIdKey

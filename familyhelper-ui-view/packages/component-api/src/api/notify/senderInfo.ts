@@ -1,8 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { Pres, Prespa } from '../../util/response'
-import type { PagingInfo } from '../../util/request'
+import { type Pres, type Prespa } from '../../util/response'
+import { type PagingInfo } from '../../util/request'
 
 export type SenderInfoKey = {
   notify_setting_id: string

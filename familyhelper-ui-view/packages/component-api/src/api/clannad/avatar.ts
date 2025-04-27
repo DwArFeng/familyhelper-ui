@@ -1,8 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { StringIdKey } from '../subgrade/key'
-import type { Pres } from '../../util/response'
+import { type StringIdKey } from '../subgrade/key'
+import { type Pres } from '../../util/response'
 
 export type AvatarInfo = {
   key: StringIdKey

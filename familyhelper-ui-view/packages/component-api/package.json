@@ -16,6 +16,8 @@
     "@types/node": "^22.14.0",
     "axios": "^1.8.4",
     "eslint": "^9.24.0",
+    "eslint-import-resolver-typescript": "^4.3.4",
+    "eslint-plugin-import-x": "^4.11.0",
     "js-base64": "^3.7.7",
     "prettier": "^3.5.3",
     "typescript": "~5.7.3",

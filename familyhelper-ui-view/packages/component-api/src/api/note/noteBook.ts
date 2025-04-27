@@ -1,12 +1,12 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
-import type { LongIdKey, StringIdKey } from '../subgrade/key'
-import type { Pres, Prespa } from '../../util/response'
-import type { PagingInfo } from '../../util/request'
+import { type LongIdKey, type StringIdKey } from '../subgrade/key'
+import { type Pres, type Prespa } from '../../util/response'
+import { type PagingInfo } from '../../util/request'
 
-import type { PonbPermissionLevel } from './ponb'
-import type { DispAccount } from '../system/account'
+import { type PonbPermissionLevel } from './ponb'
+import { type DispAccount } from '../system/account'
 
 export type NoteBook = {
   key: LongIdKey
