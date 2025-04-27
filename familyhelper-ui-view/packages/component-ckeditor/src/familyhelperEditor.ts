@@ -4,7 +4,7 @@
  * @license Copyright (c) 2014-2022, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
  */
-import type { EditorConfig, PluginConstructor } from 'ckeditor5'
+import { type EditorConfig, type PluginConstructor } from 'ckeditor5'
 import {
   Alignment,
   Autoformat,
