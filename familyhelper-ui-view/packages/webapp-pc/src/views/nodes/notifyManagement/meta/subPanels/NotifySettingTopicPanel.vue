@@ -93,7 +93,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, onMounted, ref, watch } from 'vue'
 
@@ -107,12 +107,12 @@ import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePane
 
 import AccountSelector from '@/views/nodes/systemSettings/account/AccountSelector.vue'
 
-import type { NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
+import { type NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
 import {
   all as allNotifySetting,
   labelLike as labelLikeNotifySetting,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
-import type { Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
+import { type Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
 import {
   all as allTopic,
   labelLike as labelLikeTopic,

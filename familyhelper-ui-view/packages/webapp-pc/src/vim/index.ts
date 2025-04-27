@@ -6,27 +6,27 @@ import App from '@/App.vue'
 import { createApp } from 'vue'
 
 // 导入 VimApplicationContext 类型。
-import type { Vim, VimApplicationContext } from '@/vim/types.ts'
+import { type Vim, type VimApplicationContext } from '@/vim/types.ts'
 
 // 导入 api 模块。
 import api from '@/api'
-import type { VimApi } from '@/api/types.ts'
+import { type VimApi } from '@/api/types.ts'
 
 // 导入 library 模块。
 import library from '@/library'
-import type { VimLibrary } from '@/library/types.ts'
+import { type VimLibrary } from '@/library/types.ts'
 
 // 导入 navigation 模块。
 import navigation from '@/navigation'
-import type { VimNavigation } from '@/navigation/types.ts'
+import { type VimNavigation } from '@/navigation/types.ts'
 
 // 导入 router 模块。
 import router from '@/router'
-import type { VimRouter } from '@/router/types.ts'
+import { type VimRouter } from '@/router/types.ts'
 
 // 导入 store 模块。
 import store from '@/store'
-import type { VimStore } from '@/store/types.ts'
+import { type VimStore } from '@/store/types.ts'
 
 /**
  * 状态。

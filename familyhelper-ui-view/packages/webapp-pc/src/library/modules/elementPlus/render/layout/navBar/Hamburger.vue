@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { ElementPlusStore } from '@/store/modules/elementPlus.ts'
+import { type ElementPlusStore } from '@/store/modules/elementPlus.ts'
 
 defineOptions({
   name: 'HamburgerComponent',

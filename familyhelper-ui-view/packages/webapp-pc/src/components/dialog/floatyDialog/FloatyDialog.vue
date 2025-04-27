@@ -176,7 +176,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 
-import type { DockStatus, VisualField } from './types.ts'
+import { type DockStatus, type VisualField } from './types.ts'
 
 defineOptions({
   name: 'FloatyDialog',

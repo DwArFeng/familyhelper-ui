@@ -134,7 +134,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { Search as SearchIcon } from '@element-plus/icons-vue'
@@ -149,7 +149,7 @@ import { useGeneralMaintainDialog } from '@/components/dialog/maintainDialog/com
 
 import FormatterSupportSelectDialog from '@/views/nodes/settingrepo/formatterSupport/FormatterSupportSelectDialog.vue'
 
-import type { SettingCategory } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingCategory.ts'
+import { type SettingCategory } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingCategory.ts'
 import {
   all,
   exists,
@@ -158,7 +158,7 @@ import {
   remove,
   update,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingCategory.ts'
-import type { FormatterSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/formatterSupport.ts'
+import { type FormatterSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/formatterSupport.ts'
 import { exists as existsSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/formatterSupport.ts'
 import { resetFormat } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/reset.ts'
 import { resolveResponse } from '@/util/response.ts'

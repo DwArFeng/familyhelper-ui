@@ -135,11 +135,11 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { onMounted, ref, watch } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import BorderLayoutPanel from '@/components/layout/borderLayoutPanel/BorderLayoutPanel.vue'
@@ -149,8 +149,8 @@ import MaintainDialog from '@/components/dialog/maintainDialog/MaintainDialog.vu
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 import { useGeneralMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
-import type { StringIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import type { Role } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/role.ts'
+import { type StringIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
+import { type Role } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/role.ts'
 import {
   all as allRole,
   exists as existsRole,
@@ -158,7 +158,7 @@ import {
   remove as removeRole,
   update as updateRole,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/role.ts'
-import type { Pexp } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/pexp.ts'
+import { type Pexp } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/pexp.ts'
 import {
   childForRole as childPexpForRole,
   insert as insertPexp,

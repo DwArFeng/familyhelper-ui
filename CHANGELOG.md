@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- `webapp-pc` 子模块依赖新增。
+  - 增加依赖 `eslint-import-resolver-typescript` 以应用其新功能，版本为 `^4.3.4`。
+  - 增加依赖 `eslint-plugin-import-x` 以应用其新功能，版本为 `^4.11.0`。
+
 - `webapp-mobile` 子模块依赖新增。
   - 增加依赖 `eslint-import-resolver-typescript` 以应用其新功能，版本为 `^4.3.4`。
   - 增加依赖 `eslint-plugin-import-x` 以应用其新功能，版本为 `^4.11.0`。
@@ -42,6 +46,7 @@
   - 优化 `src/navigation/types.ts` 中的部分类型定义。
 
 - `webapp-pc` 子模块优化。
+  - 优化子模块的 lint 机制，并按照新的规则调整代码及文档。
   - 优化 `src/navigation/modules` 目录中 `ts` 文件的注释。
   - 优化 `src/store/modules` 目录中 `ts` 文件的代码结构。
   - 优化 `src/store/types.ts` 中的部分类型定义。
@@ -65,6 +70,8 @@
 #### Bug修复
 
 - `webapp-pc` 子模块页面 bug 修复。
+  - 学习笔记 -> 笔记本页面 vue 文件中 import-from 代码中 URL 大小写错误。
+  - 学习笔记 -> 笔记管理页面 vue 文件中 import-from 代码中 URL 大小写错误。
   - 学习笔记 -> 笔记管理主面板笔记页签及其对应浮动面板编辑模式在特定场景下工具栏样式显示错误。
   - 杂项 -> 文件编面板 rtf 子面板编辑模式在特定场景下工具栏样式显示错误。
   - 学习笔记 -> 笔记管理西侧笔记树面板搜索栏未能正确处理搜索逻辑。

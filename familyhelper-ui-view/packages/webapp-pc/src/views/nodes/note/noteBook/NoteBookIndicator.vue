@@ -32,7 +32,7 @@ import { useUserPreference } from '@/composables/userPreference.ts'
 import { Search as SearchIcon, Refresh as RefreshIcon } from '@element-plus/icons-vue'
 
 import NoteBookSelectDialog from './subDialogs/NoteBookSelectDialog.vue'
-import type { DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
+import { type DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
 import {
   exists,
   inspectDisp,

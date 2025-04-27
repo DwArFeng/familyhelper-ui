@@ -63,7 +63,7 @@ import TextEditor from '@/components/text/textEditor/TextEditor.vue'
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 import { useInspectOnlyMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
-import type { RouterSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/routerSupport.ts'
+import { type RouterSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/routerSupport.ts'
 import { all } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/routerSupport.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
 

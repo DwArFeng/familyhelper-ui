@@ -68,9 +68,9 @@ import { useEditOnlyMaintainDialog } from '@/components/dialog/maintainDialog/co
 
 import MetaIndicatorSelectDialog from '@/views/nodes/notifyManagement/metaIndicator/MetaIndicatorSelectDialog.vue'
 
-import type { NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
-import type { Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
-import type { DispMeta } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/meta.ts'
+import { type NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
+import { type Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
+import { type DispMeta } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/meta.ts'
 import {
   childForNotifySettingTopicUserDisp,
   insert,

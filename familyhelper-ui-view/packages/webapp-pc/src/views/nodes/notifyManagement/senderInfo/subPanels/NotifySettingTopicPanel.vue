@@ -104,12 +104,12 @@ import TitleLayoutPanel from '@/components/layout/titleLayoutPanel/TitleLayoutPa
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type { NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
+import { type NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
 import {
   all as allNotifySetting,
   labelLike as labelLikeNotifySetting,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
-import type { Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
+import { type Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
 import {
   all as allTopic,
   labelLike as labelLikeTopic,

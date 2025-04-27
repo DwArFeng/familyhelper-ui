@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { PagingInfo } from '@dwarfeng/familyhelper-ui-component-api/src/util/request.ts'
-import type {
-  PagedData,
-  Prespa,
+import { type PagingInfo } from '@dwarfeng/familyhelper-ui-component-api/src/util/request.ts'
+import {
+  type PagedData,
+  type Prespa,
 } from '@dwarfeng/familyhelper-ui-component-api/src/util/response.ts'
 
 import { resolveResponse } from '@/util/response.ts'

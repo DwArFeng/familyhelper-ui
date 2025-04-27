@@ -174,14 +174,14 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { NavigationEzNavStore } from '@/store/modules/navigationEzNav.ts'
-import type { NavigationStore } from '@/store/modules/navigation.ts'
-import type { NavigationNodeInfo } from '@/navigation/types.ts'
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type NavigationEzNavStore } from '@/store/modules/navigationEzNav.ts'
+import { type NavigationStore } from '@/store/modules/navigation.ts'
+import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { ref, onMounted, onUnmounted, nextTick } from 'vue'
 
-import type { RouteLocationRaw } from 'vue-router'
+import { type RouteLocationRaw } from 'vue-router'
 
 import { ElMessageBox } from 'element-plus'
 

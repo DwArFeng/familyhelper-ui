@@ -43,7 +43,7 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type { Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
+import { type Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
 import { all } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
 

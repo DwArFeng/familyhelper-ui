@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { NavigationNodeSetting, VimNavigationModule } from '@/navigation/types.ts'
+import { type NavigationNodeSetting, type VimNavigationModule } from '@/navigation/types.ts'
 
 /**
  * VIM Navigation 模块。

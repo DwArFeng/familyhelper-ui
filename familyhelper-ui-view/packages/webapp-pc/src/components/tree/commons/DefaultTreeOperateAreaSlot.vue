@@ -32,7 +32,7 @@
 <script setup lang="ts" generic="CT extends Record<string, any>">
 import { Delete as DeleteIcon, EditPen, Search as SearchIcon } from '@element-plus/icons-vue'
 
-import type { TreeNode } from './types.ts'
+import { type TreeNode } from './types.ts'
 
 defineOptions({
   name: 'DefaultTreeOperateAreaSlot',

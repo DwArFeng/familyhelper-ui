@@ -24,7 +24,7 @@ api 模块不负责处理 API 接口的具体实现，而是在模块初始化�
 如下所示：
 
 ```typescript
-import type { Role } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/role.ts'
+import { type Role } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/role.ts'
 import { all as allRole } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/role.ts'
 
 import { lookupAllToList } from '@/util/lookup.ts'
@@ -47,7 +47,7 @@ async function getAllRole(): Promise<void> {
 ```typescript
 import vim from '@/vim'
 
-import type { HttpClient } from '@dwarfeng/familyhelper-ui-component-api/src/util/http.ts'
+import { type HttpClient } from '@dwarfeng/familyhelper-ui-component-api/src/util/http.ts'
 
 async function customApiRequest(): Promise<void> {
   const client: HttpClient = vim.ctx().api().publicClient()

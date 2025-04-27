@@ -44,7 +44,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watch } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElForm, ElMessage } from 'element-plus'
 
 import { Search as SearchIcon } from '@element-plus/icons-vue'
@@ -53,8 +53,8 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 import TextEditor from '@/components/text/textEditor/TextEditor.vue'
 
 import DispatcherSupportSelectDialog from '@/views/nodes/notifyManagement/dispatcherSupport/DispatcherSupportSelectDialog.vue'
-import type { Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
-import type { DispatcherSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/dispatcherSupport.ts'
+import { type Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
+import { type DispatcherSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/dispatcherSupport.ts'
 import { exists as dispatcherSupportExists } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/dispatcherSupport.ts'
 import {
   exists as existsDispatcherInfo,

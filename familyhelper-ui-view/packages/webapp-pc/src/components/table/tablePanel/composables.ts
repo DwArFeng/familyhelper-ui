@@ -1,10 +1,10 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { ComputedRef, Ref } from 'vue'
+import { type ComputedRef, type Ref } from 'vue'
 import { computed, ref } from 'vue'
 
-import type { PagingInfo } from '@dwarfeng/familyhelper-ui-component-api/src/util/request.ts'
-import type { PagedData } from '@dwarfeng/familyhelper-ui-component-api/src/util/response.ts'
+import { type PagingInfo } from '@dwarfeng/familyhelper-ui-component-api/src/util/request.ts'
+import { type PagedData } from '@dwarfeng/familyhelper-ui-component-api/src/util/response.ts'
 
 // -----------------------------------------------------------后端分页-----------------------------------------------------------
 type UseBackendPagingTablePanelResult<T, CT> = {

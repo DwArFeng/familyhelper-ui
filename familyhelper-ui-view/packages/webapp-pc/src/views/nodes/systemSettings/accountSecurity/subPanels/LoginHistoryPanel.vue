@@ -76,9 +76,9 @@ import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePane
 
 import LoginHistoryInspectDialog from './LoginHistoryInspectDialog.vue'
 
-import type {
-  LoginHistory,
-  LoginHistoryResponseCode,
+import {
+  type LoginHistory,
+  type LoginHistoryResponseCode,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/loginHistory.ts'
 import { accountIdEquals } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/loginHistory.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'

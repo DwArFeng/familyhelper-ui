@@ -1,11 +1,11 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { ShallowRef } from 'vue'
+import { type ShallowRef } from 'vue'
 
-import type { ComponentExposed } from 'vue-component-type-helpers'
+import { type ComponentExposed } from 'vue-component-type-helpers'
 
-import type { TreeNode } from '@/components/tree/commons/types.ts'
-import type { HybridBean, HybridBeanMap } from './types.ts'
+import { type TreeNode } from '@/components/tree/commons/types.ts'
+import { type HybridBean, type HybridBeanMap } from './types.ts'
 import LazySearchTreePanel from './LazySearchTreePanel.vue'
 
 // -----------------------------------------------------------通用-----------------------------------------------------------

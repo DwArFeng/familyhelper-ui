@@ -108,8 +108,8 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
-import type { NotificationStore } from '@/store/modules/notification.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
+import { type NotificationStore } from '@/store/modules/notification.ts'
 
 import { onMounted, ref } from 'vue'
 
@@ -122,7 +122,7 @@ import TablePanel from '@/components/table/tablePanel/TablePanel.vue'
 import TextEditor from '@/components/text/textEditor/TextEditor.vue'
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
-import type { Notification } from '@dwarfeng/familyhelper-ui-component-api/src/api/clannad/notification.ts'
+import { type Notification } from '@dwarfeng/familyhelper-ui-component-api/src/api/clannad/notification.ts'
 import {
   childForUser,
   childForUserUnread,

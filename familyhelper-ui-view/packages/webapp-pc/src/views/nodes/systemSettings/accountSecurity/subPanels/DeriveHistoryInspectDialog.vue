@@ -42,9 +42,9 @@ import { ElForm } from 'element-plus'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 
-import type {
-  DeriveHistory,
-  DeriveHistoryResponseCode,
+import {
+  type DeriveHistory,
+  type DeriveHistoryResponseCode,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/deriveHistory.ts'
 import { inspect } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/deriveHistory.ts'
 import { resolveResponse } from '@/util/response.ts'

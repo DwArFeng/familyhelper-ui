@@ -203,9 +203,9 @@ import { useGeneralCardPanel } from '@/components/card/cardPanel/composables.ts'
 
 import PermitMaintainDialog from './subDialogs/PermitMaintainDialog.vue'
 
-import type { LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import type { DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
-import type { DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/NoteBook.ts'
+import { type LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
+import { type DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
+import { type DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
 import {
   changeFavored,
   create,
@@ -214,8 +214,8 @@ import {
   userOwned,
   userOwnedWithConditionDisplayDisp,
   userPermittedWithConditionDisplayDisp,
-} from '@dwarfeng/familyhelper-ui-component-api/src/api/note/NoteBook.ts'
-import type { PonbPermissionLevel } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/Ponb.ts'
+} from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
+import { type PonbPermissionLevel } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/ponb.ts'
 import { lookupAllToList, lookupCount } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
 

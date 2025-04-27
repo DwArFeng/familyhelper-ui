@@ -27,7 +27,7 @@ import NotifyHistoryPanel from './subPanels/NotifyHistoryPanel.vue'
 import NotifyInfoRecordPanel from './subPanels/NotifyInfoRecordPanel.vue'
 import NotifySendRecordPanel from './subPanels/NotifySendRecordPanel.vue'
 
-import type { DispNotifyHistory } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifyHistory.ts'
+import { type DispNotifyHistory } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifyHistory.ts'
 
 defineOptions({
   name: 'NotifyHistory',

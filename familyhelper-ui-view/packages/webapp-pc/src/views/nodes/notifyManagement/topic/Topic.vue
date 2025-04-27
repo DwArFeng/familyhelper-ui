@@ -19,7 +19,7 @@ import BorderLayoutPanel from '@/components/layout/borderLayoutPanel/BorderLayou
 import TopicPanel from './subPanels/TopicPanel.vue'
 import DispatcherInfoPanel from './subPanels/DispatcherInfoPanel.vue'
 
-import type { Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
+import { type Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
 
 defineOptions({
   name: 'TopicComponent',

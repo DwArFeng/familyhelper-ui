@@ -35,7 +35,7 @@ import { onMounted, ref, watch } from 'vue'
 
 import AvatarPanel from '@/components/avatar/AvatarPanel.vue'
 
-import type { DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
+import { type DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 
 import { idLikeDisp } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account'
 import { lookupAllToList } from '@/util/lookup.ts'

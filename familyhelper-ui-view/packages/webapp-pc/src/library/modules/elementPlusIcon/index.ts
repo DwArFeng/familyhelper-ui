@@ -1,5 +1,5 @@
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { VimLibraryModule } from '@/library/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import { type VimLibraryModule } from '@/library/types.ts'
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 

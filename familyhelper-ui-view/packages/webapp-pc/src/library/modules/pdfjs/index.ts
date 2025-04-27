@@ -1,4 +1,4 @@
-import type { VimLibraryModule } from '@/library/types.ts'
+import { type VimLibraryModule } from '@/library/types.ts'
 
 import * as pdfjsLib from 'pdfjs-dist'
 import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'

@@ -1,7 +1,12 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { SimplyStore, SimplyStoreDefinition, VimStore, VimStoreModule } from '@/store/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import {
+  type SimplyStore,
+  type SimplyStoreDefinition,
+  type VimStore,
+  type VimStoreModule,
+} from '@/store/types.ts'
 import { createPinia, defineStore } from 'pinia'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'

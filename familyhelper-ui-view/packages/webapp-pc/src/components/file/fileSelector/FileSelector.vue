@@ -27,7 +27,7 @@ import { useTemplateRef } from 'vue'
 
 import { ElMessageBox } from 'element-plus'
 
-import type { FileTester, FileTestResult } from './types.ts'
+import { type FileTester, type FileTestResult } from './types.ts'
 
 defineOptions({
   name: 'FileSelector',

@@ -1,16 +1,16 @@
 // noinspection DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type {
-  Hyperscript,
-  NotifyType,
-  RenderType,
-  ResponseMeta,
-  VimLibraryModule,
-  Visualizer,
+import { type VimApplicationContext } from '@/vim/types.ts'
+import {
+  type Hyperscript,
+  type NotifyType,
+  type RenderType,
+  type ResponseMeta,
+  type VimLibraryModule,
+  type Visualizer,
 } from '@/library/types.ts'
 
-import type { VNode } from 'vue'
+import { type VNode } from 'vue'
 
 import ElementPLUS, { ElMessage } from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'

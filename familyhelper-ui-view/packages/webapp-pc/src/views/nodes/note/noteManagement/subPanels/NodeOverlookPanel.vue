@@ -67,8 +67,8 @@ import MaintainDialog from '@/components/dialog/maintainDialog/MaintainDialog.vu
 
 import { useIdentityEditOnlyMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
-import type { LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import type { NoteNode } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
+import { type LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
+import { type NoteNode } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
 import { inspect, update } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
 import { resolveResponse } from '@/util/response.ts'
 

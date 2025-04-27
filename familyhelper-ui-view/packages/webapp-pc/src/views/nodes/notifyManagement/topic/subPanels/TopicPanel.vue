@@ -102,7 +102,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import TablePanel from '@/components/table/tablePanel/TablePanel.vue'
@@ -112,7 +112,7 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 import { useGeneralMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
-import type { Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
+import { type Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
 import {
   all,
   exists,

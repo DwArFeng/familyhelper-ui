@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { Ref } from 'vue'
+import { type Ref } from 'vue'
 import { ref } from 'vue'
 
-import type { TreeNode } from '@/components/tree/commons/types.ts'
+import { type TreeNode } from '@/components/tree/commons/types.ts'
 
 // -----------------------------------------------------------树选区-----------------------------------------------------------
 type UseTreeSelectionResult<CT> = {

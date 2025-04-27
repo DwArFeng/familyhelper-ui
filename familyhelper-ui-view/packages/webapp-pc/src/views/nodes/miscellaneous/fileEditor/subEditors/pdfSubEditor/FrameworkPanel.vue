@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 
-import type { PDFDocumentProxy } from 'pdfjs-dist'
+import { type PDFDocumentProxy } from 'pdfjs-dist'
 
 import HeaderPanel from './HeaderPanel.vue'
 import ContentPanel from './ContentPanel.vue'

@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 
-import type { EditorConfig } from 'ckeditor5'
+import { type EditorConfig } from 'ckeditor5'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
 
 import { FamilyhelperEditor } from '@dwarfeng/familyhelper-ui-component-ckeditor/src/familyhelperEditor.ts'

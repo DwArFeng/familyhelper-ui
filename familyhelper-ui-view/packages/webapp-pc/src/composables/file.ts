@@ -1,8 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { VNode } from 'vue'
+import { type VNode } from 'vue'
 
-import type { CreateInfo, DisplayInfo, IconInfo } from '@/util/file.ts'
+import { type CreateInfo, type DisplayInfo, type IconInfo } from '@/util/file.ts'
 import { getCreateInfo, getDisplayInfo } from '@/util/file.ts'
 
 import { useIconfontButtonIcon, useMissingIcon } from './icon.ts'

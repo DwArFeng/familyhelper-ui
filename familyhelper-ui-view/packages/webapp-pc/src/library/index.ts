@@ -1,7 +1,12 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { LibrarySetting, VimLibrary, VimLibraryModule, Visualizer } from '@/library/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import {
+  type LibrarySetting,
+  type VimLibrary,
+  type VimLibraryModule,
+  type Visualizer,
+} from '@/library/types.ts'
 import { defaultVisualizerKey } from '@/library/props.ts'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'

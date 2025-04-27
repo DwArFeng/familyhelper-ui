@@ -2,7 +2,10 @@
 
 import vim from '@/vim'
 
-import type { Pres, ResponseMeta } from '@dwarfeng/familyhelper-ui-component-api/src/util/response'
+import {
+  type Pres,
+  type ResponseMeta,
+} from '@dwarfeng/familyhelper-ui-component-api/src/util/response'
 
 /**
  * 响应坏处理器。

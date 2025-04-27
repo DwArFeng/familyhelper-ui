@@ -128,7 +128,7 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 import { useGeneralMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
-import type { NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
+import { type NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
 import {
   all,
   insert,

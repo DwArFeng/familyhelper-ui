@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { Delete as DeleteIcon } from '@element-plus/icons-vue'
-import type { NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NavigationNodeInfo } from '@/navigation/types.ts'
 
 defineOptions({
   name: 'EditorNavBar',

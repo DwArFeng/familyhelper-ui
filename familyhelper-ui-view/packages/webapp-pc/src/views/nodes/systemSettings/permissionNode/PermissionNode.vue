@@ -100,7 +100,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { Search as SearchIcon } from '@element-plus/icons-vue'
@@ -112,8 +112,8 @@ import MaintainDialog from '@/components/dialog/maintainDialog/MaintainDialog.vu
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 import { useGeneralMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
-import type { StringIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import type { Permission } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
+import { type StringIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
+import { type Permission } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
 import {
   all,
   exists,

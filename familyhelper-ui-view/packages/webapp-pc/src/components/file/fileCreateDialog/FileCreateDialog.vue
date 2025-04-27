@@ -63,16 +63,16 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, onMounted, ref, watch } from 'vue'
 
 import { useCreateIcon } from '@/composables/file.ts'
 
-import type { CreateInfo, CreatePermissionInfo } from '@/util/file.ts'
+import { type CreateInfo, type CreatePermissionInfo } from '@/util/file.ts'
 import { getCreateInfos } from '@/util/file.ts'
 
-import type { ExtensionFilter, FileCreateInfo } from './types.ts'
+import { type ExtensionFilter, type FileCreateInfo } from './types.ts'
 
 defineOptions({
   name: 'FileCreateDialog',

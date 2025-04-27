@@ -50,7 +50,7 @@ import TablePanel from '@/components/table/tablePanel/TablePanel.vue'
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type { DispatcherSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/dispatcherSupport.ts'
+import { type DispatcherSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/dispatcherSupport.ts'
 import { all } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/dispatcherSupport.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
 

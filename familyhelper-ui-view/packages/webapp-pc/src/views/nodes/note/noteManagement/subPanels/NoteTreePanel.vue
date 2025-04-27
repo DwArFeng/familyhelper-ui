@@ -38,19 +38,19 @@
 <script setup lang="ts">
 import { useTemplateRef, watch } from 'vue'
 
-import type { ComponentExposed } from 'vue-component-type-helpers'
+import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import { Delete as DeleteIcon } from '@element-plus/icons-vue'
 
 import LazySearchTreePanel from '@/components/tree/lazySerachTreePanel/LazySearchTreePanel.vue'
 
-import type { HybridBean } from '@/components/tree/lazySerachTreePanel/types.ts'
+import { type HybridBean } from '@/components/tree/lazySerachTreePanel/types.ts'
 import { useOperableHybridLazySearchTreePanel } from '@/components/tree/lazySerachTreePanel/composables.ts'
 
-import type { TreeNode } from '@/components/tree/commons/types.ts'
+import { type TreeNode } from '@/components/tree/commons/types.ts'
 
-import type { LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import type { DispNoteNode } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
+import { type LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
+import { type DispNoteNode } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
 import {
   childForNoteBookNameLikeDisp as noteNodeChildForNoteBookNameLikeDisp,
   childForNoteBookRootDisp as noteNodeChildForNoteBookRootDisp,
@@ -58,7 +58,7 @@ import {
   itemPathFromRootDisp,
   nodePathFromRootDisp,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
-import type { DispNoteItem } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteItem.ts'
+import { type DispNoteItem } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteItem.ts'
 import {
   childForNoteBookNameLikeDisp as noteItemChildForNoteBookNameLikeDisp,
   childForNoteBookRootDisp as noteItemChildForNoteBookRootDisp,

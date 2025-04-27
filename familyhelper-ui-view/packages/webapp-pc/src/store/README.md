@@ -25,7 +25,7 @@ VIM Store 实例的使用方法与 Pinia 对应的 Store 使用方法一致。
 
 ```typescript
 import vim from '@/vim'
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
@@ -46,7 +46,7 @@ VIM StoreDefinition 实例的使用方法与 Pinia 对应的 StoreDefinition 使
 ```typescript
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 const lnpStoreDefinition = vim.ctx().store().vueStoreDefinition<'lnp', LnpStore>('lnp')
 
@@ -106,7 +106,7 @@ async function logout(): Promise<void> {
 ```ts
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
@@ -126,7 +126,7 @@ lnpStore.$onAction(({ name, after }) => {
 ```ts
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
@@ -162,7 +162,7 @@ VIM 框架考虑到了这一场景，并且引入了 ExecutableActionHandle API�
 `lnp.ts`：
 
 ```ts
-import type { ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 import { ExecutableActionHandleImpl } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 
 function willLogout(): ExecutableActionHandle<void, void, void> {
@@ -180,9 +180,9 @@ async function logout(): Promise<void> {
 ```ts
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
-import type { ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
@@ -204,7 +204,7 @@ lnpStore.$onAction(({ name, after }) => {
 ```ts
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
@@ -239,10 +239,10 @@ store 模块采用动态扫描机制，开发人员只需要在 `./modules` 目�
 ```ts
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode,JSAnnotator
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { StoreSetup, VimStoreModule } from '@/store/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import { type StoreSetup, VimStoreModule } from '@/store/types.ts'
 
-import type { ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 import { ExecutableActionHandleImpl } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'

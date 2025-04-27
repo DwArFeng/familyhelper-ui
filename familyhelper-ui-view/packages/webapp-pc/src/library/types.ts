@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimComponent, VimComponentModule } from '@/vim/types.ts'
-import type { VNode } from 'vue'
+import { type VimComponent, type VimComponentModule } from '@/vim/types.ts'
+import { type VNode } from 'vue'
 
 // -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
 /**

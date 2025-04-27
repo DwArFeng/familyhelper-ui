@@ -85,9 +85,9 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type {
-  SettingNode,
-  SettingNodeType,
+import {
+  type SettingNode,
+  type SettingNodeType,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingNode.ts'
 import {
   idLikeReachable,

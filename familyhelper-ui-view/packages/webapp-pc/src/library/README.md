@@ -39,7 +39,7 @@ library 模块负责处理第三方组件库的集成和使用，这些组件的
 ```typescript
 import vim from '@/vim'
 
-import type { VimLibrary } from '@/library/types.ts'
+import { type VimLibrary } from '@/library/types.ts'
 
 function notify(): void {
   const library: Omit<VimLibrary, "init"> = vim.ctx().library()
@@ -78,7 +78,7 @@ library 中的模块采用动态扫描机制，开发人员只需要在 `./modul
 在 `index.ts` 文件的头部导入资源文件，方法提供空实现/ null 返回值即可，代码如下所示：
 
 ```ts
-import type { VimLibraryModule } from '@/library/types.ts'
+import { type VimLibraryModule } from '@/library/types.ts'
 
 import 'library.css'
 
@@ -102,8 +102,8 @@ export default vimLibraryModule
 在初始化方法中，通过 `VimApplicationContext` 拿到 vue 的 `App` 对象，并注册组件，代码如下所示：
 
 ```ts
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { VimLibraryModule } from '@/library/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import { type VimLibraryModule } from '@/library/types.ts'
 
 import ElementPLUS from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
@@ -135,16 +135,16 @@ export default vimLibraryModule
 在 `VimLibraryModule.provideVisualizer` 方法中提供格式化器的实现。
 
 ```ts
-import type {
-  Hyperscript,
-  NotifyType,
-  RenderType,
-  ResponseMeta,
-  VimLibraryModule,
-  Visualizer,
+import {
+  type Hyperscript,
+  type NotifyType,
+  type RenderType,
+  type ResponseMeta,
+  type VimLibraryModule,
+  type Visualizer,
 } from '@/library/types.ts'
 
-import type { VNode } from 'vue'
+import { type VNode } from 'vue'
 
 // 在这个例子中，除了提供可视化器，还和上面的例子一样，同时引入了资源文件。
 import './global.css'

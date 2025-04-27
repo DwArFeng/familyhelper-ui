@@ -75,7 +75,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import { ElMessage } from 'element-plus'
 
-import type { EditorConfig } from 'ckeditor5'
+import { type EditorConfig } from 'ckeditor5'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
 
 import { FamilyhelperEditor } from '@dwarfeng/familyhelper-ui-component-ckeditor/src/familyhelperEditor.ts'
@@ -83,7 +83,7 @@ import { FamilyhelperEditor } from '@dwarfeng/familyhelper-ui-component-ckeditor
 import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import FileCreateDialog from '@/components/file/fileCreateDialog/FileCreateDialog.vue'
 
-import type { FileCreateInfo } from '@/components/file/fileCreateDialog/types.ts'
+import { type FileCreateInfo } from '@/components/file/fileCreateDialog/types.ts'
 import { useSpecifiedExtensionFileCreateDialog } from '@/components/file/fileCreateDialog/composables.ts'
 
 import {

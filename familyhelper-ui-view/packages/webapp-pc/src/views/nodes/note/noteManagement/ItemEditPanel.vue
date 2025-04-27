@@ -102,21 +102,24 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, useTemplateRef } from 'vue'
 
-import type { ComponentExposed } from 'vue-component-type-helpers'
+import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import { useUserPreference } from '@/composables/userPreference.ts'
 
 import FloatyDialog from '@/components/dialog/floatyDialog/FloatyDialog.vue'
 
-import type {
-  UserPreference as FloatyDialogUserPreference,
-  VisualField,
+import {
+  type UserPreference as FloatyDialogUserPreference,
+  type VisualField,
 } from '@/components/dialog/floatyDialog/types.ts'
 import { useUserPreferenceFloatyDialog } from '@/components/dialog/floatyDialog/composables.ts'
 
 import FileEditPanel from '@/views/nodes/miscellaneous/fileEditor/FileEditPanel.vue'
 
-import type { FileEditType, FileEditMode } from '@/views/nodes/miscellaneous/fileEditor/type.ts'
+import {
+  type FileEditType,
+  type FileEditMode,
+} from '@/views/nodes/miscellaneous/fileEditor/type.ts'
 
 import ItemOverlookPanel from './subPanels/ItemOverlookPanel.vue'
 import ItemNotePanel from './subPanels/ItemNotePanel.vue'

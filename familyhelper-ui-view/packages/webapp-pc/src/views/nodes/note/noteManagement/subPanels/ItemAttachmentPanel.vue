@@ -206,7 +206,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { VNode } from 'vue'
+import { type VNode } from 'vue'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
@@ -225,12 +225,12 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 import FileUploadDialog from '@/components/file/fileUploadDialog/FileUploadDialog.vue'
 import FileCreateDialog from '@/components/file/fileCreateDialog/FileCreateDialog.vue'
 
-import type { FileCreateInfo } from '@/components/file/fileCreateDialog/types.ts'
+import { type FileCreateInfo } from '@/components/file/fileCreateDialog/types.ts'
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type { FileEditMode } from '@/views/nodes/miscellaneous/fileEditor/type.ts'
+import { type FileEditMode } from '@/views/nodes/miscellaneous/fileEditor/type.ts'
 
-import type { AttachmentFileInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/attachmentFile.ts'
+import { type AttachmentFileInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/attachmentFile.ts'
 import {
   childForNoteItem,
   childForNoteItemCreatedDateAsc,
@@ -251,7 +251,7 @@ import {
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
 import { parseFileExtension } from '@dwarfeng/familyhelper-ui-component-util/src/util/file.ts'
 
-import type { EditInfo } from '@/util/file.ts'
+import { type EditInfo } from '@/util/file.ts'
 import { getEditInfo } from '@/util/file.ts'
 
 defineOptions({

@@ -33,7 +33,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import ChildForMetaMissingSubPanel from './subPanels/ChildForMetaMissingSubPanel.vue'
 
-import type { MetaIndicator } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/metaIndicator.ts'
+import { type MetaIndicator } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/metaIndicator.ts'
 
 defineOptions({
   name: 'MetaIndicatorSelectDialog',

@@ -43,7 +43,7 @@ import vim from '@/vim'
 
 import { onMounted, reactive, ref } from 'vue'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import backgroundImg from '@/assets/img/login-background.jpg'
 

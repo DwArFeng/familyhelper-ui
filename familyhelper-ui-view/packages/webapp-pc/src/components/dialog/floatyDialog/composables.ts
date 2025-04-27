@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { Ref } from 'vue'
+import { type Ref } from 'vue'
 import { ref } from 'vue'
 
-import type { DockStatus, UserPreference, VisualField } from './types.ts'
+import { type DockStatus, type UserPreference, type VisualField } from './types.ts'
 
 // -----------------------------------------------------------通用-----------------------------------------------------------
 export type UseGeneralFloatyDialogResult = {

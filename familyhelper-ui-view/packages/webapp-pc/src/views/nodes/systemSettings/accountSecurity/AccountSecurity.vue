@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, ref } from 'vue'
 

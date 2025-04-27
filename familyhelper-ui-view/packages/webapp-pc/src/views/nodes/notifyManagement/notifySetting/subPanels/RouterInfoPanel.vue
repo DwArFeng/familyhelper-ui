@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef, watch } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElForm, ElMessage } from 'element-plus'
 
 import { Search as SearchIcon } from '@element-plus/icons-vue'
@@ -50,8 +50,8 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 import TextEditor from '@/components/text/textEditor/TextEditor.vue'
 
 import RouterSupportSelectDialog from '@/views/nodes/notifyManagement/routerSupport/RouterSupportSelectDialog.vue'
-import type { NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
-import type { RouterSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/routerSupport.ts'
+import { type NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
+import { type RouterSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/routerSupport.ts'
 import { exists as routerSupportExists } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/routerSupport.ts'
 import {
   exists as existsRouterInfo,

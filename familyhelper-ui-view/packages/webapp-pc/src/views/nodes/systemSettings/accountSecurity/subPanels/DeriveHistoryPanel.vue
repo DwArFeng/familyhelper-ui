@@ -70,9 +70,9 @@ import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePane
 
 import DeriveHistoryInspectDialog from './DeriveHistoryInspectDialog.vue'
 
-import type {
-  DeriveHistory,
-  DeriveHistoryResponseCode,
+import {
+  type DeriveHistory,
+  type DeriveHistoryResponseCode,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/deriveHistory.ts'
 import { accountIdEquals } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/deriveHistory.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'

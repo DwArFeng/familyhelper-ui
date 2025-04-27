@@ -76,10 +76,10 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 import { useInspectOnlyMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
-import type { DispNotifyHistory } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifyHistory.ts'
-import type {
-  NotifyInfoRecord,
-  NotifyInfoRecordType,
+import { type DispNotifyHistory } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifyHistory.ts'
+import {
+  type NotifyInfoRecord,
+  type NotifyInfoRecordType,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifyInfoRecord.ts'
 import { childForNotifyHistory } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifyInfoRecord.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'

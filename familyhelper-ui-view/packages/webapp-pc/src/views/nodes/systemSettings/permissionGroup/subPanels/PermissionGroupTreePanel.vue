@@ -22,23 +22,23 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue'
 
-import type { ComponentExposed } from 'vue-component-type-helpers'
+import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import LazySearchTreePanel from '@/components/tree/lazySerachTreePanel/LazySearchTreePanel.vue'
 import { useOperableGeneralLazySearchTreePanel } from '@/components/tree/lazySerachTreePanel/composables.ts'
 
-import type { TreeNode } from '@/components/tree/commons/types.ts'
+import { type TreeNode } from '@/components/tree/commons/types.ts'
 
-import type { DispPermissionGroupTreeItem } from '../types.ts'
+import { type DispPermissionGroupTreeItem } from '../types.ts'
 
-import type { DispPermissionGroup } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
+import { type DispPermissionGroup } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
 import {
   childForParentDisp,
   childForRootDisp,
   nameLikeDisp,
   pathFromRootDisp,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
-import type { PagedData } from '@dwarfeng/familyhelper-ui-component-api/src/util/response.ts'
+import { type PagedData } from '@dwarfeng/familyhelper-ui-component-api/src/util/response.ts'
 import { lookupAllToList } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
 

@@ -23,8 +23,8 @@ import BorderLayoutPanel from '@/components/layout/borderLayoutPanel/BorderLayou
 import NotifySettingTopicPanel from './subPanels/NotifySettingTopicPanel.vue'
 import MetaPanel from '@/views/nodes/notifyManagement/meta/subPanels/MetaPanel.vue'
 
-import type { NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
-import type { Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
+import { type NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
+import { type Topic } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/topic.ts'
 
 defineOptions({
   name: 'MetaComponent',

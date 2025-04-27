@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 
-import type { MetaIndicator } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/metaIndicator.ts'
+import { type MetaIndicator } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/metaIndicator.ts'
 import { metaMissing } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/metaIndicator.ts'
 import { resolveResponse } from '@/util/response.ts'
 

@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { ComputedRef, Ref } from 'vue'
+import { type ComputedRef, type Ref } from 'vue'
 import { computed, ref } from 'vue'
 
-import type { ExtensionFilter } from './types.ts'
+import { type ExtensionFilter } from './types.ts'
 
 // -----------------------------------------------------------特定扩展名-----------------------------------------------------------
 export type UseSpecifiedExtensionFileCreateDialogResult = {

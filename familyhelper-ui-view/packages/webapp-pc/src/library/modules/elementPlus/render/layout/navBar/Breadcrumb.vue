@@ -9,10 +9,10 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { NavigationStore } from '@/store/modules/navigation.ts'
+import { type NavigationStore } from '@/store/modules/navigation.ts'
 
 import { computed } from 'vue'
-import type { NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NavigationNodeInfo } from '@/navigation/types.ts'
 
 defineOptions({
   name: 'BreadcrumbComponent',

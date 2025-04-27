@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimComponent, VimComponentModule } from '@/vim/types.ts'
+import { type VimComponent, type VimComponentModule } from '@/vim/types.ts'
 import {
   type _ExtractActionsFromSetupStore,
   type _ExtractGettersFromSetupStore,

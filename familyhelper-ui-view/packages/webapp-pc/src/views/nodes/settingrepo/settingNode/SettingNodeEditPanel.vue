@@ -29,16 +29,16 @@ import vim from '@/vim'
 
 import { computed, onMounted, ref, watch } from 'vue'
 
-import type { NotificationHandle } from 'element-plus'
+import { type NotificationHandle } from 'element-plus'
 import { ElNotification } from 'element-plus'
 
 import TextNodeSubEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/TextNodeSubEditPanel.vue'
 import ImageNodeEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/ImageNodeEditPanel.vue'
 import ImageListNodeEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/ImageListNodeEditPanel.vue'
 
-import type {
-  SettingNode,
-  SettingNodeType,
+import {
+  type SettingNode,
+  type SettingNodeType,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingNode.ts'
 import { inspect } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingNode.ts'
 import { resolveResponse } from '@/util/response.ts'

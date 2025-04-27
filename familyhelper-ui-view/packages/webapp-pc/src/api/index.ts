@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
-import type { ApiSetting, VimApi } from '@/api/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
+import { type ApiSetting, type VimApi } from '@/api/types.ts'
 import {
   apiPrefix,
   authenticationRequestHeaderKey,
@@ -13,7 +13,7 @@ import {
 } from '@/api/props.ts'
 
 import http, { type HttpClient } from '@dwarfeng/familyhelper-ui-component-api/src/util/http.ts'
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 /**
  * 状态。

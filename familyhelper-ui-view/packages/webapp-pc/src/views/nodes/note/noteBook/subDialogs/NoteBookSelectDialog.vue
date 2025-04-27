@@ -134,10 +134,10 @@ import CornerLightPanel from '@/components/layout/cornerLightPanel/CornerLightPa
 
 import { useGeneralCardPanel } from '@/components/card/cardPanel/composables.ts'
 
-import type { DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
-import type { DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
+import { type DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
+import { type DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
 import { userPermittedWithConditionDisplayDisp } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
-import type { PonbPermissionLevel } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/ponb.ts'
+import { type PonbPermissionLevel } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/ponb.ts'
 import { lookupAllToList } from '@/util/lookup.ts'
 
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'

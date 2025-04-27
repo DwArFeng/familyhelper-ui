@@ -11,7 +11,7 @@ import { watch, ref, onMounted } from 'vue'
 
 import FileEditPanel from './FileEditPanel.vue'
 
-import type { FileEditType, FileEditMode } from './type.ts'
+import { type FileEditType, type FileEditMode } from './type.ts'
 import { hasFileEditType } from './fileHandlers.ts'
 
 defineOptions({

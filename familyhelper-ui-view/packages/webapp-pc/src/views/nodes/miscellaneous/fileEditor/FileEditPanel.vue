@@ -83,11 +83,11 @@ import TxtSubEditor from './subEditors/txtSubEditor/TxtSubEditor.vue'
 
 import { parseFileExtension } from '@dwarfeng/familyhelper-ui-component-util/src/util/file.ts'
 
-import type { EditInfo } from '@/util/file.ts'
+import { type EditInfo } from '@/util/file.ts'
 import { getEditInfo } from '@/util/file.ts'
 
-import type { FileEditMode, FileEditType } from './type.ts'
-import type { FileHandler, InspectFileResult, UpdateFileResult } from './fileHandlers.ts'
+import { type FileEditMode, type FileEditType } from './type.ts'
+import { type FileHandler, type InspectFileResult, type UpdateFileResult } from './fileHandlers.ts'
 import { fileHandler } from './fileHandlers.ts'
 
 defineOptions({

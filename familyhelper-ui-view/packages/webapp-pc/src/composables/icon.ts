@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { VNode } from 'vue'
+import { type VNode } from 'vue'
 import { h } from 'vue'
 
 // -----------------------------------------------------------IconFont 图标-----------------------------------------------------------

@@ -28,13 +28,13 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { NavigationStore } from '@/store/modules/navigation.ts'
+import { type NavigationStore } from '@/store/modules/navigation.ts'
 
 import { ref } from 'vue'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 import SidebarItem from './SidebarItem.vue'
-import type { NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NavigationNodeInfo } from '@/navigation/types.ts'
 
 defineOptions({
   name: 'SideBar',

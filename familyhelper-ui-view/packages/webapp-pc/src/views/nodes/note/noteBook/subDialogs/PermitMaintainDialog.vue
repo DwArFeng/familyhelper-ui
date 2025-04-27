@@ -91,7 +91,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { onMounted, ref, watch } from 'vue'
 
@@ -106,12 +106,12 @@ import AccountSelector from '@/views/nodes/systemSettings/account/AccountSelecto
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type {
-  DispPonb,
-  PonbPermissionLevel,
+import {
+  type DispPonb,
+  type PonbPermissionLevel,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/ponb.ts'
 import { childForNoteBookDisp } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/ponb.ts'
-import type { DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
+import { type DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 import {
   removePermission,
   upsertPermission,

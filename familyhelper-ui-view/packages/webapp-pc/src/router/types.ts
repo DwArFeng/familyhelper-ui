@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimComponent } from '@/vim/types.ts'
-import type { Router } from 'vue-router'
+import { type VimComponent } from '@/vim/types.ts'
+import { type Router } from 'vue-router'
 
 // -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
 /**

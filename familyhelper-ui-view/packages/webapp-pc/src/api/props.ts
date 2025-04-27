@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { ApiSetting } from '@/api/types.ts'
+import { type ApiSetting } from '@/api/types.ts'
 
 /**
  * develop 环境的基础 URL 前缀。

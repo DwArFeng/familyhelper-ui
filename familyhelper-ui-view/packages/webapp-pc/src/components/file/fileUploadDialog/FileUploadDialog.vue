@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import type { VNode } from 'vue'
+import { type VNode } from 'vue'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import { Delete as DeleteIcon } from '@element-plus/icons-vue'
@@ -65,7 +65,7 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 
 import { useDisplayIconWithDefaults } from '@/composables/file'
 
-import type { FileTester, FileTestResult } from './types.ts'
+import { type FileTester, type FileTestResult } from './types.ts'
 
 import {
   dataSizePreset,

@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { Ref } from 'vue'
+import { type Ref } from 'vue'
 import { ref } from 'vue'
 
 // -----------------------------------------------------------通用-----------------------------------------------------------

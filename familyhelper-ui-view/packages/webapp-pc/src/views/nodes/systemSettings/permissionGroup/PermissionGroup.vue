@@ -191,12 +191,12 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from 'vue'
 
-import type { ComponentExposed } from 'vue-component-type-helpers'
+import { type ComponentExposed } from 'vue-component-type-helpers'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
-import type { TreeNode } from '@/components/tree/commons/types.ts'
+import { type TreeNode } from '@/components/tree/commons/types.ts'
 import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import BorderLayoutPanel from '@/components/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 import TablePanel from '@/components/table/tablePanel/TablePanel.vue'
@@ -206,11 +206,11 @@ import { useGeneralMaintainDialog } from '@/components/dialog/maintainDialog/com
 import { useTreeSelection } from '@/components/tree/commons/composables.ts'
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type { DispPermissionGroupTreeItem } from './types.ts'
+import { type DispPermissionGroupTreeItem } from './types.ts'
 import PermissionGroupTreePanel from './subPanels/PermissionGroupTreePanel.vue'
 
-import type { StringIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import type { PermissionGroup } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
+import { type StringIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
+import { type PermissionGroup } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
 import {
   exists as existsPermissionGroup,
   insert as insertPermissionGroup,
@@ -218,7 +218,7 @@ import {
   remove as removePermissionGroup,
   update as updatePermissionGroup,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
-import type { Permission } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
+import { type Permission } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
 import {
   childForGroup as permissionChildForGroup,
   update as updatePermission,

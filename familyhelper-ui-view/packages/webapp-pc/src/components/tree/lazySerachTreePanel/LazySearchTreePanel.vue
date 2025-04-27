@@ -120,10 +120,10 @@
 </template>
 
 <script setup lang="ts" generic="CT extends Record<string, any>">
-import type { Ref } from 'vue'
+import { type Ref } from 'vue'
 import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 
-import type { LoadFunction, TreeOptionProps as ElTreeOptionProps } from 'element-plus'
+import { type LoadFunction, type TreeOptionProps as ElTreeOptionProps } from 'element-plus'
 import { ElOption, ElSelect, ElTree } from 'element-plus'
 
 import {
@@ -138,7 +138,7 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 import DefaultTreeDefaultSlot from '@/components/tree/commons/DefaultTreeDefaultSlot.vue'
 import DefaultTreeOperateAreaSlot from '@/components/tree/commons/DefaultTreeOperateAreaSlot.vue'
 
-import type { TreeNode } from '@/components/tree/commons/types.ts'
+import { type TreeNode } from '@/components/tree/commons/types.ts'
 
 defineOptions({
   name: 'LazySearchTreePanel',

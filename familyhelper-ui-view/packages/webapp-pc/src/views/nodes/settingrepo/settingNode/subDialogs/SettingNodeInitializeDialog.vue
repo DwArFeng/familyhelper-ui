@@ -83,7 +83,7 @@
 <script setup lang="ts">
 import { onMounted, ref, useTemplateRef, watch } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElForm, ElMessage } from 'element-plus'
 
 import { Search as SearchIcon, DocumentCopy } from '@element-plus/icons-vue'
@@ -93,11 +93,11 @@ import JsonEditor from '@/components/text/jsonEditor/JsonEditor.vue'
 import SettingCategorySelectDialog from '@/views/nodes/settingrepo/settingCategory/SettingCategorySelectDialog.vue'
 import SettingNodeSelectDialog from '@/views/nodes/settingrepo/settingNode/subDialogs/SettingNodeSelectDialog.vue'
 
-import type { SettingCategory } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingCategory.ts'
-import type {
-  SettingNode,
-  SettingNodeInitInfo,
-  SettingNodeType,
+import { type SettingCategory } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingCategory.ts'
+import {
+  type SettingNode,
+  type SettingNodeInitInfo,
+  type SettingNodeType,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingNode.ts'
 import { exists as settingCategoryExists } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingCategory.ts'
 import { operateInit as settingNodeOperateInit } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingNode.ts'

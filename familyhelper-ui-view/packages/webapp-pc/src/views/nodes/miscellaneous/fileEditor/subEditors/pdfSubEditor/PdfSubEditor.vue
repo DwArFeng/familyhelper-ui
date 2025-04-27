@@ -12,7 +12,7 @@
 <script setup lang="ts">
 import { markRaw, onMounted, ref, watch } from 'vue'
 
-import type { PDFDocumentProxy } from 'pdfjs-dist'
+import { type PDFDocumentProxy } from 'pdfjs-dist'
 import * as pdfjsLib from 'pdfjs-dist'
 
 import FrameworkPanel from './FrameworkPanel.vue'

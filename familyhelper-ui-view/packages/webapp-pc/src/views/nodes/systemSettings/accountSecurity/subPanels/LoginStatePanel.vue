@@ -241,11 +241,11 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { onMounted, ref, useTemplateRef, watch } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElForm, ElMessage, ElMessageBox } from 'element-plus'
 import { Delete as DeleteIcon, DocumentCopy as DocumentCopyIcon } from '@element-plus/icons-vue'
 
@@ -256,9 +256,9 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type {
-  LoginState,
-  LoginStateType,
+import {
+  type LoginState,
+  type LoginStateType,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/loginState.ts'
 import {
   childForAccount,

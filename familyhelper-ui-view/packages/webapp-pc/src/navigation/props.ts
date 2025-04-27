@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { NavigationSetting } from '@/navigation/types.ts'
+import { type NavigationSetting } from '@/navigation/types.ts'
 
 /**
  * 默认 Navigation key。

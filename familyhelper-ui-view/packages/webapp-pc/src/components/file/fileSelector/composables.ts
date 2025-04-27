@@ -1,9 +1,9 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { ComputedRef, Ref } from 'vue'
+import { type ComputedRef, type Ref } from 'vue'
 import { computed, ref } from 'vue'
 
-import type { FileTester } from './types.ts'
+import { type FileTester } from './types.ts'
 
 // -----------------------------------------------------------图片-----------------------------------------------------------
 export type UseImageFileSelectorResult = {

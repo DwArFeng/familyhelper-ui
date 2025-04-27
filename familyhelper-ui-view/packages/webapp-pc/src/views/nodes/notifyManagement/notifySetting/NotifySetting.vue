@@ -19,7 +19,7 @@ import BorderLayoutPanel from '@/components/layout/borderLayoutPanel/BorderLayou
 import NotifySettingPanel from './subPanels/NotifySettingPanel.vue'
 import RouterInfoPanel from './subPanels/RouterInfoPanel.vue'
 
-import type { NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
+import { type NotifySetting } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/notifySetting.ts'
 
 defineOptions({
   name: 'NotifySetting',

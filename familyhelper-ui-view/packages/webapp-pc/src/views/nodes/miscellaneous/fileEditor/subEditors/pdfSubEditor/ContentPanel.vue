@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 
-import type { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist'
+import { type PDFDocumentProxy, type PDFPageProxy } from 'pdfjs-dist'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 

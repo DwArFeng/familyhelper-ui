@@ -126,9 +126,9 @@ import SettingNodeInitializeDialog from '@/views/nodes/settingrepo/settingNode/s
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import type {
-  SettingNode,
-  SettingNodeType,
+import {
+  type SettingNode,
+  type SettingNodeType,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/settingNode.ts'
 import {
   idLikeReachable,

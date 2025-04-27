@@ -44,7 +44,7 @@
 <script setup lang="ts" generic="CT extends Record<string, any>">
 import { computed, onMounted, ref, useTemplateRef, watch } from 'vue'
 
-import type { FormRules } from 'element-plus'
+import { type FormRules } from 'element-plus'
 import { ElForm } from 'element-plus'
 
 defineOptions({

@@ -1,8 +1,8 @@
 // noinspection JSUnusedGlobalSymbols
 
-import type { FileEditType } from '@/views/nodes/miscellaneous/fileEditor/type.ts'
+import { type FileEditType } from '@/views/nodes/miscellaneous/fileEditor/type.ts'
 
-import type { AttachmentFileInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/attachmentFile.ts'
+import { type AttachmentFileInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/attachmentFile.ts'
 import {
   inspect as inspectNoteAttachmentFile,
   download as downloadNoteAttachmentFile,

@@ -135,7 +135,7 @@ import vim from '@/vim'
 
 import { computed, onMounted, ref, useTemplateRef, watch } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import {
@@ -155,7 +155,7 @@ import { useIdentityFrontendPagingTablePanel } from '@/components/table/tablePan
 import { useImageFileSelector } from '@/components/file/fileSelector/composables.ts'
 import { useEditOnlyMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
-import type { ImageListNodeInspectResultItem } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/imageListNode.ts'
+import { type ImageListNodeInspectResultItem } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/imageListNode.ts'
 import {
   downloadThumbnail,
   operateInspect,

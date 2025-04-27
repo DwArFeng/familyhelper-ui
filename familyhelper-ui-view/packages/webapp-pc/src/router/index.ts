@@ -1,27 +1,27 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimApplicationContext } from '@/vim/types.ts'
+import { type VimApplicationContext } from '@/vim/types.ts'
 
 import { noGuardNameErrorText, guardNotExistsErrorText } from './texts.ts'
 
-import type { VimRouter, VimRouterLocation } from '@/router/types.ts'
+import { type VimRouter, type VimRouterLocation } from '@/router/types.ts'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
-import type { ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 
-import type { NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NavigationNodeInfo } from '@/navigation/types.ts'
 
-import type {
-  NavigationGuardNext,
-  RouteLocationNormalizedGeneric,
-  Router,
-  RouteRecordRaw,
+import {
+  type NavigationGuardNext,
+  type RouteLocationNormalizedGeneric,
+  type Router,
+  type RouteRecordRaw,
 } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 import guards from './guards.ts'
-import type { PageErrorStore } from '@/store/modules/pageError.ts'
+import { type PageErrorStore } from '@/store/modules/pageError.ts'
 
 /**
  * 状态。

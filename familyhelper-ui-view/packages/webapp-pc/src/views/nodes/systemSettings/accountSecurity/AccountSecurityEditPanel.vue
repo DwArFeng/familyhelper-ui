@@ -85,9 +85,9 @@ import { computed, onMounted, ref } from 'vue'
 
 import { useUserPreference } from '@/composables/userPreference.ts'
 
-import type {
-  UserPreference as FloatyDialogUserPreference,
-  VisualField,
+import {
+  type UserPreference as FloatyDialogUserPreference,
+  type VisualField,
 } from '@/components/dialog/floatyDialog/types.ts'
 import { useUserPreferenceFloatyDialog } from '@/components/dialog/floatyDialog/composables.ts'
 import FloatyDialog from '@/components/dialog/floatyDialog/FloatyDialog.vue'

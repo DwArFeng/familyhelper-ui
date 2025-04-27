@@ -114,14 +114,14 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef } from 'vue'
 
-import type { ComponentExposed } from 'vue-component-type-helpers'
+import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import BorderLayoutPanel from '@/components/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 import MaintainDialog from '@/components/dialog/maintainDialog/MaintainDialog.vue'
 
-import type { TreeNode } from '@/components/tree/commons/types.ts'
+import { type TreeNode } from '@/components/tree/commons/types.ts'
 import { useCreateOnlyMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
 import NoteBookIndicator from '@/views/nodes/note/noteBook/NoteBookIndicator.vue'
@@ -130,20 +130,20 @@ import NodeEditPanel from './NodeEditPanel.vue'
 import ItemEditPanel from './ItemEditPanel.vue'
 import NoteTreePanel from './subPanels/NoteTreePanel.vue'
 
-import type { LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import type { DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/NoteBook.ts'
-import type { DispNoteNode } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
+import { type LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
+import { type DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
+import { type DispNoteNode } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
 import {
   create as createNoteNode,
   inspectDisp as inspectDispNoteNode,
   remove as removeNoteNode,
-} from '@dwarfeng/familyhelper-ui-component-api/src/api/note/NoteNode.ts'
-import type { DispNoteItem } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteItem.ts'
+} from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteNode.ts'
+import { type DispNoteItem } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteItem.ts'
 import {
   create as createNoteItem,
   inspectDisp as inspectDispNoteItem,
   remove as removeNoteItem,
-} from '@dwarfeng/familyhelper-ui-component-api/src/api/note/NoteItem.ts'
+} from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteItem.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 defineOptions({

@@ -164,11 +164,11 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import type { LnpStore } from '@/store/modules/lnp.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { onMounted, ref, useTemplateRef } from 'vue'
 
-import type { FormItemRule } from 'element-plus'
+import { type FormItemRule } from 'element-plus'
 import { ElDialog, ElForm, ElMessage, ElMessageBox } from 'element-plus'
 
 import BorderLayoutPanel from '@/components/layout/borderLayoutPanel/BorderLayoutPanel.vue'
@@ -178,7 +178,7 @@ import MaintainDialog from '@/components/dialog/maintainDialog/MaintainDialog.vu
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 import { useGeneralMaintainDialog } from '@/components/dialog/maintainDialog/composables.ts'
 
-import type { Account } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
+import { type Account } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 import {
   all as allAccount,
   exists,
@@ -188,7 +188,7 @@ import {
   resetRoleRelation,
   update,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
-import type { Role } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/role.ts'
+import { type Role } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/role.ts'
 import {
   all as allRole,
   childForAccount as childRoleForAccount,

@@ -1,4 +1,4 @@
-import type { VimLibraryModule } from '@/library/types.ts'
+import { type VimLibraryModule } from '@/library/types.ts'
 
 import './global.css'
 import '@dwarfeng/familyhelper-ui-component-iconfont/src/iconfont.css'

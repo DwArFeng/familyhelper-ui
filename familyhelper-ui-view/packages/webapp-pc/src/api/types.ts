@@ -1,7 +1,7 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import type { VimComponent } from '@/vim/types.ts'
-import type { HttpClient } from '@dwarfeng/familyhelper-ui-component-api/src/util/http.ts'
+import { type VimComponent } from '@/vim/types.ts'
+import { type HttpClient } from '@dwarfeng/familyhelper-ui-component-api/src/util/http.ts'
 
 // -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
 /**
