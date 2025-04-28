@@ -3,7 +3,7 @@
     <border-layout-panel class="border-layout-panel" :header-visible="true">
       <template v-slot:header>
         <div class="header-container">
-          <el-button type="success" @click="handleNoteBookSearch"> 刷新数据</el-button>
+          <el-button type="success" @click="handleNoteBookSearch">刷新数据</el-button>
           <el-divider direction="vertical" />
           <el-switch
             v-model="inspectAllSwitchValue"
@@ -59,8 +59,7 @@
                     &#xfffa;
                   </span>
                   <span class="note-book-property-text">
-                    权限:
-                    {{ parsePermissionLabel((item as NoteBookCardItem).permission_level ?? 1) }}
+                    权限: {{ (item as NoteBookCardItem).formatted_permission_level }}
                   </span>
                 </div>
                 <div class="note-book-property">
@@ -68,7 +67,7 @@
                     &#xfffb;
                   </span>
                   <span class="note-book-property-text">
-                    所有者: {{ (item as NoteBookCardItem).owner_account?.display_name ?? '' }}
+                    所有者: {{ (item as NoteBookCardItem).owner_display_name }}
                   </span>
                 </div>
                 <div class="note-book-property">
@@ -84,8 +83,7 @@
                     &#xffef;
                   </span>
                   <span class="note-book-property-text">
-                    最新更新日期:
-                    {{ formatTimestamp((item as NoteBookCardItem).last_modified_date) }}
+                    最新更新日期: {{ (item as NoteBookCardItem).formatted_last_modified_date }}
                   </span>
                 </div>
               </div>
@@ -203,8 +201,6 @@ import { useGeneralCardPanel } from '@/components/card/cardPanel/composables.ts'
 
 import PermitMaintainDialog from './subDialogs/PermitMaintainDialog.vue'
 
-import { type LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import { type DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 import { type DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
 import {
   changeFavored,
@@ -277,16 +273,14 @@ onMounted(() => {
 
 // -----------------------------------------------------------笔记本卡片-----------------------------------------------------------
 type NoteBookCardItem = {
-  key: LongIdKey
   name: string
-  remark: string
-  created_date: number
-  item_count: number
-  last_modified_date: number
-  last_inspected_date: number
-  owner_account: DispAccount | null
   permission_level: PonbPermissionLevel | null
+  formatted_permission_level: string
+  owner_display_name: string
+  item_count: number
+  formatted_last_modified_date: string
   favorite: boolean
+  note_book: DispNoteBook
 }
 
 const { items: noteBookCardItems, updateByLookup: updateNoteBookCardByLookup } =
@@ -294,29 +288,27 @@ const { items: noteBookCardItems, updateByLookup: updateNoteBookCardByLookup } =
 const noteBookCardLoading = ref<number>(0)
 const noteBookCardMaxCard = ref<number>(1000)
 
-function parsePermissionLabel(permissionLevel: PonbPermissionLevel): string {
-  switch (permissionLevel) {
-    case 0:
-      return '所有者'
-    case 1:
-      return '访客'
-    default:
-      return '（未知）'
-  }
-}
-
 function noteBookCardItemMap(t: DispNoteBook): NoteBookCardItem {
+  function formatPermissionLevel(permissionLevel: PonbPermissionLevel | null): string {
+    switch (permissionLevel) {
+      case 0:
+        return '所有者'
+      case 1:
+        return '访客'
+      default:
+        return '未知'
+    }
+  }
+
   return {
-    key: t.key,
     name: t.name,
-    remark: t.remark,
-    created_date: t.created_date,
-    item_count: t.item_count,
-    last_modified_date: t.last_modified_date,
-    last_inspected_date: t.last_inspected_date,
-    owner_account: t.owner_account,
     permission_level: t.permission_level,
+    formatted_permission_level: formatPermissionLevel(t.permission_level),
+    owner_display_name: t.owner_account?.display_name ?? '未知',
+    item_count: t.item_count,
+    formatted_last_modified_date: formatTimestamp(t.last_modified_date),
     favorite: t.favorite,
+    note_book: t,
   }
 }
 
@@ -344,12 +336,12 @@ async function handleNoteBookToCreate(): Promise<void> {
   }
 }
 
-function handleEditMenuItemClicked(item: DispNoteBook, close: () => void): void {
+function handleEditMenuItemClicked(item: NoteBookCardItem, close: () => void): void {
   close()
   handleItemToEdit(item)
 }
 
-async function handleItemToEdit(item: DispNoteBook): Promise<void> {
+async function handleItemToEdit(item: NoteBookCardItem): Promise<void> {
   if (item.permission_level !== 0) {
     await ElMessageBox.alert('您不是此笔记本的所有者，无权编辑该笔记本！', '权限不足', {
       confirmButtonText: '确定',
@@ -358,15 +350,15 @@ async function handleItemToEdit(item: DispNoteBook): Promise<void> {
     })
     return
   }
-  showNoteBookEditMaintainDialog(item)
+  showNoteBookEditMaintainDialog(item.note_book)
 }
 
-function handlePermitMenuItemClicked(item: DispNoteBook, close: () => void): void {
+function handlePermitMenuItemClicked(item: NoteBookCardItem, close: () => void): void {
   close()
   handleItemToPermit(item)
 }
 
-async function handleItemToPermit(item: DispNoteBook): Promise<void> {
+async function handleItemToPermit(item: NoteBookCardItem): Promise<void> {
   if (item.permission_level !== 0) {
     await ElMessageBox.alert('您不是此笔记本的所有者，无权分配该笔记本的权限！', '权限不足', {
       confirmButtonText: '确定',
@@ -375,16 +367,20 @@ async function handleItemToPermit(item: DispNoteBook): Promise<void> {
     })
     return
   }
+  handleShowPermitMaintainDialog(item.note_book)
+}
+
+function handleShowPermitMaintainDialog(item: DispNoteBook): void {
   permitMaintainDialogNoteBookId.value = item.key.long_id
   permitMaintainDialogVisible.value = true
 }
 
-function handleDeleteMenuItemClicked(item: DispNoteBook, close: () => void): void {
+function handleDeleteMenuItemClicked(item: NoteBookCardItem, close: () => void): void {
   close()
   handleItemToDelete(item)
 }
 
-async function handleItemToDelete(item: DispNoteBook): Promise<void> {
+async function handleItemToDelete(item: NoteBookCardItem): Promise<void> {
   if (item.permission_level !== 0) {
     await ElMessageBox.alert('您不是此笔记本的所有者，无权删除该笔记本！', '权限不足', {
       confirmButtonText: '确定',
@@ -393,7 +389,7 @@ async function handleItemToDelete(item: DispNoteBook): Promise<void> {
     })
     return
   }
-  await handleNoteBookDelete(item)
+  await handleNoteBookDelete(item.note_book)
 }
 
 async function handleNoteBookDelete(item: DispNoteBook): Promise<void> {
@@ -423,9 +419,9 @@ async function handleNoteBookDelete(item: DispNoteBook): Promise<void> {
   }
 }
 
-function handleChangeFavoredMenuItemClicked(item: DispNoteBook, close: () => void): void {
+function handleChangeFavoredMenuItemClicked(item: NoteBookCardItem, close: () => void): void {
   close()
-  handleNoteBookChangeFavored(item)
+  handleNoteBookChangeFavored(item.note_book)
 }
 
 async function handleNoteBookChangeFavored(item: DispNoteBook): Promise<void> {

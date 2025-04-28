@@ -15,7 +15,7 @@
     <header-layout-panel class="body-wrapper">
       <template v-slot:header>
         <div class="header-container">
-          <el-button type="success" @click="handleNoteBookSearch"> 刷新数据</el-button>
+          <el-button type="success" @click="handleNoteBookSearch">刷新数据</el-button>
           <el-divider direction="vertical" />
           <el-switch
             v-model="favoredOnlySwitchValue"
@@ -58,7 +58,6 @@
             @onSelectionChanged="handleNoteBookCardSelectionChanged"
           >
             <template v-slot:default="{ item }">
-              <!--suppress JSUnresolvedReference -->
               <corner-light-panel
                 class="note-book-card-container-wrapper"
                 light-bevel-edge="40px"
@@ -71,8 +70,7 @@
                       &#xfffa;
                     </span>
                     <span class="note-book-property-text">
-                      权限:
-                      {{ parsePermissionLabel((item as NoteBookCardItem).permission_level ?? 1) }}
+                      权限: {{ (item as NoteBookCardItem).formatted_permission_level }}
                     </span>
                   </div>
                   <div class="note-book-property">
@@ -80,7 +78,7 @@
                       &#xfffb;
                     </span>
                     <span class="note-book-property-text">
-                      所有者: {{ (item as NoteBookCardItem).owner_account?.display_name ?? '' }}
+                      所有者: {{ (item as NoteBookCardItem).owner_display_name }}
                     </span>
                   </div>
                   <div class="note-book-property">
@@ -96,8 +94,7 @@
                       &#xffef;
                     </span>
                     <span class="note-book-property-text">
-                      最新更新日期:
-                      {{ formatTimestamp((item as NoteBookCardItem).last_modified_date) }}
+                      最新更新日期: {{ (item as NoteBookCardItem).formatted_last_modified_date }}
                     </span>
                   </div>
                 </div>
@@ -134,7 +131,6 @@ import CornerLightPanel from '@/components/layout/cornerLightPanel/CornerLightPa
 
 import { useGeneralCardPanel } from '@/components/card/cardPanel/composables.ts'
 
-import { type DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 import { type DispNoteBook } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
 import { userPermittedWithConditionDisplayDisp } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
 import { type PonbPermissionLevel } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/ponb.ts'
@@ -229,14 +225,12 @@ onMounted(() => {
 // -----------------------------------------------------------笔记本卡片-----------------------------------------------------------
 type NoteBookCardItem = {
   name: string
-  remark: string
-  created_date: number
-  item_count: number
-  last_modified_date: number
-  last_inspected_date: number
-  favorite: boolean
-  owner_account: DispAccount | null
   permission_level: PonbPermissionLevel | null
+  formatted_permission_level: string
+  owner_display_name: string
+  item_count: number
+  formatted_last_modified_date: string
+  favorite: boolean
   note_book: DispNoteBook
 }
 
@@ -246,28 +240,26 @@ const noteBookCardLoading = ref<number>(0)
 const noteBookCardMaxCard = ref<number>(1000)
 const noteBookSelection = ref<NoteBookCardItem[]>([])
 
-function parsePermissionLabel(permissionLevel: PonbPermissionLevel): string {
-  switch (permissionLevel) {
-    case 0:
-      return '所有者'
-    case 1:
-      return '访客'
-    default:
-      return '（未知）'
-  }
-}
-
 function noteBookCardItemMap(t: DispNoteBook): NoteBookCardItem {
+  function formatPermissionLevel(permissionLevel: PonbPermissionLevel | null): string {
+    switch (permissionLevel) {
+      case 0:
+        return '所有者'
+      case 1:
+        return '访客'
+      default:
+        return '未知'
+    }
+  }
+
   return {
     name: t.name,
-    remark: t.remark,
-    created_date: t.created_date,
-    item_count: t.item_count,
-    last_modified_date: t.last_modified_date,
-    last_inspected_date: t.last_inspected_date,
-    favorite: t.favorite,
-    owner_account: t.owner_account,
     permission_level: t.permission_level,
+    formatted_permission_level: formatPermissionLevel(t.permission_level),
+    owner_display_name: t.owner_account?.display_name ?? '未知',
+    item_count: t.item_count,
+    formatted_last_modified_date: formatTimestamp(t.last_modified_date),
+    favorite: t.favorite,
     note_book: t,
   }
 }
