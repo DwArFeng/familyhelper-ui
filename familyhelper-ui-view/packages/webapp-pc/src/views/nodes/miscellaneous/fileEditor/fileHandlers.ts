@@ -8,6 +8,12 @@ import {
   download as downloadNoteAttachmentFile,
   update as updateNoteAttachmentFile,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/attachmentFile.ts'
+import { type ItemFileInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/assets/itemFile.ts'
+import {
+  inspect as inspectAssetsItemFile,
+  download as downloadAssetsItemFile,
+  update as updateAssetsItemFile,
+} from '@dwarfeng/familyhelper-ui-component-api/src/api/assets/itemFile.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 export type InspectFileResult = {
@@ -44,6 +50,27 @@ fileHandlerMap.set('NOTE_ATTACHMENT_FILE', {
       const formData: FormData = new FormData()
       formData.append('file', blob, fileName)
       await resolveResponse(updateNoteAttachmentFile({ long_id: id }, formData))
+      return { success: true, message: '附件文件提交成功' }
+    } catch {
+      return { success: false, message: '附件文件提交失败' }
+    }
+  },
+})
+
+fileHandlerMap.set('ASSETS_ITEM_FILE', {
+  async inspectFile(id: string): Promise<InspectFileResult> {
+    const itemFileInfo: ItemFileInfo = await resolveResponse(inspectAssetsItemFile({ long_id: id }))
+    const blob: Blob = await downloadAssetsItemFile({ long_id: id })
+    return {
+      name: itemFileInfo.origin_name,
+      blob: blob,
+    }
+  },
+  async updateFile(id: string, blob: Blob, fileName: string): Promise<UpdateFileResult> {
+    try {
+      const formData: FormData = new FormData()
+      formData.append('file', blob, fileName)
+      await resolveResponse(updateAssetsItemFile({ long_id: id }, formData))
       return { success: true, message: '附件文件提交成功' }
     } catch {
       return { success: false, message: '附件文件提交失败' }
