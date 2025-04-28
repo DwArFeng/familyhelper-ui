@@ -29,8 +29,6 @@ import { useOperableGeneralLazySearchTreePanel } from '@/components/tree/lazySer
 
 import { type TreeNode } from '@/components/tree/commons/types.ts'
 
-import { type DispPermissionGroupTreeItem } from '../types.ts'
-
 import { type DispPermissionGroup } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
 import {
   childForParentDisp,
@@ -59,29 +57,39 @@ withDefaults(defineProps<Props>(), {
 type Emits = {
   (
     e: 'onCurrentChanged',
-    item: DispPermissionGroupTreeItem | null,
-    node: TreeNode<DispPermissionGroupTreeItem> | null,
+    item: PermissionGroupTreeItem | null,
+    node: TreeNode<PermissionGroupTreeItem> | null,
   ): void
   (
     e: 'onPermissionGroupInspect',
-    item: DispPermissionGroupTreeItem,
-    node: TreeNode<DispPermissionGroupTreeItem>,
+    item: PermissionGroupTreeItem,
+    node: TreeNode<PermissionGroupTreeItem>,
   ): void
   (
     e: 'onPermissionGroupEdit',
-    item: DispPermissionGroupTreeItem,
-    node: TreeNode<DispPermissionGroupTreeItem>,
+    item: PermissionGroupTreeItem,
+    node: TreeNode<PermissionGroupTreeItem>,
   ): void
   (
     e: 'onPermissionGroupDelete',
-    item: DispPermissionGroupTreeItem,
-    node: TreeNode<DispPermissionGroupTreeItem>,
+    item: PermissionGroupTreeItem,
+    node: TreeNode<PermissionGroupTreeItem>,
   ): void
 }
 
 const emit = defineEmits<Emits>()
 
 // -----------------------------------------------------------Tree 逻辑处理-----------------------------------------------------------
+type PermissionGroupTreeItem = {
+  tree_node_key: string
+  key_string_id: string
+  parent_key_string_id: string
+  name: string
+  remark: string
+  has_no_child: boolean
+  permission_group: DispPermissionGroup
+}
+
 const treePanelRef = useTemplateRef<ComponentExposed<typeof LazySearchTreePanel>>('treePanelRef')
 
 const {
@@ -94,8 +102,7 @@ const {
   insertBefore,
   insertAfter,
   update,
-  remove,
-} = useOperableGeneralLazySearchTreePanel<DispPermissionGroup, DispPermissionGroupTreeItem>(
+} = useOperableGeneralLazySearchTreePanel<DispPermissionGroup, PermissionGroupTreeItem>(
   dispPermissionGroupTreeDataMap,
   searchOptionCaller,
   loadRootCaller,
@@ -104,10 +111,15 @@ const {
   treePanelRef,
 )
 
-function dispPermissionGroupTreeDataMap(t: DispPermissionGroup): DispPermissionGroupTreeItem {
+function dispPermissionGroupTreeDataMap(t: DispPermissionGroup): PermissionGroupTreeItem {
   return {
-    ...t,
     tree_node_key: t.key.string_id,
+    key_string_id: t.key.string_id,
+    parent_key_string_id: t.parent_key?.string_id ?? '',
+    name: t.name,
+    remark: t.remark,
+    has_no_child: t.has_no_child,
+    permission_group: t,
   }
 }
 
@@ -119,45 +131,54 @@ function loadRootCaller(): Promise<DispPermissionGroup[]> {
   return lookupAllToList((pagingInfo) => childForRootDisp(pagingInfo))
 }
 
-function loadChildCaller(ct: DispPermissionGroupTreeItem): Promise<DispPermissionGroup[]> {
-  return lookupAllToList((pagingInfo) => childForParentDisp(ct.key, pagingInfo))
+function loadChildCaller(ct: PermissionGroupTreeItem): Promise<DispPermissionGroup[]> {
+  return lookupAllToList((pagingInfo) => childForParentDisp(ct.permission_group.key, pagingInfo))
 }
 
-async function queryPathCaller(ct: DispPermissionGroupTreeItem): Promise<DispPermissionGroup[]> {
-  const pagedData: PagedData<DispPermissionGroup> = await resolveResponse(pathFromRootDisp(ct.key))
+async function queryPathCaller(ct: PermissionGroupTreeItem): Promise<DispPermissionGroup[]> {
+  const pagedData: PagedData<DispPermissionGroup> = await resolveResponse(
+    pathFromRootDisp(ct.permission_group.key),
+  )
   return pagedData.data
 }
 
 // -----------------------------------------------------------事件转发处理-----------------------------------------------------------
 function handleCurrentChanged(
-  item: DispPermissionGroupTreeItem | null,
-  node: TreeNode<DispPermissionGroupTreeItem> | null,
+  item: PermissionGroupTreeItem | null,
+  node: TreeNode<PermissionGroupTreeItem> | null,
 ): void {
   emit('onCurrentChanged', item, node)
 }
 
 function handleItemInspect(
-  item: DispPermissionGroupTreeItem,
-  node: TreeNode<DispPermissionGroupTreeItem>,
+  item: PermissionGroupTreeItem,
+  node: TreeNode<PermissionGroupTreeItem>,
 ): void {
   emit('onPermissionGroupInspect', item, node)
 }
 
 function handleItemEdit(
-  item: DispPermissionGroupTreeItem,
-  node: TreeNode<DispPermissionGroupTreeItem>,
+  item: PermissionGroupTreeItem,
+  node: TreeNode<PermissionGroupTreeItem>,
 ): void {
   emit('onPermissionGroupEdit', item, node)
 }
 
 function handleItemDelete(
-  item: DispPermissionGroupTreeItem,
-  node: TreeNode<DispPermissionGroupTreeItem>,
+  item: PermissionGroupTreeItem,
+  node: TreeNode<PermissionGroupTreeItem>,
 ): void {
   emit('onPermissionGroupDelete', item, node)
 }
 
 // -----------------------------------------------------------树操作-----------------------------------------------------------
+function remove(treeItem: PermissionGroupTreeItem): void {
+  if (!treePanelRef.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  treePanelRef.value.remove(treeItem)
+}
+
 defineExpose({
   appendRoot,
   append,

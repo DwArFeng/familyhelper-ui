@@ -58,13 +58,13 @@
               <template v-slot:header>
                 <el-form class="detail-form" label-position="left" label-width="80px" inline>
                   <el-form-item label="权限组ID" style="width: 50%">
-                    {{ permissionGroupTreeSelectionItem?.key?.string_id ?? '' }}
+                    {{ permissionGroupTreeSelectionItem?.key_string_id ?? '' }}
                   </el-form-item>
                   <el-form-item label="父权限组ID" style="width: 50%">
                     {{
-                      permissionGroupTreeSelectionItem?.parent_key
-                        ? '(根节点)'
-                        : (permissionGroupTreeSelectionItem?.parent_key?.string_id ?? '')
+                      permissionGroupTreeSelectionItem?.parent_key_string_id
+                        ? permissionGroupTreeSelectionItem?.parent_key_string_id
+                        : '(根节点)'
                     }}
                   </el-form-item>
                   <el-form-item label="名称" style="width: 50%">
@@ -206,11 +206,13 @@ import { useGeneralMaintainDialog } from '@/components/dialog/maintainDialog/com
 import { useTreeSelection } from '@/components/tree/commons/composables.ts'
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import { type DispPermissionGroupTreeItem } from './types.ts'
 import PermissionGroupTreePanel from './subPanels/PermissionGroupTreePanel.vue'
 
 import { type StringIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
-import { type PermissionGroup } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
+import {
+  type DispPermissionGroup,
+  type PermissionGroup,
+} from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permissionGroup.ts'
 import {
   exists as existsPermissionGroup,
   insert as insertPermissionGroup,
@@ -235,7 +237,8 @@ const loading = ref<number>(0)
 
 // -----------------------------------------------------------Header 处理-----------------------------------------------------------
 function handleHeaderDetachPermissionButtonClicked(): void {
-  const groupKey: StringIdKey | null = permissionGroupTreeSelectionItem.value?.key ?? null
+  const groupKey: StringIdKey | null =
+    permissionGroupTreeSelectionItem.value?.permission_group.key ?? null
   if (!groupKey) {
     return
   }
@@ -374,9 +377,9 @@ function handlePermissionGroupCreate(item: PermissionGroupMaintainDialogItem): v
   const _appendChild: boolean = permissionGroupAppendChild.value
   let _parent_key: StringIdKey | null
   if (_appendChild) {
-    _parent_key = permissionGroupTreeSelectionItem.value?.key ?? null
+    _parent_key = permissionGroupTreeSelectionItem.value?.permission_group.key ?? null
   } else {
-    _parent_key = permissionGroupTreeSelectionItem.value?.parent_key ?? null
+    _parent_key = permissionGroupTreeSelectionItem.value?.permission_group.parent_key ?? null
   }
   const _treeNode = permissionGroupTreeSelectionNode.value
   const _treePanel = permissionGroupTreePanelRef.value
@@ -464,12 +467,22 @@ function handlePermissionGroupEdit(item: PermissionGroupMaintainDialogItem): voi
 }
 
 // -----------------------------------------------------------PermissionGroupTree 处理-----------------------------------------------------------
+type PermissionGroupTreeItem = {
+  tree_node_key: string
+  key_string_id: string
+  parent_key_string_id: string
+  name: string
+  remark: string
+  has_no_child: boolean
+  permission_group: DispPermissionGroup
+}
+
 const { item: permissionGroupTreeSelectionItem, node: permissionGroupTreeSelectionNode } =
-  useTreeSelection<DispPermissionGroupTreeItem>()
+  useTreeSelection<PermissionGroupTreeItem>()
 
 const permissionGroupId = computed(() => {
   if (permissionGroupTreeSelectionItem.value) {
-    return permissionGroupTreeSelectionItem.value.key.string_id
+    return permissionGroupTreeSelectionItem.value.permission_group.key.string_id
   }
   return ''
 })
@@ -479,8 +492,8 @@ const permissionGroupTreePanelRef = useTemplateRef<
 >('permissionGroupTreePanelRef')
 
 function handlePermissionGroupTreeCurrentChanged(
-  data: DispPermissionGroupTreeItem | null,
-  node: TreeNode<DispPermissionGroupTreeItem> | null,
+  data: PermissionGroupTreeItem | null,
+  node: TreeNode<PermissionGroupTreeItem> | null,
 ): void {
   permissionGroupTreeSelectionItem.value = data
   permissionGroupTreeSelectionNode.value = node
@@ -489,7 +502,7 @@ function handlePermissionGroupTreeCurrentChanged(
   }
   permissionTableLoading.value += 1
   lookupWithAdjustPage(
-    (pagingInfo) => permissionChildForGroup(data.key, pagingInfo),
+    (pagingInfo) => permissionChildForGroup(data.permission_group.key, pagingInfo),
     permissionTablePagingInfo.value,
   )
     .then(updatePermissionTableByLookup)
@@ -499,11 +512,11 @@ function handlePermissionGroupTreeCurrentChanged(
     })
 }
 
-function handleShowPermissionGroupMaintainEditDialog(data: DispPermissionGroupTreeItem): void {
-  showPermissionGroupMaintainEditDialog(data)
+function handleShowPermissionGroupMaintainEditDialog(data: PermissionGroupTreeItem): void {
+  showPermissionGroupMaintainEditDialog(data.permission_group)
 }
 
-function handlePermissionGroupDelete(data: DispPermissionGroupTreeItem): void {
+function handlePermissionGroupDelete(data: PermissionGroupTreeItem): void {
   const _treePanel = permissionGroupTreePanelRef.value
   if (!_treePanel) {
     throw new Error('不应该执行到此处, 请联系开发人员')
@@ -523,11 +536,11 @@ function handlePermissionGroupDelete(data: DispPermissionGroupTreeItem): void {
   )
     .then(() => Promise.resolve())
     .catch(() => Promise.reject())
-    .then(() => resolveResponse(removePermissionGroup(data.key, true)))
+    .then(() => resolveResponse(removePermissionGroup(data.permission_group.key, true)))
     .then(() => {
       ElMessage({
         showClose: true,
-        message: `权限组 ${data.key.string_id} 删除成功`,
+        message: `权限组 ${data.permission_group.key.string_id} 删除成功`,
         type: 'success',
         center: true,
       })
@@ -555,7 +568,8 @@ const {
 const permissionTableLoading = ref<number>(0)
 
 function handlePermissionToDetachTablePagingAttributeChanged(): void {
-  const groupKey: StringIdKey | null = permissionGroupTreeSelectionItem.value?.key ?? null
+  const groupKey: StringIdKey | null =
+    permissionGroupTreeSelectionItem.value?.permission_group.key ?? null
   if (!groupKey) {
     return
   }
@@ -620,7 +634,8 @@ function handlePermissionToAttachTableSelectionChanged(selection: Permission[]):
 }
 
 function handlePermissionAttachDialogAttachPermission(): void {
-  const groupKey: StringIdKey | null = permissionGroupTreeSelectionItem.value?.key ?? null
+  const groupKey: StringIdKey | null =
+    permissionGroupTreeSelectionItem.value?.permission_group.key ?? null
   if (!groupKey) {
     return
   }
