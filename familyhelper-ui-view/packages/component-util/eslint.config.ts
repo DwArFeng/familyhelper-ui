@@ -1,3 +1,5 @@
+// noinspection DuplicatedCode
+
 import pluginJs from '@eslint/js'
 import tsEslint from 'typescript-eslint'
 import pluginImportX from 'eslint-plugin-import-x'
@@ -27,7 +29,7 @@ export default [
     settings: {
       'import-x/resolver-next': [
         createTypeScriptImportResolver({
-          project: 'tsconfig.json',
+          project: 'tsconfig.app.json',
           noWarnOnMultipleProjects: true
         })
       ]
