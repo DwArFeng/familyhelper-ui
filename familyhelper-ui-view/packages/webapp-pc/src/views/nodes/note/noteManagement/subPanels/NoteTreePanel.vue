@@ -1,5 +1,5 @@
 <template>
-  <div class="note-tree-panel">
+  <div class="note-tree-panel-container">
     <div class="placeholder" v-if="noteBookId === ''">请选择笔记本</div>
     <div class="main-container" v-else>
       <lazy-search-tree-panel
@@ -349,7 +349,7 @@ defineExpose({
 </script>
 
 <style scoped>
-.note-tree-panel {
+.note-tree-panel-container {
   height: 100%;
   width: 100%;
 }
