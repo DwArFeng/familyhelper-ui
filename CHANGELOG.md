@@ -16,7 +16,8 @@
 
 #### Bug修复
 
-- (无)
+- `webapp-pc` 子模块组件 bug 修复。
+  - `LazySearchTreePanel` 组件在刷新时未能正确清除当前选中项的 bug。
 
 #### 功能移除
 

@@ -271,7 +271,10 @@ function handleRefresh(): void {
   handleLoadRoot()
   searchBarDropdownVisible.value = false
   updatePathIndicator()
-  emit('onCurrentChanged', null, null)
+  if (!treeRef.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  treeRef.value.setCurrentKey()
 }
 
 onMounted(() => {
