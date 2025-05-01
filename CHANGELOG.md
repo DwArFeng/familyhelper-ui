@@ -4,6 +4,10 @@
 
 #### 功能构建
 
+- `webapp-pc` 子模块依赖新增。
+  - 增加依赖 `sortablejs` 以应用其新功能，版本为 `^1.15.6`。
+  - 增加依赖 `@types/sortablejs` 以应用其新功能，版本为 `^1.15.8`。
+
 - `webapp-pc` 子模块组件优化。
   - `DefaultTreeOperateAreaSlot` 组件图标按钮图标尺寸优化。
   - `TablePanel` 组件图标按钮图标尺寸优化。
