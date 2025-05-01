@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- `webapp-pc` 子模块回归。
+  - 组件 `DraggableTablePanel` 回归。
+
 - `webapp-pc` 子模块依赖新增。
   - 增加依赖 `sortablejs` 以应用其新功能，版本为 `^1.15.6`。
   - 增加依赖 `@types/sortablejs` 以应用其新功能，版本为 `^1.15.8`。
