@@ -471,8 +471,6 @@ type NoteItemMaintainDialogItem = {
   remark: string
 }
 
-const UPSC_ITEM_EDIT_PANEL: string = 'ui_preference.pc.note.note_management.item_edit_panel'
-
 const {
   visible: noteItemMaintainDialogVisible,
   item: noteItemMaintainDialogItem,
@@ -487,10 +485,6 @@ const {
 const noteItemMaintainDialogLoading = ref<number>(0)
 const noteItemMaintainDialogRules = ref({
   name: [{ required: true, message: '名称不能为空', trigger: 'change' }],
-})
-
-const itemEditPanelUpsc = computed<string>(() => {
-  return UPSC_ITEM_EDIT_PANEL
 })
 
 function handleShowItemCreateDialogParent(): void {
@@ -611,6 +605,12 @@ async function handleNoteNodePropertyUpdated(): Promise<void> {
 }
 
 // -----------------------------------------------------------项目编辑面板-----------------------------------------------------------
+const UPSC_ITEM_EDIT_PANEL: string = 'ui_preference.pc.note.note_management.item_edit_panel'
+
+const itemEditPanelUpsc = computed<string>(() => {
+  return UPSC_ITEM_EDIT_PANEL
+})
+
 async function handleNoteItemPropertyUpdated(): Promise<void> {
   const oldItem: DispNoteItem | null = noteTreeCurrentItem.value?.item ?? null
   if (!oldItem) {
