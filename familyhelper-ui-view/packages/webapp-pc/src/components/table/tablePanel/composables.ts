@@ -25,11 +25,11 @@ type UseBackendPagingTablePanelResult<T, CT> = {
  * - `currentPage` 表示当前页码（起始于 `0`），可直接用于表格面板的 `currentPage` 属性，
  *   应使用 `v-model` 绑定。
  * - `pageSize` 表示每页的大小，可直接用于表格面板的 `pageSize` 属性，应使用 `v-model` 绑定。
- * - `items` 表示 bean 列表，可直接用于表格面板的 `items` 属性。
- * - `itemCount` 表示 bean 数量，可直接用于表格面板的 `itemCount` 属性。
+ * - `items` 表示 component bean 列表，可直接用于表格面板的 `items` 属性。
+ * - `itemCount` 表示 component bean 数量，可直接用于表格面板的 `itemCount` 属性。
  * - `pagingInfo` 表示分页信息，该方法可以快速获取分页信息，以便在调用后端接口时使用。
- * - `updateByLookup` 方法用于更新当前的 bean 列表和 bean 数量，当使用后端接口查询到数据后，
- *   调用此方法可以快速更新当前的 component bean 列表和数量。
+ * - `updateByLookup` 方法用于更新当前的 component bean 列表和 component bean 数量，
+ *   当使用后端接口查询到数据后，调用此方法可以快速更新当前的 component bean 列表和数量。
  *
  * 当表格面板使用的 component bean 类型和后端接口返回的 bean 类型一致时，
  * 可以使用 {@link useIdentityBackendPagingTablePanel} 方法进行简化。
@@ -88,7 +88,7 @@ export function useBackendPagingTablePanel<T, CT>(
  * - `itemCount` 表示 bean 数量，可直接用于表格面板的 `itemCount` 属性。
  * - `pagingInfo` 表示分页信息，该方法可以快速获取分页信息，以便在调用后端接口时使用。
  * - `updateByLookup` 方法用于更新当前的 bean 列表和 bean 数量，当使用后端接口查询到数据后，
- *   调用此方法可以快速更新当前的 component bean 列表和数量。
+ *   调用此方法可以快速更新当前的 bean 列表和数量。
  *
  * @template T bean 类型。
  * @param initialPageSize 初始的分页大小。
@@ -118,10 +118,10 @@ type UseFrontendPagingTablePanelResult<T, CT> = {
  * 返回的结果中：
  * - `currentPage` 表示当前页码，可直接用于表格面板的 `currentPage` 属性，应使用 `v-model` 绑定。
  * - `pageSize` 表示每页的大小，可直接用于表格面板的 `pageSize`，应使用 `v-model` 绑定。
- * - `items` 表示当前的 bean 列表，可直接用于表格面板的 `items` 属性，应使用 `v-model` 绑定。
- * - `itemCount` 表示当前的 bean 数量，可直接用于表格面板的 `itemCount` 属性。
- * - `updateByLookup` 方法用于更新当前的 bean 列表和 bean 数量，当使用后端接口查询到数据后，
- *   调用此方法可以快速更新当前的 component bean 列表和数量。
+ * - `items` 表示当前的 component bean 列表，可直接用于表格面板的 `items` 属性，应使用 `v-model` 绑定。
+ * - `itemCount` 表示当前的 component bean 数量，可直接用于表格面板的 `itemCount` 属性。
+ * - `updateByLookup` 方法用于更新当前的 component bean 列表和 component bean 数量，
+ *   当使用后端接口查询到数据后，调用此方法可以快速更新当前的 component bean 列表和数量。
  * - `refreshPaging` 方法用于刷新当前的分页信息，该方法可根据当前的分页信息更新 items，常用于
  *   `onPagingAttributeChanged` 事件的响应函数。
  *
@@ -194,7 +194,7 @@ export function useFrontendPagingTablePanel<T, CT>(
  * - `items` 表示当前的 bean 列表，可直接用于表格面板的 `items` 属性，应使用 `v-model` 绑定。
  * - `itemCount` 表示当前的 bean 数量，可直接用于表格面板的 `itemCount` 属性。
  * - `updateByLookup` 方法用于更新当前的 bean 列表和 bean 数量，当使用后端接口查询到数据后，
- *   调用此方法可以快速更新当前的 component bean 列表和数量。
+ *   调用此方法可以快速更新当前的 bean 列表和数量。
  * - `refreshPaging` 方法用于刷新当前的分页信息，该方法可根据当前的分页信息更新 items，常用于
  *   `onPagingAttributeChanged` 事件的响应函数。
  *
