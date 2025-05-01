@@ -2,7 +2,6 @@
   <div class="table-panel-container" ref="rootRef">
     <div class="table-container">
       <el-table
-        ref="elTable"
         class="table"
         height="100%"
         stripe
