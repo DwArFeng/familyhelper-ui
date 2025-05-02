@@ -3442,6 +3442,10 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       '@ckeditor/ckeditor5-widget': 45.0.0
       es-toolkit: 1.32.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-cloud-services@45.0.0':
     dependencies:
@@ -3509,6 +3513,10 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       '@ckeditor/ckeditor5-watchdog': 45.0.0
       es-toolkit: 1.32.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-document-outline@45.0.0':
     dependencies:
@@ -3636,6 +3644,10 @@ snapshots:
       '@ckeditor/ckeditor5-ui': 45.0.0
       '@ckeditor/ckeditor5-undo': 45.0.0
       ckeditor5: 45.0.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   '@ckeditor/ckeditor5-find-and-replace@45.0.0':
     dependencies:
@@ -3645,10 +3657,6 @@ snapshots:
       '@ckeditor/ckeditor5-utils': 45.0.0
       ckeditor5: 45.0.0
       es-toolkit: 1.32.0
-    transitivePeerDependencies:
-      - bufferutil
-      - supports-color
-      - utf-8-validate
 
   '@ckeditor/ckeditor5-font@45.0.0':
     dependencies:
