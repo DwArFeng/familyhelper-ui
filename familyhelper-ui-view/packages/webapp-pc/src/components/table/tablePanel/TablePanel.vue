@@ -32,7 +32,6 @@
                 <el-button
                   class="table-button"
                   v-if="inspectButtonVisible"
-                  size="small"
                   type="success"
                   :icon="SearchIcon"
                   @click="handleOperateColumnItemInspect(scope.row, scope.$index)"
@@ -40,7 +39,6 @@
                 <el-button
                   class="table-button"
                   v-if="editButtonVisible"
-                  size="small"
                   type="primary"
                   :icon="EditPen"
                   @click="handleOperateColumnItemEdit(scope.row, scope.$index)"
@@ -48,7 +46,6 @@
                 <el-button
                   class="table-button"
                   v-if="deleteButtonVisible"
-                  size="small"
                   type="danger"
                   :icon="DeleteIcon"
                   @click.stop="handleOperateColumnItemDelete(scope.row, scope.$index)"
