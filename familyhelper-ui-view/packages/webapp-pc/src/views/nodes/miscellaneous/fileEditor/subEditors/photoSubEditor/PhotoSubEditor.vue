@@ -1,6 +1,13 @@
 <template>
   <div class="photo-sub-editor-container">
-    <el-image class="image" fit="contain" :src="url" :preview-src-list="[url]" :z-index="10000" />
+    <el-image
+      class="image"
+      fit="contain"
+      preview-teleported
+      :src="url"
+      :preview-src-list="[url]"
+      :z-index="10000"
+    />
   </div>
 </template>
 
