@@ -5,6 +5,7 @@
 #### 功能构建
 
 - `webapp-pc` 子模块组件优化。
+  - `DefaultTreeOperateAreaSlot` 组件图标按钮图标尺寸优化。
   - `TablePanel` 组件图标按钮图标尺寸优化。
   - `table/tablePanel/composables.ts` 代码注释优化。
   - `TablePanel` 组件代码优化，去除不必要的 ref 属性。

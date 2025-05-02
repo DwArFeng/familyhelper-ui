@@ -3,7 +3,6 @@
     <el-button-group>
       <el-button
         class="tree-node-button"
-        size="small"
         type="success"
         v-if="inspectButtonVisible"
         :icon="SearchIcon"
@@ -11,7 +10,6 @@
       />
       <el-button
         class="tree-node-button"
-        size="small"
         type="primary"
         :icon="EditPen"
         v-if="editButtonVisible"
@@ -20,7 +18,6 @@
       <el-button
         class="tree-node-button"
         type="danger"
-        size="small"
         :icon="DeleteIcon"
         v-if="deleteButtonVisible"
         @click="handleItemDelete"
