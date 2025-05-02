@@ -14,10 +14,9 @@
               class="item icon-button"
               v-if="mode === 'DEFAULT'"
               type="info"
+              :icon="useIconfontButtonIcon('&#xffd3;')"
               @click="handlePanelFloatyButtonClicked"
-            >
-              <i class="iconfont">&#xffd3;</i>
-            </el-button>
+            />
           </div>
         </template>
         <template v-slot:default>
@@ -78,6 +77,8 @@ import { onMounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+
+import { useIconfontButtonIcon } from '@/composables/icon.ts'
 
 import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TitleLayoutPanel from '@/components/layout/titleLayoutPanel/TitleLayoutPanel.vue'

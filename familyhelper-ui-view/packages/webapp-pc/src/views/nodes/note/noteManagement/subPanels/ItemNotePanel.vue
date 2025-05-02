@@ -42,10 +42,9 @@
               class="item icon-button"
               v-if="mode === 'DEFAULT'"
               type="info"
+              :icon="useIconfontButtonIcon('&#xffd3;')"
               @click="handlePanelFloatyButtonClicked"
-            >
-              <i class="iconfont">&#xffd3;</i>
-            </el-button>
+            />
           </div>
         </template>
         <template v-slot:default>
@@ -79,6 +78,8 @@ import { type EditorConfig } from 'ckeditor5'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
 
 import { FamilyhelperEditor } from '@dwarfeng/familyhelper-ui-component-ckeditor/src/familyhelperEditor.ts'
+
+import { useIconfontButtonIcon } from '@/composables/icon.ts'
 
 import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import FileCreateDialog from '@/components/file/fileCreateDialog/FileCreateDialog.vue'
