@@ -68,7 +68,7 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import DeriveHistoryInspectDialog from './DeriveHistoryInspectDialog.vue'
+import DeriveHistoryInspectDialog from '@/views/nodes/systemSettings/accountSecurity/subDialogs/DeriveHistoryInspectDialog.vue'
 
 import {
   type DeriveHistory,

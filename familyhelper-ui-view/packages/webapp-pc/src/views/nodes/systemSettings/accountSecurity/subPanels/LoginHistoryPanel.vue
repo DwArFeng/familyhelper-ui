@@ -74,7 +74,7 @@ import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayou
 
 import { useIdentityBackendPagingTablePanel } from '@/components/table/tablePanel/composables.ts'
 
-import LoginHistoryInspectDialog from './LoginHistoryInspectDialog.vue'
+import LoginHistoryInspectDialog from '@/views/nodes/systemSettings/accountSecurity/subDialogs/LoginHistoryInspectDialog.vue'
 
 import {
   type LoginHistory,
