@@ -3,10 +3,11 @@
     <el-tabs class="tabs-panel" v-model="tabsActiveName" tab-position="left">
       <el-tab-pane label="概览" name="overlook">
         <item-overlook-panel
+          ref="itemOverlookPanelRef"
           mode="DEFAULT"
           :note-item-id="noteItemId"
           :readonly="readonly"
-          @onNoteItemPropertyUpdated="handleNoteItemPropertyUpdated"
+          @onNoteItemPropertyUpdated="handleNoteItemPropertyUpdated('DEFAULT')"
           @onPanelFloatyButtonClicked="showPanelFloaty(0)"
         />
       </el-tab-pane>
@@ -53,10 +54,11 @@
     >
       <item-overlook-panel
         v-if="panelFloatyType === 0"
+        ref="floatyItemOverlookPanelRef"
         mode="FLOATY"
         :note-item-id="noteItemId"
         :readonly="readonly"
-        @onNoteItemPropertyUpdated="handleNoteItemPropertyUpdated"
+        @onNoteItemPropertyUpdated="handleNoteItemPropertyUpdated('FLOATY')"
       />
       <item-note-panel
         v-if="panelFloatyType === 1"
@@ -157,6 +159,11 @@ type TabsActiveName = 'overlook' | 'note' | 'attachment'
 const tabsActiveName = ref<TabsActiveName>('overlook')
 
 // -----------------------------------------------------------事件处理-----------------------------------------------------------
+const itemOverlookPanelRef =
+  useTemplateRef<ComponentExposed<typeof ItemOverlookPanel>>('itemOverlookPanelRef')
+const floatyItemOverlookPanelRef = useTemplateRef<ComponentExposed<typeof ItemOverlookPanel>>(
+  'floatyItemOverlookPanelRef',
+)
 const itemNotePanelRef = useTemplateRef<ComponentExposed<typeof ItemNotePanel>>('itemNotePanelRef')
 const floatyItemNotePanelRef =
   useTemplateRef<ComponentExposed<typeof ItemNotePanel>>('floatyItemNotePanelRef')
@@ -166,8 +173,14 @@ const floatyItemAttachmentPanelRef = useTemplateRef<ComponentExposed<typeof Item
   'floatyItemAttachmentPanelRef',
 )
 
-function handleNoteItemPropertyUpdated(): void {
+function handleNoteItemPropertyUpdated(mode: 'DEFAULT' | 'FLOATY'): void {
   emit('onNoteItemPropertyUpdated')
+  // 根据 mode 取值，通过查询方法更新另一个面板的内容。
+  if (mode === 'DEFAULT') {
+    floatyItemOverlookPanelRef.value?.noteItemSearch()
+  } else {
+    itemOverlookPanelRef.value?.noteItemSearch()
+  }
 }
 
 function handleNoteItemNoteFileCommitted(mode: 'DEFAULT' | 'FLOATY'): void {

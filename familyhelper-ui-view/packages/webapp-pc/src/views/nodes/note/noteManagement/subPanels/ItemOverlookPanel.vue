@@ -234,6 +234,15 @@ async function handleNoteItemEdit(item: NoteItemMaintainDialogItem): Promise<voi
     loading.value -= 1
   }
 }
+
+// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+function noteItemSearch(): void {
+  handleNoteItemSearch()
+}
+
+defineExpose({
+  noteItemSearch,
+})
 </script>
 
 <style scoped>
