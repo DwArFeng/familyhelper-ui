@@ -1,44 +1,43 @@
 <template>
-  <div class="item-maintain-dialog-container">
-    <el-dialog
-      id="dialog"
-      v-model="watchedVisible"
-      append-to-body
-      destroy-on-close
-      :top="top"
-      :title="title"
-      :close-on-click-modal="closeOnClickModal"
-      :custom-class="customClass"
-      @keydown.ctrl.enter="handleHotKeyDown"
+  <el-dialog
+    class="item-maintain-dialog-container"
+    id="dialog"
+    v-model="watchedVisible"
+    append-to-body
+    destroy-on-close
+    :top="top"
+    :title="title"
+    :close-on-click-modal="closeOnClickModal"
+    :custom-class="customClass"
+    @keydown.ctrl.enter="handleHotKeyDown"
+  >
+    <el-form
+      ref="formRef"
+      v-loading="loading"
+      :model="item"
+      :label-width="labelWidth"
+      :rules="rules"
+      :validate-on-rule-change="false"
+      @submit.prevent
     >
-      <el-form
-        ref="formRef"
-        v-loading="loading"
-        :model="item"
-        :label-width="labelWidth"
-        :rules="rules"
-        :validate-on-rule-change="false"
-        @submit.prevent
-      >
-        <slot name="default" />
-      </el-form>
-      <template v-slot:footer>
-        <div class="footer-container">
-          <el-button
-            type="primary"
-            v-if="mode !== 'INSPECT'"
-            :disabled="loading"
-            @click="handleFirstButtonClicked"
-          >
-            {{ firstButtonLabel }}
-          </el-button>
-          <el-button :disabled="loading" @click="handleSecondButtonClicked">
-            {{ secondButtonLabel }}
-          </el-button>
-        </div>
-      </template>
-    </el-dialog>
-  </div>
+      <slot name="default" />
+    </el-form>
+    <template v-slot:footer>
+      <div class="footer-container">
+        <el-button
+          type="primary"
+          v-if="mode !== 'INSPECT'"
+          :disabled="loading"
+          @click="handleFirstButtonClicked"
+        >
+          {{ firstButtonLabel }}
+        </el-button>
+        <el-button :disabled="loading" @click="handleSecondButtonClicked">
+          {{ secondButtonLabel }}
+        </el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts" generic="CT extends Record<string, any>">

@@ -16,6 +16,7 @@
   - 增加依赖 `@types/sortablejs` 以应用其新功能，版本为 `^1.15.8`。
 
 - `webapp-pc` 子模块组件优化。
+  - `MaintainDialog` 组件对话框代码结构优化。
   - `DefaultTreeOperateAreaSlot` 组件图标按钮图标尺寸优化。
   - `TablePanel` 组件图标按钮图标尺寸优化。
   - `table/tablePanel/composables.ts` 代码注释优化。
