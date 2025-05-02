@@ -389,8 +389,23 @@ function update(item: CT): void {
   if (!treeRef.value) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
+  // 判断更新的项目是否是当前选中的节点对应的项目。
+  // 如果更新的是当前选中的节点对应的项目，则需要触发 onCurrentChanged 事件，
+  // 使得组件的使用方可以获取到最新的当前选中节点。
+  let emitOnCurrentChangedFlag: boolean = false
+  if (
+    treeRef.value.getCurrentNode() &&
+    treeRef.value.getCurrentNode()[props.keyField] === item[props.keyField]
+  ) {
+    emitOnCurrentChangedFlag = true
+  }
+  // 节点数据更新。
   const treeNode: TreeNode<CT> = treeRef.value.getNode(item) as TreeNode<CT>
   treeNode.data = item
+  // 如果需要触发 onCurrentChanged 事件，则触发。
+  if (emitOnCurrentChangedFlag) {
+    emit('onCurrentChanged', item, treeNode)
+  }
 }
 
 function remove(item: CT): void {

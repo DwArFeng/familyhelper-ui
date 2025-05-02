@@ -43,6 +43,7 @@
   - 学习笔记 -> 笔记管理笔记树子面板根元素类名错误。
 
 - `webapp-pc` 子模块组件 bug 修复。
+  - `LazySearchTreePanel` 组件调用 `update` 方法时，如果更新的项目是当前节点对应的项目，组件不触发更新事件。
   - `LazySearchTreePanel` 组件在刷新时未能正确清除当前选中项的 bug。
 
 #### 功能移除
