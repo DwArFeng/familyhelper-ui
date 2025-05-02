@@ -5,6 +5,7 @@
 #### 功能构建
 
 - `webapp-pc` 子模块回归。
+  - 组件 `ImageCropper` 回归。
   - 组件 `DraggableTablePanel` 回归。
 
 - `webapp-pc` 子模块依赖新增。
