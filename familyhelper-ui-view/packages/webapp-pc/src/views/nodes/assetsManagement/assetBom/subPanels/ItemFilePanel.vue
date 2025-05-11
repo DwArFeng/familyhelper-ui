@@ -233,9 +233,9 @@ import {
   childForItemInspectedDateDesc,
   childForItemModifiedDateDesc,
   childForItemOriginNameAsc,
-  download,
   remove,
   upload,
+  requestItemFileStreamVoucher,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/assets/itemFile.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
@@ -249,6 +249,7 @@ import { parseFileExtension } from '@dwarfeng/familyhelper-ui-component-util/src
 
 import { type EditInfo } from '@/util/file.ts'
 import { getEditInfo } from '@/util/file.ts'
+import { type LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
 
 defineOptions({
   name: 'ItemFilePanel',
@@ -502,13 +503,28 @@ function handleFileEditContextmenuClicked(row: ItemFileInfo, close: () => void):
 async function handleFileDownload(row: ItemFileInfo): Promise<void> {
   loading.value += 1
   try {
-    const blob: Blob = await download(row.key)
-    const fileName: string = row.origin_name
-    const link: HTMLAnchorElement = document.createElement('a')
-    link.href = window.URL.createObjectURL(blob)
-    link.download = fileName
-    link.click()
-    window.URL.revokeObjectURL(link.href)
+    // 获取文件下载凭证。
+    const _voucherKey: LongIdKey = await resolveResponse(requestItemFileStreamVoucher(row.key))
+    // 信息提示。
+    ElMessage({
+      showClose: true,
+      message: '后台正在准备文件，文件越大，准备时间越长，请耐心等待...',
+      type: 'success',
+      center: true,
+      duration: 10000,
+    })
+    // 创建 iframe, 执行下载。
+    const iframe: HTMLIFrameElement = document.createElement('iframe')
+    iframe.setAttribute('hidden', 'hidden')
+    document.body.appendChild(iframe)
+    const url: string = `${vim.ctx().api().baseUrl()}/assets/item-file/download-by-voucher?voucher-id=${_voucherKey.long_id}`
+    iframe.setAttribute('src', url)
+    // 销毁 iframe。
+    // 由于设置 src 属性的 iframe 不支持 onload 事件，所以使用定时器来销毁 iframe。
+    // 假设文件准备的时间不会超过 10 分钟。
+    setTimeout(() => {
+      document.body.removeChild(iframe)
+    }, 600000)
   } finally {
     loading.value -= 1
   }
