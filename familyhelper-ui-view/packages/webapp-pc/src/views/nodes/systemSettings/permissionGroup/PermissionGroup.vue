@@ -94,6 +94,13 @@
                     <el-table-column type="selection" width="55" />
                     <el-table-column prop="key.string_id" label="权限节点" show-overflow-tooltip />
                     <el-table-column prop="name" label="名称" show-overflow-tooltip />
+                    <el-table-column
+                      prop="level"
+                      label="等级"
+                      align="right"
+                      width="85"
+                      show-overflow-tooltip
+                    />
                     <el-table-column prop="remark" label="备注" show-overflow-tooltip />
                   </template>
                   <template v-slot:contextmenu="{ row, close }">
@@ -170,6 +177,7 @@
         <el-table-column type="selection" width="55" />
         <el-table-column prop="key.string_id" label="权限节点" show-overflow-tooltip />
         <el-table-column prop="name" label="名称" show-overflow-tooltip />
+        <el-table-column prop="level" label="等级" align="right" width="85" show-overflow-tooltip />
         <el-table-column prop="remark" label="备注" show-overflow-tooltip />
       </table-panel>
       <template v-slot:footer>
@@ -251,6 +259,7 @@ function handleHeaderDetachPermissionButtonClicked(): void {
           group_key: null,
           name: permission.name,
           remark: permission.remark,
+          level: permission.level,
         }),
       ),
     )
@@ -648,6 +657,7 @@ function handlePermissionAttachDialogAttachPermission(): void {
           group_key: groupKey,
           name: permission.name,
           remark: permission.remark,
+          level: permission.level,
         }),
       ),
     )

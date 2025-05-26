@@ -10,6 +10,7 @@ export type Permission = {
   group_key: StringIdKey | null
   name: string
   remark: string
+  level: number
 }
 
 export type InsertPermission = Permission

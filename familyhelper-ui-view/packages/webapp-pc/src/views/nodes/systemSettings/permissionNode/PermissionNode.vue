@@ -43,6 +43,13 @@
             <el-table-column prop="key.string_id" label="权限节点" show-overflow-tooltip />
             <el-table-column prop="group_key.string_id" label="权限组" show-overflow-tooltip />
             <el-table-column prop="name" label="名称" show-overflow-tooltip />
+            <el-table-column
+              prop="level"
+              label="等级"
+              align="right"
+              width="85"
+              show-overflow-tooltip
+            />
             <el-table-column prop="remark" label="备注" show-overflow-tooltip />
           </template>
           <template v-slot:contextmenu="{ row, close }">
@@ -84,6 +91,14 @@
       <el-form-item label="名称" prop="name">
         <el-input
           v-model="permissionMaintainDialogItem.name"
+          :readonly="permissionMaintainDialogMode === 'INSPECT'"
+        />
+      </el-form-item>
+      <el-form-item label="等级" prop="level">
+        <el-input-number
+          class="form-input-number"
+          v-model="permissionMaintainDialogItem.level"
+          :min="0"
           :readonly="permissionMaintainDialogMode === 'INSPECT'"
         />
       </el-form-item>
@@ -268,6 +283,7 @@ type PermissionMaintainDialogItem = {
   group_key_string_id: string
   name: string
   remark: string
+  level: number
 }
 
 const {
@@ -284,6 +300,7 @@ const {
     group_key_string_id: '',
     name: '',
     remark: '',
+    level: 0,
   },
 )
 const permissionMaintainDialogLoading = ref<number>(0)
@@ -344,6 +361,7 @@ function permissionMaintainDialogItemMap(t: Permission): PermissionMaintainDialo
     group_key_string_id: t.group_key?.string_id ?? '',
     name: t.name,
     remark: t.remark,
+    level: t.level,
   }
 }
 
@@ -358,6 +376,7 @@ async function handlePermissionCreate(item: PermissionMaintainDialogItem): Promi
         group_key: groupKey,
         name: item.name,
         remark: item.remark,
+        level: item.level,
       }),
     )
     ElMessage({
@@ -384,6 +403,7 @@ async function handlePermissionEdit(item: PermissionMaintainDialogItem): Promise
         group_key: groupKey,
         name: item.name,
         remark: item.remark,
+        level: item.level,
       }),
     )
     ElMessage({
@@ -426,5 +446,9 @@ async function handlePermissionEdit(item: PermissionMaintainDialogItem): Promise
 .table :deep(.contextmenu .el-divider--horizontal) {
   margin-top: 1px;
   margin-bottom: 1px;
+}
+
+.form-input-number {
+  width: 200px;
 }
 </style>
