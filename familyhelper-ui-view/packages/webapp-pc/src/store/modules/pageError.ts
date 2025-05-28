@@ -38,7 +38,7 @@ function setErrorText(value: string): void {
 
 // -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
 // 存储在 LocalStorage 中的持久化主键
-const PERSISTENCE_DATA_KEY = 'store.persistence_data.page_error'
+const PERSISTENCE_DATA_KEY = 'store.persistence_data.page_error.v2'
 
 /**
  * VIM 初始化钩子。

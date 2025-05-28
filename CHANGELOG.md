@@ -5,6 +5,9 @@
 #### 功能构建
 
 - `webapp-pc` 子模块功能优化。
+  - `src/store/modules/lnp.ts` 持久化主键常量优化。
+  - `src/store/modules/navigationEzNav.ts` 持久化主键常量优化。
+  - `src/store/modules/pageError.ts` 持久化主键常量优化。
   - `src/views/nodes/assetsManagement/assetBom/AssetBom.vue` UPSC 常量值优化。
   - `src/views/nodes/note/noteManagement/NoteManagement.vue` UPSC 常量值优化。
   - `src/views/nodes/systemSettings/accountSecurity/AccountSecurity.vue` UPSC 常量值优化。

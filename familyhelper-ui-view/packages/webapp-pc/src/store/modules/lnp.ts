@@ -189,7 +189,7 @@ type PersistenceData = {
 }
 
 // 存储在 LocalStorage 中的持久化主键
-const LOCAL_STORAGE_PERSISTENCE_DATA_KEY = 'store.persistence_data.lnp'
+const LOCAL_STORAGE_PERSISTENCE_DATA_KEY = 'store.persistence_data.lnp.v2'
 
 // 登录保持器。
 let loginKeeper: number
