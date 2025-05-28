@@ -49,7 +49,7 @@ const headerVisible = computed(() => lnpStore.hasPermission(PERMISSION_HEADER_VI
 const PERMISSION_SELF_MODIFIABLE = 'action.account_security.self_modifiable'
 const PERMISSION_ALL_MODIFIABLE = 'action.account_security.all_modifiable'
 const UPSC_ACCOUNT_SECURITY_EDIT_PANEL =
-  'ui_preference.pc.system.account_security.account_security_edit_panel.v2'
+  'ui_preference.pc.system.account_security.account_security_edit_panel'
 
 const accountSecurityEditPanelAccountId = computed(() => {
   // 如果有 PERMISSION_HEADER_VISIBLE 权限，返回用户选择器中的用户 ID。

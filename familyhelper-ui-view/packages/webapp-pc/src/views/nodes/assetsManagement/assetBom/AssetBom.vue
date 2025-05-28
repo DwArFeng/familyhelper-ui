@@ -478,8 +478,7 @@ async function handleItemCreate(item: ItemMaintainDialogItem): Promise<void> {
 }
 
 // -----------------------------------------------------------项目编辑面板-----------------------------------------------------------
-const UPSC_ITEM_EDIT_PANEL: string =
-  'ui_preference.pc.assert_management.assert_bom.item_edit_panel.v2'
+const UPSC_ITEM_EDIT_PANEL: string = 'ui_preference.pc.assert_management.assert_bom.item_edit_panel'
 
 const itemEditPanelUpsc = computed<string>(() => {
   return UPSC_ITEM_EDIT_PANEL

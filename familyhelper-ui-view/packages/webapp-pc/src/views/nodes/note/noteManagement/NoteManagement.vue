@@ -605,7 +605,7 @@ async function handleNoteNodePropertyUpdated(): Promise<void> {
 }
 
 // -----------------------------------------------------------项目编辑面板-----------------------------------------------------------
-const UPSC_ITEM_EDIT_PANEL: string = 'ui_preference.pc.note.note_management.item_edit_panel.v2'
+const UPSC_ITEM_EDIT_PANEL: string = 'ui_preference.pc.note.note_management.item_edit_panel'
 
 const itemEditPanelUpsc = computed<string>(() => {
   return UPSC_ITEM_EDIT_PANEL
