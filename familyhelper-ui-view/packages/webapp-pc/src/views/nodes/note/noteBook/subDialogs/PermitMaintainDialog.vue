@@ -1,91 +1,90 @@
 <template>
-  <div class="permit-maintain-dialog-container">
-    <el-dialog
-      v-model="watchedVisible"
-      id="dialog"
-      append-to-body
-      destroy-on-close
-      title="权限管理"
-      top="6vh"
-      :close-on-click-modal="false"
-    >
-      <header-layout-panel class="dialog-container" v-loading="loading">
-        <template v-slot:header>
-          <div class="header-container">
-            <el-form class="header-form" :inline="true" :model="form">
-              <el-form-item class="header-form-item" label="用户">
-                <account-selector
-                  v-model="form.userId"
-                  :filter="(d) => d.key.string_id !== lnpStore.me"
+  <el-dialog
+    class="permit-maintain-dialog-container"
+    v-model="watchedVisible"
+    id="dialog"
+    append-to-body
+    destroy-on-close
+    title="权限管理"
+    top="6vh"
+    :close-on-click-modal="false"
+  >
+    <header-layout-panel class="dialog-container" v-loading="loading">
+      <template v-slot:header>
+        <div class="header-container">
+          <el-form class="header-form" :inline="true" :model="form">
+            <el-form-item class="header-form-item" label="用户">
+              <account-selector
+                v-model="form.userId"
+                :filter="(d) => d.key.string_id !== lnpStore.me"
+              />
+            </el-form-item>
+            <el-form-item class="header-form-item" label="权限等级">
+              <el-select v-model="form.permissionLevel" placeholder="权限等级">
+                <el-option
+                  v-for="indicator in formPermissionLevelIndicator"
+                  :key="indicator.key"
+                  :label="indicator.label"
+                  :value="indicator.key"
+                  :disabled="!indicator.selectable"
                 />
-              </el-form-item>
-              <el-form-item class="header-form-item" label="权限等级">
-                <el-select v-model="form.permissionLevel" placeholder="权限等级">
-                  <el-option
-                    v-for="indicator in formPermissionLevelIndicator"
-                    :key="indicator.key"
-                    :label="indicator.label"
-                    :value="indicator.key"
-                    :disabled="!indicator.selectable"
-                  />
-                </el-select>
-              </el-form-item>
-              <el-form-item class="header-form-item">
-                <el-button type="primary" :disabled="form.userId === ''" @click="handlePonbUpsert">
-                  添加/更改
-                </el-button>
-              </el-form-item>
-            </el-form>
-          </div>
-        </template>
-        <template v-slot:default>
-          <table-panel
-            class="table-container"
-            v-model:current-page="ponbTableCurrentPage"
-            v-model:page-size="ponbTablePageSize"
-            :item-count="ponbTableItemCount"
-            :page-sizes="[15, 20, 30, 50]"
-            :items="ponbTableItems"
-            :inspect-button-visible="false"
-            :edit-button-visible="false"
-            :delete-button-visible="false"
-            :operate-column-width="53"
-            @onPagingAttributeChanged="handlePonbTablePagingAttributeChanged"
-          >
-            <template v-slot:default>
-              <el-table-column
-                prop="account"
-                label="用户"
-                show-overflow-tooltip
-                :formatter="accountFormatter"
-              />
-              <el-table-column
-                prop="permission_level"
-                label="权限等级"
-                show-overflow-tooltip
-                width="85px"
-                :formatter="permissionLevelFormatter"
-              />
-            </template>
-            <template v-slot:operateColumn="{ row }">
-              <el-button
-                class="table-button"
-                type="danger"
-                :icon="DeleteIcon"
-                :disabled="row.account.key.string_id === lnpStore.me"
-                @click="handlePonbDelete(row as DispPonb)"
-              />
-            </template>
-          </table-panel>
-        </template>
-      </header-layout-panel>
-      <template v-slot:footer>
-        <div class="footer-container">
-          <el-button @click="watchedVisible = false"> 关闭窗口</el-button>
+              </el-select>
+            </el-form-item>
+            <el-form-item class="header-form-item">
+              <el-button type="primary" :disabled="form.userId === ''" @click="handlePonbUpsert">
+                添加/更改
+              </el-button>
+            </el-form-item>
+          </el-form>
         </div>
       </template>
-    </el-dialog>
-  </div>
+      <template v-slot:default>
+        <table-panel
+          class="table-container"
+          v-model:current-page="ponbTableCurrentPage"
+          v-model:page-size="ponbTablePageSize"
+          :item-count="ponbTableItemCount"
+          :page-sizes="[15, 20, 30, 50]"
+          :items="ponbTableItems"
+          :inspect-button-visible="false"
+          :edit-button-visible="false"
+          :delete-button-visible="false"
+          :operate-column-width="53"
+          @onPagingAttributeChanged="handlePonbTablePagingAttributeChanged"
+        >
+          <template v-slot:default>
+            <el-table-column
+              prop="account"
+              label="用户"
+              show-overflow-tooltip
+              :formatter="accountFormatter"
+            />
+            <el-table-column
+              prop="permission_level"
+              label="权限等级"
+              show-overflow-tooltip
+              width="85px"
+              :formatter="permissionLevelFormatter"
+            />
+          </template>
+          <template v-slot:operateColumn="{ row }">
+            <el-button
+              class="table-button"
+              type="danger"
+              :icon="DeleteIcon"
+              :disabled="row.account.key.string_id === lnpStore.me"
+              @click="handlePonbDelete(row as DispPonb)"
+            />
+          </template>
+        </table-panel>
+      </template>
+    </header-layout-panel>
+    <template v-slot:footer>
+      <div class="footer-container">
+        <el-button @click="watchedVisible = false"> 关闭窗口</el-button>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup lang="ts">

@@ -5,6 +5,8 @@
 #### 功能构建
 
 - `webapp-pc` 子模块功能优化。
+  - `src/views/nodes/assetsManagement/assetCatalog/subDialogs/PermitMaintainDialog.vue` 模板结构优化。
+  - `src/views/nodes/note/noteBook/subDialogs/PermitMaintainDialog.vue` 模板结构优化。
   - `src/views/nodes/assetsManagement/assetBom/AssetBom.vue` 删除多余代码。
 
 - `webapp-pc` 子模块页面功能新增。
