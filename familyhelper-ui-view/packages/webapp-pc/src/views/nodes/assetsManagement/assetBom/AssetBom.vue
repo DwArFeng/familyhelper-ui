@@ -502,19 +502,6 @@ async function handleItemPropertyUpdated(): Promise<void> {
 }
 </script>
 
-<script lang="ts">
-export default {
-  data() {
-    return {
-      itemEditPanel: {
-        itemId: '',
-        upsc: 'ui_preference.pc.assert_management.assert_bom.item_edit_panel',
-      },
-    }
-  },
-}
-</script>
-
 <style scoped>
 .asset-bom-container {
   width: 100%;

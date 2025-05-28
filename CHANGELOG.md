@@ -4,6 +4,9 @@
 
 #### 功能构建
 
+- `webapp-pc` 子模块功能优化。
+  - `src/views/nodes/assetsManagement/assetBom/AssetBom.vue` 删除多余代码。
+
 - `webapp-pc` 子模块页面功能新增。
   - 系统设置 -> 权限节点管理页面权限实体新增等级字段。
 
