@@ -437,7 +437,6 @@ async function handleUpload(files: File[]): Promise<void> {
       showClose: true,
       message: '上传成功',
       type: 'success',
-      center: true,
     })
     const asyncWrapper = () => {
       handleInspect()
@@ -468,7 +467,6 @@ async function handleDownload(row: TableItem): Promise<void> {
       showClose: true,
       message: '后台正在准备文件，文件越大，准备时间越长，请耐心等待...',
       type: 'success',
-      center: true,
       duration: 10000,
     })
     // 构造下载地址。
@@ -511,7 +509,6 @@ async function handleUpdate(row: TableItem, file: File): Promise<void> {
       showClose: true,
       message: '更新成功',
       type: 'success',
-      center: true,
     })
     const asyncWrapper = () => {
       handleInspect()
@@ -540,7 +537,6 @@ async function handleChangeOrder(): Promise<void> {
       showClose: true,
       message: '变更顺序成功',
       type: 'success',
-      center: true,
     })
     const asyncWrapper = () => {
       handleInspect()
@@ -580,7 +576,6 @@ async function handleRemove(row: TableItem): Promise<void> {
       showClose: true,
       message: '图片项删除成功',
       type: 'success',
-      center: true,
     })
     const asyncWrapper = () => {
       handleInspect()

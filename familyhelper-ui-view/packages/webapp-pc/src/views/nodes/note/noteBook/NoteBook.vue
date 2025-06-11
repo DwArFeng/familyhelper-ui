@@ -411,7 +411,6 @@ async function handleNoteBookDelete(item: DispNoteBook): Promise<void> {
       showClose: true,
       message: `笔记本 ${item.name} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleNoteBookSearch()
   } finally {
@@ -432,7 +431,6 @@ async function handleNoteBookChangeFavored(item: DispNoteBook): Promise<void> {
       showClose: true,
       message: `笔记本 ${item.name} 收藏状态修改成功`,
       type: 'success',
-      center: true,
     })
     handleNoteBookSearch()
   } finally {
@@ -491,7 +489,6 @@ async function handleNoteBookCreate(item: NoteBookMaintainDialogItem): Promise<v
       showClose: true,
       message: `笔记本 ${item.name} 创建成功`,
       type: 'success',
-      center: true,
     })
     noteBookMaintainDialogVisible.value = false
     handleNoteBookSearch()
@@ -515,7 +512,6 @@ async function handleNoteBookEdit(item: NoteBookMaintainDialogItem): Promise<voi
       showClose: true,
       message: `笔记本 ${item.name} 更新成功`,
       type: 'success',
-      center: true,
     })
     noteBookMaintainDialogVisible.value = false
     handleNoteBookSearch()

@@ -510,7 +510,6 @@ async function handleFileDownload(row: ItemFileInfo): Promise<void> {
       showClose: true,
       message: '后台正在准备文件，文件越大，准备时间越长，请耐心等待...',
       type: 'success',
-      center: true,
       duration: 10000,
     })
     // 创建 iframe, 执行下载。
@@ -558,7 +557,6 @@ async function handleFileDelete(row: ItemFileInfo): Promise<void> {
       showClose: true,
       message: `项目文件 ${row.origin_name} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleItemFileInfoSearch()
   } finally {
@@ -599,7 +597,6 @@ async function handleFileUploadDialogConfirmed(files: File[]): Promise<void> {
       showClose: true,
       message: '文件上传成功',
       type: 'success',
-      center: true,
     })
     handleItemFileInfoSearch()
     emit('onItemFileUpdated')
@@ -623,7 +620,6 @@ async function handleFileCreateDialogConfirmed(file: FileCreateInfo): Promise<vo
       showClose: true,
       message: '文件新建成功',
       type: 'success',
-      center: true,
     })
     handleItemFileInfoSearch()
     emit('onItemFileUpdated')

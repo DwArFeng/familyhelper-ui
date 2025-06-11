@@ -343,7 +343,6 @@ async function handleItemTreeItemDelete(item: ItemTreeItem): Promise<void> {
       showClose: true,
       message: `项目 ${st.name} 删除成功`,
       type: 'success',
-      center: true,
     })
     if (!itemTreePanelRef.value) {
       throw new Error('不应该执行到此处，请联系开发人员')
@@ -455,7 +454,6 @@ async function handleItemCreate(item: ItemMaintainDialogItem): Promise<void> {
       showClose: true,
       message: `项目 ${item.name} 创建成功`,
       type: 'success',
-      center: true,
     })
     const _item = await resolveResponse(inspectDisp(_itemKey))
     if (!_item.parent_key) {

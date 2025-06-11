@@ -196,7 +196,6 @@ async function handleSaveSenderInfo(): Promise<void> {
       showClose: true,
       message: '发送器设置更新成功',
       type: 'success',
-      center: true,
     })
   } finally {
     loading.value -= 1

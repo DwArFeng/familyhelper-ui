@@ -225,7 +225,6 @@ async function handleNoteItemEdit(item: NoteItemMaintainDialogItem): Promise<voi
       showClose: true,
       message: '节点更新成功',
       type: 'success',
-      center: true,
     })
     emit('onNoteItemPropertyUpdated')
     handleNoteItemSearch()

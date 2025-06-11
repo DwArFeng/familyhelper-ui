@@ -453,7 +453,6 @@ async function handleLoginStateTableKeyCopyContextmenuClicked(
     showClose: true,
     message: '复制成功',
     type: 'success',
-    center: true,
   })
 }
 
@@ -502,7 +501,6 @@ async function handleLoginStateLogout(row: LoginState): Promise<void> {
       showClose: true,
       message: `登录凭证 ${row.key.long_id} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleLoginStateSearch()
   } finally {
@@ -657,7 +655,6 @@ async function handleLoginConfirm(): Promise<void> {
       showClose: true,
       message: `登录凭证成功，凭证ID为 ${res.token}`,
       type: 'success',
-      center: true,
     })
     loginDialogVisible.value = false
     handleLoginStateSearch()
@@ -757,7 +754,6 @@ async function handleDeriveConfirm(): Promise<void> {
       showClose: true,
       message: `登录凭证 ${deriveDialogFormModel.value.token} 派生成功`,
       type: 'success',
-      center: true,
     })
     deriveDialogVisible.value = false
     handleLoginStateSearch()

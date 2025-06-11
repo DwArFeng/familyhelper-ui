@@ -281,14 +281,12 @@ async function handleRoleDelete(item: Role): Promise<void> {
       showClose: true,
       message: `角色 ${item.name}(${item.key.string_id}) 删除成功`,
       type: 'success',
-      center: true,
     })
     if (influencedFlag) {
       ElMessage({
         showClose: true,
         message: '由于您删除了您所属的角色，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       lnpStore
         .willFireKick()
@@ -387,7 +385,6 @@ async function handleRoleCreate(item: RoleMaintainDialogItem): Promise<void> {
       showClose: true,
       message: `角色 ${item.name}(${item.key_string_id}) 创建成功`,
       type: 'success',
-      center: true,
     })
     handleRoleSearch()
     roleMaintainDialogVisible.value = false
@@ -435,7 +432,6 @@ async function handleRoleEdit(item: RoleMaintainDialogItem): Promise<void> {
       showClose: true,
       message: `角色 ${item.name}(${item.key_string_id}) 更新成功`,
       type: 'success',
-      center: true,
     })
     roleMaintainDialogVisible.value = false
     if (influencedFlag) {
@@ -443,7 +439,6 @@ async function handleRoleEdit(item: RoleMaintainDialogItem): Promise<void> {
         showClose: true,
         message: '由于您改变了您所属的角色的启用状态，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       lnpStore
         .willFireKick()
@@ -561,14 +556,12 @@ async function handlePexpDelete(item: Pexp): Promise<void> {
       showClose: true,
       message: '权限表达式删除成功',
       type: 'success',
-      center: true,
     })
     if (influencedFlag) {
       ElMessage({
         showClose: true,
         message: '由于您删除了您所属的角色的权限表达式，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       lnpStore
         .willFireKick()
@@ -693,14 +686,12 @@ async function handlePexpCreate(item: PexpMaintainDialogItem): Promise<void> {
       showClose: true,
       message: '权限表达式创建成功',
       type: 'success',
-      center: true,
     })
     if (influencedFlag) {
       ElMessage({
         showClose: true,
         message: '由于您改变了您所属的角色的启用状态，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       lnpStore
         .willFireKick()
@@ -784,14 +775,12 @@ async function handlePexpEdit(item: PexpMaintainDialogItem): Promise<void> {
       showClose: true,
       message: '权限表达式编辑成功',
       type: 'success',
-      center: true,
     })
     if (influencedFlag) {
       ElMessage({
         showClose: true,
         message: '由于您编辑了您所属的角色的权限表达式，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       lnpStore
         .willFireKick()

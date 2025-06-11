@@ -172,7 +172,6 @@ async function handleAllNotificationRead(): Promise<void> {
       showClose: true,
       message: '通知设为已读',
       type: 'success',
-      center: true,
     })
     handleNotificationSearch()
   } finally {
@@ -203,7 +202,6 @@ async function handleAllNotificationDelete(): Promise<void> {
       showClose: true,
       message: '通知删除成功',
       type: 'success',
-      center: true,
     })
     handleNotificationSearch()
   } finally {
@@ -290,7 +288,6 @@ async function handleNotificationRead(row: Notification): Promise<void> {
       showClose: true,
       message: '通知设为已读',
       type: 'success',
-      center: true,
     })
     handleNotificationSearch()
   } finally {
@@ -321,7 +318,6 @@ async function handleNotificationDelete(row: Notification): Promise<void> {
       showClose: true,
       message: '通知删除成功',
       type: 'success',
-      center: true,
     })
     handleNotificationSearch()
   } finally {

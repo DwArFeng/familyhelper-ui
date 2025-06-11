@@ -398,7 +398,6 @@ async function doCommitFile(): Promise<void> {
         showClose: true,
         message: result.message,
         type: 'success',
-        center: true,
       })
       subEditor.fireCurrentContentCommitted()
     } else {
@@ -406,7 +405,6 @@ async function doCommitFile(): Promise<void> {
         showClose: true,
         message: result.message,
         type: 'error',
-        center: true,
       })
     }
   } finally {

@@ -264,7 +264,6 @@ async function handleItemCoverDelete(item: ItemCoverTableItem): Promise<void> {
       showClose: true,
       message: '项目封面删除成功',
       type: 'success',
-      center: true,
     })
     emit('onItemCoverUpdated')
     handleItemCoverSearch()
@@ -282,7 +281,6 @@ async function handleItemCoverOrderChanged(items: ItemCoverTableItem[]): Promise
       showClose: true,
       message: '顺序调整成功',
       type: 'success',
-      center: true,
     })
     emit('onItemCoverUpdated')
   } finally {
@@ -308,7 +306,6 @@ async function handleItemCoverUpload(info: ImageSelectCropInfo): Promise<void> {
       showClose: true,
       message: '封面上传成功',
       type: 'success',
-      center: true,
     })
     emit('onItemCoverUpdated')
     handleItemCoverSearch()

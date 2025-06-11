@@ -167,7 +167,6 @@ async function handleItemTypeIndicatorDelete(item: ItemTypeIndicator): Promise<v
       showClose: true,
       message: `项目类型 ${item.key.string_id} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleItemTypeIndicatorSearch()
   } finally {
@@ -257,7 +256,6 @@ async function handleItemTypeIndicatorCreate(
       showClose: true,
       message: `项目类型 ${item.key_string_id} 创建成功`,
       type: 'success',
-      center: true,
     })
     handleItemTypeIndicatorSearch()
     itemTypeIndicatorMaintainDialogVisible.value = false
@@ -282,7 +280,6 @@ async function handleItemTypeIndicatorEdit(
       showClose: true,
       message: `项目类型 ${item.key_string_id} 更新成功`,
       type: 'success',
-      center: true,
     })
     handleItemTypeIndicatorSearch()
     itemTypeIndicatorMaintainDialogVisible.value = false

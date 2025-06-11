@@ -183,7 +183,6 @@ async function handleNotifyHistoryDelete(row: DispNotifyHistory): Promise<void> 
       showClose: true,
       message: '通知历史删除成功',
       type: 'success',
-      center: true,
     })
     handleNotifyHistorySearch()
   } finally {

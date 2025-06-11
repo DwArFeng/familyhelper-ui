@@ -163,7 +163,6 @@ async function handleItemLabelDelete(item: ItemLabel): Promise<void> {
       showClose: true,
       message: `项目标签 ${item.key.string_id} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleItemLabelSearch()
   } finally {
@@ -245,7 +244,6 @@ async function handleItemLabelCreate(item: ItemLabelMaintainDialogItem): Promise
       showClose: true,
       message: `项目标签 ${item.key_string_id} 创建成功`,
       type: 'success',
-      center: true,
     })
     handleItemLabelSearch()
     itemLabelMaintainDialogVisible.value = false
@@ -268,7 +266,6 @@ async function handleItemLabelEdit(item: ItemLabelMaintainDialogItem): Promise<v
       showClose: true,
       message: `项目标签 ${item.key_string_id} 更新成功`,
       type: 'success',
-      center: true,
     })
     handleItemLabelSearch()
     itemLabelMaintainDialogVisible.value = false

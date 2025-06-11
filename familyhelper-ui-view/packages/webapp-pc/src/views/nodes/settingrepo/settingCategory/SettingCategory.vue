@@ -184,7 +184,6 @@ async function handleApplyChanges(): Promise<void> {
       showClose: true,
       message: '变更应用成功！后台状态刷新中，请不要频繁点击',
       type: 'success',
-      center: true,
     })
     setTimeout(() => {
       applyChangesButtonDisabled.value = false
@@ -257,7 +256,6 @@ async function handleSettingCategoryCopyKeyContextmenuClicked(
     showClose: true,
     message: '复制成功',
     type: 'success',
-    center: true,
   })
 }
 
@@ -296,7 +294,6 @@ async function handleSettingCategoryDelete(item: SettingCategory): Promise<void>
       showClose: true,
       message: `配置类型 ${item.key} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleSettingCategorySearch()
   } finally {
@@ -425,7 +422,6 @@ async function handleSettingCategoryCreate(item: SettingCategoryMaintainDialogIt
       showClose: true,
       message: `配置类型 ${item.key_string_id} 创建成功`,
       type: 'success',
-      center: true,
     })
     handleSettingCategorySearch()
     settingCategoryMaintainDialogVisible.value = false
@@ -449,7 +445,6 @@ async function handleSettingCategoryEdit(item: SettingCategoryMaintainDialogItem
       showClose: true,
       message: `配置类型 ${item.key_string_id} 更新成功`,
       type: 'success',
-      center: true,
     })
     handleSettingCategorySearch()
     settingCategoryMaintainDialogVisible.value = false

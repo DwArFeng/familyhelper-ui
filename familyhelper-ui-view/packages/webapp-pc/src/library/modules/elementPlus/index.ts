@@ -87,7 +87,6 @@ function notifyApiResponseBad(responseMeta: ResponseMeta): void {
               </div>
             `,
     type: 'error',
-    center: true,
     duration: 2000,
   })
 }
@@ -107,7 +106,6 @@ function notifyApiResponseError(err: Error): void {
               </div>
              `,
     type: 'error',
-    center: true,
     duration: 2000,
   })
 }
@@ -127,7 +125,6 @@ function notifyErrorMessage(message: string): void {
               </div>
              `,
     type: 'error',
-    center: true,
     duration: 2000,
   })
 }

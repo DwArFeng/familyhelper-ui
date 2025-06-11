@@ -347,7 +347,6 @@ async function handleAssetCatalogDelete(item: DispAssetCatalog): Promise<void> {
       showClose: true,
       message: `笔记本 ${item.name} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleAssetCatalogSearch()
   } finally {
@@ -402,7 +401,6 @@ async function handleAssetCatalogCreate(item: AssetCatalogMaintainDialogItem): P
       showClose: true,
       message: `资产目录 ${item.name} 创建成功`,
       type: 'success',
-      center: true,
     })
     assetCatalogMaintainDialogVisible.value = false
     handleAssetCatalogSearch()
@@ -425,7 +423,6 @@ async function handleAssetCatalogEdit(item: AssetCatalogMaintainDialogItem): Pro
       showClose: true,
       message: `资产目录 ${item.name} 更新成功`,
       type: 'success',
-      center: true,
     })
     assetCatalogMaintainDialogVisible.value = false
     handleAssetCatalogSearch()

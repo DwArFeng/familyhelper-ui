@@ -199,7 +199,6 @@ async function handleMetaIndicatorDelete(row: MetaIndicator): Promise<void> {
       showClose: true,
       message: `指示器 ${row.label} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleMetaIndicatorSearch()
   } finally {
@@ -314,7 +313,6 @@ async function handleMetaIndicatorCreate(item: MetaIndicatorMaintainDialogItem):
       showClose: true,
       message: `指示器 ${item.label} 创建成功`,
       type: 'success',
-      center: true,
     })
     handleMetaIndicatorSearch()
     metaIndicatorMaintainDialogVisible.value = false
@@ -345,7 +343,6 @@ async function handleMetaIndicatorEdit(item: MetaIndicatorMaintainDialogItem): P
       showClose: true,
       message: `指示器 ${item.label} 更新成功`,
       type: 'success',
-      center: true,
     })
     handleMetaIndicatorSearch()
     metaIndicatorMaintainDialogVisible.value = false

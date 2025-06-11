@@ -273,7 +273,6 @@ async function commitNoteItemNoteFile(): Promise<void> {
       showClose: true,
       message: '笔记提交成功',
       type: 'success',
-      center: true,
     })
     editorBackupContent.value = editorContent.value
     emit('onNoteItemNoteFileCommitted')
@@ -298,7 +297,6 @@ async function handleAttachmentCreateDialogConfirmed(info: FileCreateInfo): Prom
       showClose: true,
       message: '另存为附件成功',
       type: 'success',
-      center: true,
     })
     emit('onNoteItemSaveAsAttachmentCompleted')
     attachmentCreateDialogVisible.value = false

@@ -271,7 +271,6 @@ function handleHeaderDetachPermissionButtonClicked(): void {
         showClose: true,
         message: `成功解除 ${res.length} 个权限的关联`,
         type: 'success',
-        center: true,
       })
     })
     .then(() => {
@@ -409,7 +408,6 @@ function handlePermissionGroupCreate(item: PermissionGroupMaintainDialogItem): v
         showClose: true,
         message: `权限组 ${res.string_id} 创建成功`,
         type: 'success',
-        center: true,
       })
       return Promise.resolve(res)
     })
@@ -457,7 +455,6 @@ function handlePermissionGroupEdit(item: PermissionGroupMaintainDialogItem): voi
         showClose: true,
         message: `权限组 ${_key.string_id} 更新成功`,
         type: 'success',
-        center: true,
       })
       return Promise.resolve(res)
     })
@@ -551,7 +548,6 @@ function handlePermissionGroupDelete(data: PermissionGroupTreeItem): void {
         showClose: true,
         message: `权限组 ${data.permission_group.key.string_id} 删除成功`,
         type: 'success',
-        center: true,
       })
       return Promise.resolve()
     })
@@ -669,7 +665,6 @@ function handlePermissionAttachDialogAttachPermission(): void {
         showClose: true,
         message: `成功添加 ${res.length} 个权限的关联`,
         type: 'success',
-        center: true,
       })
     })
     .then(() => {
@@ -702,7 +697,6 @@ function handlePermissionTableCopyKeyContextmenuClicked(row: Permission, close: 
       showClose: true,
       message: '复制成功',
       type: 'success',
-      center: true,
     })
   })
 }

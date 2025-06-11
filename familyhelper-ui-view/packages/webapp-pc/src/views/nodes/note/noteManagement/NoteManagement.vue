@@ -291,7 +291,6 @@ async function handleNoteNodeDelete(item: NoteTreeItem): Promise<void> {
       showClose: true,
       message: `节点 ${st.name} 删除成功`,
       type: 'success',
-      center: true,
     })
     if (!noteTreePanelRef.value) {
       throw new Error('不应该执行到此处，请联系开发人员')
@@ -329,7 +328,6 @@ async function handleNoteItemDelete(item: NoteTreeItem): Promise<void> {
       showClose: true,
       message: `项目 ${st.name} 删除成功`,
       type: 'success',
-      center: true,
     })
     if (!noteTreePanelRef.value) {
       throw new Error('不应该执行到此处，请联系开发人员')
@@ -441,7 +439,6 @@ async function handleNoteNodeCreate(item: NoteNodeMaintainDialogItem): Promise<v
       showClose: true,
       message: `节点 ${item.name} 创建成功`,
       type: 'success',
-      center: true,
     })
     const _noteNode: DispNoteNode = await resolveResponse(inspectDispNoteNode(_key))
     if (!_noteNode.parent_key) {
@@ -564,7 +561,6 @@ async function handleNoteItemCreate(item: NoteItemMaintainDialogItem): Promise<v
       showClose: true,
       message: `节点 ${item.name} 创建成功`,
       type: 'success',
-      center: true,
     })
     const _noteItem: DispNoteItem = await resolveResponse(inspectDispNoteItem(_key))
     if (!_noteItem.node_key) {

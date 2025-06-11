@@ -126,7 +126,6 @@ function handleCopy(): void {
       showClose: true,
       message: '复制成功',
       type: 'success',
-      center: true,
     })
   })
 }

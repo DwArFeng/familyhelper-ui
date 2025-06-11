@@ -168,7 +168,6 @@ async function handleApplyChanges(): Promise<void> {
       showClose: true,
       message: '变更应用成功！后台状态刷新中，请不要频繁点击',
       type: 'success',
-      center: true,
     })
   } finally {
     setTimeout(() => {
@@ -235,7 +234,6 @@ async function handleNotifySettingTableCopyKeyContextmenuClicked(
     showClose: true,
     message: '复制成功',
     type: 'success',
-    center: true,
   })
 }
 
@@ -298,7 +296,6 @@ async function handleNotifySettingDelete(row: NotifySetting): Promise<void> {
       showClose: true,
       message: `通知设置 ${row.label} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleNotifySettingSearch()
   } finally {
@@ -359,7 +356,6 @@ async function handleNotifySettingCreate(item: NotifySettingMaintainDialogItem):
       showClose: true,
       message: `通知设置 ${item.label} 创建成功`,
       type: 'success',
-      center: true,
     })
     handleNotifySettingSearch()
     notifySettingMaintainDialogVisible.value = false
@@ -383,7 +379,6 @@ async function handleNotifySettingEdit(item: NotifySettingMaintainDialogItem): P
       showClose: true,
       message: `通知设置 ${item.label} 更新成功`,
       type: 'success',
-      center: true,
     })
     handleNotifySettingSearch()
     notifySettingMaintainDialogVisible.value = false

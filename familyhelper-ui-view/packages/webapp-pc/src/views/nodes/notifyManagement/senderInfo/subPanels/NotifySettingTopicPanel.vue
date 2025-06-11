@@ -217,7 +217,6 @@ async function handleApplyChanges(): Promise<void> {
       showClose: true,
       message: '变更应用成功！后台状态刷新中，请不要频繁点击',
       type: 'success',
-      center: true,
     })
   } finally {
     setTimeout(() => {

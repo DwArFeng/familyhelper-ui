@@ -257,7 +257,6 @@ async function handleSettingNodeTableCopyKeyContextmenuClicked(
     showClose: true,
     message: '复制成功',
     type: 'success',
-    center: true,
   })
 }
 
@@ -352,7 +351,6 @@ async function handleSettingNodeDelete(row: SettingNode): Promise<void> {
       showClose: true,
       message: `节点 ${row.key.string_id} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleSettingNodeSearch()
   } finally {

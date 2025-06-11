@@ -254,7 +254,6 @@ async function initSettingNode(): Promise<void> {
       showClose: true,
       message: '配置节点初始化成功',
       type: 'success',
-      center: true,
     })
     emit('onSettingNodeInitialized')
     mainDialogVisible.value = false

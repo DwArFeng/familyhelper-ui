@@ -154,7 +154,6 @@ async function handleSaveRouterInfo(): Promise<void> {
       showClose: true,
       message: '路由器设置更新成功',
       type: 'success',
-      center: true,
     })
   } finally {
     loading.value -= 1

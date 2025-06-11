@@ -153,7 +153,6 @@ async function handleApplyChanges(): Promise<void> {
       showClose: true,
       message: '变更应用成功！后台状态刷新中，请不要频繁点击',
       type: 'success',
-      center: true,
     })
   } finally {
     setTimeout(() => {
@@ -245,7 +244,6 @@ async function handleTopicDelete(row: Topic): Promise<void> {
       showClose: true,
       message: `主题 ${row.label} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleTopicSearch()
   } finally {
@@ -332,7 +330,6 @@ async function handleTopicCreate(item: TopicMaintainDialogItem): Promise<void> {
       showClose: true,
       message: `主题 ${item.label} 创建成功`,
       type: 'success',
-      center: true,
     })
     handleTopicSearch()
     topicMaintainDialogVisible.value = false
@@ -357,7 +354,6 @@ async function handleTopicEdit(item: TopicMaintainDialogItem): Promise<void> {
       showClose: true,
       message: `主题 ${item.label} 更新成功`,
       type: 'success',
-      center: true,
     })
     handleTopicSearch()
     topicMaintainDialogVisible.value = false

@@ -243,7 +243,6 @@ async function handlePermissionDelete(item: Permission): Promise<void> {
       showClose: true,
       message: `权限节点 ${item.key.string_id} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleSearch()
   } finally {
@@ -257,7 +256,6 @@ async function handleCopyKeyContextmenuClicked(row: Permission, close: () => voi
     showClose: true,
     message: '复制成功',
     type: 'success',
-    center: true,
   })
   close()
 }
@@ -383,7 +381,6 @@ async function handlePermissionCreate(item: PermissionMaintainDialogItem): Promi
       showClose: true,
       message: `权限节点 ${item.key_string_id} 创建成功`,
       type: 'success',
-      center: true,
     })
     handleSearch()
     permissionMaintainDialogVisible.value = false
@@ -410,7 +407,6 @@ async function handlePermissionEdit(item: PermissionMaintainDialogItem): Promise
       showClose: true,
       message: `权限节点 ${item.key_string_id} 更新成功`,
       type: 'success',
-      center: true,
     })
     handleSearch()
     permissionMaintainDialogVisible.value = false

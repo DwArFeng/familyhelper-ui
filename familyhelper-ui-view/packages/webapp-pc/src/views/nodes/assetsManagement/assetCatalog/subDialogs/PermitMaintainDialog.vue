@@ -305,7 +305,6 @@ async function handlePoacDelete(row: DispPoac): Promise<void> {
       showClose: true,
       message: '权限删除成功',
       type: 'success',
-      center: true,
     })
     handlePoacSearch()
   } finally {

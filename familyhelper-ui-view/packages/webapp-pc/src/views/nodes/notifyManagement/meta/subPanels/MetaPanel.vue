@@ -226,7 +226,6 @@ async function handleMetaDelete(row: DispMeta): Promise<void> {
       showClose: true,
       message: `元数据 ${parseMetaLabel(row)} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleMetaSearch()
   } finally {
@@ -271,7 +270,6 @@ async function handleMetaIndicatorSelectDialogConfirmed(selection: MetaIndicator
       showClose: true,
       message: '元数据创建成功',
       type: 'success',
-      center: true,
     })
     metaIndicatorSelectDialogVisible.value = false
     handleMetaSearch()
@@ -353,7 +351,6 @@ async function handleMetaEdit(item: MetaMaintainDialogItem): Promise<void> {
       showClose: true,
       message: `元数据 ${parseMetaLabel(item)} 更新成功`,
       type: 'success',
-      center: true,
     })
     metaMaintainDialogVisible.value = false
     handleMetaSearch()

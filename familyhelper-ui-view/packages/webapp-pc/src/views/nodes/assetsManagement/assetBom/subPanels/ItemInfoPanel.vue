@@ -474,7 +474,6 @@ async function handleItemEdit(item: ItemMaintainDialogItem): Promise<void> {
       showClose: true,
       message: `项目 ${item.name} 更新成功`,
       type: 'success',
-      center: true,
     })
     emit('onItemPropertyUpdated')
     handleItemSearch()

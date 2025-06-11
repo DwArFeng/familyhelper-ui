@@ -189,7 +189,6 @@ async function handleNoteNodeEdit(item: NoteNodeMaintainDialogItem): Promise<voi
       showClose: true,
       message: '节点更新成功',
       type: 'success',
-      center: true,
     })
     emit('onNoteNodePropertyUpdated')
     handleNoteNodeSearch()

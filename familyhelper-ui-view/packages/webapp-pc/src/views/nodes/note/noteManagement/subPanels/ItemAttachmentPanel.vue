@@ -546,7 +546,6 @@ async function handleFileDelete(row: AttachmentFileInfo): Promise<void> {
       showClose: true,
       message: `项目文件 ${row.origin_name} 删除成功`,
       type: 'success',
-      center: true,
     })
     handleAttachmentFileInfoSearch()
   } finally {
@@ -590,7 +589,6 @@ async function handleFileUploadDialogConfirmed(files: File[]): Promise<void> {
       showClose: true,
       message: '文件上传成功',
       type: 'success',
-      center: true,
     })
     handleAttachmentFileInfoSearch()
     emit('onAttachmentUpdated')
@@ -614,7 +612,6 @@ async function handleFileCreateDialogConfirmed(file: FileCreateInfo): Promise<vo
       showClose: true,
       message: '文件新建成功',
       type: 'success',
-      center: true,
     })
     handleAttachmentFileInfoSearch()
     emit('onAttachmentUpdated')

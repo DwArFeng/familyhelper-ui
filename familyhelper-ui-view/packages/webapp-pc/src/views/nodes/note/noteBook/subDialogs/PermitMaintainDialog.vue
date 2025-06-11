@@ -305,7 +305,6 @@ async function handlePonbDelete(row: DispPonb): Promise<void> {
       showClose: true,
       message: '权限删除成功',
       type: 'success',
-      center: true,
     })
     handlePonbSearch()
   } finally {

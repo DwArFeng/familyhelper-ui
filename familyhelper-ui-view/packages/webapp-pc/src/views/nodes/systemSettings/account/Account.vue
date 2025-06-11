@@ -307,14 +307,12 @@ async function handleAccountDelete(item: Account): Promise<void> {
       showClose: true,
       message: `账户 ${nameToDelete}(${accountIdToDelete}) 删除成功`,
       type: 'success',
-      center: true,
     })
     if (accountIdToDelete === lnpStore.me) {
       ElMessage({
         showClose: true,
         message: '由于您删除了您自己，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       await lnpStore.willFireKick().execute()
       return
@@ -432,7 +430,6 @@ function handleAccountRegister(): void {
         showClose: true,
         message: `账户 ${accountMaintainDialogItem.value.name} 创建成功`,
         type: 'success',
-        center: true,
       })
     })
     .then(() => {
@@ -488,14 +485,12 @@ async function handleAccountEdit(): Promise<void> {
       showClose: true,
       message: `账户 ${name}(${accountId}) 更新成功`,
       type: 'success',
-      center: true,
     })
     if (accountId === lnpStore.me && !accountEnabledToEdit) {
       ElMessage({
         showClose: true,
         message: '由于您禁用了您自己，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       await lnpStore.willFireKick().execute()
       return
@@ -589,14 +584,12 @@ async function handleResetRoleRelation(): Promise<void> {
       showClose: true,
       message: `账户 ${name}(${accountId}) 角色更新成功`,
       type: 'success',
-      center: true,
     })
     if (accountId === lnpStore.me) {
       ElMessage({
         showClose: true,
         message: '由于您更改了您自己的角色，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       await lnpStore.willFireKick().execute()
       return
@@ -707,14 +700,12 @@ async function handleResetPassword(): Promise<void> {
       showClose: true,
       message: `账户 ${name}(${accountId}) 密码重置成功`,
       type: 'success',
-      center: true,
     })
     if (accountIdToEdit === lnpStore.me) {
       ElMessage({
         showClose: true,
         message: '由于您重置了您自己的密码，账号将会注销，请重新登录',
         type: 'warning',
-        center: true,
       })
       await lnpStore.willFireKick().execute()
       return

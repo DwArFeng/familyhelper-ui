@@ -147,7 +147,6 @@ async function putTextNode(): Promise<void> {
       showClose: true,
       message: '提交成功',
       type: 'success',
-      center: true,
     })
   } finally {
     loading.value -= 1
