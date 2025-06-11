@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块功能优化。
+  - `src/components/avatar/AvatarPanel.vue` 样式逻辑优化。
   - `src/components/table/tablePanel/TablePanel.vue` Emit 接口参数名称优化。
   - `src/views/nodes/assetsManagement/assetCatalog/subDialogs/PermitMaintainDialog.vue` 模板结构优化。
   - `src/views/nodes/note/noteBook/subDialogs/PermitMaintainDialog.vue` 模板结构优化。

@@ -8,11 +8,10 @@
       class="avatar-panel-container"
       fit="contain"
       :size="size"
-      :style="avatarStyle"
       :shape="shape"
       :src="display.avatarUrl"
     >
-      <div class="placeholder" :style="placeholderStyle">{{ computedDisplayName }}</div>
+      <div class="placeholder">{{ computedDisplayName }}</div>
     </el-avatar>
   </div>
 </template>
@@ -54,41 +53,6 @@ const props = withDefaults(defineProps<Props>(), {
   displayName: '',
   avatarUrl: '',
 })
-
-// 样式。
-type AvatarStyle = {
-  height: string
-  width: string
-}
-
-type PlaceholderStyle = {
-  fontSize: string
-}
-
-const avatarStyle = ref<AvatarStyle>({
-  height: `${props.size}px`,
-  width: `${props.size}px`,
-})
-
-const placeholderStyle = ref<PlaceholderStyle>({
-  fontSize: `${props.placeholderFontSize}px`,
-})
-
-watch(
-  () => props.size,
-  (value) => {
-    const size = `${value}px`
-    avatarStyle.value.height = size
-    avatarStyle.value.width = size
-  },
-)
-
-watch(
-  () => props.placeholderFontSize,
-  (value) => {
-    placeholderStyle.value.fontSize = `${value}px`
-  },
-)
 
 // 显示。
 type Display = {
@@ -199,10 +163,16 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.avatar-panel-container {
+  height: v-bind(size + 'px');
+  width: v-bind(size + 'px');
+}
+
 .placeholder {
   user-select: none;
   white-space: nowrap;
   text-overflow: clip;
   overflow: hidden;
+  font-size: v-bind(placeholderFontSize + 'px');
 }
 </style>
