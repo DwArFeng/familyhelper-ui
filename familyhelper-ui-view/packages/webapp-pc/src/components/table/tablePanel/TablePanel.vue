@@ -183,9 +183,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 // -----------------------------------------------------------Emits 定义-----------------------------------------------------------
 type Emits = {
-  (e: 'update:currentPage', value: number): void
-  (e: 'update:pageSize', value: number): void
-  (e: 'update:items', value: CT[]): void
+  (e: 'update:currentPage', currentPage: number): void
+  (e: 'update:pageSize', pageSize: number): void
+  (e: 'update:items', items: CT[]): void
   (e: 'onPagingAttributeChanged'): void
   (e: 'onRowClick', row: CT): void
   (e: 'onItemInspect', item: CT, index: number): void
