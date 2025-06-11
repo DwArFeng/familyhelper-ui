@@ -1,8 +1,8 @@
 # ChangeLog
 
-### Release_3.5.0_20250502_build_A
+## Release_3.5.0_20250502_build_A
 
-#### 功能构建
+### 功能构建
 
 - `webapp-pc` 子模块功能优化。
   - `src/views/nodes/assetsManagement/assetCatalog/subDialogs/PermitMaintainDialog.vue` 模板结构优化。
@@ -28,19 +28,19 @@
   - 优化 `webapp-mobile` 子模块的配置文件，以消除不必要的警告。
   - 优化 `webapp-pc` 子模块的配置文件，以消除不必要的警告。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_3.4.0_20250502_build_A
+## Release_3.4.0_20250502_build_A
 
-#### 功能构建
+### 功能构建
 
 - `webapp-pc` 子模块回归。
   - 菜单 `资产管理` 回归。
@@ -73,7 +73,7 @@
 - `component-api` 子模块回归。
   - `src/api/assets` 目录下的 HTTP 客户端 API 回归。
 
-#### Bug修复
+### Bug 修复
 
 - `webapp-pc` 子模块页面 bug 修复。
   - 学习笔记 -> 笔记管理页面主笔记编辑面板概览页签和对应的浮动窗口一起显示的场景下，一个组件编辑属性，另一个组件没有更新。
@@ -84,31 +84,31 @@
   - `LazySearchTreePanel` 组件调用 `update` 方法时，如果更新的项目是当前节点对应的项目，组件不触发更新事件。
   - `LazySearchTreePanel` 组件在刷新时未能正确清除当前选中项的 bug。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_3.3.0_20250428_build_B
+## Release_3.3.0_20250428_build_B
 
-#### 功能构建
+### 功能构建
 
 - (无)
 
-#### Bug修复
+### Bug 修复
 
 - 调整 eslint 配置，修复项目在部分电脑中非 ASCII 路径下无法打包的问题。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_3.3.0_20250428_build_A
+## Release_3.3.0_20250428_build_A
 
-#### 功能构建
+### 功能构建
 
 - `webapp-pc` 子模块依赖新增。
   - 增加依赖 `eslint-import-resolver-typescript` 以应用其新功能，版本为 `^4.3.4`。
@@ -173,7 +173,7 @@
   - 优化部分代码注释中的内容。
   - 优化部分文档注释中的内容。
 
-#### Bug修复
+### Bug 修复
 
 - `webapp-pc` 子模块页面 bug 修复。
   - 学习笔记 -> 笔记本页面 vue 文件中 import-from 代码中 URL 大小写错误。
@@ -187,7 +187,7 @@
 
 - 修复 `familyhelper-ui-view` 模块 `pom.xml` 中错误的插件配置。
 
-#### 功能移除
+### 功能移除
 
 - `webapp-mobile` 子模块功能移除。
   - 移除 `src/store/types.ts` 中多余的类型定义。
@@ -203,9 +203,9 @@
 
 ---
 
-### Release_3.2.0_20250418_build_A
+## Release_3.2.0_20250418_build_A
 
-#### 功能构建
+### 功能构建
 
 - `component-ckeditor` 子模块依赖升级。
   - 升级 `vite` 依赖版本为 `^6.2.6` 以规避漏洞。
@@ -222,21 +222,21 @@
   - 优化文档注释中 `@param` 与 `@returns` 中的类型标注。
   - 将文档注释中的 `@return` 替换为 `@returns`。
 
-#### Bug修复
+### Bug 修复
 
 - `webapp-pc` 子模块中 `vue` 模板 `element-plus` 组件 `:icon` 属性 bug 修复。
   - src/components/file/fileUploadDialog/FileUploadDialog.vue。
   - src/components/text/textEditor/TextEditor.vue。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_3.1.0_20250416_build_A
+## Release_3.1.0_20250416_build_A
 
-#### 功能构建
+### 功能构建
 
 - `component-api` 子模块回归。
   - `src/api/note` 目录下的 HTTP 客户端 API 回归。
@@ -276,12 +276,12 @@
   - 使用 TypeScript 重写 `ckeditor5` 相关的代码。
   - 使用 TypeScript 相关标准优化代码检查机制。
 
-#### Bug修复
+### Bug 修复
 
 - `webapp-pc` 子模块 bug 修复。
   - 部分 `vue` 组件的必选属性的定义代码 bug 修复。
 
-#### 功能移除
+### 功能移除
 
 - `component-ckeditor` 子模块功能移除。
   - 去除 `webpack` 相关的 `ckeditor5` 依赖，并移除 `webpack` 相关的构建脚本。
@@ -289,9 +289,9 @@
 
 ---
 
-### Release_3.0.0_20250411_build_A
+## Release_3.0.0_20250411_build_A
 
-#### 功能构建
+### 功能构建
 
 - `webapp-mobile` 子模块优化。
   - 建立构建脚本格式化机制。
@@ -372,17 +372,17 @@
 
 - 建立 `familyhelper-ui-view` 模块构建脚本格式化机制。
 
-#### Bug修复
+### Bug 修复
 
 - 修复 `familyhelper-ui-view` 模块的脚本 bug。
   - 修复 `packages` 目录不存在时无法执行 pnpm 指令的 bug。
 
-#### 功能移除
+### 功能移除
 
 - 移除 `familyhelper-ui-view` 模块旧版本 `packages` 目录。
 
 ---
 
-### 更早的版本
+## 更早的版本
 
 [View all changelogs](./changelogs)

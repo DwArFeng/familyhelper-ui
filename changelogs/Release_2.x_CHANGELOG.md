@@ -1,8 +1,8 @@
 # ChangeLog
 
-### Release_2.1.0_20241208_build_A
+## Release_2.1.0_20241208_build_A
 
-#### 功能构建
+### 功能构建
 
 - 组件优化。
   - 优化 `TablePanel.vue` 表格面板组件样式，以规避潜在的样式冲突。
@@ -32,33 +32,27 @@
   - 学习笔记 -> 笔记管理选择笔记本对话框主卡片面板显示逻辑优化。
   - 资金管理 -> 资金变更记录左侧面板增加备注筛选功能。
 
-#### Bug修复
+### Bug 修复
 
 - 修复 `familyhelper-ui-view` 模块中的错误配置。
   - packages/webapp-mobile/vue.config.js。
 
-#### 功能移除
+### 功能移除
 
 - (无)
 
 ---
 
-### Release_2.0.0_20241113_build_A
+## Release_2.0.0_20241113_build_A
 
-#### 功能构建
+### 功能构建
 
 - 使用 monorepo 重构项目结构。
 
-#### Bug修复
+### Bug 修复
 
 - (无)
 
-#### 功能移除
+### 功能移除
 
 - (无)
-
----
-
-### 更早的版本
-
-[View all changelogs](./changelogs)
