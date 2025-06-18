@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh_CN/VersionBlacklist.md。
+
 - `webapp-pc` 子模块功能优化。
   - `src/components/avatar/AvatarPanel.vue` 样式逻辑优化。
   - `src/components/table/tablePanel/TablePanel.vue` Emit 接口参数名称优化。
