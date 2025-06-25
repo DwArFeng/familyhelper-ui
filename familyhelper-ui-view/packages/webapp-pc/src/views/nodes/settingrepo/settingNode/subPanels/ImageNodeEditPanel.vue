@@ -140,12 +140,18 @@ async function handleInspect(): Promise<void> {
         args: props.args,
       }),
     )
+    if (!imageNodeInspectResult) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
     imageOriginName.value = imageNodeInspectResult.origin_name
     imageLength.value = imageNodeInspectResult.length
     const thumbnail = await downloadThumbnail({
       category: props.category,
       args: props.args,
     })
+    if (!thumbnail) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
     imageThumbnailUrl.value = window.URL.createObjectURL(thumbnail)
   } finally {
     loading.value -= 1
@@ -164,6 +170,9 @@ async function handleDownload(): Promise<void> {
         args: props.args,
       }),
     )
+    if (!voucherKey) {
+      throw new Error('不应该执行到此处, 请联系开发人员')
+    }
     ElMessage({
       showClose: true,
       message: '后台正在准备文件，文件越大，准备时间越长，请耐心等待...',

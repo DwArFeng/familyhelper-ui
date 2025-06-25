@@ -31,6 +31,12 @@ export type SettingNodeInspectInfo = {
   args: string[]
 }
 
+export type SettingNodeInspectResult = {
+  type: SettingNodeType
+  last_modified_date: number
+  remark: string
+}
+
 export type SettingNodeInitInfo = {
   category: string
   args: string[]
@@ -103,7 +109,9 @@ export function idLikeReachable(pattern: string, pagingInfo: PagingInfo): Prespa
   )
 }
 
-export function operateInspect(inspectInfo: SettingNodeInspectInfo): Pres<null> {
+export function operateInspect(
+  inspectInfo: SettingNodeInspectInfo,
+): Pres<SettingNodeInspectResult | null> {
   return http
     .generalClient()
     .post('settingrepo', 'setting-node/inspect/', inspectInfo, 'application/json;charset=UTF-8')

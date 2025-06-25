@@ -266,6 +266,9 @@ const changeOrderDialogNeoIndexValidator: FormItemRule['validator'] = (_rule, va
       )
     })
     .then((res) => {
+      if (!res) {
+        throw new Error('不应该执行到此处，请联系开发人员')
+      }
       if (res.size <= 0) {
         callback(new Error('没有可变更的索引'))
         return Promise.reject()
@@ -381,6 +384,9 @@ async function handleInspect(): Promise<void> {
         args: props.args,
       }),
     )
+    if (!res) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
     updateItemTableByLookup(res.items.map((item, index) => ({ ...item, index })))
   } finally {
     loading.value -= 1
@@ -411,6 +417,9 @@ async function refreshThumbnail(): Promise<void> {
       args: props.args,
       index: itemTableCurrentRow.value.index,
     })
+    if (!blob) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
     anchorImageOriginName.value = itemTableCurrentRow.value.origin_name
     anchorImageLength.value = itemTableCurrentRow.value.length
     anchorImageThumbnailUrl.value = window.URL.createObjectURL(blob)
@@ -463,6 +472,9 @@ async function handleDownload(row: TableItem): Promise<void> {
         index: row.index,
       }),
     )
+    if (!voucherKey) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
     ElMessage({
       showClose: true,
       message: '后台正在准备文件，文件越大，准备时间越长，请耐心等待...',

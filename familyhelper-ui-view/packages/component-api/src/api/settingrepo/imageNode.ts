@@ -54,24 +54,28 @@ export function all(pagingInfo: PagingInfo): Prespa<ImageNode> {
   )
 }
 
-export function operateInspect(inspectInfo: ImageNodeInspectInfo): Pres<ImageNodeInspectResult> {
+export function operateInspect(
+  inspectInfo: ImageNodeInspectInfo,
+): Pres<ImageNodeInspectResult | null> {
   return http
     .generalClient()
     .post('settingrepo', 'image-node/inspect/', inspectInfo, 'application/json;charset=UTF-8')
 }
 
-export function downloadFile(downloadInfo: ImageNodeFileDownloadInfo): Promise<Blob> {
-  return http
-    .generalClient()
-    .post(
-      'settingrepo',
-      'image-node/download-file/',
-      downloadInfo,
-      'application/json;charset=UTF-8',
-    )
+export function downloadFile(downloadInfo: ImageNodeFileDownloadInfo): Promise<Blob | null> {
+  return http.generalClient().get(
+    'settingrepo',
+    'image-node/download-file/',
+    {
+      'download-info': Base64.encode(JSON.stringify(downloadInfo)),
+    },
+    'blob',
+  )
 }
 
-export function requestFileStreamVoucher(downloadInfo: ImageNodeFileDownloadInfo): Pres<LongIdKey> {
+export function requestFileStreamVoucher(
+  downloadInfo: ImageNodeFileDownloadInfo,
+): Pres<LongIdKey | null> {
   return http
     .generalClient()
     .post(
@@ -82,7 +86,9 @@ export function requestFileStreamVoucher(downloadInfo: ImageNodeFileDownloadInfo
     )
 }
 
-export function downloadThumbnail(downloadInfo: ImageNodeThumbnailDownloadInfo): Promise<Blob> {
+export function downloadThumbnail(
+  downloadInfo: ImageNodeThumbnailDownloadInfo,
+): Promise<Blob | null> {
   return http.generalClient().get(
     'settingrepo',
     'image-node/download-thumbnail/',

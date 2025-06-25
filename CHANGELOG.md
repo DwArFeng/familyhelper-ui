@@ -8,7 +8,11 @@
 
 ### Bug 修复
 
-- (无)
+- `component-api` 子模块 bug 修复。
+  - 修复 `src/api/settingrepo/imageListNode.ts` 中的 bug。
+  - 修复 `src/api/settingrepo/imageNode.ts` 中的 bug。
+  - 修复 `src/api/settingrepo/settingNode.ts` 中的 bug。
+  - 修复 `src/api/settingrepo/textNode.ts` 中的 bug。
 
 ### 功能移除
 
