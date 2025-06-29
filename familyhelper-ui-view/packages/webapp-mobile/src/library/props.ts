@@ -23,6 +23,6 @@ import { type LibrarySetting } from '@/library/types.ts'
  *
  * 在上面的例子中，`defaultVisualizerKey` 的值可以是 `foo` 或 `foo-bar-baz`。
  */
-const defaultVisualizerKey: LibrarySetting['defaultVisualizerKey'] = 'element-plus'
+const defaultVisualizerKey: LibrarySetting['defaultVisualizerKey'] = 'simple'
 
 export { defaultVisualizerKey }

@@ -25,6 +25,9 @@
 
 ### Bug 修复
 
+- `webapp-mobile` 子模块 bug 修复。
+  - 修复 `src/library/props.ts` 中的错误配置。
+
 - `component-api` 子模块 bug 修复。
   - 修复 `src/api/settingrepo/imageListNode.ts` 中的 bug。
   - 修复 `src/api/settingrepo/imageNode.ts` 中的 bug。
