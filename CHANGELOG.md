@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件优化。
+  - `TextEditor` 组件 `el-link` v-bind 优化，以规避 deprecated 警告。
+
 - `component-api` 子模块功能新增。
   - 新增 `src/api/settingrepo/iahnNode.ts` API 代码。
   - 为 `src/api/settingrepo/settingNode.ts` 添加新类型枚举。

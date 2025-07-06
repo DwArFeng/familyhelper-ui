@@ -20,8 +20,8 @@
         <el-link
           class="item"
           type="primary"
+          underline="never"
           :icon="DocumentIcon"
-          :underline="false"
           @click="handleCopy"
         >
           复制
