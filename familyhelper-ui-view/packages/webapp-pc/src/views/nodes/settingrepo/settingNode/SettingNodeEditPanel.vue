@@ -20,6 +20,12 @@
       :args="settingNode?.args"
       :readonly="readonly"
     />
+    <iahn-node-edit-panel
+      v-else-if="settingNode?.type === 4"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
     <div class="placeholder" v-else>节点类型未知，无法查看或编辑</div>
   </div>
 </template>
@@ -35,6 +41,7 @@ import { ElNotification } from 'element-plus'
 import TextNodeSubEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/TextNodeSubEditPanel.vue'
 import ImageNodeEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/ImageNodeEditPanel.vue'
 import ImageListNodeEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/ImageListNodeEditPanel.vue'
+import IahnNodeEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/IahnNodeEditPanel.vue'
 
 import {
   type SettingNode,

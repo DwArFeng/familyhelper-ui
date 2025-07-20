@@ -198,7 +198,7 @@ onMounted(() => {
 })
 
 // -----------------------------------------------------------配置节点表格处理-----------------------------------------------------------
-const SETTING_NODE_TYPE_SPACE: SettingNodeType[] = [0, 1, 2, 3]
+const SETTING_NODE_TYPE_SPACE: SettingNodeType[] = [0, 1, 2, 3, 4]
 
 const {
   currentPage: settingNodeTableCurrentPage,
@@ -223,6 +223,8 @@ function settingNodeTableTypeFormatter(row: SettingNode, column: any): string {
       return '图片'
     case 3:
       return '图片列表'
+    case 4:
+      return '国际化'
     default:
       return '（未知）'
   }
