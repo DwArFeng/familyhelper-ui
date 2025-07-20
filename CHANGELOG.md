@@ -5,6 +5,8 @@
 ### 功能构建
 
 - `component-api` 子模块功能新增。
+  - 新增 `src/api/settingrepo/iahnNode.ts` API 代码。
+  - 为 `src/api/settingrepo/settingNode.ts` 添加新类型枚举。
   - 为 `src/api/settingrepo/imageListNode.ts` 添加新方法。
   - 为 `src/api/settingrepo/imageNode.ts` 添加新方法。
   - 为 `src/api/settingrepo/settingNode.ts` 添加新方法。

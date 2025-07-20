@@ -9,12 +9,14 @@ export type SettingNodeTypeText = 0
 export type SettingNodeTypeLongText = 1
 export type SettingNodeTypeImage = 2
 export type SettingNodeTypeImageList = 3
+export type SettingNodeTypeIahn = 4
 
 export type SettingNodeType =
   | SettingNodeTypeText
   | SettingNodeTypeLongText
   | SettingNodeTypeImage
   | SettingNodeTypeImageList
+  | SettingNodeTypeIahn
 
 export type SettingNode = {
   key: StringIdKey
