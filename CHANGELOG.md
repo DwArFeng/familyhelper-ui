@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `component-api` 子模块回归。
+  - `src/api/finance` 目录下的 HTTP 客户端 API 回归。
+
 - `webapp-mobile` 子模块功能新增。
   - 新增登录页面背景图片配置功能。
 
