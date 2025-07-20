@@ -25,6 +25,10 @@ export type TextNodePutInfo = {
   value: string
 }
 
+export type PublicTextNodeInspectInfo = {
+  args: string[]
+}
+
 export function exists(key: StringIdKey): Pres<boolean> {
   return http.generalClient().get('settingrepo', `text-node/${key.string_id}/exists/`, {}, 'json')
 }
@@ -55,4 +59,12 @@ export function operatePut(info: TextNodePutInfo): Pres<null> {
   return http
     .generalClient()
     .post('settingrepo', 'text-node/put/', info, 'application/json;charset=UTF-8')
+}
+
+export function operateInspectForPublic(
+  info: PublicTextNodeInspectInfo,
+): Pres<TextNodeInspectResult | null> {
+  return http
+    .publicClient()
+    .post('settingrepo', 'text-node/inspect-for-public/', info, 'application/json;charset=UTF-8')
 }

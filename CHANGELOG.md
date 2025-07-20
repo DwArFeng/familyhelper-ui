@@ -4,7 +4,11 @@
 
 ### 功能构建
 
-- (无)
+- `component-api` 子模块功能新增。
+  - 为 `src/api/settingrepo/imageListNode.ts` 添加新方法。
+  - 为 `src/api/settingrepo/imageNode.ts` 添加新方法。
+  - 为 `src/api/settingrepo/settingNode.ts` 添加新方法。
+  - 为 `src/api/settingrepo/textNode.ts` 添加新方法。
 
 ### Bug 修复
 

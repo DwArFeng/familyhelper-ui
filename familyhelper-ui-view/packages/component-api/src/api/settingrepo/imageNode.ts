@@ -34,6 +34,18 @@ export type ImageNodeThumbnailDownloadInfo = {
   args: string[]
 }
 
+type PublicImageNodeInspectInfo = {
+  args: string[]
+}
+
+type PublicImageNodeFileDownloadInfo = {
+  args: string[]
+}
+
+type PublicImageNodeThumbnailDownloadInfo = {
+  args: string[]
+}
+
 export function exists(key: StringIdKey): Pres<boolean> {
   return http.generalClient().get('settingrepo', `image-node/${key.string_id}/exists/`, {}, 'json')
 }
@@ -109,4 +121,56 @@ export function uploadStream(formData: FormData): Pres<null> {
   return http
     .generalClient()
     .post('settingrepo', 'image-node/upload-stream/', formData, 'multipart/form-data')
+}
+
+export function inspectForPublic(
+  inspectInfo: PublicImageNodeInspectInfo,
+): Pres<ImageNodeInspectResult | null> {
+  return http
+    .publicClient()
+    .post(
+      'settingrepo',
+      'image-node/inspect-for-public/',
+      inspectInfo,
+      'application/json;charset=UTF-8',
+    )
+}
+
+export function downloadFileForPublic(
+  downloadInfo: PublicImageNodeFileDownloadInfo,
+): Promise<Blob | null> {
+  return http.publicClient().get(
+    'settingrepo',
+    'image-node/download-file-for-public/',
+    {
+      'download-info': Base64.encode(JSON.stringify(downloadInfo)),
+    },
+    'blob',
+  )
+}
+
+export function requestFileStreamVoucherForPublic(
+  downloadInfo: PublicImageNodeFileDownloadInfo,
+): Pres<LongIdKey | null> {
+  return http
+    .publicClient()
+    .post(
+      'settingrepo',
+      'image-node/request-file-stream-voucher-for-public/',
+      downloadInfo,
+      'application/json;charset=UTF-8',
+    )
+}
+
+export function downloadThumbnailForPublic(
+  downloadInfo: PublicImageNodeThumbnailDownloadInfo,
+): Promise<Blob | null> {
+  return http.publicClient().get(
+    'settingrepo',
+    'image-node/download-thumbnail-for-public/',
+    {
+      'download-info': Base64.encode(JSON.stringify(downloadInfo)),
+    },
+    'blob',
+  )
 }

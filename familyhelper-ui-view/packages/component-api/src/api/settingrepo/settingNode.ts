@@ -49,6 +49,10 @@ export type SettingNodeRemoveInfo = {
   args: string[]
 }
 
+export type PublicSettingNodeInspectInfo = {
+  args: string[]
+}
+
 export function exists(key: StringIdKey): Pres<boolean> {
   return http
     .generalClient()
@@ -127,4 +131,17 @@ export function operateRemove(removeInfo: SettingNodeRemoveInfo): Pres<null> {
   return http
     .generalClient()
     .post('settingrepo', 'setting-node/remove/', removeInfo, 'application/json;charset=UTF-8')
+}
+
+export function operateInspectForPublic(
+  inspectInfo: PublicSettingNodeInspectInfo,
+): Pres<SettingNodeInspectResult | null> {
+  return http
+    .publicClient()
+    .post(
+      'settingrepo',
+      'setting-node/inspect-for-public/',
+      inspectInfo,
+      'application/json;charset=UTF-8',
+    )
 }

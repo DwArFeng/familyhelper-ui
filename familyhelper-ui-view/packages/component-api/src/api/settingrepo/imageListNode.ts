@@ -61,6 +61,24 @@ export type ImageListNodeRemoveInfo = {
   index: number
 }
 
+export type PublicImageListNodeSizeInfo = {
+  args: string[]
+}
+
+export type PublicImageListNodeInspectInfo = {
+  args: string[]
+}
+
+export type PublicImageListNodeFileDownloadInfo = {
+  args: string[]
+  index: number
+}
+
+export type PublicImageListNodeThumbnailDownloadInfo = {
+  args: string[]
+  index: number
+}
+
 export function exists(key: StringIdKey): Pres<boolean> {
   return http
     .generalClient()
@@ -173,4 +191,69 @@ export function remove(removeInfo: ImageListNodeRemoveInfo): Pres<null> {
   return http
     .generalClient()
     .post('settingrepo', 'image-list-node/remove/', removeInfo, 'application/json;charset=UTF-8')
+}
+
+export function sizeForPublic(
+  sizeInfo: PublicImageListNodeSizeInfo,
+): Pres<ImageListNodeSizeResult | null> {
+  return http
+    .publicClient()
+    .post(
+      'settingrepo',
+      'image-list-node/size-for-public/',
+      sizeInfo,
+      'application/json;charset=UTF-8',
+    )
+}
+
+export function inspectForPublic(
+  inspectInfo: PublicImageListNodeInspectInfo,
+): Pres<ImageListNodeInspectResult | null> {
+  return http
+    .publicClient()
+    .post(
+      'settingrepo',
+      'image-list-node/inspect-for-public/',
+      inspectInfo,
+      'application/json;charset=UTF-8',
+    )
+}
+
+export function downloadFileForPublic(
+  downloadInfo: PublicImageListNodeFileDownloadInfo,
+): Promise<Blob | null> {
+  return http.publicClient().get(
+    'settingrepo',
+    'image-list-node/download-file-for-public/',
+    {
+      'download-info': Base64.encode(JSON.stringify(downloadInfo)),
+    },
+    'blob',
+  )
+}
+
+export function requestFileStreamVoucherForPublic(
+  downloadInfo: PublicImageListNodeFileDownloadInfo,
+): Pres<LongIdKey | null> {
+  return http
+    .publicClient()
+    .post(
+      'settingrepo',
+      'image-list-node/request-file-stream-voucher-for-public/',
+      downloadInfo,
+      'application/json;charset=UTF-8',
+    )
+}
+
+export function downloadThumbnailForPublic(
+  downloadInfo: PublicImageListNodeThumbnailDownloadInfo,
+): Promise<Blob | null> {
+  return http.publicClient().get(
+    'settingrepo',
+    'image-list-node/download-thumbnail-for-public/',
+    {
+      'download-info': Base64.encode(JSON.stringify(downloadInfo)),
+    },
+    'blob',
+  )
 }
