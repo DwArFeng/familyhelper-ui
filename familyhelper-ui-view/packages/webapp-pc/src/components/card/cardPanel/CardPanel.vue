@@ -472,6 +472,8 @@ function handleContextmenuItemDelete(item: CT, index: number): void {
 }
 
 .card-button {
+  height: 28px;
+  width: 28px;
   padding: 7px;
 }
 
