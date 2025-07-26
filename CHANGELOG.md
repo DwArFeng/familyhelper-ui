@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块功能优化。
+  - `src/views/nodes/assetsManagement/assetBom/subDialogs/ItemCoverEditDialog.vue` 代码结构优化。
+
 - `component-api` 子模块回归。
   - `src/api/finance` 目录下的 HTTP 客户端 API 回归。
 

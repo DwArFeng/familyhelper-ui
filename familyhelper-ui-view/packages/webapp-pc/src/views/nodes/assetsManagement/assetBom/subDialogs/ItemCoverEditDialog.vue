@@ -92,7 +92,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch, onUnmounted } from 'vue'
 
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { type ImageSelectCropInfo } from '@/components/image/imageSelectCropDialog/types.ts'
 import DraggableTablePanel from '@/components/table/draggableTablePanel/DraggableTablePanel.vue'
@@ -118,7 +118,6 @@ import {
   dataSizePreset,
 } from '@dwarfeng/familyhelper-ui-component-util/src/util/number.ts'
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
-import { ElMessageBox } from 'element-plus'
 
 defineOptions({
   name: 'ItemCoverEditDialog',
