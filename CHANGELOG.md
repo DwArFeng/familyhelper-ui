@@ -34,6 +34,9 @@
 
 ### Bug 修复
 
+- `webapp-pc` 子模块 bug 修复。
+  - 修复 `src/components/image/imageSelectCropDialog` 目录下不正确的 vue 文件命名。
+
 - `webapp-mobile` 子模块 bug 修复。
   - 修复 `src/library/props.ts` 中的错误配置。
 

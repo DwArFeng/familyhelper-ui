@@ -96,7 +96,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { type ImageSelectCropInfo } from '@/components/image/imageSelectCropDialog/types.ts'
 import DraggableTablePanel from '@/components/table/draggableTablePanel/DraggableTablePanel.vue'
-import ImageSelectCropDialog from '@/components/image/imageSelectCropDialog/ImageSelectEditDialog.vue'
+import ImageSelectCropDialog from '@/components/image/imageSelectCropDialog/ImageSelectCropDialog.vue'
 import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 
 import { useGeneralDraggableTablePanel } from '@/components/table/draggableTablePanel/composables.ts'
