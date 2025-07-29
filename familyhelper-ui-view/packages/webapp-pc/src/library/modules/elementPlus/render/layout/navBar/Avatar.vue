@@ -45,7 +45,7 @@ import { computed } from 'vue'
 import { type NotificationStore } from '@/store/modules/notification.ts'
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
-import AvatarPanel from '@/components/avatar/AvatarPanel.vue'
+import AvatarPanel from '@/components/avatar/avatarPanel/AvatarPanel.vue'
 
 defineOptions({
   name: 'AvatarComponent',

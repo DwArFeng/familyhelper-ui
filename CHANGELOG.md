@@ -24,6 +24,7 @@
   - 新增 `src/util/i18n.ts` 国际化工具类。
 
 - `webapp-pc` 子模块组件优化。
+  - `AvatarPanel` 组件路径优化。
   - `CardPanel` 组件按钮样式优化。
   - `TextEditor` 组件 `el-link` v-bind 优化，以规避 deprecated 警告。
 

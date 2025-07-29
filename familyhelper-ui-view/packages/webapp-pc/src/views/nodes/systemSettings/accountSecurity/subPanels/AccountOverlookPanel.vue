@@ -64,7 +64,7 @@ import { useIconfontButtonIcon } from '@/composables/icon.ts'
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 
 import HeaderLayoutPanel from '@/components/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
-import AvatarPanel from '@/components/avatar/AvatarPanel.vue'
+import AvatarPanel from '@/components/avatar/avatarPanel/AvatarPanel.vue'
 
 import { inspectDisp } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 import { resolveResponse } from '@/util/response.ts'

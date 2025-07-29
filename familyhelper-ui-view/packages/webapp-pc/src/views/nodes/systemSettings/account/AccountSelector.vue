@@ -33,7 +33,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 
-import AvatarPanel from '@/components/avatar/AvatarPanel.vue'
+import AvatarPanel from '@/components/avatar/avatarPanel/AvatarPanel.vue'
 
 import { type DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 
