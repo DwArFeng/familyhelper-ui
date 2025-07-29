@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块回归。
+  - 组件库 `Echarts` 回归。
+
 - `webapp-pc` 子模块功能优化。
   - `src/views/nodes/assetsManagement/assetBom/subDialogs/ItemCoverEditDialog.vue` 代码结构优化。
 
