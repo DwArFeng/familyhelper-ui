@@ -8,6 +8,7 @@
   - 组件 `GeneralChartPanel` 新增。
 
 - `webapp-pc` 子模块回归。
+  - 菜单 `资金管理` 回归。
   - 组件库 `Echarts` 回归。
 
 - `webapp-pc` 子模块功能优化。
