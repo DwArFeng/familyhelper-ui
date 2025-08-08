@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块文档优化。
+  - `src/views/README.md` 文档编写。
+
 - `webapp-pc` 子模块文档优化。
   - `src/views/README.md` 文档编写。
 
