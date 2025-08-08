@@ -8,7 +8,7 @@ import { onMounted, onUnmounted, ref, shallowRef, watch, useTemplateRef } from '
 import { type ECharts, type ECElementEvent, type Payload } from 'echarts/core'
 import * as echarts from 'echarts/core'
 
-import { type GeneralChartPanelOption, type RendererType } from './types.ts'
+import { type GeneralChartOption, type RendererType } from './types.ts'
 
 defineOptions({
   name: 'GeneralChartPanel',
@@ -23,7 +23,7 @@ type Props = {
    *
    * @see https://echarts.apache.org/zh/option.html
    */
-  option: GeneralChartPanelOption
+  option: GeneralChartOption
 
   /**
    * 图表主题。
@@ -38,28 +38,11 @@ type Props = {
    * @see https://echarts.apache.org/handbook/zh/best-practices/canvas-vs-svg/
    */
   renderer?: RendererType
-
-  /**
-   * 是否自动调整尺寸。
-   *
-   * 如果选择 `false`，则需要手动调用 `resize` 方法进行尺寸调整。
-   */
-  autoResize?: boolean
-
-  /**
-   * 是否在更新选项时自动显示加载动画。
-   *
-   * 如果选择 `true`，则组件在更新选项时会自动显示加载动画；
-   * 反之需要手动调用 `showLoading` 和 `hideLoading` 方法显示/隐藏加载动画。
-   */
-  autoLoading?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   theme: undefined,
   renderer: 'canvas',
-  autoResize: true,
-  autoLoading: true,
 })
 
 // -----------------------------------------------------------Emits 定义-----------------------------------------------------------
@@ -340,7 +323,6 @@ function initChart(): void {
     })
     // noinspection SpellCheckingInspection
     _chartInstance.on('brushselected', (param: unknown) => {
-      console.log('brushselected')
       // noinspection SpellCheckingInspection
       emit('brushselected', param as Payload)
     })
@@ -363,17 +345,6 @@ function initChart(): void {
     })
   }
 
-  function updateOption(): void {
-    const _autoLoading: boolean = props.autoLoading
-    if (_autoLoading) {
-      _chartInstance.showLoading()
-    }
-    _chartInstance.setOption(props.option, true)
-    if (_autoLoading) {
-      _chartInstance.hideLoading()
-    }
-  }
-
   // 检查容器是否存在，如果不存在，则不进行初始化。
   if (!chartContainerRef.value) {
     return
@@ -389,7 +360,7 @@ function initChart(): void {
   // 抛出事件绑定。
   bindEmitEvents()
   // 初始化选项。
-  updateOption()
+  _chartInstance.setOption(props.option, true)
   // 保存实例引用。
   chartInstance.value = _chartInstance
   // 抛出初始化事件。
@@ -419,53 +390,19 @@ function refreshChart(): void {
 
 onMounted(() => {
   initChart()
-  if (import.meta.hot) {
-    /*
-     * 处于热模块替换环境时，从 hot.data 中还原 option。
-     * 从而规避热模块替换时内部变量值丢失的问题。
-     */
-    const option: GeneralChartPanelOption | null =
-      import.meta.hot.data.option ?? (null as GeneralChartPanelOption | null)
-    const _chartInstance: ECharts | null = chartInstance.value as ECharts | null
-    if (option && _chartInstance) {
-      _chartInstance.setOption(option, true)
-    }
-  }
 })
 
 onUnmounted(() => {
-  if (import.meta.hot) {
-    /*
-     * 处于热模块替换环境时，将 option 保存到 hot.data 中。
-     * 从而规避热模块替换时内部变量值丢失的问题。
-     */
-    import.meta.hot.data.option = chartInstance.value?.getOption() ?? null
-  }
   disposeChart()
 })
 
 // -----------------------------------------------------------尺寸变化处理-----------------------------------------------------------
 const resizeObserver = ref<ResizeObserver | null>(null)
 
-watch(
-  () => props.autoResize,
-  (value) => {
-    if (!value) {
-      return
-    }
-    const _chartInstance: ECharts | null = chartInstance.value as ECharts | null
-    if (!_chartInstance) {
-      return
-    }
-    _chartInstance.resize()
-    emit('resize')
-  },
-)
-
 function initResizeListener(): void {
   function resizeObserverCallBack(): void {
     const _chartInstance: ECharts | null = chartInstance.value as ECharts | null
-    if (!props.autoResize || !_chartInstance) {
+    if (!_chartInstance) {
       return
     }
     _chartInstance.resize()
@@ -490,20 +427,6 @@ function disposeResizeListener(): void {
   resizeObserver.value = null
 }
 
-/**
- * 调整尺寸。
- *
- * @see https://echarts.apache.org/zh/api.html#echartsInstance.resize
- */
-function resize(): void {
-  const _chartInstance: ECharts | null = chartInstance.value as ECharts | null
-  if (!_chartInstance) {
-    return
-  }
-  _chartInstance.resize()
-  emit('resize')
-}
-
 onMounted(() => {
   initResizeListener()
 })
@@ -515,19 +438,12 @@ onUnmounted(() => {
 // -----------------------------------------------------------选项处理-----------------------------------------------------------
 watch(() => props.option, updateOption, { deep: true })
 
-function updateOption(option: GeneralChartPanelOption): void {
-  const _autoLoading: boolean = props.autoLoading
+function updateOption(option: GeneralChartOption): void {
   const _chartInstance: ECharts | null = chartInstance.value as ECharts | null
   if (!_chartInstance) {
     return
   }
-  if (_autoLoading) {
-    _chartInstance.showLoading()
-  }
   _chartInstance.setOption(option, true)
-  if (_autoLoading) {
-    _chartInstance.hideLoading()
-  }
 }
 
 // -----------------------------------------------------------主题处理-----------------------------------------------------------
@@ -631,7 +547,6 @@ function getConnectedDataURL(opts?: Parameters<ECharts['getConnectedDataURL']>[0
 
 // -----------------------------------------------------------方法暴露-----------------------------------------------------------
 defineExpose({
-  resize,
   showLoading,
   hideLoading,
   renderToSVGString,

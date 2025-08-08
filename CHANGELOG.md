@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件新增。
+  - 组件 `GeneralChartPanel` 新增。
+
 - `webapp-pc` 子模块回归。
   - 组件库 `Echarts` 回归。
 

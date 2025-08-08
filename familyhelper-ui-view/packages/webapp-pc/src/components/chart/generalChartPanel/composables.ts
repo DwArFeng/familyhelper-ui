@@ -6,17 +6,15 @@ import { type ShallowRef } from 'vue'
 
 import { type ECharts } from 'echarts/core'
 
-import { type GeneralChartPanelOption } from './types.ts'
+import { type GeneralChartOption } from './types.ts'
 import { type RendererType } from './types.ts'
 import GeneralChartPanel from './GeneralChartPanel.vue'
 
 // -----------------------------------------------------------通用-----------------------------------------------------------
 type UseGeneralGeneralChartPanelResult = {
-  option: Ref<GeneralChartPanelOption>
+  option: Ref<GeneralChartOption>
   theme: ComputedRef<string | object | undefined>
   renderer: ComputedRef<RendererType>
-  autoResize: ComputedRef<boolean | undefined>
-  autoLoading: ComputedRef<boolean | undefined>
 }
 
 /**
@@ -28,8 +26,6 @@ type UseGeneralGeneralChartPanelResult = {
  * - `option` 表示图表的选项，可直接用于 GeneralChartPanel 的 `option` 属性。
  * - `theme` 表示图表的主题，可直接用于 GeneralChartPanel 的 `theme` 属性。
  * - `renderer` 表示图表的渲染器类型，可直接用于 GeneralChartPanel 的 `renderer` 属性。
- * - `autoResize` 表示图表是否自动调整大小，可直接用于 GeneralChartPanel 的 `autoResize` 属性。
- * - `autoLoading` 表示图表是否自动加载数据，可直接用于 GeneralChartPanel 的 `autoLoading` 属性。
  *
  * @param initialOption 初始的图表选项，默认为空对象。
  * @param theme 图表的主题，可以是字符串或对象，默认为 `undefined`。
@@ -37,34 +33,27 @@ type UseGeneralGeneralChartPanelResult = {
  * @returns 调用方法后的返回结果。
  */
 export function useGeneralGeneralChartPanel(
-  initialOption: GeneralChartPanelOption | undefined,
+  initialOption: GeneralChartOption | undefined,
   theme: string | object | undefined,
   renderer: RendererType,
 ): UseGeneralGeneralChartPanelResult {
-  const _option = ref<GeneralChartPanelOption>(initialOption ?? {})
+  const _option = ref<GeneralChartOption>(initialOption ?? {})
 
   const _theme = computed<string | object | undefined>(() => theme)
   const _renderer = computed<RendererType>(() => renderer)
-  const _autoResize = computed<boolean>(() => true)
-  const _autoLoading = computed<boolean>(() => true)
 
   return {
     option: _option,
     theme: _theme,
     renderer: _renderer,
-    autoResize: _autoResize,
-    autoLoading: _autoLoading,
   } as UseGeneralGeneralChartPanelResult
 }
 
 // -----------------------------------------------------------通用-带操作方法-----------------------------------------------------------
 type UseOperableGeneralGeneralChartPanelResult = {
-  option: Ref<GeneralChartPanelOption>
+  option: Ref<GeneralChartOption>
   theme: ComputedRef<string | object | undefined>
   renderer: ComputedRef<RendererType>
-  autoResize: ComputedRef<boolean | undefined>
-  autoLoading: ComputedRef<boolean | undefined>
-  resize: () => void
   showLoading: () => void
   hideLoading: () => void
   renderToSVGString: (opts?: Parameters<ECharts['renderToSVGString']>[0]) => string
@@ -81,9 +70,6 @@ type UseOperableGeneralGeneralChartPanelResult = {
  * - `option` 表示图表的选项，可直接用于 GeneralChartPanel 的 `option` 属性。
  * - `theme` 表示图表的主题，可直接用于 GeneralChartPanel 的 `theme` 属性。
  * - `renderer` 表示图表的渲染器类型，可直接用于 GeneralChartPanel 的 `renderer` 属性。
- * - `autoResize` 表示图表是否自动调整大小，可直接用于 GeneralChartPanel 的 `autoResize` 属性。
- * - `autoLoading` 表示图表是否自动加载数据，可直接用于 GeneralChartPanel 的 `autoLoading` 属性。
- * - `resize` 方法用于调整图表大小。
  * - `showLoading` 方法用于显示图表加载状态。
  * - `hideLoading` 方法用于隐藏图表加载状态。
  * - `renderToSVGString` 方法用于将图表渲染为 SVG 字符串。
@@ -95,32 +81,19 @@ type UseOperableGeneralGeneralChartPanelResult = {
  * @param initialOption 初始的图表选项，默认为空对象。
  * @param theme 图表的主题，可以是字符串或对象，默认为 `undefined`。
  * @param renderer 图表的渲染器类型，可以是字符串或对象，默认为 `canvas`。
- * @param autoResize 图表是否自动调整大小，默认为 `true`。
- * @param autoLoading 图表是否自动加载数据，默认为 `true`。
  * @param generalChartPanelRef 通用表格面板的引用。
+ * @returns 调用方法后的返回结果。
  */
 export function useOperableGeneralGeneralChartPanel(
-  initialOption: GeneralChartPanelOption | undefined,
+  initialOption: GeneralChartOption | undefined,
   theme: string | object | undefined,
   renderer: RendererType,
-  autoResize: boolean | undefined,
-  autoLoading: boolean | undefined,
   generalChartPanelRef: Readonly<ShallowRef<InstanceType<typeof GeneralChartPanel> | null>>,
 ): UseOperableGeneralGeneralChartPanelResult {
-  const _option = ref<GeneralChartPanelOption>(initialOption ?? {})
+  const _option = ref<GeneralChartOption>(initialOption ?? {})
 
   const _theme = computed<string | object | undefined>(() => theme)
   const _renderer = computed<RendererType>(() => renderer)
-  const _autoResize = computed<boolean | undefined>(() => autoResize)
-  const _autoLoading = computed<boolean | undefined>(() => autoLoading)
-
-  function resize(): void {
-    const instance = generalChartPanelRef.value
-    if (!instance) {
-      throw new Error('GeneralChartPanel instance is not ready')
-    }
-    instance.resize()
-  }
 
   function showLoading(): void {
     const instance = generalChartPanelRef.value
@@ -166,9 +139,6 @@ export function useOperableGeneralGeneralChartPanel(
     option: _option,
     theme: _theme,
     renderer: _renderer,
-    autoResize: _autoResize,
-    autoLoading: _autoLoading,
-    resize,
     showLoading,
     hideLoading,
     renderToSVGString,
@@ -179,13 +149,11 @@ export function useOperableGeneralGeneralChartPanel(
 
 // -----------------------------------------------------------分离-----------------------------------------------------------
 type UseSeparatedGeneralChartPanelResult = {
-  option: ComputedRef<GeneralChartPanelOption>
+  option: ComputedRef<GeneralChartOption>
   theme: ComputedRef<string | object | undefined>
   renderer: ComputedRef<RendererType>
-  autoResize: ComputedRef<boolean | undefined>
-  autoLoading: ComputedRef<boolean | undefined>
-  staticOption: Ref<GeneralChartPanelOption>
-  dynamicOption: Ref<GeneralChartPanelOption>
+  staticOption: Ref<GeneralChartOption>
+  dynamicOption: Ref<GeneralChartOption>
 }
 
 /**
@@ -197,8 +165,6 @@ type UseSeparatedGeneralChartPanelResult = {
  * - `option` 表示图表的选项，包含静态和动态部分，可直接用于 GeneralChartPanel 的 `option` 属性。
  * - `theme` 表示图表的主题，可直接用于 GeneralChartPanel 的 `theme` 属性。
  * - `renderer` 表示图表的渲染器类型，可直接用于 GeneralChartPanel 的 `renderer` 属性。
- * - `autoResize` 表示图表是否自动调整大小，可直接用于 GeneralChartPanel 的 `autoResize` 属性。
- * - `autoLoading` 表示图表是否自动加载数据，可直接用于 GeneralChartPanel 的 `autoLoading` 属性。
  * - `staticOption` 表示静态部分的图表选项，更改此引用中的值，便可更改图表选项中的静态部分。
  * - `dynamicOption` 表示动态部分的图表选项，更改此引用中的值，便可更改图表选项中的动态部分。
  *
@@ -206,32 +172,29 @@ type UseSeparatedGeneralChartPanelResult = {
  * @param initialDynamicOption 初始的动态图表选项，默认为空对象。
  * @param theme 图表的主题，可以是字符串或对象，默认为 `undefined`。
  * @param renderer 图表的渲染器类型，可以是字符串或对象，默认为 `canvas`。
+ * @returns 调用方法后的返回结果。
  */
 export function useSeparatedGeneralChartPanel(
-  initialStaticOption: GeneralChartPanelOption | undefined,
-  initialDynamicOption: GeneralChartPanelOption | undefined,
+  initialStaticOption: GeneralChartOption | undefined,
+  initialDynamicOption: GeneralChartOption | undefined,
   theme: string | object | undefined,
   renderer: RendererType,
 ): UseSeparatedGeneralChartPanelResult {
-  const _option = computed<GeneralChartPanelOption>(() => {
-    const _innerStaticOption: GeneralChartPanelOption = _staticOption.value ?? {}
-    const _innerDynamicOption: GeneralChartPanelOption = _dynamicOption.value ?? {}
+  const _option = computed<GeneralChartOption>(() => {
+    const _innerStaticOption: GeneralChartOption = _staticOption.value ?? {}
+    const _innerDynamicOption: GeneralChartOption = _dynamicOption.value ?? {}
     return mergeObjects(_innerStaticOption, _innerDynamicOption)
   })
   const _theme = computed<string | object | undefined>(() => theme)
   const _renderer = computed<RendererType>(() => renderer)
-  const _autoResize = computed<boolean>(() => true)
-  const _autoLoading = computed<boolean>(() => true)
 
-  const _staticOption = ref<GeneralChartPanelOption>(initialStaticOption ?? {})
-  const _dynamicOption = ref<GeneralChartPanelOption>(initialDynamicOption ?? {})
+  const _staticOption = ref<GeneralChartOption>(initialStaticOption ?? {})
+  const _dynamicOption = ref<GeneralChartOption>(initialDynamicOption ?? {})
 
   return {
     option: _option,
     theme: _theme,
     renderer: _renderer,
-    autoResize: _autoResize,
-    autoLoading: _autoLoading,
     staticOption: _staticOption,
     dynamicOption: _dynamicOption,
   } as UseSeparatedGeneralChartPanelResult
@@ -239,14 +202,11 @@ export function useSeparatedGeneralChartPanel(
 
 // -----------------------------------------------------------分离-带操作方法-----------------------------------------------------------
 type UseOperableSeparatedGeneralChartPanelResult = {
-  option: ComputedRef<GeneralChartPanelOption>
+  option: ComputedRef<GeneralChartOption>
   theme: ComputedRef<string | object | undefined>
   renderer: ComputedRef<RendererType>
-  autoResize: ComputedRef<boolean | undefined>
-  autoLoading: ComputedRef<boolean | undefined>
-  staticOption: Ref<GeneralChartPanelOption>
-  dynamicOption: Ref<GeneralChartPanelOption>
-  resize: () => void
+  staticOption: Ref<GeneralChartOption>
+  dynamicOption: Ref<GeneralChartOption>
   showLoading: () => void
   hideLoading: () => void
   renderToSVGString: (opts?: Parameters<ECharts['renderToSVGString']>[0]) => string
@@ -263,11 +223,8 @@ type UseOperableSeparatedGeneralChartPanelResult = {
  * - `option` 表示图表的选项，包含静态和动态部分，可直接用于 GeneralChartPanel 的 `option` 属性。
  * - `theme` 表示图表的主题，可直接用于 GeneralChartPanel 的 `theme` 属性。
  * - `renderer` 表示图表的渲染器类型，可直接用于 GeneralChartPanel 的 `renderer` 属性。
- * - `autoResize` 表示图表是否自动调整大小，可直接用于 GeneralChartPanel 的 `autoResize` 属性。
- * - `autoLoading` 表示图表是否自动加载数据，可直接用于 GeneralChartPanel 的 `autoLoading` 属性。
  * - `staticOption` 表示静态部分的图表选项，更改此引用中的值，便可更改图表选项中的静态部分。
  * - `dynamicOption` 表示动态部分的图表选项，更改此引用中的值，便可更改图表选项中的动态部分。
- * - `resize` 方法用于调整图表大小。
  * - `showLoading` 方法用于显示图表加载状态。
  * - `hideLoading` 方法用于隐藏图表加载状态。
  * - `renderToSVGString` 方法用于将图表渲染为 SVG 字符串。
@@ -278,39 +235,26 @@ type UseOperableSeparatedGeneralChartPanelResult = {
  * @param initialDynamicOption 初始的动态图表选项，默认为空对象。
  * @param theme 图表的主题，可以是字符串或对象，默认为 `undefined`。
  * @param renderer 图表的渲染器类型，可以是字符串或对象，默认为 `canvas`。
- * @param autoResize 图表是否自动调整大小，默认为 `true`。
- * @param autoLoading 图表是否自动加载数据，默认为 `true`。
  * @param generalChartPanelRef 通用表格面板的引用。
+ * @returns 调用方法后的返回结果。
  */
 export function useOperableSeparatedGeneralChartPanel(
-  initialStaticOption: GeneralChartPanelOption | undefined,
-  initialDynamicOption: GeneralChartPanelOption | undefined,
+  initialStaticOption: GeneralChartOption | undefined,
+  initialDynamicOption: GeneralChartOption | undefined,
   theme: string | object | undefined,
   renderer: RendererType,
-  autoResize: boolean | undefined,
-  autoLoading: boolean | undefined,
   generalChartPanelRef: Readonly<ShallowRef<InstanceType<typeof GeneralChartPanel> | null>>,
 ): UseOperableSeparatedGeneralChartPanelResult {
-  const _option = computed<GeneralChartPanelOption>(() => {
-    const _innerStaticOption: GeneralChartPanelOption = _staticOption.value ?? {}
-    const _innerDynamicOption: GeneralChartPanelOption = _dynamicOption.value ?? {}
+  const _option = computed<GeneralChartOption>(() => {
+    const _innerStaticOption: GeneralChartOption = _staticOption.value ?? {}
+    const _innerDynamicOption: GeneralChartOption = _dynamicOption.value ?? {}
     return mergeObjects(_innerStaticOption, _innerDynamicOption)
   })
   const _theme = computed<string | object | undefined>(() => theme)
   const _renderer = computed<RendererType>(() => renderer)
-  const _autoResize = computed<boolean | undefined>(() => autoResize)
-  const _autoLoading = computed<boolean | undefined>(() => autoLoading)
 
-  const _staticOption = ref<GeneralChartPanelOption>(initialStaticOption ?? {})
-  const _dynamicOption = ref<GeneralChartPanelOption>(initialDynamicOption ?? {})
-
-  function resize(): void {
-    const instance = generalChartPanelRef.value
-    if (!instance) {
-      throw new Error('GeneralChartPanel instance is not ready')
-    }
-    instance.resize()
-  }
+  const _staticOption = ref<GeneralChartOption>(initialStaticOption ?? {})
+  const _dynamicOption = ref<GeneralChartOption>(initialDynamicOption ?? {})
 
   function showLoading(): void {
     const instance = generalChartPanelRef.value
@@ -356,11 +300,8 @@ export function useOperableSeparatedGeneralChartPanel(
     option: _option,
     theme: _theme,
     renderer: _renderer,
-    autoResize: _autoResize,
-    autoLoading: _autoLoading,
     staticOption: _staticOption,
     dynamicOption: _dynamicOption,
-    resize,
     showLoading,
     hideLoading,
     renderToSVGString,

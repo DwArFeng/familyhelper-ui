@@ -19,7 +19,7 @@ import { type ComposeOption } from 'echarts/core'
 import { type EChartsInitOpts } from 'echarts/core'
 
 // 导出通用图表的类型。
-export type GeneralChartPanelOption = ComposeOption<
+export type GeneralChartOption = ComposeOption<
   | BarSeriesOption
   | LineSeriesOption
   | TitleComponentOption
