@@ -123,7 +123,11 @@
 import { type Ref } from 'vue'
 import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 
-import { type LoadFunction, type TreeOptionProps as ElTreeOptionProps } from 'element-plus'
+import {
+  type LoadFunction,
+  type TreeOptionProps as ElTreeOptionProps,
+  type TreeNodeData,
+} from 'element-plus'
 import { ElOption, ElSelect, ElTree } from 'element-plus'
 
 import {
@@ -347,10 +351,8 @@ function appendRoot(item: CT): void {
     if (!treeRef.value) {
       throw new Error('不应该执行到此处, 请联系开发人员')
     }
-    if (
-      treeRef.value.getCurrentNode() &&
-      treeRef.value.getCurrentNode()[props.keyField] === item[props.keyField]
-    ) {
+    const _treeCurrentNode: TreeNodeData | null = treeRef.value.getCurrentNode()
+    if (_treeCurrentNode && _treeCurrentNode[props.keyField] === item[props.keyField]) {
       treeRef.value.setCurrentKey()
     }
     if (!treeRef.value.getCurrentNode()) {
@@ -393,10 +395,8 @@ function update(item: CT): void {
   // 如果更新的是当前选中的节点对应的项目，则需要触发 onCurrentChanged 事件，
   // 使得组件的使用方可以获取到最新的当前选中节点。
   let emitOnCurrentChangedFlag: boolean = false
-  if (
-    treeRef.value.getCurrentNode() &&
-    treeRef.value.getCurrentNode()[props.keyField] === item[props.keyField]
-  ) {
+  const _treeCurrentNode: TreeNodeData | null = treeRef.value.getCurrentNode()
+  if (_treeCurrentNode && _treeCurrentNode[props.keyField] === item[props.keyField]) {
     emitOnCurrentChangedFlag = true
   }
   // 节点数据更新。

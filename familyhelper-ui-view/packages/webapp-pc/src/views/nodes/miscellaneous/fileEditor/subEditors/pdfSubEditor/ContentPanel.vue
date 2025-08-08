@@ -102,6 +102,7 @@ async function doRenderPage(): Promise<void> {
   const renderContext = {
     canvasContext: contentCanvasContext,
     viewport: pdfPageViewPort,
+    canvas: null,
   }
   await pdfPage.render(renderContext).promise
   // 更新 contentCanvas 样式。
