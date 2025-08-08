@@ -38,6 +38,9 @@
 
 ### Bug 修复
 
+- `webapp-pc` 子模块组件 bug 修复。
+  - `TablePanel` 组件 `onCurrentChanged` 事件的参数类型定义错误。
+
 - `webapp-pc` 子模块 bug 修复。
   - 修复 `src/components/image/imageSelectCropDialog` 目录下不正确的 vue 文件命名。
 

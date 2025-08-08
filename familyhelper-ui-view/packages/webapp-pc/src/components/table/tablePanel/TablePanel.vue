@@ -191,7 +191,7 @@ type Emits = {
   (e: 'onItemInspect', item: CT, index: number): void
   (e: 'onItemEdit', item: CT, index: number): void
   (e: 'onItemDelete', item: CT, index: number): void
-  (e: 'onCurrentChanged', current: CT): void
+  (e: 'onCurrentChanged', current: CT | null): void
   (e: 'onSelectionChanged', selection: CT[]): void
 }
 
