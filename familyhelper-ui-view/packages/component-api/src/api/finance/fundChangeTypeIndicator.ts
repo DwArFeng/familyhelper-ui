@@ -1,4 +1,4 @@
-// noinspection NpmUsedModulesInstalled,JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
 import { type StringIdKey } from '../subgrade/key'

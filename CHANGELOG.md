@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 优化 node 模块下的 `logging` 目录结构。
+  - 将 `logging/settings-linux.xml` 重命名为 `settings-ref-linux.xml`，以消除文件名的歧义。
+  - 将 `logging/settings-windows.xml` 重命名为 `settings-ref-windows.xml`，以消除文件名的歧义。
+  - 更新 `logging/README.md` 中的相关说明。
+
 - 优化 `changelogs` 目录结构，以适配新的版本规范。
 
 - 优化 `docs/wiki` 目录结构。
