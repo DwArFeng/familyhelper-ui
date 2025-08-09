@@ -131,7 +131,7 @@ const {
 const bankCardTableLoading = ref<number>(0)
 const bankCardTableCurrent = ref<DispBankCard | null>(null)
 
-const bankCardTableAnchor = computed<DispBankCard | null>(()=>{
+const bankCardTableAnchor = computed<DispBankCard | null>(() => {
   const _bankCardTableCurrent: DispBankCard | null = bankCardTableCurrent.value
   if (_bankCardTableCurrent) {
     return _bankCardTableCurrent

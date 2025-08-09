@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- `webapp-pc` 子模块 bug 修复。
+  - 修复节点视图目录中 `financeManagement/financeReport/subPanels/BankCardPanel.vue` 的格式问题。
 
 ### 功能移除
 
