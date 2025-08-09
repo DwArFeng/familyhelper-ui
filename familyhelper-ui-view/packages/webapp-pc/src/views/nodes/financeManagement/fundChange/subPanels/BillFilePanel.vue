@@ -30,6 +30,7 @@
                   <el-image
                     class="image"
                     fit="cover"
+                    preview-teleported
                     :src="row.url"
                     :preview-src-list="[row.url]"
                   />
