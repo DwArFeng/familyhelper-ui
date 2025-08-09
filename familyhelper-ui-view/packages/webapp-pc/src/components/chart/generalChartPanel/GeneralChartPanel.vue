@@ -145,6 +145,9 @@ const chartContainerRef = useTemplateRef<HTMLElement>('chartContainerRef')
 // -----------------------------------------------------------实例引用-----------------------------------------------------------
 const chartInstance = shallowRef<ECharts | null>(null)
 
+// -----------------------------------------------------------延迟初始化标记-----------------------------------------------------------
+let initLater: boolean = false
+
 // -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
 function initChart(): void {
   function bindEmitEvents(): void {
@@ -346,13 +349,21 @@ function initChart(): void {
   }
 
   // 检查容器是否存在，如果不存在，则不进行初始化。
-  if (!chartContainerRef.value) {
+  const _chartContainer: HTMLElement | null = chartContainerRef.value
+  if (!_chartContainer) {
     return
   }
   // 检查实例是否已存在，如果已存在，则不进行初始化。
   if (chartInstance.value) {
     return
   }
+
+  // 当容器的长度或宽度为 0 时，标记为延迟初始化并退出，以规避 ECharts 警告。
+  if (_chartContainer.clientWidth === 0 || _chartContainer.clientHeight === 0) {
+    initLater = true
+    return
+  }
+
   // 创建新的 ECharts 实例。
   const _chartInstance: ECharts = echarts.init(chartContainerRef.value, props.theme, {
     renderer: props.renderer,
@@ -365,6 +376,8 @@ function initChart(): void {
   chartInstance.value = _chartInstance
   // 抛出初始化事件。
   emit('init', _chartInstance)
+  // 复位延迟初始化标记。
+  initLater = false
 }
 
 function disposeChart(): void {
@@ -401,12 +414,19 @@ const resizeObserver = ref<ResizeObserver | null>(null)
 
 function initResizeListener(): void {
   function resizeObserverCallBack(): void {
-    const _chartInstance: ECharts | null = chartInstance.value as ECharts | null
-    if (!_chartInstance) {
-      return
+    // 如果延迟启动标记置位，则初始化。
+    if (initLater) {
+      initChart()
     }
-    _chartInstance.resize()
-    emit('resize')
+    // 否则调整尺寸。
+    else {
+      const _chartInstance: ECharts | null = chartInstance.value as ECharts | null
+      if (!_chartInstance) {
+        return
+      }
+      _chartInstance.resize()
+      emit('resize')
+    }
   }
 
   const _chartContainer: HTMLElement | null = chartContainerRef.value
