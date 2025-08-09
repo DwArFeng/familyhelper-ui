@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 更新 README.md。
+
+- Wiki 更新。
+  - docs/wiki/zh-CN/Introduction.md。
+
 - `webapp-mobile` 子模块文档优化。
   - `src/views/README.md` 文档编写。
 

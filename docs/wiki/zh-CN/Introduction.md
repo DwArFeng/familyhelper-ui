@@ -25,3 +25,50 @@ wiki 为项目的开发人员为本项目编写的详细文档，包含不同语
 
 1. [简介](./Introduction.md) - 即本文件。
 2. [目录](./Contents.md) - 文档目录。
+
+## 使用说明
+
+1. 下载源码
+
+   使用 git 进行源码下载。
+
+   ```shell
+   git clone git@github.com:DwArFeng/familyhelper-ui.git
+   ```
+
+   对于中国用户，可以使用 gitee 进行高速下载。
+
+   ```shell
+   git clone git@gitee.com:dwarfeng/familyhelper-ui.git
+   ```
+
+2. 项目打包
+
+   进入项目根目录，执行 maven 命令。
+
+   ```shell
+   mvn clean package
+   ```
+
+3. 解压
+
+   找到打包后的目标文件。
+
+   ```
+   familyhelper-ui-distribute/target/familyhelper-ui-distribute-[version]-release.tar.gz
+   ```
+
+   将其解压至 windows 系统或者 linux 系统。
+
+4. 配置
+
+   1. 修改 `conf/familyhelper-ui` 文件夹下的配置文件，着重修改日志记录设置。
+
+5. 部署
+
+   将解压并修改后的文件夹部署至 tomcat 服务器中。
+   - 将 `conf` 目录下的配置文件复制到 tomcat 的 `conf` 目录下。
+   - 将 `webapps` 目录下的文件复制到 tomcat 的 `webapps` 目录下。
+
+6. enjoy it
+
