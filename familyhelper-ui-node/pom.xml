@@ -11,7 +11,7 @@
     <parent>
         <artifactId>familyhelper-ui</artifactId>
         <groupId>com.dwarfeng</groupId>
-        <version>3.6.0.c-SNAPSHOT</version>
+        <version>3.6.0.c</version>
     </parent>
 
     <packaging>war</packaging>
