@@ -7,11 +7,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
+import { computed, onMounted, onBeforeUnmount, ref, useTemplateRef, watch } from 'vue'
 
 import { type PDFDocumentProxy, type PDFPageProxy } from 'pdfjs-dist'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
+import { onUnmounted } from 'vue'
 
 defineOptions({
   name: 'ContentPanel',
@@ -36,6 +37,8 @@ const contentCanvasStyleLeft = ref<number>(0)
 
 const contentPanelRef = useTemplateRef<HTMLDivElement>('contentPanelRef')
 const contentCanvasRef = useTemplateRef<HTMLCanvasElement>('contentCanvasRef')
+
+let pdfContentContainerToDispose: HTMLDivElement | null
 
 const pdfRenderWatchingData = computed(() => {
   return {
@@ -134,12 +137,20 @@ onMounted(() => {
   contentPanelResizeObserver.observe(pdfContentContainer)
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   const pdfContentContainer: HTMLDivElement | null = contentPanelRef.value
   if (!pdfContentContainer) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
-  contentPanelResizeObserver.unobserve(pdfContentContainer)
+  pdfContentContainerToDispose = pdfContentContainer
+})
+
+onUnmounted(() => {
+  if (!pdfContentContainerToDispose) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  contentPanelResizeObserver.unobserve(pdfContentContainerToDispose)
+  pdfContentContainerToDispose = null
 })
 </script>
 

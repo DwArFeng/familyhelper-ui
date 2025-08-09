@@ -42,6 +42,9 @@
 
 ### Bug 修复
 
+- `webapp-pc` 子模块页面 bug 修复。
+  - 杂项 -> 文件编辑面板 pdf 子编辑器销毁时抛出异常。
+
 - `webapp-pc` 子模块组件 bug 修复。
   - `TablePanel` 组件 `onCurrentChanged` 事件的参数类型定义错误。
 
