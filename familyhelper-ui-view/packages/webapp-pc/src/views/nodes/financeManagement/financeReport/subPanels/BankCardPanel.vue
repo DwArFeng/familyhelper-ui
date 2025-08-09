@@ -3,22 +3,22 @@
     <div class="placeholder" v-if="accountBook === null">请选择账本</div>
     <div class="bank-card-body" v-else>
       <div class="bank-card-body-grid expand">
-        <div class="placeholder" v-if="bankCardTableCurrent === null">请选择银行卡</div>
+        <div class="placeholder" v-if="bankCardTableAnchor === null">请选择银行卡</div>
         <div class="bank-card-body-grid-main" v-else>
           <div class="details-wrapper">
             <title-layout-panel class="details" title="银行卡详情" bordered apply-container-height>
               <el-form class="bank-card-detail" label-position="left" inline label-width="60px">
                 <el-form-item label="名称" style="width: 50%">
-                  <span>{{ bankCardTableCurrent?.name ?? '（未知）' }}</span>
+                  <span>{{ bankCardTableAnchor?.name ?? '（未知）' }}</span>
                 </el-form-item>
                 <el-form-item label="所有者" style="width: 50%">
                   <span>{{
-                    bankCardTableCurrent?.account_book?.owner_account?.key?.string_id ?? '（未知）'
+                    bankCardTableAnchor?.account_book?.owner_account?.key?.string_id ?? '（未知）'
                   }}</span>
                 </el-form-item>
                 <el-form-item label="备注" style="width: 100%">
                   <!--suppress JSUnresolvedReference -->
-                  <span>{{ bankCardTableCurrent?.remark ?? '（未知）' }}</span>
+                  <span>{{ bankCardTableAnchor?.remark ?? '（未知）' }}</span>
                 </el-form-item>
               </el-form>
             </title-layout-panel>
@@ -106,6 +106,7 @@ import { lookupWithAdjustPage } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
+import { computed } from 'vue'
 
 defineOptions({
   name: 'BankCardPanel',
@@ -129,6 +130,18 @@ const {
 } = useIdentityBackendPagingTablePanel<DispBankCard>(15)
 const bankCardTableLoading = ref<number>(0)
 const bankCardTableCurrent = ref<DispBankCard | null>(null)
+
+const bankCardTableAnchor = computed<DispBankCard | null>(()=>{
+  const _bankCardTableCurrent: DispBankCard | null = bankCardTableCurrent.value
+  if (_bankCardTableCurrent) {
+    return _bankCardTableCurrent
+  }
+  const _bankCardTableItems: DispBankCard[] = bankCardTableItems.value
+  if (_bankCardTableItems.length > 0) {
+    return _bankCardTableItems[0]
+  }
+  return null
+})
 
 // 此处 any 是 element-plus API 规定的，故忽略警告。
 function bankCardTableCardTypeFormatter(row: DispBankCard): string {
@@ -176,9 +189,6 @@ async function updateBankCardTable0(): Promise<void> {
       bankCardTablePagingInfo.value,
     )
     updateBankCardTableByLookup(res)
-    if (bankCardTableItems.value.length > 0) {
-      bankCardTableCurrent.value = bankCardTableItems.value[0]
-    }
   } finally {
     bankCardTableLoading.value -= 1
   }
@@ -202,7 +212,7 @@ const balanceIndicatorFormattedColor = ref<'red' | 'black'>('black')
 const balanceIndicatorFormattedValue = ref<string>('')
 
 function updateBalanceIndicator(): void {
-  if (!bankCardTableCurrent.value) {
+  if (!bankCardTableAnchor.value) {
     return
   }
   updateBalanceIndicator0()
@@ -274,7 +284,7 @@ function updateBalanceIndicator0(): void {
     )
   }
 
-  const _bankCard: DispBankCard | null = bankCardTableCurrent.value
+  const _bankCard: DispBankCard | null = bankCardTableAnchor.value
   if (!_bankCard) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
@@ -296,7 +306,7 @@ function updateBalanceIndicator0(): void {
 }
 
 watch(
-  () => bankCardTableCurrent.value,
+  () => bankCardTableAnchor.value,
   () => {
     updateBalanceIndicator()
   },
@@ -362,14 +372,14 @@ const {
 const balanceChartLoading = ref<number>(0)
 
 function updateBalanceChart(): void {
-  if (!bankCardTableCurrent.value) {
+  if (!bankCardTableAnchor.value) {
     return
   }
   updateBalanceChart0()
 }
 
 async function updateBalanceChart0(): Promise<void> {
-  const _bankCard: DispBankCard | null = bankCardTableCurrent.value
+  const _bankCard: DispBankCard | null = bankCardTableAnchor.value
   if (!_bankCard) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
@@ -402,7 +412,7 @@ async function updateBalanceChart0(): Promise<void> {
 }
 
 watch(
-  () => bankCardTableCurrent.value,
+  () => bankCardTableAnchor.value,
   () => {
     updateBalanceChart()
   },

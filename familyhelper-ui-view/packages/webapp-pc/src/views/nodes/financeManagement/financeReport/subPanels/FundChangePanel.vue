@@ -3,7 +3,7 @@
     <div class="placeholder" v-if="accountBook === null">请选择账本</div>
     <div class="fund-change-body" v-else>
       <div class="fund-change-body-grid expand">
-        <div class="placeholder" v-if="fundChangeTableCurrent === null">请选择资金变更数据</div>
+        <div class="placeholder" v-if="fundChangeTableAnchor === null">请选择资金变更数据</div>
         <div class="fund-change-body-grid-main" v-else>
           <div class="details-wrapper">
             <title-layout-panel
@@ -145,6 +145,7 @@ import { lookupAllToList, lookupWithAdjustPage } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
+import { computed } from 'vue'
 
 defineOptions({
   name: 'FundChangePanel',
@@ -201,6 +202,18 @@ const {
 const fundChangeTableLoading = ref<number>(0)
 const fundChangeTableCurrent = ref<DispFundChange | null>(null)
 
+const fundChangeTableAnchor = computed<DispFundChange | null>(() => {
+  const _fundChangeTableCurrent: DispFundChange | null = fundChangeTableCurrent.value
+  if (_fundChangeTableCurrent) {
+    return _fundChangeTableCurrent
+  }
+  const _fundChangeTableItems: DispFundChange[] = fundChangeTableItems.value
+  if (_fundChangeTableItems.length > 0) {
+    return _fundChangeTableItems[0]
+  }
+  return null
+})
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function fundChangeTableBalanceNumberFormatter(row: DispFundChange, column: any): string {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -255,9 +268,6 @@ async function updateFundChangeTableChildForAccountBookDisp(): Promise<void> {
       fundChangeTablePagingInfo.value,
     )
     updateFundChangeTableByLookup(res)
-    if (fundChangeTableItems.value.length > 0) {
-      fundChangeTableCurrent.value = fundChangeTableItems.value[0]
-    }
   } finally {
     fundChangeTableLoading.value -= 1
   }
@@ -281,9 +291,6 @@ async function updateFundChangeTableChildForAccountBookTypeEqualsDisp(): Promise
       fundChangeTablePagingInfo.value,
     )
     updateFundChangeTableByLookup(res)
-    if (fundChangeTableItems.value.length > 0) {
-      fundChangeTableCurrent.value = fundChangeTableItems.value[0]
-    }
   } finally {
     fundChangeTableLoading.value -= 1
   }
@@ -316,7 +323,7 @@ function updateFundChangeDetail(): void {
     return '（未指定）'
   }
 
-  const _fundChange: DispFundChange | null = fundChangeTableCurrent.value
+  const _fundChange: DispFundChange | null = fundChangeTableAnchor.value
   if (!_fundChange) {
     fundChangeDetailFormattedChangeType.value = ''
     fundChangeDetailFormattedHappenedDate.value = ''
@@ -329,7 +336,7 @@ function updateFundChangeDetail(): void {
 }
 
 watch(
-  () => fundChangeTableCurrent.value,
+  () => fundChangeTableAnchor.value,
   () => {
     updateFundChangeDetail()
   },
@@ -346,7 +353,7 @@ const deltaIndicatorFormattedColor = ref<'red' | 'black'>('black')
 const deltaIndicatorFormattedValue = ref<string>('')
 
 function updateDeltaIndicator(): void {
-  if (!fundChangeTableCurrent.value) {
+  if (!fundChangeTableAnchor.value) {
     return
   }
   updateDeltaIndicator0()
@@ -418,7 +425,7 @@ function updateDeltaIndicator0(): void {
     )
   }
 
-  const _fundChange: DispFundChange | null = fundChangeTableCurrent.value
+  const _fundChange: DispFundChange | null = fundChangeTableAnchor.value
   if (!_fundChange) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
@@ -440,7 +447,7 @@ function updateDeltaIndicator0(): void {
 }
 
 watch(
-  () => fundChangeTableCurrent.value,
+  () => fundChangeTableAnchor.value,
   () => {
     updateDeltaIndicator()
   },
