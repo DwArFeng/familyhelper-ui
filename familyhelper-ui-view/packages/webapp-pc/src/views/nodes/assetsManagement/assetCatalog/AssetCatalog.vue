@@ -167,7 +167,6 @@ import { lookupAllToList, lookupCount } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
-import { userOwned } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/noteBook.ts'
 
 defineOptions({
   name: 'AssetCatalog',
@@ -251,7 +250,7 @@ function assetCatalogCardItemMap(t: DispAssetCatalog): AssetCatalogCardItem {
 async function handleAssetCatalogToCreate(): Promise<void> {
   assetCatalogCardLoading.value += 1
   try {
-    const count: number = await lookupCount((pagingInfo) => userOwned(pagingInfo))
+    const count: number = await lookupCount((pagingInfo) => allOwnedDisp(pagingInfo))
     const maxCard: number = assetCatalogCardMaxCard.value
     if (count > maxCard) {
       await ElMessageBox.alert(

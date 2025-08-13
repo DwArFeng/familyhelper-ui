@@ -8,6 +8,9 @@
 
 ### Bug 修复
 
+- `webapp-pc` 子模块页面 bug 修复。
+  - 资产管理 -> 资产目录管理主卡片面板增加按钮点击后，业务逻辑处理不正确。
+
 - `component-api` 子模块 bug 修复。
   - 删除 `src/api/assets/assetCatalog.ts` 中多余的方法。
 
