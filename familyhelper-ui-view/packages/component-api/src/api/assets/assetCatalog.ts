@@ -63,30 +63,6 @@ export function all(pagingInfo: PagingInfo): Prespa<AssetCatalog> {
   )
 }
 
-export function allPermitted(pagingInfo: PagingInfo): Prespa<AssetCatalog> {
-  return http.generalClient().get(
-    'assets',
-    'asset-catalog/all-permitted/',
-    {
-      page: pagingInfo.page,
-      rows: pagingInfo.rows,
-    },
-    'json',
-  )
-}
-
-export function allOwned(pagingInfo: PagingInfo): Prespa<AssetCatalog> {
-  return http.generalClient().get(
-    'assets',
-    'asset-catalog/all-owned/',
-    {
-      page: pagingInfo.page,
-      rows: pagingInfo.rows,
-    },
-    'json',
-  )
-}
-
 export function inspectDisp(key: LongIdKey): Pres<DispAssetCatalog> {
   return http.generalClient().get('assets', `asset-catalog/${key.long_id}/disp/`, {}, 'json')
 }

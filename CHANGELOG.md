@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- `component-api` 子模块 bug 修复。
+  - 删除 `src/api/assets/assetCatalog.ts` 中多余的方法。
 
 ### 功能移除
 
