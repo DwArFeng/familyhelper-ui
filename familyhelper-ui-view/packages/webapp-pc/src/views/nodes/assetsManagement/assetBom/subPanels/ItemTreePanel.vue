@@ -50,6 +50,7 @@ import {
 import { type PagedData } from '@dwarfeng/familyhelper-ui-component-api/src/util/response.ts'
 import { lookupAllToList } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
+import { watch } from 'vue'
 
 defineOptions({
   name: 'ItemTreePanel',
@@ -136,6 +137,16 @@ async function queryPathCaller(ct: ItemTreeItem): Promise<DispItem[]> {
   const pagedData: PagedData<DispItem> = await resolveResponse(pathFromRootDisp(ct.item.key))
   return pagedData.data
 }
+
+watch(
+  () => props.assetCatalogId,
+  () => {
+    if (!treePanelRef.value) {
+      return
+    }
+    treePanelRef.value.refresh()
+  },
+)
 
 // -----------------------------------------------------------事件转发处理-----------------------------------------------------------
 function handleCurrentChanged(
