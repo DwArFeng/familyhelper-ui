@@ -191,6 +191,7 @@
       v-model:visible="fileUploadDialogVisible"
       title="上传文件"
       :loading="fileUploadDialogLoading"
+      :target-key="noteItemId"
       @onConfirmed="handleFileUploadDialogConfirmed"
     />
     <file-create-dialog
@@ -575,7 +576,7 @@ function handleFileEditFloatyContextmenuClicked(row: AttachmentFileInfo, close: 
 const fileUploadDialogVisible = ref<boolean>(false)
 const fileUploadDialogLoading = ref<number>(0)
 
-async function handleFileUploadDialogConfirmed(files: File[]): Promise<void> {
+async function handleFileUploadDialogConfirmed(files: File[], callback: () => void): Promise<void> {
   fileUploadDialogLoading.value += 1
   try {
     const promises: Promise<unknown>[] = []
@@ -585,6 +586,7 @@ async function handleFileUploadDialogConfirmed(files: File[]): Promise<void> {
       promises.push(resolveResponse(upload({ long_id: props.noteItemId }, formData)))
     })
     await Promise.all(promises)
+    callback()
     ElMessage({
       showClose: true,
       message: '文件上传成功',
