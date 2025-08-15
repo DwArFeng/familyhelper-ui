@@ -20,6 +20,12 @@
             :tester="tester"
             @onFileSelected="handleFileSelected"
           />
+          <el-button
+            type="danger"
+            :disabled="files.length === 0"
+            @click="handleClearFileButtonClicked"
+            >清除文件</el-button
+          >
         </div>
         <el-divider class="item" />
         <overlay-scrollbars-component class="scroll-bar body">
@@ -84,6 +90,7 @@ type Props = {
   accept?: string
   tester?: FileTester
   loading?: boolean | number
+  targetKey?: unknown
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -91,12 +98,13 @@ const props = withDefaults(defineProps<Props>(), {
   accept: '',
   tester: () => true as FileTestResult,
   loading: false,
+  targetKey: undefined,
 })
 
 // -----------------------------------------------------------Emits 定义-----------------------------------------------------------
 type Emits = {
   (e: 'update:visible', value: boolean): void
-  (e: 'onConfirmed', files: File[]): void
+  (e: 'onConfirmed', files: File[], callback: () => void): void
 }
 
 const emit = defineEmits<Emits>()
@@ -130,6 +138,14 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
+// -----------------------------------------------------------目标键处理-----------------------------------------------------------
+watch(
+  () => props.targetKey,
+  () => {
+    files.value = []
+  },
+)
+
 // -----------------------------------------------------------逻辑处理-----------------------------------------------------------
 const files = ref<File[]>([])
 
@@ -146,12 +162,19 @@ function handleFileSelected(_files: File[]): void {
   files.value.push(..._files)
 }
 
+function handleClearFileButtonClicked(): void {
+  files.value = []
+}
+
 // -----------------------------------------------------------对话框处理-----------------------------------------------------------
 function handleConfirmButtonClicked(): void {
   if (props.loading || files.value.length === 0) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
-  emit('onConfirmed', files.value)
+  const callback: () => void = () => {
+    files.value = []
+  }
+  emit('onConfirmed', files.value, callback)
 }
 
 function handleCancelButtonClicked(): void {
@@ -162,7 +185,10 @@ function handleHotKeyDown(): void {
   if (props.loading || files.value.length === 0) {
     return
   }
-  emit('onConfirmed', files.value)
+  const callback: () => void = () => {
+    files.value = []
+  }
+  emit('onConfirmed', files.value, callback)
 }
 </script>
 
@@ -185,7 +211,10 @@ function handleHotKeyDown(): void {
 }
 
 .editor-container .header {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 5px;
 }
 
 .editor-container .body {
