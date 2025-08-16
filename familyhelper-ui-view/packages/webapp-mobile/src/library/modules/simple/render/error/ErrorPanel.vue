@@ -1,5 +1,5 @@
 <template>
-  <div class="error-panel-container" v-cloak>
+  <div class="error-panel-container" v-cloak :style="backgroundImageStyle">
     <div class="error-panel">
       <div class="home-button-container">
         <button class="home-button" title="点此返回主页" @click="handleBackToHomeButtonClicked">
@@ -21,6 +21,10 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
+import { onMounted, reactive } from 'vue'
+
+import backgroundImg from '@/assets/img/error-background.jpg'
+
 defineOptions({
   name: 'ErrorPanel',
 })
@@ -32,6 +36,29 @@ defineSlots<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-empty-object-type
   default?: (props: {}) => any
 }>()
+
+// -----------------------------------------------------------背景样式处理-----------------------------------------------------------
+const backgroundImageStyle = reactive({
+  backgroundImage: `url(${backgroundImg})`,
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'auto 100%',
+  backgroundPosition: 'center',
+})
+
+onMounted(() => {
+  if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
+    backgroundImageStyle.backgroundSize = 'auto 100%'
+  } else {
+    backgroundImageStyle.backgroundSize = '100% auto'
+  }
+  window.onresize = () => {
+    if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
+      backgroundImageStyle.backgroundSize = 'auto 100%'
+    } else {
+      backgroundImageStyle.backgroundSize = '100% auto'
+    }
+  }
+})
 
 // -----------------------------------------------------------方法定义-----------------------------------------------------------
 function handleBackToHomeButtonClicked(): void {

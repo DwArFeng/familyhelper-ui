@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" v-cloak :style="backgroundImageStyle">
     <form @submit.prevent="handleLogin">
       <div class="form-group">
         <label for="username">用户名</label>
@@ -17,9 +17,11 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
+import { onMounted, reactive, ref } from 'vue'
+
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
-import { ref } from 'vue'
+import backgroundImg from '@/assets/img/login-background.jpg'
 
 defineOptions({
   name: 'LoginComponent',
@@ -27,6 +29,29 @@ defineOptions({
 
 // -----------------------------------------------------------Store 引入-----------------------------------------------------------
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
+
+// --------------------------------+---------------------------背景样式处理-----------------------------------------------------------
+const backgroundImageStyle = reactive({
+  backgroundImage: `url(${backgroundImg})`,
+  backgroundRepeat: 'no-repeat',
+  backgroundSize: 'auto 100%',
+  backgroundPosition: 'center',
+})
+
+onMounted(() => {
+  if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
+    backgroundImageStyle.backgroundSize = 'auto 100%'
+  } else {
+    backgroundImageStyle.backgroundSize = '100% auto'
+  }
+  window.onresize = () => {
+    if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
+      backgroundImageStyle.backgroundSize = 'auto 100%'
+    } else {
+      backgroundImageStyle.backgroundSize = '100% auto'
+    }
+  }
+})
 
 // -----------------------------------------------------------登录表单-----------------------------------------------------------
 const username = ref<string>('')
