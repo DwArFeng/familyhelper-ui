@@ -1,5 +1,5 @@
 <template>
-  <div class="page-forbidden-container" v-cloak :style="backgroundImageStyle">
+  <div class="page-login-container" v-cloak :style="backgroundImageStyle">
     <!--suppress HtmlUnknownAttribute -->
     <div class="login-panel" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.1)">
       <div class="login-banner">
@@ -109,7 +109,7 @@ function handleHotKeyDown(event: KeyboardEvent): void {
 </script>
 
 <style scoped>
-.page-forbidden-container {
+.page-login-container {
   height: 100%;
   width: 100%;
   justify-content: center;

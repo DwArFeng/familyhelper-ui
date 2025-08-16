@@ -9,6 +9,7 @@
   - EzNav 持久化逻辑优化，基于数据变更进行防抖存储，而不是在登出时存储。
 
 - `webapp-pc` 子模块功能优化。
+  - 优化 `src/library/modules/elementPlus/render/login/Login.vue` 中部分 HTML 元素的 class 名称。
   - EzNav 持久化逻辑优化，基于数据变更进行防抖存储，而不是在登出时存储。
 
 - `component-api` 子模块功能调整。
