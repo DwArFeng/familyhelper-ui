@@ -5,7 +5,7 @@ import { type SimplyStore, type StoreSetup, type VimStoreModule } from '@/store/
 
 import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 
-import { computed, type ComputedRef, ref } from 'vue'
+import { computed, type ComputedRef, ref, watch } from 'vue'
 
 import {
   type TextNodeInspectInfo,
@@ -139,6 +139,9 @@ const navigationNodes = computed(() => {
   })
   return nodes
 })
+
+// 防抖存储延时句柄。
+let debounceSaveHandle: ReturnType<typeof setTimeout> | null = null
 
 // EzNav 注解。
 function annotation(nodeKey: string): NavigationEzNavAnnotation {
@@ -320,6 +323,86 @@ function clearAll(): void {
   _nodeMetaMap.value = {}
 }
 
+// 防抖存储。
+// 防抖时长。
+const DEBOUNCE_SAVE_DURATION = 2000
+
+watch(
+  () => [_pinnedNodeKeys.value, _activeNodeKeys.value, _nodeMetaMap.value, _nodeBackMap.value],
+  () => {
+    async function save(): Promise<void> {
+      if (!ctx) {
+        throw new Error('不应该执行到此处，请联系开发人员')
+      }
+
+      const lnpStore = ctx.store().vueStore<'lnp', LnpStore>('lnp')
+
+      // 如果没有登录，直接退出。
+      if (!lnpStore.isLogin) {
+        return
+      }
+
+      // 原始值。
+      const rawValue = {
+        pinnedNodeKeys: _pinnedNodeKeys.value,
+        activeNodeKeys: _activeNodeKeys.value,
+        nodeMetaMap: _nodeMetaMap.value,
+        nodeBackMap: _nodeBackMap.value,
+      }
+
+      // 根据 VIM 设置，选择性地恢复导航信息。
+      switch (ctx.navigation().setting.ezNavRestoreWhenLogin) {
+        case 'restore-all':
+          break
+        case 'restore-pinned':
+          rawValue.activeNodeKeys = []
+          break
+        default:
+          throw new Error('不应该执行到此处，请联系开发人员')
+      }
+
+      // 存储导航信息。
+      const textNodePutInfo: TextNodePutInfo = {
+        category: SETTINGREPO_PERSISTENCE_DATA_KEY,
+        args: [lnpStore.me],
+        value: JSON.stringify(rawValue),
+      }
+
+      // 调用服务存储 EzNav 数据。
+      await resolveResponse(operatePut(textNodePutInfo))
+    }
+
+    if (!ctx) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
+
+    const lnpStore = ctx.store().vueStore<'lnp', LnpStore>('lnp')
+
+    if (debounceSaveHandle) {
+      clearTimeout(debounceSaveHandle)
+    }
+
+    // 如果没有登录，直接退出。
+    if (!lnpStore.isLogin) {
+      return
+    }
+
+    debounceSaveHandle = setTimeout(() => {
+      debounceSaveHandle = null
+
+      // 如果没有登录，直接退出。
+      if (!lnpStore.isLogin) {
+        return
+      }
+
+      save().catch(() => {})
+    }, DEBOUNCE_SAVE_DURATION)
+  },
+  {
+    deep: true,
+  },
+)
+
 /**
  * 提供 Store Setup。
  *
@@ -376,15 +459,6 @@ if (import.meta.hot) {
   lnpStoreLogoutActionHandle = import.meta.hot.data.lnpStoreLogoutActionHandle ?? (() => {})
 }
 
-let lnpStoreFireKickActionHandle: () => void = () => {}
-if (import.meta.hot) {
-  /*
-   * 处于热模块替换环境时，从 hot.data 中还原 lnpStoreFireKickActionHandle。
-   * 从而规避热模块替换时内部变量值丢失的问题。
-   */
-  lnpStoreFireKickActionHandle = import.meta.hot.data.lnpStoreFireKickActionHandle ?? (() => {})
-}
-
 /**
  * VIM 初始化钩子。
  */
@@ -397,8 +471,6 @@ function vimInitializedLoadHook(): void {
   addLnpStoreLoginActionListener()
   // 添加登出监听器。
   addLnpStoreLogoutActionListener()
-  // 添加通知踢出监听器。
-  addLnpStoreFireKickActionListener()
 }
 
 function loadAffixNodeKeys(): void {
@@ -494,7 +566,7 @@ function addLnpStoreLoginActionListener(): void {
     if (name !== 'willLogin') {
       return
     }
-    after((result) => {
+    after((result: ExecutableActionHandle<void, void, void>) => {
       result.registerAfterHook(() => restoreAfterLogin(lnpStore))
     })
   })
@@ -553,7 +625,16 @@ function addLnpStoreLogoutActionListener(): void {
       return
     }
     after((result: ExecutableActionHandle<void, void, void>) => {
-      result.registerBeforeHook(() => saveBeforeLogout(lnpStore))
+      result.registerBeforeHook(() => {
+        // 如果防抖存储延时句柄不存在，则直接返回。
+        if (!debounceSaveHandle) {
+          return Promise.resolve()
+        }
+        // 取消防抖存储延时，并立即存储。
+        clearTimeout(debounceSaveHandle)
+        debounceSaveHandle = null
+        return saveBeforeLogout(lnpStore)
+      })
     })
   })
   if (import.meta.hot) {
@@ -562,29 +643,6 @@ function addLnpStoreLogoutActionListener(): void {
      * 从而规避热模块替换时内部变量值丢失的问题。
      */
     import.meta.hot.data.lnpStoreLogoutActionHandle = lnpStoreLogoutActionHandle
-  }
-}
-
-function addLnpStoreFireKickActionListener(): void {
-  if (!ctx) {
-    throw new Error('不应该执行到此处，请联系开发人员')
-  }
-
-  const lnpStore = ctx.store().vueStore<'lnp', LnpStore>('lnp')
-  lnpStoreFireKickActionHandle = lnpStore.$onAction(({ name, after }) => {
-    if (name !== 'willFireKick') {
-      return
-    }
-    after((result: ExecutableActionHandle<void, void, void>) => {
-      result.registerBeforeHook(() => Promise.resolve())
-    })
-  })
-  if (import.meta.hot) {
-    /*
-     * 处于热模块替换环境时，将 lnpStoreFireKickActionHandle 保存到 hot.data 中。
-     * 从而规避热模块替换时内部变量值丢失的问题。
-     */
-    import.meta.hot.data.lnpStoreFireKickActionHandle = lnpStoreFireKickActionHandle
   }
 }
 
@@ -598,10 +656,10 @@ function windowBeforeUnloadHook(): void {
   removeLnpStoreLoginActionListener()
   // 移除登出监听器。
   removeLnpStoreLogoutActionListener()
-  // 移除通知踢出监听器。
-  removeLnpStoreFireKickActionListener()
   // 根据当前状态，选择性地保存持久化数据。
   maySavePersistenceData()
+  // 根据防抖存储延时句柄的值，选择性地取消防抖存储。
+  mayCancelDebounceSave()
 }
 
 function removeLnpStoreLoginActionListener(): void {
@@ -628,18 +686,6 @@ function removeLnpStoreLogoutActionListener(): void {
   }
 }
 
-function removeLnpStoreFireKickActionListener(): void {
-  lnpStoreFireKickActionHandle()
-  lnpStoreFireKickActionHandle = () => {}
-  if (import.meta.hot) {
-    /*
-     * 处于热模块替换环境时，将 lnpStoreFireKickActionHandle 保存到 hot.data 中。
-     * 从而规避热模块替换时内部变量值丢失的问题。
-     */
-    import.meta.hot.data.lnpStoreFireKickActionHandle = lnpStoreFireKickActionHandle
-  }
-}
-
 function maySavePersistenceData(): void {
   if (!ctx) {
     throw new Error('不应该执行到此处，请联系开发人员')
@@ -662,6 +708,13 @@ function maySavePersistenceData(): void {
       nodeBackMap: _nodeBackMap.value,
     }),
   )
+}
+
+function mayCancelDebounceSave(): void {
+  if (!debounceSaveHandle) {
+    return
+  }
+  clearTimeout(debounceSaveHandle)
 }
 
 // -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
