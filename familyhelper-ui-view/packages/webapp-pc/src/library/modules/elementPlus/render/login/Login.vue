@@ -1,46 +1,38 @@
 <template>
-  <div class="login-container">
-    <div class="login-cloak" v-show="!loginBackgroundStore.ready">
-      <div class="placeholder">正在加载，请稍候...</div>
-    </div>
-    <div
-      class="login-main-container"
-      v-show="loginBackgroundStore.ready"
-      :style="backgroundImageStyle"
-    >
-      <div class="login-panel" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.1)">
-        <div class="login-banner">
-          <span class="login-panel-text">赵扶风开发制作</span>
-          <span class="login-panel-text">github地址: https://github.com/</span>
+  <div class="page-forbidden-container" v-cloak :style="backgroundImageStyle">
+    <!--suppress HtmlUnknownAttribute -->
+    <div class="login-panel" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.1)">
+      <div class="login-banner">
+        <span class="login-panel-text">赵扶风开发制作</span>
+        <span class="login-panel-text">github地址: https://github.com/</span>
+      </div>
+      <div class="login-header">
+        <span class="login-header-title-chs">用户登录</span>
+        <span class="login-header-title-en">User Login</span>
+      </div>
+      <el-form class="login-main" ref="formRef" :model="form" @keydown="handleHotKeyDown">
+        <el-form-item class="login-main-input">
+          <el-input v-model="form.id" placeholder="请输入用户名"></el-input>
+        </el-form-item>
+        <el-form-item class="login-main-input">
+          <el-input v-model="form.password" placeholder="请输入密码" show-password></el-input>
+        </el-form-item>
+        <div class="login-main-status">
+          <span class="login-panel-text">记住密码</span>
+          <span class="login-panel-text">忘记密码?</span>
         </div>
-        <div class="login-header">
-          <span class="login-header-title-chs">用户登录</span>
-          <span class="login-header-title-en">User Login</span>
-        </div>
-        <el-form class="login-main" ref="formRef" :model="form" @keydown="handleHotKeyDown">
-          <el-form-item class="login-main-input">
-            <el-input v-model="form.id" placeholder="请输入用户名"></el-input>
-          </el-form-item>
-          <el-form-item class="login-main-input">
-            <el-input v-model="form.password" placeholder="请输入密码" show-password></el-input>
-          </el-form-item>
-          <div class="login-main-status">
-            <span class="login-panel-text">记住密码</span>
-            <span class="login-panel-text">忘记密码?</span>
-          </div>
-        </el-form>
-        <div class="login-placeholder" />
-        <div class="login-footer">
-          <el-button
-            class="login-footer-button"
-            type="primary"
-            :disabled="form.id === '' || form.password === ''"
-            @click="handleLogin"
-          >
-            登录
-          </el-button>
-          <span class="login-footer-register login-panel-text">没有账号?立即注册!</span>
-        </div>
+      </el-form>
+      <div class="login-placeholder" />
+      <div class="login-footer">
+        <el-button
+          class="login-footer-button"
+          type="primary"
+          :disabled="form.id === '' || form.password === ''"
+          @click="handleLogin"
+        >
+          登录
+        </el-button>
+        <span class="login-footer-register login-panel-text">没有账号?立即注册!</span>
       </div>
     </div>
   </div>
@@ -50,10 +42,8 @@
 import vim from '@/vim'
 
 import { onMounted, reactive, ref } from 'vue'
-import { watch } from 'vue'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
-import { type LoginBackgroundStore } from '@/store/modules/loginBackground.ts'
 
 import backgroundImg from '@/assets/img/login-background.jpg'
 
@@ -63,28 +53,17 @@ defineOptions({
 
 // -----------------------------------------------------------Store 引入-----------------------------------------------------------
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
-const loginBackgroundStore = vim
-  .ctx()
-  .store()
-  .vueStore<'login-background', LoginBackgroundStore>('login-background')
 
 // -----------------------------------------------------------Loading 状态-----------------------------------------------------------
 const loading = ref<number>(0)
 
 // --------------------------------+---------------------------背景样式处理-----------------------------------------------------------
 const backgroundImageStyle = reactive({
-  backgroundImage: `url(${loginBackgroundStore.ready ? loginBackgroundStore.backgroundUrl : backgroundImg})`,
+  backgroundImage: `url(${backgroundImg})`,
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'auto 100%',
   backgroundPosition: 'center',
 })
-
-watch(
-  () => loginBackgroundStore.backgroundUrl,
-  (value) => {
-    backgroundImageStyle.backgroundImage = `url(${value})`
-  },
-)
 
 onMounted(() => {
   if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
@@ -130,31 +109,7 @@ function handleHotKeyDown(event: KeyboardEvent): void {
 </script>
 
 <style scoped>
-.login-container {
-  height: 100%;
-  width: 100%;
-  background-color: #ffffff;
-}
-
-.login-cloak {
-  height: 100%;
-  width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
-}
-
-.login-main-container {
+.page-forbidden-container {
   height: 100%;
   width: 100%;
   justify-content: center;
