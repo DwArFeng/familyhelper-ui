@@ -14,27 +14,32 @@
               <el-button type="primary" :disabled="readonly" @click="selectFile"> 上传</el-button>
             </template>
           </file-selector>
-          <el-button type="primary" @click="handleDownload"> 下载</el-button>
+          <el-button type="primary" :disabled="imageNullFlag" @click="handleDownload">
+            下载
+          </el-button>
           <el-divider direction="vertical" />
-          <el-button type="success" @click="handleInspect"> 刷新</el-button>
+          <el-button type="success" @click="handleInspect"> 刷新 </el-button>
         </div>
       </template>
       <template v-slot:default>
-        <div class="main-container">
-          <title-layout-panel class="item property-container" title="图片属性">
-            <el-form class="property-form" label-position="left" label-width="80px" inline>
-              <el-form-item label="文件名称" style="width: 100%">
-                {{ imageOriginName }}
-              </el-form-item>
-              <el-form-item label="文件大小" style="width: 100%">
-                {{ imageFormattedLength }}
-              </el-form-item>
-            </el-form>
-          </title-layout-panel>
-          <el-divider direction="vertical" />
-          <title-layout-panel class="item expand image-container" title="图片预览">
-            <el-image class="image" fit="contain" :src="imageThumbnailUrl" />
-          </title-layout-panel>
+        <div class="main-container-wrapper">
+          <div class="placeholder" v-if="imageNullFlag">未上传图片</div>
+          <div class="main-container" v-else>
+            <title-layout-panel class="item property-container" title="图片属性">
+              <el-form class="property-form" label-position="left" label-width="80px" inline>
+                <el-form-item label="文件名称" style="width: 100%">
+                  {{ imageOriginName }}
+                </el-form-item>
+                <el-form-item label="文件大小" style="width: 100%">
+                  {{ imageFormattedLength }}
+                </el-form-item>
+              </el-form>
+            </title-layout-panel>
+            <el-divider direction="vertical" />
+            <title-layout-panel class="item expand image-container" title="图片预览">
+              <el-image class="image" fit="contain" :src="imageThumbnailUrl" />
+            </title-layout-panel>
+          </div>
         </div>
       </template>
     </header-layout-panel>
@@ -114,6 +119,7 @@ function handlePropsUpdate(): void {
 
 // -----------------------------------------------------------编辑器逻辑-----------------------------------------------------------
 const { tester: fileSelectorTester, accept: fileSelectorAccept } = useImageFileSelector()
+const imageNullFlag = ref<boolean>(true)
 const imageOriginName = ref<string>('')
 const imageLength = ref<number>(0)
 const imageThumbnailUrl = ref<string>('')
@@ -141,8 +147,10 @@ async function handleInspect(): Promise<void> {
       }),
     )
     if (!imageNodeInspectResult) {
-      throw new Error('不应该执行到此处，请联系开发人员')
+      imageNullFlag.value = true
+      return
     }
+    imageNullFlag.value = false
     imageOriginName.value = imageNodeInspectResult.origin_name
     imageLength.value = imageNodeInspectResult.length
     const thumbnail = await downloadThumbnail({
@@ -257,6 +265,24 @@ onUnmounted(() => {
 /*noinspection CssUnusedSymbol*/
 .header-container .el-divider--vertical {
   margin: 0 8px;
+}
+
+.main-container-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #bfbfbf;
+  user-select: none;
 }
 
 .main-container {
