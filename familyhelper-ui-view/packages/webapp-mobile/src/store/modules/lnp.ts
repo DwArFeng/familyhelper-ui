@@ -98,7 +98,7 @@ async function login(
   dynamicLoginInfo: Pick<DynamicLoginInfo, 'account_key' | 'password'>,
 ): Promise<void> {
   return resolveResponse(
-    dynamicLogin({ ...dynamicLoginInfo, remark: '家庭助手 PC 端登录', extra_params: {} }),
+    dynamicLogin({ ...dynamicLoginInfo, remark: '家庭助手移动端登录', extra_params: {} }),
   )
     .then((res) => setLoginInfo(res))
     .then(() => {

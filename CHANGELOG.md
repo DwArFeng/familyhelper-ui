@@ -23,6 +23,7 @@
 ### Bug 修复
 
 - `webapp-mobile` 子模块 bug 修复。
+  - 修复 `src/store/modules/lnp.ts` 中不合理的字符串值。
   - 修复 `src/store/modules/navigationEzNav.ts` 中不合理的常量值。
 
 - `webapp-pc` 子模块页面 bug 修复。
