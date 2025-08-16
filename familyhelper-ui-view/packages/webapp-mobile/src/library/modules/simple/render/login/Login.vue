@@ -1,25 +1,16 @@
 <template>
   <div class="login-container">
-    <div class="login-cloak" v-show="!loginBackgroundStore.ready">
-      <div class="placeholder">正在加载，请稍候...</div>
-    </div>
-    <div
-      class="login-main-container"
-      v-show="loginBackgroundStore.ready"
-      :style="backgroundImageStyle"
-    >
-      <form @submit.prevent="handleLogin">
-        <div class="form-group">
-          <label for="username">用户名</label>
-          <input type="text" id="username" v-model="username" required />
-        </div>
-        <div class="form-group">
-          <label for="password">密码</label>
-          <input type="password" id="password" v-model="password" required />
-        </div>
-        <button type="submit">登录</button>
-      </form>
-    </div>
+    <form @submit.prevent="handleLogin">
+      <div class="form-group">
+        <label for="username">用户名</label>
+        <input type="text" id="username" v-model="username" required />
+      </div>
+      <div class="form-group">
+        <label for="password">密码</label>
+        <input type="password" id="password" v-model="password" required />
+      </div>
+      <button type="submit">登录</button>
+    </form>
   </div>
 </template>
 
@@ -27,11 +18,8 @@
 import vim from '@/vim'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
-import { type LoginBackgroundStore } from '@/store/modules/loginBackground.ts'
 
-import { reactive, ref, watch, onMounted } from 'vue'
-
-import backgroundImg from '@/assets/img/login-background.jpg'
+import { ref } from 'vue'
 
 defineOptions({
   name: 'LoginComponent',
@@ -39,46 +27,10 @@ defineOptions({
 
 // -----------------------------------------------------------Store 引入-----------------------------------------------------------
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
-const loginBackgroundStore = vim
-  .ctx()
-  .store()
-  .vueStore<'login-background', LoginBackgroundStore>('login-background')
 
 // -----------------------------------------------------------登录表单-----------------------------------------------------------
 const username = ref<string>('')
 const password = ref<string>('')
-
-// --------------------------------+---------------------------背景样式处理-----------------------------------------------------------
-const backgroundImageStyle = reactive({
-  backgroundImage: `url(${loginBackgroundStore.ready ? loginBackgroundStore.backgroundUrl : backgroundImg})`,
-  backgroundRepeat: 'no-repeat',
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-})
-
-watch(
-  () => loginBackgroundStore.backgroundUrl,
-  (value) => {
-    backgroundImageStyle.backgroundImage = `url(${value})`
-  },
-)
-
-onMounted(() => {
-  // 移动端适配背景图片尺寸
-  if (window.innerWidth < window.innerHeight) {
-    backgroundImageStyle.backgroundSize = 'auto 100%'
-  } else {
-    backgroundImageStyle.backgroundSize = '100% auto'
-  }
-
-  window.addEventListener('resize', () => {
-    if (window.innerWidth < window.innerHeight) {
-      backgroundImageStyle.backgroundSize = 'auto 100%'
-    } else {
-      backgroundImageStyle.backgroundSize = '100% auto'
-    }
-  })
-})
 
 function handleLogin(): void {
   lnpStore
@@ -89,45 +41,18 @@ function handleLogin(): void {
 
 <style scoped>
 .login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
-  width: 100%;
-  background-color: #ffffff;
-}
-
-.login-cloak {
-  height: 100%;
-  width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
-}
-
-.login-main-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
+  background-color: #f5f5f5;
 }
 
 form {
-  background: rgba(255, 255, 255, 0.9);
+  background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  width: 90%;
-  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -138,16 +63,14 @@ label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: bold;
-  color: #333;
 }
 
 input {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  font-size: 16px;
 }
 
 button {
@@ -159,14 +82,9 @@ button {
   color: white;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 1rem;
 }
 
 button:hover {
   background-color: #0056b3;
-}
-
-button:active {
-  transform: translateY(1px);
 }
 </style>
