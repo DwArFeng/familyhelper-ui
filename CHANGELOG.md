@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块功能优化。
+  - 去除 `src/library/modules/simple/render/error/ErrorPanel.vue` 多余的导入语句。
   - EzNav 持久化逻辑优化，基于数据变更进行防抖存储，而不是在登出时存储。
 
 - `webapp-pc` 子模块功能优化。

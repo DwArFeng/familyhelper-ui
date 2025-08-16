@@ -20,7 +20,6 @@
 
 <script setup lang="ts">
 import vim from '@/vim'
-import { defineOptions, defineSlots } from 'vue'
 
 defineOptions({
   name: 'ErrorPanel',
