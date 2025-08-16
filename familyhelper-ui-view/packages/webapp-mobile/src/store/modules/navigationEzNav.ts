@@ -439,7 +439,7 @@ function provideStoreSetup(): StoreSetup {
 // 存储在 Localstorage 中的持久化主键
 const LOCAL_STORAGE_PERSISTENCE_DATA_KEY = 'store.persistence_data.eznav'
 // 存储在 Settingrepo 中的持久化主键
-const SETTINGREPO_PERSISTENCE_DATA_KEY = 'framework.pc.eznav'
+const SETTINGREPO_PERSISTENCE_DATA_KEY = 'framework.mobile.eznav'
 
 let lnpStoreLoginActionHandle: () => void = () => {}
 if (import.meta.hot) {

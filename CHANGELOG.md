@@ -22,6 +22,9 @@
 
 ### Bug 修复
 
+- `webapp-mobile` 子模块 bug 修复。
+  - 修复 `src/store/modules/navigationEzNav.ts` 中不合理的常量值。
+
 - `webapp-pc` 子模块页面 bug 修复。
   - 配置仓库 -> 配置节点编辑器图片节点编辑子面板处理未上传图片的节点时逻辑不正确。
   - 资产管理 -> 资产 BOM 管理头部面板目录指示器数据改变后，左侧项目树未能正确刷新。
