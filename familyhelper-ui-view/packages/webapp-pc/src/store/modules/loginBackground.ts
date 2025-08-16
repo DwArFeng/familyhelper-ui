@@ -123,17 +123,21 @@ async function loadBackground(): Promise<void> {
 }
 
 /**
- * 类型的参数。
+ * 配置仓库的设置类别: ID。
  */
-const ARGS_TYPE: string[] = ['pc', 'login', 'background', 'type']
+const SETTINGREPO_CATEGORY: string = 'login_background.pc'
 /**
- * 图片的参数。
+ * 配置仓库的参数: 类型。
  */
-const ARGS_IMAGE: string[] = ['pc', 'login', 'background', 'image']
+const SETTINGREPO_ARGS_TYPE: string[] = ['type']
 /**
- * 图片列表的参数。
+ * 配置仓库的参数: 图片。
  */
-const ARGS_IMAGE_LIST: string[] = ['pc', 'login', 'background', 'image_list']
+const SETTINGREPO_ARGS_IMAGE: string[] = ['image']
+/**
+ * 配置仓库的参数: 图片列表。
+ */
+const ARGS_IMAGE_LIST: string[] = ['image_list']
 
 const TYPE_IMAGE: string = '0'
 const TYPE_IMAGE_LIST: string = '1'
@@ -142,7 +146,8 @@ async function loadBackground0(): Promise<Blob> {
   // 获取登录背景图片的类型。
   const typeTextNode: TextNode | null = (await resolveResponse(
     textNodeOperateInspect({
-      args: ARGS_TYPE,
+      category: SETTINGREPO_CATEGORY,
+      args: SETTINGREPO_ARGS_TYPE,
     }),
   )) as TextNode | null
   if (!typeTextNode) {
@@ -169,14 +174,18 @@ async function loadBackgroundByImage(): Promise<Blob> {
   // 获取登录背景图片的信息。
   const imageNode: ImageNode | null = (await resolveResponse(
     imageNodeInspect({
-      args: ARGS_IMAGE,
+      category: SETTINGREPO_CATEGORY,
+      args: SETTINGREPO_ARGS_IMAGE,
     }),
   )) as ImageNode | null
   if (!imageNode) {
     throw new Error('无法获取登录背景图片, 请联系开发人员')
   }
   // 下载背景图片并返回。
-  const result: Blob | null = await imageNodeDownloadFile({ args: ARGS_IMAGE })
+  const result: Blob | null = await imageNodeDownloadFile({
+    category: SETTINGREPO_CATEGORY,
+    args: SETTINGREPO_ARGS_IMAGE,
+  })
   if (!result) {
     throw new Error('下载登录背景图片失败')
   }
@@ -187,6 +196,7 @@ async function loadBackgroundByImageList(): Promise<Blob> {
   // 获取登录背景图片列表的大小信息。
   const sizeResult: ImageListNodeSizeResult | null = await resolveResponse(
     imageListSize({
+      category: SETTINGREPO_CATEGORY,
       args: ARGS_IMAGE_LIST,
     }),
   )
@@ -198,6 +208,7 @@ async function loadBackgroundByImageList(): Promise<Blob> {
   // 获取登录背景图片列表的图片信息。
   const imageListNodeInspectResult: ImageListNodeInspectResult | null = (await resolveResponse(
     imageListInspect({
+      category: SETTINGREPO_CATEGORY,
       args: ARGS_IMAGE_LIST,
     }),
   )) as ImageListNodeInspectResult | null
@@ -209,6 +220,7 @@ async function loadBackgroundByImageList(): Promise<Blob> {
   }
   // 下载背景图片并返回。
   const result: Blob | null = await imageListDownloadFile({
+    category: SETTINGREPO_CATEGORY,
     args: ARGS_IMAGE_LIST,
     index,
   })

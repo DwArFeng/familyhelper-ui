@@ -174,6 +174,7 @@ export type IahnNodeMessageUpsertByMekInfoItem = {
 }
 
 export type PublicIahnNodeMessageInspectInfo = {
+  category: string
   args: string[]
   language: string
   country: string
@@ -182,6 +183,7 @@ export type PublicIahnNodeMessageInspectInfo = {
 }
 
 export type PublicIahnNodeMessageInspectByLocaleInfo = {
+  category: string
   args: string[]
   language: string
   country: string
@@ -189,14 +191,17 @@ export type PublicIahnNodeMessageInspectByLocaleInfo = {
 }
 
 export type PublicIahnNodeLocaleListInspectInfo = {
+  category: string
   args: string[]
 }
 
 export type PublicIahnNodeMekListInspectInfo = {
+  category: string
   args: string[]
 }
 
 export type PublicIahnNodeMessageTableInspectInfo = {
+  category: string
   args: string[]
 }
 

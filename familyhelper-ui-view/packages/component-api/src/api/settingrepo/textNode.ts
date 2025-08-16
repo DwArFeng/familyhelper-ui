@@ -26,6 +26,7 @@ export type TextNodePutInfo = {
 }
 
 export type PublicTextNodeInspectInfo = {
+  category: string
   args: string[]
 }
 

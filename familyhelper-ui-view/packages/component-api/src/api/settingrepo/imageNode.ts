@@ -35,14 +35,17 @@ export type ImageNodeThumbnailDownloadInfo = {
 }
 
 type PublicImageNodeInspectInfo = {
+  category: string
   args: string[]
 }
 
 type PublicImageNodeFileDownloadInfo = {
+  category: string
   args: string[]
 }
 
 type PublicImageNodeThumbnailDownloadInfo = {
+  category: string
   args: string[]
 }
 

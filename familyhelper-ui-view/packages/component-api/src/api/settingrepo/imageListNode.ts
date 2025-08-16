@@ -62,19 +62,23 @@ export type ImageListNodeRemoveInfo = {
 }
 
 export type PublicImageListNodeSizeInfo = {
+  category: string
   args: string[]
 }
 
 export type PublicImageListNodeInspectInfo = {
+  category: string
   args: string[]
 }
 
 export type PublicImageListNodeFileDownloadInfo = {
+  category: string
   args: string[]
   index: number
 }
 
 export type PublicImageListNodeThumbnailDownloadInfo = {
+  category: string
   args: string[]
   index: number
 }

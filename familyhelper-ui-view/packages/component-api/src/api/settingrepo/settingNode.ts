@@ -52,6 +52,7 @@ export type SettingNodeRemoveInfo = {
 }
 
 export type PublicSettingNodeInspectInfo = {
+  category: string
   args: string[]
 }
 
