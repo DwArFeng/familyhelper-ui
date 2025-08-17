@@ -73,7 +73,7 @@ import {
 } from '@dwarfeng/familyhelper-ui-component-util/src/util/number.ts'
 
 defineOptions({
-  name: 'ImageNodeEditPanel',
+  name: 'ImageNodeSubEditPanel',
 })
 
 // -----------------------------------------------------------Props 定义-----------------------------------------------------------

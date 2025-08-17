@@ -8,19 +8,19 @@
       :args="settingNode?.args"
       :readonly="readonly"
     />
-    <image-node-edit-panel
+    <image-node-sub-edit-panel
       v-else-if="settingNode?.type === 2"
       :category="settingNode?.category"
       :args="settingNode?.args"
       :readonly="readonly"
     />
-    <image-list-node-edit-panel
+    <image-list-node-sub-edit-panel
       v-else-if="settingNode?.type === 3"
       :category="settingNode?.category"
       :args="settingNode?.args"
       :readonly="readonly"
     />
-    <iahn-node-edit-panel
+    <iahn-node-sub-edit-panel
       v-else-if="settingNode?.type === 4"
       :category="settingNode?.category"
       :args="settingNode?.args"
@@ -39,9 +39,9 @@ import { type NotificationHandle } from 'element-plus'
 import { ElNotification } from 'element-plus'
 
 import TextNodeSubEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/TextNodeSubEditPanel.vue'
-import ImageNodeEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/ImageNodeEditPanel.vue'
-import ImageListNodeEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/ImageListNodeEditPanel.vue'
-import IahnNodeEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/IahnNodeEditPanel.vue'
+import ImageNodeSubEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/ImageNodeSubEditPanel.vue'
+import ImageListNodeSubEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/ImageListNodeSubEditPanel.vue'
+import IahnNodeSubEditPanel from '@/views/nodes/settingrepo/settingNode/subPanels/IahnNodeSubEditPanel.vue'
 
 import {
   type SettingNode,

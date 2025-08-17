@@ -281,7 +281,7 @@ import { resolveResponse } from '@/util/response.ts'
 import { formatLocale } from '@dwarfeng/familyhelper-ui-component-util/src/util/i18n.ts'
 
 defineOptions({
-  name: 'IahnNodeEditPanel',
+  name: 'IahnNodeSubEditPanel',
 })
 
 // -----------------------------------------------------------Props 定义-----------------------------------------------------------
