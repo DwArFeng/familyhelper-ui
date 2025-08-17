@@ -15,6 +15,7 @@
           <el-button type="danger" :disabled="readonly" @click="handleEditorResetButtonClicked">
             重置
           </el-button>
+          <el-button type="success" @click="handleInspect"> 刷新 </el-button>
         </div>
       </template>
       <template v-slot:default>
