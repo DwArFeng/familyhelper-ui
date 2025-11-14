@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `component-api` 子模块回归。
+  - `src/api/life` 目录下的 HTTP 客户端 API 回归。
+
 - 优化开发环境支持。
   - 在 .gitignore 中添加 VSCode 相关文件的忽略规则。
   - 在 .gitignore 中添加 Cursor IDE 相关文件的忽略规则。
