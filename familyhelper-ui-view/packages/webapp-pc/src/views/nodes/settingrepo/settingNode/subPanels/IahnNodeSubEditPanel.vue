@@ -535,7 +535,7 @@ const putLocaleDialogVariantValidator: FormItemRule['validator'] = (_rule, value
 const putLocaleDialogFormRules = {
   label: [{ required: true, message: '标签不能为空', trigger: 'blur' }],
   language: [
-    { required: true, message: '国家不能为空', trigger: 'blur' },
+    { required: true, message: '语言不能为空', trigger: 'blur' },
     { validator: putLocaleDialogLanguageValidator, trigger: 'blur' },
   ],
   country: [{ validator: putLocaleDialogCountryValidator, trigger: 'blur' }],

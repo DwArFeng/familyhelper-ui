@@ -18,7 +18,7 @@
           :validate-on-rule-change="false"
           @submit.prevent
         >
-          <el-form-item label="权限节点" prop="category">
+          <el-form-item label="配置类型" prop="category">
             <el-input v-model="mainDialogModel.category">
               <template v-slot:append>
                 <el-button-group class="button-group">
@@ -39,7 +39,7 @@
           <el-form-item label="参数" prop="string_args">
             <json-editor class="json-editor" v-model="mainDialogModel.string_args" />
           </el-form-item>
-          <el-form-item label="权限节点" prop="type">
+          <el-form-item label="节点类型" prop="type">
             <el-select class="type-select" v-model="mainDialogModel.type" placeholder="请选择">
               <el-option
                 v-for="item in mainDialogModelTypeIndicator"
