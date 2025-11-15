@@ -37,7 +37,7 @@
     "jiti": "^2.5.1",
     "prettier": "^3.6.2",
     "typescript": "~5.7.3",
-    "vite": "^6.3.5",
+    "vite": "^6.4.1",
     "vite-plugin-vue-devtools": "^7.7.7",
     "vue-tsc": "^2.2.12"
   },
