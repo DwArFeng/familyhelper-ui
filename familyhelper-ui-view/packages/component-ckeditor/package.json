@@ -20,7 +20,7 @@
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/language-server": "^2.2.12",
     "@vue/tsconfig": "^0.7.0",
-    "ckeditor5": "^45.2.1",
+    "ckeditor5": "^45.2.2",
     "eslint": "^9.32.0",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import-x": "^4.16.1",
