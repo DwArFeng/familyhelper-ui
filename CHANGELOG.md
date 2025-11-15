@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
+
 - `webapp-pc` 子模块回归。
   - 菜单 `日常生活` 回归。
 
