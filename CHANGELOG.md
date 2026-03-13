@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块功能优化。
+  - 更改 src/views 路径结构，引入 elementPlus 和 simple 可视化器目录。
   - 实现可视化器的动态加载。
 
 - `component-ckeditor` 子模块依赖升级。

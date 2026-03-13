@@ -54,7 +54,8 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'assets-management/asset-catalog',
-      component: () => import('@/views/nodes/assetsManagement/assetCatalog/AssetCatalog.vue'),
+      component: () =>
+        import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
     },
     permission: {
       required: true,
@@ -81,7 +82,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'assets-management/asset-bom',
-      component: () => import('@/views/nodes/assetsManagement/assetBom/AssetBom.vue'),
+      component: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
     },
     permission: {
       required: true,
@@ -109,7 +110,9 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'assets-management/item-type-indicator',
       component: () =>
-        import('@/views/nodes/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
+        import(
+          '@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'
+        ),
     },
     permission: {
       required: true,
@@ -136,7 +139,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'assets-management/item-label',
-      component: () => import('@/views/nodes/assetsManagement/itemLabel/ItemLabel.vue'),
+      component: () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
     },
     permission: {
       required: true,

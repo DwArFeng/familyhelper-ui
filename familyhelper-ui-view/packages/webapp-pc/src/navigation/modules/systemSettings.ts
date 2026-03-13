@@ -54,7 +54,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/account',
-      component: () => import('@/views/nodes/systemSettings/account/Account.vue'),
+      component: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
     },
     permission: {
       required: true,
@@ -81,7 +81,8 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/account-security',
-      component: () => import('@/views/nodes/systemSettings/accountSecurity/AccountSecurity.vue'),
+      component: () =>
+        import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
     },
     permission: {
       required: true,
@@ -108,7 +109,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/role',
-      component: () => import('@/views/nodes/systemSettings/role/Role.vue'),
+      component: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
     },
     permission: {
       required: true,
@@ -135,7 +136,8 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/permission-group',
-      component: () => import('@/views/nodes/systemSettings/permissionGroup/PermissionGroup.vue'),
+      component: () =>
+        import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
     },
     permission: {
       required: true,
@@ -162,7 +164,8 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/permission-node',
-      component: () => import('@/views/nodes/systemSettings/permissionNode/PermissionNode.vue'),
+      component: () =>
+        import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
     },
     permission: {
       required: true,

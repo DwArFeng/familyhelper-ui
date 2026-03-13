@@ -47,7 +47,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'miscellaneous/file-editor',
-      component: () => import('@/views/nodes/miscellaneous/fileEditor/FileEditor.vue'),
+      component: () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
     },
   },
 ]

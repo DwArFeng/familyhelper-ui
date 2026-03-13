@@ -54,7 +54,8 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/account-book',
-      component: () => import('@/views/nodes/financeManagement/accountBook/AccountBook.vue'),
+      component: () =>
+        import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
     },
     permission: {
       required: true,
@@ -82,7 +83,9 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/bank-card-type-indicator',
       component: () =>
-        import('@/views/nodes/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
+        import(
+          '@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'
+        ),
     },
     permission: {
       required: true,
@@ -109,7 +112,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/bank-card',
-      component: () => import('@/views/nodes/financeManagement/bankCard/BankCard.vue'),
+      component: () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
     },
     permission: {
       required: true,
@@ -136,7 +139,8 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/balance-record',
-      component: () => import('@/views/nodes/financeManagement/balanceRecord/BalanceRecord.vue'),
+      component: () =>
+        import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
     },
     permission: {
       required: true,
@@ -165,7 +169,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'finance-management/fund-change-type-indicator',
       component: () =>
         import(
-          '@/views/nodes/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
+          '@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
         ),
     },
     permission: {
@@ -193,7 +197,8 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/fund-change',
-      component: () => import('@/views/nodes/financeManagement/fundChange/FundChange.vue'),
+      component: () =>
+        import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
     },
     permission: {
       required: true,
@@ -220,7 +225,8 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/finance-report',
-      component: () => import('@/views/nodes/financeManagement/financeReport/FinanceReport.vue'),
+      component: () =>
+        import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
     },
     permission: {
       required: true,
@@ -248,7 +254,9 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/remind-driver-support',
       component: () =>
-        import('@/views/nodes/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
+        import(
+          '@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'
+        ),
     },
     permission: {
       required: true,

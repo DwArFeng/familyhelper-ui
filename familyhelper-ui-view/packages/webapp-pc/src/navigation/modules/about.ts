@@ -32,7 +32,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'about',
-      component: () => import('@/views/nodes/about/About.vue'),
+      component: () => import('@/views/nodes/elementPlus/about/About.vue'),
     },
     permission: {
       required: false,

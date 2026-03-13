@@ -54,7 +54,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'life/pb-set',
-      component: () => import('@/views/nodes/life/pbSet/PbSet.vue'),
+      component: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
     },
     permission: {
       required: true,
@@ -81,7 +81,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'life/pb-management',
-      component: () => import('@/views/nodes/life/pbManagement/PbManagement.vue'),
+      component: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
     },
     permission: {
       required: true,
