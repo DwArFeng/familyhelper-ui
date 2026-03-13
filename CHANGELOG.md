@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- 依赖升级。
+  - 升级 `log4j2` 依赖版本为 `2.25.3` 以规避漏洞。
+
 - `familyhelper-ui-view` 子模块类优化注释、文档注释格式、代码换行格式。
   - packages/component-util/src/util/timestamp.ts。
 
