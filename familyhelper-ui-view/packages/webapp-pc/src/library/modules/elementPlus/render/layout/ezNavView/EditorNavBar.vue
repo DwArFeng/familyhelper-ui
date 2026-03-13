@@ -1,7 +1,7 @@
 <template>
   <div class="editor-nav-bar-container">
     <!--suppress JSUnresolvedReference -->
-    <span>{{ props.node.display.label }}</span>
+    <span>{{ props.node.display[visualizerKey].label }}</span>
     <el-icon class="close-icon" @mouseup="handleDelete">
       <delete-icon />
     </el-icon>
@@ -9,12 +9,20 @@
 </template>
 
 <script setup lang="ts">
-import { Delete as DeleteIcon } from '@element-plus/icons-vue'
+import vim from '@/vim'
+
 import { type NavigationNodeInfo } from '@/navigation/types.ts'
+
+import { computed } from 'vue'
+
+import { Delete as DeleteIcon } from '@element-plus/icons-vue'
 
 defineOptions({
   name: 'EditorNavBar',
 })
+
+// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+const router = vim.ctx().router().vueRouter()
 
 // -----------------------------------------------------------Props 定义-----------------------------------------------------------
 type Props = {
@@ -23,6 +31,11 @@ type Props = {
 }
 
 const props = defineProps<Props>()
+
+// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+const visualizerKey = computed<string>(
+  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
+)
 
 // -----------------------------------------------------------Emits 定义-----------------------------------------------------------
 type Emits = {

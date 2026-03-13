@@ -5,7 +5,7 @@
         <el-icon>
           <menu-icon />
         </el-icon>
-        <span>{{ props.node.display.label }}</span>
+        <span>{{ props.node.display[visualizerKey].label }}</span>
       </template>
       <template v-slot:default>
         <sidebar-item
@@ -19,7 +19,7 @@
       <el-icon>
         <menu-icon />
       </el-icon>
-      <span>{{ props.node.display.label }}</span>
+      <span>{{ props.node.display[visualizerKey].label }}</span>
     </el-menu-item>
   </div>
 </template>
@@ -35,6 +35,9 @@ import { computed } from 'vue'
 
 import { Menu as MenuIcon } from '@element-plus/icons-vue'
 
+// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+const router = vim.ctx().router().vueRouter()
+
 // -----------------------------------------------------------Store 引入-----------------------------------------------------------
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
@@ -45,6 +48,11 @@ type Props = {
 }
 
 const props = defineProps<Props>()
+
+// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+const visualizerKey = computed<string>(
+  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
+)
 
 // -----------------------------------------------------------主节点处理-----------------------------------------------------------
 const nodePermitted = computed<boolean>(() => {

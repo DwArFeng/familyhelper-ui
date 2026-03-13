@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'assetsManagement',
     index: 20,
     display: {
-      label: '资产管理',
+      '': {
+        label: '资产管理',
+      },
+      elementPlus: {
+        label: '资产管理',
+      },
+      simple: {
+        label: '资产管理',
+      },
     },
     menu: {
       shown: true,
@@ -39,7 +47,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'assetsManagement.assetCatalog',
     index: 10,
     display: {
-      label: '资产目录管理',
+      '': {
+        label: '资产目录管理',
+      },
+      elementPlus: {
+        label: '资产目录管理',
+      },
+      simple: {
+        label: '资产目录管理',
+      },
     },
     menu: {
       shown: true,
@@ -54,8 +70,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'assets-management/asset-catalog',
-      component: () =>
-        import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
+      },
     },
     permission: {
       required: true,
@@ -67,7 +89,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'assetsManagement.assetBom',
     index: 20,
     display: {
-      label: '资产BOM管理',
+      '': {
+        label: '资产BOM管理',
+      },
+      elementPlus: {
+        label: '资产BOM管理',
+      },
+      simple: {
+        label: '资产BOM管理',
+      },
     },
     menu: {
       shown: true,
@@ -82,7 +112,12 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'assets-management/asset-bom',
-      component: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
+        simple: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
+      },
     },
     permission: {
       required: true,
@@ -94,7 +129,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'assetsManagement.itemTypeIndicator',
     index: 30,
     display: {
-      label: '项目类型管理',
+      '': {
+        label: '项目类型管理',
+      },
+      elementPlus: {
+        label: '项目类型管理',
+      },
+      simple: {
+        label: '项目类型管理',
+      },
     },
     menu: {
       shown: true,
@@ -109,10 +152,20 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'assets-management/item-type-indicator',
-      component: () =>
-        import(
-          '@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'
-        ),
+      component: {
+        '': () =>
+          import(
+            '@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'
+          ),
+        elementPlus: () =>
+          import(
+            '@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'
+          ),
+        simple: () =>
+          import(
+            '@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'
+          ),
+      },
     },
     permission: {
       required: true,
@@ -124,7 +177,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'assetsManagement.itemLabel',
     index: 40,
     display: {
-      label: '项目标签管理',
+      '': {
+        label: '项目标签管理',
+      },
+      elementPlus: {
+        label: '项目标签管理',
+      },
+      simple: {
+        label: '项目标签管理',
+      },
     },
     menu: {
       shown: true,
@@ -139,7 +200,12 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'assets-management/item-label',
-      component: () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
+        simple: () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
+      },
     },
     permission: {
       required: true,

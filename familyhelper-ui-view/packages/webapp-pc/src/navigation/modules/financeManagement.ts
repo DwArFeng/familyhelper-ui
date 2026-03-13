@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement',
     index: 10,
     display: {
-      label: '资金管理',
+      '': {
+        label: '资金管理',
+      },
+      elementPlus: {
+        label: '资金管理',
+      },
+      simple: {
+        label: '资金管理',
+      },
     },
     menu: {
       shown: true,
@@ -39,7 +47,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement.accountBook',
     index: 10,
     display: {
-      label: '账本管理',
+      '': {
+        label: '账本管理',
+      },
+      elementPlus: {
+        label: '账本管理',
+      },
+      simple: {
+        label: '账本管理',
+      },
     },
     menu: {
       shown: true,
@@ -54,8 +70,13 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/account-book',
-      component: () =>
-        import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
+      },
     },
     permission: {
       required: true,
@@ -67,7 +88,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement.bankCardTypeIndicator',
     index: 20,
     display: {
-      label: '银行卡类型管理',
+      '': {
+        label: '银行卡类型管理',
+      },
+      elementPlus: {
+        label: '银行卡类型管理',
+      },
+      simple: {
+        label: '银行卡类型管理',
+      },
     },
     menu: {
       shown: true,
@@ -82,10 +111,20 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/bank-card-type-indicator',
-      component: () =>
-        import(
-          '@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'
-        ),
+      component: {
+        '': () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'
+          ),
+        elementPlus: () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'
+          ),
+        simple: () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'
+          ),
+      },
     },
     permission: {
       required: true,
@@ -97,7 +136,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement.bankCard',
     index: 30,
     display: {
-      label: '银行卡管理',
+      '': {
+        label: '银行卡管理',
+      },
+      elementPlus: {
+        label: '银行卡管理',
+      },
+      simple: {
+        label: '银行卡管理',
+      },
     },
     menu: {
       shown: true,
@@ -112,7 +159,12 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/bank-card',
-      component: () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
+        simple: () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
+      },
     },
     permission: {
       required: true,
@@ -124,7 +176,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement.balanceRecord',
     index: 40,
     display: {
-      label: '余额记录',
+      '': {
+        label: '余额记录',
+      },
+      elementPlus: {
+        label: '余额记录',
+      },
+      simple: {
+        label: '余额记录',
+      },
     },
     menu: {
       shown: true,
@@ -139,8 +199,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/balance-record',
-      component: () =>
-        import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
+      },
     },
     permission: {
       required: true,
@@ -152,7 +218,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement.fundChangeTypeIndicator',
     index: 50,
     display: {
-      label: '资金变更类型管理',
+      '': {
+        label: '资金变更类型管理',
+      },
+      elementPlus: {
+        label: '资金变更类型管理',
+      },
+      simple: {
+        label: '资金变更类型管理',
+      },
     },
     menu: {
       shown: true,
@@ -167,10 +241,20 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/fund-change-type-indicator',
-      component: () =>
-        import(
-          '@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
-        ),
+      component: {
+        '': () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
+          ),
+        elementPlus: () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
+          ),
+        simple: () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
+          ),
+      },
     },
     permission: {
       required: true,
@@ -182,7 +266,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement.fundChange',
     index: 60,
     display: {
-      label: '资金变更记录',
+      '': {
+        label: '资金变更记录',
+      },
+      elementPlus: {
+        label: '资金变更记录',
+      },
+      simple: {
+        label: '资金变更记录',
+      },
     },
     menu: {
       shown: true,
@@ -197,8 +289,13 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/fund-change',
-      component: () =>
-        import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
+      },
     },
     permission: {
       required: true,
@@ -210,7 +307,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement.financeReport',
     index: 70,
     display: {
-      label: '资金报告',
+      '': {
+        label: '资金报告',
+      },
+      elementPlus: {
+        label: '资金报告',
+      },
+      simple: {
+        label: '资金报告',
+      },
     },
     menu: {
       shown: true,
@@ -225,8 +330,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/finance-report',
-      component: () =>
-        import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
+      },
     },
     permission: {
       required: true,
@@ -238,7 +349,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'financeManagement.remindDriverSupport',
     index: 80,
     display: {
-      label: '提醒驱动器支持',
+      '': {
+        label: '提醒驱动器支持',
+      },
+      elementPlus: {
+        label: '提醒驱动器支持',
+      },
+      simple: {
+        label: '提醒驱动器支持',
+      },
     },
     menu: {
       shown: true,
@@ -253,10 +372,20 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'finance-management/remind-driver-support',
-      component: () =>
-        import(
-          '@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'
-        ),
+      component: {
+        '': () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'
+          ),
+        elementPlus: () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'
+          ),
+        simple: () =>
+          import(
+            '@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'
+          ),
+      },
     },
     permission: {
       required: true,

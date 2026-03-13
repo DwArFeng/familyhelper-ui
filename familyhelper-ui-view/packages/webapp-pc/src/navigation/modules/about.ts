@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'about',
     index: 9000,
     display: {
-      label: '关于',
+      '': {
+        label: '关于',
+      },
+      elementPlus: {
+        label: '关于',
+      },
+      simple: {
+        label: '关于',
+      },
     },
     menu: {
       shown: true,
@@ -32,7 +40,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'about',
-      component: () => import('@/views/nodes/elementPlus/about/About.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/about/About.vue'),
+        elementPlus: () => import('@/views/nodes/elementPlus/about/About.vue'),
+        simple: () => import('@/views/nodes/elementPlus/about/About.vue'),
+      },
     },
     permission: {
       required: false,

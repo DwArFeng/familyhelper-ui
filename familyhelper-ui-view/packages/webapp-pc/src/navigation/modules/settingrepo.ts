@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'settingrepo',
     index: 135,
     display: {
-      label: '配置仓库',
+      '': {
+        label: '配置仓库',
+      },
+      elementPlus: {
+        label: '配置仓库',
+      },
+      simple: {
+        label: '配置仓库',
+      },
     },
     menu: {
       shown: true,
@@ -39,7 +47,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'settingrepo.settingCategory',
     index: 10,
     display: {
-      label: '配置类型管理',
+      '': {
+        label: '配置类型管理',
+      },
+      elementPlus: {
+        label: '配置类型管理',
+      },
+      simple: {
+        label: '配置类型管理',
+      },
     },
     menu: {
       shown: true,
@@ -54,8 +70,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/setting-category',
-      component: () =>
-        import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+      },
     },
     permission: {
       required: true,
@@ -67,7 +89,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'settingrepo.settingNode',
     index: 20,
     display: {
-      label: '配置节点管理',
+      '': {
+        label: '配置节点管理',
+      },
+      elementPlus: {
+        label: '配置节点管理',
+      },
+      simple: {
+        label: '配置节点管理',
+      },
     },
     menu: {
       shown: true,
@@ -82,7 +112,12 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/setting-node',
-      component: () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+        simple: () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+      },
     },
     permission: {
       required: true,
@@ -94,7 +129,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'settingrepo.formatterSupport',
     index: 30,
     display: {
-      label: '格式化器支持',
+      '': {
+        label: '格式化器支持',
+      },
+      elementPlus: {
+        label: '格式化器支持',
+      },
+      simple: {
+        label: '格式化器支持',
+      },
     },
     menu: {
       shown: true,
@@ -109,8 +152,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/formatter-support',
-      component: () =>
-        import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+      },
     },
     permission: {
       required: true,
@@ -122,7 +171,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'settingrepo.settingNodeEditor',
     index: 40,
     display: {
-      label: '配置节点编辑器',
+      '': {
+        label: '配置节点编辑器',
+      },
+      elementPlus: {
+        label: '配置节点编辑器',
+      },
+      simple: {
+        label: '配置节点编辑器',
+      },
     },
     ezNav: {
       shown: true,
@@ -134,8 +191,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/setting-node-editor',
-      component: () =>
-        import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+      },
     },
     permission: {
       required: true,

@@ -2,10 +2,13 @@
 
 import { type VimApplicationContext } from '@/vim/types.ts'
 import {
+  type DisplayInfo,
+  type DisplaySetting,
   type NavigationNodeInfo,
   type NavigationNodeSetting,
   type NavigationSetting,
   type RouterInfo,
+  type RouterSetting,
   type VimNavigation,
   type VimNavigationModule,
 } from '@/navigation/types.ts'
@@ -104,6 +107,34 @@ async function init(ctx: VimApplicationContext): Promise<void> {
   // 等待所有 Promise 完成。
   await Promise.all(promises)
 
+  /*
+   * 对于 navigationNodeSetting 的 router.component，将每个 key 都变为 kebab 格式，值保持不变。
+   */
+  function mapRouterComponent(
+    routerSettingComponent: RouterSetting['component'],
+  ): RouterInfo['component'] {
+    const routerInfoComponent: RouterInfo['component'] = {
+      '': () => {
+        throw new Error('不应该执行到此处，请联系开发人员')
+      },
+    }
+    for (const key in routerSettingComponent) {
+      routerInfoComponent[toKebabCase(key)] = routerSettingComponent[key]
+    }
+    return routerInfoComponent
+  }
+
+  /*
+   * 对于 navigationNodeSetting 的 display，将每个 key 都变为 kebab 格式，值保持不变。
+   */
+  function mapDisplay(displaySetting: DisplaySetting): DisplayInfo {
+    const displayInfo: DisplayInfo = { '': {} }
+    for (const key in displaySetting) {
+      displayInfo[toKebabCase(key)] = displaySetting[key]
+    }
+    return displayInfo
+  }
+
   // 将 NavigationNodeSetting 转换为 NavigationNodeInfo，并存入 navigationNodeInfos 对象。
   for (const navigationNodeSetting of navigationNodeSettings) {
     let routerInfo: RouterInfo
@@ -111,7 +142,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
       routerInfo = {
         required: true,
         path: navigationNodeSetting.router.path,
-        component: navigationNodeSetting.router.component,
+        component: mapRouterComponent(navigationNodeSetting.router.component),
       }
     } else {
       routerInfo = {
@@ -126,7 +157,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
       childKeys: [],
       key: navigationNodeSetting.key,
       index: navigationNodeSetting.index,
-      display: navigationNodeSetting.display ?? {},
+      display: mapDisplay(navigationNodeSetting.display),
       menu: navigationNodeSetting.menu ?? { shown: false },
       ezNav: navigationNodeSetting.ezNav ?? { shown: false },
       router: routerInfo,

@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'life',
     index: 120,
     display: {
-      label: '日常生活',
+      '': {
+        label: '日常生活',
+      },
+      elementPlus: {
+        label: '日常生活',
+      },
+      simple: {
+        label: '日常生活',
+      },
     },
     menu: {
       shown: true,
@@ -39,7 +47,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'life.pbSet',
     index: 0,
     display: {
-      label: '个人最佳集合',
+      '': {
+        label: '个人最佳集合',
+      },
+      elementPlus: {
+        label: '个人最佳集合',
+      },
+      simple: {
+        label: '个人最佳集合',
+      },
     },
     menu: {
       shown: true,
@@ -54,7 +70,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'life/pb-set',
-      component: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
+        elementPlus: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
+        simple: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
+      },
     },
     permission: {
       required: true,
@@ -66,7 +86,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'life.pbManagement',
     index: 10,
     display: {
-      label: '个人最佳管理',
+      '': {
+        label: '个人最佳管理',
+      },
+      elementPlus: {
+        label: '个人最佳管理',
+      },
+      simple: {
+        label: '个人最佳管理',
+      },
     },
     menu: {
       shown: true,
@@ -81,7 +109,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'life/pb-management',
-      component: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
+        elementPlus: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
+        simple: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
+      },
     },
     permission: {
       required: true,

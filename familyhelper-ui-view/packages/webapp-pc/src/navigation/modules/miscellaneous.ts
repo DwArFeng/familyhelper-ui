@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'miscellaneous',
     index: 150,
     display: {
-      label: '杂项',
+      '': {
+        label: '杂项',
+      },
+      elementPlus: {
+        label: '杂项',
+      },
+      simple: {
+        label: '杂项',
+      },
     },
   },
   {
@@ -32,7 +40,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'miscellaneous.fileEditor',
     index: 10,
     display: {
-      label: '文件编辑器',
+      '': {
+        label: '文件编辑器',
+      },
+      elementPlus: {
+        label: '文件编辑器',
+      },
+      simple: {
+        label: '文件编辑器',
+      },
     },
     menu: {
       shown: true,
@@ -47,7 +63,12 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'miscellaneous/file-editor',
-      component: () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+        simple: () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+      },
     },
   },
 ]

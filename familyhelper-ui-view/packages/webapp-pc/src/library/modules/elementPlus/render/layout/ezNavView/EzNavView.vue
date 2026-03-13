@@ -33,7 +33,7 @@
           >
             <link-icon />
           </el-icon>
-          <span>{{ node.display.label }}</span>
+          <span>{{ node.display[visualizerKey].label }}</span>
           <el-icon
             class="close-icon"
             v-if="navigationEzNavStore.annotation(node.key) === 'active'"
@@ -179,7 +179,7 @@ import { type NavigationStore } from '@/store/modules/navigation.ts'
 import { type NavigationNodeInfo } from '@/navigation/types.ts'
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
-import { ref, onMounted, onUnmounted, nextTick } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 
 import { type RouteLocationRaw } from 'vue-router'
 
@@ -195,6 +195,9 @@ defineOptions({
   name: 'EzNavView',
 })
 
+// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+const router = vim.ctx().router().vueRouter()
+
 // -----------------------------------------------------------Store 引入-----------------------------------------------------------
 const navigationEzNavStore = vim
   .ctx()
@@ -202,6 +205,11 @@ const navigationEzNavStore = vim
   .vueStore<'navigation-ez-nav', NavigationEzNavStore>('navigation-ez-nav')
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
+
+// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+const visualizerKey = computed<string>(
+  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
+)
 
 // -----------------------------------------------------------急救操作-----------------------------------------------------------
 

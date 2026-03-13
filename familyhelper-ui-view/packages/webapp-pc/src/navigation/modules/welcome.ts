@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'welcome',
     index: 0,
     display: {
-      label: '首页',
+      '': {
+        label: '首页',
+      },
+      elementPlus: {
+        label: '首页',
+      },
+      simple: {
+        label: '首页',
+      },
     },
     menu: {
       shown: false,
@@ -37,7 +45,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/elementPlus/welcome/Welcome.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/welcome/Welcome.vue'),
+        elementPlus: () => import('@/views/nodes/elementPlus/welcome/Welcome.vue'),
+        simple: () => import('@/views/nodes/elementPlus/welcome/Welcome.vue'),
+      },
     },
     permission: {
       required: false,

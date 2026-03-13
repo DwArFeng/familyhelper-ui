@@ -159,13 +159,18 @@ export type NavigationNodeInfo = {
 /**
  * 显示信息。
  *
- * 该类型是一个只读的 Record<string, string>，表示 Navigation 节点的显示信息。
+ * 该类型是一个嵌套的 Record 结构，表示 Navigation 节点的显示信息。
  *
- * 该字段可以存放 `string-string` 对象，其中对象的键的取值由 library 模块的 `Visualizer` 决定。
+ * 该字段的结构为 `Record<string, Record<string, string>>`，其中：
+ * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
+ * - 内层对象包含该 Visualizer 所需的属性键值对。
+ *
+ * 该字段必须为所有注册的 Visualizer 提供对应的显示信息，其中对象的键的取值由 library 模块的 `Visualizer` 决定。
  * 开发人员需要提供满足 VIM 框架中所有注册的 `Visualizer` 规定的键及其对应的值，
  * 以避免 `Visualizer` 渲染时出现错误。
  */
-export type DisplayInfo = Record<string, string>
+export type DisplayInfo = Record<'', Record<string, string>> &
+  Record<string, Record<string, string>>
 
 /**
  * 菜单信息。
@@ -304,15 +309,20 @@ export type RouterInfo = {
   /**
    * 组件。
    *
-   * 该字段对应的值是一个组件，表示路由的组件。
+   * 该字段对应的值是一个嵌套的 Record 结构，用于存储不同 Visualizer 的组件。
    *
+   * 该字段的结构为 `Record<string, () => Promise<any>>`，其中：
+   * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
+   * - 内层值是一个懒加载组件的函数，返回 Promise<any>。
+   *
+   * 该字段必须提供一个 `''` 键作为默认值，以便在找不到当前 Visualizer 对应的组件时使用。
    * 如果 `required` 为 `false`，则该字段无需提供。
    *
    * @see required
    */
   // 组件的类型确实是 any，故抑制 eslint 错误。
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: any
+  component?: Record<string, any> & { '': any }
 }
 
 /**
@@ -427,13 +437,18 @@ export type NavigationNodeSetting = {
 /**
  * 显示设置。
  *
- * 该类型是一个只读的 Record<string, string>，表示 Navigation 节点的显示设置。
+ * 该类型是一个嵌套的 Record 结构，表示 Navigation 节点的显示设置。
  *
- * 该字段可以存放 `string-string` 对象，其中对象的键的取值由 library 模块的 `Visualizer` 决定。
+ * 该字段的结构为 `Record<string, Record<string, string>>`，其中：
+ * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
+ * - 内层对象包含该 Visualizer 所需的属性键值对。
+ *
+ * 该字段必须为所有注册的 Visualizer 提供对应的显示信息，其中对象的键的取值由 library 模块的 `Visualizer` 决定。
  * 开发人员需要提供满足 VIM 框架中所有注册的 `Visualizer` 规定的键及其对应的值，
  * 以避免 `Visualizer` 渲染时出现错误。
  */
-export type DisplaySetting = Record<string, string>
+export type DisplaySetting = Record<'', Record<string, string>> &
+  Record<string, Record<string, string>>
 
 /**
  * 菜单设置。
@@ -572,15 +587,20 @@ export type RouterSetting = {
   /**
    * 组件。
    *
-   * 该字段对应的值是一个组件，表示路由的组件。
+   * 该字段对应的值是一个嵌套的 Record 结构，用于存储不同 Visualizer 的组件。
    *
+   * 该字段的结构为 `Record<string, () => Promise<any>>`，其中：
+   * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
+   * - 内层值是一个懒加载组件的函数，返回 Promise<any>。
+   *
+   * 该字段必须提供一个 `''` 键作为默认值，以便在找不到当前 Visualizer 对应的组件时使用。
    * 如果 `required` 为 `false`，则该字段无需提供。
    *
    * @see required
    */
   // 组件的类型确实是 any，故抑制 eslint 错误。
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: any
+  component?: Record<string, any> & { '': any }
 }
 
 /**

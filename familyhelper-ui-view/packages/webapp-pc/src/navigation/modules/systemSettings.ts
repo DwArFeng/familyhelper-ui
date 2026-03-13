@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'systemSettings',
     index: 140,
     display: {
-      label: '系统设置',
+      '': {
+        label: '系统设置',
+      },
+      elementPlus: {
+        label: '系统设置',
+      },
+      simple: {
+        label: '系统设置',
+      },
     },
     menu: {
       shown: true,
@@ -39,7 +47,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'systemSettings.account',
     index: 10,
     display: {
-      label: '账户管理',
+      '': {
+        label: '账户管理',
+      },
+      elementPlus: {
+        label: '账户管理',
+      },
+      simple: {
+        label: '账户管理',
+      },
     },
     menu: {
       shown: true,
@@ -54,7 +70,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/account',
-      component: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
+        elementPlus: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
+        simple: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
+      },
     },
     permission: {
       required: true,
@@ -66,7 +86,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'systemSettings.accountSecurity',
     index: 20,
     display: {
-      label: '账户安全',
+      '': {
+        label: '账户安全',
+      },
+      elementPlus: {
+        label: '账户安全',
+      },
+      simple: {
+        label: '账户安全',
+      },
     },
     menu: {
       shown: true,
@@ -81,8 +109,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/account-security',
-      component: () =>
-        import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
+      },
     },
     permission: {
       required: true,
@@ -94,7 +128,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'systemSettings.role',
     index: 30,
     display: {
-      label: '角色管理',
+      '': {
+        label: '角色管理',
+      },
+      elementPlus: {
+        label: '角色管理',
+      },
+      simple: {
+        label: '角色管理',
+      },
     },
     menu: {
       shown: true,
@@ -109,7 +151,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/role',
-      component: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
+        elementPlus: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
+        simple: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
+      },
     },
     permission: {
       required: true,
@@ -121,7 +167,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'systemSettings.permissionGroup',
     index: 40,
     display: {
-      label: '权限分组管理',
+      '': {
+        label: '权限分组管理',
+      },
+      elementPlus: {
+        label: '权限分组管理',
+      },
+      simple: {
+        label: '权限分组管理',
+      },
     },
     menu: {
       shown: true,
@@ -136,8 +190,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/permission-group',
-      component: () =>
-        import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
+      },
     },
     permission: {
       required: true,
@@ -149,7 +209,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'systemSettings.permissionNode',
     index: 50,
     display: {
-      label: '权限节点管理',
+      '': {
+        label: '权限节点管理',
+      },
+      elementPlus: {
+        label: '权限节点管理',
+      },
+      simple: {
+        label: '权限节点管理',
+      },
     },
     menu: {
       shown: true,
@@ -164,8 +232,14 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'system-settings/permission-node',
-      component: () =>
-        import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
+      component: {
+        '': () =>
+          import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
+        simple: () =>
+          import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
+      },
     },
     permission: {
       required: true,

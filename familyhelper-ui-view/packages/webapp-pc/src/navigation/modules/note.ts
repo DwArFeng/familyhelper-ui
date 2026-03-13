@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'note',
     index: 110,
     display: {
-      label: '学习笔记',
+      '': {
+        label: '学习笔记',
+      },
+      elementPlus: {
+        label: '学习笔记',
+      },
+      simple: {
+        label: '学习笔记',
+      },
     },
     menu: {
       shown: true,
@@ -39,7 +47,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'note.noteBook',
     index: 10,
     display: {
-      label: '笔记本',
+      '': {
+        label: '笔记本',
+      },
+      elementPlus: {
+        label: '笔记本',
+      },
+      simple: {
+        label: '笔记本',
+      },
     },
     menu: {
       shown: true,
@@ -54,7 +70,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'note/note-book',
-      component: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
+        elementPlus: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
+        simple: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
+      },
     },
     permission: {
       required: true,
@@ -66,7 +86,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'note.noteManagement',
     index: 20,
     display: {
-      label: '笔记管理',
+      '': {
+        label: '笔记管理',
+      },
+      elementPlus: {
+        label: '笔记管理',
+      },
+      simple: {
+        label: '笔记管理',
+      },
     },
     menu: {
       shown: true,
@@ -81,7 +109,12 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'note/note-management',
-      component: () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
+      component: {
+        '': () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
+        elementPlus: () =>
+          import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
+        simple: () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
+      },
     },
     permission: {
       required: true,
