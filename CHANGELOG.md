@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `familyhelper-ui-view` 子模块类优化注释、文档注释格式、代码换行格式。
+  - packages/component-util/src/util/timestamp.ts。
+
 - 优化文件格式。
   - 优化 `index.jsp` 文件的格式。
   - 优化 `spring-mvc.xml` 文件的格式。

@@ -16,7 +16,7 @@ export function currentTimestamp(): number {
  * @returns 格式化后的时间戳。
  */
 export function formatTimestamp(timestamp: number): string {
-  // 时间戳为10位需*1000，时间戳为13位的话不需乘1000 var date = new Date(timestamp*1000);
+  // 时间戳为 10 位需*1000，时间戳为 13 位的话不需乘 1000 var date = new Date(timestamp*1000);
   const date = new Date(timestamp)
   const YY = `${date.getFullYear()}-`
   const MM = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`
@@ -34,7 +34,7 @@ export function formatTimestamp(timestamp: number): string {
  * @returns 格式化后的时间戳。
  */
 export function formatShortTimestamp(timestamp: number): string {
-  // 时间戳为10位需*1000，时间戳为13位的话不需乘1000 var date = new Date(timestamp*1000);
+  // 时间戳为 10 位需*1000，时间戳为 13 位的话不需乘 1000 var date = new Date(timestamp*1000);
   const date = new Date(timestamp)
   const YY = `${date.getFullYear()}-`
   const MM = `${date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1}-`
