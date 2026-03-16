@@ -195,17 +195,11 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'notify-settings/meta-indicator',
       component: {
         '': () =>
-          import(
-            '@/views/nodes/elementPlus/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'),
         elementPlus: () =>
-          import(
-            '@/views/nodes/elementPlus/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'),
         simple: () =>
-          import(
-            '@/views/nodes/elementPlus/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'),
       },
     },
     permission: {
@@ -407,17 +401,11 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'notify-settings/dispatcher-support',
       component: {
         '': () =>
-          import(
-            '@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'
-          ),
+          import('@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
         elementPlus: () =>
-          import(
-            '@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'
-          ),
+          import('@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
         simple: () =>
-          import(
-            '@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'
-          ),
+          import('@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
       },
     },
     permission: {

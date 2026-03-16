@@ -9,7 +9,7 @@
     "check-format": "node scripts/check-format.js"
   },
   "devDependencies": {
-    "prettier": "^3.6.2"
+    "prettier": "^3.8.1"
   },
   "packageManager": "pnpm@9.9.0"
 }

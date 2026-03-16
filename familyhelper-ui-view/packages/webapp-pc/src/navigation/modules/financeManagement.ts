@@ -113,17 +113,11 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'finance-management/bank-card-type-indicator',
       component: {
         '': () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
         elementPlus: () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
         simple: () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
       },
     },
     permission: {
@@ -243,17 +237,11 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'finance-management/fund-change-type-indicator',
       component: {
         '': () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
         elementPlus: () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
         simple: () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
       },
     },
     permission: {
@@ -374,17 +362,11 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'finance-management/remind-driver-support',
       component: {
         '': () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
         elementPlus: () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
         simple: () =>
-          import(
-            '@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'
-          ),
+          import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
       },
     },
     permission: {

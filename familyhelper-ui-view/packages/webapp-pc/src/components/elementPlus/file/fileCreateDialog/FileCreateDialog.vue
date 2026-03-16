@@ -39,7 +39,7 @@
           class="input"
           placeholder="请输入文件名称（不用输入后缀名），注意不要输入非法字符"
           v-model="fileName"
-          oninput="this.value = this.value.replace(/[&\|\\\*^%$'&quot;#@:;，。？！\,@\$]/g,'')"
+          oninput="this.value = this.value.replace(/[&\|\\\*^%$'&quot;#@:;，。？！\,@\$]/g, '')"
         >
           <template v-slot:append>{{ currentCreateInfo?.extension ?? '' }}</template>
         </el-input>

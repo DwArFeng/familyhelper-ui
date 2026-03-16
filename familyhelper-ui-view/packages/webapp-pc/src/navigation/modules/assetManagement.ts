@@ -154,17 +154,11 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'assets-management/item-type-indicator',
       component: {
         '': () =>
-          import(
-            '@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
         elementPlus: () =>
-          import(
-            '@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
         simple: () =>
-          import(
-            '@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'
-          ),
+          import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
       },
     },
     permission: {

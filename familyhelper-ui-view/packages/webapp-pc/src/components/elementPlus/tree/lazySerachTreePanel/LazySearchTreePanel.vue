@@ -120,15 +120,16 @@
 </template>
 
 <script setup lang="ts" generic="CT extends Record<string, any>">
-import { type Ref } from 'vue'
-import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, onMounted, type Ref, ref, useTemplateRef, watch } from 'vue'
 
 import {
+  ElOption,
+  ElSelect,
+  ElTree,
   type LoadFunction,
-  type TreeOptionProps as ElTreeOptionProps,
   type TreeNodeData,
+  type TreeOptionProps as ElTreeOptionProps,
 } from 'element-plus'
-import { ElOption, ElSelect, ElTree } from 'element-plus'
 
 import {
   Aim as AimIcon,
@@ -143,6 +144,7 @@ import DefaultTreeDefaultSlot from '@/components/elementPlus/tree/commons/Defaul
 import DefaultTreeOperateAreaSlot from '@/components/elementPlus/tree/commons/DefaultTreeOperateAreaSlot.vue'
 
 import { type TreeNode } from '@/components/elementPlus/tree/commons/types.ts'
+import { type Node } from 'element-plus/es/components/tree/src/model/node'
 
 defineOptions({
   name: 'LazySearchTreePanel',
@@ -309,7 +311,13 @@ function handleTreeLoad(node: TreeNode<CT>, resolve: (result: CT[]) => void): vo
   props.loadChildHandler(node.data, resolve)
 }
 
-function handleTreeCurrentChanged(current: CT, node: TreeNode<CT>): void {
+// Element Plus 的 API 中，handleTreeCurrentChanged 的 _current 参数类型为 any，故忽略类型警告。
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function handleTreeCurrentChanged(_current: any, _node: Node | null): void {
+  // Element Plus emits (data, node) with generic Node types; accept any and cast internally.
+  const current: CT | null = (_current as CT) ?? null
+  const node: TreeNode<CT> | null = (_node as TreeNode<CT>) ?? null
+
   if (searchBarValue.value) {
     if (!current) {
       searchBarValue.value = null
