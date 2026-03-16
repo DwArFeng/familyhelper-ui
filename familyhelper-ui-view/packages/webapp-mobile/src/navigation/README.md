@@ -148,7 +148,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.settingrepo',
+      node: 'ui.mobile.menu_visible.settingrepo',
     },
   },
   {
@@ -175,7 +175,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.settingrepo.setting_category',
+      node: 'ui.mobile.menu_visible.settingrepo.setting_category',
     },
   },
 ]

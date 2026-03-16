@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块部分 README.md 文档优化。
+  - src/navigation/README.md。
+
 - `webapp-mobile` 子模块功能优化。
   - 更改导航的路由设置，将单一组件映射变为基于可视化器类型的复合组件映射。
   - 更改 src/views 路径结构，引入 simple 可视化器目录。
