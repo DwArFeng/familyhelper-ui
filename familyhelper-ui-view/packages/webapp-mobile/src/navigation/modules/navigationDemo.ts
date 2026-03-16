@@ -32,7 +32,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/welcome/Welcome.vue'),
+      component: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
     },
     permission: {
       required: false,
@@ -60,7 +60,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/welcome/Welcome.vue'),
+      component: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
     },
     permission: {
       required: false,
@@ -88,7 +88,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/welcome/Welcome.vue'),
+      component: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
     },
     permission: {
       required: false,
@@ -116,7 +116,7 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/welcome/Welcome.vue'),
+      component: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
     },
     permission: {
       required: false,

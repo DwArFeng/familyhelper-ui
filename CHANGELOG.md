@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块功能优化。
+  - 更改 src/views 路径结构，引入 simple 可视化器目录。
   - 实现可视化器的动态加载。
 
 - `webapp-pc` 子模块功能优化。
