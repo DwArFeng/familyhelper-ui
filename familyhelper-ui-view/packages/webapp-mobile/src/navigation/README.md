@@ -90,7 +90,7 @@ const example: NavigationNodeSetting = {
   router: {
     required: true,
     path: 'node-path-here',
-    component: () => import('@/views/items/yourComponentPath/YourComponent.vue'),
+    component: () => import('@/views/nodes/yourComponentPath/YourComponent.vue'),
   },
   permission: {
     required: true,

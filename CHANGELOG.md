@@ -36,7 +36,8 @@
 
 ### Bug 修复
 
-- (无)
+- `webapp-mobile` 子模块部分 README.md 文档修正。
+  - src/navigation/README.md。
 
 ### 功能移除
 
