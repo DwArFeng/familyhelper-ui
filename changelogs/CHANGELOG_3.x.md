@@ -597,9 +597,3 @@
 ### 功能移除
 
 - 移除 `familyhelper-ui-view` 模块旧版本 `packages` 目录。
-
----
-
-## 更早的版本
-
-[View all changelogs](./changelogs)

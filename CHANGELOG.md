@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- 移除 `.changelogs` 目录下的 `CHANGELOG_*.md` 文件中冗余的章节，包含错误的链接。
+  - changelogs/CHANGELOG_3.x.md。
 
 ### 功能移除
 
