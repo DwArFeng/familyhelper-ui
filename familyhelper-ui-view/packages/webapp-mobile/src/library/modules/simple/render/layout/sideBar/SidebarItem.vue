@@ -10,7 +10,7 @@
             />
           </svg>
         </span>
-        <span class="menu-text">{{ props.node.display.label }}</span>
+        <span class="menu-text">{{ props.node.display[visualizerKey].label }}</span>
         <span class="submenu-arrow" :class="{ 'is-open': isOpen }">▶</span>
       </div>
       <div class="submenu-content" v-show="isOpen">
@@ -31,7 +31,7 @@
           />
         </svg>
       </span>
-      <span class="menu-text">{{ props.node.display.label }}</span>
+      <span class="menu-text">{{ props.node.display[visualizerKey].label }}</span>
     </div>
   </div>
 </template>
@@ -44,6 +44,9 @@ import { type NavigationStore } from '@/store/modules/navigation.ts'
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, ref } from 'vue'
+
+// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+const router = vim.ctx().router().vueRouter()
 
 // -----------------------------------------------------------Store 引入-----------------------------------------------------------
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
@@ -60,6 +63,11 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   select: [nodeKey: string]
 }>()
+
+// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+const visualizerKey = computed<string>(
+  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
+)
 
 // -----------------------------------------------------------主节点处理-----------------------------------------------------------
 const nodePermitted = computed<boolean>(() => {

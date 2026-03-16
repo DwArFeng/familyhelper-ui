@@ -24,7 +24,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'navigationDemo',
     index: 100,
     display: {
-      label: '导航演示',
+      '': {
+        label: '导航演示',
+      },
+      elementPlus: {
+        label: '导航演示',
+      },
+      simple: {
+        label: '导航演示',
+      },
     },
     menu: {
       shown: true,
@@ -32,7 +40,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      component: {
+        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      },
     },
     permission: {
       required: false,
@@ -43,7 +55,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'navigationDemo.subMenuItem1',
     index: 10,
     display: {
-      label: '子菜单1',
+      '': {
+        label: '子菜单1',
+      },
+      elementPlus: {
+        label: '子菜单1',
+      },
+      simple: {
+        label: '子菜单1',
+      },
     },
     menu: {
       shown: true,
@@ -60,7 +80,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      component: {
+        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      },
     },
     permission: {
       required: false,
@@ -71,7 +95,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'navigationDemo.subMenuItem2',
     index: 20,
     display: {
-      label: '子菜单2',
+      '': {
+        label: '子菜单2',
+      },
+      elementPlus: {
+        label: '子菜单2',
+      },
+      simple: {
+        label: '子菜单2',
+      },
     },
     menu: {
       shown: true,
@@ -88,7 +120,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      component: {
+        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      },
     },
     permission: {
       required: false,
@@ -99,7 +135,15 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'navigationDemo.subMenuItem3',
     index: 30,
     display: {
-      label: '子菜单3',
+      '': {
+        label: '子菜单3',
+      },
+      elementPlus: {
+        label: '子菜单3',
+      },
+      simple: {
+        label: '子菜单3',
+      },
     },
     menu: {
       shown: true,
@@ -116,7 +160,11 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'welcome',
-      component: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      component: {
+        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      },
     },
     permission: {
       required: false,

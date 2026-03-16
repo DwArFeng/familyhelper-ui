@@ -2,7 +2,7 @@
   <div class="breadcrumb-container">
     <div class="breadcrumb">
       <span v-for="(node, index) in currentNodePath" :key="index" class="breadcrumb-item">
-        <span class="breadcrumb-text">{{ node.display.label }}</span>
+        <span class="breadcrumb-text">{{ node.display[visualizerKey].label }}</span>
         <span v-if="index < currentNodePath.length - 1" class="breadcrumb-separator">/</span>
       </span>
     </div>
@@ -21,8 +21,16 @@ defineOptions({
   name: 'BreadcrumbComponent',
 })
 
+// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+const router = vim.ctx().router().vueRouter()
+
 // -----------------------------------------------------------Store 引入-----------------------------------------------------------
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
+
+// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+const visualizerKey = computed<string>(
+  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
+)
 
 // -----------------------------------------------------------节点处理-----------------------------------------------------------
 const currentNodePath = computed<NavigationNodeInfo[]>(() => {
