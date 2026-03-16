@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件优化。
+  - `src/components/elementPlus/file/fileSelector/composables.ts` 新增 Composition API。
+
 - `component-ckeditor` 子模块依赖升级。
   - 升级 `ckeditor5` 依赖版本为 `^47.6.0` 以规避漏洞。
 
