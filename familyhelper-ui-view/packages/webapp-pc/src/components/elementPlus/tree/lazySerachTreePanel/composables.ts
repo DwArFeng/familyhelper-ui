@@ -28,7 +28,7 @@ type UseGeneralLazySearchTreePanelResult<CT> = {
  * - `queryPathHandler` 表示查询路径处理器，可直接用于懒加载搜索树面板的 `queryPathHandler` 属性。
  *
  * 当懒加载搜索树面板使用的 component bean 类型和后台接口返回的 bean 类型一致时，
- * 可以使用 {@link useIdentityLazySearchTreePanel} 方法进行简化。
+ * 可以使用 {@link useIdentityGeneralLazySearchTreePanel} 方法进行简化。
  *
  * @template T bean 类型。
  * @template CT component bean 类型。
@@ -38,7 +38,7 @@ type UseGeneralLazySearchTreePanelResult<CT> = {
  * @param loadChildCaller 加载子 bean 的调用函数。
  * @param queryPathCaller 查询路径的调用函数。
  * @returns 调用方法后的返回结果。
- * @see useIdentityLazySearchTreePanel
+ * @see useIdentityGeneralLazySearchTreePanel
  */
 export function useGeneralLazySearchTreePanel<T, CT>(
   beanMap: (t: T) => CT,
@@ -84,7 +84,7 @@ export function useGeneralLazySearchTreePanel<T, CT>(
  * @param queryPathCaller 查询路径的调用函数。
  * @returns 调用方法后的返回结果。
  */
-export function useIdentityLazySearchTreePanel<T>(
+export function useIdentityGeneralLazySearchTreePanel<T>(
   searchOptionCaller: (pattern: string) => Promise<T[]> | T[],
   loadRootCaller: () => Promise<T[]> | T[],
   loadChildCaller: (ct: T) => Promise<T[]> | T[],
@@ -144,7 +144,7 @@ type UseOperableGeneralLazySearchTreePanel<T, CT> = {
  * - `setCurrent` 表示设置当前 bean 的方法。
  *
  * 当懒加载搜索树面板使用的 component bean 类型和后台接口返回的 bean 类型一致时，
- * 可以使用 {@link useIdentityOperableGeneralLazySearchTreePanel} 方法进行简化。
+ * 可以使用 {@link useOperableIdentityGeneralLazySearchTreePanel} 方法进行简化。
  *
  * @template T bean 类型。
  * @template CT component bean 类型。
@@ -155,7 +155,7 @@ type UseOperableGeneralLazySearchTreePanel<T, CT> = {
  * @param queryPathCaller 查询路径的调用函数。
  * @param lazySearchTreePanelRef 懒加载搜索树面板的引用。
  * @returns 调用方法后的返回结果。
- * @see useIdentityOperableGeneralLazySearchTreePanel
+ * @see useOperableIdentityGeneralLazySearchTreePanel
  */
 export function useOperableGeneralLazySearchTreePanel<T, CT>(
   beanMap: (t: T) => CT,
@@ -301,7 +301,7 @@ export function useOperableGeneralLazySearchTreePanel<T, CT>(
  * @param lazySearchTreePanelRef 懒加载搜索树面板的引用。
  * @returns 调用方法后的返回结果。
  */
-export function useIdentityOperableGeneralLazySearchTreePanel<T>(
+export function useOperableIdentityGeneralLazySearchTreePanel<T>(
   searchOptionCaller: (pattern: string) => Promise<T[]> | T[],
   loadRootCaller: () => Promise<T[]> | T[],
   loadChildCaller: (ct: T) => Promise<T[]> | T[],
