@@ -213,6 +213,8 @@ function settingNodeTableTypeFormatter(row: SettingNode, column: any): string {
       return '文件'
     case 6:
       return '文件列表'
+    case 7:
+      return '导航'
     default:
       return '（未知）'
   }
