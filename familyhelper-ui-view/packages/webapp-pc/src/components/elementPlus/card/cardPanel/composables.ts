@@ -20,13 +20,13 @@ type UseGeneralCardPanelResult<T, CT> = {
  *  调用此方法可以快速更新当前的 component bean 列表。
  *
  * 当卡片面板的 component bean 类型和后端接口返回的 bean 类型一致时，
- * 可以使用 {@link useIdentityCardPanel} 方法进行简化。
+ * 可以使用 {@link useIdentityGeneralCardPanel} 方法进行简化。
  *
  * @template T bean 类型。
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
  * @returns 调用方法后的返回结果。
- * @see useIdentityCardPanel
+ * @see useIdentityGeneralCardPanel
  */
 export function useGeneralCardPanel<T, CT>(
   beanMap: (t: T) => CT,
@@ -58,6 +58,6 @@ export function useGeneralCardPanel<T, CT>(
  * @template T bean 类型。
  * @returns 调用方法后的返回结果。
  */
-export function useIdentityCardPanel<T>(): UseGeneralCardPanelResult<T, T> {
+export function useIdentityGeneralCardPanel<T>(): UseGeneralCardPanelResult<T, T> {
   return useGeneralCardPanel<T, T>((t) => t)
 }
