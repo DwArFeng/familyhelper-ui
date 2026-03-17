@@ -9,6 +9,7 @@
   - 新增 `src/api/settingrepo/fileNode.ts` API 接口。
 
 - `webapp-pc` 子模块组件优化。
+  - `src/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditPanel.vue` 新增事件 `onFileCommitted`。
   - `src/components/elementPlus/file/fileSelector/composables.ts` 新增 Composition API。
 
 - `component-ckeditor` 子模块依赖升级。

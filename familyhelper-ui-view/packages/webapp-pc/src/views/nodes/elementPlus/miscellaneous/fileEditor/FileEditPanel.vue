@@ -103,6 +103,13 @@ type Props = {
 
 const props = defineProps<Props>()
 
+// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+type Emits = {
+  onFileCommitted: []
+}
+
+const emit = defineEmits<Emits>()
+
 // -----------------------------------------------------------加载逻辑-----------------------------------------------------------
 const loading = ref<number>(0)
 const reading = ref<number>(0)
@@ -400,6 +407,7 @@ async function doCommitFile(): Promise<void> {
         type: 'success',
       })
       subEditor.fireCurrentContentCommitted()
+      emit('onFileCommitted')
     } else {
       ElMessage({
         showClose: true,
