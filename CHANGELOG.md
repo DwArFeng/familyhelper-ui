@@ -32,7 +32,8 @@
 
 ### 功能移除
 
-- (无)
+- `webapp-pc` 子模块功能移除。
+  - `src/components/elementPlus/tree/lazySerachTreePanel/LazySearchTreePanel.vue` 移除未使用的 `update` 事件。
 
 ---
 

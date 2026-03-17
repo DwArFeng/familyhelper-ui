@@ -185,7 +185,6 @@ const props = withDefaults(defineProps<Props>(), {
 type Emits = {
   (e: 'update:currentPage', currentPage: number): void
   (e: 'update:pageSize', pageSize: number): void
-  (e: 'update:items', items: CT[]): void
   (e: 'onPagingAttributeChanged'): void
   (e: 'onRowClick', row: CT): void
   (e: 'onItemInspect', item: CT, index: number): void
