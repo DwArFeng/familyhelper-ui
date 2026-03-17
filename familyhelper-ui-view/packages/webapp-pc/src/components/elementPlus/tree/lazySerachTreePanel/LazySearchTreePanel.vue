@@ -120,16 +120,15 @@
 </template>
 
 <script setup lang="ts" generic="CT extends Record<string, any>">
-import { computed, nextTick, onMounted, type Ref, ref, useTemplateRef, watch } from 'vue'
+import { type Ref } from 'vue'
+import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
 
 import {
-  ElOption,
-  ElSelect,
-  ElTree,
   type LoadFunction,
-  type TreeNodeData,
   type TreeOptionProps as ElTreeOptionProps,
+  type TreeNodeData,
 } from 'element-plus'
+import { ElOption, ElSelect, ElTree } from 'element-plus'
 
 import {
   Aim as AimIcon,
@@ -224,10 +223,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 // -----------------------------------------------------------Emits 定义-----------------------------------------------------------
 type Emits = {
-  (e: 'onCurrentChanged', current: CT | null, node: TreeNode<CT> | null): void
   (e: 'onItemInspect', item: CT, node: TreeNode<CT>): void
   (e: 'onItemEdit', item: CT, node: TreeNode<CT>): void
   (e: 'onItemDelete', item: CT, node: TreeNode<CT>): void
+  (e: 'onCurrentChanged', current: CT | null, node: TreeNode<CT> | null): void
 }
 
 const emit = defineEmits<Emits>()
