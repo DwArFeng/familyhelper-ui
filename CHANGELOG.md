@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `component-api` 子模功能新增。
+  - 新增 `src/api/settingrepo/fileListNode.ts` API 接口。
+  - 新增 `src/api/settingrepo/fileNode.ts` API 接口。
+
 - `webapp-pc` 子模块组件优化。
   - `src/components/elementPlus/file/fileSelector/composables.ts` 新增 Composition API。
 
