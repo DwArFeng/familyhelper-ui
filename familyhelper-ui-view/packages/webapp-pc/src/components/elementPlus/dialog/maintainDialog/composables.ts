@@ -25,14 +25,14 @@ type UseGeneralMaintainDialogResult<T, CT> = {
  * - `showInspectDialog` 方法用于显示查看对话框，参数为要查看的 bean 对象。
  *
  * 当维护对话框使用的 component bean 类型和组件对话框使用的 bean 类型一致时，
- * 可以使用 {@link useIdentityMaintainDialog} 方法进行简化。
+ * 可以使用 {@link useIdentityGeneralMaintainDialog} 方法进行简化。
  *
  * @template T bean 类型。
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
  * @param initialItem 初始的 component bean 对象。
  * @returns 调用方法后的返回结果。
- * @see useIdentityMaintainDialog
+ * @see useIdentityGeneralMaintainDialog
  */
 export function useGeneralMaintainDialog<T, CT>(
   beanMap: (t: T) => CT,
@@ -88,7 +88,9 @@ export function useGeneralMaintainDialog<T, CT>(
  * @param initialItem 初始的 component bean 对象。
  * @returns 调用方法后的返回结果。
  */
-export function useIdentityMaintainDialog<T>(initialItem: T): UseGeneralMaintainDialogResult<T, T> {
+export function useIdentityGeneralMaintainDialog<T>(
+  initialItem: T,
+): UseGeneralMaintainDialogResult<T, T> {
   return useGeneralMaintainDialog<T, T>((t) => t, initialItem)
 }
 
@@ -270,4 +272,25 @@ export function useCreateOnlyMaintainDialog<CT>(
     mode: _mode,
     showDialog,
   } as UseCreateOnlyMaintainDialogResult<CT>
+}
+
+/**
+ * 使用仅创建的维护对话框。
+ *
+ * 该方法可以简化维护对话框使用的 component bean 类型和组件对话框使用的 bean 类型一致的场景。
+ *
+ * 返回的结果中：
+ * - `visible` 表示对话框是否可见，可直接用于对话框的 `visible` 属性，应使用 `v-model` 绑定。
+ * - `item` 表示当前的 bean 对象，可直接用于对话框的 `item` 属性。
+ * - `mode` 表示当前的对话框模式，该值恒为 `CREATE`，可直接用于对话框的 `mode` 属性。
+ * - `showDialog` 方法用于显示创建对话框。
+ *
+ * @template T bean 类型。
+ * @param initialItem 初始的 component bean 对象。
+ * @returns 调用方法后的返回结果。
+ */
+export function useIdentityCreateOnlyMaintainDialog<T>(
+  initialItem: T,
+): UseCreateOnlyMaintainDialogResult<T> {
+  return useCreateOnlyMaintainDialog<T>(initialItem)
 }

@@ -18,6 +18,7 @@
   - 新增 `src/api/settingrepo/fileNode.ts` API 接口。
 
 - `webapp-pc` 子模块组件优化。
+  - `src/components/elementPlus/dialog/maintainDialog/composables.ts` 方法签名优化，新增 Composition API。
   - `src/components/elementPlus/tree/lazySerachTreePanel/composables.ts` 方法签名优化。
   - `src/components/elementPlus/table/draggableTablePanel/composables.ts` 方法签名及文档注释优化。
   - `src/components/elementPlus/card/cardPanel/composables.ts` 方法签名优化。
