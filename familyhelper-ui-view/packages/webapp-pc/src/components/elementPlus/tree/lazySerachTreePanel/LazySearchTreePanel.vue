@@ -422,9 +422,13 @@ function remove(item: CT): void {
   treeRef.value.remove(item)
 }
 
-function setCurrent(item: CT): void {
+function setCurrent(item: CT | null): void {
   if (!treeRef.value) {
     throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  if (!item) {
+    treeRef.value.setCurrentKey()
+    return
   }
   treeRef.value.setCurrentKey(item[props.keyField])
 }

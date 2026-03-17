@@ -119,7 +119,7 @@ type UseOperableGeneralLazySearchTreePanel<T, CT> = {
   insertAfter: (target: TreeNode<CT>, t: T) => void
   update: (t: T) => void
   remove: (t: T) => void
-  setCurrent: (t: T) => void
+  setCurrent: (t: T | null) => void
 }
 
 /**
@@ -240,10 +240,14 @@ export function useOperableGeneralLazySearchTreePanel<T, CT>(
     instance.remove(ct as Record<string, any>)
   }
 
-  function setCurrent(t: T): void {
+  function setCurrent(t: T | null): void {
     const instance = lazySearchTreePanelRef.value
     if (!instance) {
       throw new Error('LazySearchTreePanel instance is not ready')
+    }
+    if (!t) {
+      instance.setCurrent(null)
+      return
     }
     const ct: CT = beanMap(t)
     // 此处类型必须使用 any，故忽略类型检查
@@ -454,7 +458,7 @@ type UseOperableHybridLazySearchTreePanelResult<T, CT> = {
   insertAfter: (target: TreeNode<CT>, t: HybridBean<T>) => void
   update: (t: HybridBean<T>) => void
   remove: (t: HybridBean<T>) => void
-  setCurrent: (t: HybridBean<T>) => void
+  setCurrent: (t: HybridBean<T> | null) => void
 }
 
 /**
@@ -566,10 +570,14 @@ export function useOperableHybridLazySearchTreePanel<T, CT>(
     instance.remove(ct as Record<string, any>)
   }
 
-  function setCurrent(t: HybridBean<T>): void {
+  function setCurrent(t: HybridBean<T> | null): void {
     const instance = lazySearchTreePanelRef.value
     if (!instance) {
       throw new Error('LazySearchTreePanel instance is not ready')
+    }
+    if (!t) {
+      instance.setCurrent(null)
+      return
     }
     const ct: CT = hybridBeanMap(hybridBeanMapMap, t)
     // 此处类型必须使用 any，故忽略类型检查

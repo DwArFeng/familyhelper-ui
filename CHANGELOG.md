@@ -18,6 +18,7 @@
   - 新增 `src/api/settingrepo/fileNode.ts` API 接口。
 
 - `webapp-pc` 子模块组件优化。
+  - `src/components/elementPlus/tree/lazySerachTreePanel/LazySearchTreePanel.vue` 方法签名优化。
   - `src/components/elementPlus/tree/lazySerachTreePanel/LazySearchTreePanel.vue` 调整 Emits 顺序。
   - `src/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditPanel.vue` 新增事件 `onFileCommitted`。
   - `src/components/elementPlus/file/fileSelector/composables.ts` 新增 Composition API。
