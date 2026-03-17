@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块页面功能新增。
+  - 配置仓库 -> 配置节点编辑器新增文件节点子编辑面板。
+  - 配置仓库 -> 配置节点编辑器新增文件列表节点子编辑面板。
+
 - `component-api` 子模功能新增。
   - 新增 `src/api/settingrepo/fileListNode.ts` API 接口。
   - 新增 `src/api/settingrepo/fileNode.ts` API 接口。

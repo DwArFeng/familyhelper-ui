@@ -200,6 +200,8 @@ const mainDialogModelTypeIndicator = ref<{ type: SettingNodeType; label: string 
   { type: 2, label: '图片' },
   { type: 3, label: '图片列表' },
   { type: 4, label: '国际化' },
+  { type: 5, label: '文件' },
+  { type: 6, label: '文件列表' },
 ])
 
 const formRef = useTemplateRef<InstanceType<typeof ElForm>>('formRef')

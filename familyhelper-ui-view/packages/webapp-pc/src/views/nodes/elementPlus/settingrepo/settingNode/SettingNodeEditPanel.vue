@@ -26,6 +26,18 @@
       :args="settingNode?.args"
       :readonly="readonly"
     />
+    <file-node-sub-edit-panel
+      v-else-if="settingNode?.type === 5"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
+    <file-list-node-sub-edit-panel
+      v-else-if="settingNode?.type === 6"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
     <div class="placeholder" v-else>节点类型未知，无法查看或编辑</div>
   </div>
 </template>
@@ -42,6 +54,8 @@ import TextNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingN
 import ImageNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/ImageNodeSubEditPanel.vue'
 import ImageListNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/ImageListNodeSubEditPanel.vue'
 import IahnNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/IahnNodeSubEditPanel.vue'
+import FileNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/FileNodeSubEditPanel.vue'
+import FileListNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/FileListNodeSubEditPanel.vue'
 
 import {
   type SettingNode,

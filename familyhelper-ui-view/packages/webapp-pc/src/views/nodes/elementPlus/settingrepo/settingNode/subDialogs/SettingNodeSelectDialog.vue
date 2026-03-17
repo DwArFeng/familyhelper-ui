@@ -209,6 +209,10 @@ function settingNodeTableTypeFormatter(row: SettingNode, column: any): string {
       return '图片列表'
     case 4:
       return '国际化'
+    case 5:
+      return '文件'
+    case 6:
+      return '文件列表'
     default:
       return '（未知）'
   }
