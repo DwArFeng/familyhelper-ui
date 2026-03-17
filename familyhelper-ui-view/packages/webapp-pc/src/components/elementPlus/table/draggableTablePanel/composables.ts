@@ -20,13 +20,13 @@ type UseGeneralPagingTablePanelResult<T, CT> = {
  *   调用此方法可以快速更新当前的 component bean 列表。
  *
  * 当表格面板使用的 component bean 类型和后端接口返回的 bean 类型一致时，
- * 可以使用 {@link useIdentityFrontendPagingTablePanel} 方法进行简化。
+ * 可以使用 {@link useIdentityGeneralDraggableTablePanel} 方法进行简化。
  *
  * @template T bean 类型。
  * @template CT component bean 类型。
  * @param beanMap bean 映射函数。
  * @returns 调用方法后的返回结果。
- * @see useIdentityFrontendPagingTablePanel
+ * @see useIdentityGeneralDraggableTablePanel
  */
 export function useGeneralDraggableTablePanel<T, CT>(
   beanMap: (t: T) => CT,
@@ -58,6 +58,6 @@ export function useGeneralDraggableTablePanel<T, CT>(
  * @template T bean 类型。
  * @returns 调用方法后的返回结果。
  */
-export function useIdentityDraggableTablePanel<T>(): UseGeneralPagingTablePanelResult<T, T> {
+export function useIdentityGeneralDraggableTablePanel<T>(): UseGeneralPagingTablePanelResult<T, T> {
   return useGeneralDraggableTablePanel<T, T>((t) => t)
 }
