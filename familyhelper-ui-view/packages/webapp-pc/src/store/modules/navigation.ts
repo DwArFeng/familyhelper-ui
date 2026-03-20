@@ -5,7 +5,7 @@ import { type StoreSetup, type VimStoreModule } from '@/store/types.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 
 // -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
 /**
@@ -24,9 +24,9 @@ function init(_ctx: VimApplicationContext): void {
 export type NavigationStore = {
   isCurrentNode: (nodeKey: string) => boolean
   currentNodeKey: ComputedRef<string>
-  getNodeInfo: (nodeKey: string) => Readonly<NavigationNodeInfo> | null
-  getParentNodeInfo: (nodeKey: string) => Readonly<NavigationNodeInfo> | null
-  getChildNodeInfos: (nodeKey: string | null) => Readonly<NavigationNodeInfo[]>
+  getNodeInfo: (nodeKey: string) => Readonly<NodeInfo> | null
+  getParentNodeInfo: (nodeKey: string) => Readonly<NodeInfo> | null
+  getChildNodeInfos: (nodeKey: string | null) => Readonly<NodeInfo[]>
   setCurrentNodeKey: (value: string) => void
 }
 
@@ -39,14 +39,14 @@ function isCurrentNode(nodeKey: string): boolean {
   return _currentNodeKey.value === nodeKey
 }
 
-function getNodeInfo(nodeKey: string): Readonly<NavigationNodeInfo> | null {
+function getNodeInfo(nodeKey: string): Readonly<NodeInfo> | null {
   if (!ctx) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
   return ctx.navigation().nodeInfo(nodeKey)
 }
 
-function getParentNodeInfo(nodeKey: string): Readonly<NavigationNodeInfo> | null {
+function getParentNodeInfo(nodeKey: string): Readonly<NodeInfo> | null {
   if (!ctx) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
@@ -57,12 +57,12 @@ function getParentNodeInfo(nodeKey: string): Readonly<NavigationNodeInfo> | null
   return ctx.navigation().nodeInfo(currentNodeInfo.parentKey)
 }
 
-function getChildNodeInfos(nodeKey: string | null): Readonly<NavigationNodeInfo[]> {
+function getChildNodeInfos(nodeKey: string | null): Readonly<NodeInfo[]> {
   if (!ctx) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
   if (!nodeKey) {
-    const result: NavigationNodeInfo[] = []
+    const result: NodeInfo[] = []
     ctx
       .navigation()
       .nodeRootKeys()
@@ -70,7 +70,7 @@ function getChildNodeInfos(nodeKey: string | null): Readonly<NavigationNodeInfo[
         if (!ctx) {
           throw new Error('不应该执行到此处，请联系开发人员')
         }
-        const mayNodeInfo: NavigationNodeInfo | null = ctx.navigation().nodeInfo(rk)
+        const mayNodeInfo: NodeInfo | null = ctx.navigation().nodeInfo(rk)
         if (mayNodeInfo) {
           result.push(mayNodeInfo)
         }

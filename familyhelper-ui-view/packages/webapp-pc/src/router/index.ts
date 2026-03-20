@@ -7,7 +7,7 @@ import { type VimApplicationContext } from '@/vim/types.ts'
 import { guardNotExistsErrorText, noGuardNameErrorText } from './texts.ts'
 
 import { type Component } from '@/compreg/types.ts'
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 import { type VimRouter, type VimRouterLocation } from '@/router/types.ts'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
@@ -202,7 +202,7 @@ function addLnpStoreLoginActionListener(ctx: VimApplicationContext): void {
 
 function initRouter(ctx: VimApplicationContext): void {
   // 解析 VIM 布局路由表的重定向。
-  const defaultNodeKey: string = ctx.navigation().setting.defaultNavigationKey
+  const defaultNodeKey: string = ctx.navigation().setting.defaultNodeKey
   vimLayoutRoute.redirect = { name: defaultNodeKey }
 
   // 创建 router，并设置静态路由表。
@@ -294,7 +294,7 @@ function initVimLayoutRoutes(ctx: VimApplicationContext): void {
   }
 
   // 获取导航节点。
-  const nodeInfos: Readonly<NavigationNodeInfo[]> = ctx.navigation().nodeInfos()
+  const nodeInfos: Readonly<NodeInfo[]> = ctx.navigation().nodeInfos()
 
   // 遍历导航节点。
   for (const nodeInfo of nodeInfos) {
@@ -346,7 +346,7 @@ function updateVimLayoutRoutes(ctx: VimApplicationContext): void {
   }
 
   // 获取导航节点。
-  const nodeInfos: Readonly<NavigationNodeInfo[]> = ctx.navigation().nodeInfos()
+  const nodeInfos: Readonly<NodeInfo[]> = ctx.navigation().nodeInfos()
 
   // 移除所有现有的 vim.layout 子路由。
   for (const nodeInfo of nodeInfos) {

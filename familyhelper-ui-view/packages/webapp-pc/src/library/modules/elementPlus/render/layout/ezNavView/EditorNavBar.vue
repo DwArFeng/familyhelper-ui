@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 
 import { computed } from 'vue'
 
@@ -26,7 +26,7 @@ const router = vim.ctx().router().vueRouter()
 
 // -----------------------------------------------------------Props 定义-----------------------------------------------------------
 type Props = {
-  node: NavigationNodeInfo
+  node: NodeInfo
   annotation: string
 }
 

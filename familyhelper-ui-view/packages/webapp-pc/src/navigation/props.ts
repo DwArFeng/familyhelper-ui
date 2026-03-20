@@ -8,10 +8,10 @@ import { type NavigationSetting } from '@/navigation/types.ts'
  * 该字段对应的值是一个字符串，表示默认的 Navigation 的 key。
  *
  * 该字段的值必须是一个 `./modules/*.ts` 文件中提供的
- * `VimNavigationModule.provideNavigationNodeSettings()` 方法返回的 `NavigationNodeSetting[]`
- * 中存在的 `NavigationNodeSetting.key` 字段对应的值。
+ * `VimNavigationModule.provideNodeSettings()` 方法返回的 `NodeSetting[]`
+ * 中存在的 `NodeSetting.key` 字段对应的值。
  */
-const defaultNavigationKey: NavigationSetting['defaultNavigationKey'] = 'welcome'
+const defaultNavigationKey: NavigationSetting['defaultNodeKey'] = 'welcome'
 
 /**
  * 是否启用 EzNav。

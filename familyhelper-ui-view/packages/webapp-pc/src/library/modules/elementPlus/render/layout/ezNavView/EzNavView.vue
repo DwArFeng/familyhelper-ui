@@ -14,7 +14,7 @@
           class="ez-nav-item"
           ref="routerLinkRef"
           :class="navigationStore.isCurrentNode(node.key) ? 'active' : ''"
-          v-for="node in navigationEzNavStore.navigationNodes"
+          v-for="node in navigationEzNavStore.nodes"
           :key="node.key"
           @click="handleNavigation(node.key)"
           @contextmenu.prevent="openMenu(node.key, $event)"
@@ -124,7 +124,7 @@
             <draggable-component
               class="editor-dragger"
               item-key="key"
-              :list="editorDialogPinnedNavigationNodes"
+              :list="editorDialogPinnedNodes"
               :group="{ name: 'nav' }"
             >
               <!--suppress VueUnrecognizedSlot -->
@@ -144,7 +144,7 @@
             <draggable-component
               class="editor-dragger"
               item-key="key"
-              :list="editorDialogActiveNavigationNodes"
+              :list="editorDialogActiveNodes"
               :group="{ name: 'nav' }"
             >
               <!--suppress VueUnrecognizedSlot -->
@@ -176,7 +176,7 @@ import vim from '@/vim'
 
 import { type NavigationEzNavStore } from '@/store/modules/navigationEzNav.ts'
 import { type NavigationStore } from '@/store/modules/navigation.ts'
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
@@ -236,7 +236,7 @@ function handleRemove(nodeKey: string): void {
   navigationEzNavStore.removeNodeKey(nodeKey)
 
   // 获取 nodeKey 对应的元数据，分析关闭行为。
-  const nodeInfo: NavigationNodeInfo | null = navigationStore.getNodeInfo(nodeKey)
+  const nodeInfo: NodeInfo | null = navigationStore.getNodeInfo(nodeKey)
   if (!nodeInfo) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
@@ -266,7 +266,7 @@ function handleCloseBack(nodeKey: string): void {
 }
 
 function handleCloseDefault(): void {
-  vim.ctx().router().vueRouter().push({ name: vim.ctx().navigation().setting.defaultNavigationKey })
+  vim.ctx().router().vueRouter().push({ name: vim.ctx().navigation().setting.defaultNodeKey })
 }
 
 // -----------------------------------------------------------Router Link 菜单操作-----------------------------------------------------------
@@ -359,23 +359,23 @@ function handleShowEditDialogContextMenuItemClicked(): void {
 // -----------------------------------------------------------编辑对话框-----------------------------------------------------------
 
 const editDialogVisible = ref<boolean>(false)
-const editorDialogPinnedNavigationNodes = ref<NavigationNodeInfo[]>([])
-const editorDialogActiveNavigationNodes = ref<NavigationNodeInfo[]>([])
+const editorDialogPinnedNodes = ref<NodeInfo[]>([])
+const editorDialogActiveNodes = ref<NodeInfo[]>([])
 
 function handleShowEditDialog(): void {
   // 数据初始化。
-  editorDialogPinnedNavigationNodes.value = []
-  editorDialogActiveNavigationNodes.value = []
+  editorDialogPinnedNodes.value = []
+  editorDialogActiveNodes.value = []
   navigationEzNavStore.pinnedNodeKeys.forEach((key) => {
-    const mayNode: NavigationNodeInfo | null = navigationStore.getNodeInfo(key)
+    const mayNode: NodeInfo | null = navigationStore.getNodeInfo(key)
     if (mayNode) {
-      editorDialogPinnedNavigationNodes.value.push(mayNode)
+      editorDialogPinnedNodes.value.push(mayNode)
     }
   })
   navigationEzNavStore.activeNodeKeys.forEach((key) => {
-    const mayNode: NavigationNodeInfo | null = navigationStore.getNodeInfo(key)
+    const mayNode: NodeInfo | null = navigationStore.getNodeInfo(key)
     if (mayNode) {
-      editorDialogActiveNavigationNodes.value.push(mayNode)
+      editorDialogActiveNodes.value.push(mayNode)
     }
   })
   // 显示对话框。
@@ -393,12 +393,8 @@ function handleNavigationContextMenuItemClicked(): void {
 }
 
 function handleEditorConfirm(): void {
-  navigationEzNavStore.setPinnedNodeKeys(
-    editorDialogPinnedNavigationNodes.value.map((node) => node.key),
-  )
-  navigationEzNavStore.setActiveNodeKeys(
-    editorDialogActiveNavigationNodes.value.map((node) => node.key),
-  )
+  navigationEzNavStore.setPinnedNodeKeys(editorDialogPinnedNodes.value.map((node) => node.key))
+  navigationEzNavStore.setActiveNodeKeys(editorDialogActiveNodes.value.map((node) => node.key))
   editDialogVisible.value = false
 }
 
@@ -413,9 +409,9 @@ function handleEditDialogHotKeyDown(event: KeyboardEvent): void {
 
 function handleEditorNodeDelete(annotation: string, index: number): void {
   if (annotation === 'pinned') {
-    editorDialogPinnedNavigationNodes.value.splice(index, 1)
+    editorDialogPinnedNodes.value.splice(index, 1)
   } else {
-    editorDialogActiveNavigationNodes.value.splice(index, 1)
+    editorDialogActiveNodes.value.splice(index, 1)
   }
 }
 
@@ -489,19 +485,19 @@ function mayForward(): void {
   if (index < 0) {
     return
   }
-  if (index === navigationEzNavStore.navigationNodes.length - 1) {
+  if (index === navigationEzNavStore.nodes.length - 1) {
     return
   }
   jumpToIndex(index + 1)
 }
 
 function currentIndex(): number {
-  const navigationNodeKeys: string[] = navigationEzNavStore.navigationNodes.map((node) => node.key)
-  return navigationNodeKeys.indexOf(navigationStore.currentNodeKey)
+  const nodeKeys: string[] = navigationEzNavStore.nodes.map((node) => node.key)
+  return nodeKeys.indexOf(navigationStore.currentNodeKey)
 }
 
 function jumpToIndex(index: number): void {
-  const nodeKey: string = navigationEzNavStore.navigationNodes[index].key
+  const nodeKey: string = navigationEzNavStore.nodes[index].key
   const { params, query } = navigationEzNavStore.nodeMeta(nodeKey)
   const location = { name: nodeKey, params, query } as RouteLocationRaw
   vim.ctx().router().vueRouter().push(location)

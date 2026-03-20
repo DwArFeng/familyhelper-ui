@@ -27,7 +27,7 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 import { type NavigationStore } from '@/store/modules/navigation.ts'
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
@@ -44,7 +44,7 @@ const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
 // -----------------------------------------------------------Props 定义-----------------------------------------------------------
 type Props = {
-  node: NavigationNodeInfo
+  node: NodeInfo
 }
 
 const props = defineProps<Props>()
@@ -71,7 +71,7 @@ const hasChild = computed<boolean>(() => {
   return navigationStore.getChildNodeInfos(props.node.key).length > 0
 })
 
-const children = computed<Readonly<NavigationNodeInfo[]>>(() => {
+const children = computed<Readonly<NodeInfo[]>>(() => {
   return navigationStore.getChildNodeInfos(props.node.key)
 })
 </script>

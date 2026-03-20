@@ -34,7 +34,7 @@ import { ref } from 'vue'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 import SidebarItem from './SidebarItem.vue'
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 
 defineOptions({
   name: 'SideBar',
@@ -55,7 +55,7 @@ const menuBackgroundColor = ref('#2D3A4B')
 
 // -----------------------------------------------------------选择事件处理-----------------------------------------------------------
 function handleMenuSelect(nodeKey: string): void {
-  const nodeInfo: Readonly<NavigationNodeInfo> | null = navigationStore.getNodeInfo(nodeKey)
+  const nodeInfo: Readonly<NodeInfo> | null = navigationStore.getNodeInfo(nodeKey)
   if (!nodeInfo) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }

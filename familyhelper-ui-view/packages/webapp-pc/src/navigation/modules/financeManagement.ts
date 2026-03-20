@@ -1,13 +1,13 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import { type NavigationNodeSetting, type VimNavigationModule } from '@/navigation/types.ts'
+import { type NodeSetting, type VimNavigationModule } from '@/navigation/types.ts'
 
 /**
  * VIM Navigation 模块。
  */
 const vimNavigationModule: VimNavigationModule = {
   init,
-  provideNavigationNodeSettings,
+  provideNodeSettings,
 }
 
 /**
@@ -16,9 +16,9 @@ const vimNavigationModule: VimNavigationModule = {
 function init(): void {}
 
 /**
- * Navigation 节点数组。
+ * 节点设置数组。
  */
-const navigationNodes: NavigationNodeSetting[] = [
+const nodeSettings: NodeSetting[] = [
   {
     parentKey: null,
     key: 'financeManagement',
@@ -341,10 +341,10 @@ const navigationNodes: NavigationNodeSetting[] = [
 ]
 
 /**
- * 提供 NavigationNodeSetting。
+ * 提供 NodeSetting。
  */
-function provideNavigationNodeSettings(): NavigationNodeSetting[] {
-  return navigationNodes
+function provideNodeSettings(): NodeSetting[] {
+  return nodeSettings
 }
 
 export default vimNavigationModule

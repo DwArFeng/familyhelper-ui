@@ -15,7 +15,7 @@ import vim from '@/vim'
 import { type NavigationStore } from '@/store/modules/navigation.ts'
 
 import { computed } from 'vue'
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 
 defineOptions({
   name: 'BreadcrumbComponent',
@@ -33,12 +33,10 @@ const visualizerKey = computed<string>(
 )
 
 // -----------------------------------------------------------节点处理-----------------------------------------------------------
-const currentNodePath = computed<NavigationNodeInfo[]>(() => {
+const currentNodePath = computed<NodeInfo[]>(() => {
   // 获取当前节点路径。
-  let anchorNode: NavigationNodeInfo | null = navigationStore.getNodeInfo(
-    navigationStore.currentNodeKey,
-  )
-  const currentNodePathList: NavigationNodeInfo[] = []
+  let anchorNode: NodeInfo | null = navigationStore.getNodeInfo(navigationStore.currentNodeKey)
+  const currentNodePathList: NodeInfo[] = []
   // 使用循环获取当前节点路径。
   while (anchorNode) {
     currentNodePathList.splice(0, 0, anchorNode)

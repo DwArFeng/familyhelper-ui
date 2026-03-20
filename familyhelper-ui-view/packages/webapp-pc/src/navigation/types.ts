@@ -17,9 +17,9 @@ export interface VimNavigation extends VimComponent {
   setting: Readonly<NavigationSetting>
 
   /**
-   * Navigation 根节点 key 列表。
+   * 根节点 key 列表。
    *
-   * 该字段对应的值是一个函数，调用后返回一个只读的 string[]，表示所有可访问的 Navigation 根节点的 key。
+   * 该字段对应的值是一个函数，调用后返回一个只读的 string[]，表示所有可访问的根节点的 key。
    *
    * 该字段对应的值只能在 VIM 初始化完成后调用，
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
@@ -27,24 +27,24 @@ export interface VimNavigation extends VimComponent {
   nodeRootKeys: () => Readonly<string[]>
 
   /**
-   * Navigation 节点信息。
+   * 节点信息。
    *
-   * 该字段对应的值是一个函数，调用后返回一个只读的 NavigationNodeInfo[]，表示所有 Navigation 节点的信息。
+   * 该字段对应的值是一个函数，调用后返回一个只读的 NodeInfo[]，表示所有节点信息。
    *
    * 该字段对应的值只能在 VIM 初始化完成后调用，
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
    */
-  nodeInfos: () => Readonly<NavigationNodeInfo[]>
+  nodeInfos: () => Readonly<NodeInfo[]>
 
   /**
-   * 根据指定的 key 获取 Navigation 节点信息。
+   * 根据指定的 key 获取节点信息。
    *
-   * 该字段对应的值是一个函数，接受 Navigation 节点的 key，返回对应的只读的 Navigation 节点信息或 null。
+   * 该字段对应的值是一个函数，接受节点的 key，返回对应的只读的节点信息或 null。
    *
    * 该字段对应的值只能在 VIM 初始化完成后调用，
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
    */
-  nodeInfo: (key: string) => Readonly<NavigationNodeInfo> | null
+  nodeInfo: (key: string) => Readonly<NodeInfo> | null
 }
 
 /**
@@ -52,15 +52,15 @@ export interface VimNavigation extends VimComponent {
  */
 export type NavigationSetting = {
   /**
-   * 默认 Navigation key。
+   * 默认节点键。
    *
-   * 该字段对应的值是一个字符串，表示默认的 Navigation 的 key。
+   * 该字段对应的值是一个字符串，表示默认节点的键。
    *
    * 该字段的值必须是一个 `./modules/*.ts` 文件中提供的
-   * `VimNavigationModule.provideNavigationNodeSettings()` 方法返回的 `NavigationNodeSetting[]`
-   * 中存在的 `NavigationNodeSetting.key` 字段对应的值。
+   * `VimNavigationModule.provideNodeSettings()` 方法返回的 `NodeSetting[]`
+   * 中存在的 `NodeSetting.key` 字段对应的值。
    */
-  defaultNavigationKey: string
+  defaultNodeKey: string
 
   /**
    * 是否启用 EzNav。
@@ -87,9 +87,9 @@ export type NavigationSetting = {
 }
 
 /**
- * Navigation 节点信息。
+ * 节点信息。
  */
-export type NavigationNodeInfo = {
+export type NodeInfo = {
   /**
    * 父节点 key。
    *
@@ -373,15 +373,15 @@ export type PermissionInfo = {
  */
 export interface VimNavigationModule extends VimComponentModule {
   /**
-   * 提供 Navigation 节点设置。
+   * 提供节点设置。
    */
-  provideNavigationNodeSettings(): NavigationNodeSetting[]
+  provideNodeSettings(): NodeSetting[]
 }
 
 /**
  * Navigation 节点设置。
  */
-export type NavigationNodeSetting = {
+export type NodeSetting = {
   /**
    * 父节点 key。
    *

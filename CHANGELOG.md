@@ -8,6 +8,7 @@
   - `src/api/settingrepo/navigationNode.ts` 方法签名优化。
 
 - `webapp-pc` 子模块功能优化。
+  - 调整 `navigation` VIM 组件及相关组件中的方法签名，使其更加合理。
   - 新增 `store` VIM 组件中的方法。
   - 新增 `src/util/store.ts` 工具方法，用于判断 `store` VIM 组件是否准备完毕。
   - 优化 `src/views/vim/*/*.vue` 组件的 `store` VIM 组件是否准备完毕判断逻辑。
