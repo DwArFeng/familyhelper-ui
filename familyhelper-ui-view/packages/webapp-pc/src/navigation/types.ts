@@ -309,20 +309,35 @@ export type RouterInfo = {
   /**
    * 组件。
    *
-   * 该字段对应的值是一个嵌套的 Record 结构，用于存储不同 Visualizer 的组件。
+   * 该字段对应的值是一个对象，表示组件设置。
    *
-   * 该字段的结构为 `Record<string, () => Promise<any>>`，其中：
-   * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
-   * - 内层值是一个懒加载组件的函数，返回 Promise<any>。
-   *
-   * 该字段必须提供一个 `''` 键作为默认值，以便在找不到当前 Visualizer 对应的组件时使用。
    * 如果 `required` 为 `false`，则该字段无需提供。
    *
    * @see required
    */
-  // 组件的类型确实是 any，故抑制 eslint 错误。
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: Record<string, any> & { '': any }
+  component?: {
+    /**
+     * 键。
+     *
+     * 该字段对应的值是 compreg 模块中的键值，为 string 类型。
+     *
+     * 该字段的值应该对应于某个 compreg 模块中提供的 Compreg 组件的 key。
+     */
+    key: string
+
+    /**
+     * 参数。
+     *
+     * 该字段对应的值是一个嵌套的 Record 结构，用于存储不同 Visualizer 的组件参数，其中：
+     * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
+     * - 外层值是一个对象，表示该 Visualizer 组件的参数键值对。
+     *
+     * 该字段必须提供一个 `''` 键作为默认值，以便在找不到当前 Visualizer 对应的组件参数时使用。
+     *
+     * 如果在所有 Visualizer 中该组件均不需要参数，可以不提供该字段。
+     */
+    param?: Record<string, Record<string, unknown>> & { '': Record<string, unknown> }
+  }
 }
 
 /**
@@ -587,20 +602,35 @@ export type RouterSetting = {
   /**
    * 组件。
    *
-   * 该字段对应的值是一个嵌套的 Record 结构，用于存储不同 Visualizer 的组件。
+   * 该字段对应的值是一个对象，表示组件设置。
    *
-   * 该字段的结构为 `Record<string, () => Promise<any>>`，其中：
-   * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
-   * - 内层值是一个懒加载组件的函数，返回 Promise<any>。
-   *
-   * 该字段必须提供一个 `''` 键作为默认值，以便在找不到当前 Visualizer 对应的组件时使用。
    * 如果 `required` 为 `false`，则该字段无需提供。
    *
    * @see required
    */
-  // 组件的类型确实是 any，故抑制 eslint 错误。
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  component?: Record<string, any> & { '': any }
+  component?: {
+    /**
+     * 键。
+     *
+     * 该字段对应的值是 compreg 模块中的键值，为 string 类型。
+     *
+     * 该字段的值应该对应于某个 compreg 模块中提供的 Compreg 组件的 key。
+     */
+    key: string
+
+    /**
+     * 参数。
+     *
+     * 该字段对应的值是一个嵌套的 Record 结构，用于存储不同 Visualizer 的组件参数，其中：
+     * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
+     * - 外层值是一个对象，表示该 Visualizer 组件的参数键值对。
+     *
+     * 该字段必须提供一个 `''` 键作为默认值，以便在找不到当前 Visualizer 对应的组件参数时使用。
+     *
+     * 如果在所有 Visualizer 中该组件均不需要参数，可以不提供该字段。
+     */
+    param?: Record<string, Record<string, unknown>> & { '': Record<string, unknown> }
+  }
 }
 
 /**

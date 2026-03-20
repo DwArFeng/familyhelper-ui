@@ -71,9 +71,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'life/pb-set',
       component: {
-        '': () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
-        elementPlus: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
-        simple: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
+        key: 'life.pbSet',
       },
     },
     permission: {
@@ -110,9 +108,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'life/pb-management',
       component: {
-        '': () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
-        elementPlus: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
-        simple: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
+        key: 'life.pbManagement',
       },
     },
     permission: {

@@ -41,9 +41,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'about',
       component: {
-        '': () => import('@/views/nodes/elementPlus/about/About.vue'),
-        elementPlus: () => import('@/views/nodes/elementPlus/about/About.vue'),
-        simple: () => import('@/views/nodes/elementPlus/about/About.vue'),
+        key: 'about',
       },
     },
     permission: {

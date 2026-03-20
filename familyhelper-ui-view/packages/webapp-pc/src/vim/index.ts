@@ -12,6 +12,10 @@ import { type Vim, type VimApplicationContext } from '@/vim/types.ts'
 import api from '@/api'
 import { type VimApi } from '@/api/types.ts'
 
+// 导入 compreg 模块。
+import compreg from '@/compreg'
+import { type VimCompreg } from '@/compreg/types.ts'
+
 // 导入 library 模块。
 import library from '@/library'
 import { type VimLibrary } from '@/library/types.ts'
@@ -72,6 +76,7 @@ async function init(): Promise<void> {
     status: 'initializing',
     app: app,
     api: provideApi,
+    compreg: provideCompreg,
     library: provideLibrary,
     navigation: provideNavigation,
     router: provideRouter,
@@ -100,6 +105,12 @@ async function init(): Promise<void> {
   mayPromise = library.init(vimApplicationContext)
   if (mayPromise instanceof Promise) {
     promises.push(mayPromise)
+  }
+
+  // 初始化 compreg 模块。
+  mayPromise = compreg.init(vimApplicationContext)
+  if (mayPromise instanceof Promise) {
+    await mayPromise
   }
 
   // 初始化 navigation 模块。
@@ -174,6 +185,19 @@ function provideApi(): Omit<VimApi, 'init'> {
     throw new Error('不能在 initializing 状态下获取 api')
   }
   return api
+}
+
+/**
+ * 提供 Compreg。
+ */
+function provideCompreg(): Omit<VimCompreg, 'init'> {
+  if (!vimApplicationContext) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  if (vimApplicationContext.status === 'initializing') {
+    throw new Error('不能在 initializing 状态下获取 compreg')
+  }
+  return compreg
 }
 
 /**

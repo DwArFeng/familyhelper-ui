@@ -4,7 +4,12 @@
 
 ### 功能构建
 
-- (无)
+- `webapp-pc` 子模块功能优化。
+  - 新增 `compreg` VIM 组件，用于维护组件的注册。
+  - 调整 `navigation` VIM 组件，调整 `RouterSetting` 类型。
+  - 将菜单的关系和组件显示分离。
+  - 增加 `miscellaneous.compregFallback` 组件，作为 `compreg` 的默认组件。
+  - 更新 `src/navigation/README.md` 中的 `navigation` VIM 组件使用说明。
 
 ### Bug 修复
 

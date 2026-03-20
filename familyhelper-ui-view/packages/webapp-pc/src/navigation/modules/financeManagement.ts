@@ -71,11 +71,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/account-book',
       component: {
-        '': () => import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
+        key: 'financeManagement.accountBook',
       },
     },
     permission: {
@@ -112,12 +108,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/bank-card-type-indicator',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
+        key: 'financeManagement.bankCardTypeIndicator',
       },
     },
     permission: {
@@ -154,10 +145,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/bank-card',
       component: {
-        '': () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
-        simple: () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
+        key: 'financeManagement.bankCard',
       },
     },
     permission: {
@@ -194,12 +182,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/balance-record',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
+        key: 'financeManagement.balanceRecord',
       },
     },
     permission: {
@@ -236,12 +219,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/fund-change-type-indicator',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
+        key: 'financeManagement.fundChangeTypeIndicator',
       },
     },
     permission: {
@@ -278,11 +256,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/fund-change',
       component: {
-        '': () => import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
+        key: 'financeManagement.fundChange',
       },
     },
     permission: {
@@ -319,12 +293,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/finance-report',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
+        key: 'financeManagement.financeReport',
       },
     },
     permission: {
@@ -361,12 +330,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'finance-management/remind-driver-support',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
+        key: 'financeManagement.remindDriverSupport',
       },
     },
     permission: {

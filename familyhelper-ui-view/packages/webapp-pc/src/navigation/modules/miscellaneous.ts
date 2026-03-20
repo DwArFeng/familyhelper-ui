@@ -64,10 +64,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'miscellaneous/file-editor',
       component: {
-        '': () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
-        simple: () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+        key: 'miscellaneous.fileEditor',
       },
     },
   },

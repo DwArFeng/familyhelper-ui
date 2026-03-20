@@ -71,12 +71,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'assets-management/asset-catalog',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
+        key: 'assetsManagement.assetCatalog',
       },
     },
     permission: {
@@ -113,10 +108,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'assets-management/asset-bom',
       component: {
-        '': () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
-        simple: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
+        key: 'assetsManagement.assetBom',
       },
     },
     permission: {
@@ -153,12 +145,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'assets-management/item-type-indicator',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
+        key: 'assetsManagement.itemTypeIndicator',
       },
     },
     permission: {
@@ -195,10 +182,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'assets-management/item-label',
       component: {
-        '': () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
-        simple: () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
+        key: 'assetsManagement.itemLabel',
       },
     },
     permission: {

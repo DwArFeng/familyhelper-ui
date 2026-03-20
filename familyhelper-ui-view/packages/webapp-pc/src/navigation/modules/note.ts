@@ -71,9 +71,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'note/note-book',
       component: {
-        '': () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
-        elementPlus: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
-        simple: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
+        key: 'note.noteBook',
       },
     },
     permission: {
@@ -110,10 +108,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'note/note-management',
       component: {
-        '': () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
-        simple: () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
+        key: 'note.noteManagement',
       },
     },
     permission: {

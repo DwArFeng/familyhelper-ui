@@ -71,9 +71,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'system-settings/account',
       component: {
-        '': () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
-        elementPlus: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
-        simple: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
+        key: 'systemSettings.account',
       },
     },
     permission: {
@@ -110,12 +108,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'system-settings/account-security',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
+        key: 'systemSettings.accountSecurity',
       },
     },
     permission: {
@@ -152,9 +145,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'system-settings/role',
       component: {
-        '': () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
-        elementPlus: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
-        simple: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
+        key: 'systemSettings.role',
       },
     },
     permission: {
@@ -191,12 +182,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'system-settings/permission-group',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
+        key: 'systemSettings.permissionGroup',
       },
     },
     permission: {
@@ -233,12 +219,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'system-settings/permission-node',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
+        key: 'systemSettings.permissionNode',
       },
     },
     permission: {

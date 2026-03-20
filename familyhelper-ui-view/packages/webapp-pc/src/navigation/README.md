@@ -90,7 +90,14 @@ const example: NavigationNodeSetting = {
   router: {
     required: true,
     path: 'node-path-here',
-    component: () => import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+    component: {
+      key: 'yourComponentKeyHere',
+      param: {
+        '': {
+          key: 'value',
+        }
+      }
+    }
   },
   permission: {
     required: true,
@@ -171,7 +178,9 @@ const navigationNodes: NavigationNodeSetting[] = [
     router: {
       required: true,
       path: 'settingrepo/setting-category',
-      component: () => import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+      component: {
+        key: 'settingrepo.settingCategory',
+      },
     },
     permission: {
       required: true,

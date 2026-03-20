@@ -71,12 +71,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'settingrepo/setting-category',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+        key: 'settingrepo.settingCategory',
       },
     },
     permission: {
@@ -113,10 +108,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'settingrepo/setting-node',
       component: {
-        '': () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
-        simple: () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+        key: 'settingrepo.settingNode',
       },
     },
     permission: {
@@ -153,12 +145,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'settingrepo/formatter-support',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+        key: 'settingrepo.formatterSupport',
       },
     },
     permission: {
@@ -192,12 +179,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'settingrepo/setting-node-editor',
       component: {
-        '': () =>
-          import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
-        elementPlus: () =>
-          import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
-        simple: () =>
-          import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+        key: 'settingrepo.settingNodeEditor',
       },
     },
     permission: {
