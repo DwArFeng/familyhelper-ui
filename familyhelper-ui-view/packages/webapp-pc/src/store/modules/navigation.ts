@@ -476,7 +476,7 @@ export type EzNavPersistenceData = {
 }
 
 // 导航.配置仓库类型。
-const NAVIGATION_SETTINGREPO_CATEGORY: string = 'navigation.pc'
+const NAVIGATION_SETTINGREPO_CATEGORY: string = 'framework.pc.navigation'
 // 导航.配置仓库参数: key。
 const NAVIGATION_SETTINGREPO_ARGS_KEY: string[] = ['key']
 // 导航.配置仓库参数: custom。
