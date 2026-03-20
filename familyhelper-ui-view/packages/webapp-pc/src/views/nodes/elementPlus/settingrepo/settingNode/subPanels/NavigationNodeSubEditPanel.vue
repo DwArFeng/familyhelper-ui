@@ -629,9 +629,6 @@ async function handleItemEdit(item: NavigationNodeStructureDialogItem): Promise<
       message: '导航条目更新成功',
       type: 'success',
     })
-    if (!structureTreeCurrent.value) {
-      throw new Error('不应该执行到此处，请联系开发人员')
-    }
     handleInspect()
     itemMaintainDialogVisible.value = false
   } finally {
