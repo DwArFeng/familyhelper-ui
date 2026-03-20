@@ -9,7 +9,6 @@ import {
   operateInspectForPublic as textNodeOperateInspect,
   type TextNodeInspectResult,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
-
 import { resolveResponse } from '@/util/response.ts'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
@@ -123,7 +122,7 @@ function provideStoreSetup(): StoreSetup {
  * Window 加载钩子。
  */
 function windowLoadHook(): void {
-  //加载 Visualizer Key
+  // 加载 visualizer key。
   loadVisualizerKey().then(() => {})
 }
 
