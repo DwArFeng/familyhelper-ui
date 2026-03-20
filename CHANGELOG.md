@@ -8,6 +8,7 @@
   - `src/api/settingrepo/navigationNode.ts` 方法签名优化。
 
 - `webapp-pc` 子模块功能优化。
+  - 优化 `src/store/modules/visualizer.ts` 模块中的方法签名，代码格式，代码注释。
   - 优化 `src/router/guards.ts` 中的方法签名，以消除警告。
   - 调整 `navigation` VIM 组件及相关组件中的方法签名，使其更加合理。
   - 新增 `store` VIM 组件中的方法。

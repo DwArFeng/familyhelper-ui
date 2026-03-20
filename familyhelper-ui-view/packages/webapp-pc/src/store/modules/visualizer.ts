@@ -5,10 +5,8 @@ import { type StoreSetup, type VimStoreModule } from '@/store/types.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-import {
-  operateInspectForPublic as textNodeOperateInspect,
-  type TextNodeInspectResult,
-} from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
+import { type TextNodeInspectResult } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
+import { operateInspectForPublic as textNodeOperateInspect } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
@@ -30,23 +28,44 @@ function init(_ctx: VimApplicationContext): void {
  */
 export type VisualizerStore = {
   ready: ComputedRef<boolean>
-  visualizerKey: ComputedRef<string | null>
+  visualizerKey: ComputedRef<string>
 }
 
 // Store 区域。
 const _ready = ref<boolean>(false)
-const _visualizerKey = ref<string | null>(null)
+const _visualizerKey = ref<string>('')
 
 // Visualizer Key。
 const ready: ComputedRef<boolean> = computed(() => _ready.value)
-const visualizerKey: ComputedRef<string | null> = computed(() => _visualizerKey.value)
+const visualizerKey: ComputedRef<string> = computed(() => _visualizerKey.value)
 
 function setReady(): void {
   _ready.value = true
 }
 
-function setVisualizerKey(value: string | null): void {
+function setVisualizerKey(value: string): void {
   _visualizerKey.value = value
+}
+
+/**
+ * 提供 Store Setup。
+ *
+ * @returns Store Setup。
+ */
+function provideStoreSetup(): StoreSetup {
+  return (): VisualizerStore => ({
+    ready,
+    visualizerKey,
+  })
+}
+
+// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
+/**
+ * Window 加载钩子。
+ */
+function windowLoadHook(): void {
+  // 加载 visualizer key。
+  loadVisualizerKey().then(() => {})
 }
 
 /**
@@ -75,7 +94,7 @@ async function loadVisualizerKey(): Promise<void> {
     ctx.library().defaultVisualizer().notify('errorMessage', message)
 
     // 使用默认 Visualizer Key。
-    setVisualizerKey(null)
+    setVisualizerKey('')
   } finally {
     // 设置准备标记。
     setReady()
@@ -102,28 +121,7 @@ async function loadVisualizerKey0(): Promise<string> {
   if (!result) {
     throw new Error('无法获取 Visualizer Key, 请联系开发人员')
   }
-  return toKebabCase(result.value)
-}
-
-/**
- * 提供 Store Setup。
- *
- * @returns Store Setup。
- */
-function provideStoreSetup(): StoreSetup {
-  return (): VisualizerStore => ({
-    ready,
-    visualizerKey,
-  })
-}
-
-// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
-/**
- * Window 加载钩子。
- */
-function windowLoadHook(): void {
-  // 加载 visualizer key。
-  loadVisualizerKey().then(() => {})
+  return toKebabCase(result.value ?? '')
 }
 
 // -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
