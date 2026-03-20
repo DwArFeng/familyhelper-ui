@@ -7,8 +7,6 @@ import {
   type NavigationNodeInfo,
   type NavigationNodeSetting,
   type NavigationSetting,
-  type RouterInfo,
-  type RouterSetting,
   type VimNavigation,
   type VimNavigationModule,
 } from '@/navigation/types.ts'
@@ -108,23 +106,6 @@ async function init(ctx: VimApplicationContext): Promise<void> {
   await Promise.all(promises)
 
   /*
-   * 对于 navigationNodeSetting 的 router.component，将每个 key 都变为 kebab 格式，值保持不变。
-   */
-  function mapRouterComponent(
-    routerSettingComponent: RouterSetting['component'],
-  ): RouterInfo['component'] {
-    const routerInfoComponent: RouterInfo['component'] = {
-      '': () => {
-        throw new Error('不应该执行到此处，请联系开发人员')
-      },
-    }
-    for (const key in routerSettingComponent) {
-      routerInfoComponent[toKebabCase(key)] = routerSettingComponent[key]
-    }
-    return routerInfoComponent
-  }
-
-  /*
    * 对于 navigationNodeSetting 的 display，将每个 key 都变为 kebab 格式，值保持不变。
    */
   function mapDisplay(displaySetting: DisplaySetting): DisplayInfo {
@@ -137,18 +118,6 @@ async function init(ctx: VimApplicationContext): Promise<void> {
 
   // 将 NavigationNodeSetting 转换为 NavigationNodeInfo，并存入 navigationNodeInfos 对象。
   for (const navigationNodeSetting of navigationNodeSettings) {
-    let routerInfo: RouterInfo
-    if (navigationNodeSetting.router) {
-      routerInfo = {
-        required: true,
-        path: navigationNodeSetting.router.path,
-        component: mapRouterComponent(navigationNodeSetting.router.component),
-      }
-    } else {
-      routerInfo = {
-        required: false,
-      }
-    }
     if (navigationNodeInfos[navigationNodeSetting.key]) {
       throw new Error(`导航节点 ${navigationNodeSetting.key} 重复`)
     }
@@ -160,7 +129,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
       display: mapDisplay(navigationNodeSetting.display),
       menu: navigationNodeSetting.menu ?? { shown: false },
       ezNav: navigationNodeSetting.ezNav ?? { shown: false },
-      router: routerInfo,
+      router: navigationNodeSetting.router ?? { required: false },
       permission: navigationNodeSetting.permission ?? { required: false },
     }
   }

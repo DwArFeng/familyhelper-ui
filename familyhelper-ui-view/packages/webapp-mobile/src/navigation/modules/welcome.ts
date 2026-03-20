@@ -43,8 +43,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       required: true,
       path: 'welcome',
       component: {
-        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        key: 'welcome',
       },
     },
     permission: {

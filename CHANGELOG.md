@@ -5,6 +5,11 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块功能优化。
+  - 新增 `compreg` VIM 组件，用于维护组件的注册。
+  - 调整 `navigation` VIM 组件，调整 `RouterSetting` 类型。
+  - 将菜单的关系和组件显示分离。
+  - 增加 `miscellaneous.compregFallback` 组件，作为 `compreg` 的默认组件。
+  - 更新 `src/navigation/README.md` 中的 `navigation` VIM 组件使用说明。
   - 重构 `src/views/nodes` 中的目录结构，以适配 `library` VIM 组件下对应的模块名称。
   - 更改 `navigation` VIM 组件模块中的内容，以适配 `library` VIM 组件下对应的模块名称。
 

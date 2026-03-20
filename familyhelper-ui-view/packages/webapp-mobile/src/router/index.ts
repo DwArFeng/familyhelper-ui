@@ -6,13 +6,13 @@ import { type VimApplicationContext } from '@/vim/types.ts'
 
 import { guardNotExistsErrorText, noGuardNameErrorText } from './texts.ts'
 
+import { type Component } from '@/compreg/types.ts'
+import { type NavigationNodeInfo } from '@/navigation/types.ts'
 import { type VimRouter, type VimRouterLocation } from '@/router/types.ts'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
-
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
 
 import {
   createRouter,
@@ -24,6 +24,7 @@ import {
 } from 'vue-router'
 
 import guards from './guards.ts'
+
 import { type PageErrorStore } from '@/store/modules/pageError.ts'
 import { type VisualizerStore } from '@/store/modules/visualizer.ts'
 
@@ -308,6 +309,7 @@ function initVimLayoutRoutes(ctx: VimApplicationContext): void {
       permissionNode?: string
       ezNav: boolean
       visualizerKey?: string
+      componentParam?: Record<string, unknown>
     }
 
     // 构建元数据。
@@ -317,16 +319,19 @@ function initVimLayoutRoutes(ctx: VimApplicationContext): void {
       permissionNode: nodeInfo.permission.node,
       ezNav: nodeInfo.ezNav.shown,
       visualizerKey: '',
+      componentParam: {},
     }
 
     // 构建 vim 子路由记录。
     if (!nodeInfo.router.component) {
       throw new Error('不应该执行到此处, 请联系开发人员')
     }
+    const compregComponent: Component =
+      ctx.compreg().component(nodeInfo.router.component.key) ?? ctx.compreg().defaultComponent()
     const vimChildRoute: RouteRecordRaw = {
       name: nodeInfo.key,
       path: '/vim/layout/' + (nodeInfo.router.path ?? ''),
-      component: nodeInfo.router.component[''],
+      component: compregComponent[''],
       meta: meta,
     }
 
@@ -366,31 +371,49 @@ function updateVimLayoutRoutes(ctx: VimApplicationContext): void {
       continue
     }
 
+    // 构建元数据。
+    if (!nodeInfo.router.component) {
+      throw new Error('不应该执行到此处, 请联系开发人员')
+    }
+    let componentParam
+    if (nodeInfo.router.component.param) {
+      componentParam =
+        nodeInfo.router.component.param[visualizerKey] ?? nodeInfo.router.component.param[''] ?? {}
+    } else {
+      componentParam = {}
+    }
     type Meta = {
       guard: 'vim'
       permissionRequired: boolean
       permissionNode?: string
       ezNav: boolean
       visualizerKey?: string
+      componentParam?: Record<string, unknown>
     }
-
-    // 构建元数据。
     const meta: Meta = {
       guard: 'vim',
       permissionRequired: nodeInfo.permission.required,
       permissionNode: nodeInfo.permission.node,
       ezNav: nodeInfo.ezNav.shown,
       visualizerKey: visualizerKey,
+      componentParam: componentParam,
     }
 
     // 构建 vim 子路由记录。
-    if (!nodeInfo.router.component) {
-      throw new Error('不应该执行到此处, 请联系开发人员')
+    const customCompregComponent: Component | null = ctx
+      .compreg()
+      .component(nodeInfo.router.component.key)
+    const defaultCompregComponent: Component = ctx.compreg().defaultComponent()
+    let component
+    if (customCompregComponent) {
+      component = customCompregComponent[visualizerKey] ?? customCompregComponent['']
+    } else {
+      component = defaultCompregComponent['']
     }
     const vimChildRoute: RouteRecordRaw = {
       name: nodeInfo.key,
       path: '/vim/layout/' + (nodeInfo.router.path ?? ''),
-      component: nodeInfo.router.component[visualizerKey] ?? nodeInfo.router.component[''],
+      component: component,
       meta: meta,
     }
 

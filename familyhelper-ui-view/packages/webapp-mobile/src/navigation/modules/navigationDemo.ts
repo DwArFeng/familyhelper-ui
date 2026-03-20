@@ -35,12 +35,7 @@ const navigationNodes: NavigationNodeSetting[] = [
       shown: true,
     },
     router: {
-      required: true,
-      path: 'welcome',
-      component: {
-        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-      },
+      required: false,
     },
     permission: {
       required: false,
@@ -72,10 +67,9 @@ const navigationNodes: NavigationNodeSetting[] = [
     },
     router: {
       required: true,
-      path: 'welcome',
+      path: 'navigation-demo/sub-menu-item-1',
       component: {
-        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        key: 'navigationDemo.subMenuItem1',
       },
     },
     permission: {
@@ -108,10 +102,9 @@ const navigationNodes: NavigationNodeSetting[] = [
     },
     router: {
       required: true,
-      path: 'welcome',
+      path: 'navigation-demo/sub-menu-item-2',
       component: {
-        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        key: 'navigationDemo.subMenuItem2',
       },
     },
     permission: {
@@ -144,10 +137,9 @@ const navigationNodes: NavigationNodeSetting[] = [
     },
     router: {
       required: true,
-      path: 'welcome',
+      path: 'navigation-demo/sub-menu-item-3',
       component: {
-        '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+        key: 'navigationDemo.subMenuItem3',
       },
     },
     permission: {

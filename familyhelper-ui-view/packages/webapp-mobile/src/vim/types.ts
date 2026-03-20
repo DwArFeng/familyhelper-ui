@@ -2,6 +2,7 @@
 
 import { type App } from 'vue'
 import { type VimApi } from '@/api/types.ts'
+import { type VimCompreg } from '@/compreg/types.ts'
 import { type VimLibrary } from '@/library/types.ts'
 import { type VimNavigation } from '@/navigation/types.ts'
 import { type VimRouter } from '@/router/types.ts'
@@ -56,6 +57,15 @@ export interface VimApplicationContext {
    * 该字段对应的值只能在 VIM 初始化完成后调用，即在 `status` 为 `initialized` 时调用。
    */
   api: () => Omit<VimApi, 'init'>
+
+  /**
+   * VIM 中的 compreg 模块对象。
+   *
+   * 该字段对应的值是一个函数，调用后返回 VIM 中的 compreg 模块对象。
+   *
+   * 该字段对应的值只能在 VIM 初始化完成后调用，即在 `status` 为 `initialized` 时调用。
+   */
+  compreg: () => Omit<VimCompreg, 'init'>
 
   /**
    * VIM 中的 library 模块对象。
