@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/ConfDirectory.md。
+
 - `webapp-pc` 子模块组件新增。
   - 组件 `SearchTreePanel` 新增。
 
