@@ -15,6 +15,14 @@ import {
  */
 export interface VimStore extends VimComponent {
   /**
+   * 获取所有已注册的 Store ID。
+   *
+   * 该字段对应的值只能在 VIM 初始化完成后调用，
+   * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
+   */
+  storeIds: () => string[]
+
+  /**
    * Vue Store 定义。
    *
    * 该字段对应的值是一个函数，接受 id，返回对应的 Pinia Store 定义对象。

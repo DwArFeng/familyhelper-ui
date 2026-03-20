@@ -39,8 +39,8 @@ const _visualizerKey = ref<string | null>(null)
 const ready: ComputedRef<boolean> = computed(() => _ready.value)
 const visualizerKey: ComputedRef<string | null> = computed(() => _visualizerKey.value)
 
-function setReady(value: boolean): void {
-  _ready.value = value
+function setReady(): void {
+  _ready.value = true
 }
 
 function setVisualizerKey(value: string | null): void {
@@ -76,7 +76,7 @@ async function loadVisualizerKey(): Promise<void> {
     setVisualizerKey(null)
   } finally {
     // 设置准备标记。
-    setReady(true)
+    setReady()
   }
 }
 

@@ -5,6 +5,10 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块功能优化。
+  - 新增 `store` VIM 组件中的方法。
+  - 新增 `src/util/store.ts` 工具方法，用于判断 `store` VIM 组件是否准备完毕。
+  - 优化 `src/views/vim/*/*.vue` 组件的 `store` VIM 组件是否准备完毕判断逻辑。
+  - 补充 `src/store/README.md` 中的 `store` VIM 组件使用说明。
   - 优化 `src/store/modules/visualizer.ts` 模块中的代码格式以及代码注释。
   - 新增 `compreg` VIM 组件，用于维护组件的注册。
   - 调整 `navigation` VIM 组件，调整 `RouterSetting` 类型。
