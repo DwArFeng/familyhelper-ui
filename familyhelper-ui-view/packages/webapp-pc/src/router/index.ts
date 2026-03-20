@@ -1,6 +1,6 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import { watch } from 'vue'
+import { nextTick, watch, type WatchHandle } from 'vue'
 
 import { type VimApplicationContext } from '@/vim/types.ts'
 
@@ -27,6 +27,9 @@ import guards from './guards.ts'
 
 import { type PageErrorStore } from '@/store/modules/pageError.ts'
 import { type VisualizerStore } from '@/store/modules/visualizer.ts'
+import { type NavigationStore } from '@/store/modules/navigation.ts'
+
+import { ready } from '@/util/store.ts'
 
 /**
  * 状态。
@@ -56,7 +59,7 @@ let vueRouter: Router | null = null
 /**
  * 基础路由表。
  */
-const baseRoute: RouteRecordRaw = {
+const baseRoute: Readonly<RouteRecordRaw> = {
   name: '',
   path: '/',
   redirect: {
@@ -66,10 +69,13 @@ const baseRoute: RouteRecordRaw = {
 
 /**
  * VIM 布局路由表。
+ *
+ * 该路由表内的定义为初始值用于在动态导航加载完毕之前前提供通用路径匹配。
+ * 在动态导航加载完毕之后，会使用实际的导航节点信息更新该路由表。
  */
 const vimLayoutRoute: RouteRecordRaw = {
   name: 'vim.layout',
-  path: '/vim/layout',
+  path: '/vim/layout/:path*',
   component: () => import('@/views/vim/layout/Layout.vue'),
   children: [],
   meta: {
@@ -80,7 +86,7 @@ const vimLayoutRoute: RouteRecordRaw = {
 /**
  * VIM 路由表。
  */
-const vimRoutes: RouteRecordRaw[] = [
+const vimRoutes: Readonly<RouteRecordRaw[]> = [
   {
     name: 'vim',
     path: '/vim',
@@ -94,7 +100,6 @@ const vimRoutes: RouteRecordRaw[] = [
       guard: 'simple',
     },
   },
-  vimLayoutRoute,
   {
     name: 'vim.pageForbidden',
     path: '/vim/page-forbidden',
@@ -137,9 +142,14 @@ function init(ctx: VimApplicationContext): void {
     addLnpStoreLoginActionListener(ctx)
     addLnpStoreLogoutActionListener(ctx)
     addLnpStoreFireKickActionListener(ctx)
-    initRouter(ctx)
+    initBaseRouter(ctx)
     finishInitializing(ctx)
   }, 1000000000)
+
+  // 注册 Window load 钩子，在回调中执行 VIM 布局路由初始化调度。
+  ctx.registerWindowLoadHook(() => {
+    waitReadyAndUpdateVimLayoutRouter(ctx)
+  })
 
   // 注册 Window beforeunload 钩子，在回调中执行销毁调度。
   ctx.registerWindowBeforeUnloadHook(() => {
@@ -200,242 +210,174 @@ function addLnpStoreLoginActionListener(ctx: VimApplicationContext): void {
   }
 }
 
-function initRouter(ctx: VimApplicationContext): void {
-  // 解析 VIM 布局路由表的重定向。
-  const defaultNodeKey: string = ctx.navigation().setting.defaultNodeKey
-  vimLayoutRoute.redirect = { name: defaultNodeKey }
+function initBaseRouter(ctx: VimApplicationContext): void {
+  function doGuard(
+    to: RouteLocationNormalizedGeneric,
+    from: RouteLocationNormalizedGeneric,
+    next: NavigationGuardNext,
+  ): void {
+    if (!vueRouter) {
+      throw new Error('不应该执行到此处, 请联系开发人员')
+    }
+
+    const pageErrorStore = ctx.store().vueStore<'page-error', PageErrorStore>('page-error')
+
+    // 判断页面是否存在，如果页面不存在，则跳转到 vim.pageNotFound 页面。
+    if (!to.name || !vueRouter.hasRoute(to.name)) {
+      next({ name: 'vim.pageNotFound' })
+      return
+    }
+
+    // 检查路由元数据的 guard 字段。
+    const guardName: string | undefined = to.meta.guard as string | undefined
+    // 如果路由没有配置权限，则跳转到内部错误页面。
+    if (guardName === undefined) {
+      pageErrorStore.setErrorText(noGuardNameErrorText(to))
+      next({ name: 'vim.pageError' })
+      return
+    }
+    // 从 guards 中取出对应的 guard。
+    const guard = guards[guardName]
+    // 如果 guard 不存在，则跳转到内部页面。
+    if (!guard) {
+      pageErrorStore.setErrorText(guardNotExistsErrorText(to, guardName))
+      next({ name: 'vim.pageError' })
+      return
+    }
+    // 类型处理。
+    // 此处类型确实需要使用 any，故抑制警告。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const _to: VimRouterLocation<any> = {
+      name: to.name as string,
+      meta: to.meta,
+      params: to.params,
+      query: to.query,
+    }
+    // 此处类型确实需要使用 any，故抑制警告。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const _from: VimRouterLocation<any> = {
+      name: from.name as string,
+      meta: from.meta,
+      params: from.params,
+      query: from.query,
+    }
+    // 执行代理守卫。
+    guard(_to, _from, next)
+  }
 
   // 创建 router，并设置静态路由表。
   vueRouter = createRouter({
     history: createWebHashHistory(),
-    routes: [baseRoute, ...vimRoutes],
+    routes: [baseRoute, vimLayoutRoute, ...vimRoutes],
   })
 
-  // 添加 vim.layout 路由表。
-  initVimLayoutRoutes(ctx)
-
-  // 添加 vim.layout 的监视逻辑。
-  const visualizerStore = ctx.store().vueStore<'visualizer', VisualizerStore>('visualizer')
-  watch(
-    () => ({ ready: visualizerStore.ready, visualizerKey: visualizerStore.visualizerKey }),
-    (value, oldValue) => {
-      if (!value.ready) {
-        return
-      }
-      if (value.visualizerKey === oldValue?.visualizerKey) {
-        return
-      }
-      updateVimLayoutRoutes(ctx)
-    },
-    { immediate: true },
-  )
-
   // 添加路由守卫。
-  vueRouter.beforeEach(
-    (
-      to: RouteLocationNormalizedGeneric,
-      from: RouteLocationNormalizedGeneric,
-      next: NavigationGuardNext,
-    ) => {
-      if (!vueRouter) {
+  vueRouter.beforeEach(doGuard)
+}
+
+function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
+  function refreshVimLayoutRoutes(ctx: VimApplicationContext): void {
+    if (!vueRouter) {
+      throw new Error('不应该执行到此处, 请联系开发人员')
+    }
+
+    // 获取导航节点。
+    const navigationStore = ctx.store().vueStore<'navigation', NavigationStore>('navigation')
+    const nodeInfos: Readonly<NodeInfo[]> = Object.values(navigationStore.nodeInfos)
+
+    // 解析 VIM 布局路由表的重定向。
+    vimLayoutRoute.redirect = { name: navigationStore.defaultNodeKey ?? '' }
+
+    // 重置 vim.layout 路由表。
+    vueRouter.removeRoute('vim.layout')
+    vimLayoutRoute.path = '/vim/layout'
+    vimLayoutRoute.children = []
+    vueRouter.addRoute(vimLayoutRoute)
+
+    const visualizerStore = ctx.store().vueStore<'visualizer', VisualizerStore>('visualizer')
+    const visualizerKey: string = visualizerStore.visualizerKey ?? ''
+
+    // 遍历导航节点。
+    for (const nodeInfo of nodeInfos) {
+      // 如果节点没有 router 信息，则跳过。
+      if (!nodeInfo.router.required) {
+        continue
+      }
+
+      type Meta = {
+        guard: 'vim'
+        permissionRequired: boolean
+        permissionNode?: string
+        ezNav: boolean
+        visualizerKey?: string
+        componentParam?: Record<string, unknown>
+      }
+
+      // 构建元数据。
+      if (!nodeInfo.router.component) {
         throw new Error('不应该执行到此处, 请联系开发人员')
       }
-
-      const pageErrorStore = ctx.store().vueStore<'page-error', PageErrorStore>('page-error')
-
-      // 判断页面是否存在，如果页面不存在，则跳转到 vim.pageNotFound 页面。
-      if (!to.name || !vueRouter.hasRoute(to.name)) {
-        next({ name: 'vim.pageNotFound' })
-        return
+      let componentParam
+      if (nodeInfo.router.component.param) {
+        componentParam =
+          nodeInfo.router.component.param[visualizerKey] ??
+          nodeInfo.router.component.param[''] ??
+          {}
+      } else {
+        componentParam = {}
+      }
+      const meta: Meta = {
+        guard: 'vim',
+        permissionRequired: nodeInfo.permission.required,
+        permissionNode: nodeInfo.permission.node,
+        ezNav: nodeInfo.ezNav.shown,
+        visualizerKey: visualizerKey,
+        componentParam: componentParam,
       }
 
-      // 检查路由元数据的 guard 字段。
-      const guardName: string | undefined = to.meta.guard as string | undefined
-      // 如果路由没有配置权限，则跳转到内部错误页面。
-      if (guardName === undefined) {
-        pageErrorStore.setErrorText(noGuardNameErrorText(to))
-        next({ name: 'vim.pageError' })
-        return
+      // 构建 vim 子路由记录。
+      const customCompregComponent: Component | null = ctx
+        .compreg()
+        .component(nodeInfo.router.component.key)
+      const defaultCompregComponent: Component = ctx.compreg().defaultComponent()
+      let component
+      if (customCompregComponent) {
+        component = customCompregComponent[visualizerKey] ?? customCompregComponent['']
+      } else {
+        component = defaultCompregComponent['']
       }
-      // 从 guards 中取出对应的 guard。
-      const guard = guards[guardName]
-      // 如果 guard 不存在，则跳转到内部页面。
-      if (!guard) {
-        pageErrorStore.setErrorText(guardNotExistsErrorText(to, guardName))
-        next({ name: 'vim.pageError' })
-        return
+      const vimChildRoute: RouteRecordRaw = {
+        name: nodeInfo.key,
+        path: '/vim/layout/' + (nodeInfo.router.path ?? ''),
+        component: component,
+        meta: meta,
       }
-      // 类型处理。
-      // 此处类型确实需要使用 any，故抑制警告。
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const _to: VimRouterLocation<any> = {
-        name: to.name as string,
-        meta: to.meta,
-        params: to.params,
-        query: to.query,
-      }
-      // 此处类型确实需要使用 any，故抑制警告。
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const _from: VimRouterLocation<any> = {
-        name: from.name as string,
-        meta: from.meta,
-        params: from.params,
-        query: from.query,
-      }
-      // 执行代理守卫。
-      guard(_to, _from, next)
-    },
-  )
-}
 
-function initVimLayoutRoutes(ctx: VimApplicationContext): void {
-  if (!vueRouter) {
-    throw new Error('不应该执行到此处, 请联系开发人员')
+      // 将路由记录添加到 vim 路由表中。
+      vueRouter.addRoute('vim.layout', vimChildRoute)
+    }
+
+    // 使用 router.replace 重新导航到当前路由，触发组件重新渲染。
+    const currentRoute = vueRouter.currentRoute.value
+    // 通过 nextTick 确保在下一个事件循环中执行路由替换。
+    nextTick(() => {
+      vueRouter!
+        .replace({
+          path: currentRoute.path,
+          query: currentRoute.query,
+        })
+        .then(() => Promise.resolve())
+    }).then(() => Promise.resolve())
   }
 
-  // 获取导航节点。
-  const nodeInfos: Readonly<NodeInfo[]> = ctx.navigation().nodeInfos()
-
-  // 遍历导航节点。
-  for (const nodeInfo of nodeInfos) {
-    // 如果节点没有 router 信息，则跳过。
-    if (!nodeInfo.router.required) {
-      continue
+  // 添加 vim.layout 的监视逻辑。
+  const readyWatchHandle: WatchHandle = watch(ready, (value) => {
+    if (!value) {
+      return
     }
-
-    type Meta = {
-      guard: 'vim'
-      permissionRequired: boolean
-      permissionNode?: string
-      ezNav: boolean
-      visualizerKey?: string
-      componentParam?: Record<string, unknown>
-    }
-
-    // 构建元数据。
-    const meta: Meta = {
-      guard: 'vim',
-      permissionRequired: nodeInfo.permission.required,
-      permissionNode: nodeInfo.permission.node,
-      ezNav: nodeInfo.ezNav.shown,
-      visualizerKey: '',
-      componentParam: {},
-    }
-
-    // 构建 vim 子路由记录。
-    if (!nodeInfo.router.component) {
-      throw new Error('不应该执行到此处, 请联系开发人员')
-    }
-    const compregComponent: Component =
-      ctx.compreg().component(nodeInfo.router.component.key) ?? ctx.compreg().defaultComponent()
-    const vimChildRoute: RouteRecordRaw = {
-      name: nodeInfo.key,
-      path: '/vim/layout/' + (nodeInfo.router.path ?? ''),
-      component: compregComponent[''],
-      meta: meta,
-    }
-
-    // 将路由记录添加到 vim 路由表中。
-    vueRouter.addRoute('vim.layout', vimChildRoute)
-  }
-}
-
-function updateVimLayoutRoutes(ctx: VimApplicationContext): void {
-  if (!vueRouter) {
-    throw new Error('不应该执行到此处, 请联系开发人员')
-  }
-
-  // 获取导航节点。
-  const nodeInfos: Readonly<NodeInfo[]> = ctx.navigation().nodeInfos()
-
-  // 移除所有现有的 vim.layout 子路由。
-  for (const nodeInfo of nodeInfos) {
-    // 如果节点没有 router 信息，则跳过。
-    if (!nodeInfo.router.required) {
-      continue
-    }
-
-    // 如果路由存在，则移除该路由。
-    if (nodeInfo.key && vueRouter.hasRoute(nodeInfo.key)) {
-      vueRouter.removeRoute(nodeInfo.key)
-    }
-  }
-
-  const visualizerStore = ctx.store().vueStore<'visualizer', VisualizerStore>('visualizer')
-  const visualizerKey: string = visualizerStore.visualizerKey ?? ''
-
-  // 遍历导航节点。
-  for (const nodeInfo of nodeInfos) {
-    // 如果节点没有 router 信息，则跳过。
-    if (!nodeInfo.router.required) {
-      continue
-    }
-
-    type Meta = {
-      guard: 'vim'
-      permissionRequired: boolean
-      permissionNode?: string
-      ezNav: boolean
-      visualizerKey?: string
-      componentParam?: Record<string, unknown>
-    }
-
-    // 构建元数据。
-    if (!nodeInfo.router.component) {
-      throw new Error('不应该执行到此处, 请联系开发人员')
-    }
-    let componentParam
-    if (nodeInfo.router.component.param) {
-      componentParam =
-        nodeInfo.router.component.param[visualizerKey] ?? nodeInfo.router.component.param[''] ?? {}
-    } else {
-      componentParam = {}
-    }
-    const meta: Meta = {
-      guard: 'vim',
-      permissionRequired: nodeInfo.permission.required,
-      permissionNode: nodeInfo.permission.node,
-      ezNav: nodeInfo.ezNav.shown,
-      visualizerKey: visualizerKey,
-      componentParam: componentParam,
-    }
-
-    // 构建 vim 子路由记录。
-    const customCompregComponent: Component | null = ctx
-      .compreg()
-      .component(nodeInfo.router.component.key)
-    const defaultCompregComponent: Component = ctx.compreg().defaultComponent()
-    let component
-    if (customCompregComponent) {
-      component = customCompregComponent[visualizerKey] ?? customCompregComponent['']
-    } else {
-      component = defaultCompregComponent['']
-    }
-    const vimChildRoute: RouteRecordRaw = {
-      name: nodeInfo.key,
-      path: '/vim/layout/' + (nodeInfo.router.path ?? ''),
-      component: component,
-      meta: meta,
-    }
-
-    // 将路由记录添加到 vim 路由表中。
-    vueRouter.addRoute('vim.layout', vimChildRoute)
-  }
-
-  // 使用 router.replace 重新导航到当前路由，触发组件重新渲染。
-  const currentRoute = vueRouter!.currentRoute.value
-  if (currentRoute.name) {
-    vueRouter!
-      .replace({
-        name: currentRoute.name as string,
-        params: currentRoute.params,
-        query: currentRoute.query,
-      })
-      .then(() => Promise.resolve())
-  } else {
-    // 如果当前路由没有名称，使用窗口刷新作为回退方案
-    window.location.replace(window.location.href)
-  }
+    readyWatchHandle.stop()
+    refreshVimLayoutRoutes(ctx)
+  })
 }
 
 function addLnpStoreLogoutActionListener(ctx: VimApplicationContext): void {

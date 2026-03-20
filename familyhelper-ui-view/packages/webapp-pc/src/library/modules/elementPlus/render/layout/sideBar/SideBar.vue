@@ -1,7 +1,6 @@
 <template>
   <div class="side-bar-container">
     <overlay-scrollbars-component class="scroll-bar" :options="scrollBarOptions">
-      <!--suppress JSUnresolvedVariable -->
       <el-menu
         text-color="#ffffff"
         active-text-color="#ffd04b"
@@ -11,7 +10,6 @@
         :unique-opened="true"
         @select="handleMenuSelect"
       >
-        <!--suppress JSUnresolvedFunction -->
         <sidebar-item
           v-for="node in navigationStore
             .getChildNodeInfos(null)

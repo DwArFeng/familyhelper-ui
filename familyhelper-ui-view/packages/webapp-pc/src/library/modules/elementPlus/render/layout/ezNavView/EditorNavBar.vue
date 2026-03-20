@@ -1,7 +1,8 @@
 <template>
   <div class="editor-nav-bar-container">
-    <!--suppress JSUnresolvedReference -->
-    <span>{{ props.node.display[visualizerKey].label }}</span>
+    <span>
+      {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+    </span>
     <el-icon class="close-icon" @mouseup="handleDelete">
       <delete-icon />
     </el-icon>

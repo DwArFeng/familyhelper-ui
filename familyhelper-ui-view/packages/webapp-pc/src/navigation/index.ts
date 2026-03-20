@@ -44,7 +44,6 @@ const navigation: VimNavigation = {
   setting: setting(),
   nodeRootKeys,
   nodeInfos,
-  nodeInfo,
 }
 
 /**
@@ -186,23 +185,11 @@ function nodeRootKeys(): Readonly<string>[] {
 /**
  * 获取 Navigation 节点信息数组。
  */
-function nodeInfos(): Readonly<NodeInfo[]> {
+function nodeInfos(): Readonly<Record<string, NodeInfo>> {
   if (status === 'initializing') {
     throw new Error('不能在 initializing 状态下获取 nodeInfos')
   }
-  return Object.values(_nodeInfos)
-}
-
-/**
- * 获取 Navigation 节点信息。
- *
- * @param key 导航键。
- */
-function nodeInfo(key: string): Readonly<NodeInfo> {
-  if (status === 'initializing') {
-    throw new Error('不能在 initializing 状态下获取 nodeInfo')
-  }
-  return _nodeInfos[key]
+  return _nodeInfos
 }
 
 export default navigation

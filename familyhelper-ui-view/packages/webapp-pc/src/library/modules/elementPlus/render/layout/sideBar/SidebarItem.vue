@@ -5,7 +5,9 @@
         <el-icon>
           <menu-icon />
         </el-icon>
-        <span>{{ props.node.display[visualizerKey].label }}</span>
+        <span>
+          {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+        </span>
       </template>
       <template v-slot:default>
         <sidebar-item
@@ -19,7 +21,9 @@
       <el-icon>
         <menu-icon />
       </el-icon>
-      <span>{{ props.node.display[visualizerKey].label }}</span>
+      <span>
+        {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+      </span>
     </el-menu-item>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <el-breadcrumb class="breadcrumb-container" separator="/">
     <el-breadcrumb-item v-for="(node, index) in currentNodePath" :key="index">
-      <span>{{ node.display[visualizerKey].label }}</span>
+      <span>{{ node.display[visualizerKey]?.label ?? node.display['']?.label ?? '未知' }}</span>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>

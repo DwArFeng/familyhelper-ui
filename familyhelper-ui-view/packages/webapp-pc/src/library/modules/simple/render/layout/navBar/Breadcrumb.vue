@@ -2,7 +2,9 @@
   <div class="breadcrumb-container">
     <div class="breadcrumb">
       <span v-for="(node, index) in currentNodePath" :key="index" class="breadcrumb-item">
-        <span class="breadcrumb-text">{{ node.display[visualizerKey].label }}</span>
+        <span class="breadcrumb-text">
+          {{ node.display[visualizerKey]?.label ?? node.display['']?.label ?? '未知' }}
+        </span>
         <span v-if="index < currentNodePath.length - 1" class="breadcrumb-separator">/</span>
       </span>
     </div>
