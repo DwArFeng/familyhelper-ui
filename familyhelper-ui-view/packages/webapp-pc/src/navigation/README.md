@@ -31,7 +31,7 @@ import vim from '@/vim'
 import { type VimNavigation } from '@/navigation/types.ts'
 
 function printNodeRootKeys(): void {
-  const navigation: Omit<VimNavigation, "init"> = vim.ctx().navigation()
+  const navigation: Omit<VimNavigation, 'init'> = vim.ctx().navigation()
   console.log(navigation.nodeRootKeys())
 }
 ```
@@ -74,8 +74,10 @@ const example: NavigationNodeSetting = {
   key: 'node.key',
   index: 10,
   display: {
-    label: 'Example label here',
-    iconClass: 'menu-item',
+    '': {
+      label: 'Example label here',
+      iconClass: 'menu-item',
+    }
   },
   menu: {
     shown: true,
@@ -136,8 +138,7 @@ const vimNavigationModule: VimNavigationModule = {
 /**
  * 初始化。
  */
-function init(): void {
-}
+function init(): void {}
 
 /**
  * Navigation 节点数组。
@@ -148,7 +149,9 @@ const navigationNodes: NavigationNodeSetting[] = [
     key: 'settingrepo',
     index: 135,
     display: {
-      label: '配置仓库',
+      '': {
+        label: '配置仓库',
+      },
     },
     menu: {
       shown: true,
