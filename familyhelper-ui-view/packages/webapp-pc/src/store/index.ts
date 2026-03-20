@@ -28,6 +28,7 @@ const storeDefinitions: Record<string, SimplyStoreDefinition<string, unknown>> =
  */
 const store: VimStore = {
   init,
+  storeIds,
   vueStoreDefinition,
   vueStore,
 }
@@ -91,6 +92,16 @@ async function init(ctx: VimApplicationContext): Promise<void> {
 
   // 设置状态为 initialized。
   status = 'initialized'
+}
+
+/**
+ * 获取所有已注册的 Store ID。
+ */
+function storeIds(): string[] {
+  if (status === 'initializing') {
+    throw new Error('不能在 initializing 状态下获取 storeIds')
+  }
+  return Object.keys(storeDefinitions)
 }
 
 /**

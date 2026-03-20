@@ -1,11 +1,13 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import { ref, watch } from 'vue'
+import { ref, watch, type WatchHandle } from 'vue'
 
 import vim from '@/vim'
 
 import { type VisualizerStore } from '@/store/modules/visualizer.ts'
 import { type Visualizer } from '@/library/types.ts'
+
+import { ready } from '@/util/store.ts'
 
 const visualizerStore = vim.ctx().store().vueStore<'visualizer', VisualizerStore>('visualizer')
 
@@ -66,19 +68,18 @@ function updateVisualizer(): void {
   }
 }
 
-watch(
-  () => ({ ready: visualizerStore.ready, visualizerKey: visualizerStore.visualizerKey }),
-  (value, oldValue) => {
-    if (!value.ready) {
-      initializeVisualizer()
+if (!ready.value) {
+  initializeVisualizer()
+  const watchHandle: WatchHandle = watch(ready, (value) => {
+    if (!value) {
       return
     }
-    if (value.visualizerKey !== oldValue?.visualizerKey) {
-      updateVisualizer()
-    }
-  },
-  { immediate: true },
-)
+    watchHandle.stop()
+    updateVisualizer()
+  })
+} else {
+  updateVisualizer()
+}
 
 /**
  * 获取当前配置的 Visualizer 实例。
