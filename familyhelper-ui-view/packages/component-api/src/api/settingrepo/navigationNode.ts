@@ -202,7 +202,7 @@ export function sizeForPublic(
     )
 }
 
-export function inspectForPublic(
+export function operateInspectForPublic(
   inspectInfo: PublicNavigationNodeInspectInfo,
 ): Pres<NavigationNodeInspectResult | null> {
   return http
