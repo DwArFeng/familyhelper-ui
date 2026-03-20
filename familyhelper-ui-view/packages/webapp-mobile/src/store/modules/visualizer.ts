@@ -5,11 +5,8 @@ import { type StoreSetup, type VimStoreModule } from '@/store/types.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-import {
-  operateInspectForPublic as textNodeOperateInspect,
-  type TextNodeInspectResult,
-} from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
-
+import { type TextNodeInspectResult } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
+import { operateInspectForPublic as textNodeOperateInspect } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
@@ -123,7 +120,7 @@ function provideStoreSetup(): StoreSetup {
  * Window 加载钩子。
  */
 function windowLoadHook(): void {
-  //加载 Visualizer Key
+  // 加载 visualizer key。
   loadVisualizerKey().then(() => {})
 }
 

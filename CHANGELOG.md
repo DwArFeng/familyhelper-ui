@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块功能优化。
+  - 优化 `src/store/modules/visualizer.ts` 模块中的代码格式以及代码注释。
   - 新增 `compreg` VIM 组件，用于维护组件的注册。
   - 调整 `navigation` VIM 组件，调整 `RouterSetting` 类型。
   - 将菜单的关系和组件显示分离。
