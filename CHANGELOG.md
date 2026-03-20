@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块功能优化。
+  - 优化 `src/router/guards.ts` 中的方法签名，以消除警告。
   - 调整 `navigation` VIM 组件及相关组件中的方法签名，使其更加合理。
   - 新增 `store` VIM 组件中的方法。
   - 新增 `src/util/store.ts` 工具方法，用于判断 `store` VIM 组件是否准备完毕。

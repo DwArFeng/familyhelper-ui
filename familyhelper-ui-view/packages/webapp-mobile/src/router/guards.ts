@@ -14,7 +14,7 @@ type VimRouterGuardMeta = {
   ezNav: boolean
 }
 
-const simpleGuard: VimRouterGuard<object> = (to, from, next) => {
+const simpleGuard: VimRouterGuard<object> = (_to, _from, next) => {
   next()
 }
 
@@ -55,7 +55,7 @@ const vimGuard: VimRouterGuard<VimRouterGuardMeta> = (to, from, next) => {
   next()
 }
 
-const errorGuard: VimRouterGuard<object> = (to, from, next) => {
+const errorGuard: VimRouterGuard<object> = (_to, _from, next) => {
   next()
 }
 
