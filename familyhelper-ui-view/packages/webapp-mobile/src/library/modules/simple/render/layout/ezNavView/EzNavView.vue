@@ -1,7 +1,7 @@
 <template>
   <div class="ez-nav-container" ref="rootRef">
     <div class="router-link-container-wrapper">
-      <div class="loading" v-if="navigationEzNavStore.loading > 0">
+      <div class="loading" v-if="navigationStore.ezNavLoading > 0">
         <span>正在加载，请稍候...</span>
         <div class="deep-clean-panel">
           <span>加载失败？</span>
@@ -14,12 +14,12 @@
           class="ez-nav-item"
           ref="routerLinkRef"
           :class="navigationStore.isCurrentNode(node.key) ? 'active' : ''"
-          v-for="node in navigationEzNavStore.nodes"
+          v-for="node in navigationStore.ezNavNodes"
           :key="node.key"
           @click="handleNavigation(node.key)"
           @contextmenu.prevent="openMenu(node.key, $event)"
         >
-          <span class="prefix-icon" v-if="navigationEzNavStore.annotation(node.key) === 'affix'">
+          <span class="prefix-icon" v-if="navigationStore.ezNavAnnotation(node.key) === 'affix'">
             <svg viewBox="0 0 1024 1024" width="12" height="12">
               <path
                 fill="currentColor"
@@ -27,7 +27,7 @@
               />
             </svg>
           </span>
-          <span class="prefix-icon" v-if="navigationEzNavStore.annotation(node.key) === 'pinned'">
+          <span class="prefix-icon" v-if="navigationStore.ezNavAnnotation(node.key) === 'pinned'">
             <svg viewBox="0 0 1024 1024" width="12" height="12">
               <path
                 fill="currentColor"
@@ -35,10 +35,10 @@
               />
             </svg>
           </span>
-          <span>{{ node.display[visualizerKey].label }}</span>
+          <span>{{ node.display[visualizerKey]?.label ?? node.display['']?.label ?? '未知' }}</span>
           <span
             class="close-icon"
-            v-if="navigationEzNavStore.annotation(node.key) === 'active'"
+            v-if="navigationStore.ezNavAnnotation(node.key) === 'active'"
             @click.stop="handleRemove(node.key)"
           >
             <svg viewBox="0 0 1024 1024" width="12" height="12">
@@ -61,42 +61,42 @@
     >
       <div
         class="contextmenu-item"
-        v-if="navigationEzNavStore.annotation(contextmenu.nodeKey) === 'active'"
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'active'"
         @click="handlePinContextMenuItemClicked"
       >
         固定
       </div>
       <div
         class="contextmenu-item"
-        v-if="navigationEzNavStore.annotation(contextmenu.nodeKey) === 'pinned'"
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'pinned'"
         @click="handleUnpinContextMenuItemClicked"
       >
         解除固定
       </div>
       <div
         class="contextmenu-item"
-        v-if="navigationEzNavStore.annotation(contextmenu.nodeKey) === 'pinned'"
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'pinned'"
         @click="handleUnpinAndCloseContextMenuItemClicked"
       >
         解除固定并清除
       </div>
       <div
         class="contextmenu-item"
-        v-if="navigationEzNavStore.annotation(contextmenu.nodeKey) === 'active'"
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'active'"
         @click="handleRemoveNodeKeyContextMenuItemClicked"
       >
         清除
       </div>
       <div
         class="contextmenu-item"
-        v-if="navigationEzNavStore.annotation(contextmenu.nodeKey) === 'active'"
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'active'"
         @click="handleClearOtherContextMenuItemClicked"
       >
         清除其它
       </div>
       <div
         class="contextmenu-item"
-        v-if="navigationEzNavStore.annotation(contextmenu.nodeKey) === 'active'"
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'active'"
         @click="handleClearActiveContextMenuItemClicked"
       >
         清除所有
@@ -117,7 +117,6 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import { type NavigationEzNavStore } from '@/store/modules/navigationEzNav.ts'
 import { type NavigationStore } from '@/store/modules/navigation.ts'
 import { type NodeInfo } from '@/navigation/types.ts'
 import { type LnpStore } from '@/store/modules/lnp.ts'
@@ -134,10 +133,6 @@ defineOptions({
 const router = vim.ctx().router().vueRouter()
 
 // -----------------------------------------------------------Store 引入-----------------------------------------------------------
-const navigationEzNavStore = vim
-  .ctx()
-  .store()
-  .vueStore<'navigation-ez-nav', NavigationEzNavStore>('navigation-ez-nav')
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
@@ -150,7 +145,7 @@ const visualizerKey = computed<string>(
 
 function deepCleanWithoutPrompt(): void {
   Promise.resolve()
-    .then(() => navigationEzNavStore.clearAll())
+    .then(() => navigationStore.clearAllEzNavNodes())
     .then(() => {
       vim.ctx().router().vueRouter().push({ name: 'vim.layout' })
     })
@@ -160,25 +155,22 @@ function deepCleanWithoutPrompt(): void {
 // -----------------------------------------------------------Router Link 常规操作-----------------------------------------------------------
 // 导航处理。
 function handleNavigation(nodeKey: string): void {
-  const { params, query } = navigationEzNavStore.nodeMeta(nodeKey)
+  const { params, query } = navigationStore.ezNavNodeMeta(nodeKey) ?? { params: {}, query: {} }
   const location = { name: nodeKey, params, query } as RouteLocationRaw
   vim.ctx().router().vueRouter().push(location)
 }
 
 // 删除处理。
 function handleRemove(nodeKey: string): void {
-  // 在导航栏中删除 nodeKey。
-  navigationEzNavStore.removeNodeKey(nodeKey)
+  navigationStore.removeEzNavNode(nodeKey)
 
-  // 获取 nodeKey 对应的元数据，分析关闭行为。
   const nodeInfo: NodeInfo | null = navigationStore.getNodeInfo(nodeKey)
   if (!nodeInfo) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
   const closedActionType: string = nodeInfo.ezNav.closedBehavior?.type ?? 'none'
 
-  // 根据不同的行为执行不同的退出动作。
-  navigationEzNavStore.setBacking(navigationEzNavStore.backing + 1)
+  navigationStore.incrementEzNavBacking()
   switch (closedActionType) {
     case 'back':
       handleCloseBack(nodeKey)
@@ -190,12 +182,12 @@ function handleRemove(nodeKey: string): void {
     default:
       break
   }
-  navigationEzNavStore.setBacking(navigationEzNavStore.backing - 1)
+  navigationStore.decrementEzNavBacking()
 }
 
 function handleCloseBack(nodeKey: string): void {
-  const backNodeKey: string = navigationEzNavStore.nodeBack(nodeKey)
-  const { params, query } = navigationEzNavStore.nodeMeta(backNodeKey)
+  const backNodeKey: string = navigationStore.ezNavNodeBack(nodeKey) ?? ''
+  const { params, query } = navigationStore.ezNavNodeMeta(backNodeKey) ?? { params: {}, query: {} }
   const location = { name: backNodeKey, params, query } as RouteLocationRaw
   vim.ctx().router().vueRouter().push(location)
 }
@@ -256,34 +248,34 @@ function closeMenu(): void {
 
 function handlePinContextMenuItemClicked(): void {
   closeMenu()
-  navigationEzNavStore.pin(contextmenu.value.nodeKey)
+  navigationStore.pinEzNavNode(contextmenu.value.nodeKey)
 }
 
 function handleUnpinContextMenuItemClicked(): void {
   closeMenu()
-  navigationEzNavStore.unpin(contextmenu.value.nodeKey)
+  navigationStore.unpinEzNavNode(contextmenu.value.nodeKey)
 }
 
 function handleUnpinAndCloseContextMenuItemClicked(): void {
   closeMenu()
-  navigationEzNavStore.unpin(contextmenu.value.nodeKey)
-  navigationEzNavStore.removeNodeKey(contextmenu.value.nodeKey)
+  navigationStore.unpinEzNavNode(contextmenu.value.nodeKey)
+  navigationStore.removeEzNavNode(contextmenu.value.nodeKey)
 }
 
 function handleRemoveNodeKeyContextMenuItemClicked(): void {
   closeMenu()
-  navigationEzNavStore.removeNodeKey(contextmenu.value.nodeKey)
+  navigationStore.removeEzNavNode(contextmenu.value.nodeKey)
 }
 
 function handleClearOtherContextMenuItemClicked(): void {
   closeMenu()
-  navigationEzNavStore.clearActive()
-  navigationEzNavStore.pushNodeKey(contextmenu.value.nodeKey)
+  navigationStore.clearActiveEzNavNodes()
+  navigationStore.pushEzNavByNodeKey(contextmenu.value.nodeKey)
 }
 
 function handleClearActiveContextMenuItemClicked(): void {
   closeMenu()
-  navigationEzNavStore.clearActive()
+  navigationStore.clearActiveEzNavNodes()
 }
 
 function handleNavigationContextMenuItemClicked(): void {
@@ -298,7 +290,7 @@ function handleDeepCleanContextMenuItemClicked(): void {
       '该操作将会清空您所有与导航栏相关的缓存的数据。\n这将使您的导航栏全部清空，包括固定导航栏与活动导航栏\n是否继续?',
     )
   ) {
-    navigationEzNavStore.clearAll()
+    navigationStore.clearAllEzNavNodes()
     vim.ctx().router().vueRouter().push({ name: 'vim.layout' })
   }
 }
@@ -324,7 +316,7 @@ function handleHotKeyDown($event: KeyboardEvent): void {
 }
 
 function mayBackward(): void {
-  if (navigationEzNavStore.loading > 0) {
+  if (navigationStore.ezNavLoading > 0) {
     return
   }
   const index = currentIndex()
@@ -338,27 +330,27 @@ function mayBackward(): void {
 }
 
 function mayForward(): void {
-  if (navigationEzNavStore.loading > 0) {
+  if (navigationStore.ezNavLoading > 0) {
     return
   }
   const index = currentIndex()
   if (index < 0) {
     return
   }
-  if (index === navigationEzNavStore.nodes.length - 1) {
+  if (index === navigationStore.ezNavNodes.length - 1) {
     return
   }
   jumpToIndex(index + 1)
 }
 
 function currentIndex(): number {
-  const nodeKeys: string[] = navigationEzNavStore.nodes.map((node) => node.key)
+  const nodeKeys: string[] = navigationStore.ezNavNodes.map((node) => node.key)
   return nodeKeys.indexOf(navigationStore.currentNodeKey)
 }
 
 function jumpToIndex(index: number): void {
-  const nodeKey: string = navigationEzNavStore.nodes[index].key
-  const { params, query } = navigationEzNavStore.nodeMeta(nodeKey)
+  const nodeKey: string = navigationStore.ezNavNodes[index].key
+  const { params, query } = navigationStore.ezNavNodeMeta(nodeKey) ?? { params: {}, query: {} }
   const location = { name: nodeKey, params, query } as RouteLocationRaw
   vim.ctx().router().vueRouter().push(location)
 }

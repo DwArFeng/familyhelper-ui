@@ -29,22 +29,13 @@ export interface VimNavigation extends VimComponent {
   /**
    * 节点信息。
    *
-   * 该字段对应的值是一个函数，调用后返回一个只读的 NodeInfo[]，表示所有节点信息。
+   * 该字段对应的值是一个函数，调用后返回一个只读的 Record<string, NodeInfo>，
+   * 表示所有节点信息与其键的映射关系。
    *
    * 该字段对应的值只能在 VIM 初始化完成后调用，
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
    */
-  nodeInfos: () => Readonly<NodeInfo[]>
-
-  /**
-   * 根据指定的 key 获取节点信息。
-   *
-   * 该字段对应的值是一个函数，接受节点的 key，返回对应的只读的节点信息或 null。
-   *
-   * 该字段对应的值只能在 VIM 初始化完成后调用，
-   * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
-   */
-  nodeInfo: (key: string) => Readonly<NodeInfo> | null
+  nodeInfos: () => Readonly<Record<string, NodeInfo>>
 }
 
 /**

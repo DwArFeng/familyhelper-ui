@@ -6,7 +6,6 @@ import { type VimRouterGuard } from '@/router/types.ts'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
 import { type NavigationStore } from '@/store/modules/navigation.ts'
-import { type NavigationEzNavStore } from '@/store/modules/navigationEzNav.ts'
 
 type VimRouterGuardMeta = {
   permissionRequired: boolean
@@ -21,10 +20,6 @@ const simpleGuard: VimRouterGuard<object> = (_to, _from, next) => {
 const vimGuard: VimRouterGuard<VimRouterGuardMeta> = (to, from, next) => {
   const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
   const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
-  const navigationEzNavStore = vim
-    .ctx()
-    .store()
-    .vueStore<'navigation-ez-nav', NavigationEzNavStore>('navigation-ez-nav')
 
   // 判断是否登录，如果没有登录，直接跳转到登录页面。
   if (!lnpStore.isLogin) {
@@ -48,7 +43,7 @@ const vimGuard: VimRouterGuard<VimRouterGuardMeta> = (to, from, next) => {
   if (vim.ctx().navigation().setting.ezNavEnabled && to.meta.ezNav) {
     const _to = to ?? {}
     const _from = from ?? {}
-    navigationEzNavStore.pushLocateInfo({ from: _from, to: _to })
+    navigationStore.pushEzNavByLocateInfo({ to: _to, from: _from })
   }
 
   // 所有判断通过后，放行页面跳转。

@@ -5,6 +5,11 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块功能优化。
+  - 将菜单的加载方式变更为动态加载，默认菜单作为 fallback。
+  - 合并 `src/store/modules` 中的 `navigation.ts` 和 `navigationEzNav.ts` 模块为 `navigation.ts` 模块。
+  - 重构 `router` VIM 组件的加载机制，以支持动态菜单加载。
+  - 重构 `navigation` VIM 组件签名，以支持动态菜单加载。
+  - 调整 `src/library/modules` 中的 `simple` 模块中的渲染器组件代码，以支持动态菜单加载。
   - 优化 `src/store/modules/visualizer.ts` 模块中的方法签名，代码格式，代码注释。
   - 优化 `src/router/guards.ts` 中的方法签名，以消除警告。
   - 调整 `navigation` VIM 组件及相关组件中的方法签名，使其更加合理。

@@ -10,7 +10,9 @@
             />
           </svg>
         </span>
-        <span class="menu-text">{{ props.node.display[visualizerKey].label }}</span>
+        <span class="menu-text">
+          {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+        </span>
         <span class="submenu-arrow" :class="{ 'is-open': isOpen }">▶</span>
       </div>
       <div class="submenu-content" v-show="isOpen">
@@ -31,7 +33,9 @@
           />
         </svg>
       </span>
-      <span class="menu-text">{{ props.node.display[visualizerKey].label }}</span>
+      <span class="menu-text">
+        {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+      </span>
     </div>
   </div>
 </template>
