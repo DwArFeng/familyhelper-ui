@@ -101,14 +101,10 @@ async function loadVisualizerKey(): Promise<void> {
   }
 }
 
-/**
- * 配置仓库的设置类别: ID。
- */
-const SETTINGREPO_CATEGORY: string = 'visualizer_key.pc'
-/**
- * 配置仓库的参数: Key。
- */
-const SETTINGREPO_ARGS_KEY: string[] = ['visualizer.key']
+// 配置仓库类型。
+const SETTINGREPO_CATEGORY: string = 'framework.pc.visualizer'
+// 配置仓库参数: key。
+const SETTINGREPO_ARGS_KEY: string[] = ['key']
 
 async function loadVisualizerKey0(): Promise<string> {
   // 获取 Visualizer Key。
