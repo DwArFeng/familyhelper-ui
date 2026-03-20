@@ -27,9 +27,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       '': {
         label: '导航演示',
       },
-      elementPlus: {
-        label: '导航演示',
-      },
       simple: {
         label: '导航演示',
       },
@@ -42,7 +39,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'welcome',
       component: {
         '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
         simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
       },
     },
@@ -58,9 +54,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       '': {
         label: '子菜单1',
       },
-      elementPlus: {
-        label: '子菜单1',
-      },
       simple: {
         label: '子菜单1',
       },
@@ -82,7 +75,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'welcome',
       component: {
         '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
         simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
       },
     },
@@ -98,9 +90,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       '': {
         label: '子菜单2',
       },
-      elementPlus: {
-        label: '子菜单2',
-      },
       simple: {
         label: '子菜单2',
       },
@@ -122,7 +111,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'welcome',
       component: {
         '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
         simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
       },
     },
@@ -138,9 +126,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       '': {
         label: '子菜单3',
       },
-      elementPlus: {
-        label: '子菜单3',
-      },
       simple: {
         label: '子菜单3',
       },
@@ -162,7 +147,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'welcome',
       component: {
         '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
         simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
       },
     },

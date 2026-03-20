@@ -27,9 +27,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       '': {
         label: '首页',
       },
-      elementPlus: {
-        label: '首页',
-      },
       simple: {
         label: '首页',
       },
@@ -47,7 +44,6 @@ const navigationNodes: NavigationNodeSetting[] = [
       path: 'welcome',
       component: {
         '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-        elementPlus: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
         simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
       },
     },

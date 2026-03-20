@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块功能优化。
+  - 重构 `src/views/nodes` 中的目录结构，以适配 `library` VIM 组件下对应的模块名称。
+  - 更改 `navigation` VIM 组件模块中的内容，以适配 `library` VIM 组件下对应的模块名称。
+
 - `component-api` 子模功能优化。
   - `src/api/settingrepo/navigationNode.ts` 方法签名优化。
 
