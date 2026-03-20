@@ -18,7 +18,7 @@ import {
 import { resolveResponse } from '@/util/response.ts'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 
 // -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
 /**
@@ -47,7 +47,7 @@ export type NavigationEzNavStore = {
   setPinnedNodeKeys: (value: string[]) => void
   setActiveNodeKeys: (value: string[]) => void
   setBacking: (value: number) => void
-  navigationNodes: ComputedRef<NavigationNodeInfo[]>
+  nodes: ComputedRef<NodeInfo[]>
   annotation: (nodeKey: string) => NavigationEzNavAnnotation
   nodeMeta: (nodeKey: string) => NavigationEzNavNodeMeta
   nodeBack: (nodeKey: string) => string
@@ -108,13 +108,13 @@ function setBacking(value: number): void {
 }
 
 // 所有导航视图。
-const navigationNodes = computed(() => {
-  const nodes: NavigationNodeInfo[] = []
+const nodes = computed(() => {
+  const nodes: NodeInfo[] = []
   _affixNodeKeys.value.forEach((key) => {
     if (!ctx) {
       throw new Error('不应该执行到此处，请联系开发人员')
     }
-    const mayNode: NavigationNodeInfo | null = ctx.navigation().nodeInfo(key)
+    const mayNode: NodeInfo | null = ctx.navigation().nodeInfo(key)
     if (mayNode) {
       nodes.push(mayNode)
     }
@@ -123,7 +123,7 @@ const navigationNodes = computed(() => {
     if (!ctx) {
       throw new Error('不应该执行到此处，请联系开发人员')
     }
-    const mayNode: NavigationNodeInfo | null = ctx.navigation().nodeInfo(key)
+    const mayNode: NodeInfo | null = ctx.navigation().nodeInfo(key)
     if (mayNode) {
       nodes.push(mayNode)
     }
@@ -132,7 +132,7 @@ const navigationNodes = computed(() => {
     if (!ctx) {
       throw new Error('不应该执行到此处，请联系开发人员')
     }
-    const mayNode: NavigationNodeInfo | null = ctx.navigation().nodeInfo(key)
+    const mayNode: NodeInfo | null = ctx.navigation().nodeInfo(key)
     if (mayNode) {
       nodes.push(mayNode)
     }
@@ -170,7 +170,7 @@ function nodeBack(nodeKey: string): string {
   }
   let backKey = nodeKey
   const forbidden: string[] = []
-  const defaultNodeKey: string = ctx.navigation().setting.defaultNavigationKey
+  const defaultNodeKey: string = ctx.navigation().setting.defaultNodeKey
   while (true) {
     backKey = _nodeBackMap.value[backKey]
     if (backKey === null || backKey === undefined) {
@@ -420,7 +420,7 @@ function provideStoreSetup(): StoreSetup {
     setPinnedNodeKeys,
     setActiveNodeKeys,
     setBacking,
-    navigationNodes,
+    nodes: nodes,
     annotation,
     nodeMeta,
     nodeBack,

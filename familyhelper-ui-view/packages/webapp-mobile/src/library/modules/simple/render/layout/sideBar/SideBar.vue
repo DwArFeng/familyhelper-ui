@@ -20,7 +20,7 @@
 import vim from '@/vim'
 
 import { type NavigationStore } from '@/store/modules/navigation.ts'
-import { type NavigationNodeInfo } from '@/navigation/types.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 
 import SidebarItem from './SidebarItem.vue'
 
@@ -33,7 +33,7 @@ const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore
 
 // -----------------------------------------------------------选择事件处理-----------------------------------------------------------
 function handleMenuSelect(nodeKey: string): void {
-  const nodeInfo: Readonly<NavigationNodeInfo> | null = navigationStore.getNodeInfo(nodeKey)
+  const nodeInfo: Readonly<NodeInfo> | null = navigationStore.getNodeInfo(nodeKey)
   if (!nodeInfo) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }

@@ -4,14 +4,14 @@ import { type VimApplicationContext } from '@/vim/types.ts'
 import {
   type DisplayInfo,
   type DisplaySetting,
-  type NavigationNodeInfo,
-  type NavigationNodeSetting,
+  type NodeInfo,
+  type NodeSetting,
   type NavigationSetting,
   type VimNavigation,
   type VimNavigationModule,
 } from '@/navigation/types.ts'
 import {
-  defaultNavigationKey,
+  defaultNodeKey,
   ezNavEnabled,
   ezNavMaxActiveItem,
   ezNavRestoreWhenLogin,
@@ -32,9 +32,9 @@ let status: 'initializing' | 'initialized' = 'initializing'
 const navigationNodeRootKeys: string[] = []
 
 /**
- * Navigation 节点信息。
+ * 节点信息。
  */
-const navigationNodeInfos: Record<string, NavigationNodeInfo> = {}
+const navigationNodeInfos: Record<string, NodeInfo> = {}
 
 /**
  * Navigation。
@@ -75,8 +75,8 @@ async function init(ctx: VimApplicationContext): Promise<void> {
     modules[moduleName] = rawModules[moduleKey]
   }
 
-  // 定义 NavigationNodeSetting 数组。
-  const navigationNodeSettings: NavigationNodeSetting[] = []
+  // 定义 NodeSetting 数组。
+  const navigationNodeSettings: NodeSetting[] = []
 
   // 定义 Promise 数组。
   const promises: Promise<void>[] = []
@@ -90,15 +90,15 @@ async function init(ctx: VimApplicationContext): Promise<void> {
     const mayPromise = vimNavigationModule.init(ctx)
     // 判断 mayPromise 是否为 Promise，并执行对应操作。
     if (mayPromise instanceof Promise) {
-      // 等待 mayPromise 完成后，将 NavigationNodeSetting 存入 navigationNodeSettings 数组。
+      // 等待 mayPromise 完成后，将 NodeSetting 存入 navigationNodeSettings 数组。
       mayPromise.then(() => {
-        navigationNodeSettings.push(...vimNavigationModule.provideNavigationNodeSettings())
+        navigationNodeSettings.push(...vimNavigationModule.provideNodeSettings())
       })
       // 将 Promise 存入 Promise 数组。
       promises.push(mayPromise)
     } else {
-      // 将 NavigationNodeSetting 存入 navigationNodeSettings 数组。
-      navigationNodeSettings.push(...vimNavigationModule.provideNavigationNodeSettings())
+      // 将 NodeSetting 存入 navigationNodeSettings 数组。
+      navigationNodeSettings.push(...vimNavigationModule.provideNodeSettings())
     }
   }
 
@@ -116,7 +116,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
     return displayInfo
   }
 
-  // 将 NavigationNodeSetting 转换为 NavigationNodeInfo，并存入 navigationNodeInfos 对象。
+  // 将 NodeSetting 转换为 NodeInfo，并存入 navigationNodeInfos 对象。
   for (const navigationNodeSetting of navigationNodeSettings) {
     if (navigationNodeInfos[navigationNodeSetting.key]) {
       throw new Error(`导航节点 ${navigationNodeSetting.key} 重复`)
@@ -134,7 +134,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
     }
   }
 
-  // 解析 NavigationNodeInfo 的 parentKey，并根据其值分类操作。
+  // 解析 NodeInfo 的 parentKey，并根据其值分类操作。
   for (const navigationNodeInfo of Object.values(navigationNodeInfos)) {
     // 如果 navigationNodeInfo.parentKey 存在，则将 navigationNodeInfo.key 存入其父节点的 childKeys 数组。
     if (navigationNodeInfo.parentKey) {
@@ -164,7 +164,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
  */
 function setting(): NavigationSetting {
   return {
-    defaultNavigationKey,
+    defaultNodeKey,
     ezNavEnabled,
     ezNavMaxActiveItem,
     ezNavRestoreWhenLogin,
@@ -186,7 +186,7 @@ function nodeRootKeys(): Readonly<string>[] {
 /**
  * 获取 Navigation 节点信息数组。
  */
-function nodeInfos(): Readonly<NavigationNodeInfo[]> {
+function nodeInfos(): Readonly<NodeInfo[]> {
   if (status === 'initializing') {
     throw new Error('不能在 initializing 状态下获取 nodeInfos')
   }
@@ -198,7 +198,7 @@ function nodeInfos(): Readonly<NavigationNodeInfo[]> {
  *
  * @param key 导航键。
  */
-function nodeInfo(key: string): Readonly<NavigationNodeInfo> {
+function nodeInfo(key: string): Readonly<NodeInfo> {
   if (status === 'initializing') {
     throw new Error('不能在 initializing 状态下获取 nodeInfo')
   }

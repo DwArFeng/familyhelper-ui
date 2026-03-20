@@ -60,16 +60,16 @@ navigation 中的模块采用动态扫描机制，开发人员只需要在 `./mo
 ts 文件需要默认导出一个 `VimNavigationModule` 类型的对象，VIM 会自动加载该对象，
 开发人员可以参考 `./types.ts` 文件中的 `VimNavigationModule` 类型定义，了解该对象的具体结构，并提供对应的方法实现。
 
-在 `VimNavigationModule` 中，`provideNavigationNodeSettings()`方法用于对 VIM 框架提供模块中所有的节点设置，
+在 `VimNavigationModule` 中，`provideNodeSettings()`方法用于对 VIM 框架提供模块中所有的节点设置，
 在实践中，通常是一个大菜单以及其下的所有子菜单。
 
-`VimNavigationModule.provideNavigationNodeSettings()` 方法的返回值是 `NavigationNodeSetting` 数组，
+`VimNavigationModule.provideNodeSettings()` 方法的返回值是 `NodeSetting` 数组，
 对于每一个元素，其完整配置示例代码如下所示：
 
 ```ts
-import { type NavigationNodeSetting } from './types.ts'
+import { type NodeSetting } from './types.ts'
 
-const example: NavigationNodeSetting = {
+const example: NodeSetting = {
   parentKey: 'parent_node.key',
   key: 'node.key',
   index: 10,
@@ -123,14 +123,14 @@ const example: NavigationNodeSetting = {
 ```ts
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import { type NavigationNodeSetting, VimNavigationModule } from '@/navigation/types.ts'
+import { type NodeSetting, VimNavigationModule } from '@/navigation/types.ts'
 
 /**
  * VIM Navigation 模块。
  */
 const vimNavigationModule: VimNavigationModule = {
   init,
-  provideNavigationNodeSettings,
+  provideNodeSettings,
 }
 
 /**
@@ -140,9 +140,9 @@ function init(): void {
 }
 
 /**
- * Navigation 节点数组。
+ * 节点设置数组。
  */
-const navigationNodes: NavigationNodeSetting[] = [
+const nodeSettings: NodeSetting[] = [
   {
     parentKey: null,
     key: 'settingrepo',
@@ -190,10 +190,10 @@ const navigationNodes: NavigationNodeSetting[] = [
 ]
 
 /**
- * 提供 NavigationNodeSetting。
+ * 提供 NodeSetting。
  */
-function provideNavigationNodeSettings(): NavigationNodeSetting[] {
-  return navigationNodes
+function provideNodeSettings(): NodeSetting[] {
+  return nodeSettings
 }
 
 export default vimNavigationModule
