@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/CompileBySource.md。
+
 - `webapp-mobile` 子模块功能优化。
   - 优化 `src/store/modules/visualizer.ts` 模块中的常量值以及注释，以提升项目规范性。
   - 优化 `src/store/modules/navigation.ts` 模块中的常量值以及注释，以提升项目规范性。

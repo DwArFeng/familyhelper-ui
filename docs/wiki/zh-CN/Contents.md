@@ -12,6 +12,12 @@
 
 - [Version Blacklist](./VersionBlacklist.md) - 版本黑名单，列出了本项目的版本黑名单，请注意避免使用这些版本。
 
-## 配置
+## 安装、部署、初始化
+
+### 安装
+
+- [Compile by Source](./CompileBySource.md) - 从源码编译，详细说明如何从源码编译本项目，以及编译产物的部署方式。
+
+### 配置
 
 - [Conf Directory](./ConfDirectory.md) - 配置目录说明，详细说明如何配置本项目，即 `conf/` 目录下的内容。
