@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块实现系统设置一级菜单。
+  - 实现权限作用域管理二级菜单。
+
 - `webapp-pc` 子模块功能优化。
   - `src/views/nodes/elementPlus/assetsManagement/assetBom/subPanels/ItemInfoPanel.vue` 中占位符部分结构优化。
   - `src/views/nodes/elementPlus/settingrepo/settingNode/subPanels/FileListNodeSubEditPanel.vue` 样式优化。

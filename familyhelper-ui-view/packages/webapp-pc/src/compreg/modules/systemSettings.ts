@@ -47,6 +47,17 @@ const compregSettings: ComponentSetting[] = [
     },
   },
   {
+    key: 'systemSettings.permissionScope',
+    component: {
+      '': () =>
+        import('@/views/nodes/elementPlus/systemSettings/permissionScope/PermissionScope.vue'),
+      comvisual: () =>
+        import('@/views/nodes/elementPlus/systemSettings/permissionScope/PermissionScope.vue'),
+      elementPlus: () =>
+        import('@/views/nodes/elementPlus/systemSettings/permissionScope/PermissionScope.vue'),
+    },
+  },
+  {
     key: 'systemSettings.permissionGroup',
     component: {
       '': () =>

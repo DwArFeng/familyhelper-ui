@@ -155,6 +155,43 @@ const nodeSettings: NodeSetting[] = [
   },
   {
     parentKey: 'systemSettings',
+    key: 'systemSettings.permissionScope',
+    index: 35,
+    display: {
+      '': {
+        label: '权限作用域管理',
+      },
+      comvisual: {
+        label: '权限作用域管理',
+      },
+      elementPlus: {
+        label: '权限作用域管理',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'system-settings/permission-scope',
+      component: {
+        key: 'systemSettings.permissionScope',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.system_settings.permission_scope',
+    },
+  },
+  {
+    parentKey: 'systemSettings',
     key: 'systemSettings.permissionGroup',
     index: 40,
     display: {
