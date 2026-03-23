@@ -61,7 +61,7 @@ const createInfos: CreateInfo[] = [
     extension: '.rtf',
     permission: {
       required: true,
-      node: 'action.file_create.rtf',
+      node: 'action;action.file_create.rtf',
     },
   },
   {
@@ -72,7 +72,7 @@ const createInfos: CreateInfo[] = [
     extension: '.txt',
     permission: {
       required: true,
-      node: 'action.file_create.txt',
+      node: 'action;action.file_create.txt',
     },
   },
 ]

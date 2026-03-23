@@ -3,24 +3,25 @@
 import { type VimApplicationContext } from '@/vim/types.ts'
 import { type StoreSetup, type VimStoreModule } from '@/store/types.ts'
 
-import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
-import { ExecutableActionHandleImpl } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import {
+  type ExecutableActionHandle,
+  ExecutableActionHandleImpl,
+} from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
 import {
-  type DynamicLoginInfo,
-  type LoginResponse,
+  type LoginInfo,
+  type LoginResult,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/login.ts'
 import {
-  dynamicLogin,
-  logout as apiLogout,
-  postpone,
+  login as apiLogin,
+  logoutMe as apiLogoutMe,
+  postponeMe as apiPostponeMe,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/login.ts'
-import { type Permission } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
-import { lookupForUser } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
+import { type PermissionInspectResult } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
+import { inspectPermissionOfMe as apiInspectPermissionOfMe } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
 import { currentDate } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/time.ts'
-
 import { type ResponseBadHandler } from '@/util/response.ts'
 import { defaultResponseBadHandler, resolveResponse } from '@/util/response.ts'
 
@@ -41,6 +42,9 @@ function init(_ctx: VimApplicationContext): void {
 }
 
 // -----------------------------------------------------------Store 定义-----------------------------------------------------------
+// 登录与权限.RBAC 作用域。
+const LNP_RBAC_SCOPES: string[] = ['ui.pc', 'action']
+
 /**
  * Lnp Store。
  */
@@ -49,9 +53,7 @@ export type LnpStore = {
   token: ComputedRef<string>
   me: ComputedRef<string>
   hasPermission: (node: string) => boolean
-  willLogin: (
-    dynamicLoginInfo: Pick<DynamicLoginInfo, 'account_key' | 'password'>,
-  ) => ExecutableActionHandle<void, void, void>
+  willLogin: (dynamicLoginInfo: LoginInfo) => ExecutableActionHandle<void, void, void>
   willLogout: () => ExecutableActionHandle<void, void, void>
   willFireKick: () => ExecutableActionHandle<void, void, void>
 }
@@ -78,39 +80,43 @@ const isLogin = computed<boolean>(() => {
 
 const token = computed<string>(() => _token.value)
 
-function setLoginInfo(loginResponse: LoginResponse): void {
-  _accountId.value = loginResponse.account_id
-  _token.value = loginResponse.token
-  _expireDate.value = loginResponse.expire_date
+function setLoginInfo(loginResult: LoginResult): void {
+  _accountId.value = loginResult.account_key.string_id
+  _token.value = loginResult.login_state_key.string_id
+  _expireDate.value = loginResult.expire_date
 }
 
 function setOnlineFlag(value: boolean): void {
   _onlineFlag.value = value
 }
 
-function willLogin(
-  dynamicLoginInfo: Pick<DynamicLoginInfo, 'account_key' | 'password'>,
-): ExecutableActionHandle<void, void, void> {
-  return new ExecutableActionHandleImpl(() => login(dynamicLoginInfo))
+function willLogin(loginInfo: LoginInfo): ExecutableActionHandle<void, void, void> {
+  return new ExecutableActionHandleImpl(() => login(loginInfo))
 }
 
-async function login(
-  dynamicLoginInfo: Pick<DynamicLoginInfo, 'account_key' | 'password'>,
-): Promise<void> {
-  return resolveResponse(
-    dynamicLogin({ ...dynamicLoginInfo, remark: '家庭助手 PC 端登录', extra_params: {} }),
+async function login(loginInfo: LoginInfo): Promise<void> {
+  const loginResult = await resolveResponse(apiLogin(loginInfo))
+  setLoginInfo(loginResult)
+  setOnlineFlag(true)
+  const date = await resolveResponse(currentDate())
+  setServiceDateOffset(date - currentTimestamp())
+  const apiInspectPermissionOfMePromises: Promise<PermissionInspectResult | null>[] = []
+  LNP_RBAC_SCOPES.forEach((scope) => {
+    apiInspectPermissionOfMePromises.push(
+      resolveResponse(apiInspectPermissionOfMe({ scope_key: { string_id: scope } })),
+    )
+  })
+  const apiInspectPermissionOfMeResults: (PermissionInspectResult | null)[] = await Promise.all(
+    apiInspectPermissionOfMePromises,
   )
-    .then((res) => setLoginInfo(res))
-    .then(() => {
-      setOnlineFlag(true)
-      return resolveResponse(currentDate())
-    })
-    .then((res) => {
-      setServiceDateOffset(res - currentTimestamp())
-      // noinspection JSUnresolvedReference
-      return resolveResponse(lookupForUser(dynamicLoginInfo.account_key))
-    })
-    .then((res) => setPermissions(res))
+  const permissionNodes: string[] = []
+  apiInspectPermissionOfMeResults.forEach((result) => {
+    const nodes: string[] = (result?.permissions ?? []).map(
+      (permission) => `${permission.key.scope_string_id};${permission.key.permission_string_id}`,
+    )
+    permissionNodes.push(...nodes)
+  })
+  setPermissions(permissionNodes)
 }
 
 function willLogout(): ExecutableActionHandle<void, void, void> {
@@ -123,7 +129,7 @@ async function logout(): Promise<void> {
       setOnlineFlag(false)
       return Promise.resolve()
     })
-    .then(() => resolveResponse(apiLogout({ long_id: _token.value })))
+    .then(() => resolveResponse(apiLogoutMe()))
     .then(() => Promise.resolve())
 }
 
@@ -144,11 +150,11 @@ function hasPermission(node: string): boolean {
   return _permissions.value[node] === _permissionUuid.value
 }
 
-function setPermissions(value: Permission[]): void {
+function setPermissions(permissionNodes: string[]): void {
   const id = uuid()
   _permissionUuid.value = id
-  value.forEach((p) => {
-    _permissions.value[p.key.string_id] = id
+  permissionNodes.forEach((node) => {
+    _permissions.value[node] = id
   })
 }
 
@@ -251,7 +257,7 @@ function loginCheck(): void {
           .then(() => {})
       },
     }
-    resolveResponse(postpone({ long_id: _token.value }), responseBadHandler)
+    resolveResponse(apiPostponeMe(), responseBadHandler)
       .then((res) => {
         setLoginInfo(res)
         return resolveResponse(currentDate())

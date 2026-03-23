@@ -39,7 +39,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management',
     },
   },
   {
@@ -76,7 +76,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management.account_book',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management.account_book',
     },
   },
   {
@@ -113,7 +113,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management.bank_card_type_indicator',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management.bank_card_type_indicator',
     },
   },
   {
@@ -150,7 +150,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management.bank_card',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management.bank_card',
     },
   },
   {
@@ -187,7 +187,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management.balance_record',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management.balance_record',
     },
   },
   {
@@ -224,7 +224,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management.fund_change_type_indicator',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management.fund_change_type_indicator',
     },
   },
   {
@@ -261,7 +261,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management.fund_change',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management.fund_change',
     },
   },
   {
@@ -298,7 +298,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management.finance_report',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management.finance_report',
     },
   },
   {
@@ -335,7 +335,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.finance_management.remind_driver_support',
+      node: 'ui.pc;ui.pc.menu_visible.finance_management.remind_driver_support',
     },
   },
 ]

@@ -39,7 +39,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.settingrepo',
+      node: 'ui.pc;ui.pc.menu_visible.settingrepo',
     },
   },
   {
@@ -76,7 +76,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.settingrepo.setting_category',
+      node: 'ui.pc;ui.pc.menu_visible.settingrepo.setting_category',
     },
   },
   {
@@ -113,7 +113,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.settingrepo.setting_node',
+      node: 'ui.pc;ui.pc.menu_visible.settingrepo.setting_node',
     },
   },
   {
@@ -150,7 +150,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.settingrepo.formatter_support',
+      node: 'ui.pc;ui.pc.menu_visible.settingrepo.formatter_support',
     },
   },
   {
@@ -184,7 +184,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.settingrepo.setting_node_editor',
+      node: 'ui.pc;ui.pc.menu_visible.settingrepo.setting_node_editor',
     },
   },
 ]

@@ -1,88 +1,23 @@
 // noinspection JSUnusedGlobalSymbols
 
 import http from '../../util/http'
+import { type Pres } from '../../util/response'
+
 import { type StringIdKey } from '../subgrade/key'
-import { type PagingInfo } from '../../util/request'
-import { type Pres, type Prespa } from '../../util/response'
+import { type Permission } from '../rbac/permission'
 
-export type Permission = {
-  key: StringIdKey
-  group_key: StringIdKey | null
-  name: string
-  remark: string
-  level: number
+export type PermissionOfMeInspectInfo = {
+  scope_key: StringIdKey
 }
 
-export type InsertPermission = Permission
-
-export type UpdatePermission = Permission
-
-export function exists(key: StringIdKey): Pres<boolean> {
-  return http.generalClient().get('system', `permission/${key.string_id}/exists/`, {}, 'json')
+export type PermissionInspectResult = {
+  permissions: Permission[]
 }
 
-export function inspect(key: StringIdKey): Pres<Permission> {
-  return http.generalClient().get('system', `permission/${key.string_id}/`, {}, 'json')
-}
-
-export function insert(permission: InsertPermission): Pres<StringIdKey> {
+export function inspectPermissionOfMe(
+  info: PermissionOfMeInspectInfo,
+): Pres<PermissionInspectResult | null> {
   return http
     .generalClient()
-    .post('system', 'permission/', permission, 'application/json;charset=UTF-8')
-}
-
-export function update(permission: UpdatePermission): Pres<null> {
-  return http
-    .generalClient()
-    .patch('system', 'permission/', permission, 'application/json;charset=UTF-8')
-}
-
-export function remove(key: StringIdKey): Pres<null> {
-  return http.generalClient().del('system', `permission/${key.string_id}/`, {}, 'json')
-}
-
-export function all(pagingInfo: PagingInfo): Prespa<Permission> {
-  return http.generalClient().get(
-    'system',
-    'permission/all/',
-    {
-      page: pagingInfo.page,
-      rows: pagingInfo.rows,
-    },
-    'json',
-  )
-}
-
-export function idLike(pattern: string, pagingInfo: PagingInfo): Prespa<Permission> {
-  return http.generalClient().get(
-    'system',
-    'permission/id-like/',
-    {
-      pattern,
-      page: pagingInfo.page,
-      rows: pagingInfo.rows,
-    },
-    'json',
-  )
-}
-
-export function childForGroup(
-  groupKey: StringIdKey | null,
-  pagingInfo: PagingInfo,
-): Prespa<Permission> {
-  return http.generalClient().get(
-    'system',
-    `permission-group/${groupKey?.string_id ?? ''}/permission`,
-    {
-      page: pagingInfo.page,
-      rows: pagingInfo.rows,
-    },
-    'json',
-  )
-}
-
-export function lookupForUser(userKey: StringIdKey): Pres<Permission[]> {
-  return http
-    .generalClient()
-    .post('system', 'permission/lookup-for-user', userKey, 'application/json;charset=UTF-8')
+    .post('system', 'inspect-permission-of-me', info, 'application/json;charset=UTF-8')
 }

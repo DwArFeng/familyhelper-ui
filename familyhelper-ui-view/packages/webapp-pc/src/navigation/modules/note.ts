@@ -39,7 +39,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.note',
+      node: 'ui.pc;ui.pc.menu_visible.note',
     },
   },
   {
@@ -76,7 +76,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.note.note_book',
+      node: 'ui.pc;ui.pc.menu_visible.note.note_book',
     },
   },
   {
@@ -113,7 +113,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.note.note_management',
+      node: 'ui.pc;ui.pc.menu_visible.note.note_management',
     },
   },
 ]

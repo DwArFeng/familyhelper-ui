@@ -39,7 +39,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.system_settings',
+      node: 'ui.pc;ui.pc.menu_visible.system_settings',
     },
   },
   {
@@ -76,7 +76,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.system_settings.account',
+      node: 'ui.pc;ui.pc.menu_visible.system_settings.account',
     },
   },
   {
@@ -113,7 +113,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.system_settings.account_security',
+      node: 'ui.pc;ui.pc.menu_visible.system_settings.account_security',
     },
   },
   {
@@ -150,7 +150,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.system_settings.role',
+      node: 'ui.pc;ui.pc.menu_visible.system_settings.role',
     },
   },
   {
@@ -187,7 +187,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.system_settings.permission_group',
+      node: 'ui.pc;ui.pc.menu_visible.system_settings.permission_group',
     },
   },
   {
@@ -224,7 +224,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.system_settings.permission_node',
+      node: 'ui.pc;ui.pc.menu_visible.system_settings.permission_node',
     },
   },
 ]

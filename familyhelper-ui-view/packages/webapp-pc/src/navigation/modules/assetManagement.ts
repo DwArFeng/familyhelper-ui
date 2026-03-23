@@ -39,7 +39,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.assets_management',
+      node: 'ui.pc;ui.pc.menu_visible.assets_management',
     },
   },
   {
@@ -76,7 +76,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.assets_management.assets_catalog',
+      node: 'ui.pc;ui.pc.menu_visible.assets_management.assets_catalog',
     },
   },
   {
@@ -113,7 +113,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.assets_management.assets_bom',
+      node: 'ui.pc;ui.pc.menu_visible.assets_management.assets_bom',
     },
   },
   {
@@ -150,7 +150,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.assets_management.item_type_indicator',
+      node: 'ui.pc;ui.pc.menu_visible.assets_management.item_type_indicator',
     },
   },
   {
@@ -187,7 +187,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.assets_management.item_label',
+      node: 'ui.pc;ui.pc.menu_visible.assets_management.item_label',
     },
   },
 ]

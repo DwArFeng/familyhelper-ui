@@ -39,7 +39,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management',
     },
   },
   {
@@ -76,7 +76,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.notification',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.notification',
     },
   },
   {
@@ -113,7 +113,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.notify_setting',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.notify_setting',
     },
   },
   {
@@ -150,7 +150,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.topic',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.topic',
     },
   },
   {
@@ -187,7 +187,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.meta_indicator',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.meta_indicator',
     },
   },
   {
@@ -224,7 +224,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.meta',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.meta',
     },
   },
   {
@@ -261,7 +261,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.sender_info',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.sender_info',
     },
   },
   {
@@ -298,7 +298,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.notify_history',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.notify_history',
     },
   },
   {
@@ -335,7 +335,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.router_support',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.router_support',
     },
   },
   {
@@ -372,7 +372,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.dispatcher_support',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.dispatcher_support',
     },
   },
   {
@@ -409,7 +409,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.notify_management.sender_support',
+      node: 'ui.pc;ui.pc.menu_visible.notify_management.sender_support',
     },
   },
 ]

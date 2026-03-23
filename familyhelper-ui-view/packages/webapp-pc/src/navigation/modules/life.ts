@@ -39,7 +39,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.life',
+      node: 'ui.pc;ui.pc.menu_visible.life',
     },
   },
   {
@@ -76,7 +76,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.life.pb_set',
+      node: 'ui.pc;ui.pc.menu_visible.life.pb_set',
     },
   },
   {
@@ -113,7 +113,7 @@ const nodeSettings: NodeSetting[] = [
     },
     permission: {
       required: true,
-      node: 'ui.pc.menu_visible.life.pb_management',
+      node: 'ui.pc;ui.pc.menu_visible.life.pb_management',
     },
   },
 ]

@@ -4,7 +4,10 @@
 
 ### 功能构建
 
-- (无)
+- `familyhelper-ui-view` 子模块功能重构，以适配新的中台架构。
+  - packages/webapp-pc。
+  - packages/webapp-mobile。
+  - packages/component-api。
 
 ### Bug 修复
 
