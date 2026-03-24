@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `component-api` 子模块功能新增。
+  - 新增 `src/api/rbac/reset.ts` API 代码。
+
 - `webapp-pc` 子模块系统设置一级菜单回归。
   - 账户管理二级菜单回归。
   - 账户安全二级菜单回归。
