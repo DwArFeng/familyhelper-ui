@@ -57,11 +57,10 @@
           :item-count="permissionTableItemCount"
           :page-sizes="[15, 20, 30, 50]"
           :items="permissionTableItems"
+          :operate-column-width="156"
           :show-contextmenu="true"
           :contextmenu-width="100"
           @onPagingAttributeChanged="handlePagingAttributeChanged"
-          @onItemInspect="handleShowPermissionInspectDialog"
-          @onItemEdit="handleShowPermissionEditDialog"
           @onItemDelete="handlePermissionDelete"
         >
           <template v-slot:default>
@@ -85,11 +84,46 @@
             />
             <el-table-column prop="remark" label="备注" show-overflow-tooltip />
           </template>
+          <template v-slot:operateColumn="{ row }">
+            <el-button-group class="operate-column">
+              <el-button
+                class="table-button"
+                type="success"
+                :icon="SearchIcon"
+                title="查看"
+                @click="handleShowPermissionInspectDialog(row as Permission)"
+              />
+              <el-button
+                class="table-button"
+                type="info"
+                :icon="ViewIcon"
+                title="查看用户视图"
+                @click="handleShowUserViewOfPermissionInspectDialog(row as Permission)"
+              />
+              <el-button
+                class="table-button"
+                type="primary"
+                :icon="EditPen"
+                title="编辑"
+                @click="handleShowPermissionEditDialog(row as Permission)"
+              />
+              <el-button
+                class="table-button"
+                type="danger"
+                :icon="DeleteIcon"
+                title="删除"
+                @click="handlePermissionDelete(row as Permission)"
+              />
+            </el-button-group>
+          </template>
           <template v-slot:contextmenu="{ row, close }">
             <ul>
               <li @click="handleCopyKeyContextmenuClicked(row as Permission, close)">复制主键</li>
               <el-divider />
               <li @click="handleInspectContextmenuClicked(row as Permission, close)">查看...</li>
+              <li @click="handleUserViewInspectContextmenuClicked(row as Permission, close)">
+                查看用户视图...
+              </li>
               <li @click="handleEditContextmenuClicked(row as Permission, close)">编辑...</li>
               <li @click="handleDeleteContextmenuClicked(row as Permission, close)">删除...</li>
             </ul>
@@ -149,6 +183,10 @@
         />
       </el-form-item>
     </maintain-dialog>
+    <user-view-of-permission-inspect-dialog
+      v-model:visible="userViewOfPermissionInspectDialogVisible"
+      :permission="userViewOfPermissionInspectDialogPermission"
+    />
   </div>
 </template>
 
@@ -158,7 +196,12 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
-import { Search as SearchIcon } from '@element-plus/icons-vue'
+import {
+  Search as SearchIcon,
+  View as ViewIcon,
+  EditPen,
+  Delete as DeleteIcon,
+} from '@element-plus/icons-vue'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
@@ -166,6 +209,7 @@ import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 
 import PermissionScopeIndicator from '@/views/nodes/elementPlus/systemSettings/permissionScope/PermissionScopeIndicator.vue'
+import UserViewOfPermissionInspectDialog from './subDialogs/UserViewOfPermissionInspectDialog.vue'
 
 import { useIdentityBackendPagingTablePanel } from '@/components/elementPlus/table/tablePanel/composables.ts'
 import { useGeneralMaintainDialog } from '@/components/elementPlus/dialog/maintainDialog/composables.ts'
@@ -348,6 +392,19 @@ async function handleCopyKeyContextmenuClicked(row: Permission, close: () => voi
 function handleInspectContextmenuClicked(row: Permission, close: () => void): void {
   close()
   handleShowPermissionInspectDialog(row)
+}
+
+function handleUserViewInspectContextmenuClicked(row: Permission, close: () => void): void {
+  close()
+  handleShowUserViewOfPermissionInspectDialog(row)
+}
+
+const userViewOfPermissionInspectDialogVisible = ref<boolean>(false)
+const userViewOfPermissionInspectDialogPermission = ref<Permission | null>(null)
+
+function handleShowUserViewOfPermissionInspectDialog(item: Permission): void {
+  userViewOfPermissionInspectDialogPermission.value = item
+  userViewOfPermissionInspectDialogVisible.value = true
 }
 
 function handleEditContextmenuClicked(row: Permission, close: () => void): void {
@@ -594,6 +651,12 @@ async function handlePermissionEdit(item: PermissionMaintainDialogItem): Promise
 .table :deep(.contextmenu .el-divider--horizontal) {
   margin-top: 1px;
   margin-bottom: 1px;
+}
+
+.table .table-button {
+  height: 28px;
+  width: 28px;
+  padding: 7px;
 }
 
 .form-input-number {

@@ -5,8 +5,8 @@
     append-to-body
     destroy-on-close
     title="添加角色"
-    width="80%"
-    top="6vh"
+    align-center
+    width="55vw"
     :close-on-click-modal="false"
   >
     <table-panel
@@ -180,7 +180,7 @@ function handleCancelButtonClicked(): void {
 
 <style scoped>
 .table {
-  height: 70vh;
+  height: 50vh;
 }
 
 .footer-container {

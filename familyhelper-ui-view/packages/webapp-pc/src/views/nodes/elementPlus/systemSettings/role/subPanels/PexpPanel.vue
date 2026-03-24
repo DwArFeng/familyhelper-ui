@@ -24,6 +24,15 @@
           >
             应用变更
           </el-button>
+          <el-divider direction="vertical" />
+          <el-button
+            class="icon-button"
+            type="info"
+            :disabled="scopeId === ''"
+            @click="handleShowPermissionViewOfRoleInspectDialog"
+          >
+            权限视图
+          </el-button>
         </div>
       </template>
       <template v-slot:default>
@@ -82,6 +91,11 @@
         />
       </el-form-item>
     </maintain-dialog>
+    <permission-view-of-role-inspect-dialog
+      v-model:visible="permissionViewOfRoleInspectDialogVisible"
+      :role="role"
+      :scope-id="scopeId"
+    />
   </div>
 </template>
 
@@ -100,6 +114,7 @@ import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 import PermissionScopeIndicator from '@/views/nodes/elementPlus/systemSettings/permissionScope/PermissionScopeIndicator.vue'
+import PermissionViewOfRoleInspectDialog from '@/views/nodes/elementPlus/systemSettings/role/subDialogs/PermissionViewOfRoleInspectDialog.vue'
 
 import { useIdentityBackendPagingTablePanel } from '@/components/elementPlus/table/tablePanel/composables.ts'
 import { useGeneralMaintainDialog } from '@/components/elementPlus/dialog/maintainDialog/composables.ts'
@@ -171,6 +186,16 @@ async function handleApplyChanges(): Promise<void> {
       applyChangesButtonDisabled.value = false
     }, 3000)
   }
+}
+
+// endregion
+
+// region 权限视图查看对话框
+
+const permissionViewOfRoleInspectDialogVisible = ref<boolean>(false)
+
+function handleShowPermissionViewOfRoleInspectDialog(): void {
+  permissionViewOfRoleInspectDialogVisible.value = true
 }
 
 // endregion
@@ -600,6 +625,7 @@ async function handlePexpDelete(item: DispPexp): Promise<void> {
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+  row-gap: 5px;
 }
 
 /*noinspection CssUnusedSymbol*/

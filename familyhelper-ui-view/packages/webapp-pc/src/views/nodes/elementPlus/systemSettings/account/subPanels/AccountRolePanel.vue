@@ -15,6 +15,10 @@
             >
               应用变更
             </el-button>
+            <el-divider direction="vertical" />
+            <el-button type="info" @click="handleShowPermissionViewOfUserInspectDialog">
+              权限视图
+            </el-button>
             <div style="flex-grow: 1" />
             <el-button
               class="icon-button"
@@ -99,6 +103,10 @@
       :account-id="accountId"
       @onAttached="handleRoleAttached"
     />
+    <permission-view-of-user-inspect-dialog
+      v-model:visible="permissionViewOfUserInspectDialogVisible"
+      :account-id="accountId"
+    />
   </div>
 </template>
 
@@ -134,6 +142,7 @@ import { lookupWithAdjustPage } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 import AccountRoleAttachDialog from '../subDialogs/AccountRoleAttachDialog.vue'
+import PermissionViewOfUserInspectDialog from '../subDialogs/PermissionViewOfUserInspectDialog.vue'
 
 defineOptions({
   name: 'AccountRolePanel',
@@ -442,6 +451,12 @@ async function handleRoleUserRelationEdit(item: RoleUserRelationMaintainDialogIt
 // region 角色用户关联连接对话框
 
 const accountRoleAttachDialogVisible = ref<boolean>(false)
+
+const permissionViewOfUserInspectDialogVisible = ref<boolean>(false)
+
+function handleShowPermissionViewOfUserInspectDialog(): void {
+  permissionViewOfUserInspectDialogVisible.value = true
+}
 
 function handlePanelFloatyButtonClicked(): void {
   emit('onPanelFloatyButtonClicked')
