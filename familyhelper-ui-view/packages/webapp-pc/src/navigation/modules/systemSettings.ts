@@ -301,6 +301,43 @@ const nodeSettings: NodeSetting[] = [
       node: 'ui.pc;ui.pc.menu_visible.system_settings.account_protector_support',
     },
   },
+  {
+    parentKey: 'systemSettings',
+    key: 'systemSettings.permissionFilterSupport',
+    index: 70,
+    display: {
+      '': {
+        label: '权限过滤器支持',
+      },
+      comvisual: {
+        label: '权限过滤器支持',
+      },
+      elementPlus: {
+        label: '权限过滤器支持',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'system-settings/permission-filter-support',
+      component: {
+        key: 'systemSettings.permissionFilterSupport',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.system_settings.permission_filter_support',
+    },
+  },
 ]
 
 /**

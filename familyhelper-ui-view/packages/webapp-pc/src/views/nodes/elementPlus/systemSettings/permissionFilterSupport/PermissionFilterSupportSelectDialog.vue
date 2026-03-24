@@ -1,0 +1,187 @@
+<template>
+  <el-dialog
+    class="permission-filter-support-select-dialog-container"
+    v-model="watchedVisible"
+    append-to-body
+    tabindex="0"
+    id="dialog"
+    title="模板选择"
+    destroy-on-close
+    :close-on-click-modal="false"
+    @keydown.ctrl.enter="handleHotKeyDown"
+  >
+    <table-panel
+      class="table"
+      v-loading="loading"
+      v-model:current-page="permissionFilterSupportTableCurrentPage"
+      v-model:page-size="permissionFilterSupportTablePageSize"
+      highlight-current-row
+      :item-count="permissionFilterSupportTableItemCount"
+      :page-sizes="[15, 20, 30, 50]"
+      :items="permissionFilterSupportTableItems"
+      :operate-column-visible="false"
+      @onPagingAttributeChanged="handlePermissionFilterSupportTablePagingAttributeChanged"
+      @onCurrentChanged="handlePermissionFilterSupportTableCurrentChanged"
+    >
+      <el-table-column prop="label" label="名称" show-overflow-tooltip />
+      <el-table-column prop="key.string_id" label="ID" show-overflow-tooltip />
+      <el-table-column prop="description" label="描述" show-overflow-tooltip />
+      <el-table-column prop="example_pattern" label="示例参数" show-overflow-tooltip />
+    </table-panel>
+    <template v-slot:footer>
+      <div>
+        <el-button
+          type="primary"
+          :disabled="loading > 0 || permissionFilterSupportTableCurrentRow === null"
+          @click="handleConfirmButtonClicked"
+        >
+          确认
+        </el-button>
+        <el-button :disabled="loading > 0" @click="handleCancelButtonClicked"> 取消</el-button>
+      </div>
+    </template>
+  </el-dialog>
+</template>
+
+<script setup lang="ts">
+import { onMounted, ref, watch } from 'vue'
+
+import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
+
+import { useIdentityBackendPagingTablePanel } from '@/components/elementPlus/table/tablePanel/composables.ts'
+
+import { type FilterSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/filterSupport.ts'
+import { all } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/filterSupport.ts'
+import { lookupWithAdjustPage } from '@/util/lookup.ts'
+
+defineOptions({
+  name: 'PermissionFilterSupportSelectDialog',
+})
+
+// region Props 定义
+
+type Props = {
+  visible: boolean
+}
+
+const props = defineProps<Props>()
+
+// endregion
+
+// region Emits 定义
+
+type Emits = {
+  (e: 'update:visible', value: boolean): void
+  (e: 'onConfirmed', value: FilterSupport): void
+}
+
+const emit = defineEmits<Emits>()
+
+// endregion
+
+// region 加载逻辑
+
+const loading = ref<number>(0)
+
+// endregion
+
+// region 可见性处理
+
+const watchedVisible = ref(props.visible)
+
+watch(
+  () => props.visible,
+  (value) => {
+    watchedVisible.value = value
+  },
+)
+
+watch(
+  () => watchedVisible.value,
+  (value) => {
+    emit('update:visible', value)
+  },
+)
+
+onMounted(() => {
+  watchedVisible.value = props.visible
+  handlePermissionFilterSupportSearch()
+})
+
+// endregion
+
+// region 搜索
+
+function handlePermissionFilterSupportSearch(): void {
+  handlePermissionFilterSupportAllSearch()
+}
+
+async function handlePermissionFilterSupportAllSearch(): Promise<void> {
+  loading.value += 1
+  try {
+    const res = await lookupWithAdjustPage(
+      (pagingInfo) => all(pagingInfo),
+      permissionFilterSupportTablePagingInfo.value,
+    )
+    updatePermissionFilterSupportTableByLookup(res)
+  } finally {
+    loading.value -= 1
+  }
+}
+
+// endregion
+
+// region 权限过滤器支持表格处理
+
+const {
+  currentPage: permissionFilterSupportTableCurrentPage,
+  pageSize: permissionFilterSupportTablePageSize,
+  itemCount: permissionFilterSupportTableItemCount,
+  items: permissionFilterSupportTableItems,
+  pagingInfo: permissionFilterSupportTablePagingInfo,
+  updateByLookup: updatePermissionFilterSupportTableByLookup,
+} = useIdentityBackendPagingTablePanel<FilterSupport>(15)
+const permissionFilterSupportTableCurrentRow = ref<FilterSupport | null>(null)
+
+function handlePermissionFilterSupportTablePagingAttributeChanged(): void {
+  handlePermissionFilterSupportSearch()
+}
+
+function handlePermissionFilterSupportTableCurrentChanged(current: FilterSupport | null): void {
+  permissionFilterSupportTableCurrentRow.value = current
+}
+
+// endregion
+
+// region 对话框处理
+
+function handleConfirmButtonClicked(): void {
+  const formatSupport: FilterSupport | null = permissionFilterSupportTableCurrentRow.value
+  if (!formatSupport) {
+    throw new Error('不应该执行到此处，请联系开发人员')
+  }
+  emit('onConfirmed', formatSupport)
+  watchedVisible.value = false
+}
+
+function handleCancelButtonClicked(): void {
+  watchedVisible.value = false
+}
+
+function handleHotKeyDown(): void {
+  const formatSupport: FilterSupport | null = permissionFilterSupportTableCurrentRow.value
+  if (!formatSupport) {
+    return
+  }
+  emit('onConfirmed', formatSupport)
+  watchedVisible.value = false
+}
+
+// endregion
+</script>
+
+<style scoped>
+.table {
+  height: 450px;
+}
+</style>

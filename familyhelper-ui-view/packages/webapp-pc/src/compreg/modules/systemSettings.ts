@@ -90,6 +90,17 @@ const compregSettings: ComponentSetting[] = [
         import('@/views/nodes/elementPlus/systemSettings/accountProtectorSupport/AccountProtectorSupport.vue'),
     },
   },
+  {
+    key: 'systemSettings.permissionFilterSupport',
+    component: {
+      '': () =>
+        import('@/views/nodes/elementPlus/systemSettings/permissionFilterSupport/PermissionFilterSupport.vue'),
+      comvisual: () =>
+        import('@/views/nodes/elementPlus/systemSettings/permissionFilterSupport/PermissionFilterSupport.vue'),
+      elementPlus: () =>
+        import('@/views/nodes/elementPlus/systemSettings/permissionFilterSupport/PermissionFilterSupport.vue'),
+    },
+  },
 ]
 
 /**
