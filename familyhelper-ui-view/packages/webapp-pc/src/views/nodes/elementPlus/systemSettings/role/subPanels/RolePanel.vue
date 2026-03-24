@@ -7,6 +7,14 @@
             新建角色
           </el-button>
           <el-button type="success" @click="handleRoleSearch">刷新数据</el-button>
+          <el-divider direction="vertical" />
+          <el-button
+            type="primary"
+            :disabled="applyChangesButtonDisabled"
+            @click="handleApplyChanges"
+          >
+            应用变更
+          </el-button>
         </div>
       </template>
       <template v-slot:default>
@@ -105,6 +113,7 @@ import {
   update as updateRole,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/role.ts'
 import { childForRoleDisp } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/roleUserRelation.ts'
+import { resetAnalysis } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/reset.ts'
 import { lookupAllToList, lookupWithAdjustPage } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
 
@@ -125,6 +134,28 @@ const emit = defineEmits<Emits>()
 // region Store
 
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
+
+// endregion
+
+// region 应用变更
+
+const applyChangesButtonDisabled = ref<boolean>(false)
+
+async function handleApplyChanges(): Promise<void> {
+  applyChangesButtonDisabled.value = true
+  try {
+    await resolveResponse(resetAnalysis())
+    ElMessage({
+      showClose: true,
+      message: '变更应用成功！后台状态刷新中，请不要频繁点击',
+      type: 'success',
+    })
+  } finally {
+    setTimeout(() => {
+      applyChangesButtonDisabled.value = false
+    }, 3000)
+  }
+}
 
 // endregion
 

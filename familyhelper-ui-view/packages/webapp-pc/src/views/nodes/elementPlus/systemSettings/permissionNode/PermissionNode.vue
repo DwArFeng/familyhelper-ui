@@ -37,6 +37,14 @@
               <el-button :icon="SearchIcon" @click="handleSearch" />
             </template>
           </el-input>
+          <el-divider direction="vertical" />
+          <el-button
+            type="primary"
+            :disabled="applyChangesButtonDisabled"
+            @click="handleApplyChanges"
+          >
+            应用变更
+          </el-button>
         </div>
       </template>
       <template v-slot:default>
@@ -173,6 +181,7 @@ import {
   childForScopePermissionStringIdLike,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/permission.ts'
 import { exists as permissionGroupExists } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/permissionGroup.ts'
+import { resetAnalysis } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/reset.ts'
 import { resolveResponse } from '@/util/response.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
 
@@ -195,6 +204,28 @@ type PermissionMaintainDialogItem = {
 // region 加载逻辑
 
 const loading = ref<number>(0)
+
+// endregion
+
+// region 应用变更
+
+const applyChangesButtonDisabled = ref<boolean>(false)
+
+async function handleApplyChanges(): Promise<void> {
+  applyChangesButtonDisabled.value = true
+  try {
+    await resolveResponse(resetAnalysis())
+    ElMessage({
+      showClose: true,
+      message: '变更应用成功！后台状态刷新中，请不要频繁点击',
+      type: 'success',
+    })
+  } finally {
+    setTimeout(() => {
+      applyChangesButtonDisabled.value = false
+    }, 3000)
+  }
+}
 
 // endregion
 

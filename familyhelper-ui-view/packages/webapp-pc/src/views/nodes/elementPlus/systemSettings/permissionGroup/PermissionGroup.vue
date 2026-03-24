@@ -52,6 +52,14 @@
           </el-button>
           <el-divider direction="vertical" />
           <permission-scope-indicator @onChanged="handlePermissionScopeIndicatorChanged" />
+          <el-divider direction="vertical" />
+          <el-button
+            type="primary"
+            :disabled="applyChangesButtonDisabled"
+            @click="handleApplyChanges"
+          >
+            应用变更
+          </el-button>
         </div>
       </template>
       <template v-slot:west>
@@ -142,6 +150,7 @@ import {
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/permissionGroup.ts'
 import { type DispPermission } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/permission.ts'
 import { update as updatePermission } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/permission.ts'
+import { resetAnalysis } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/reset.ts'
 import { type TreeNode } from '@/components/elementPlus/tree/commons/types.ts'
 import { resolveResponse } from '@/util/response.ts'
 
@@ -224,6 +233,28 @@ function handleTreeCurrentChanged(
 
 function handleTreeItemDelete(item: PermissionGroupTreeItem): void {
   handleEntityDelete(item)
+}
+
+// endregion
+
+// region 应用变更
+
+const applyChangesButtonDisabled = ref<boolean>(false)
+
+async function handleApplyChanges(): Promise<void> {
+  applyChangesButtonDisabled.value = true
+  try {
+    await resolveResponse(resetAnalysis())
+    ElMessage({
+      showClose: true,
+      message: '变更应用成功！后台状态刷新中，请不要频繁点击',
+      type: 'success',
+    })
+  } finally {
+    setTimeout(() => {
+      applyChangesButtonDisabled.value = false
+    }, 3000)
+  }
 }
 
 // endregion
