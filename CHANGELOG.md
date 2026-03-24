@@ -16,6 +16,7 @@
   - 系统设置 -> 权限节点管理页面头部栏增加应用变更按钮，及其相关功能。
 
 - `component-api` 子模块功能新增。
+  - 新增 `src/api/acckeeper/reset.ts` API 代码。
   - 新增 `src/api/rbac/reset.ts` API 代码。
 
 - `webapp-pc` 子模块系统设置一级菜单回归。
