@@ -264,6 +264,43 @@ const nodeSettings: NodeSetting[] = [
       node: 'ui.pc;ui.pc.menu_visible.system_settings.permission_node',
     },
   },
+  {
+    parentKey: 'systemSettings',
+    key: 'systemSettings.accountProtectorSupport',
+    index: 60,
+    display: {
+      '': {
+        label: '账户保护器支持',
+      },
+      comvisual: {
+        label: '账户保护器支持',
+      },
+      elementPlus: {
+        label: '账户保护器支持',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'system-settings/account-protector-support',
+      component: {
+        key: 'systemSettings.accountProtectorSupport',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.system_settings.account_protector_support',
+    },
+  },
 ]
 
 /**

@@ -79,6 +79,17 @@ const compregSettings: ComponentSetting[] = [
         import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
     },
   },
+  {
+    key: 'systemSettings.accountProtectorSupport',
+    component: {
+      '': () =>
+        import('@/views/nodes/elementPlus/systemSettings/accountProtectorSupport/AccountProtectorSupport.vue'),
+      comvisual: () =>
+        import('@/views/nodes/elementPlus/systemSettings/accountProtectorSupport/AccountProtectorSupport.vue'),
+      elementPlus: () =>
+        import('@/views/nodes/elementPlus/systemSettings/accountProtectorSupport/AccountProtectorSupport.vue'),
+    },
+  },
 ]
 
 /**
