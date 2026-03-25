@@ -11,7 +11,8 @@ import { resolveResponse } from '@/util/response.ts'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
 
-// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+// region 初始化逻辑
+
 /**
  * VIM 应用上下文。
  */
@@ -22,7 +23,10 @@ function init(_ctx: VimApplicationContext): void {
   ctx.registerWindowLoadHook(windowLoadHook)
 }
 
-// -----------------------------------------------------------Store 定义-----------------------------------------------------------
+// endregion
+
+// region Store 定义
+
 /**
  * Visualizer Key Store。
  */
@@ -59,7 +63,10 @@ function provideStoreSetup(): StoreSetup {
   })
 }
 
-// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
+// endregion
+
+// region 钩子逻辑
+
 /**
  * Window 加载钩子。
  */
@@ -120,7 +127,10 @@ async function loadVisualizerKey0(): Promise<string> {
   return toKebabCase(result.value ?? '')
 }
 
-// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
+// endregion
+
+// region VimStoreModule 定义
+
 /**
  * VIM Store 模块。
  */
@@ -128,5 +138,7 @@ const vimStoreModule: VimStoreModule = {
   init,
   provideStoreSetup,
 }
+
+// endregion
 
 export default vimStoreModule

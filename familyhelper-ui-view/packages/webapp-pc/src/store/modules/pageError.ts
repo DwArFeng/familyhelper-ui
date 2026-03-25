@@ -5,7 +5,8 @@ import { type StoreSetup, type VimStoreModule } from '@/store/types.ts'
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+// region 初始化逻辑
+
 /**
  * VIM 应用上下文。
  */
@@ -17,7 +18,10 @@ function init(_ctx: VimApplicationContext): void {
   ctx.registerWindowBeforeUnloadHook(windowBeforeUnloadHook)
 }
 
-// -----------------------------------------------------------Store 定义-----------------------------------------------------------
+// endregion
+
+// region Store 定义
+
 /**
  * Page Error Store。
  */
@@ -36,7 +40,10 @@ function setErrorText(value: string): void {
   _errorText.value = value
 }
 
-// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
+// endregion
+
+// region 钩子逻辑
+
 // 存储在 LocalStorage 中的持久化主键
 const PERSISTENCE_DATA_KEY = 'store.persistence_data.page_error'
 
@@ -79,7 +86,10 @@ function provideStoreSetup(): StoreSetup {
   })
 }
 
-// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
+// endregion
+
+// region VimStoreModule 定义
+
 /**
  * VIM Store 模块。
  */
@@ -87,5 +97,7 @@ const vimStoreModule: VimStoreModule = {
   init,
   provideStoreSetup,
 }
+
+// endregion
 
 export default vimStoreModule

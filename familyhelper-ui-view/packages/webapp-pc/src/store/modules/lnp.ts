@@ -28,7 +28,8 @@ import { defaultResponseBadHandler, resolveResponse } from '@/util/response.ts'
 import { currentTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
 import { uuid } from '@dwarfeng/familyhelper-ui-component-util/src/util/uuid.ts'
 
-// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+// region 初始化逻辑
+
 /**
  * VIM 应用上下文。
  */
@@ -41,7 +42,10 @@ function init(_ctx: VimApplicationContext): void {
   ctx.registerWindowBeforeUnloadHook(windowUnloadHook)
 }
 
-// -----------------------------------------------------------Store 定义-----------------------------------------------------------
+// endregion
+
+// region Store 定义
+
 // 登录与权限.RBAC 作用域。
 const LNP_RBAC_SCOPES: string[] = ['ui.pc', 'action']
 
@@ -180,7 +184,10 @@ function provideStoreSetup(): StoreSetup {
   })
 }
 
-// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
+// endregion
+
+// region 钩子逻辑
+
 /**
  * 持久化数据。
  */
@@ -303,7 +310,10 @@ function restorePersistenceData(value: PersistenceData): void {
   _onlineFlag.value = value.onlineFlag
 }
 
-// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
+// endregion
+
+// region VimStoreModule 定义
+
 /**
  * VIM Store 模块。
  */
@@ -312,5 +322,6 @@ const vimStoreModule: VimStoreModule = {
   provideStoreSetup,
 }
 
-// noinspection JSUnusedGlobalSymbols
+// endregion
+
 export default vimStoreModule

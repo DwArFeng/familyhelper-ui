@@ -13,7 +13,8 @@ import { computed, type ComputedRef, ref } from 'vue'
 import { childForUserUnread } from '@dwarfeng/familyhelper-ui-component-api/src/api/clannad/notification.ts'
 import { resolveResponse } from '@/util/response.ts'
 
-// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+// region 初始化逻辑
+
 /**
  * VIM 应用上下文。
  */
@@ -26,7 +27,10 @@ function init(_ctx: VimApplicationContext): void {
   ctx.registerWindowBeforeUnloadHook(windowUnloadHook)
 }
 
-// -----------------------------------------------------------Store 定义-----------------------------------------------------------
+// endregion
+
+// region Store 定义
+
 /**
  * Notification Store。
  */
@@ -78,7 +82,10 @@ function provideStoreSetup(): StoreSetup {
   })
 }
 
-// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
+// endregion
+
+// region 钩子逻辑
+
 let unreadUpdateTimer: number
 
 let lnpStoreLoginActionHandle: () => void = () => {}
@@ -187,5 +194,7 @@ const vimStoreModule: VimStoreModule = {
   init,
   provideStoreSetup,
 }
+
+// endregion
 
 export default vimStoreModule
