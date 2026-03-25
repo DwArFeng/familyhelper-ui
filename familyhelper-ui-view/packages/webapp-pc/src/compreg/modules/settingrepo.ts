@@ -23,9 +23,9 @@ const compregSettings: ComponentSetting[] = [
     key: 'settingrepo.settingCategory',
     component: {
       '': () => import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
     },
   },
@@ -33,9 +33,9 @@ const compregSettings: ComponentSetting[] = [
     key: 'settingrepo.settingNode',
     component: {
       '': () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
-      simple: () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
     },
   },
   {
@@ -43,9 +43,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
     },
   },
@@ -54,9 +54,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
     },
   },

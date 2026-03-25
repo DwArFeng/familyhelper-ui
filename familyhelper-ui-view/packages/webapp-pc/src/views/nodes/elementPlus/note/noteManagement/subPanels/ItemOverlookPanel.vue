@@ -81,7 +81,7 @@ import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 import { useIconfontButtonIcon } from '@/composables/icon.ts'
 
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
-import TitleLayoutPanel from '@/components/common/layout/titleLayoutPanel/TitleLayoutPanel.vue'
+import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 
 import { useIdentityEditOnlyMaintainDialog } from '@/components/elementPlus/dialog/maintainDialog/composables.ts'

@@ -23,9 +23,9 @@ const compregSettings: ComponentSetting[] = [
     key: 'notifyManagement.notification',
     component: {
       '': () => import('@/views/nodes/elementPlus/notifyManagement/notification/Notification.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notification/Notification.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notification/Notification.vue'),
     },
   },
@@ -34,9 +34,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/notifyManagement/notifySetting/NotifySetting.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notifySetting/NotifySetting.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notifySetting/NotifySetting.vue'),
     },
   },
@@ -44,8 +44,8 @@ const compregSettings: ComponentSetting[] = [
     key: 'notifyManagement.topic',
     component: {
       '': () => import('@/views/nodes/elementPlus/notifyManagement/topic/Topic.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/notifyManagement/topic/Topic.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/notifyManagement/topic/Topic.vue'),
-      simple: () => import('@/views/nodes/elementPlus/notifyManagement/topic/Topic.vue'),
     },
   },
   {
@@ -61,7 +61,7 @@ const compregSettings: ComponentSetting[] = [
           '@/views/nodes/elementPlus' +
             '/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'
         ),
-      simple: () =>
+      comvisual: () =>
         import(
           '@/views/nodes/elementPlus' +
             '/notifyManagement/metaIndicator/subPanels/MetaIndicator.vue'
@@ -72,17 +72,18 @@ const compregSettings: ComponentSetting[] = [
     key: 'notifyManagement.meta',
     component: {
       '': () => import('@/views/nodes/elementPlus/notifyManagement/meta/Meta.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/notifyManagement/meta/Meta.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/notifyManagement/meta/Meta.vue'),
-      simple: () => import('@/views/nodes/elementPlus/notifyManagement/meta/Meta.vue'),
     },
   },
   {
     key: 'notifyManagement.senderInfo',
     component: {
       '': () => import('@/views/nodes/elementPlus/notifyManagement/senderInfo/SenderInfo.vue'),
+      comvisual: () =>
+        import('@/views/nodes/elementPlus/notifyManagement/senderInfo/SenderInfo.vue'),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/senderInfo/SenderInfo.vue'),
-      simple: () => import('@/views/nodes/elementPlus/notifyManagement/senderInfo/SenderInfo.vue'),
     },
   },
   {
@@ -90,9 +91,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/notifyManagement/notifyHistory/NotifyHistory.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notifyHistory/NotifyHistory.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notifyHistory/NotifyHistory.vue'),
     },
   },
@@ -101,9 +102,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/notifyManagement/routerSupport/RouterSupport.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/notifyManagement/routerSupport/RouterSupport.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/routerSupport/RouterSupport.vue'),
     },
   },
@@ -112,9 +113,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
     },
   },
@@ -123,9 +124,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/notifyManagement/senderSupport/SenderSupport.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/notifyManagement/senderSupport/SenderSupport.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/senderSupport/SenderSupport.vue'),
     },
   },

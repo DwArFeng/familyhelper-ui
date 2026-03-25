@@ -23,9 +23,9 @@ const compregSettings: ComponentSetting[] = [
     key: 'financeManagement.accountBook',
     component: {
       '': () => import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
     },
   },
@@ -34,9 +34,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
     },
   },
@@ -44,9 +44,9 @@ const compregSettings: ComponentSetting[] = [
     key: 'financeManagement.bankCard',
     component: {
       '': () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
-      simple: () => import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
     },
   },
   {
@@ -54,9 +54,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
     },
   },
@@ -65,9 +65,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
     },
   },
@@ -75,9 +75,10 @@ const compregSettings: ComponentSetting[] = [
     key: 'financeManagement.fundChange',
     component: {
       '': () => import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
+      comvisual: () =>
+        import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
-      simple: () => import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
     },
   },
   {
@@ -85,9 +86,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
     },
   },
@@ -96,9 +97,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
     },
   },

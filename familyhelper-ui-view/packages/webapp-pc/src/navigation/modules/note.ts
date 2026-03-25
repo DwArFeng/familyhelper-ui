@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '学习笔记',
       },
-      elementPlus: {
+      comvisual: {
         label: '学习笔记',
       },
-      simple: {
+      elementPlus: {
         label: '学习笔记',
       },
     },
@@ -50,10 +50,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '笔记本',
       },
-      elementPlus: {
+      comvisual: {
         label: '笔记本',
       },
-      simple: {
+      elementPlus: {
         label: '笔记本',
       },
     },
@@ -87,10 +87,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '笔记管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '笔记管理',
       },
-      simple: {
+      elementPlus: {
         label: '笔记管理',
       },
     },

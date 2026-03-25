@@ -165,7 +165,7 @@ import { type FormItemRule } from 'element-plus'
 import { useIconfontButtonIcon } from '@/composables/icon.ts'
 
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
-import TitleLayoutPanel from '@/components/common/layout/titleLayoutPanel/TitleLayoutPanel.vue'
+import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 
 import ItemCoverEditDialog from '@/views/nodes/elementPlus/assetsManagement/assetBom/subDialogs/ItemCoverEditDialog.vue'

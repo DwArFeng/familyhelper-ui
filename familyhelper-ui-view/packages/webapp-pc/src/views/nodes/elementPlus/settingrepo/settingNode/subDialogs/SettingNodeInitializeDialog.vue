@@ -88,7 +88,7 @@ import { ElForm, ElMessage } from 'element-plus'
 
 import { Search as SearchIcon, DocumentCopy } from '@element-plus/icons-vue'
 
-import JsonEditor from '@/components/common/text/jsonEditor/JsonEditor.vue'
+import JsonEditor from '@/components/elementPlus/text/jsonEditor/JsonEditor.vue'
 
 import SettingCategorySelectDialog from '@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategorySelectDialog.vue'
 import SettingNodeSelectDialog from '@/views/nodes/elementPlus/settingrepo/settingNode/subDialogs/SettingNodeSelectDialog.vue'

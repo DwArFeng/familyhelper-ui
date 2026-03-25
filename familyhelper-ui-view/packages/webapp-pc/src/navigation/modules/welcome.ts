@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '首页',
       },
-      elementPlus: {
+      comvisual: {
         label: '首页',
       },
-      simple: {
+      elementPlus: {
         label: '首页',
       },
     },

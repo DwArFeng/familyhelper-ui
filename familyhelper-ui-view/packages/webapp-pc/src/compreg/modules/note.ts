@@ -23,16 +23,16 @@ const compregSettings: ComponentSetting[] = [
     key: 'note.noteBook',
     component: {
       '': () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
-      simple: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
     },
   },
   {
     key: 'note.noteManagement',
     component: {
       '': () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
-      simple: () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
     },
   },
 ]

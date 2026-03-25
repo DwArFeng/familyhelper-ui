@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '杂项',
       },
-      elementPlus: {
+      comvisual: {
         label: '杂项',
       },
-      simple: {
+      elementPlus: {
         label: '杂项',
       },
     },
@@ -43,10 +43,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '文件编辑器',
       },
-      elementPlus: {
+      comvisual: {
         label: '文件编辑器',
       },
-      simple: {
+      elementPlus: {
         label: '文件编辑器',
       },
     },

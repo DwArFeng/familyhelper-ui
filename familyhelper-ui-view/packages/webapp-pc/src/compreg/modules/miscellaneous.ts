@@ -22,21 +22,20 @@ const compregSettings: ComponentSetting[] = [
   {
     key: 'miscellaneous.compregFallback',
     component: {
-      '': () =>
-        import('@/views/nodes/elementPlus/miscellaneous/compregFallback/CompregFallback.vue'),
+      '': () => import('@/views/nodes/comvisual/miscellaneous/compregFallback/CompregFallback.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/miscellaneous/compregFallback/CompregFallback.vue'),
       elementPlus: () =>
-        import('@/views/nodes/elementPlus/miscellaneous/compregFallback/CompregFallback.vue'),
-      simple: () =>
-        import('@/views/nodes/elementPlus/miscellaneous/compregFallback/CompregFallback.vue'),
+        import('@/views/nodes/comvisual/miscellaneous/compregFallback/CompregFallback.vue'),
     },
   },
   {
     key: 'miscellaneous.fileEditor',
     component: {
       '': () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
-      simple: () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
     },
   },
 ]

@@ -23,16 +23,16 @@ const compregSettings: ComponentSetting[] = [
     key: 'life.pbSet',
     component: {
       '': () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
-      simple: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
     },
   },
   {
     key: 'life.pbManagement',
     component: {
       '': () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
-      simple: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
     },
   },
 ]

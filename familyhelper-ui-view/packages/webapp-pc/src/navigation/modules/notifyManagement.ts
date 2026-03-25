@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '通知管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '通知管理',
       },
-      simple: {
+      elementPlus: {
         label: '通知管理',
       },
     },
@@ -50,10 +50,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '通知接收',
       },
-      elementPlus: {
+      comvisual: {
         label: '通知接收',
       },
-      simple: {
+      elementPlus: {
         label: '通知接收',
       },
     },
@@ -87,10 +87,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '通知设置',
       },
-      elementPlus: {
+      comvisual: {
         label: '通知设置',
       },
-      simple: {
+      elementPlus: {
         label: '通知设置',
       },
     },
@@ -124,10 +124,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '主题设置',
       },
-      elementPlus: {
+      comvisual: {
         label: '主题设置',
       },
-      simple: {
+      elementPlus: {
         label: '主题设置',
       },
     },
@@ -161,10 +161,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '元数据指示器',
       },
-      elementPlus: {
+      comvisual: {
         label: '元数据指示器',
       },
-      simple: {
+      elementPlus: {
         label: '元数据指示器',
       },
     },
@@ -198,10 +198,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '元数据管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '元数据管理',
       },
-      simple: {
+      elementPlus: {
         label: '元数据管理',
       },
     },
@@ -235,10 +235,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '发送器设置',
       },
-      elementPlus: {
+      comvisual: {
         label: '发送器设置',
       },
-      simple: {
+      elementPlus: {
         label: '发送器设置',
       },
     },
@@ -272,10 +272,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '通知历史',
       },
-      elementPlus: {
+      comvisual: {
         label: '通知历史',
       },
-      simple: {
+      elementPlus: {
         label: '通知历史',
       },
     },
@@ -309,10 +309,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '路由器支持',
       },
-      elementPlus: {
+      comvisual: {
         label: '路由器支持',
       },
-      simple: {
+      elementPlus: {
         label: '路由器支持',
       },
     },
@@ -346,10 +346,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '调度器支持',
       },
-      elementPlus: {
+      comvisual: {
         label: '调度器支持',
       },
-      simple: {
+      elementPlus: {
         label: '调度器支持',
       },
     },
@@ -383,10 +383,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '发送器支持',
       },
-      elementPlus: {
+      comvisual: {
         label: '发送器支持',
       },
-      simple: {
+      elementPlus: {
         label: '发送器支持',
       },
     },

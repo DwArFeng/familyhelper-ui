@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '系统设置',
       },
-      elementPlus: {
+      comvisual: {
         label: '系统设置',
       },
-      simple: {
+      elementPlus: {
         label: '系统设置',
       },
     },
@@ -50,10 +50,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '账户管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '账户管理',
       },
-      simple: {
+      elementPlus: {
         label: '账户管理',
       },
     },
@@ -87,10 +87,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '账户安全',
       },
-      elementPlus: {
+      comvisual: {
         label: '账户安全',
       },
-      simple: {
+      elementPlus: {
         label: '账户安全',
       },
     },
@@ -124,10 +124,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '角色管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '角色管理',
       },
-      simple: {
+      elementPlus: {
         label: '角色管理',
       },
     },
@@ -161,10 +161,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '权限分组管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '权限分组管理',
       },
-      simple: {
+      elementPlus: {
         label: '权限分组管理',
       },
     },
@@ -198,10 +198,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '权限节点管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '权限节点管理',
       },
-      simple: {
+      elementPlus: {
         label: '权限节点管理',
       },
     },

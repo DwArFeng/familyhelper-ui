@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '资产管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '资产管理',
       },
-      simple: {
+      elementPlus: {
         label: '资产管理',
       },
     },
@@ -50,10 +50,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '资产目录管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '资产目录管理',
       },
-      simple: {
+      elementPlus: {
         label: '资产目录管理',
       },
     },
@@ -87,10 +87,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '资产BOM管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '资产BOM管理',
       },
-      simple: {
+      elementPlus: {
         label: '资产BOM管理',
       },
     },
@@ -124,10 +124,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '项目类型管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '项目类型管理',
       },
-      simple: {
+      elementPlus: {
         label: '项目类型管理',
       },
     },
@@ -161,10 +161,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '项目标签管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '项目标签管理',
       },
-      simple: {
+      elementPlus: {
         label: '项目标签管理',
       },
     },

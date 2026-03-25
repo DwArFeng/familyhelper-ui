@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '配置仓库',
       },
-      elementPlus: {
+      comvisual: {
         label: '配置仓库',
       },
-      simple: {
+      elementPlus: {
         label: '配置仓库',
       },
     },
@@ -50,10 +50,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '配置类型管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '配置类型管理',
       },
-      simple: {
+      elementPlus: {
         label: '配置类型管理',
       },
     },
@@ -87,10 +87,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '配置节点管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '配置节点管理',
       },
-      simple: {
+      elementPlus: {
         label: '配置节点管理',
       },
     },
@@ -124,10 +124,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '格式化器支持',
       },
-      elementPlus: {
+      comvisual: {
         label: '格式化器支持',
       },
-      simple: {
+      elementPlus: {
         label: '格式化器支持',
       },
     },
@@ -161,10 +161,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '配置节点编辑器',
       },
-      elementPlus: {
+      comvisual: {
         label: '配置节点编辑器',
       },
-      simple: {
+      elementPlus: {
         label: '配置节点编辑器',
       },
     },

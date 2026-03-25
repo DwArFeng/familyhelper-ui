@@ -127,7 +127,7 @@ import { Search as SearchIcon } from '@element-plus/icons-vue'
 
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import CardPanel from '@/components/elementPlus/card/cardPanel/CardPanel.vue'
-import CornerLightPanel from '@/components/common/layout/cornerLightPanel/CornerLightPanel.vue'
+import CornerLightPanel from '@/components/comvisual/layout/cornerLightPanel/CornerLightPanel.vue'
 
 import { useGeneralCardPanel } from '@/components/elementPlus/card/cardPanel/composables.ts'
 

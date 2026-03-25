@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '关于',
       },
-      elementPlus: {
+      comvisual: {
         label: '关于',
       },
-      simple: {
+      elementPlus: {
         label: '关于',
       },
     },

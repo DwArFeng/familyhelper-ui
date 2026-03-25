@@ -23,9 +23,9 @@ const compregSettings: ComponentSetting[] = [
     key: 'assetsManagement.assetCatalog',
     component: {
       '': () => import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
     },
   },
@@ -33,8 +33,8 @@ const compregSettings: ComponentSetting[] = [
     key: 'assetsManagement.assetBom',
     component: {
       '': () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
-      simple: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
     },
   },
   {
@@ -42,9 +42,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
     },
   },
@@ -52,9 +52,9 @@ const compregSettings: ComponentSetting[] = [
     key: 'assetsManagement.itemLabel',
     component: {
       '': () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
-      simple: () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
     },
   },
 ]

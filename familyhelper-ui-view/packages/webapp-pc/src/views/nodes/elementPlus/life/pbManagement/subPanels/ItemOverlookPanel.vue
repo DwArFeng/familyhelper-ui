@@ -113,12 +113,12 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
-import TitleLayoutPanel from '@/components/common/layout/titleLayoutPanel/TitleLayoutPanel.vue'
-import GeneralChartPanel from '@/components/common/chart/generalChartPanel/GeneralChartPanel.vue'
+import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
+import GeneralChartPanel from '@/components/echarts/generalChartPanel/GeneralChartPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 
-import { type GeneralChartOption } from '@/components/common/chart/generalChartPanel/types.ts'
-import { useSeparatedGeneralChartPanel } from '@/components/common/chart/generalChartPanel/composables.ts'
+import { type GeneralChartOption } from '@/components/echarts/generalChartPanel/types.ts'
+import { useSeparatedGeneralChartPanel } from '@/components/echarts/generalChartPanel/composables.ts'
 import { useIdentityEditOnlyMaintainDialog } from '@/components/elementPlus/dialog/maintainDialog/composables.ts'
 
 import { type LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'

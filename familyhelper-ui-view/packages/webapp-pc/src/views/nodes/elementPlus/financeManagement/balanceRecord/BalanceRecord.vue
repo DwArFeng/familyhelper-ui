@@ -251,7 +251,7 @@ import { EditPen, RefreshLeft } from '@element-plus/icons-vue'
 
 import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 import CardPanel from '@/components/elementPlus/card/cardPanel/CardPanel.vue'
-import CornerLightPanel from '@/components/common/layout/cornerLightPanel/CornerLightPanel.vue'
+import CornerLightPanel from '@/components/comvisual/layout/cornerLightPanel/CornerLightPanel.vue'
 
 import { useGeneralCardPanel } from '@/components/elementPlus/card/cardPanel/composables.ts'
 

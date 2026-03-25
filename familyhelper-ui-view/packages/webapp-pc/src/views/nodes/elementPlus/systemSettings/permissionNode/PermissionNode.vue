@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import ComingSoon from '@/components/common/layout/comingSoon/ComingSoon.vue'
+import ComingSoon from '@/components/comvisual/layout/comingSoon/ComingSoon.vue'
 import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 
 defineOptions({

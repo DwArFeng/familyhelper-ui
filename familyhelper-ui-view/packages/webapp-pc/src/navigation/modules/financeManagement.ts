@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '资金管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '资金管理',
       },
-      simple: {
+      elementPlus: {
         label: '资金管理',
       },
     },
@@ -50,10 +50,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '账本管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '账本管理',
       },
-      simple: {
+      elementPlus: {
         label: '账本管理',
       },
     },
@@ -87,10 +87,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '银行卡类型管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '银行卡类型管理',
       },
-      simple: {
+      elementPlus: {
         label: '银行卡类型管理',
       },
     },
@@ -124,10 +124,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '银行卡管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '银行卡管理',
       },
-      simple: {
+      elementPlus: {
         label: '银行卡管理',
       },
     },
@@ -161,10 +161,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '余额记录',
       },
-      elementPlus: {
+      comvisual: {
         label: '余额记录',
       },
-      simple: {
+      elementPlus: {
         label: '余额记录',
       },
     },
@@ -198,10 +198,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '资金变更类型管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '资金变更类型管理',
       },
-      simple: {
+      elementPlus: {
         label: '资金变更类型管理',
       },
     },
@@ -235,10 +235,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '资金变更记录',
       },
-      elementPlus: {
+      comvisual: {
         label: '资金变更记录',
       },
-      simple: {
+      elementPlus: {
         label: '资金变更记录',
       },
     },
@@ -272,10 +272,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '资金报告',
       },
-      elementPlus: {
+      comvisual: {
         label: '资金报告',
       },
-      simple: {
+      elementPlus: {
         label: '资金报告',
       },
     },
@@ -309,10 +309,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '提醒驱动器支持',
       },
-      elementPlus: {
+      comvisual: {
         label: '提醒驱动器支持',
       },
-      simple: {
+      elementPlus: {
         label: '提醒驱动器支持',
       },
     },

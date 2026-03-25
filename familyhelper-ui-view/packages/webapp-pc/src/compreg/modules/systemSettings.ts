@@ -23,8 +23,8 @@ const compregSettings: ComponentSetting[] = [
     key: 'systemSettings.account',
     component: {
       '': () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
-      simple: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
     },
   },
   {
@@ -32,9 +32,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
     },
   },
@@ -42,8 +42,8 @@ const compregSettings: ComponentSetting[] = [
     key: 'systemSettings.role',
     component: {
       '': () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
+      comvisual: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
-      simple: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
     },
   },
   {
@@ -51,9 +51,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
     },
   },
@@ -62,9 +62,9 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
-      elementPlus: () =>
+      comvisual: () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
-      simple: () =>
+      elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
     },
   },

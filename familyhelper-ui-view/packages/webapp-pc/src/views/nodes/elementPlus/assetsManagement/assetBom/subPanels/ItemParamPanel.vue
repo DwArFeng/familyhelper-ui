@@ -29,7 +29,7 @@ import { ref } from 'vue'
 
 import { useIconfontButtonIcon } from '@/composables/icon.ts'
 
-import ComingSoon from '@/components/common/layout/comingSoon/ComingSoon.vue'
+import ComingSoon from '@/components/comvisual/layout/comingSoon/ComingSoon.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 
 defineOptions({

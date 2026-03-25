@@ -27,10 +27,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '日常生活',
       },
-      elementPlus: {
+      comvisual: {
         label: '日常生活',
       },
-      simple: {
+      elementPlus: {
         label: '日常生活',
       },
     },
@@ -50,10 +50,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '个人最佳集合',
       },
-      elementPlus: {
+      comvisual: {
         label: '个人最佳集合',
       },
-      simple: {
+      elementPlus: {
         label: '个人最佳集合',
       },
     },
@@ -87,10 +87,10 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '个人最佳管理',
       },
-      elementPlus: {
+      comvisual: {
         label: '个人最佳管理',
       },
-      simple: {
+      elementPlus: {
         label: '个人最佳管理',
       },
     },

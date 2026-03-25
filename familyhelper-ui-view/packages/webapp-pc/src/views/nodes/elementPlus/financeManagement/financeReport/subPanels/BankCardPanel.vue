@@ -88,12 +88,12 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 
-import { type GeneralChartOption } from '@/components/common/chart/generalChartPanel/types.ts'
+import { type GeneralChartOption } from '@/components/echarts/generalChartPanel/types.ts'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
-import TitleLayoutPanel from '@/components/common/layout/titleLayoutPanel/TitleLayoutPanel.vue'
-import GeneralChartPanel from '@/components/common/chart/generalChartPanel/GeneralChartPanel.vue'
+import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
+import GeneralChartPanel from '@/components/echarts/generalChartPanel/GeneralChartPanel.vue'
 
-import { useSeparatedGeneralChartPanel } from '@/components/common/chart/generalChartPanel/composables.ts'
+import { useSeparatedGeneralChartPanel } from '@/components/echarts/generalChartPanel/composables.ts'
 
 import { useIdentityBackendPagingTablePanel } from '@/components/elementPlus/table/tablePanel/composables.ts'
 

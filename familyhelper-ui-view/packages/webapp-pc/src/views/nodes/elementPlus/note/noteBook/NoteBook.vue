@@ -194,7 +194,7 @@ import {
 import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 import CardPanel from '@/components/elementPlus/card/cardPanel/CardPanel.vue'
-import CornerLightPanel from '@/components/common/layout/cornerLightPanel/CornerLightPanel.vue'
+import CornerLightPanel from '@/components/comvisual/layout/cornerLightPanel/CornerLightPanel.vue'
 
 import { useGeneralMaintainDialog } from '@/components/elementPlus/dialog/maintainDialog/composables.ts'
 import { useGeneralCardPanel } from '@/components/elementPlus/card/cardPanel/composables.ts'
