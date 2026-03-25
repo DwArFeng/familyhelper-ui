@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-util` 子模块功能优化。
+  - 优化 `src/util/store.ts` 中的方法签名，以支持 `ExecutableActionHandle` 前置/后置钩子的优先级设置。
+  - 优化 `src/util/store.ts` 中的文档注释。
+
 - `familyhelper-ui-view` 子模块功能重构，以适配新的中台架构。
   - packages/webapp-pc。
   - packages/webapp-mobile。
