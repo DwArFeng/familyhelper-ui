@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块组件新增。
+  - 组件 `comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue` 新增。
   - 组件 `comvisual/layout/placeholderPanel/PlaceholderPanel.vue` 新增。
 
 - `webapp-pc` 子模块功能优化。
