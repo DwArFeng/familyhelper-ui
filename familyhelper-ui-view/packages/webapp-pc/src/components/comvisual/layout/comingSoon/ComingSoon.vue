@@ -1,10 +1,12 @@
 <template>
-  <div class="coming-soon-container placeholder">
-    页面正在快马加鞭地开发中，很快就能见面 （๑╹◡╹)ﾉ”
+  <div class="coming-soon-container">
+    <placeholder-panel text="页面正在快马加鞭地开发中，很快就能见面 （๑╹◡╹)ﾉ”" />
   </div>
 </template>
 
 <script setup lang="ts">
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
+
 defineOptions({
   name: 'ComingSoon',
 })
@@ -14,18 +16,5 @@ defineOptions({
 .coming-soon-container {
   width: 100%;
   height: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 </style>

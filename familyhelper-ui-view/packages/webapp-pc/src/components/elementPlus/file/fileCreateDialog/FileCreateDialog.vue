@@ -9,9 +9,7 @@
     @keydown.ctrl.enter="handleHotKeyDown"
   >
     <div>
-      <div class="placeholder" v-if="validCreateInfos.length === 0">
-        您没有创建任何类型文件的权限！
-      </div>
+      <placeholder-panel v-if="validCreateInfos.length" text="您没有创建任何类型文件的权限！" />
       <div
         class="editor-container"
         v-else
@@ -69,8 +67,9 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import { useCreateIcon } from '@/composables/file.ts'
 
-import { type CreateInfo, type CreatePermissionInfo } from '@/util/file.ts'
-import { getCreateInfos } from '@/util/file.ts'
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
+
+import { type CreateInfo, type CreatePermissionInfo, getCreateInfos } from '@/util/file.ts'
 
 import { type ExtensionFilter, type FileCreateInfo } from './types.ts'
 
@@ -293,18 +292,5 @@ function handleHotKeyDown(): void {
 
 .editor-container .input {
   width: 85%;
-}
-
-.placeholder {
-  width: 100%;
-  line-height: 184px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 </style>

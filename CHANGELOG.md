@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件优化。
+  - 组件 `comvisual/layout/comingSoon/ComingSoon.vue` 中占位符部分结构优化。
+  - 组件 `elementPlus/file/fileCreateDialog/FileCreateDialog.vue` 中占位符部分结构优化。
+
 - `webapp-pc` 子模块组件新增。
   - 组件 `comvisual/widget/floatTool/FloatTool.vue` 新增。
   - 组件 `comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue` 新增。
