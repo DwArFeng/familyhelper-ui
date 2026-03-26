@@ -310,6 +310,7 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
         permissionNode?: string
         ezNav: boolean
         visualizerKey?: string
+        compreg: string
         componentParam?: Record<string, unknown>
       }
 
@@ -332,6 +333,7 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
         permissionNode: nodeInfo.permission.node,
         ezNav: nodeInfo.ezNav.shown,
         visualizerKey: visualizerKey,
+        compreg: nodeInfo.router.component.key,
         componentParam: componentParam,
       }
 
