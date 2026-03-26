@@ -49,7 +49,8 @@
 
 ### Bug 修复
 
-- (无)
+- `webapp-pc` 子模块 bug 修复。
+  - 修复 `src/store/modules/elementPlus.ts` 模块在页面全屏状态发生变化时意外调用全屏方法的 bug。
 
 ### 功能移除
 
