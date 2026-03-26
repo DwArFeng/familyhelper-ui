@@ -1,8 +1,8 @@
 <template>
   <div class="child-for-meta-missing-sub-panel-container">
-    <div class="placeholder" v-if="propsInvalid">请指定通知设置、主题、用户</div>
+    <placeholder-panel v-if="propsInvalid" text="请指定通知设置、主题、用户" />
     <div class="valid-container" v-else v-loading="loading">
-      <div class="placeholder" v-if="metaIndicatorItems.length === 0">没有需要添加的元数据项</div>
+      <placeholder-panel v-if="metaIndicatorItems.length === 0" text="没有需要添加的元数据项" />
       <div class="select-container" v-else>
         <el-input v-model="labelFilterBarValue" placeholder="名称筛选" clearable />
         <el-table
@@ -26,6 +26,8 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
+
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 
 import { type MetaIndicator } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/metaIndicator.ts'
 import { metaMissing } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/metaIndicator.ts'
@@ -143,20 +145,6 @@ function handleMetaIndicatorTableSelectionChange(selection: MetaIndicator[]): vo
 .child-for-meta-missing-sub-panel-container {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 28px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .select-container {

@@ -18,7 +18,7 @@
         </div>
       </template>
       <template v-slot:default>
-        <div class="placeholder" v-show="!accountBookIndicatorValue">请选择账本</div>
+        <placeholder-panel v-show="!accountBookIndicatorValue" text="请选择账本" />
         <card-panel
           class="card-panel"
           v-show="accountBookIndicatorValue"
@@ -249,6 +249,7 @@ import { ElMessageBox, ElMessage, ElForm } from 'element-plus'
 
 import { EditPen, RefreshLeft } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 import CardPanel from '@/components/elementPlus/card/cardPanel/CardPanel.vue'
 import CornerLightPanel from '@/components/comvisual/layout/cornerLightPanel/CornerLightPanel.vue'
@@ -751,19 +752,6 @@ function handleBankCardToCancel(): void {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .card-panel:focus {

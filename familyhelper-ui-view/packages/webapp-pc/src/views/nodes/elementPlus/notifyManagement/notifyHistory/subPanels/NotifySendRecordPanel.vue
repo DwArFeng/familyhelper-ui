@@ -1,6 +1,6 @@
 <template>
   <div class="notify-send-record-panel-container">
-    <div v-if="!notifyHistory" class="placeholder">请选择通知历史</div>
+    <placeholder-panel v-if="!notifyHistory" text="请选择通知历史" />
     <div v-else class="main-container" v-loading="loading">
       <header-layout-panel>
         <template v-slot:header>
@@ -73,6 +73,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
@@ -258,19 +259,6 @@ function notifySendRecordMaintainDialogItemMap(
 .notify-send-record-panel-container {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .main-container {

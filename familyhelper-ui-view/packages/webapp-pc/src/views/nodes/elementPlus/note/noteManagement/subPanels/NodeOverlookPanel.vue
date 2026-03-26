@@ -1,6 +1,6 @@
 <template>
   <div class="node-overlook-panel-container">
-    <div class="placeholder" v-if="noteNodeId === ''">请选择节点</div>
+    <placeholder-panel v-if="noteNodeId === ''" text="请选择节点" />
     <div v-else class="main-container" v-loading="loading">
       <header-layout-panel>
         <template v-slot:header>
@@ -61,6 +61,7 @@ import { ElMessage } from 'element-plus'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
@@ -225,19 +226,6 @@ async function handleNoteNodeEdit(item: NoteNodeMaintainDialogItem): Promise<voi
   width: 100%;
   height: 100%;
   background: #ffffff;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .main-container {

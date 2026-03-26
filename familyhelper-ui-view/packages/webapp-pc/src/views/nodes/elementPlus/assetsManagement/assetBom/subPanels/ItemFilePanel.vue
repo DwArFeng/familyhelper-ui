@@ -1,6 +1,6 @@
 <template>
   <div class="item-file-panel-container">
-    <div class="placeholder" v-if="itemId === ''">请选择项目</div>
+    <placeholder-panel v-if="itemId === ''" text="请选择项目" />
     <div v-else class="main-container" v-loading="loading">
       <header-layout-panel>
         <template v-slot:header>
@@ -217,6 +217,7 @@ import {
 import { useIconfontButtonIcon } from '@/composables/icon.ts'
 import { useDisplayIconWithDefaults } from '@/composables/file'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import FileUploadDialog from '@/components/elementPlus/file/fileUploadDialog/FileUploadDialog.vue'
@@ -673,19 +674,6 @@ defineExpose({
   height: 100%;
   width: 100%;
   background: #ffffff;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .main-container {

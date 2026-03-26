@@ -1,9 +1,9 @@
 <template>
   <div class="bank-card-panel-container">
-    <div class="placeholder" v-if="accountBook === null">请选择账本</div>
+    <placeholder-panel v-if="accountBook === null" text="请选择账本" />
     <div class="bank-card-body" v-else>
       <div class="bank-card-body-grid expand">
-        <div class="placeholder" v-if="bankCardTableAnchor === null">请选择银行卡</div>
+        <placeholder-panel v-if="bankCardTableAnchor === null" text="请选择银行卡" />
         <div class="bank-card-body-grid-main" v-else>
           <div class="details-wrapper">
             <title-layout-panel class="details" title="银行卡详情" bordered apply-container-height>
@@ -88,6 +88,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import { type GeneralChartOption } from '@/components/echarts/generalChartPanel/types.ts'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
@@ -439,19 +440,6 @@ onMounted(() => {
 .bank-card-panel-container {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .bank-card-body {

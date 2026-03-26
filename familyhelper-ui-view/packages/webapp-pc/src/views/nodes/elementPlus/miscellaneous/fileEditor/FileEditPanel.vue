@@ -1,8 +1,8 @@
 <template>
   <div class="file-edit-panel-container">
-    <div v-if="type === ''" class="placeholder">请指定文件类型</div>
-    <div v-else-if="id === ''" class="placeholder">请指定文件 ID</div>
-    <div v-else-if="mode === ''" class="placeholder">请指定编辑器模式</div>
+    <placeholder-panel v-if="type === ''" text="请指定文件类型" />
+    <placeholder-panel v-else-if="id === ''" text="请指定文件 ID" />
+    <placeholder-panel v-else-if="mode === ''" text="请指定编辑器模式" />
     <div v-else class="main-container" v-loading="loading">
       <div class="editor-header">
         <div class="file-indicator">
@@ -30,7 +30,7 @@
       </div>
       <el-divider />
       <div class="editor-body" tabindex="0" @keydown="handleHotKeyDown">
-        <div class="placeholder" v-if="reading">正在加载文件，请稍候</div>
+        <placeholder-panel v-if="reading" text="正在加载文件，请稍候" />
         <div class="sub-editor-wrapper" v-show="!reading">
           <pdf-sub-editor
             v-if="pdfSubEditorUsing"
@@ -60,9 +60,7 @@
             :readonly="subEditorReadonly"
             @onContentChangeIndicatorChanged="handleTxtSubEditorContentChangeIndicatorChanged"
           />
-          <div class="placeholder" v-else>
-            未能找到扩展名为 {{ fileExtension }} 的{{ mode === 'INSPECT' ? '查看器' : '编辑器' }}
-          </div>
+          <placeholder-panel v-else :text="unsupportedSubEditorPlaceholderText" />
         </div>
       </div>
     </div>
@@ -75,6 +73,8 @@ import { computed, onMounted, onUnmounted, ref, useTemplateRef, type VNode, watc
 import { ElMessage } from 'element-plus'
 
 import { useDisplayIconWithDefaults } from '@/composables/file.ts'
+
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 
 import PdfSubEditor from './subEditors/pdfSubEditor/PdfSubEditor.vue'
 import PhotoSubEditor from './subEditors/photoSubEditor/PhotoSubEditor.vue'
@@ -261,10 +261,13 @@ const subEditorReadonly = computed<boolean>(() => {
   return !(props.mode === 'EDIT') || !(editInfo.actionLevel === 'EDIT')
 })
 
+const unsupportedSubEditorPlaceholderText = computed<string>(() => {
+  return `未能找到扩展名为 ${fileExtension.value} 的${props.mode === 'INSPECT' ? '查看器' : '编辑器'}`
+})
+
 // endregion
 
 // region PDF 子编辑器
-
 const pdfSubEditorContentChangeIndicator = ref<boolean>(false)
 
 const pdfSubEditorRef = useTemplateRef<InstanceType<typeof PdfSubEditor>>('pdfSubEditorRef')
@@ -532,19 +535,6 @@ async function doCommitFile(): Promise<void> {
 
 .main-container .editor-body:focus {
   outline: none;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .main-container .editor-body .sub-editor-wrapper {

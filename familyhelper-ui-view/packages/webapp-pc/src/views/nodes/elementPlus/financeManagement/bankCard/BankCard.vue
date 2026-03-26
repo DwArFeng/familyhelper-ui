@@ -9,7 +9,7 @@
         </div>
       </template>
       <template v-slot:default>
-        <div class="placeholder" v-show="!accountBookIndicatorValue">请选择账本</div>
+        <placeholder-panel v-show="!accountBookIndicatorValue" text="请选择账本" />
         <card-panel
           v-show="accountBookIndicatorValue"
           v-loading="bankCardCardLoading"
@@ -140,6 +140,7 @@ import { ElMessageBox, ElMessage } from 'element-plus'
 
 import { Delete as DeleteIcon, EditPen } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 import CardPanel from '@/components/elementPlus/card/cardPanel/CardPanel.vue'
@@ -515,19 +516,6 @@ async function handleBankCardEdit(item: BankCardMaintainDialogItem): Promise<voi
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .bank-card-card-container {

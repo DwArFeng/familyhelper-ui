@@ -20,7 +20,7 @@
       </template>
       <template v-slot:default>
         <div class="main-container-wrapper">
-          <div class="placeholder" v-if="fileNullFlag">未上传文件</div>
+          <placeholder-panel v-if="fileNullFlag" text="未上传文件" />
           <div class="main-container" v-else>
             <title-layout-panel class="item property-container" title="文件属性">
               <el-form class="property-form" label-position="left" label-width="80px" inline>
@@ -34,7 +34,7 @@
             </title-layout-panel>
             <el-divider direction="vertical" />
             <title-layout-panel class="item expand editor-container" title="文件编辑器">
-              <div class="placeholder" v-if="!canInspect">文件不可展示</div>
+              <placeholder-panel v-if="!canInspect" text="文件不可展示" />
               <div
                 class="placeholder"
                 v-else-if="!readonly && canEdit && isLargeFile && !userConfirmedLargeFile"
@@ -105,6 +105,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import { ElMessage } from 'element-plus'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import FileSelector from '@/components/elementPlus/file/fileSelector/FileSelector.vue'

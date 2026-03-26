@@ -1,7 +1,7 @@
 <template>
   <div class="fund-change-panel-container">
     <div class="center-panel-wrapper">
-      <div class="placeholder" v-if="accountBook === null">请选择账本</div>
+      <placeholder-panel v-if="accountBook === null" text="请选择账本" />
       <header-layout-panel class="center-panel" v-else v-loading="loading">
         <template v-slot:header>
           <div class="header-container">
@@ -207,6 +207,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { Search as SearchIcon, EditPen, Delete as DeleteIcon } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
@@ -734,19 +735,6 @@ async function handleFundChangeUpdate(item: FundChangeMaintainDialogItem): Promi
 .center-panel-wrapper {
   width: 100%;
   height: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .table-button {

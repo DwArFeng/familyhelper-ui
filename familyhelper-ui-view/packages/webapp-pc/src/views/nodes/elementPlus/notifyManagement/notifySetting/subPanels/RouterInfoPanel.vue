@@ -1,6 +1,6 @@
 <template>
   <div class="router-info-panel-container" v-loading="loading">
-    <div class="placeholder" v-if="!notifySetting">请选择通知设置</div>
+    <placeholder-panel v-if="!notifySetting" text="请选择通知设置" />
     <header-layout-panel v-else>
       <template v-slot:header>
         <div class="header-container">
@@ -46,6 +46,7 @@ import { ElForm, ElMessage } from 'element-plus'
 
 import { Search as SearchIcon } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TextEditor from '@/components/elementPlus/text/textEditor/TextEditor.vue'
 
@@ -234,19 +235,6 @@ function handleRouterSupportSelected(routerSupport: RouterSupport): void {
 .router-info-panel-container {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .header-container {

@@ -1,6 +1,6 @@
 <template>
   <div class="meta-indicator-panel-container" v-loading="loading">
-    <div class="placeholder" v-if="!topic">请选择通知设置</div>
+    <placeholder-panel v-if="!topic" text="请选择通知设置" />
     <header-layout-panel v-else>
       <template v-slot:header>
         <div class="header-container">
@@ -80,6 +80,7 @@ import { ref, watch } from 'vue'
 import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
@@ -374,19 +375,6 @@ async function handleMetaIndicatorEdit(item: MetaIndicatorMaintainDialogItem): P
 .meta-indicator-panel-container {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .header-container {

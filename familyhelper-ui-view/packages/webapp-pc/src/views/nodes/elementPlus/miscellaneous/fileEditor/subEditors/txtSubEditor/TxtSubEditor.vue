@@ -1,6 +1,6 @@
 <template>
   <div class="txt-sub-editor-container">
-    <div v-show="loading" class="placeholder">正在渲染数据，请稍候...</div>
+    <placeholder-panel v-show="loading" text="正在渲染数据，请稍候..." />
     <div v-show="!loading" class="editor">
       <el-input type="textarea" resize="none" v-model="content" :readonly="readonly" />
     </div>
@@ -9,6 +9,8 @@
 
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
+
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 
 defineOptions({
   name: 'TxtSubEditor',
@@ -108,19 +110,6 @@ watch(content, () => {
 .txt-sub-editor-container {
   width: 100%;
   height: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .editor {

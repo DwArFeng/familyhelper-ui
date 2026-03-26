@@ -1,6 +1,6 @@
 <template>
   <div class="item-note-panel-container">
-    <div class="placeholder" v-if="noteItemId === ''">请选择项目</div>
+    <placeholder-panel v-if="noteItemId === ''" text="请选择项目" />
     <div v-else class="main-container" v-loading="loading">
       <header-layout-panel>
         <template v-slot:header>
@@ -81,6 +81,7 @@ import { FamilyhelperEditor } from '@dwarfeng/familyhelper-ui-component-ckeditor
 
 import { useIconfontButtonIcon } from '@/composables/icon.ts'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import FileCreateDialog from '@/components/elementPlus/file/fileCreateDialog/FileCreateDialog.vue'
 
@@ -350,19 +351,6 @@ defineExpose({
   width: 100%;
   height: 100%;
   background: #ffffff;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .main-container {

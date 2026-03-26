@@ -1,6 +1,6 @@
 <template>
   <div class="account-book-panel-container">
-    <div class="placeholder" v-if="accountBook === null">请选择账本</div>
+    <placeholder-panel v-if="accountBook === null" text="请选择账本" />
     <div class="account-book-body" v-else>
       <div class="west-body-grid">
         <div class="details-wrapper">
@@ -124,6 +124,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import { type GeneralChartOption } from '@/components/echarts/generalChartPanel/types.ts'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
@@ -535,19 +536,6 @@ onMounted(() => {
 .account-book-panel-container {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .account-book-body {

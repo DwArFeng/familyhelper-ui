@@ -99,8 +99,8 @@
           </title-layout-panel>
           <el-divider direction="vertical" />
           <title-layout-panel class="item expand image-container" title="图片预览">
-            <div v-if="!itemTableCurrentRow" class="placeholder">请选择图片</div>
-            <div v-else-if="itemTableCurrentRow.null_flag" class="placeholder">无图片</div>
+            <placeholder-panel v-if="!itemTableCurrentRow" text="请选择图片" />
+            <placeholder-panel v-else-if="itemTableCurrentRow.null_flag" text="无图片" />
             <div class="image-wrapper" v-else v-loading="anchorImageLoading">
               <el-image class="image" fit="contain" :src="anchorImageThumbnailUrl" />
             </div>
@@ -145,6 +145,7 @@ import {
   Upload as UploadIcon,
 } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
@@ -677,19 +678,5 @@ async function handleRemove(row: TableItem): Promise<void> {
   height: 100%;
   width: 100%;
   object-fit: contain;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  line-height: 184px;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 </style>

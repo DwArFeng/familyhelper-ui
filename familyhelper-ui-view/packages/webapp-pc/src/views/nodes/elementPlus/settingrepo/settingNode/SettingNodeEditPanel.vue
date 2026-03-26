@@ -1,7 +1,7 @@
 <template>
   <div class="setting-node-edit-panel-container">
-    <div class="placeholder" v-if="loading">正在查询配置节点信息...</div>
-    <div class="placeholder" v-else-if="settingNodeInvalid">无法查看或编辑配置节点</div>
+    <placeholder-panel v-if="loading" text="正在查询配置节点信息..." />
+    <placeholder-panel v-else-if="settingNodeInvalid" text="无法查看或编辑配置节点" />
     <text-node-sub-edit-panel
       v-else-if="settingNode?.type === 0"
       :category="settingNode?.category"
@@ -44,7 +44,7 @@
       :args="settingNode?.args"
       :readonly="readonly"
     />
-    <div class="placeholder" v-else>节点类型未知，无法查看或编辑</div>
+    <placeholder-panel v-else text="节点类型未知，无法查看或编辑" />
   </div>
 </template>
 
@@ -56,6 +56,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { type NotificationHandle } from 'element-plus'
 import { ElNotification } from 'element-plus'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import TextNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/TextNodeSubEditPanel.vue'
 import ImageNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/ImageNodeSubEditPanel.vue'
 import ImageListNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/ImageListNodeSubEditPanel.vue'
@@ -224,18 +225,5 @@ onMounted(() => {
 .setting-node-edit-panel-container {
   width: 100%;
   height: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 </style>

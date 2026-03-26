@@ -56,7 +56,7 @@
         />
       </template>
       <template v-slot:default>
-        <div class="placeholder" v-show="pbTreeCurrentItem === null">请选择节点或项目</div>
+        <placeholder-panel v-show="pbTreeCurrentItem === null" text="请选择节点或项目" />
         <node-edit-panel
           v-show="pbTreeCurrentItem !== null && pbTreeCurrentItem.type === 'node'"
           :node-id="pbTreeCurrentItem?.node?.key.long_id ?? ''"
@@ -142,6 +142,7 @@ import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 
@@ -758,19 +759,6 @@ async function handlePbItemPropertyUpdated(): Promise<void> {
   display: flex;
   flex-direction: row;
   align-items: center;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .asset-bom-select {

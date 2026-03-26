@@ -1,9 +1,9 @@
 <template>
   <div class="fund-change-panel-container">
-    <div class="placeholder" v-if="accountBook === null">请选择账本</div>
+    <placeholder-panel v-if="accountBook === null" text="请选择账本" />
     <div class="fund-change-body" v-else>
       <div class="fund-change-body-grid expand">
-        <div class="placeholder" v-if="fundChangeTableAnchor === null">请选择资金变更数据</div>
+        <placeholder-panel v-if="fundChangeTableAnchor === null" text="请选择资金变更数据" />
         <div class="fund-change-body-grid-main" v-else>
           <div class="details-wrapper">
             <title-layout-panel
@@ -125,6 +125,7 @@
 import { onMounted, ref, watch } from 'vue'
 
 import { type GeneralChartOption } from '@/components/echarts/generalChartPanel/types.ts'
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import GeneralChartPanel from '@/components/echarts/generalChartPanel/GeneralChartPanel.vue'
@@ -608,19 +609,6 @@ onMounted(() => {
 .fund-change-panel-container {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .fund-change-body {

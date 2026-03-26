@@ -43,9 +43,7 @@
                 :renderer="recordChartRender"
               />
               <div class="record-panel-block carousel-panel">
-                <div class="placeholder" v-if="carouselImages.length === 0">
-                  最新记录没有上传图片
-                </div>
+                <placeholder-panel v-if="carouselImages.length === 0" text="最新记录没有上传图片" />
                 <el-carousel
                   class="el-carousel"
                   v-else
@@ -112,6 +110,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import { ElMessage } from 'element-plus'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import GeneralChartPanel from '@/components/echarts/generalChartPanel/GeneralChartPanel.vue'
@@ -561,18 +560,5 @@ onUnmounted(() => {
 .carousel-panel .el-carousel .image {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 </style>

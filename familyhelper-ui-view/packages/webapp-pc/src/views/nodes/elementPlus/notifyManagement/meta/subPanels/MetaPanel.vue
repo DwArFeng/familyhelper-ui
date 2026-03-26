@@ -1,5 +1,5 @@
 <template>
-  <div class="placeholder" v-if="propsInvalid">请选择通知设置、主题、用户</div>
+  <placeholder-panel v-if="propsInvalid" text="请选择通知设置、主题、用户" />
   <header-layout-panel v-else v-loading="loading">
     <template v-slot:header>
       <el-button type="primary" @click="metaIndicatorSelectDialogVisible = true">新建</el-button>
@@ -59,6 +59,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
@@ -382,19 +383,6 @@ async function handleMetaEdit(item: MetaMaintainDialogItem): Promise<void> {
 </script>
 
 <style scoped>
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
-}
-
 /*noinspection CssUnusedSymbol*/
 .table :deep(.single-line .cell) {
   white-space: nowrap;

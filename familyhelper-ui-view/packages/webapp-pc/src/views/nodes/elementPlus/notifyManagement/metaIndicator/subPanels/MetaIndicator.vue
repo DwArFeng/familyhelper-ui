@@ -53,17 +53,4 @@ function handleCurrentTopicChanged(value: Topic | null): void {
 .header-container .el-divider--vertical {
   margin: 0 8px;
 }
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
-}
 </style>

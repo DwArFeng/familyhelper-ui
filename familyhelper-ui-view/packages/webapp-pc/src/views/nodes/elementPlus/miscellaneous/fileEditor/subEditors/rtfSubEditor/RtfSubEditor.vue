@@ -1,6 +1,6 @@
 <template>
   <div class="rtf-sub-editor-container">
-    <div v-show="loading" class="placeholder">正在渲染数据，请稍候...</div>
+    <placeholder-panel v-show="loading" text="正在渲染数据，请稍候..." />
     <div v-show="!loading" class="editor">
       <ckeditor v-model="content" :config="config" :editor="editorClass" @ready="handleReady" />
     </div>
@@ -9,6 +9,8 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
+
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 
 import { type EditorConfig } from 'ckeditor5'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
@@ -156,19 +158,6 @@ function updateReadonly(readonly: boolean): void {
 .rtf-sub-editor-container {
   width: 100%;
   height: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .editor {

@@ -1,6 +1,6 @@
 <template>
   <div class="item-tree-panel-container">
-    <div class="placeholder" v-if="assetCatalogId === ''">请选择资产目录</div>
+    <placeholder-panel v-if="assetCatalogId === ''" text="请选择资产目录" />
     <div class="main-container" v-else>
       <lazy-search-tree-panel
         ref="treePanelRef"
@@ -34,6 +34,7 @@ import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import { Delete as DeleteIcon } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import LazySearchTreePanel from '@/components/elementPlus/tree/lazySerachTreePanel/LazySearchTreePanel.vue'
 
 import { useOperableGeneralLazySearchTreePanel } from '@/components/elementPlus/tree/lazySerachTreePanel/composables.ts'
@@ -190,19 +191,6 @@ defineExpose({
 .item-tree-panel-container {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .main-container {

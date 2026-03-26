@@ -1,6 +1,6 @@
 <template>
   <div class="pdf-sub-editor-container">
-    <div v-show="loading" class="placeholder">正在渲染数据，请稍候...</div>
+    <placeholder-panel v-show="loading" text="正在渲染数据，请稍候..." />
     <framework-panel
       v-show="!loading"
       :doc="pdfDoc as NullablePDFDocumentProxy"
@@ -14,6 +14,8 @@ import { markRaw, onMounted, ref, watch } from 'vue'
 
 import { type PDFDocumentProxy } from 'pdfjs-dist'
 import * as pdfjsLib from 'pdfjs-dist'
+
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 
 import FrameworkPanel from './FrameworkPanel.vue'
 
@@ -109,18 +111,5 @@ const pdfDoc = ref<PDFDocumentProxy | null>(null)
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 </style>

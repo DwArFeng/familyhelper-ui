@@ -1,8 +1,8 @@
 <template>
   <div class="bill-file-panel-container">
     <div class="center-panel-wrapper">
-      <div class="placeholder" v-if="!accountBook">请选择账本</div>
-      <div class="placeholder" v-else-if="!fundChange">请选择资金变更记录</div>
+      <placeholder-panel v-if="!accountBook" text="请选择账本" />
+      <placeholder-panel v-else-if="!fundChange" text="请选择资金变更记录" />
       <header-layout-panel v-else>
         <template v-slot:header>
           <div class="header-container">
@@ -95,6 +95,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { Download as DownloadIcon, Delete as DeleteIcon } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import { type ImageSelectCropInfo } from '@/components/elementPlus/image/imageSelectCropDialog/types.ts'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
@@ -375,18 +376,5 @@ async function handleBillFileUploadConfirmed(info: ImageSelectCropInfo): Promise
 .center-panel-wrapper {
   width: 100%;
   height: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 </style>

@@ -23,7 +23,7 @@
       </template>
       <template v-slot:default>
         <div class="main-container-wrapper">
-          <div class="placeholder" v-if="imageNullFlag">未上传图片</div>
+          <placeholder-panel v-if="imageNullFlag" text="未上传图片" />
           <div class="main-container" v-else>
             <title-layout-panel class="item property-container" title="图片属性">
               <el-form class="property-form" label-position="left" label-width="80px" inline>
@@ -53,6 +53,7 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
 
 import { ElMessage } from 'element-plus'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import FileSelector from '@/components/elementPlus/file/fileSelector/FileSelector.vue'
@@ -282,19 +283,6 @@ onUnmounted(() => {
 .main-container-wrapper {
   height: 100%;
   width: 100%;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .main-container {

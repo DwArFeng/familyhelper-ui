@@ -94,11 +94,11 @@
           </title-layout-panel>
           <el-divider direction="vertical" />
           <title-layout-panel class="item expand editor-container" title="文件编辑器">
-            <div v-if="!itemTableCurrentRow" class="placeholder">请选择文件</div>
-            <div v-else-if="itemTableCurrentRow.null_flag" class="placeholder">无文件</div>
-            <div v-else-if="!canInspect" class="placeholder">文件不可展示</div>
+            <placeholder-panel v-if="!itemTableCurrentRow" text="请选择文件" />
+            <placeholder-panel v-else-if="itemTableCurrentRow.null_flag" text="无文件" />
+            <placeholder-panel v-else-if="!canInspect" text="文件不可展示" />
             <div
-              class="placeholder"
+              class="placeholder-rich-block"
               v-else-if="!readonly && canEdit && isLargeFile && !userConfirmedLargeFile"
             >
               文件大小超过 5MB，编辑操作可能影响性能
@@ -108,7 +108,7 @@
               <el-link type="primary" @click="handleConfirmLargeFile"> 点击此处编辑 </el-link>
             </div>
             <div
-              class="placeholder"
+              class="placeholder-rich-block"
               v-else-if="!readonly && isLargeFile && !userConfirmedLargeFile"
             >
               该文件不可编辑，只可查看
@@ -119,7 +119,7 @@
               <br />
               <el-link type="primary" @click="handleConfirmLargeFile"> 点击此处查看 </el-link>
             </div>
-            <div class="placeholder" v-else-if="isLargeFile && !userConfirmedLargeFile">
+            <div class="placeholder-rich-block" v-else-if="isLargeFile && !userConfirmedLargeFile">
               文件大小超过 5MB，查看操作可能影响性能
               <br />
               如需继续查看，请点击下方链接
@@ -191,6 +191,7 @@ import {
   Upload as UploadIcon,
 } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
@@ -851,7 +852,7 @@ async function handleRemove(row: TableItem): Promise<void> {
   flex-direction: column;
 }
 
-.placeholder {
+.placeholder-rich-block {
   width: 100%;
   height: 100%;
   text-align: center;

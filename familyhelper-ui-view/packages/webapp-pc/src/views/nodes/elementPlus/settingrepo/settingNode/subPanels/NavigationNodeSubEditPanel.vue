@@ -93,7 +93,7 @@
               </search-tree-panel>
               <el-divider direction="vertical" />
               <div class="flex-item expand">
-                <div class="placeholder" v-if="!structureTreeCurrent">请选择导航节点</div>
+                <placeholder-panel v-if="!structureTreeCurrent" text="请选择导航节点" />
                 <el-form
                   class="property-form"
                   v-else
@@ -181,6 +181,7 @@ import { ElMessage, ElMessageBox, type FormItemRule } from 'element-plus'
 
 import { Delete as DeleteIcon, EditPen } from '@element-plus/icons-vue'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import SearchTreePanel from '@/components/elementPlus/tree/searchTreePanel/SearchTreePanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TextEditor from '@/components/elementPlus/text/textEditor/TextEditor.vue'
@@ -833,19 +834,6 @@ async function handleFormatIndex(): Promise<void> {
   height: 28px;
   width: 28px;
   padding: 7px;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .form-text-editor {
