@@ -36,6 +36,17 @@ export interface VimCompreg extends VimComponent {
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
    */
   component: (key: string) => Component | null
+
+  /**
+   * 全部 Compreg 组件。
+   *
+   * 该字段对应的值是一个函数，调用后返回一个只读的 Record<string, Component>，
+   * 表示所有已注册的 Compreg 组件与其 key 的映射关系。
+   *
+   * 该字段对应的值只能在 VIM 初始化完成后调用，
+   * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
+   */
+  components: () => Readonly<Record<string, Component>>
 }
 
 /**

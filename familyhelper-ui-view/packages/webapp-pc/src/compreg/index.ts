@@ -32,6 +32,7 @@ const compreg: VimCompreg = {
   setting: setting(),
   defaultComponent,
   component,
+  components,
 }
 
 /**
@@ -140,6 +141,18 @@ function component(key: string): Component | null {
     throw new Error('不能在 initializing 状态下获取 component')
   }
   return compregComponents[key] || null
+}
+
+/**
+ * 获取全部 Compreg 组件。
+ *
+ * @returns 全部 Compreg 组件与其 key 的映射。
+ */
+function components(): Readonly<Record<string, Component>> {
+  if (status === 'initializing') {
+    throw new Error('不能在 initializing 状态下获取 components')
+  }
+  return compregComponents
 }
 
 export default compreg
