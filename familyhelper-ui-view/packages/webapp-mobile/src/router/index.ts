@@ -230,17 +230,22 @@ function initBaseRouter(ctx: VimApplicationContext): void {
 
     // 检查路由元数据的 guard 字段。
     const guardName: string | undefined = to.meta.guard as string | undefined
+    // 如果路由没有配置权限，则跳转到内部错误页面。
     if (guardName === undefined) {
       pageErrorStore.setErrorText(noGuardNameErrorText(to))
       next({ name: 'vim.pageError' })
       return
     }
+    // 从 guards 中取出对应的 guard。
     const guard = guards[guardName]
+    // 如果 guard 不存在，则跳转到内部页面。
     if (!guard) {
       pageErrorStore.setErrorText(guardNotExistsErrorText(to, guardName))
       next({ name: 'vim.pageError' })
       return
     }
+    // 类型处理。
+    // 此处类型确实需要使用 any，故抑制警告。
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const _to: VimRouterLocation<any> = {
       name: to.name as string,
@@ -248,6 +253,7 @@ function initBaseRouter(ctx: VimApplicationContext): void {
       params: to.params,
       query: to.query,
     }
+    // 此处类型确实需要使用 any，故抑制警告。
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const _from: VimRouterLocation<any> = {
       name: from.name as string,
@@ -255,14 +261,17 @@ function initBaseRouter(ctx: VimApplicationContext): void {
       params: from.params,
       query: from.query,
     }
+    // 执行代理守卫。
     guard(_to, _from, next)
   }
 
+  // 创建 router，并设置静态路由表。
   vueRouter = createRouter({
     history: createWebHashHistory(),
     routes: [baseRoute, vimLayoutRoute, ...vimRoutes],
   })
 
+  // 添加路由守卫。
   vueRouter.beforeEach(doGuard)
 }
 
@@ -272,11 +281,14 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
       throw new Error('不应该执行到此处, 请联系开发人员')
     }
 
+    // 获取导航节点。
     const navigationStore = ctx.store().vueStore<'navigation', NavigationStore>('navigation')
     const nodeInfos: Readonly<NodeInfo[]> = Object.values(navigationStore.nodeInfos)
 
+    // 解析 VIM 布局路由表的重定向。
     vimLayoutRoute.redirect = { name: navigationStore.defaultNodeKey ?? '' }
 
+    // 重置 vim.layout 路由表。
     vueRouter.removeRoute('vim.layout')
     vimLayoutRoute.path = '/vim/layout'
     vimLayoutRoute.children = []
@@ -285,7 +297,9 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
     const visualizerStore = ctx.store().vueStore<'visualizer', VisualizerStore>('visualizer')
     const visualizerKey: string = visualizerStore.visualizerKey ?? ''
 
+    // 遍历导航节点。
     for (const nodeInfo of nodeInfos) {
+      // 如果节点没有 router 信息，则跳过。
       if (!nodeInfo.router.required) {
         continue
       }
@@ -299,6 +313,7 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
         componentParam?: Record<string, unknown>
       }
 
+      // 构建元数据。
       if (!nodeInfo.router.component) {
         throw new Error('不应该执行到此处, 请联系开发人员')
       }
@@ -320,6 +335,7 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
         componentParam: componentParam,
       }
 
+      // 构建 vim 子路由记录。
       const customCompregComponent: Component | null = ctx
         .compreg()
         .component(nodeInfo.router.component.key)
@@ -337,10 +353,13 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
         meta: meta,
       }
 
+      // 将路由记录添加到 vim 路由表中。
       vueRouter.addRoute('vim.layout', vimChildRoute)
     }
 
+    // 使用 router.replace 重新导航到当前路由，触发组件重新渲染。
     const currentRoute = vueRouter.currentRoute.value
+    // 通过 nextTick 确保在下一个事件循环中执行路由替换。
     nextTick(() => {
       vueRouter!
         .replace({
@@ -351,6 +370,7 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
     }).then(() => Promise.resolve())
   }
 
+  // 添加 vim.layout 的监视逻辑。
   const readyWatchHandle: WatchHandle = watch(ready, (value) => {
     if (!value) {
       return

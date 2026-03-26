@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块文件优化注释、文档注释格式、代码换行格式。
+  - src/router/index.ts
   - src/library/modules/simple/\*/*.vue。
   - src/store/README.md。
   - src/store/modules/*.ts。
