@@ -38,6 +38,16 @@ const compregSettings: ComponentSetting[] = [
         import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
     },
   },
+  {
+    key: 'miscellaneous.externalLink',
+    component: {
+      '': () => import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
+      elementPlus: () =>
+        import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
+    },
+  },
 ]
 
 /**

@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块实现杂项一级菜单。
+  - 实现外链二级菜单。
+
 - `webapp-pc` 子模块 hyperscript 页面新增。
   - elementPlus/hyperscript/placeholder/index.ts。
   - comvisual/hyperscript/placeholder/index.ts。

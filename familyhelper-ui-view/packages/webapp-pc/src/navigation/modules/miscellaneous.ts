@@ -68,6 +68,39 @@ const nodeSettings: NodeSetting[] = [
       },
     },
   },
+  {
+    parentKey: 'miscellaneous',
+    key: 'miscellaneous.externalLink',
+    index: 20,
+    display: {
+      '': {
+        label: '外链',
+      },
+      comvisual: {
+        label: '外链',
+      },
+      elementPlus: {
+        label: '外链',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'miscellaneous/external-link',
+      component: {
+        key: 'miscellaneous.externalLink',
+      },
+    },
+  },
 ]
 
 /**
