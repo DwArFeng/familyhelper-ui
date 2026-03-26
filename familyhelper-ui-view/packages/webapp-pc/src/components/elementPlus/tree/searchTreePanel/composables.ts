@@ -6,7 +6,8 @@ import { type ComponentExposed } from 'vue-component-type-helpers'
 import { type ManagedBean } from './types.ts'
 import SearchTreePanel from './SearchTreePanel.vue'
 
-// -----------------------------------------------------------自定义-----------------------------------------------------------
+// region 自定义
+
 type UseCustomSearchTreePanelResult<T, CT> = {
   items: Ref<CT[]>
   updateByLookup: (res: T[]) => void
@@ -176,7 +177,10 @@ export function useOperableIdentityCustomSearchTreePanel<T>(
   return useOperableCustomSearchTreePanel((t: T) => t, mergeHandler, searchTreePanelRef)
 }
 
-// -----------------------------------------------------------托管-公共-----------------------------------------------------------
+// endregion
+
+// region 托管-公共
+
 type GetCustomAttributeResult<T, CT> = {
   items: Ref<CT[]>
   updateByLookup: (res: T[]) => void
@@ -199,7 +203,10 @@ function getCustomAttribute<T, CT>(
   } as GetCustomAttributeResult<T, CT>
 }
 
-// -----------------------------------------------------------托管-----------------------------------------------------------
+// endregion
+
+// region 托管
+
 type UseManagedSearchTreePanelResult<T, PT> = {
   keyField: 'key'
   labelField: 'label'
@@ -328,7 +335,10 @@ export function useOperableManagedSearchTreePanel<T, PT>(
   } as UseOperableManagedSearchTreePanelResult<T, PT>
 }
 
-// -----------------------------------------------------------托管-公共-----------------------------------------------------------
+// endregion
+
+// region 托管-公共
+
 type GetManagedAttributeResult<T, PT> = {
   keyField: 'key'
   labelField: 'label'
@@ -461,3 +471,5 @@ function getManagedAttribute<T, PT>(
     updateByLookup,
   } as GetManagedAttributeResult<T, PT>
 }
+
+// endregion

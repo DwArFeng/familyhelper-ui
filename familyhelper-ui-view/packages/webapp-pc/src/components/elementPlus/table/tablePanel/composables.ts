@@ -6,7 +6,8 @@ import { computed, ref } from 'vue'
 import { type PagingInfo } from '@dwarfeng/familyhelper-ui-component-api/src/util/request.ts'
 import { type PagedData } from '@dwarfeng/familyhelper-ui-component-api/src/util/response.ts'
 
-// -----------------------------------------------------------后端分页-----------------------------------------------------------
+// region 后端分页
+
 type UseBackendPagingTablePanelResult<T, CT> = {
   currentPage: Ref<number>
   pageSize: Ref<number>
@@ -100,7 +101,10 @@ export function useIdentityBackendPagingTablePanel<T>(
   return useBackendPagingTablePanel<T, T>((t) => t, initialPageSize)
 }
 
-// -----------------------------------------------------------前端分页-----------------------------------------------------------
+// endregion
+
+// region 前端分页
+
 type UseFrontendPagingTablePanelResult<T, CT> = {
   currentPage: Ref<number>
   pageSize: Ref<number>
@@ -207,3 +211,5 @@ export function useIdentityFrontendPagingTablePanel<T>(
 ): UseFrontendPagingTablePanelResult<T, T> {
   return useFrontendPagingTablePanel<T, T>((t) => t, initialPageSize)
 }
+
+// endregion

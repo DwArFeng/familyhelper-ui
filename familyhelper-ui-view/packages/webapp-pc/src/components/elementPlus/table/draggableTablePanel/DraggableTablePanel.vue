@@ -156,7 +156,8 @@ defineOptions({
   name: 'DraggableTablePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type RowKey =
   | keyof {
       [K in keyof CT as CT[K] extends string ? K : never]: unknown
@@ -217,7 +218,10 @@ const props = withDefaults(defineProps<Props>(), {
   cellClassName: '',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:items', items: CT[]): void
   (e: 'onItemOrderChanged', items: CT[]): void
@@ -231,7 +235,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 type OperateColumnSlotProps = {
   row: CT
   // 此处 any 是 element-plus 使用的类型，故忽略类型警告。
@@ -269,7 +276,10 @@ defineSlots<{
   contextmenu?: (props: ContextmenuSlotProps) => any
 }>()
 
-// -----------------------------------------------------------拖拽处理-----------------------------------------------------------
+// endregion
+
+// region 拖拽处理
+
 const elTableRef = useTemplateRef<InstanceType<typeof ElTable>>('elTableRef')
 
 let sortable: Sortable | null = null
@@ -326,7 +336,10 @@ function setSort(): void {
   })
 }
 
-// -----------------------------------------------------------选择/选区处理-----------------------------------------------------------
+// endregion
+
+// region 选择/选区处理
+
 function handleTableRowClick(row: CT): void {
   emit('onRowClick', row)
 }
@@ -339,7 +352,10 @@ function handleTableSelectionChange(selection: CT[]): void {
   emit('onSelectionChanged', selection)
 }
 
-// -----------------------------------------------------------操作列处理-----------------------------------------------------------
+// endregion
+
+// region 操作列处理
+
 function handleOperateColumnItemInspect(item: CT, index: number): void {
   emit('onItemInspect', item, index)
 }
@@ -384,7 +400,10 @@ function handleContextmenuItemMoveEnd(_item: CT, index: number): void {
   emit('onItemOrderChanged', _tempItems)
 }
 
-// -----------------------------------------------------------上下文菜单处理-----------------------------------------------------------
+// endregion
+
+// region 上下文菜单处理
+
 const contextmenuVisible = ref<boolean>(false)
 const contextmenuLeft = ref<number>(0)
 const contextmenuTop = ref<number>(0)
@@ -478,6 +497,8 @@ function handleContextmenuItemDelete(item: CT, index: number): void {
   contextmenuClose()
   emit('onItemDelete', item, index)
 }
+
+// endregion
 </script>
 
 <style scoped>

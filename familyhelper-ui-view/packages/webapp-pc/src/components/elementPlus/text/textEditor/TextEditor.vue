@@ -60,7 +60,8 @@ defineOptions({
   name: 'TextEditor',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   modelValue: string
   readonly?: boolean
@@ -70,14 +71,20 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:modelValue', value: string): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 type AddonSlotProps = {
   replace: (value: string) => void
 }
@@ -88,7 +95,10 @@ defineSlots<{
   addon?: (props: AddonSlotProps) => any
 }>()
 
-// -----------------------------------------------------------值处理逻辑-----------------------------------------------------------
+// endregion
+
+// region 值处理逻辑
+
 const watchedModelValue = ref(props.modelValue)
 
 watch(
@@ -109,7 +119,10 @@ onMounted(() => {
   watchedModelValue.value = props.modelValue
 })
 
-// -----------------------------------------------------------模式处理-----------------------------------------------------------
+// endregion
+
+// region 模式处理
+
 type Mode = 'plain' | 'json'
 type ModeOption = { value: Mode; label: string }
 
@@ -119,7 +132,10 @@ const selectorOptions = ref<ModeOption[]>([
   { value: 'json', label: 'JSON' },
 ])
 
-// -----------------------------------------------------------文本操作-----------------------------------------------------------
+// endregion
+
+// region 文本操作
+
 function handleCopy(): void {
   navigator.clipboard.writeText(watchedModelValue.value).then(() => {
     ElMessage({
@@ -133,6 +149,8 @@ function handleCopy(): void {
 function addonReplace(value: string): void {
   watchedModelValue.value = value
 }
+
+// endregion
 </script>
 
 <style scoped>

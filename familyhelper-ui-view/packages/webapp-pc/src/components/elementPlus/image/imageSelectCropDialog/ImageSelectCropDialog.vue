@@ -61,7 +61,8 @@ defineOptions({
   name: 'ImageUploadCropDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   title?: string
@@ -85,7 +86,10 @@ const props = withDefaults(defineProps<Props>(), {
   loading: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', info: ImageSelectCropInfo): void
@@ -93,7 +97,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = computed<boolean>(() => {
   if (typeof props.loading === 'number') {
     return props.loading > 0
@@ -101,7 +108,10 @@ const loading = computed<boolean>(() => {
   return props.loading
 })
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -122,7 +132,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------显示处理-----------------------------------------------------------
+// endregion
+
+// region 显示处理
+
 function handleOpen(): void {
   if (imageUrl.value === null) {
     return
@@ -141,7 +154,10 @@ function handleClosed(): void {
   imageFileName.value = null
 }
 
-// -----------------------------------------------------------文件选择器-----------------------------------------------------------
+// endregion
+
+// region 文件选择器
+
 const fileSelectorFileTester = computed<FileTester>(() => {
   return (file: File) => {
     if (!/\.(jpg|jpeg|png|JPG|PNG)$/.test(file.name)) {
@@ -167,7 +183,10 @@ function handleFileSelected(files: File[]): void {
   imageFileName.value = file.name
 }
 
-// -----------------------------------------------------------图片编辑器-----------------------------------------------------------
+// endregion
+
+// region 图片编辑器
+
 const imageUrl = ref<string | null>(null)
 const imageFileName = ref<string | null>(null)
 
@@ -182,7 +201,10 @@ onUnmounted(() => {
   imageFileName.value = null
 })
 
-// -----------------------------------------------------------确认逻辑-----------------------------------------------------------
+// endregion
+
+// region 确认逻辑
+
 async function handleConfirmButtonClicked(): Promise<void> {
   if (!imageUrl.value) {
     throw new Error('不应该执行到此处，请联系开发人员')
@@ -221,6 +243,8 @@ async function handleHotKeyDown(): Promise<void> {
   const _blob: Blob = await _blobPromise
   emit('onConfirmed', { blob: _blob, name: imageFileName.value })
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -5,7 +5,8 @@ import { ref } from 'vue'
 
 import { type DockStatus, type UserPreference, type VisualField } from './types.ts'
 
-// -----------------------------------------------------------通用-----------------------------------------------------------
+// region 通用
+
 export type UseGeneralFloatyDialogResult = {
   visible: Ref<boolean>
   initialX: Ref<number>
@@ -69,7 +70,10 @@ export function useGeneralFloatyDialog(
   } as UseGeneralFloatyDialogResult
 }
 
-// -----------------------------------------------------------用户偏好-----------------------------------------------------------
+// endregion
+
+// region 用户偏好
+
 export type UseUserPreferenceFloatyDialogResult = {
   visible: Ref<boolean>
   initialX: Ref<number>
@@ -175,3 +179,5 @@ export function useUserPreferenceFloatyDialog(
     applyUserPreference,
   } as UseUserPreferenceFloatyDialogResult
 }
+
+// endregion

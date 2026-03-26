@@ -128,7 +128,8 @@ defineOptions({
   name: 'SearchTreePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   /**
    * 树节点标识字段。
@@ -185,7 +186,10 @@ const props = withDefaults(defineProps<Props>(), {
   searchFilterHandler: () => false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onItemInspect', item: CT, node: TreeNode<CT>): void
   (e: 'onItemEdit', item: CT, node: TreeNode<CT>): void
@@ -195,7 +199,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 type DefaultSlotProps = {
   node: TreeNode<CT> | null
   item: CT
@@ -217,7 +224,10 @@ defineSlots<{
   operateArea?: (props: OperateAreaSlotProps) => any
 }>()
 
-// -----------------------------------------------------------Tree 数据处理-----------------------------------------------------------
+// endregion
+
+// region Tree 数据处理
+
 watch(
   () => props.items,
   () => {
@@ -235,7 +245,10 @@ watch(
   { deep: true },
 )
 
-// -----------------------------------------------------------Tree 处理-----------------------------------------------------------
+// endregion
+
+// region Tree 处理
+
 const treeOperateAreaHover = ref<boolean>(false)
 
 const treeProps = computed(() => {
@@ -300,7 +313,10 @@ defineExpose({
   setCurrent,
 })
 
-// -----------------------------------------------------------搜索处理-----------------------------------------------------------
+// endregion
+
+// region 搜索处理
+
 type PathBean = { key: string; bean: CT; path: CT[] }
 
 const searchBarValue = ref<PathBean | null>(null)
@@ -451,7 +467,10 @@ function handleSelectPopupScrolled(): void {
   updatePathIndicator()
 }
 
-// -----------------------------------------------------------PathIndicator 处理-----------------------------------------------------------
+// endregion
+
+// region PathIndicator 处理
+
 const pathIndicatorVisible = ref<boolean>(false)
 const pathIndicatorAnchorIndex = ref<number>(-1)
 const pathIndicatorContent = ref<string>('')
@@ -576,7 +595,10 @@ onMounted(() => {
   )
 })
 
-// -----------------------------------------------------------操作区域处理-----------------------------------------------------------
+// endregion
+
+// region 操作区域处理
+
 function handleOperateAreaItemInspect(item: CT, node: TreeNode<CT>): void {
   emit('onItemInspect', item, node)
 }
@@ -588,6 +610,8 @@ function handleOperateAreaItemEdit(item: CT, node: TreeNode<CT>): void {
 function handleOperateAreaItemDelete(item: CT, node: TreeNode<CT>): void {
   emit('onItemDelete', item, node)
 }
+
+// endregion
 </script>
 
 <style scoped>

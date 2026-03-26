@@ -78,7 +78,8 @@ defineOptions({
   name: 'ImageCropper',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   imageUrl: string
   outputSize?: number
@@ -98,7 +99,10 @@ const props = withDefaults(defineProps<Props>(), {
   enlarge: 1,
 })
 
-// -----------------------------------------------------------样式处理-----------------------------------------------------------
+// endregion
+
+// region 样式处理
+
 const cropperMinHeight = computed<string>(() => {
   return `max(${props.cropperHeight}px, ${props.cropBoxHeight}px)`
 })
@@ -106,7 +110,10 @@ const cropperMinWidth = computed<string>(() => {
   return `max(${props.cropperWidth}px, ${props.cropBoxWidth}px)`
 })
 
-// -----------------------------------------------------------主容器处理-----------------------------------------------------------
+// endregion
+
+// region 主容器处理
+
 const mainContainerRef = useTemplateRef<HTMLElement>('mainContainerRef')
 
 function handleCropperFocus(): void {
@@ -116,7 +123,10 @@ function handleCropperFocus(): void {
   mainContainerRef.value.focus()
 }
 
-// -----------------------------------------------------------Cropper 处理-----------------------------------------------------------
+// endregion
+
+// region Cropper 处理
+
 const cropperRef = useTemplateRef<InstanceType<typeof VueCropper>>('cropperRef')
 
 function handleCropperZoomIn(): void {
@@ -154,7 +164,10 @@ function handleCropperReload(): void {
   cropperRef.value.reload()
 }
 
-// -----------------------------------------------------------热键处理-----------------------------------------------------------
+// endregion
+
+// region 热键处理
+
 function handleHotKeyDown(event: KeyboardEvent): void {
   if (props.imageUrl === '') {
     return
@@ -183,7 +196,10 @@ function handleHotKeyDown(event: KeyboardEvent): void {
   }
 }
 
-// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+// endregion
+
+// region 方法暴露
+
 function getCropBlob(callback: (blob: Blob) => void): void {
   if (!cropperRef.value) {
     throw new Error('不应该执行到此处, 请联系开发人员')
@@ -202,6 +218,8 @@ defineExpose({
   getCropBlob,
   reload,
 })
+
+// endregion
 </script>
 
 <style scoped>

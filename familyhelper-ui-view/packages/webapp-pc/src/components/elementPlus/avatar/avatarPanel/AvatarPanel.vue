@@ -30,7 +30,8 @@ defineOptions({
   name: 'AvatarPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   renderMode?: 'BY_ID' | 'BY_CONTENT'
   shape?: 'square' | 'circle'
@@ -160,6 +161,8 @@ onUnmounted(() => {
     window.URL.revokeObjectURL(url)
   }
 })
+
+// endregion
 </script>
 
 <style scoped>

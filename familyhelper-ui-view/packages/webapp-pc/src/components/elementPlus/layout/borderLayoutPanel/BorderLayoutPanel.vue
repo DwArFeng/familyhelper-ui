@@ -60,7 +60,8 @@ defineOptions({
   name: 'BorderLayoutPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   breadcrumb?: string[]
   headerVisible?: boolean
@@ -89,7 +90,10 @@ const props = withDefaults(defineProps<Props>(), {
   destroyEastOnHide: true,
 })
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 defineSlots<{
   // 参数 props: {} 是 vue 约定的类型，故忽略类型警告。
   // 返回值 any 是 vue 约定的类型，故忽略类型警告。
@@ -113,7 +117,10 @@ defineSlots<{
   footer?: (props: {}) => any
 }>()
 
-// -----------------------------------------------------------V-IF 处理-----------------------------------------------------------
+// endregion
+
+// region V-IF 处理
+
 const headerVictorIf = computed(() => {
   if (!props.destroyHeaderOnHide) {
     return true
@@ -142,7 +149,10 @@ const eastVictorIf = computed(() => {
   return props.eastVisible
 })
 
-// -----------------------------------------------------------V-SHOW 处理-----------------------------------------------------------
+// endregion
+
+// region V-SHOW 处理
+
 const headerVictorShow = computed(() => {
   if (props.destroyHeaderOnHide) {
     return true
@@ -170,6 +180,8 @@ const eastVictorShow = computed(() => {
   }
   return props.eastVisible
 })
+
+// endregion
 </script>
 
 <style scoped>

@@ -50,7 +50,8 @@ defineOptions({
   name: 'MaintainDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   item?: CT
@@ -89,7 +90,10 @@ const props = withDefaults(defineProps<Props>(), {
   customClass: '',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onItemCreate', item: CT): void
@@ -98,7 +102,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 defineSlots<{
   // 参数 props: {} 是 vue 约定的类型，故忽略类型警告。
   // 返回值 any 是 vue 约定的类型，故忽略类型警告。
@@ -106,7 +113,10 @@ defineSlots<{
   default?: (props: {}) => any
 }>()
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -127,7 +137,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = computed<boolean>(() => {
   if (typeof props.loading === 'number') {
     return props.loading > 0
@@ -135,7 +148,10 @@ const loading = computed<boolean>(() => {
   return props.loading
 })
 
-// -----------------------------------------------------------标题/按钮标签处理-----------------------------------------------------------
+// endregion
+
+// region 标题/按钮标签处理
+
 const title = computed(() => {
   switch (props.mode) {
     case 'CREATE':
@@ -173,7 +189,10 @@ const secondButtonLabel = computed(() => {
   }
 })
 
-// -----------------------------------------------------------规则处理-----------------------------------------------------------
+// endregion
+
+// region 规则处理
+
 const rules = computed<FormRules | undefined>(() => {
   switch (props.mode) {
     case 'CREATE':
@@ -187,10 +206,16 @@ const rules = computed<FormRules | undefined>(() => {
   }
 })
 
-// -----------------------------------------------------------表单引用-----------------------------------------------------------
+// endregion
+
+// region 表单引用
+
 const formRef = useTemplateRef<InstanceType<typeof ElForm>>('formRef')
 
-// -----------------------------------------------------------模式处理-----------------------------------------------------------
+// endregion
+
+// region 模式处理
+
 watch(
   () => props.mode,
   () => {
@@ -201,7 +226,10 @@ watch(
   },
 )
 
-// -----------------------------------------------------------按钮事件处理-----------------------------------------------------------
+// endregion
+
+// region 按钮事件处理
+
 function handleFirstButtonClicked(): void {
   if (!formRef.value) {
     throw new Error('不应该执行到此处, 请联系开发人员')
@@ -254,6 +282,8 @@ function handleHotKeyDown(): void {
     default:
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -17,7 +17,8 @@ defineOptions({
   name: 'PlainSubEditor',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   modelValue: string
   readonly?: boolean
@@ -27,14 +28,20 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:modelValue', value: string): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------值处理逻辑-----------------------------------------------------------
+// endregion
+
+// region 值处理逻辑
+
 const watchedModelValue = ref(props.modelValue)
 
 watch(
@@ -54,6 +61,8 @@ watch(
 onMounted(() => {
   watchedModelValue.value = props.modelValue
 })
+
+// endregion
 </script>
 
 <style scoped>

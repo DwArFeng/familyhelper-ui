@@ -8,7 +8,8 @@ import { type TreeNode } from '@/components/elementPlus/tree/commons/types.ts'
 import { type HybridBean, type HybridBeanMap } from './types.ts'
 import LazySearchTreePanel from './LazySearchTreePanel.vue'
 
-// -----------------------------------------------------------通用-----------------------------------------------------------
+// region 通用
+
 type UseGeneralLazySearchTreePanelResult<CT> = {
   searchOptionHandler: (pattern: string, accept: (result: CT[]) => void) => void
   loadRootHandler: (accept: (result: CT[]) => void) => void
@@ -107,7 +108,10 @@ export function useIdentityGeneralLazySearchTreePanel<T>(
   }
 }
 
-// -----------------------------------------------------------通用-带操作方法-----------------------------------------------------------
+// endregion
+
+// region 通用-带操作方法
+
 type UseOperableGeneralLazySearchTreePanel<T, CT> = {
   searchOptionHandler: (pattern: string, accept: (result: CT[]) => void) => void
   loadRootHandler: (accept: (result: CT[]) => void) => void
@@ -318,7 +322,10 @@ export function useOperableIdentityGeneralLazySearchTreePanel<T>(
   )
 }
 
-// -----------------------------------------------------------通用-公共-----------------------------------------------------------
+// endregion
+
+// region 通用-公共
+
 type GetGeneralLoadingHandlerResult<CT> = {
   searchOptionHandler: (pattern: string, accept: (result: CT[]) => void) => void
   loadRootHandler: (accept: (result: CT[]) => void) => void
@@ -385,7 +392,10 @@ function getGeneralLoadingHandler<T, CT>(
   }
 }
 
-// -----------------------------------------------------------混合-----------------------------------------------------------
+// endregion
+
+// region 混合
+
 type UseHybridLazySearchTreePanelResult<CT> = {
   searchOptionHandler: (pattern: string, accept: (result: CT[]) => void) => void
   loadRootHandler: (accept: (result: CT[]) => void) => void
@@ -446,7 +456,10 @@ export function useHybridLazySearchTreePanel<T, CT>(
   }
 }
 
-// -----------------------------------------------------------混合-带操作方法-----------------------------------------------------------
+// endregion
+
+// region 混合-带操作方法
+
 type UseOperableHybridLazySearchTreePanelResult<T, CT> = {
   searchOptionHandler: (pattern: string, accept: (result: CT[]) => void) => void
   loadRootHandler: (accept: (result: CT[]) => void) => void
@@ -600,7 +613,10 @@ export function useOperableHybridLazySearchTreePanel<T, CT>(
   }
 }
 
-// -----------------------------------------------------------混合-公共-----------------------------------------------------------
+// endregion
+
+// region 混合-公共
+
 type GetHybridLoadingHandlerResult<CT> = {
   searchOptionHandler: (pattern: string, accept: (result: CT[]) => void) => void
   loadRootHandler: (accept: (result: CT[]) => void) => void
@@ -690,3 +706,5 @@ function getHybridLoadingHandler<T, CT>(
     queryPathHandler,
   }
 }
+
+// endregion

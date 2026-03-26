@@ -35,7 +35,8 @@ defineOptions({
   name: 'DefaultTreeOperateAreaSlot',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   inspectButtonVisible?: boolean
   editButtonVisible?: boolean
@@ -50,7 +51,10 @@ const props = withDefaults(defineProps<Props>(), {
   deleteButtonVisible: true,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (event: 'onItemInspect', item: CT, node: TreeNode<CT>): void
   (event: 'onItemEdit', item: CT, node: TreeNode<CT>): void
@@ -59,7 +63,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------事件处理-----------------------------------------------------------
+// endregion
+
+// region 事件处理
+
 function handleItemInspect(): void {
   emit('onItemInspect', props.item, props.node)
 }
@@ -71,6 +78,8 @@ function handleItemEdit(): void {
 function handleItemDelete(): void {
   emit('onItemDelete', props.item, props.node)
 }
+
+// endregion
 </script>
 
 <style scoped>

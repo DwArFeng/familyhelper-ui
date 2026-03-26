@@ -149,7 +149,8 @@ defineOptions({
   name: 'CardPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   cardWidth?: number | string
   cardHeight?: number | string
@@ -190,7 +191,10 @@ const props = withDefaults(defineProps<Props>(), {
   deleteMenuItemVisible: true,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onItemInspect', item: CT, index: number): void
   (e: 'onItemEdit', item: CT, index: number): void
@@ -202,7 +206,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 type DefaultSlotProps = {
   item: CT
   index: number
@@ -237,7 +244,10 @@ defineSlots<{
   contextmenu?: (props: ContextmenuSlotProps) => any
 }>()
 
-// -----------------------------------------------------------卡片样式-----------------------------------------------------------
+// endregion
+
+// region 卡片样式
+
 const bodyStyle = ref({
   width: '100%',
   height: '100%',
@@ -259,7 +269,10 @@ const cardStyle = computed(() => {
   return { width, height }
 })
 
-// -----------------------------------------------------------卡片头部-----------------------------------------------------------
+// endregion
+
+// region 卡片头部
+
 function parseTitle(item: CT): string {
   if (props.titleField === '') {
     return ''
@@ -279,7 +292,10 @@ function handleHeaderItemDelete(item: CT, index: number): void {
   emit('onItemDelete', item, index)
 }
 
-// -----------------------------------------------------------卡片选区-----------------------------------------------------------
+// endregion
+
+// region 卡片选区
+
 const singleSelectionIndex = ref<number>(-1)
 const multiSelectionIndex = ref<number[]>([])
 
@@ -319,12 +335,18 @@ function handleCardBodyClicked(index: number): void {
   }
 }
 
-// -----------------------------------------------------------卡片体-----------------------------------------------------------
+// endregion
+
+// region 卡片体
+
 function handleAddButtonClicked(): void {
   emit('onItemAdd')
 }
 
-// -----------------------------------------------------------菜单逻辑-----------------------------------------------------------
+// endregion
+
+// region 菜单逻辑
+
 const contextmenuVisible = ref<boolean>(false)
 const contextmenuLeft = ref<number>(0)
 const contextmenuTop = ref<number>(0)
@@ -408,6 +430,8 @@ function handleContextmenuItemDelete(item: CT, index: number): void {
   contextmenuClose()
   emit('onItemDelete', item, index)
 }
+
+// endregion
 </script>
 
 <style scoped>

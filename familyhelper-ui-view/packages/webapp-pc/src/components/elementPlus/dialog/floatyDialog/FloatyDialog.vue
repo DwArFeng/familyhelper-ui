@@ -182,7 +182,8 @@ defineOptions({
   name: 'FloatyDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   iconVisible?: boolean
@@ -220,7 +221,10 @@ const props = withDefaults(defineProps<Props>(), {
   initialContentOpacity: 100,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onVisualFieldAdjusted', visualField: VisualField): void
@@ -229,7 +233,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 defineSlots<{
   // 参数 props: {} 是 vue 约定的类型，故忽略类型警告。
   // 返回值 any 是 vue 约定的类型，故忽略类型警告。
@@ -241,7 +248,10 @@ defineSlots<{
   icon?: (props: {}) => any
 }>()
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref<boolean>(props.visible)
 const key = ref<number>(0)
 
@@ -280,7 +290,10 @@ function handleClose(): void {
   })
 }
 
-// -----------------------------------------------------------显示参数-----------------------------------------------------------
+// endregion
+
+// region 显示参数
+
 const x = ref<number>(props.initialX)
 const y = ref<number>(props.initialY)
 const height = ref<number>(props.initialHeight)
@@ -391,7 +404,10 @@ watch(
   },
 )
 
-// -----------------------------------------------------------样式处理-----------------------------------------------------------
+// endregion
+
+// region 样式处理
+
 const maskCursor = ref<string>('auto')
 
 const containerStyle = computed(() => {
@@ -487,7 +503,10 @@ function inspectCursorStyle(event: MouseEvent): string {
   return window.getComputedStyle(event.target as Element, '::after').getPropertyValue('cursor')
 }
 
-// -----------------------------------------------------------移动/尺寸调整计算-----------------------------------------------------------
+// endregion
+
+// region 移动/尺寸调整计算
+
 const xCopy = ref<number>(0)
 const yCopy = ref<number>(0)
 const heightCopy = ref<number>(0)
@@ -725,7 +744,10 @@ function southEastResizingHandle(dX: number, dY: number): void {
   southResizingHandle(dX, dY)
 }
 
-// -----------------------------------------------------------上下文菜单-----------------------------------------------------------
+// endregion
+
+// region 上下文菜单
+
 /*
  * contextMenuStatus 代码含义:
  *   0: 未弹出菜单。
@@ -788,7 +810,10 @@ function doCloseContextMenu(): void {
   contextMenuStatus.value = 0
 }
 
-// -----------------------------------------------------------停靠-----------------------------------------------------------
+// endregion
+
+// region 停靠
+
 const backupX = ref<number>(0)
 const backupY = ref<number>(0)
 const backupHeight = ref<number>(0)
@@ -897,7 +922,10 @@ function resumeVisualField(): void {
   width.value = backupWidth.value
 }
 
-// -----------------------------------------------------------全局（窗体）尺寸检测-----------------------------------------------------------
+// endregion
+
+// region 全局（窗体）尺寸检测
+
 let bodyResizeObserver: ResizeObserver | null = null
 let resizeTimeout: number = 0
 
@@ -934,6 +962,8 @@ onMounted(() => {
 onUnmounted(() => {
   removeBodyResizeListener()
 })
+
+// endregion
 </script>
 
 <style scoped>

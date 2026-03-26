@@ -5,7 +5,8 @@ import { computed, ref } from 'vue'
 
 import { type ExtensionFilter } from './types.ts'
 
-// -----------------------------------------------------------特定扩展名-----------------------------------------------------------
+// region 特定扩展名
+
 export type UseSpecifiedExtensionFileCreateDialogResult = {
   visible: Ref<boolean>
   filter: ComputedRef<ExtensionFilter>
@@ -75,3 +76,5 @@ export function useSpecifiedExtensionsFileCreateDialog(
     filter: _filter,
   } as UseSpecifiedExtensionsFileCreateDialogResult
 }
+
+// endregion

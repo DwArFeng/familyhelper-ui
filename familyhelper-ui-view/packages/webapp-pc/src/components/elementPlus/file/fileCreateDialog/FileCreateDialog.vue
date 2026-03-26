@@ -78,7 +78,8 @@ defineOptions({
   name: 'FileCreateDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   title?: string
@@ -93,7 +94,10 @@ const props = withDefaults(defineProps<Props>(), {
   loading: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', info: FileCreateInfo): void
@@ -101,10 +105,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// endregion
+
+// region Store 引入
+
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = computed<boolean>(() => {
   if (typeof props.loading === 'number') {
     return props.loading > 0
@@ -112,7 +122,10 @@ const loading = computed<boolean>(() => {
   return props.loading
 })
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -133,7 +146,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------逻辑处理-----------------------------------------------------------
+// endregion
+
+// region 逻辑处理
+
 const selectedIndex = ref<number>(0)
 const fileName = ref<string>('')
 
@@ -177,7 +193,10 @@ watch(
   },
 )
 
-// -----------------------------------------------------------对话框处理-----------------------------------------------------------
+// endregion
+
+// region 对话框处理
+
 function handleConfirmButtonClicked(): void {
   if (props.loading || fileName.value === '' || currentCreateInfo.value === null) {
     throw new Error('不应该执行到此处, 请联系开发人员')
@@ -201,6 +220,8 @@ function handleHotKeyDown(): void {
   const fileCreateInfo: FileCreateInfo = { blob, name }
   emit('onConfirmed', fileCreateInfo)
 }
+
+// endregion
 </script>
 
 <style scoped>

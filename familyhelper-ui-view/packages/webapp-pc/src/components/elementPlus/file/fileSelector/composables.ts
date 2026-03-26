@@ -5,7 +5,8 @@ import { computed, ref } from 'vue'
 
 import { type FileTester } from './types.ts'
 
-// -----------------------------------------------------------通用-----------------------------------------------------------
+// region 通用
+
 export type UseGeneralFileSelectorResult = {
   tester: Ref<FileTester>
   accept: ComputedRef<string>
@@ -40,7 +41,10 @@ export function useGeneralFileSelector(): UseGeneralFileSelectorResult {
   } as UseGeneralFileSelectorResult
 }
 
-// -----------------------------------------------------------图片-----------------------------------------------------------
+// endregion
+
+// region 图片
+
 export type UseImageFileSelectorResult = {
   tester: Ref<FileTester>
   accept: ComputedRef<string>
@@ -77,3 +81,5 @@ export function useImageFileSelector(): UseImageFileSelectorResult {
     accept,
   } as UseImageFileSelectorResult
 }
+
+// endregion

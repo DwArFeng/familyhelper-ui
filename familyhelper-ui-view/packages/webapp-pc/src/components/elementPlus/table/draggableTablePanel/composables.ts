@@ -3,7 +3,8 @@
 import { type Ref } from 'vue'
 import { ref } from 'vue'
 
-// -----------------------------------------------------------通用-----------------------------------------------------------
+// region 通用
+
 type UseGeneralPagingTablePanelResult<T, CT> = {
   items: Ref<CT[]>
   updateByLookup: (res: T[]) => void
@@ -61,3 +62,5 @@ export function useGeneralDraggableTablePanel<T, CT>(
 export function useIdentityGeneralDraggableTablePanel<T>(): UseGeneralPagingTablePanelResult<T, T> {
   return useGeneralDraggableTablePanel<T, T>((t) => t)
 }
+
+// endregion

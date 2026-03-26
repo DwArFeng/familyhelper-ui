@@ -149,7 +149,8 @@ defineOptions({
   name: 'LazySearchTreePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   /**
    * 树节点标识字段。
@@ -221,7 +222,10 @@ const props = withDefaults(defineProps<Props>(), {
   },
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onItemInspect', item: CT, node: TreeNode<CT>): void
   (e: 'onItemEdit', item: CT, node: TreeNode<CT>): void
@@ -231,7 +235,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 type DefaultSlotProps = {
   node: TreeNode<CT> | null
   item: CT
@@ -253,10 +260,16 @@ defineSlots<{
   operateArea?: (props: OperateAreaSlotProps) => any
 }>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------初始化/重置逻辑-----------------------------------------------------------
+// endregion
+
+// region 初始化/重置逻辑
+
 function handleLoadRoot(): void {
   // 构造 accept 函数。
   const accept = (res: CT[]) => {
@@ -286,7 +299,10 @@ onMounted(() => {
   handleLoadRoot()
 })
 
-// -----------------------------------------------------------Tree 处理-----------------------------------------------------------
+// endregion
+
+// region Tree 处理
+
 const treeRoot = ref<CT[]>([]) as Ref<CT[]>
 const treeOperateAreaHover = ref<boolean>(false)
 
@@ -450,7 +466,10 @@ defineExpose({
   refresh,
 })
 
-// -----------------------------------------------------------SearchBar 处理-----------------------------------------------------------
+// endregion
+
+// region SearchBar 处理
+
 const searchBarLoading = ref<number>(0)
 const searchBarValue = ref<CT | null>(null)
 const searchBarOptions = ref<CT[]>([]) as Ref<CT[]>
@@ -642,7 +661,10 @@ function handleSelectPopupScrolled(): void {
   updatePathIndicator()
 }
 
-// -----------------------------------------------------------PathIndicator 处理-----------------------------------------------------------
+// endregion
+
+// region PathIndicator 处理
+
 const pathIndicatorLoading = ref<number>(0)
 const pathIndicatorVisible = ref<boolean>(false)
 const pathIndicatorAnchorIndex = ref<number>(-1)
@@ -785,7 +807,10 @@ onMounted(() => {
   )
 })
 
-// -----------------------------------------------------------操作区域处理-----------------------------------------------------------
+// endregion
+
+// region 操作区域处理
+
 function handleOperateAreaItemInspect(item: CT, node: TreeNode<CT>): void {
   emit('onItemInspect', item, node)
 }
@@ -797,6 +822,8 @@ function handleOperateAreaItemEdit(item: CT, node: TreeNode<CT>): void {
 function handleOperateAreaItemDelete(item: CT, node: TreeNode<CT>): void {
   emit('onItemDelete', item, node)
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -128,7 +128,8 @@ defineOptions({
   name: 'TablePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   pageSize?: number
   pageSizes?: number[]
@@ -181,7 +182,10 @@ const props = withDefaults(defineProps<Props>(), {
   paginationAdjustStrategy: 'FORCE_NORMAL',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:currentPage', currentPage: number): void
   (e: 'update:pageSize', pageSize: number): void
@@ -196,7 +200,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 type OperateColumnSlotProps = {
   row: CT
   // 此处 any 是 element-plus 使用的类型，故忽略类型警告。
@@ -230,7 +237,10 @@ defineSlots<{
   contextmenu?: (props: ContextmenuSlotProps) => any
 }>()
 
-// -----------------------------------------------------------分页逻辑处理-----------------------------------------------------------
+// endregion
+
+// region 分页逻辑处理
+
 const watchedCurrentPage = ref<number>(1)
 const watchedPageSize = ref<number>(0)
 
@@ -281,7 +291,10 @@ onMounted(() => {
   watchedPageSize.value = props.pageSize
 })
 
-// -----------------------------------------------------------分页样式处理-----------------------------------------------------------
+// endregion
+
+// region 分页样式处理
+
 const paginationStyle = computed(() => {
   if (props.paginationAdjustStrategy === 'FORCE_NORMAL') {
     return 'NORMAL'
@@ -307,7 +320,10 @@ const paginationLayout = computed(() => {
   return 'total, sizes, prev, pager, next, jumper'
 })
 
-// -----------------------------------------------------------选择/选区处理-----------------------------------------------------------
+// endregion
+
+// region 选择/选区处理
+
 function handleTableRowClick(row: CT): void {
   emit('onRowClick', row)
 }
@@ -320,7 +336,10 @@ function handleTableSelectionChange(selection: CT[]): void {
   emit('onSelectionChanged', selection)
 }
 
-// -----------------------------------------------------------操作列处理-----------------------------------------------------------
+// endregion
+
+// region 操作列处理
+
 function handleOperateColumnItemInspect(item: CT, index: number): void {
   emit('onItemInspect', item, index)
 }
@@ -333,7 +352,10 @@ function handleOperateColumnItemDelete(item: CT, index: number): void {
   emit('onItemDelete', item, index)
 }
 
-// -----------------------------------------------------------上下文菜单处理-----------------------------------------------------------
+// endregion
+
+// region 上下文菜单处理
+
 const contextmenuVisible = ref<boolean>(false)
 const contextmenuLeft = ref<number>(0)
 const contextmenuTop = ref<number>(0)
@@ -427,6 +449,8 @@ function handleContextmenuItemDelete(item: CT, index: number): void {
   contextmenuClose()
   emit('onItemDelete', item, index)
 }
+
+// endregion
 </script>
 
 <style scoped>

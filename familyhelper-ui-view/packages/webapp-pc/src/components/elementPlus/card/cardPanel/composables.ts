@@ -3,7 +3,8 @@
 import { type Ref } from 'vue'
 import { ref } from 'vue'
 
-// -----------------------------------------------------------通用-----------------------------------------------------------
+// region 通用
+
 type UseGeneralCardPanelResult<T, CT> = {
   items: Ref<CT[]>
   updateByLookup: (res: T[]) => void
@@ -61,3 +62,5 @@ export function useGeneralCardPanel<T, CT>(
 export function useIdentityGeneralCardPanel<T>(): UseGeneralCardPanelResult<T, T> {
   return useGeneralCardPanel<T, T>((t) => t)
 }
+
+// endregion

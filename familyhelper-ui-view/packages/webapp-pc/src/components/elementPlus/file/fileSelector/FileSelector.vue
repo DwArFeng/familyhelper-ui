@@ -33,7 +33,8 @@ defineOptions({
   name: 'FileSelector',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   accept?: string
   multiple?: boolean
@@ -50,14 +51,20 @@ const props = withDefaults(defineProps<Props>(), {
   buttonType: 'success',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onFileSelected', files: File[]): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 type DefaultSlotProps = {
   selectFile: () => void
 }
@@ -69,7 +76,10 @@ defineSlots<{
   default?: (props: DefaultSlotProps) => any
 }>()
 
-// -----------------------------------------------------------选择逻辑-----------------------------------------------------------
+// endregion
+
+// region 选择逻辑
+
 const fileSelectorRef = useTemplateRef<HTMLInputElement>('fileSelectorRef')
 
 function handleFileSelect(): void {
@@ -125,7 +135,10 @@ function handleFileSelected(event: Event): void {
   }
 }
 
-// -----------------------------------------------------------文件选择-----------------------------------------------------------
+// endregion
+
+// region 文件选择
+
 function selectFile(): void {
   const selector = fileSelectorRef.value
   if (!selector) {
@@ -137,6 +150,8 @@ function selectFile(): void {
 defineExpose({
   selectFile,
 })
+
+// endregion
 </script>
 
 <style scoped></style>

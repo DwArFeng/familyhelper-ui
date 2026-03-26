@@ -3,7 +3,8 @@
 import { type ComputedRef, type Ref } from 'vue'
 import { computed, ref } from 'vue'
 
-// -----------------------------------------------------------通用-----------------------------------------------------------
+// region 通用
+
 type UseGeneralMaintainDialogResult<T, CT> = {
   visible: Ref<boolean>
   item: Ref<CT>
@@ -94,7 +95,10 @@ export function useIdentityGeneralMaintainDialog<T>(
   return useGeneralMaintainDialog<T, T>((t) => t, initialItem)
 }
 
-// -----------------------------------------------------------仅查看-----------------------------------------------------------
+// endregion
+
+// region 仅查看
+
 type UseInspectOnlyMaintainDialogResult<T, CT> = {
   visible: Ref<boolean>
   item: Ref<CT>
@@ -163,7 +167,10 @@ export function useIdentityInspectOnlyMaintainDialog<T>(
   return useInspectOnlyMaintainDialog<T, T>((t) => t, initialItem)
 }
 
-// -----------------------------------------------------------仅编辑-----------------------------------------------------------
+// endregion
+
+// region 仅编辑
+
 type UseEditOnlyMaintainDialogResult<T, CT> = {
   visible: Ref<boolean>
   item: Ref<CT>
@@ -232,7 +239,10 @@ export function useIdentityEditOnlyMaintainDialog<T>(
   return useEditOnlyMaintainDialog<T, T>((t) => t, initialItem)
 }
 
-// -----------------------------------------------------------仅创建-----------------------------------------------------------
+// endregion
+
+// region 仅创建
+
 type UseCreateOnlyMaintainDialogResult<CT> = {
   visible: Ref<boolean>
   item: Ref<CT>
@@ -294,3 +304,5 @@ export function useIdentityCreateOnlyMaintainDialog<T>(
 ): UseCreateOnlyMaintainDialogResult<T> {
   return useCreateOnlyMaintainDialog<T>(initialItem)
 }
+
+// endregion

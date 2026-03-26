@@ -14,12 +14,15 @@ defineOptions({
   name: 'DefaultTreeDefaultSlot',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   label: string
 }
 
 defineProps<Props>()
+
+// endregion
 </script>
 
 <style scoped>

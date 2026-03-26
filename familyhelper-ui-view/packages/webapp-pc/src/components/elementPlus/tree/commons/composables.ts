@@ -5,7 +5,8 @@ import { ref } from 'vue'
 
 import { type TreeNode } from '@/components/elementPlus/tree/commons/types.ts'
 
-// -----------------------------------------------------------树选区-----------------------------------------------------------
+// region 树选区
+
 type UseTreeSelectionResult<CT> = {
   item: Ref<CT | null>
   node: Ref<TreeNode<CT> | null>
@@ -32,3 +33,5 @@ export function useTreeSelection<CT>(): UseTreeSelectionResult<CT> {
     node: _node,
   } as UseTreeSelectionResult<CT>
 }
+
+// endregion
