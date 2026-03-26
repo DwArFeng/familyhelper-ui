@@ -19,6 +19,7 @@
   - 组件 `comvisual/widget/floatTool/FloatTool.vue` 新增。
 
 - `webapp-mobile` 子模块功能优化。
+  - 增加 VIM 组件 `VimCompreg` 的接口方法，提供更多的功能。
   - 优化 Compreg `miscellaneous.compregFallback` 的组件设置。
   - 优化 `src/views/nodes/comvisual/*/*.vue` 中占位符部分结构优化。
   - 将 `simple` 可视化器重命名为 `comvisual`，并优化项目结构。
