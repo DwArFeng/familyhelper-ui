@@ -305,7 +305,8 @@ import { ExecutableActionHandleImpl } from '@dwarfeng/familyhelper-ui-component-
 
 import { computed, type ComputedRef, ref } from 'vue'
 
-// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+// region 初始化逻辑
+
 /**
  * VIM 应用上下文。
  */
@@ -317,7 +318,10 @@ function init(_ctx: VimApplicationContext): void {
   ctx.registerWindowBeforeUnloadHook(windowUnloadHook)
 }
 
-// -----------------------------------------------------------Store 定义-----------------------------------------------------------
+// endregion
+
+// region Store 定义
+
 /**
  * Foobar Store。
  */
@@ -364,7 +368,10 @@ function provideStoreSetup(): StoreSetup {
   })
 }
 
-// -----------------------------------------------------------钩子逻辑-----------------------------------------------------------
+// endregion
+
+// region 钩子逻辑
+
 /**
  * Window 加载钩子。
  */
@@ -382,7 +389,10 @@ function windowUnloadHook(): void {
   _permissions.value = {}
 }
 
-// -----------------------------------------------------------VimStoreModule 定义-----------------------------------------------------------
+// endregion
+
+// region VimStoreModule 定义
+
 /**
  * VIM Store 模块。
  */
@@ -390,6 +400,8 @@ const vimStoreModule: VimStoreModule = {
   init,
   provideStoreSetup
 }
+
+// endregion
 
 export default vimStoreModule
 ```
