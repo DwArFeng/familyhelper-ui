@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块 hyperscript 页面新增。
+  - comvisual/hyperscript/placeholder/index.ts。
+
 - `webapp-pc` 子模块组件优化。
   - 组件 `comvisual/layout/comingSoon/ComingSoon.vue` 中占位符部分结构优化。
   - 组件 `elementPlus/file/fileCreateDialog/FileCreateDialog.vue` 中占位符部分结构优化。
