@@ -10,7 +10,8 @@ import { type GeneralChartOption } from './types.ts'
 import { type RendererType } from './types.ts'
 import GeneralChartPanel from './GeneralChartPanel.vue'
 
-// -----------------------------------------------------------通用-----------------------------------------------------------
+// region 通用
+
 type UseGeneralGeneralChartPanelResult = {
   option: Ref<GeneralChartOption>
   theme: ComputedRef<string | object | undefined>
@@ -49,7 +50,10 @@ export function useGeneralGeneralChartPanel(
   } as UseGeneralGeneralChartPanelResult
 }
 
-// -----------------------------------------------------------通用-带操作方法-----------------------------------------------------------
+// endregion
+
+// region 通用-带操作方法
+
 type UseOperableGeneralGeneralChartPanelResult = {
   option: Ref<GeneralChartOption>
   theme: ComputedRef<string | object | undefined>
@@ -147,7 +151,10 @@ export function useOperableGeneralGeneralChartPanel(
   } as UseOperableGeneralGeneralChartPanelResult
 }
 
-// -----------------------------------------------------------分离-----------------------------------------------------------
+// endregion
+
+// region 分离
+
 type UseSeparatedGeneralChartPanelResult = {
   option: ComputedRef<GeneralChartOption>
   theme: ComputedRef<string | object | undefined>
@@ -200,7 +207,10 @@ export function useSeparatedGeneralChartPanel(
   } as UseSeparatedGeneralChartPanelResult
 }
 
-// -----------------------------------------------------------分离-带操作方法-----------------------------------------------------------
+// endregion
+
+// region 分离-带操作方法
+
 type UseOperableSeparatedGeneralChartPanelResult = {
   option: ComputedRef<GeneralChartOption>
   theme: ComputedRef<string | object | undefined>
@@ -381,3 +391,5 @@ function mergeObjects(target: MergeObject, source: MergeObject): MergeObject {
 function isObject(value: unknown): boolean {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
 }
+
+// endregion

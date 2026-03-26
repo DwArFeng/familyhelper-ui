@@ -14,7 +14,8 @@ defineOptions({
   name: 'GeneralChartPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   /**
    * 图表选项。
@@ -45,7 +46,10 @@ const props = withDefaults(defineProps<Props>(), {
   renderer: 'canvas',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   // 初始化/销毁。
   (e: 'init', instance: ECharts): void
@@ -139,16 +143,28 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------容器引用-----------------------------------------------------------
+// endregion
+
+// region 容器引用
+
 const chartContainerRef = useTemplateRef<HTMLElement>('chartContainerRef')
 
-// -----------------------------------------------------------实例引用-----------------------------------------------------------
+// endregion
+
+// region 实例引用
+
 const chartInstance = shallowRef<ECharts | null>(null)
 
-// -----------------------------------------------------------延迟初始化标记-----------------------------------------------------------
+// endregion
+
+// region 延迟初始化标记
+
 let initLater: boolean = false
 
-// -----------------------------------------------------------初始化逻辑-----------------------------------------------------------
+// endregion
+
+// region 初始化逻辑
+
 function initChart(): void {
   function bindEmitEvents(): void {
     // 鼠标事件。
@@ -409,7 +425,10 @@ onUnmounted(() => {
   disposeChart()
 })
 
-// -----------------------------------------------------------尺寸变化处理-----------------------------------------------------------
+// endregion
+
+// region 尺寸变化处理
+
 const resizeObserver = ref<ResizeObserver | null>(null)
 
 function initResizeListener(): void {
@@ -455,7 +474,10 @@ onUnmounted(() => {
   disposeResizeListener()
 })
 
-// -----------------------------------------------------------选项处理-----------------------------------------------------------
+// endregion
+
+// region 选项处理
+
 watch(() => props.option, updateOption, { deep: true })
 
 function updateOption(option: GeneralChartOption): void {
@@ -466,7 +488,10 @@ function updateOption(option: GeneralChartOption): void {
   _chartInstance.setOption(option, true)
 }
 
-// -----------------------------------------------------------主题处理-----------------------------------------------------------
+// endregion
+
+// region 主题处理
+
 watch(
   () => props.theme,
   () => {
@@ -474,7 +499,10 @@ watch(
   },
 )
 
-// -----------------------------------------------------------渲染器处理-----------------------------------------------------------
+// endregion
+
+// region 渲染器处理
+
 watch(
   () => props.renderer,
   () => {
@@ -482,7 +510,10 @@ watch(
   },
 )
 
-// -----------------------------------------------------------加载动画-----------------------------------------------------------
+// endregion
+
+// region 加载动画
+
 /**
  * 显示加载动画。
  *
@@ -509,7 +540,10 @@ function hideLoading(): void {
   _chartInstance.hideLoading()
 }
 
-// -----------------------------------------------------------渲染输出-----------------------------------------------------------
+// endregion
+
+// region 渲染输出
+
 /**
  * 渲染图表为 SVG 字符串。
  *
@@ -565,7 +599,10 @@ function getConnectedDataURL(opts?: Parameters<ECharts['getConnectedDataURL']>[0
   return _chartInstance.getConnectedDataURL(opts)
 }
 
-// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+// endregion
+
+// region 方法暴露
+
 defineExpose({
   showLoading,
   hideLoading,
@@ -573,6 +610,8 @@ defineExpose({
   getDataURL,
   getConnectedDataURL,
 })
+
+// endregion
 </script>
 
 <style scoped>

@@ -43,7 +43,8 @@ defineOptions({
   name: 'CornerLightPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   showNorthWest?: boolean
   showNorthEast?: boolean
@@ -66,7 +67,10 @@ const props = withDefaults(defineProps<Props>(), {
   animateDuration: 0.2,
 })
 
-// -----------------------------------------------------------样式计算-----------------------------------------------------------
+// endregion
+
+// region 样式计算
+
 const lightStyle = computed(() => {
   let finalLightBevelEdge: string | number
   if (Number.isFinite(props.lightBevelEdge)) {
@@ -91,6 +95,8 @@ const lightStyle = computed(() => {
 const cascading = computed(() => {
   return props.lightOnTop ? 'top' : 'bottom'
 })
+
+// endregion
 </script>
 
 <style scoped>

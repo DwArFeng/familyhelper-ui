@@ -13,7 +13,8 @@ defineOptions({
   name: 'JsonEditor',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   modelValue: string
   readonly?: boolean
@@ -23,14 +24,20 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:modelValue', value: string): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------编辑器处理-----------------------------------------------------------
+// endregion
+
+// region 编辑器处理
+
 const editorRef = ref<HTMLElement | null>()
 let editor: JSONEditor | null = null
 let internalChangeFlag: boolean = false
@@ -94,6 +101,8 @@ watch(
     editor.aceEditor.setReadOnly(value)
   },
 )
+
+// endregion
 </script>
 
 <style scoped>

@@ -12,7 +12,8 @@ defineOptions({
   name: 'TitleLayoutPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   title: string
   bordered?: boolean
@@ -24,13 +25,18 @@ withDefaults(defineProps<Props>(), {
   applyContainerHeight: false,
 })
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// endregion
+
+// region Slots 定义
+
 defineSlots<{
   // 参数 props: {} 是 vue 约定的类型，故忽略类型警告。
   // 返回值 any 是 vue 约定的类型，故忽略类型警告。
   // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-empty-object-type
   default?: (props: {}) => any
 }>()
+
+// endregion
 </script>
 
 <style scoped>
