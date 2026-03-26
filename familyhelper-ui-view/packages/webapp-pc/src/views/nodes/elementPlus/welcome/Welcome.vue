@@ -1,5 +1,5 @@
 <template>
-  <div class="readme-container">
+  <div class="welcome-container">
     <border-layout-panel class="border-layout-panel">
       <div class="main-container">
         <placeholder-panel text="欢迎使用家庭助手，我们是幸福的一家人 （๑╹◡╹)ﾉ”" />
@@ -18,7 +18,7 @@ defineOptions({
 </script>
 
 <style scoped>
-.readme-container {
+.welcome-container {
   width: 100%;
   height: 100%;
 }
