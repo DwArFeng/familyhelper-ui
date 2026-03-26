@@ -38,6 +38,13 @@ const compregSettings: ComponentSetting[] = [
         import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
     },
   },
+  {
+    key: 'miscellaneous.text',
+    component: {
+      '': () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
+      comvisual: () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
+    },
+  },
 ]
 
 /**

@@ -68,6 +68,39 @@ const nodeSettings: NodeSetting[] = [
       },
     },
   },
+  {
+    parentKey: 'miscellaneous',
+    key: 'miscellaneous.text',
+    index: 30,
+    display: {
+      '': {
+        label: '文本',
+      },
+      comvisual: {
+        label: '文本',
+      },
+      elementPlus: {
+        label: '文本',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'miscellaneous/text',
+      component: {
+        key: 'miscellaneous.text',
+      },
+    },
+  },
 ]
 
 /**
