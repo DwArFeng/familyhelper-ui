@@ -78,12 +78,14 @@ function hiddenBricksClick(): void {
 .about-container {
   width: 100%;
   height: 100%;
+  position: relative;
 }
 
 .hiddenBricks {
   height: 30px;
   width: 30px;
   cursor: pointer;
+  position: absolute;
 }
 
 .content-wrapper {
