@@ -69,7 +69,15 @@ const nodeSettings: NodeSetting[] = [
       required: true,
       path: 'navigation-demo/sub-menu-item-1',
       component: {
-        key: 'navigationDemo.subMenuItem1',
+        key: 'miscellaneous.text',
+        param: {
+          '': {
+            content: '这是通过 router.component.param 传入的参数 - 子菜单1',
+          },
+          comvisual: {
+            content: '这是通过 router.component.param 传入的参数 - 子菜单1',
+          },
+        },
       },
     },
     permission: {
@@ -104,7 +112,15 @@ const nodeSettings: NodeSetting[] = [
       required: true,
       path: 'navigation-demo/sub-menu-item-2',
       component: {
-        key: 'navigationDemo.subMenuItem2',
+        key: 'miscellaneous.text',
+        param: {
+          '': {
+            content: '这是通过 router.component.param 传入的参数 - 子菜单2',
+          },
+          comvisual: {
+            content: '这是通过 router.component.param 传入的参数 - 子菜单2',
+          },
+        },
       },
     },
     permission: {
@@ -117,10 +133,10 @@ const nodeSettings: NodeSetting[] = [
     index: 30,
     display: {
       '': {
-        label: '子菜单3',
+        label: '外链展示1',
       },
       comvisual: {
-        label: '子菜单3',
+        label: '外链展示1',
       },
     },
     menu: {
@@ -139,7 +155,58 @@ const nodeSettings: NodeSetting[] = [
       required: true,
       path: 'navigation-demo/sub-menu-item-3',
       component: {
-        key: 'navigationDemo.subMenuItem3',
+        key: 'miscellaneous.externalLink',
+        param: {
+          '': {
+            src: 'http://www.example.com',
+          },
+          comvisual: {
+            src: 'http://www.example.com',
+          },
+        },
+      },
+    },
+    permission: {
+      required: false,
+    },
+  },
+  {
+    parentKey: 'navigationDemo',
+    key: 'navigationDemo.subMenuItem4',
+    index: 40,
+    display: {
+      '': {
+        label: '外链展示2',
+      },
+      comvisual: {
+        label: '外链展示2',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      affix: false,
+      affixIndex: 0,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'navigation-demo/sub-menu-item-4',
+      component: {
+        key: 'miscellaneous.externalLink',
+        param: {
+          '': {
+            src: 'http://info.cern.ch/',
+          },
+          comvisual: {
+            src: 'http://info.cern.ch/',
+          },
+        },
       },
     },
     permission: {
