@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 import { pad } from '@dwarfeng/familyhelper-ui-component-util/src/util/number.ts'
 
@@ -13,7 +13,8 @@ defineOptions({
   name: 'DigitalWatch',
 })
 
-// -----------------------------------------------------------主业务处理-----------------------------------------------------------
+// region 主业务处理
+
 const currentTime = ref<string>('00:00:00')
 
 // 更新时间。
@@ -35,6 +36,8 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(timer)
 })
+
+// endregion
 </script>
 
 <style scoped>

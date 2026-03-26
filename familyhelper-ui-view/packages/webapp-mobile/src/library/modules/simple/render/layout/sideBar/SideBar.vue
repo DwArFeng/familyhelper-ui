@@ -28,10 +28,14 @@ defineOptions({
   name: 'SideBar',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 
-// -----------------------------------------------------------选择事件处理-----------------------------------------------------------
+// endregion
+
+// region 选择事件处理
+
 function handleMenuSelect(nodeKey: string): void {
   const nodeInfo: Readonly<NodeInfo> | null = navigationStore.getNodeInfo(nodeKey)
   if (!nodeInfo) {
@@ -41,6 +45,8 @@ function handleMenuSelect(nodeKey: string): void {
     vim.ctx().router().vueRouter().push({ name: nodeInfo.key })
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

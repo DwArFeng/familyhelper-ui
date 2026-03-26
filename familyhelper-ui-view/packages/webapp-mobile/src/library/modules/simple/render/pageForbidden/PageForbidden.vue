@@ -20,7 +20,8 @@ defineOptions({
   name: 'PageForbidden',
 })
 
-// -----------------------------------------------------------报错文本-----------------------------------------------------------
+// region 报错文本
+
 const ERROR_TEXT: string = `结界防御系统启动 (๑•̀д•́๑)
 
 您遇到了神圣结界阻挡，可能因为：
@@ -55,6 +56,8 @@ const ERROR_TEXT: string = `结界防御系统启动 (๑•̀д•́๑)
 2. 召唤管理员：传送门已开启 → 915724865@qq.com
 `
 const textarea = ref<string>(ERROR_TEXT)
+
+// endregion
 </script>
 
 <style scoped>

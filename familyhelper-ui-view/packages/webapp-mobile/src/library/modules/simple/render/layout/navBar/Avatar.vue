@@ -27,16 +27,20 @@ import vim from '@/vim'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
-import { ref, onMounted, onUnmounted, computed, type ComputedRef } from 'vue'
+import { computed, type ComputedRef, onMounted, onUnmounted, ref } from 'vue'
 
 defineOptions({
   name: 'AvatarComponent',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------状态处理-----------------------------------------------------------
+// endregion
+
+// region 状态处理
+
 const dropdownVisible = ref(false)
 const avatarRef = ref<HTMLElement | null>(null)
 
@@ -71,7 +75,10 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
 })
 
-// -----------------------------------------------------------下拉菜单命令处理-----------------------------------------------------------
+// endregion
+
+// region 下拉菜单命令处理
+
 function handleCommand(key: string): void {
   dropdownVisible.value = false
   switch (key) {
@@ -96,6 +103,8 @@ function handleLogoutCommand(): void {
     .execute()
     .catch(() => {})
 }
+
+// endregion
 </script>
 
 <style scoped>

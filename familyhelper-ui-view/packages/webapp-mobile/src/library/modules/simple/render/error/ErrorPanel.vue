@@ -29,7 +29,8 @@ defineOptions({
   name: 'ErrorPanel',
 })
 
-// -----------------------------------------------------------Slots 定义-----------------------------------------------------------
+// region Slots 定义
+
 defineSlots<{
   // 参数 props: {} 是 vue 约定的类型，故忽略类型警告。
   // 返回值 any 是 vue 约定的类型，故忽略类型警告。
@@ -37,7 +38,10 @@ defineSlots<{
   default?: (props: {}) => any
 }>()
 
-// -----------------------------------------------------------背景样式处理-----------------------------------------------------------
+// endregion
+
+// region 背景样式处理
+
 const backgroundImageStyle = reactive({
   backgroundImage: `url(${backgroundImg})`,
   backgroundRepeat: 'no-repeat',
@@ -60,10 +64,15 @@ onMounted(() => {
   }
 })
 
-// -----------------------------------------------------------方法定义-----------------------------------------------------------
+// endregion
+
+// region 方法定义
+
 function handleBackToHomeButtonClicked(): void {
   vim.ctx().router().vueRouter().push({ name: 'vim.layout' })
 }
+
+// endregion
 </script>
 
 <style scoped>
