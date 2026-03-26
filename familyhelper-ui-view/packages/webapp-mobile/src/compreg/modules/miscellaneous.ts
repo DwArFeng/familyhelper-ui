@@ -26,6 +26,14 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () => import('@/views/nodes/comvisual/CompregFallback.vue'),
     },
   },
+  {
+    key: 'miscellaneous.externalLink',
+    component: {
+      '': () => import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
+    },
+  },
 ]
 
 /**
