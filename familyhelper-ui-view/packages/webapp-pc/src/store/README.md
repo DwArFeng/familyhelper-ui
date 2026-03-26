@@ -224,7 +224,7 @@ function handleButtonClicked(): void {
 
 ### ready
 
-`ready` 表示"该 store 是否已就绪"。若模块在 Store 类型上暴露了 `ready` 属性，则该 store 参与全局就绪判断。
+`ready` 表示“该 store 是否已就绪”。若模块在 Store 类型上暴露了 `ready` 属性，则该 store 参与全局就绪判断。
 
 `@/util/store.ts` 导出一个计算属性 `ready`：遍历当前已注册的所有 store 实例，
 仅当每一个带有 `ready` 属性的 store 的 `ready` 值均为真时，该导出 `ready` 才为 `true`； 未暴露 `ready` 的 store 不参与判断。
@@ -232,7 +232,7 @@ function handleButtonClicked(): void {
 则使用其 `value` 属性，否则按布尔值使用。
 
 视图中（如 layout、login、错误页等）从 `@/util/store.ts` 引入该 `ready`，在 `ready.value` 为假时渲染遮罩（如 VimMask），
-为真时再渲染正式内容，从而在"所有带 ready 的 store 均已就绪"后再展示主界面。
+为真时再渲染正式内容，从而在“所有带 ready 的 store 均已就绪”后再展示主界面。
 
 模块侧为可选实现：在 Store 类型上声明 `ready: ComputedRef<boolean>`，在 `provideStoreSetup` 返回的对象中暴露 `ready`；
 内部通常使用 `ref` 与 `computed` 暴露只读的 `ready`，在适当时机（如数据加载完成）将其设为 `true`。

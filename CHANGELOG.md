@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块 README.md 说明文件优化。
+  - src/store/README.md。
+
 - `webapp-util` 子模块功能优化。
   - 优化 `src/util/store.ts` 中的方法签名，以支持 `ExecutableActionHandle` 前置/后置钩子的优先级设置。
   - 优化 `src/util/store.ts` 中的文档注释。
