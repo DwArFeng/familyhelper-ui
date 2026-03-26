@@ -102,29 +102,29 @@ export default vimLibraryModule
 在初始化方法中，通过 `VimApplicationContext` 拿到 vue 的 `App` 对象，并注册组件，代码如下所示：
 
 ```ts
-import { type VimApplicationContext } from '@/vim/types.ts'
-import { type VimLibraryModule } from '@/library/types.ts'
-
-import ElementPLUS from 'element-plus'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-
-import 'element-plus/dist/index.css'
-
-import './global.css'
+import {type VimLibraryModule} from '@/library/types.ts'
 
 const vimLibraryModule: VimLibraryModule = {
-  init,
-  provideVisualizer,
+    init,
+    provideVisualizer,
 }
 
-function init(ctx: VimApplicationContext): void {
-  ctx.app.use(ElementPLUS, {
-    locale: zhCn,
-  })
+function init(): void {
+    // Some third-party libraries may require some initialization steps, such as registering components, 
+    // setting up configurations, etc. You can perform these steps in the init method.
 }
 
-function provideVisualizer(): null {
-  return null
+function provideVisualizer(): Visualizer {
+    return {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        notify(type: NotifyType, ...args: any[]): void {
+            alert(`This is a demo visualizer. Please implement the notify method according to your needs.`)
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        render(type: RenderType, ...args: any[]): VNode {
+            return h('div', 'This is a demo visualizer. Please implement the render method according to your needs.')
+        },
+    }
 }
 
 export default vimLibraryModule

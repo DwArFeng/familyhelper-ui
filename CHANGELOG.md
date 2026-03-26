@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块 README.md 说明文件优化。
+  - src/library/README.md。
   - src/store/README.md。
 
 - `webapp-util` 子模块功能优化。
