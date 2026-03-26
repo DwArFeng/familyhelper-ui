@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块功能优化。
+  - 更新 `VimLayoutRouter` 动态路由表时，向路由的元数据区提供更多的信息。
+
 - `webapp-pc` 子模块文件优化注释、文档注释格式、代码换行格式。
   - src/views/nodes/elementPlus/about/\*/*.vue。
   - src/views/nodes/elementPlus/assetsManagement/\*/*.vue。
