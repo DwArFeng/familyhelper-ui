@@ -3,7 +3,8 @@
 import { type VNode } from 'vue'
 import { h } from 'vue'
 
-// -----------------------------------------------------------IconFont 图标-----------------------------------------------------------
+// region IconFont 图标
+
 /**
  * 使用 IconFont 图标。
  *
@@ -16,7 +17,10 @@ export function useIconfontButtonIcon(iconCharacter: string): VNode {
   return h('i', { class: 'iconfont' }, iconCharacter)
 }
 
-// -----------------------------------------------------------缺失图标-----------------------------------------------------------
+// endregion
+
+// region 缺失图标
+
 /**
  * 使用缺失图标。
  *
@@ -27,3 +31,5 @@ export function useIconfontButtonIcon(iconCharacter: string): VNode {
 export function useMissingIcon(): VNode {
   return h('i', { style: { display: 'block', backgroundColor: 'magenta' } })
 }
+
+// endregion

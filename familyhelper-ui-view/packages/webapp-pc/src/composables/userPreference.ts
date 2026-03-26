@@ -10,6 +10,8 @@ import {
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
 import { resolveResponse } from '@/util/response.ts'
 
+// region 用户偏好
+
 export type UseUserPreferenceResult = {
   loadUserPreference: () => Promise<void>
   saveUserPreference: () => Promise<void>
@@ -102,3 +104,5 @@ export function useUserPreference<UP extends Record<string, unknown>>(
     saveUserPreference,
   } as UseUserPreferenceResult
 }
+
+// endregion

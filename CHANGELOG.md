@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块文件优化注释、文档注释格式、代码换行格式。
+  - src/composables/*.ts。
   - src/store/README.md。
   - src/store/modules/*.ts。
   - src/api/types.ts。

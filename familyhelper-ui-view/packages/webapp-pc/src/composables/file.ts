@@ -7,7 +7,8 @@ import { getCreateInfo, getDisplayInfo } from '@/util/file.ts'
 
 import { useIconfontButtonIcon, useMissingIcon } from './icon.ts'
 
-// -----------------------------------------------------------文件图标-----------------------------------------------------------
+// region 文件图标
+
 /**
  * 使用文件创建图标。
  *
@@ -99,3 +100,5 @@ export function useDisplayIconWithDefaults(indicator: unknown, defaultIconInfo: 
     return useMissingIcon()
   }
 }
+
+// endregion
