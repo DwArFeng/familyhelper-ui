@@ -103,17 +103,24 @@ defineOptions({
   name: 'MetaIndicatorPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   topic: Topic | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 watch(
   () => props.topic,
   () => {
@@ -145,12 +152,18 @@ async function handleMetaIndicatorChildForTopicSearch(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowMetaIndicatorCreateDialog(): void {
   showMetaIndicatorCreateMaintainDialog()
 }
 
-// -----------------------------------------------------------元数据指示器表格-----------------------------------------------------------
+// endregion
+
+// region 元数据指示器表格
+
 const {
   currentPage: metaIndicatorTableCurrentPage,
   pageSize: metaIndicatorTablePageSize,
@@ -206,7 +219,10 @@ async function handleMetaIndicatorDelete(row: MetaIndicator): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------元数据指示器维护对话框-----------------------------------------------------------
+// endregion
+
+// region 元数据指示器维护对话框
+
 type MetaIndicatorMaintainDialogItem = {
   key_topic_id: string
   key_meta_id: string
@@ -350,6 +366,8 @@ async function handleMetaIndicatorEdit(item: MetaIndicatorMaintainDialogItem): P
     metaIndicatorMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

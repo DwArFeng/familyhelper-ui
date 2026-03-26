@@ -168,7 +168,8 @@ defineOptions({
   name: 'BankCard',
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// region 头部面板
+
 const accountBookIndicatorValue = ref<DispAccountBook | null>(null)
 
 function handleBankCardIndicatorChanged(value: DispAccountBook | null): void {
@@ -176,7 +177,10 @@ function handleBankCardIndicatorChanged(value: DispAccountBook | null): void {
   handleBankCardSearch()
 }
 
-// -----------------------------------------------------------只读计算-----------------------------------------------------------
+// endregion
+
+// region 只读计算
+
 const readonly = computed<boolean>(() => {
   if (!accountBookIndicatorValue.value) {
     return true
@@ -185,10 +189,16 @@ const readonly = computed<boolean>(() => {
   return accountBookIndicatorValue.value.permission_level !== 0
 })
 
-// -----------------------------------------------------------银行卡类型-----------------------------------------------------------
+// endregion
+
+// region 银行卡类型
+
 const bankCardTypeIndicators = ref<BankCardTypeIndicator[]>([])
 
-// -----------------------------------------------------------查询逻辑-----------------------------------------------------------
+// endregion
+
+// region 查询逻辑
+
 function handleSearch(): void {
   handleBankCardTypeIndicatorSearch()
   handleBankCardSearch()
@@ -236,7 +246,10 @@ onMounted(() => {
   handleSearch()
 })
 
-// -----------------------------------------------------------银行卡卡片-----------------------------------------------------------
+// endregion
+
+// region 银行卡卡片
+
 type BankCardCardItem = {
   name: string
   formatted_type: { label: string; remark: string }
@@ -396,7 +409,10 @@ async function handleItemDelete(item: BankCardCardItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------银行卡维护对话框-----------------------------------------------------------
+// endregion
+
+// region 银行卡维护对话框
+
 type BankCardMaintainDialogItem = {
   key_long_id: string
   name: string
@@ -483,6 +499,8 @@ async function handleBankCardEdit(item: BankCardMaintainDialogItem): Promise<voi
     bankCardMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

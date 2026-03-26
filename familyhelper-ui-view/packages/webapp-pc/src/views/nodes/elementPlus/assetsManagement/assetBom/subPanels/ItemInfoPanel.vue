@@ -194,7 +194,8 @@ defineOptions({
   name: 'ItemInfoPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   itemId: string
   readonly: boolean
@@ -203,7 +204,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onItemPropertyUpdated'): void
   (e: 'onItemCoverUpdated'): void
@@ -212,15 +216,24 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handlePanelFloatyButtonClicked(): void {
   emit('onPanelFloatyButtonClicked')
 }
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------项目查询-----------------------------------------------------------
+// endregion
+
+// region 项目查询
+
 watch(
   () => props.itemId,
   () => {
@@ -327,7 +340,10 @@ onMounted(() => {
   handleItemSearch()
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 async function handleShowItemEditDialog(): Promise<void> {
   // 显示对话框。
   showItemMaintainDialog(itemMaintainDialogItem.value)
@@ -343,7 +359,10 @@ async function handleShowItemEditDialog(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目生命周期指示器-----------------------------------------------------------
+// endregion
+
+// region 项目生命周期指示器
+
 type ItemLifeCycleIndicator = {
   key: ItemLifeCycle
   label: string
@@ -356,13 +375,22 @@ const itemLifeCycleIndicator = ref<ItemLifeCycleIndicator>([
   { key: 3, label: '已废弃' },
 ])
 
-// -----------------------------------------------------------项目类型指示器-----------------------------------------------------------
+// endregion
+
+// region 项目类型指示器
+
 const itemTypeIndicators = ref<ItemTypeIndicator[]>([])
 
-// -----------------------------------------------------------项目标签-----------------------------------------------------------
+// endregion
+
+// region 项目标签
+
 const itemLabels = ref<ItemLabel[]>([])
 
-// -----------------------------------------------------------项目属性表单-----------------------------------------------------------
+// endregion
+
+// region 项目属性表单
+
 type ItemPropertyFormItem = {
   name: string
   formatted_type: string
@@ -385,7 +413,10 @@ const itemPropertyFormItem = ref<ItemPropertyFormItem>({
   remark: '',
 })
 
-// -----------------------------------------------------------项目封面跑马灯-----------------------------------------------------------
+// endregion
+
+// region 项目封面跑马灯
+
 const itemCoverCarouselImageUrls = ref<string[]>([])
 
 function releaseOldItemCover(): void {
@@ -400,7 +431,10 @@ onUnmounted(() => {
   releaseOldItemCover()
 })
 
-// -----------------------------------------------------------项目维护对话框-----------------------------------------------------------
+// endregion
+
+// region 项目维护对话框
+
 type ItemMaintainDialogItem = {
   long_id: string
   parent_long_id: string
@@ -483,7 +517,10 @@ async function handleItemEdit(item: ItemMaintainDialogItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目封面编辑对话框-----------------------------------------------------------
+// endregion
+
+// region 项目封面编辑对话框
+
 const itemCoverEditDialogVisible = ref<boolean>(false)
 const itemCoverEditDialogUpdatedFlag = ref<boolean>(false)
 
@@ -506,7 +543,10 @@ function handleItemCoverUpdated(): void {
   itemCoverEditDialogUpdatedFlag.value = true
 }
 
-// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+// endregion
+
+// region 方法暴露
+
 function itemSearch(): void {
   handleItemSearch()
 }
@@ -514,6 +554,8 @@ function itemSearch(): void {
 defineExpose({
   itemSearch,
 })
+
+// endregion
 </script>
 
 <style scoped>

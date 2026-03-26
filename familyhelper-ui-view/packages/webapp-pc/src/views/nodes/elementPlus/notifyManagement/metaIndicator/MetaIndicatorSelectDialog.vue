@@ -39,7 +39,8 @@ defineOptions({
   name: 'MetaIndicatorSelectDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   notifySettingId: string
@@ -52,7 +53,10 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'CHILD_FOR_META_MISSING',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', selection: MetaIndicator[]): void
@@ -60,10 +64,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -84,14 +94,20 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------选区逻辑-----------------------------------------------------------
+// endregion
+
+// region 选区逻辑
+
 const selection = ref<MetaIndicator[]>([])
 
 function handleSelectionChanged(value: MetaIndicator[]): void {
   selection.value = value
 }
 
-// -----------------------------------------------------------确认逻辑-----------------------------------------------------------
+// endregion
+
+// region 确认逻辑
+
 const notConfirmable = computed<boolean>(() => {
   if (props.mode === 'CHILD_FOR_META_MISSING') {
     return selection.value.length === 0
@@ -111,6 +127,8 @@ function handleConfirm(): void {
     emit('onConfirmed', selection.value)
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

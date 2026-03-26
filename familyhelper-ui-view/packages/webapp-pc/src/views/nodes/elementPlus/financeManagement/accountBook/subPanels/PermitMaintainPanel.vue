@@ -106,7 +106,8 @@ defineOptions({
   name: 'PermitMaintainPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   accountBookId?: string
 }
@@ -115,13 +116,22 @@ const props = withDefaults(defineProps<Props>(), {
   accountBookId: '',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// endregion
+
+// region Store 引入
+
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const form = ref<{
   userId: string
   permissionLevel: PoabPermissionLevel
@@ -155,7 +165,10 @@ async function handlePoabUpsert(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------账本权限查询-----------------------------------------------------------
+// endregion
+
+// region 账本权限查询
+
 watch(
   () => props.accountBookId,
   (value) => {
@@ -193,7 +206,10 @@ onMounted(() => {
   handlePoabSearch()
 })
 
-// -----------------------------------------------------------账本权限表格处理-----------------------------------------------------------
+// endregion
+
+// region 账本权限表格处理
+
 const {
   currentPage: poabTableCurrentPage,
   pageSize: poabTablePageSize,
@@ -265,6 +281,8 @@ async function handlePoabDelete(row: DispPoab): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

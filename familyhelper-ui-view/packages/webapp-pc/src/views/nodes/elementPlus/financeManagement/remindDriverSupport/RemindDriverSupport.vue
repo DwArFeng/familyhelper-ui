@@ -71,10 +71,14 @@ defineOptions({
   name: 'RemindDriverSupport',
 })
 
-// -----------------------------------------------------------加载标记-----------------------------------------------------------
+// region 加载标记
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 function handleRemindDriverSupportSearch(): void {
   handleRemindDriverSupportAllSearch()
 }
@@ -96,7 +100,10 @@ onMounted(() => {
   handleRemindDriverSupportSearch()
 })
 
-// -----------------------------------------------------------提醒驱动器支持表格-----------------------------------------------------------
+// endregion
+
+// region 提醒驱动器支持表格
+
 const {
   currentPage: remindDriverSupportTableCurrentPage,
   pageSize: remindDriverSupportTablePageSize,
@@ -110,7 +117,10 @@ function handleRemindDriverSupportTablePagingAttributeChanged(): void {
   handleRemindDriverSupportSearch()
 }
 
-// -----------------------------------------------------------维护对话框-----------------------------------------------------------
+// endregion
+
+// region 维护对话框
+
 type RemindDriverSupportMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -146,6 +156,8 @@ function remindDriverSupportMaintainDialogItemMap(
 function handleShowRemindDriverSupportMaintainInspectDialog(item: RemindDriverSupport): void {
   showRemindDriverSupportMaintainDialog(item)
 }
+
+// endregion
 </script>
 
 <style scoped>

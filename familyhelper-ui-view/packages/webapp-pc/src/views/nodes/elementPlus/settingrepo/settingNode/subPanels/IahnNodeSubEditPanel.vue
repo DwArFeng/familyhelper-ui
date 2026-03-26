@@ -284,7 +284,8 @@ defineOptions({
   name: 'IahnNodeSubEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   category: string | null
   args: string[] | null
@@ -295,10 +296,16 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------Props 处理-----------------------------------------------------------
+// endregion
+
+// region Props 处理
+
 const settingNodeInvalid = computed(() => {
   return props.category === null || props.args === null
 })
@@ -325,7 +332,10 @@ function handlePropsUpdate(): void {
   handleInspect()
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 type LocaleSelectOption = {
   formattedLocale: string
   label: string
@@ -347,7 +357,10 @@ const localeSelectOptions = computed<LocaleSelectOption[]>(() => {
   })
 })
 
-// -----------------------------------------------------------编辑器数据-----------------------------------------------------------
+// endregion
+
+// region 编辑器数据
+
 const messageTable = ref<IahnNodeMessageTableInspectResult | null>(null)
 
 function handleInspect(): void {
@@ -379,7 +392,10 @@ async function handleInspectMessageTable(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------表格-----------------------------------------------------------
+// endregion
+
+// region 表格
+
 async function handleDeleteMek(mekId: string): Promise<void> {
   try {
     await ElMessageBox.confirm(`此操作将永久删除文本键 ${mekId}。<br>是否继续?`, '提示', {
@@ -467,7 +483,10 @@ async function handleDeleteLocale(column: { no: number }): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------推入地区对话框-----------------------------------------------------------
+// endregion
+
+// region 推入地区对话框
+
 type PutLocaleDialogFormData = {
   language: string
   country: string
@@ -610,7 +629,10 @@ async function handlePutLocale(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------推入文本键对话框-----------------------------------------------------------
+// endregion
+
+// region 推入文本键对话框
+
 type PutMekDialogFormData = {
   mek_id: string
   label: string
@@ -696,7 +718,10 @@ async function handlePutMek(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------消息表格-----------------------------------------------------------
+// endregion
+
+// region 消息表格
+
 const tableColumns = computed<IahnNodeMessageTableInspectResultColumn[]>(() => {
   if (!messageTable.value) {
     return []
@@ -743,7 +768,10 @@ function handleTableCellDbclicked(
   handleShowMessageEditDialog()
 }
 
-// -----------------------------------------------------------消息编辑对话框-----------------------------------------------------------
+// endregion
+
+// region 消息编辑对话框
+
 type MessageEditDialogFormData = {
   message: string
 }
@@ -828,6 +856,8 @@ async function handleMessageEdit(): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

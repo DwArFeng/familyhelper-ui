@@ -231,7 +231,8 @@ defineOptions({
   name: 'FileListNodeSubEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   category: string | null
   args: string[] | null
@@ -242,10 +243,16 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------Props 处理-----------------------------------------------------------
+// endregion
+
+// region Props 处理
+
 const settingNodeInvalid = computed(() => {
   return props.category === null || props.args === null
 })
@@ -272,7 +279,10 @@ function handlePropsUpdate(): void {
   handleInspect()
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleClickFileSelector(): void {
   const itemUpdateFileSelector = itemUpdateFileSelectorRef.value
   if (!itemUpdateFileSelector) {
@@ -281,7 +291,10 @@ function handleClickFileSelector(): void {
   itemUpdateFileSelector.selectFile()
 }
 
-// -----------------------------------------------------------文件选择器-----------------------------------------------------------
+// endregion
+
+// region 文件选择器
+
 function handleItemUpdateFileSelectorSelected(files: File[]): void {
   if (!itemTableCurrentRow.value) {
     return
@@ -289,7 +302,10 @@ function handleItemUpdateFileSelectorSelected(files: File[]): void {
   handleUpdate(itemTableCurrentRow.value, files[0])
 }
 
-// -----------------------------------------------------------文件列表条目表格-----------------------------------------------------------
+// endregion
+
+// region 文件列表条目表格
+
 type TableItem = FileListNodeInspectResultItem & { index: number }
 
 const {
@@ -358,7 +374,10 @@ function handleShowChangeOrderDialog(row: TableItem): void {
   showChangeOrderDialog(row)
 }
 
-// -----------------------------------------------------------文件列表条目调整顺序维护对话框-----------------------------------------------------------
+// endregion
+
+// region 文件列表条目调整顺序维护对话框
+
 type ChangeOrderDialogItem = {
   index: number
   neo_index: number
@@ -425,7 +444,10 @@ const itemUpdateFileSelectorRef = useTemplateRef<InstanceType<typeof FileSelecto
   'itemUpdateFileSelectorRef',
 )
 
-// -----------------------------------------------------------文件创建对话框-----------------------------------------------------------
+// endregion
+
+// region 文件创建对话框
+
 const fileCreateDialogVisible = ref<boolean>(false)
 const fileCreateDialogLoading = ref<number>(0)
 
@@ -458,7 +480,10 @@ async function handleFileCreateDialogConfirmed(file: FileCreateInfo): Promise<vo
   }
 }
 
-// -----------------------------------------------------------文件编辑器-----------------------------------------------------------
+// endregion
+
+// region 文件编辑器
+
 const userConfirmedLargeFile = ref<boolean>(false)
 const inspectNoticeClosed = ref<boolean>(false)
 
@@ -553,7 +578,10 @@ async function handleFileCommitted(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------文件操作-----------------------------------------------------------
+// endregion
+
+// region 文件操作
+
 async function handleInspect(): Promise<void> {
   if (settingNodeInvalid.value) {
     return
@@ -747,6 +775,8 @@ async function handleRemove(row: TableItem): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

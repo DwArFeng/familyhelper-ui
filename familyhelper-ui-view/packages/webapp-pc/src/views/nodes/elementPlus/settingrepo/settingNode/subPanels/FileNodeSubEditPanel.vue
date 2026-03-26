@@ -135,7 +135,8 @@ defineOptions({
   name: 'FileNodeSubEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   category: string | null
   args: string[] | null
@@ -146,10 +147,16 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------Props 处理-----------------------------------------------------------
+// endregion
+
+// region Props 处理
+
 const settingNodeInvalid = computed(() => {
   return props.category === null || props.args === null
 })
@@ -176,12 +183,18 @@ function handlePropsUpdate(): void {
   handleInspect()
 }
 
-// -----------------------------------------------------------文件属性面板-----------------------------------------------------------
+// endregion
+
+// region 文件属性面板
+
 const fileNullFlag = ref<boolean>(true)
 const fileOriginName = ref<string>('')
 const fileLength = ref<number>(0)
 
-// -----------------------------------------------------------文件编辑器-----------------------------------------------------------
+// endregion
+
+// region 文件编辑器
+
 const userConfirmedLargeFile = ref<boolean>(false)
 const inspectNoticeClosed = ref<boolean>(false)
 
@@ -248,7 +261,10 @@ function handleFileCommitted(): void {
   handleInspect()
 }
 
-// -----------------------------------------------------------文件创建对话框-----------------------------------------------------------
+// endregion
+
+// region 文件创建对话框
+
 const fileCreateDialogVisible = ref<boolean>(false)
 const fileCreateDialogLoading = ref<number>(0)
 
@@ -281,7 +297,10 @@ async function handleFileCreateDialogConfirmed(file: FileCreateInfo): Promise<vo
   }
 }
 
-// -----------------------------------------------------------文件操作-----------------------------------------------------------
+// endregion
+
+// region 文件操作
+
 async function handleInspect(): Promise<void> {
   if (settingNodeInvalid.value) {
     return
@@ -382,6 +401,8 @@ async function handleUpload(files: File[]): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

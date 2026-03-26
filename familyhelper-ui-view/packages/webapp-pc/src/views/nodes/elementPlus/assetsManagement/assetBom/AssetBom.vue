@@ -157,7 +157,8 @@ defineOptions({
   name: 'AssetBom',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
 function handleSearch(): void {
@@ -189,7 +190,10 @@ onMounted(() => {
   handleSearch()
 })
 
-// -----------------------------------------------------------属性计算-----------------------------------------------------------
+// endregion
+
+// region 属性计算
+
 const nonAssetCatalogSelected = computed<boolean>(() => {
   return assetCatalogIndicatorValue.value === null
 })
@@ -206,7 +210,10 @@ const nonItemSelected = computed<boolean>(() => {
   return item === null
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const assetCatalogIndicatorValue = ref<DispAssetCatalog | null>(null)
 
 function handleAssetCatalogIndicatorChanged(value: DispAssetCatalog | null): void {
@@ -268,7 +275,10 @@ async function handleShowItemCreateDialogChild(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目树面板-----------------------------------------------------------
+// endregion
+
+// region 项目树面板
+
 type ItemTreeItem = {
   tree_node_key: string
   name: string
@@ -353,13 +363,22 @@ async function handleItemTreeItemDelete(item: ItemTreeItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目类型指示器-----------------------------------------------------------
+// endregion
+
+// region 项目类型指示器
+
 const itemTypeIndicators = ref<ItemTypeIndicator[]>([])
 
-// -----------------------------------------------------------项目标签-----------------------------------------------------------
+// endregion
+
+// region 项目标签
+
 const itemLabels = ref<ItemLabel[]>([])
 
-// -----------------------------------------------------------项目生命周期指示器-----------------------------------------------------------
+// endregion
+
+// region 项目生命周期指示器
+
 type ItemLifeCycleIndicator = {
   key: ItemLifeCycle
   label: string
@@ -372,7 +391,10 @@ const itemLifeCycleIndicator = ref<ItemLifeCycleIndicator>([
   { key: 3, label: '已废弃' },
 ])
 
-// -----------------------------------------------------------项目维护对话框-----------------------------------------------------------
+// endregion
+
+// region 项目维护对话框
+
 type ItemMaintainDialogItem = {
   long_id: string
   parent_long_id: string
@@ -475,7 +497,10 @@ async function handleItemCreate(item: ItemMaintainDialogItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目编辑面板-----------------------------------------------------------
+// endregion
+
+// region 项目编辑面板
+
 const UPSC_ITEM_EDIT_PANEL: string = 'ui_preference.pc.assert_management.assert_bom.item_edit_panel'
 
 const itemEditPanelUpsc = computed<string>(() => {
@@ -498,6 +523,8 @@ async function handleItemPropertyUpdated(): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

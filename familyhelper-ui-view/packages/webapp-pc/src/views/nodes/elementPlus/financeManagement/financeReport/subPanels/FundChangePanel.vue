@@ -151,14 +151,18 @@ defineOptions({
   name: 'FundChangePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   accountBook: DispAccountBook | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------资金变更类型指示器处理-----------------------------------------------------------
+// endregion
+
+// region 资金变更类型指示器处理
+
 const fundChangeTypeSelectorOptions = ref<FundChangeTypeIndicator[]>([])
 const fundChangeTypeSelectorLoading = ref<number>(0)
 const fundChangeTypeSelectorSelectModel = ref<string | null>(null)
@@ -190,7 +194,10 @@ onMounted(() => {
   updateFundChangeTypeIndicator()
 })
 
-// -----------------------------------------------------------资金变更表格处理-----------------------------------------------------------
+// endregion
+
+// region 资金变更表格处理
+
 const {
   currentPage: fundChangeTableCurrentPage,
   pageSize: fundChangeTablePageSize,
@@ -307,7 +314,10 @@ onMounted(() => {
   updateFundChangeTable()
 })
 
-// -----------------------------------------------------------资金变更详情处理-----------------------------------------------------------
+// endregion
+
+// region 资金变更详情处理
+
 const fundChangeDetailFormattedChangeType = ref<string>('')
 const fundChangeDetailFormattedHappenedDate = ref<string>('')
 const fundChangeDetailRemark = ref<string>('')
@@ -346,7 +356,10 @@ onMounted(() => {
   updateFundChangeDetail()
 })
 
-// -----------------------------------------------------------变更金额指示器处理-----------------------------------------------------------
+// endregion
+
+// region 变更金额指示器处理
+
 const deltaIndicatorColor = ref<'red' | 'black'>('black')
 const deltaIndicatorValue = ref<string>('')
 const deltaIndicatorFormattedColor = ref<'red' | 'black'>('black')
@@ -457,7 +470,10 @@ onMounted(() => {
   updateDeltaIndicator()
 })
 
-// -----------------------------------------------------------资金变更图表处理-----------------------------------------------------------
+// endregion
+
+// region 资金变更图表处理
+
 const FUND_CHANGE_CHART_STATIC_OPTION: GeneralChartOption = {
   tooltip: {
     trigger: 'axis',
@@ -584,6 +600,8 @@ watch(
 onMounted(() => {
   updateFundChangeChart()
 })
+
+// endregion
 </script>
 
 <style scoped>

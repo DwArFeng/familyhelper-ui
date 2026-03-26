@@ -164,10 +164,14 @@ defineOptions({
   name: 'PbSet',
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// region 头部面板
+
 const inspectAllSwitchValue = ref<boolean>(true)
 
-// -----------------------------------------------------------个人最佳集合查询-----------------------------------------------------------
+// endregion
+
+// region 个人最佳集合查询
+
 function handlePbSetSearch(): void {
   if (inspectAllSwitchValue.value) {
     handlePbSetAllPermittedSearch()
@@ -200,7 +204,10 @@ onMounted(() => {
   handlePbSetSearch()
 })
 
-// -----------------------------------------------------------个人最佳集合卡片-----------------------------------------------------------
+// endregion
+
+// region 个人最佳集合卡片
+
 type PbSetCardItem = {
   name: string
   permission_level: PopbPermissionLevel | null
@@ -353,7 +360,10 @@ async function handlePbSetDelete(item: DispPbSet): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------个人最佳集合维护对话框-----------------------------------------------------------
+// endregion
+
+// region 个人最佳集合维护对话框
+
 type PbSetMaintainDialogItem = {
   key_long_id: string
   name: string
@@ -427,9 +437,14 @@ async function handlePbSetEdit(item: PbSetMaintainDialogItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------权限维护对话框-----------------------------------------------------------
+// endregion
+
+// region 权限维护对话框
+
 const permitMaintainDialogVisible = ref<boolean>(false)
 const permitMaintainDialogPbSetId = ref<string>('')
+
+// endregion
 </script>
 
 <style scoped>

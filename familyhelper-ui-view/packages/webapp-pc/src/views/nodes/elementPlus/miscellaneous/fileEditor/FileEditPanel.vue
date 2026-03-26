@@ -94,7 +94,8 @@ defineOptions({
   name: 'FileEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   type: FileEditType
   id: string
@@ -103,18 +104,27 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   onFileCommitted: []
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 const reading = ref<number>(0)
 
-// -----------------------------------------------------------文件属性-----------------------------------------------------------
+// endregion
+
+// region 文件属性
+
 const fileName = ref<string>('')
 const fileBaseBlob = ref<Blob | null>(null)
 
@@ -122,7 +132,10 @@ const fileExtension = computed<string>(() => {
   return parseFileExtension(fileName.value)
 })
 
-// -----------------------------------------------------------文件指示器-----------------------------------------------------------
+// endregion
+
+// region 文件指示器
+
 function fileIndicatorIcon(): VNode {
   const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
   return useDisplayIconWithDefaults(indicator, { type: 'iconfont', content: '\uffe5' })
@@ -170,7 +183,10 @@ function handleResetButtonClicked(): void {
   handleFileInspectSearch()
 }
 
-// -----------------------------------------------------------文件查询-----------------------------------------------------------
+// endregion
+
+// region 文件查询
+
 const watchedFileProps = computed(() => {
   return {
     type: props.type,
@@ -220,7 +236,10 @@ onMounted(() => {
   handleFileSearch()
 })
 
-// -----------------------------------------------------------子编辑器-----------------------------------------------------------
+// endregion
+
+// region 子编辑器
+
 const subEditorCurrent = computed<string | null>(() => {
   const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
   const editInfo: EditInfo | null = getEditInfo(indicator)
@@ -242,7 +261,10 @@ const subEditorReadonly = computed<boolean>(() => {
   return !(props.mode === 'EDIT') || !(editInfo.actionLevel === 'EDIT')
 })
 
-// -----------------------------------------------------------PDF 子编辑器-----------------------------------------------------------
+// endregion
+
+// region PDF 子编辑器
+
 const pdfSubEditorContentChangeIndicator = ref<boolean>(false)
 
 const pdfSubEditorRef = useTemplateRef<InstanceType<typeof PdfSubEditor>>('pdfSubEditorRef')
@@ -255,7 +277,10 @@ function handlePdfSubEditorContentChangeIndicatorChanged(value: boolean): void {
   pdfSubEditorContentChangeIndicator.value = value
 }
 
-// -----------------------------------------------------------PHOTO 子编辑器-----------------------------------------------------------
+// endregion
+
+// region PHOTO 子编辑器
+
 const photoSubEditorContentChangeIndicator = ref<boolean>(false)
 
 const photoSubEditorRef = useTemplateRef<InstanceType<typeof PhotoSubEditor>>('photoSubEditorRef')
@@ -268,7 +293,10 @@ function handlePhotoSubEditorContentChangeIndicatorChanged(value: boolean): void
   photoSubEditorContentChangeIndicator.value = value
 }
 
-// -----------------------------------------------------------RTF 子编辑器-----------------------------------------------------------
+// endregion
+
+// region RTF 子编辑器
+
 const rtfSubEditorContentChangeIndicator = ref<boolean>(false)
 
 const rtfSubEditor = useTemplateRef<InstanceType<typeof RtfSubEditor>>('rtfSubEditor')
@@ -281,7 +309,10 @@ function handleRtfSubEditorContentChangeIndicatorChanged(value: boolean): void {
   rtfSubEditorContentChangeIndicator.value = value
 }
 
-// -----------------------------------------------------------TXT 子编辑器-----------------------------------------------------------
+// endregion
+
+// region TXT 子编辑器
+
 const txtSubEditorContentChangeIndicator = ref<boolean>(false)
 
 const txtSubEditor = useTemplateRef<InstanceType<typeof TxtSubEditor>>('txtSubEditor')
@@ -294,7 +325,10 @@ function handleTxtSubEditorContentChangeIndicatorChanged(value: boolean): void {
   txtSubEditorContentChangeIndicator.value = value
 }
 
-// -----------------------------------------------------------热键处理-----------------------------------------------------------
+// endregion
+
+// region 热键处理
+
 const hotKeyCommitColdDown = ref<boolean>(false)
 const hotKeyCommitTimeoutHandle = ref<number | null>(null)
 
@@ -323,7 +357,10 @@ onUnmounted(() => {
   }
 })
 
-// -----------------------------------------------------------文件提交-----------------------------------------------------------
+// endregion
+
+// region 文件提交
+
 function commitFile(): void {
   if (props.type === '' || props.id === '' || props.mode === '') {
     return
@@ -419,6 +456,8 @@ async function doCommitFile(): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

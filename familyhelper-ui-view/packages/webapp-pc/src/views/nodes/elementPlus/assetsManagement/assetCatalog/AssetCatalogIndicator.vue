@@ -43,7 +43,8 @@ defineOptions({
   name: 'AssetCatalogIndicator',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   mode?: 'ASSET_BOM' | 'ASSETS_REPORT' | 'DEFAULT'
 }
@@ -52,17 +53,26 @@ withDefaults(defineProps<Props>(), {
   mode: 'DEFAULT',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onChanged', value: DispAssetCatalog | null): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------数据逻辑-----------------------------------------------------------
+// endregion
+
+// region 数据逻辑
+
 const assetCatalog = ref<DispAssetCatalog | null>(null)
 
 const displayValue = computed(() => {
@@ -96,7 +106,10 @@ async function updateAssetCatalog(assetCatalogId: string): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------选择对话框-----------------------------------------------------------
+// endregion
+
+// region 选择对话框
+
 const dialogVisible = ref<boolean>(false)
 
 function handleShowDialog(): void {
@@ -114,7 +127,10 @@ function handleConfirmed(neoValue: DispAssetCatalog, setDefault: boolean): void 
   }
 }
 
-// -----------------------------------------------------------用户偏好-----------------------------------------------------------
+// endregion
+
+// region 用户偏好
+
 type UserPreference = {
   assetCatalogId: string
 }
@@ -146,6 +162,8 @@ function userPreferenceSetter(userPreference: UserPreference): void {
 onMounted(() => {
   loadUserPreference()
 })
+
+// endregion
 </script>
 
 <style scoped>

@@ -47,7 +47,8 @@ defineOptions({
   name: 'TextNodeSubEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   category: string | null
   args: string[] | null
@@ -58,10 +59,16 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------Props 处理-----------------------------------------------------------
+// endregion
+
+// region Props 处理
+
 const settingNodeInvalid = computed(() => {
   return props.category === null || props.args === null
 })
@@ -88,7 +95,10 @@ function handlePropsUpdate(): void {
   handleInspect()
 }
 
-// -----------------------------------------------------------编辑器逻辑-----------------------------------------------------------
+// endregion
+
+// region 编辑器逻辑
+
 const editorContent = ref<string>('')
 const editorBackupContent = ref<string>('')
 
@@ -157,6 +167,8 @@ async function putTextNode(): Promise<void> {
 function handleEditorResetButtonClicked(): void {
   editorContent.value = editorBackupContent.value
 }
+
+// endregion
 </script>
 
 <style scoped>

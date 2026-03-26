@@ -107,14 +107,18 @@ defineOptions({
   name: 'SettingNodeInitDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onSettingNodeInitialized'): void
@@ -122,7 +126,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------主对话框-----------------------------------------------------------
+// endregion
+
+// region 主对话框
+
 type MainDialogSettingNodeInitInfo = Omit<SettingNodeInitInfo, 'args'> & {
   string_args: string
 }
@@ -274,7 +281,10 @@ onMounted(() => {
   mainDialogVisible.value = props.visible
 })
 
-// -----------------------------------------------------------配置类型选择对话框-----------------------------------------------------------
+// endregion
+
+// region 配置类型选择对话框
+
 const settingCategorySelectDialogVisible = ref<boolean>(false)
 
 function handleShowSettingCategorySelectDialog(): void {
@@ -285,7 +295,10 @@ function handleSettingCategorySelectConfirmed(selection: SettingCategory): void 
   mainDialogModel.value.category = selection.key.string_id
 }
 
-// -----------------------------------------------------------配置节点选择对话框-----------------------------------------------------------
+// endregion
+
+// region 配置节点选择对话框
+
 const settingNodeSelectDialogVisible = ref<boolean>(false)
 
 function handleShowSettingNodeSelectDialog(): void {
@@ -296,6 +309,8 @@ function handleSettingNodeSelectConfirmed(selection: SettingNode): void {
   mainDialogModel.value.category = selection.category
   mainDialogModel.value.string_args = JSON.stringify(selection.args)
 }
+
+// endregion
 </script>
 
 <style scoped>

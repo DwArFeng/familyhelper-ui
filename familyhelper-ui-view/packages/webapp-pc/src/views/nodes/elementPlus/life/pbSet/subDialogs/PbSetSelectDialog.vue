@@ -97,7 +97,8 @@ defineOptions({
   name: 'PbSetSelectDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   mode?: 'PB_MANAGEMENT' | 'DEFAULT'
@@ -108,7 +109,10 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'DEFAULT',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', pbSet: DispPbSet, setToDefault: boolean): void
@@ -116,7 +120,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -137,7 +144,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------显示处理-----------------------------------------------------------
+// endregion
+
+// region 显示处理
+
 function handleOpen(): void {
   pbSetSelection.value = []
   setToDefaultCheckboxValue.value = false
@@ -148,7 +158,10 @@ function handleClosed(): void {
   pbSetSelection.value = []
 }
 
-// -----------------------------------------------------------个人最佳集合查询-----------------------------------------------------------
+// endregion
+
+// region 个人最佳集合查询
+
 function handlePbSetSearch(): void {
   handlePbSetAllPermittedSearch()
 }
@@ -167,7 +180,10 @@ onMounted(() => {
   handlePbSetSearch()
 })
 
-// -----------------------------------------------------------个人最佳集合卡片-----------------------------------------------------------
+// endregion
+
+// region 个人最佳集合卡片
+
 type PbSetCardItem = {
   name: string
   permission_level: PopbPermissionLevel | null
@@ -213,7 +229,10 @@ function handlePbSetCardSelectionChanged(selection: PbSetCardItem[]): void {
   pbSetSelection.value = selection
 }
 
-// -----------------------------------------------------------确认逻辑-----------------------------------------------------------
+// endregion
+
+// region 确认逻辑
+
 const setToDefaultCheckboxValue = ref<boolean>(false)
 
 const confirmButtonDisabled = computed<boolean>(() => {
@@ -241,6 +260,8 @@ function handleHotKeyDown(): void {
   emit('onConfirmed', pbSet.pb_set, setToDefaultCheckboxValue.value)
   watchedVisible.value = false
 }
+
+// endregion
 </script>
 
 <style scoped>

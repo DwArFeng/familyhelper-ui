@@ -143,17 +143,24 @@ defineOptions({
   name: 'NotifySettingPanel',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentNotifySettingChanged', value: NotifySetting | null): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const applyChangesButtonDisabled = ref<boolean>(false)
 
 function handleShowNotifySettingCreateDialog(): void {
@@ -176,7 +183,10 @@ async function handleApplyChanges(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------通知设置查询-----------------------------------------------------------
+// endregion
+
+// region 通知设置查询
+
 function handleNotifySettingSearch(): void {
   handleNotifySettingAllSearch()
 }
@@ -198,7 +208,10 @@ onMounted(() => {
   handleNotifySettingSearch()
 })
 
-// -----------------------------------------------------------通知设置表格-----------------------------------------------------------
+// endregion
+
+// region 通知设置表格
+
 const {
   currentPage: notifySettingTableCurrentPage,
   pageSize: notifySettingTablePageSize,
@@ -303,7 +316,10 @@ async function handleNotifySettingDelete(row: NotifySetting): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------通知设置维护对话框-----------------------------------------------------------
+// endregion
+
+// region 通知设置维护对话框
+
 type NotifySettingMaintainDialogItem = {
   key_long_id: string
   label: string
@@ -386,6 +402,8 @@ async function handleNotifySettingEdit(item: NotifySettingMaintainDialogItem): P
     notifySettingMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

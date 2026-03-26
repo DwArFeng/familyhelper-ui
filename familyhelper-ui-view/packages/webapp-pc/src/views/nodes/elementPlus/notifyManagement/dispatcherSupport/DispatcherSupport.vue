@@ -71,10 +71,14 @@ defineOptions({
   name: 'DispatcherSupport',
 })
 
-// -----------------------------------------------------------加载标记-----------------------------------------------------------
+// region 加载标记
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 function handleDispatcherSupportSearch(): void {
   handleDispatcherSupportAllSearch()
 }
@@ -96,7 +100,10 @@ onMounted(() => {
   handleDispatcherSupportSearch()
 })
 
-// -----------------------------------------------------------调度器支持表格-----------------------------------------------------------
+// endregion
+
+// region 调度器支持表格
+
 const {
   currentPage: dispatcherSupportTableCurrentPage,
   pageSize: dispatcherSupportTablePageSize,
@@ -110,7 +117,10 @@ function handleDispatcherSupportTablePagingAttributeChanged(): void {
   handleDispatcherSupportSearch()
 }
 
-// -----------------------------------------------------------维护对话框-----------------------------------------------------------
+// endregion
+
+// region 维护对话框
+
 type DispatcherSupportMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -146,6 +156,8 @@ function dispatcherSupportMaintainDialogItemMap(
 function handleShowDispatcherSupportMaintainInspectDialog(item: DispatcherSupport): void {
   showDispatcherSupportMaintainDialog(item)
 }
+
+// endregion
 </script>
 
 <style scoped>

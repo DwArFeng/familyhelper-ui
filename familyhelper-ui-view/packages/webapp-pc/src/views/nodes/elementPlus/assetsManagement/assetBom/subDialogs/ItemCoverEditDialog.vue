@@ -123,7 +123,8 @@ defineOptions({
   name: 'ItemCoverEditDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   itemId: string
@@ -131,7 +132,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onItemCoverUpdated'): void
@@ -139,10 +143,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -163,7 +173,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------显示处理-----------------------------------------------------------
+// endregion
+
+// region 显示处理
+
 function handleDialogOpen(): void {
   handleItemCoverChildForItemSearch()
 }
@@ -175,10 +188,16 @@ function handleDialogClose(): void {
   updateItemCoverTableItemsByLookup([])
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const itemCoverMaxSize = ref<number>(6)
 
-// -----------------------------------------------------------项目封面查询-----------------------------------------------------------
+// endregion
+
+// region 项目封面查询
+
 function handleItemCoverSearch(): void {
   handleItemCoverChildForItemSearch()
 }
@@ -218,7 +237,10 @@ onUnmounted(() => {
   updateItemCoverTableItemsByLookup([])
 })
 
-// -----------------------------------------------------------项目封面表格处理-----------------------------------------------------------
+// endregion
+
+// region 项目封面表格处理
+
 type ItemCoverInfoWithUrl = ItemCoverInfo & { url: string }
 
 type ItemCoverTableItem = {
@@ -287,7 +309,10 @@ async function handleItemCoverOrderChanged(items: ItemCoverTableItem[]): Promise
   }
 }
 
-// -----------------------------------------------------------文件选择编辑对话框-----------------------------------------------------------
+// endregion
+
+// region 文件选择编辑对话框
+
 const imageSelectCropDialogVisible = ref<boolean>(false)
 const imageSelectCropDialogLoading = ref<number>(0)
 
@@ -313,6 +338,8 @@ async function handleItemCoverUpload(info: ImageSelectCropInfo): Promise<void> {
     imageSelectCropDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

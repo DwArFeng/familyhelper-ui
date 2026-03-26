@@ -112,14 +112,18 @@ defineOptions({
   name: 'BankCardPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   accountBook: DispAccountBook | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------银行卡表格处理-----------------------------------------------------------
+// endregion
+
+// region 银行卡表格处理
+
 const {
   currentPage: bankCardTableCurrentPage,
   pageSize: bankCardTablePageSize,
@@ -205,7 +209,10 @@ onMounted(() => {
   updateBankCardTable()
 })
 
-// -----------------------------------------------------------余额指示器处理-----------------------------------------------------------
+// endregion
+
+// region 余额指示器处理
+
 const balanceIndicatorColor = ref<'red' | 'black'>('black')
 const balanceIndicatorValue = ref<string>('')
 const balanceIndicatorFormattedColor = ref<'red' | 'black'>('black')
@@ -316,7 +323,10 @@ onMounted(() => {
   updateBalanceIndicator()
 })
 
-// -----------------------------------------------------------余额图表处理-----------------------------------------------------------
+// endregion
+
+// region 余额图表处理
+
 const BALANCE_CHART_STATIC_OPTION: GeneralChartOption = {
   tooltip: {
     trigger: 'axis',
@@ -421,6 +431,8 @@ watch(
 onMounted(() => {
   updateBalanceChart()
 })
+
+// endregion
 </script>
 
 <style scoped>

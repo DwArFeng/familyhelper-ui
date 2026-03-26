@@ -172,10 +172,14 @@ defineOptions({
   name: 'AssetCatalog',
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// region 头部面板
+
 const inspectAllSwitchValue = ref<boolean>(false)
 
-// -----------------------------------------------------------资产目录查询-----------------------------------------------------------
+// endregion
+
+// region 资产目录查询
+
 function handleAssetCatalogSearch(): void {
   if (inspectAllSwitchValue.value) {
     handleAssetCatalogAllPermittedSearch()
@@ -208,7 +212,10 @@ onMounted(() => {
   handleAssetCatalogSearch()
 })
 
-// -----------------------------------------------------------资产目录卡片-----------------------------------------------------------
+// endregion
+
+// region 资产目录卡片
+
 type AssetCatalogCardItem = {
   name: string
   permission_level: PoacPermissionLevel | null
@@ -353,7 +360,10 @@ async function handleAssetCatalogDelete(item: DispAssetCatalog): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------资产目录维护对话框-----------------------------------------------------------
+// endregion
+
+// region 资产目录维护对话框
+
 type AssetCatalogMaintainDialogItem = {
   key_long_id: string
   name: string
@@ -430,9 +440,14 @@ async function handleAssetCatalogEdit(item: AssetCatalogMaintainDialogItem): Pro
   }
 }
 
-// -----------------------------------------------------------权限维护对话框-----------------------------------------------------------
+// endregion
+
+// region 权限维护对话框
+
 const permitMaintainDialogVisible = ref<boolean>(false)
 const permitMaintainDialogAssetCatalogId = ref<string>('')
+
+// endregion
 </script>
 
 <style scoped>

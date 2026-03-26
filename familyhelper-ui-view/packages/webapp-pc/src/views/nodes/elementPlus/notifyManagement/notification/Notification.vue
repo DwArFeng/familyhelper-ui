@@ -140,17 +140,24 @@ defineOptions({
   name: 'NotificationComponent',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 const notificationStore = vim
   .ctx()
   .store()
   .vueStore<'notification', NotificationStore>('notification')
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const unreadSwitchValue = ref<boolean>(false)
 
 async function handleAllNotificationRead(): Promise<void> {
@@ -209,7 +216,10 @@ async function handleAllNotificationDelete(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------通知查询-----------------------------------------------------------
+// endregion
+
+// region 通知查询
+
 function handleNotificationSearch(): void {
   notificationStore
     .willUpdateUnreadCount()
@@ -252,7 +262,10 @@ onMounted(() => {
   handleNotificationSearch()
 })
 
-// -----------------------------------------------------------通知表格处理-----------------------------------------------------------
+// endregion
+
+// region 通知表格处理
+
 const {
   currentPage: notificationTableCurrentPage,
   pageSize: notificationTablePageSize,
@@ -325,7 +338,10 @@ async function handleNotificationDelete(row: Notification): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------详情对话框处理-----------------------------------------------------------
+// endregion
+
+// region 详情对话框处理
+
 const detailDialogVisible = ref<boolean>(false)
 const detailDialogSubject = ref<string | null>('')
 const detailDialogBody = ref<string | null>('')
@@ -346,6 +362,8 @@ function handleShowDetailDialog(row: Notification): void {
       loading.value -= 1
     })
 }
+
+// endregion
 </script>
 
 <style scoped>

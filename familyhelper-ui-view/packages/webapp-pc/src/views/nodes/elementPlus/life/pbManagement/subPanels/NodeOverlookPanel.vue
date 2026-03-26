@@ -73,7 +73,8 @@ defineOptions({
   name: 'NodeOverlookPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   nodeId: string
   readOnly?: boolean
@@ -83,17 +84,26 @@ const props = withDefaults(defineProps<Props>(), {
   readOnly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onNodeEdit'): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------表单实体-----------------------------------------------------------
+// endregion
+
+// region 表单实体
+
 type FormEntity = {
   name: string
   remark: string
@@ -104,7 +114,10 @@ const formEntity = ref<FormEntity>({
   remark: '',
 })
 
-// -----------------------------------------------------------查询处理-----------------------------------------------------------
+// endregion
+
+// region 查询处理
+
 watch(
   () => props.nodeId,
   () => {
@@ -140,12 +153,18 @@ function updateFormView(res: DispPbNode): void {
   }
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowPbNodeEditDialog(): void {
   showPbNodeMaintainDialog(pbNodeMaintainDialogItem.value)
 }
 
-// -----------------------------------------------------------个人最佳节点维护对话框-----------------------------------------------------------
+// endregion
+
+// region 个人最佳节点维护对话框
+
 type PbNodeMaintainDialogItem = {
   long_id: string
   parent_long_id: string
@@ -195,7 +214,10 @@ async function handlePbNodeEdit(item: PbNodeMaintainDialogItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+// endregion
+
+// region 方法暴露
+
 function updateViewMethod(): void {
   updateView()
 }
@@ -207,6 +229,8 @@ defineExpose({
 onMounted(() => {
   updateView()
 })
+
+// endregion
 </script>
 
 <style scoped>

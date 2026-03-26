@@ -128,17 +128,24 @@ defineOptions({
   name: 'TopicPanel',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentTopicChanged', value: Topic | null): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const applyChangesButtonDisabled = ref<boolean>(false)
 
 function handleShowTopicCreateDialog(): void {
@@ -161,7 +168,10 @@ async function handleApplyChanges(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------主题查询-----------------------------------------------------------
+// endregion
+
+// region 主题查询
+
 function handleTopicSearch(): void {
   handleTopicAllSearch()
 }
@@ -183,7 +193,10 @@ onMounted(() => {
   handleTopicSearch()
 })
 
-// -----------------------------------------------------------主题表格-----------------------------------------------------------
+// endregion
+
+// region 主题表格
+
 const {
   currentPage: topicTableCurrentPage,
   pageSize: topicTablePageSize,
@@ -251,7 +264,10 @@ async function handleTopicDelete(row: Topic): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------主题维护对话框-----------------------------------------------------------
+// endregion
+
+// region 主题维护对话框
+
 type TopicMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -361,6 +377,8 @@ async function handleTopicEdit(item: TopicMaintainDialogItem): Promise<void> {
     topicMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

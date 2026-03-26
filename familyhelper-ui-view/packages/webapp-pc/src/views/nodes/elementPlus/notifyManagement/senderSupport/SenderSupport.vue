@@ -71,10 +71,14 @@ defineOptions({
   name: 'SenderSupport',
 })
 
-// -----------------------------------------------------------加载标记-----------------------------------------------------------
+// region 加载标记
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 function handleSenderSupportSearch(): void {
   handleSenderSupportAllSearch()
 }
@@ -96,7 +100,10 @@ onMounted(() => {
   handleSenderSupportSearch()
 })
 
-// -----------------------------------------------------------发送器支持表格-----------------------------------------------------------
+// endregion
+
+// region 发送器支持表格
+
 const {
   currentPage: senderSupportTableCurrentPage,
   pageSize: senderSupportTablePageSize,
@@ -110,7 +117,10 @@ function handleSenderSupportTablePagingAttributeChanged(): void {
   handleSenderSupportSearch()
 }
 
-// -----------------------------------------------------------维护对话框-----------------------------------------------------------
+// endregion
+
+// region 维护对话框
+
 type SenderSupportMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -144,6 +154,8 @@ function senderSupportMaintainDialogItemMap(t: SenderSupport): SenderSupportMain
 function handleShowSenderSupportMaintainInspectDialog(item: SenderSupport): void {
   showSenderSupportMaintainDialog(item)
 }
+
+// endregion
 </script>
 
 <style scoped>

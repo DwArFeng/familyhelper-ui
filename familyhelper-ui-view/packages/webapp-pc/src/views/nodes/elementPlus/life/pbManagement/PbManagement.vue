@@ -180,10 +180,14 @@ defineOptions({
   name: 'PbManagement',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------属性计算-----------------------------------------------------------
+// endregion
+
+// region 属性计算
+
 const nonPbSetSelected = computed<boolean>(() => {
   return pbSetIndicatorValue.value === null
 })
@@ -203,14 +207,20 @@ const nonPbNodeSelected = computed<boolean>(() => {
   return item.type !== 'node'
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const pbSetIndicatorValue = ref<DispPbSet | null>(null)
 
 function handlePbSetChanged(value: DispPbSet | null): void {
   pbSetIndicatorValue.value = value
 }
 
-// -----------------------------------------------------------个人最佳树面板-----------------------------------------------------------
+// endregion
+
+// region 个人最佳树面板
+
 type PbTreeItem = {
   tree_node_key: string
   type: 'node' | 'item'
@@ -371,7 +381,10 @@ async function handlePbItemDelete(
   }
 }
 
-// -----------------------------------------------------------节点维护对话框-----------------------------------------------------------
+// endregion
+
+// region 节点维护对话框
+
 type PbNodeMaintainDialogItem = {
   long_id: string
   parent_long_id: string
@@ -524,7 +537,10 @@ async function handlePbNodeEdit(item: PbNodeMaintainDialogItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目维护对话框-----------------------------------------------------------
+// endregion
+
+// region 项目维护对话框
+
 type PbItemMaintainDialogItem = {
   long_id: string
   node_long_id: string
@@ -685,7 +701,10 @@ async function handlePbItemEdit(item: PbItemMaintainDialogItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------节点编辑面板-----------------------------------------------------------
+// endregion
+
+// region 节点编辑面板
+
 async function handlePbNodePropertyUpdated(): Promise<void> {
   const oldNode: DispPbNode | null = pbTreeCurrentItem.value?.node ?? null
   if (!oldNode) {
@@ -703,7 +722,10 @@ async function handlePbNodePropertyUpdated(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目编辑面板-----------------------------------------------------------
+// endregion
+
+// region 项目编辑面板
+
 async function handlePbItemPropertyUpdated(): Promise<void> {
   const oldItem: DispPbItem | null = pbTreeCurrentItem.value?.item ?? null
   if (!oldItem) {
@@ -720,6 +742,8 @@ async function handlePbItemPropertyUpdated(): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

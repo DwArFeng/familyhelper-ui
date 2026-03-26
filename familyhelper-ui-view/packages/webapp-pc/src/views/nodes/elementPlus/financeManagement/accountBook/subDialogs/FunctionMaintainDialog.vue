@@ -36,7 +36,8 @@ defineOptions({
   name: 'FunctionMaintainDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   accountBookId: string
@@ -47,14 +48,20 @@ const props = withDefaults(defineProps<Props>(), {
   accountBookId: '',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -75,10 +82,15 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------Tab 页-----------------------------------------------------------
+// endregion
+
+// region Tab 页
+
 type TabsActiveName = 'permit' | 'remind'
 
 const tabsActiveName = ref<TabsActiveName>('permit')
+
+// endregion
 </script>
 
 <style scoped>

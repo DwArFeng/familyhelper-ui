@@ -105,7 +105,8 @@ defineOptions({
   name: 'AssetCatalogSelectDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   mode?: 'ASSET_BOM' | 'ASSETS_REPORT' | 'DEFAULT'
@@ -116,7 +117,10 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'DEFAULT',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', assetCatalog: DispAssetCatalog, setToDefault: boolean): void
@@ -124,7 +128,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -145,7 +152,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------显示处理-----------------------------------------------------------
+// endregion
+
+// region 显示处理
+
 function handleOpen(): void {
   assetCatalogSelection.value = []
   setToDefaultCheckboxValue.value = false
@@ -156,7 +166,10 @@ function handleClosed(): void {
   assetCatalogSelection.value = []
 }
 
-// -----------------------------------------------------------资产目录查询-----------------------------------------------------------
+// endregion
+
+// region 资产目录查询
+
 function handleAssetCatalogSearch(): void {
   handleAssetCatalogAllPermittedSearch()
 }
@@ -175,7 +188,10 @@ onMounted(() => {
   handleAssetCatalogSearch()
 })
 
-// -----------------------------------------------------------资产目录卡片-----------------------------------------------------------
+// endregion
+
+// region 资产目录卡片
+
 type AssetCatalogCardItem = {
   name: string
   permission_level: PoacPermissionLevel | null
@@ -219,7 +235,10 @@ function handleAssetCatalogCardSelectionChanged(selection: AssetCatalogCardItem[
   assetCatalogSelection.value = selection
 }
 
-// -----------------------------------------------------------确认逻辑-----------------------------------------------------------
+// endregion
+
+// region 确认逻辑
+
 const setToDefaultCheckboxValue = ref<boolean>(false)
 
 const confirmButtonDisabled = computed<boolean>(() => {
@@ -247,6 +266,8 @@ function handleHotKeyDown(): void {
   emit('onConfirmed', assetCatalog.asset_catalog, setToDefaultCheckboxValue.value)
   watchedVisible.value = false
 }
+
+// endregion
 </script>
 
 <style scoped>

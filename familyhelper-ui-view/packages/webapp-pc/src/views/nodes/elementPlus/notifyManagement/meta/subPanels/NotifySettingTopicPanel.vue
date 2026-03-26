@@ -123,7 +123,8 @@ defineOptions({
   name: 'NotifySettingTopicPanel',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentNotifySettingChanged', value: NotifySetting | null): void
   (e: 'onCurrentTopicChanged', value: Topic | null): void
@@ -132,10 +133,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// endregion
+
+// region Store 引入
+
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const COMPONENT_VISIBLE_PERMISSION_ACCOUNT_SELECTOR: string =
   'ui.pc.component_visible.notify_management.meta.account_selector'
 
@@ -240,7 +247,10 @@ onMounted(() => {
   handleSearch()
 })
 
-// -----------------------------------------------------------通知设置表格-----------------------------------------------------------
+// endregion
+
+// region 通知设置表格
+
 const {
   currentPage: notifySettingTableCurrentPage,
   pageSize: notifySettingTablePageSize,
@@ -267,7 +277,10 @@ function handleNotifySettingTableCurrentChanged(current: NotifySetting | null): 
   emit('onCurrentNotifySettingChanged', current)
 }
 
-// -----------------------------------------------------------主题表格-----------------------------------------------------------
+// endregion
+
+// region 主题表格
+
 const {
   currentPage: topicTableCurrentPage,
   pageSize: topicTablePageSize,
@@ -293,6 +306,8 @@ function handleTopicTablePagingAttributeChanged(): void {
 function handleTopicTableCurrentChanged(current: Topic | null): void {
   emit('onCurrentTopicChanged', current)
 }
+
+// endregion
 </script>
 
 <style scoped>

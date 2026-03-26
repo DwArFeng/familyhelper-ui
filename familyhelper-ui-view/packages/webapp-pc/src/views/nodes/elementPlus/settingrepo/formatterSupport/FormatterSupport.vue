@@ -71,10 +71,14 @@ defineOptions({
   name: 'FormatterSupport',
 })
 
-// -----------------------------------------------------------加载标记-----------------------------------------------------------
+// region 加载标记
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 function handleFormatterSupportSearch(): void {
   handleFormatterSupportAllSearch()
 }
@@ -96,7 +100,10 @@ onMounted(() => {
   handleFormatterSupportSearch()
 })
 
-// -----------------------------------------------------------格式化器支持表格-----------------------------------------------------------
+// endregion
+
+// region 格式化器支持表格
+
 const {
   currentPage: formatterSupportTableCurrentPage,
   pageSize: formatterSupportTablePageSize,
@@ -110,7 +117,10 @@ function handleFormatterSupportTablePagingAttributeChanged(): void {
   handleFormatterSupportSearch()
 }
 
-// -----------------------------------------------------------维护对话框-----------------------------------------------------------
+// endregion
+
+// region 维护对话框
+
 type FormatterSupportMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -146,6 +156,8 @@ function formatterSupportMaintainDialogItemMap(
 function handleShowFormatterSupportMaintainInspectDialog(item: FormatterSupport): void {
   showFormatterSupportMaintainDialog(item)
 }
+
+// endregion
 </script>
 
 <style scoped>

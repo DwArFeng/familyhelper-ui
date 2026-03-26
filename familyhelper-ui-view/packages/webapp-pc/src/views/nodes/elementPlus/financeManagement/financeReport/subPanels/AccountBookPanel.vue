@@ -149,14 +149,18 @@ defineOptions({
   name: 'AccountBookPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   accountBook: DispAccountBook | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------总余额指示器处理-----------------------------------------------------------
+// endregion
+
+// region 总余额指示器处理
+
 const totalBalanceIndicatorColor = ref<'red' | 'black'>('black')
 const totalBalanceIndicatorValue = ref<string>('')
 const totalBalanceIndicatorFormattedColor = ref<'red' | 'black'>('black')
@@ -267,7 +271,10 @@ onMounted(() => {
   updateTotalBalanceIndicator()
 })
 
-// -----------------------------------------------------------总余额图表处理-----------------------------------------------------------
+// endregion
+
+// region 总余额图表处理
+
 const TOTAL_BALANCE_CHART_STATIC_OPTION: GeneralChartOption = {
   tooltip: {
     trigger: 'axis',
@@ -373,7 +380,10 @@ onMounted(() => {
   updateTotalBalanceChart()
 })
 
-// -----------------------------------------------------------银行卡表格处理-----------------------------------------------------------
+// endregion
+
+// region 银行卡表格处理
+
 const {
   currentPage: bankCardTableCurrentPage,
   pageSize: bankCardTablePageSize,
@@ -442,7 +452,10 @@ onMounted(() => {
   updateBankCardTable()
 })
 
-// -----------------------------------------------------------资金变更表格处理-----------------------------------------------------------
+// endregion
+
+// region 资金变更表格处理
+
 const {
   currentPage: fundChangeTableCurrentPage,
   pageSize: fundChangeTablePageSize,
@@ -514,6 +527,8 @@ watch(
 onMounted(() => {
   updateFundChangeTable()
 })
+
+// endregion
 </script>
 
 <style scoped>

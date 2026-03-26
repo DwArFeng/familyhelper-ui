@@ -140,7 +140,8 @@ defineOptions({
   name: 'ItemOverlookPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   itemId: string
   readOnly?: boolean
@@ -150,14 +151,20 @@ const props = withDefaults(defineProps<Props>(), {
   readOnly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onItemEdit'): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const itemLoading = ref<number>(0)
 const recordLoading = ref<number>(0)
 const fileLoading = ref<number>(0)
@@ -167,7 +174,10 @@ const loading = computed<boolean>(() => {
   return itemLoading.value > 0 || recordLoading.value > 0 || fileLoading.value > 0
 })
 
-// -----------------------------------------------------------表单实体-----------------------------------------------------------
+// endregion
+
+// region 表单实体
+
 type FormEntity = {
   name: string
   unit: string
@@ -193,7 +203,10 @@ const formattedComparator = computed<string>(() => {
   }
 })
 
-// -----------------------------------------------------------图表处理-----------------------------------------------------------
+// endregion
+
+// region 图表处理
+
 const RECORD_CHART_STATIC_OPTION: GeneralChartOption = {
   tooltip: {
     trigger: 'axis',
@@ -247,7 +260,10 @@ const {
   dynamicOption: recordChartDynamicOption,
 } = useSeparatedGeneralChartPanel(RECORD_CHART_STATIC_OPTION, {}, undefined, undefined)
 
-// -----------------------------------------------------------图片轮播-----------------------------------------------------------
+// endregion
+
+// region 图片轮播
+
 const carouselImages = ref<string[]>([])
 
 function revokeFileUrl(): void {
@@ -258,7 +274,10 @@ function revokeFileUrl(): void {
   carouselImages.value.splice(0, carouselImages.value.length)
 }
 
-// -----------------------------------------------------------查询处理-----------------------------------------------------------
+// endregion
+
+// region 查询处理
+
 watch(
   () => props.itemId,
   () => {
@@ -357,12 +376,18 @@ async function inspectFile(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowPbItemEditDialog(): void {
   showPbItemMaintainDialog(pbItemMaintainDialogItem.value)
 }
 
-// -----------------------------------------------------------个人最佳项目维护对话框-----------------------------------------------------------
+// endregion
+
+// region 个人最佳项目维护对话框
+
 type PbItemMaintainDialogItem = {
   long_id: string
   node_long_id: string
@@ -423,7 +448,10 @@ async function handlePbItemEdit(item: PbItemMaintainDialogItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+// endregion
+
+// region 方法暴露
+
 function updateViewMethod(): void {
   updateView()
 }
@@ -439,6 +467,8 @@ onMounted(() => {
 onUnmounted(() => {
   revokeFileUrl()
 })
+
+// endregion
 </script>
 
 <style scoped>

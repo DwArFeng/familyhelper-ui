@@ -30,7 +30,8 @@ defineOptions({
   name: 'FundChangeTypeSelector',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   modelValue: FundChangeTypeIndicator | null
   readonly?: boolean
@@ -44,17 +45,26 @@ const props = withDefaults(defineProps<Props>(), {
   clearable: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:modelValue', value: FundChangeTypeIndicator | null): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------值处理逻辑-----------------------------------------------------------
+// endregion
+
+// region 值处理逻辑
+
 const watchedModelValue = ref<FundChangeTypeIndicator | null>(null)
 
 watch(
@@ -75,7 +85,10 @@ onMounted(() => {
   watchedModelValue.value = props.modelValue
 })
 
-// -----------------------------------------------------------查询逻辑-----------------------------------------------------------
+// endregion
+
+// region 查询逻辑
+
 const fundChangeTypeIndicators = ref<FundChangeTypeIndicator[]>([])
 
 function handleFundChangeTypeIndicatorSearch(): void {
@@ -95,7 +108,10 @@ onMounted(() => {
   handleFundChangeTypeIndicatorSearch()
 })
 
-// -----------------------------------------------------------数据刷新处理-----------------------------------------------------------
+// endregion
+
+// region 数据刷新处理
+
 function refresh(): void {
   handleFundChangeTypeIndicatorSearch()
 }
@@ -103,6 +119,8 @@ function refresh(): void {
 defineExpose({
   refresh,
 })
+
+// endregion
 </script>
 
 <style scoped>

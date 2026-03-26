@@ -256,7 +256,8 @@ defineOptions({
   name: 'ItemFilePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   itemId: string
   readonly: boolean
@@ -265,7 +266,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onItemFileUpdated'): void
   (e: 'onFileFloaty', id: string, name: string, mode: FileEditMode): void
@@ -274,10 +278,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 type OrderSelectorValue =
   | 'default'
   | 'inspected_date_desc'
@@ -301,7 +311,10 @@ function handlePanelFloatyButtonClicked(): void {
   emit('onPanelFloatyButtonClicked')
 }
 
-// -----------------------------------------------------------项目文件信息查询-----------------------------------------------------------
+// endregion
+
+// region 项目文件信息查询
+
 watch(
   () => props.itemId,
   () => {
@@ -403,7 +416,10 @@ onMounted(() => {
   handleItemFileInfoSearch()
 })
 
-// -----------------------------------------------------------附件文件信息表格处理-----------------------------------------------------------
+// endregion
+
+// region 附件文件信息表格处理
+
 const {
   currentPage: itemFileInfoTableCurrentPage,
   pageSize: itemFileInfoTablePageSize,
@@ -580,7 +596,10 @@ function handleFileEditFloatyContextmenuClicked(row: ItemFileInfo, close: () => 
   emit('onFileFloaty', row.key.long_id, row.origin_name, 'EDIT')
 }
 
-// -----------------------------------------------------------文件上传对话框处理-----------------------------------------------------------
+// endregion
+
+// region 文件上传对话框处理
+
 const fileUploadDialogVisible = ref<boolean>(false)
 const fileUploadDialogLoading = ref<number>(0)
 
@@ -608,7 +627,10 @@ async function handleFileUploadDialogConfirmed(files: File[], callback: () => vo
   }
 }
 
-// -----------------------------------------------------------文件创建对话框处理-----------------------------------------------------------
+// endregion
+
+// region 文件创建对话框处理
+
 const fileCreateDialogVisible = ref<boolean>(false)
 const fileCreateDialogLoading = ref<number>(0)
 
@@ -631,7 +653,10 @@ async function handleFileCreateDialogConfirmed(file: FileCreateInfo): Promise<vo
   }
 }
 
-// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+// endregion
+
+// region 方法暴露
+
 function itemFileInfoSearch(): void {
   handleItemFileInfoSearch()
 }
@@ -639,6 +664,8 @@ function itemFileInfoSearch(): void {
 defineExpose({
   itemFileInfoSearch,
 })
+
+// endregion
 </script>
 
 <style scoped>

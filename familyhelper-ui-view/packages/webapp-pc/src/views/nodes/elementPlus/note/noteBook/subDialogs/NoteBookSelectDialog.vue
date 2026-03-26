@@ -142,7 +142,8 @@ defineOptions({
   name: 'NoteBookSelectDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   mode?: 'NOTE_MANAGEMENT' | 'DEFAULT'
@@ -153,7 +154,10 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'DEFAULT',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', noteBook: DispNoteBook, setToDefault: boolean): void
@@ -161,7 +165,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -182,7 +189,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------显示处理-----------------------------------------------------------
+// endregion
+
+// region 显示处理
+
 function handleOpen(): void {
   noteBookSelection.value = []
   setToDefaultCheckboxValue.value = false
@@ -193,11 +203,17 @@ function handleClosed(): void {
   noteBookSelection.value = []
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const favoredOnlySwitchValue = ref<boolean>(false)
 const nameSearchBarValue = ref<string>('')
 
-// -----------------------------------------------------------笔记本查询-----------------------------------------------------------
+// endregion
+
+// region 笔记本查询
+
 function handleNoteBookSearch(): void {
   handleNoteBookAllPermittedSearch()
 }
@@ -222,7 +238,10 @@ onMounted(() => {
   handleNoteBookSearch()
 })
 
-// -----------------------------------------------------------笔记本卡片-----------------------------------------------------------
+// endregion
+
+// region 笔记本卡片
+
 type NoteBookCardItem = {
   name: string
   permission_level: PonbPermissionLevel | null
@@ -268,7 +287,10 @@ function handleNoteBookCardSelectionChanged(selection: NoteBookCardItem[]): void
   noteBookSelection.value = selection
 }
 
-// -----------------------------------------------------------确认逻辑-----------------------------------------------------------
+// endregion
+
+// region 确认逻辑
+
 const setToDefaultCheckboxValue = ref<boolean>(false)
 
 const confirmButtonDisabled = computed<boolean>(() => {
@@ -296,6 +318,8 @@ function handleHotKeyDown(): void {
   emit('onConfirmed', noteBook.note_book, setToDefaultCheckboxValue.value)
   watchedVisible.value = false
 }
+
+// endregion
 </script>
 
 <style scoped>

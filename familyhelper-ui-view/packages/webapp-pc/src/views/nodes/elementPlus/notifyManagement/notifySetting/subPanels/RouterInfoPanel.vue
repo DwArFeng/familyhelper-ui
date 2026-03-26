@@ -65,17 +65,24 @@ defineOptions({
   name: 'RouterInfoPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   notifySetting: NotifySetting | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 watch(
   () => props.notifySetting,
   () => {
@@ -111,7 +118,10 @@ async function handleInspectRouterInfo(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 async function handleSaveRouterInfo(): Promise<void> {
   const notifySetting: NotifySetting | null = props.notifySetting
   if (!notifySetting) {
@@ -160,7 +170,10 @@ async function handleSaveRouterInfo(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------路由器信息表单-----------------------------------------------------------
+// endregion
+
+// region 路由器信息表单
+
 type RouterInfoFormItem = {
   type: string
   param: string
@@ -198,7 +211,10 @@ const routerInfoFormRules = ref({
 
 const formRef = useTemplateRef<InstanceType<typeof ElForm>>('formRef')
 
-// -----------------------------------------------------------路由器支持选择对话框-----------------------------------------------------------
+// endregion
+
+// region 路由器支持选择对话框
+
 const routerSupportSelectDialogVisible = ref<boolean>(false)
 
 function handleRouterSupportSelected(routerSupport: RouterSupport): void {
@@ -210,6 +226,8 @@ function handleRouterSupportSelected(routerSupport: RouterSupport): void {
   }
   form.validate()
 }
+
+// endregion
 </script>
 
 <style scoped>

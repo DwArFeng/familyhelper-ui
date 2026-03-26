@@ -42,15 +42,21 @@ defineOptions({
   name: 'FinanceReport',
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// region 头部面板
+
 const accountBookIndicatorValue = ref<DispAccountBook | null>(null)
 
 function handleBankCardIndicatorChanged(value: DispAccountBook | null): void {
   accountBookIndicatorValue.value = value
 }
 
-// -----------------------------------------------------------页签面板-----------------------------------------------------------
+// endregion
+
+// region 页签面板
+
 const tabPanelValue = ref<'account_book' | 'bank_card' | 'fund_change'>('account_book')
+
+// endregion
 </script>
 
 <style scoped>

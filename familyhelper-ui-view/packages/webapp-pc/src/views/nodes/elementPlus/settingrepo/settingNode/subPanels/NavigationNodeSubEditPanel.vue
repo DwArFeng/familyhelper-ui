@@ -211,7 +211,8 @@ defineOptions({
   name: 'NavigationNodeSubEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   category: string | null
   args: string[] | null
@@ -222,10 +223,16 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------Props 处理-----------------------------------------------------------
+// endregion
+
+// region Props 处理
+
 const settingNodeInvalid = computed(() => {
   return props.category === null || props.args === null
 })
@@ -252,7 +259,10 @@ function handlePropsUpdate(): void {
   handleInspect()
 }
 
-// -----------------------------------------------------------编辑器数据-----------------------------------------------------------
+// endregion
+
+// region 编辑器数据
+
 const navigationNode = ref<NavigationNodeInspectResult | null>(null)
 
 function handleInspect(): void {
@@ -283,12 +293,18 @@ async function handleInspectNavigationNode(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------Tab 页-----------------------------------------------------------
+// endregion
+
+// region Tab 页
+
 type TabsActiveName = 'overlook' | 'structure'
 
 const tabsActiveName = ref<TabsActiveName>('overlook')
 
-// -----------------------------------------------------------概览-----------------------------------------------------------
+// endregion
+
+// region 概览
+
 type NavigationNodeOverlookPropertyFormItem = {
   count: number
   content: string
@@ -377,7 +393,10 @@ async function handleNodeEdit(item: NavigationNodeOverlookDialogItem): Promise<v
   }
 }
 
-// -----------------------------------------------------------结构-----------------------------------------------------------
+// endregion
+
+// region 结构
+
 type StructureTreeItem = {
   children: NavigationNodeInspectResultItem[]
 }
@@ -703,6 +722,8 @@ async function handleFormatIndex(): Promise<void> {
     itemMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

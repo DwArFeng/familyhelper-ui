@@ -36,14 +36,18 @@ defineOptions({
   name: 'BodhComponent',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   gaming: boolean
 }
 
 defineProps<Props>()
 
-// -----------------------------------------------------------游戏逻辑-----------------------------------------------------------
+// endregion
+
+// region 游戏逻辑
+
 const canUp = ref<boolean>(true)
 const canDown = ref<boolean>(true)
 const canLeft = ref<boolean>(true)
@@ -439,6 +443,8 @@ function updateView(): void {
   }
   gameOver()
 }
+
+// endregion
 </script>
 
 <style scoped>

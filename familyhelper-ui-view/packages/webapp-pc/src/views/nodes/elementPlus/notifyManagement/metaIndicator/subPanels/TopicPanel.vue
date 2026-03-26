@@ -51,17 +51,24 @@ defineOptions({
   name: 'TopicPanel',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentTopicChanged', value: Topic | null): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------主题查询-----------------------------------------------------------
+// endregion
+
+// region 主题查询
+
 function handleTopicSearch(): void {
   handleTopicAllSearch()
 }
@@ -83,7 +90,10 @@ onMounted(() => {
   handleTopicSearch()
 })
 
-// -----------------------------------------------------------主题表格-----------------------------------------------------------
+// endregion
+
+// region 主题表格
+
 const {
   currentPage: topicTableCurrentPage,
   pageSize: topicTablePageSize,
@@ -108,6 +118,8 @@ function handleTopicTablePagingAttributeChanged(): void {
 function handleTopicTableCurrentChanged(current: Topic | null): void {
   emit('onCurrentTopicChanged', current)
 }
+
+// endregion
 </script>
 
 <style scoped>

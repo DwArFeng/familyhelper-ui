@@ -21,7 +21,8 @@ defineOptions({
   name: 'NodeEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   nodeId: string
   readonly?: boolean
@@ -31,22 +32,33 @@ withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onNodePropertyUpdated'): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Tab 页-----------------------------------------------------------
+// endregion
+
+// region Tab 页
+
 type TabsActiveName = 'overlook'
 
 const tabsActiveName = ref<TabsActiveName>('overlook')
 
-// -----------------------------------------------------------事件处理-----------------------------------------------------------
+// endregion
+
+// region 事件处理
+
 function handleNodePropertyUpdated(): void {
   emit('onNodePropertyUpdated')
 }
+
+// endregion
 </script>
 
 <style scoped>

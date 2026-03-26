@@ -71,10 +71,14 @@ defineOptions({
   name: 'RouterSupport',
 })
 
-// -----------------------------------------------------------加载标记-----------------------------------------------------------
+// region 加载标记
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 function handleRouterSupportSearch(): void {
   handleRouterSupportAllSearch()
 }
@@ -96,7 +100,10 @@ onMounted(() => {
   handleRouterSupportSearch()
 })
 
-// -----------------------------------------------------------路由器支持表格-----------------------------------------------------------
+// endregion
+
+// region 路由器支持表格
+
 const {
   currentPage: routerSupportTableCurrentPage,
   pageSize: routerSupportTablePageSize,
@@ -110,7 +117,10 @@ function handleRouterSupportTablePagingAttributeChanged(): void {
   handleRouterSupportSearch()
 }
 
-// -----------------------------------------------------------维护对话框-----------------------------------------------------------
+// endregion
+
+// region 维护对话框
+
 type RouterSupportMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -144,6 +154,8 @@ function routerSupportMaintainDialogItemMap(t: RouterSupport): RouterSupportMain
 function handleShowRouterSupportMaintainInspectDialog(item: RouterSupport): void {
   showRouterSupportMaintainDialog(item)
 }
+
+// endregion
 </script>
 
 <style scoped>

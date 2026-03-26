@@ -32,7 +32,8 @@ defineOptions({
   name: 'ItemEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   itemId: string
   readonly?: boolean
@@ -42,19 +43,28 @@ withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onItemPropertyUpdated'): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Tab 页-----------------------------------------------------------
+// endregion
+
+// region Tab 页
+
 type TabsActiveName = 'overlook' | 'record'
 
 const tabsActiveName = ref<TabsActiveName>('overlook')
 
-// -----------------------------------------------------------事件处理-----------------------------------------------------------
+// endregion
+
+// region 事件处理
+
 const itemOverlookPanelRef =
   useTemplateRef<ComponentExposed<typeof ItemOverlookPanel>>('itemOverlookPanelRef')
 
@@ -65,6 +75,8 @@ function handleItemPropertyUpdated(): void {
 function handleRecordContextChanged(): void {
   itemOverlookPanelRef.value?.updateView()
 }
+
+// endregion
 </script>
 
 <style scoped>

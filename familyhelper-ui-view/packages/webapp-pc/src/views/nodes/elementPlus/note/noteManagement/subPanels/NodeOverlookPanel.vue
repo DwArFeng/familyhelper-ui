@@ -76,7 +76,8 @@ defineOptions({
   name: 'NodeOverlookPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   noteNodeId: string
   readonly: boolean
@@ -84,17 +85,26 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onNoteNodePropertyUpdated'): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------笔记节点查询-----------------------------------------------------------
+// endregion
+
+// region 笔记节点查询
+
 watch(
   () => props.noteNodeId,
   () => {
@@ -132,12 +142,18 @@ onMounted(() => {
   handleNoteNodeSearch()
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowNoteNodeEditDialog(): void {
   showNoteNodeMaintainDialog(noteNodeMaintainDialogItem.value)
 }
 
-// -----------------------------------------------------------属性表单-----------------------------------------------------------
+// endregion
+
+// region 属性表单
+
 type NoteNodePropertyFormItem = {
   name: string
   remark: string
@@ -148,7 +164,10 @@ const noteNodePropertyFormItem = ref<NoteNodePropertyFormItem>({
   remark: '',
 })
 
-// -----------------------------------------------------------笔记节点维护对话框-----------------------------------------------------------
+// endregion
+
+// region 笔记节点维护对话框
+
 type NoteNodeMaintainDialogItem = {
   long_id: string
   parent_long_id: string
@@ -197,6 +216,8 @@ async function handleNoteNodeEdit(item: NoteNodeMaintainDialogItem): Promise<voi
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

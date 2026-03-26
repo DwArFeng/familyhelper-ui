@@ -227,7 +227,8 @@ defineOptions({
   name: 'ItemRecordPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   itemId: string
   readOnly?: boolean
@@ -237,14 +238,20 @@ const props = withDefaults(defineProps<Props>(), {
   readOnly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onContextChanged'): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------记录查询-----------------------------------------------------------
+// endregion
+
+// region 记录查询
+
 watch(
   () => props.itemId,
   () => {
@@ -284,7 +291,10 @@ onMounted(() => {
   handleSearchRecord()
 })
 
-// -----------------------------------------------------------文件查询-----------------------------------------------------------
+// endregion
+
+// region 文件查询
+
 watch(
   () => recordTableSelection.value,
   () => {
@@ -332,7 +342,10 @@ async function inspectFile(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------记录表格处理-----------------------------------------------------------
+// endregion
+
+// region 记录表格处理
+
 const recordTableLoading = ref<number>(0)
 
 const {
@@ -392,7 +405,10 @@ async function handleRecordDelete(_index: number, entity: PbRecord): Promise<voi
   }
 }
 
-// -----------------------------------------------------------文件表格处理-----------------------------------------------------------
+// endregion
+
+// region 文件表格处理
+
 type FileTableItem = PbFileInfo & {
   url: string
 }
@@ -476,7 +492,10 @@ onUnmounted(() => {
   revokeFileTableDataUrl()
 })
 
-// -----------------------------------------------------------记录维护对话框处理-----------------------------------------------------------
+// endregion
+
+// region 记录维护对话框处理
+
 type RecordMaintainDialogItem = {
   long_id: string
   value: string
@@ -591,7 +610,10 @@ async function handleRecordEdit(item: RecordMaintainDialogItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------文件上传对话框处理-----------------------------------------------------------
+// endregion
+
+// region 文件上传对话框处理
+
 const fileUploadDialogVisible = ref<boolean>(false)
 const fileUploadDialogLoading = ref<number>(0)
 
@@ -616,6 +638,8 @@ async function handleFileUploadConfirmed(info: ImageSelectCropInfo): Promise<voi
     fileUploadDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

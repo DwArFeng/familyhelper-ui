@@ -125,7 +125,8 @@ defineOptions({
   name: 'AccountBookSelectDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   mode?: 'BANK_CARD' | 'BALANCE_RECORD' | 'FUND_CHANGE' | 'FINANCE_REPORT' | 'DEFAULT'
@@ -136,7 +137,10 @@ const props = withDefaults(defineProps<Props>(), {
   mode: 'DEFAULT',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', accountBook: DispAccountBook, setToDefault: boolean): void
@@ -144,7 +148,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -165,7 +172,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------显示处理-----------------------------------------------------------
+// endregion
+
+// region 显示处理
+
 function handleOpen(): void {
   accountBookSelection.value = []
   setToDefaultCheckboxValue.value = false
@@ -176,12 +186,18 @@ function handleClosed(): void {
   accountBookSelection.value = []
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const inspectAllSwitchValue = ref<boolean>(false)
 
 const inspectAllSwitchVisible = computed<boolean>(() => props.mode !== 'BALANCE_RECORD')
 
-// -----------------------------------------------------------账本查询-----------------------------------------------------------
+// endregion
+
+// region 账本查询
+
 function handleAccountBookSearch(): void {
   switch (props.mode) {
     case 'BALANCE_RECORD':
@@ -227,7 +243,10 @@ async function handleAccountBookAllOwnedSearch(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------账本卡片-----------------------------------------------------------
+// endregion
+
+// region 账本卡片
+
 type AccountBookCardItem = {
   name: string
   permission_level: PoabPermissionLevel | null
@@ -271,7 +290,10 @@ function handleAccountBookCardSelectionChanged(selection: AccountBookCardItem[])
   accountBookSelection.value = selection
 }
 
-// -----------------------------------------------------------确认逻辑-----------------------------------------------------------
+// endregion
+
+// region 确认逻辑
+
 const setToDefaultCheckboxValue = ref<boolean>(false)
 
 const confirmButtonDisabled = computed<boolean>(() => {
@@ -299,6 +321,8 @@ function handleHotKeyDown(): void {
   emit('onConfirmed', accountBook.account_book, setToDefaultCheckboxValue.value)
   watchedVisible.value = false
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -66,7 +66,8 @@ defineOptions({
   name: 'SenderInfoPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   notifySetting: NotifySetting | null
   topic: Topic | null
@@ -74,10 +75,16 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 const propsInvalid = computed<boolean>(() => {
   return !props.notifySetting || !props.topic
 })
@@ -138,7 +145,10 @@ async function handleInspectSenderInfo(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 async function handleSaveSenderInfo(): Promise<void> {
   const notifySetting: NotifySetting | null = props.notifySetting
   if (!notifySetting) {
@@ -202,7 +212,10 @@ async function handleSaveSenderInfo(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------发送器信息表单-----------------------------------------------------------
+// endregion
+
+// region 发送器信息表单
+
 type SenderInfoFormItem = {
   type: string
   param: string
@@ -240,7 +253,10 @@ const senderInfoFormRules = ref({
 
 const formRef = useTemplateRef<InstanceType<typeof ElForm>>('formRef')
 
-// -----------------------------------------------------------发送器支持选择对话框-----------------------------------------------------------
+// endregion
+
+// region 发送器支持选择对话框
+
 const senderSupportSelectDialogVisible = ref<boolean>(false)
 
 function handleSenderSupportSelected(senderSupport: SenderSupport): void {
@@ -252,6 +268,8 @@ function handleSenderSupportSelected(senderSupport: SenderSupport): void {
   }
   form.validate()
 }
+
+// endregion
 </script>
 
 <style scoped>

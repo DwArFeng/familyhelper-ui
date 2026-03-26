@@ -35,7 +35,8 @@ defineOptions({
   name: 'ChildForMetaMissingSubPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   notifySettingId: string
   topicId: string
@@ -44,20 +45,32 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onSelectionChanged', selection: MetaIndicator[]): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const labelFilterBarValue = ref<string>('')
 
-// -----------------------------------------------------------元数据指示器查询-----------------------------------------------------------
+// endregion
+
+// region 元数据指示器查询
+
 const propsInvalid = computed<boolean>(() => {
   return !props.notifySettingId || !props.topicId || !props.accountId
 })
@@ -106,7 +119,10 @@ onMounted(() => {
   handleMetaIndicatorSearch()
 })
 
-// -----------------------------------------------------------元数据指示器表格-----------------------------------------------------------
+// endregion
+
+// region 元数据指示器表格
+
 const metaIndicatorItems = ref<MetaIndicator[]>([])
 
 const metaIndicatorTableFilteredData = computed<MetaIndicator[]>(() => {
@@ -119,6 +135,8 @@ const metaIndicatorTableFilteredData = computed<MetaIndicator[]>(() => {
 function handleMetaIndicatorTableSelectionChange(selection: MetaIndicator[]): void {
   emit('onSelectionChanged', selection)
 }
+
+// endregion
 </script>
 
 <style scoped>

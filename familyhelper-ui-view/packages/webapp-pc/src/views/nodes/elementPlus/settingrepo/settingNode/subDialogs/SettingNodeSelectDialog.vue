@@ -101,14 +101,18 @@ defineOptions({
   name: 'SettingNodeSelectDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', value: SettingNode): void
@@ -116,10 +120,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -140,10 +150,16 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const idSearchBarValue = ref<string>('')
 
-// -----------------------------------------------------------配置节点搜索-----------------------------------------------------------
+// endregion
+
+// region 配置节点搜索
+
 function handleSettingNodeSearch(): void {
   if (idSearchBarValue.value !== '') {
     handleSettingNodeIdLikeReachableSearch()
@@ -182,7 +198,10 @@ onMounted(() => {
   handleSettingNodeSearch()
 })
 
-// -----------------------------------------------------------配置节点表格处理-----------------------------------------------------------
+// endregion
+
+// region 配置节点表格处理
+
 const {
   currentPage: settingNodeTableCurrentPage,
   pageSize: settingNodeTablePageSize,
@@ -235,7 +254,10 @@ function handleSettingNodeTableCurrentChanged(current: SettingNode | null): void
   settingNodeTableCurrentRow.value = current
 }
 
-// -----------------------------------------------------------对话框处理-----------------------------------------------------------
+// endregion
+
+// region 对话框处理
+
 function handleConfirmButtonClicked(): void {
   const formatSupport: SettingNode | null = settingNodeTableCurrentRow.value
   if (!formatSupport) {
@@ -257,6 +279,8 @@ function handleHotKeyDown(): void {
   emit('onConfirmed', formatSupport)
   watchedVisible.value = false
 }
+
+// endregion
 </script>
 
 <style scoped>

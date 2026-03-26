@@ -56,7 +56,8 @@ defineOptions({
   name: 'ItemTreePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   assetCatalogId: string
   mode?: 'ASSET_BOM' | 'GENERAL' | 'DEFAULT'
@@ -68,7 +69,10 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentChanged', item: ItemTreeItem | null, node: TreeNode<ItemTreeItem> | null): void
   (e: 'onItemInspect', item: ItemTreeItem, node: TreeNode<ItemTreeItem>): void
@@ -78,7 +82,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Tree 逻辑处理-----------------------------------------------------------
+// endregion
+
+// region Tree 逻辑处理
+
 type ItemTreeItem = {
   tree_node_key: string
   name: string
@@ -148,7 +155,10 @@ watch(
   },
 )
 
-// -----------------------------------------------------------事件转发处理-----------------------------------------------------------
+// endregion
+
+// region 事件转发处理
+
 function handleCurrentChanged(
   item: ItemTreeItem | null,
   node: TreeNode<ItemTreeItem> | null,
@@ -160,7 +170,10 @@ function handleItemDelete(item: ItemTreeItem, node: TreeNode<ItemTreeItem>): voi
   emit('onItemDelete', item, node)
 }
 
-// -----------------------------------------------------------树操作-----------------------------------------------------------
+// endregion
+
+// region 树操作
+
 defineExpose({
   appendRoot,
   append,
@@ -169,6 +182,8 @@ defineExpose({
   update,
   remove,
 })
+
+// endregion
 </script>
 
 <style scoped>

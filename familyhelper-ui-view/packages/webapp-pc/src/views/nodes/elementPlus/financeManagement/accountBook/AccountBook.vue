@@ -172,10 +172,14 @@ defineOptions({
   name: 'AccountBook',
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// region 头部面板
+
 const inspectAllSwitchValue = ref<boolean>(false)
 
-// -----------------------------------------------------------账本查询-----------------------------------------------------------
+// endregion
+
+// region 账本查询
+
 function handleAccountBookSearch(): void {
   if (inspectAllSwitchValue.value) {
     handleAccountBookAllPermittedSearch()
@@ -208,7 +212,10 @@ onMounted(() => {
   handleAccountBookSearch()
 })
 
-// -----------------------------------------------------------账本卡片-----------------------------------------------------------
+// endregion
+
+// region 账本卡片
+
 type AccountBookCardItem = {
   name: string
   permission_level: PonbPermissionLevel | null
@@ -374,7 +381,10 @@ async function handleAccountBookDelete(item: DispAccountBook): Promise<void> {
 //   }
 // }
 
-// -----------------------------------------------------------账本维护对话框-----------------------------------------------------------
+// endregion
+
+// region 账本维护对话框
+
 type AccountBookMaintainDialogItem = {
   key_long_id: string
   name: string
@@ -451,9 +461,14 @@ async function handleAccountBookEdit(item: AccountBookMaintainDialogItem): Promi
   }
 }
 
-// -----------------------------------------------------------功能维护对话框-----------------------------------------------------------
+// endregion
+
+// region 功能维护对话框
+
 const functionMaintainDialogVisible = ref<boolean>(false)
 const functionMaintainDialogAccountBookId = ref<string>('')
+
+// endregion
 </script>
 
 <style scoped>

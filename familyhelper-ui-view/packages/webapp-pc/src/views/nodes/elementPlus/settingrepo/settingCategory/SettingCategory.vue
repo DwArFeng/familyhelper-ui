@@ -168,10 +168,14 @@ defineOptions({
   name: 'SettingCategory',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const idSearchBarValue = ref<string>('')
 const applyChangesButtonDisabled = ref<boolean>(false)
 
@@ -193,7 +197,10 @@ async function handleApplyChanges(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------配置类型搜索-----------------------------------------------------------
+// endregion
+
+// region 配置类型搜索
+
 function handleSettingCategorySearch(): void {
   if (idSearchBarValue.value !== '') {
     handleSettingCategoryIdLikeSearch()
@@ -232,7 +239,10 @@ onMounted(() => {
   handleSettingCategorySearch()
 })
 
-// -----------------------------------------------------------配置类型表格处理-----------------------------------------------------------
+// endregion
+
+// region 配置类型表格处理
+
 const {
   currentPage: settingCategoryTableCurrentPage,
   pageSize: settingCategoryTablePageSize,
@@ -301,7 +311,10 @@ async function handleSettingCategoryDelete(item: SettingCategory): Promise<void>
   }
 }
 
-// -----------------------------------------------------------配置类型维护对话框处理-----------------------------------------------------------
+// endregion
+
+// region 配置类型维护对话框处理
+
 type SettingCategoryMaintainDialogItem = {
   key_string_id: string
   formatter_type: string
@@ -453,13 +466,18 @@ async function handleSettingCategoryEdit(item: SettingCategoryMaintainDialogItem
   }
 }
 
-// -----------------------------------------------------------格式化器选择对话框处理-----------------------------------------------------------
+// endregion
+
+// region 格式化器选择对话框处理
+
 const formatterSupportDialogVisible = ref<boolean>(false)
 
 function handleFormatterSupportSelected(value: FormatterSupport): void {
   settingCategoryMaintainDialogItem.value.formatter_type = value.key.string_id
   settingCategoryMaintainDialogItem.value.formatter_param = value.example_param
 }
+
+// endregion
 </script>
 
 <style scoped>

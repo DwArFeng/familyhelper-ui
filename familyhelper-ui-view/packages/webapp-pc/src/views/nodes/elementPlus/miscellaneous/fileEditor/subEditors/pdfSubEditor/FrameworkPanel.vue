@@ -26,7 +26,8 @@ defineOptions({
   name: 'FrameworkPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   doc: PDFDocumentProxy | null
   readonly: boolean
@@ -34,7 +35,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------逻辑处理-----------------------------------------------------------
+// endregion
+
+// region 逻辑处理
+
 const currentPage = ref<number>(0)
 const pages = ref<number>(0)
 const contentScale = ref<number>(2)
@@ -51,6 +55,8 @@ watch(
     }
   },
 )
+
+// endregion
 </script>
 
 <style scoped>

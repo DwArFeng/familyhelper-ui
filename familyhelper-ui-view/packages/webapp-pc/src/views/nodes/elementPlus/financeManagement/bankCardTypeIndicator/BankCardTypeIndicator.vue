@@ -94,15 +94,22 @@ defineOptions({
   name: 'BankCardTypeIndicator',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowBankCardTypeIndicatorCreateDialog(): void {
   showBankCardTypeIndicatorCreateMaintainDialog()
 }
 
-// -----------------------------------------------------------银行卡类型指示器搜索-----------------------------------------------------------
+// endregion
+
+// region 银行卡类型指示器搜索
+
 function handleBankCardTypeIndicatorSearch(): void {
   handleBankCardTypeIndicatorAllSearch()
 }
@@ -120,7 +127,10 @@ async function handleBankCardTypeIndicatorAllSearch(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------银行卡类型指示器表格处理-----------------------------------------------------------
+// endregion
+
+// region 银行卡类型指示器表格处理
+
 const {
   currentPage: bankCardTypeIndicatorTableCurrentPage,
   pageSize: bankCardTypeIndicatorTablePageSize,
@@ -174,7 +184,10 @@ async function handleBankCardTypeIndicatorDelete(item: BankCardTypeIndicator): P
   }
 }
 
-// -----------------------------------------------------------银行卡类型指示器对话框-----------------------------------------------------------
+// endregion
+
+// region 银行卡类型指示器对话框
+
 type BankCardTypeIndicatorMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -289,6 +302,8 @@ async function handleBankCardTypeIndicatorEdit(
     bankCardTypeIndicatorMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

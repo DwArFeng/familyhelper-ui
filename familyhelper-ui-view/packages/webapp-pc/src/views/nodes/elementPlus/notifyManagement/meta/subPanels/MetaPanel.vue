@@ -90,7 +90,8 @@ defineOptions({
   name: 'MetaPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   notifySetting: NotifySetting | null
   topic: Topic | null
@@ -99,15 +100,24 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------占位符-----------------------------------------------------------
+// endregion
+
+// region 占位符
+
 const propsInvalid = computed<boolean>(() => {
   return !props.notifySetting || !props.topic || !props.accountId
 })
 
-// -----------------------------------------------------------元数据查询-----------------------------------------------------------
+// endregion
+
+// region 元数据查询
+
 watch(
   () => props.notifySetting,
   () => {
@@ -171,7 +181,10 @@ onMounted(() => {
   handleMetaSearch()
 })
 
-// -----------------------------------------------------------元数据表格-----------------------------------------------------------
+// endregion
+
+// region 元数据表格
+
 const {
   currentPage: metaTableCurrentPage,
   pageSize: metaTablePageSize,
@@ -233,7 +246,10 @@ async function handleMetaDelete(row: DispMeta): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------元数据指示器选择对话框-----------------------------------------------------------
+// endregion
+
+// region 元数据指示器选择对话框
+
 const metaIndicatorSelectDialogVisible = ref<boolean>(false)
 
 async function handleMetaIndicatorSelectDialogConfirmed(selection: MetaIndicator[]): Promise<void> {
@@ -278,7 +294,10 @@ async function handleMetaIndicatorSelectDialogConfirmed(selection: MetaIndicator
   }
 }
 
-// -----------------------------------------------------------元数据维护话框-----------------------------------------------------------
+// endregion
+
+// region 元数据维护话框
+
 type MetaMaintainDialogItem = {
   key_notify_setting_id: string
   key_topic_id: string
@@ -358,6 +377,8 @@ async function handleMetaEdit(item: MetaMaintainDialogItem): Promise<void> {
     metaMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -71,7 +71,8 @@ defineOptions({
   name: 'PbTreePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   pbSetKey: string
   mode?: 'PB_MANAGEMENT' | 'DEFAULT'
@@ -83,7 +84,10 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentChanged', item: PbTreeItem | null, node: TreeNode<PbTreeItem> | null): void
   (e: 'onEntityDelete', item: PbTreeItem, node: TreeNode<PbTreeItem>, accept: () => void): void
@@ -91,7 +95,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Tree 展示处理-----------------------------------------------------------
+// endregion
+
+// region Tree 展示处理
+
 function operateAreaIconValue(item: PbTreeItem): string {
   if (item.type === 'node') {
     return '\uffd6'
@@ -99,7 +106,10 @@ function operateAreaIconValue(item: PbTreeItem): string {
   return '\uffd7'
 }
 
-// -----------------------------------------------------------Tree 逻辑处理-----------------------------------------------------------
+// endregion
+
+// region Tree 逻辑处理
+
 type PbTreeItem = {
   tree_node_key: string
   type: 'node' | 'item'
@@ -268,7 +278,10 @@ watch(
   },
 )
 
-// -----------------------------------------------------------事件转发处理-----------------------------------------------------------
+// endregion
+
+// region 事件转发处理
+
 function handleCurrentChanged(item: PbTreeItem | null, node: TreeNode<PbTreeItem> | null): void {
   emit('onCurrentChanged', item, node)
 }
@@ -283,7 +296,10 @@ function handleItemDelete(item: PbTreeItem, node: TreeNode<PbTreeItem>): void {
   emit('onEntityDelete', item, node, accept)
 }
 
-// -----------------------------------------------------------树操作-----------------------------------------------------------
+// endregion
+
+// region 树操作
+
 function appendRootPbNode(pbNode: DispPbNode): void {
   appendRoot({ type: 'node', bean: pbNode })
 }
@@ -334,6 +350,8 @@ defineExpose({
   updatePbItem,
   remove,
 })
+
+// endregion
 </script>
 
 <style scoped>

@@ -177,7 +177,8 @@ defineOptions({
   name: 'ImageListNodeSubEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   category: string | null
   args: string[] | null
@@ -188,10 +189,16 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------Props 处理-----------------------------------------------------------
+// endregion
+
+// region Props 处理
+
 const settingNodeInvalid = computed(() => {
   return props.category === null || props.args === null
 })
@@ -218,7 +225,10 @@ function handlePropsUpdate(): void {
   handleInspect()
 }
 
-// -----------------------------------------------------------编辑器逻辑-----------------------------------------------------------
+// endregion
+
+// region 编辑器逻辑
+
 type TableItem = ImageListNodeInspectResultItem & { index: number }
 type ChangeOrderDialogItem = {
   index: number
@@ -597,6 +607,8 @@ async function handleRemove(row: TableItem): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

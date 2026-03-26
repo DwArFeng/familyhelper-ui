@@ -221,12 +221,16 @@ defineOptions({
   name: 'NoteBook',
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// region 头部面板
+
 const inspectAllSwitchValue = ref<boolean>(false)
 const favoredOnlySwitchValue = ref<boolean>(false)
 const nameSearchBarValue = ref<string>('')
 
-// -----------------------------------------------------------笔记本查询-----------------------------------------------------------
+// endregion
+
+// region 笔记本查询
+
 function handleNoteBookSearch(): void {
   if (inspectAllSwitchValue.value) {
     handleNoteBookAllPermittedSearch()
@@ -271,7 +275,10 @@ onMounted(() => {
   handleNoteBookSearch()
 })
 
-// -----------------------------------------------------------笔记本卡片-----------------------------------------------------------
+// endregion
+
+// region 笔记本卡片
+
 type NoteBookCardItem = {
   name: string
   permission_level: PonbPermissionLevel | null
@@ -438,7 +445,10 @@ async function handleNoteBookChangeFavored(item: DispNoteBook): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------笔记本维护对话框-----------------------------------------------------------
+// endregion
+
+// region 笔记本维护对话框
+
 type NoteBookMaintainDialogItem = {
   key_long_id: string
   name: string
@@ -520,9 +530,14 @@ async function handleNoteBookEdit(item: NoteBookMaintainDialogItem): Promise<voi
   }
 }
 
-// -----------------------------------------------------------权限维护对话框-----------------------------------------------------------
+// endregion
+
+// region 权限维护对话框
+
 const permitMaintainDialogVisible = ref<boolean>(false)
 const permitMaintainDialogNoteBookId = ref<string>('')
+
+// endregion
 </script>
 
 <style scoped>

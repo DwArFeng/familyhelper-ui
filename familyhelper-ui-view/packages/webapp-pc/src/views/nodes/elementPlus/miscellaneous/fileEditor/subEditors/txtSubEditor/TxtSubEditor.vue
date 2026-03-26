@@ -14,7 +14,8 @@ defineOptions({
   name: 'TxtSubEditor',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   baseBlob: Blob | null
   readonly: boolean
@@ -22,14 +23,20 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onContentChangeIndicatorChanged', value: boolean): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Blob 逻辑处理-----------------------------------------------------------
+// endregion
+
+// region Blob 逻辑处理
+
 watch(
   () => props.baseBlob,
   () => {
@@ -64,7 +71,10 @@ onMounted(() => {
   syncBlob()
 })
 
-// -----------------------------------------------------------暴露方法-----------------------------------------------------------
+// endregion
+
+// region 暴露方法
+
 function currentContent(): Blob | Promise<Blob> {
   return new Blob([content.value], { type: 'text/plain' })
 }
@@ -79,7 +89,10 @@ defineExpose({
   fireCurrentContentCommitted,
 })
 
-// -----------------------------------------------------------编辑器-----------------------------------------------------------
+// endregion
+
+// region 编辑器
+
 const loading = ref<number>(0)
 const content = ref<string>('')
 const backupContent = ref<string>('')
@@ -87,6 +100,8 @@ const backupContent = ref<string>('')
 watch(content, () => {
   emit('onContentChangeIndicatorChanged', content.value !== backupContent.value)
 })
+
+// endregion
 </script>
 
 <style scoped>

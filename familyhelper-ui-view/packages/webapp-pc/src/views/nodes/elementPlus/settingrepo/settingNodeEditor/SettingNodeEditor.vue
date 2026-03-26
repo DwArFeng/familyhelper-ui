@@ -15,10 +15,14 @@ import { onMounted, ref, watch } from 'vue'
 
 import SettingNodeEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/SettingNodeEditPanel.vue'
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------配置节点编辑面板-----------------------------------------------------------
+// endregion
+
+// region 配置节点编辑面板
+
 const ROUTE_NAME: string = 'settingrepo.settingNodeEditor'
 
 const settingNodeEditPanelId = ref<string>('')
@@ -45,6 +49,8 @@ onMounted(() => {
   settingNodeEditPanelId.value = id
   settingNodeEditPanelReadonly.value = action === 'inspect'
 })
+
+// endregion
 </script>
 
 <style scoped>

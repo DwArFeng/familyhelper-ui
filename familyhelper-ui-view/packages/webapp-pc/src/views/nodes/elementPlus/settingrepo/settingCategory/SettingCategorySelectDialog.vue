@@ -91,24 +91,35 @@ defineOptions({
   name: 'SettingCategorySelectDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', value: SettingCategory): void
 }
 
 const emit = defineEmits<Emits>()
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -129,10 +140,16 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const idSearchBarValue = ref<string>('')
 
-// -----------------------------------------------------------配置类型搜索-----------------------------------------------------------
+// endregion
+
+// region 配置类型搜索
+
 function handleSettingCategorySearch(): void {
   if (idSearchBarValue.value !== '') {
     handleSettingCategoryIdLikeSearch()
@@ -171,7 +188,10 @@ onMounted(() => {
   handleSettingCategorySearch()
 })
 
-// -----------------------------------------------------------配置类型表格处理-----------------------------------------------------------
+// endregion
+
+// region 配置类型表格处理
+
 const {
   currentPage: settingCategoryTableCurrentPage,
   pageSize: settingCategoryTablePageSize,
@@ -190,7 +210,10 @@ function handleSettingCategoryTableCurrentChanged(current: SettingCategory | nul
   settingCategoryTableCurrentRow.value = current
 }
 
-// -----------------------------------------------------------对话框处理-----------------------------------------------------------
+// endregion
+
+// region 对话框处理
+
 function handleConfirmButtonClicked(): void {
   const formatSupport: SettingCategory | null = settingCategoryTableCurrentRow.value
   if (!formatSupport) {
@@ -212,6 +235,8 @@ function handleHotKeyDown(): void {
   emit('onConfirmed', formatSupport)
   watchedVisible.value = false
 }
+
+// endregion
 </script>
 
 <style scoped>

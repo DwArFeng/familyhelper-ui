@@ -68,17 +68,24 @@ defineOptions({
   name: 'DispatcherInfoPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   topic: Topic | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 watch(
   () => props.topic,
   () => {
@@ -114,7 +121,10 @@ async function handleInspectDispatcherInfo(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 async function handleSaveDispatcherInfo(): Promise<void> {
   const topic: Topic | null = props.topic
   if (!topic) {
@@ -163,7 +173,10 @@ async function handleSaveDispatcherInfo(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------调度器信息表单-----------------------------------------------------------
+// endregion
+
+// region 调度器信息表单
+
 type DispatcherInfoFormItem = {
   type: string
   param: string
@@ -201,7 +214,10 @@ const dispatcherInfoFormRules = ref({
 
 const formRef = useTemplateRef<InstanceType<typeof ElForm>>('formRef')
 
-// -----------------------------------------------------------调度器支持选择对话框-----------------------------------------------------------
+// endregion
+
+// region 调度器支持选择对话框
+
 const dispatcherSupportSelectDialogVisible = ref<boolean>(false)
 
 function handleDispatcherSupportSelected(dispatcherSupport: DispatcherSupport): void {
@@ -213,6 +229,8 @@ function handleDispatcherSupportSelected(dispatcherSupport: DispatcherSupport): 
   }
   form.validate()
 }
+
+// endregion
 </script>
 
 <style scoped>

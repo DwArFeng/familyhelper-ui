@@ -17,7 +17,8 @@ defineOptions({
   name: 'HeaderPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   currentPage: number
   pages: number
@@ -26,14 +27,20 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:currentPage', value: number): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------逻辑处理-----------------------------------------------------------
+// endregion
+
+// region 逻辑处理
+
 const watchedCurrentPage = ref<number>(props.currentPage + 1)
 
 watch(
@@ -53,6 +60,8 @@ watch(
 onMounted(() => {
   watchedCurrentPage.value = props.currentPage + 1
 })
+
+// endregion
 </script>
 
 <style scoped>

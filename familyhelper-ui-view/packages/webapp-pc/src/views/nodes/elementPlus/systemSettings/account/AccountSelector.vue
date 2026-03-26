@@ -44,7 +44,8 @@ defineOptions({
   name: 'AccountSelector',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   modelValue?: string
   filter?: (account: DispAccount) => boolean
@@ -55,17 +56,26 @@ const props = withDefaults(defineProps<Props>(), {
   filter: () => true,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:modelValue', accountId: string): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------值处理-----------------------------------------------------------
+// endregion
+
+// region 值处理
+
 const watchedModelValue = ref(props.modelValue)
 
 watch(
@@ -86,7 +96,10 @@ onMounted(() => {
   watchedModelValue.value = props.modelValue
 })
 
-// -----------------------------------------------------------选项处理-----------------------------------------------------------
+// endregion
+
+// region 选项处理
+
 const options = ref<DispAccount[]>([])
 const filteredOptions = ref<DispAccount[]>([])
 
@@ -107,6 +120,8 @@ async function updateOption(pattern: string): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

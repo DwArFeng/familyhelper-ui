@@ -71,7 +71,8 @@ defineOptions({
   name: 'NoteTreePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   noteBookId: string
   mode?: 'NOTE_MANAGEMENT' | 'DEFAULT'
@@ -83,7 +84,10 @@ const props = withDefaults(defineProps<Props>(), {
   readonly: false,
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentChanged', item: NoteTreeItem | null, node: TreeNode<NoteTreeItem> | null): void
   (e: 'onItemDelete', item: NoteTreeItem, node: TreeNode<NoteTreeItem>): void
@@ -91,7 +95,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Tree 展示处理-----------------------------------------------------------
+// endregion
+
+// region Tree 展示处理
+
 function operateAreaIconValue(item: NoteTreeItem): string {
   // noinspection JSUnresolvedReference
   if (item.type === 'node') {
@@ -100,7 +107,10 @@ function operateAreaIconValue(item: NoteTreeItem): string {
   return '\uffd7'
 }
 
-// -----------------------------------------------------------Tree 逻辑处理-----------------------------------------------------------
+// endregion
+
+// region Tree 逻辑处理
+
 type NoteTreeItem = {
   tree_node_key: string
   type: 'node' | 'item'
@@ -273,7 +283,10 @@ watch(
   },
 )
 
-// -----------------------------------------------------------事件转发处理-----------------------------------------------------------
+// endregion
+
+// region 事件转发处理
+
 function handleCurrentChanged(
   item: NoteTreeItem | null,
   node: TreeNode<NoteTreeItem> | null,
@@ -285,7 +298,10 @@ function handleItemDelete(item: NoteTreeItem, node: TreeNode<NoteTreeItem>): voi
   emit('onItemDelete', item, node)
 }
 
-// -----------------------------------------------------------树操作-----------------------------------------------------------
+// endregion
+
+// region 树操作
+
 function appendRootNoteNode(noteNode: DispNoteNode): void {
   appendRoot({ type: 'node', bean: noteNode })
 }
@@ -346,6 +362,8 @@ defineExpose({
   updateNoteItem,
   remove,
 })
+
+// endregion
 </script>
 
 <style scoped>

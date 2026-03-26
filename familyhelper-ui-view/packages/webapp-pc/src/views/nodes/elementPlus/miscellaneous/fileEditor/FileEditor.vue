@@ -18,10 +18,14 @@ defineOptions({
   name: 'FileEditor',
 })
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------路由处理-----------------------------------------------------------
+// endregion
+
+// region 路由处理
+
 watch(router.currentRoute, (value) => {
   if (value.name !== 'miscellaneous.fileEditor') {
     return
@@ -67,10 +71,15 @@ onMounted(() => {
   fileEditPanelMode.value = parseMode(action)
 })
 
-// -----------------------------------------------------------文件编辑器-----------------------------------------------------------
+// endregion
+
+// region 文件编辑器
+
 const fileEditPanelType = ref<FileEditType>('')
 const fileEditPanelId = ref<string>('')
 const fileEditPanelMode = ref<FileEditMode>('')
+
+// endregion
 </script>
 
 <style scoped>

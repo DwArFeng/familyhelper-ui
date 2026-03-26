@@ -123,7 +123,8 @@ defineOptions({
   name: 'NotifySettingTopicPanel',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentNotifySettingChanged', value: NotifySetting | null): void
   (e: 'onCurrentTopicChanged', value: Topic | null): void
@@ -131,7 +132,10 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const notifySettingSearchBarValue = ref<string>('')
 const topicSearchBarValue = ref<string>('')
 const applyChangesButtonDisabled = ref<boolean>(false)
@@ -229,7 +233,10 @@ onMounted(() => {
   handleSearch()
 })
 
-// -----------------------------------------------------------通知设置表格-----------------------------------------------------------
+// endregion
+
+// region 通知设置表格
+
 const {
   currentPage: notifySettingTableCurrentPage,
   pageSize: notifySettingTablePageSize,
@@ -256,7 +263,10 @@ function handleNotifySettingTableCurrentChanged(current: NotifySetting | null): 
   emit('onCurrentNotifySettingChanged', current)
 }
 
-// -----------------------------------------------------------主题表格-----------------------------------------------------------
+// endregion
+
+// region 主题表格
+
 const {
   currentPage: topicTableCurrentPage,
   pageSize: topicTablePageSize,
@@ -282,6 +292,8 @@ function handleTopicTablePagingAttributeChanged(): void {
 function handleTopicTableCurrentChanged(current: Topic | null): void {
   emit('onCurrentTopicChanged', current)
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -75,10 +75,14 @@ defineOptions({
   name: 'SettingNodeEditPanel',
 })
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// endregion
+
+// region Props 定义
+
 type Props = {
   id: string
   readonly?: boolean
@@ -90,10 +94,16 @@ const props = withDefaults(defineProps<Props>(), {
   watchingRouteName: '',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------配置节点-----------------------------------------------------------
+// endregion
+
+// region 配置节点
+
 const settingNode = ref<SettingNode | null>(null)
 
 const settingNodeInvalid = computed(() => {
@@ -131,7 +141,11 @@ async function handleInspectSettingNode(id: string): Promise<void> {
 onMounted(() => {
   handleInspectSettingNode(props.id)
 })
-// -----------------------------------------------------------提醒处理-----------------------------------------------------------
+
+// endregion
+
+// region 提醒处理
+
 const IMAGE_TYPES: SettingNodeType[] = [2, 3]
 
 const notifyShow = ref<boolean>(false)
@@ -202,6 +216,8 @@ function updateNotify(currentRouteName: string): void {
 onMounted(() => {
   updateNotify(router.currentRoute.value.name as string)
 })
+
+// endregion
 </script>
 
 <style scoped>

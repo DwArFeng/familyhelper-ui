@@ -145,20 +145,30 @@ defineOptions({
   name: 'SettingNode',
 })
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const idSearchBarValue = ref<string>('')
 
 function handleShowInitDialog(): void {
   initDialogVisible.value = true
 }
 
-// -----------------------------------------------------------配置节点搜索-----------------------------------------------------------
+// endregion
+
+// region 配置节点搜索
+
 function handleSettingNodeSearch(): void {
   if (idSearchBarValue.value !== '') {
     handleSettingNodeIdLikeReachableSearch()
@@ -197,7 +207,10 @@ onMounted(() => {
   handleSettingNodeSearch()
 })
 
-// -----------------------------------------------------------配置节点表格处理-----------------------------------------------------------
+// endregion
+
+// region 配置节点表格处理
+
 const SETTING_NODE_TYPE_SPACE: SettingNodeType[] = [0, 1, 2, 3, 4, 5, 6, 7]
 
 const {
@@ -366,8 +379,13 @@ async function handleSettingNodeDelete(row: SettingNode): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------初始化对话框-----------------------------------------------------------
+// endregion
+
+// region 初始化对话框
+
 const initDialogVisible = ref<boolean>(false)
+
+// endregion
 </script>
 
 <style scoped>

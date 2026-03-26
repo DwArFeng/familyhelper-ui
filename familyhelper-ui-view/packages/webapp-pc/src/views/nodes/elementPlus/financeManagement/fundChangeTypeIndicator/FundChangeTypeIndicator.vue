@@ -96,15 +96,22 @@ defineOptions({
   name: 'FundChangeTypeIndicator',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowFundChangeTypeIndicatorCreateDialog(): void {
   showFundChangeTypeIndicatorCreateMaintainDialog()
 }
 
-// -----------------------------------------------------------资金变更类型指示器搜索-----------------------------------------------------------
+// endregion
+
+// region 资金变更类型指示器搜索
+
 function handleFundChangeTypeIndicatorSearch(): void {
   handleFundChangeTypeIndicatorAllSearch()
 }
@@ -122,7 +129,10 @@ async function handleFundChangeTypeIndicatorAllSearch(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------资金变更类型指示器表格处理-----------------------------------------------------------
+// endregion
+
+// region 资金变更类型指示器表格处理
+
 const {
   currentPage: fundChangeTypeIndicatorTableCurrentPage,
   pageSize: fundChangeTypeIndicatorTablePageSize,
@@ -176,7 +186,10 @@ async function handleFundChangeTypeIndicatorDelete(item: FundChangeTypeIndicator
   }
 }
 
-// -----------------------------------------------------------资金变更类型指示器对话框-----------------------------------------------------------
+// endregion
+
+// region 资金变更类型指示器对话框
+
 type FundChangeTypeIndicatorMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -291,6 +304,8 @@ async function handleFundChangeTypeIndicatorEdit(
     fundChangeTypeIndicatorMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

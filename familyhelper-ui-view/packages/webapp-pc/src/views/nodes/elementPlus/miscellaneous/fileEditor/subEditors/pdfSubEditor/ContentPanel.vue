@@ -18,7 +18,8 @@ defineOptions({
   name: 'ContentPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   doc: PDFDocumentProxy | null
   currentPage: number
@@ -28,7 +29,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------逻辑处理-----------------------------------------------------------
+// endregion
+
+// region 逻辑处理
+
 const contentPanelResizeObserver = new ResizeObserver(() => {
   updateContentCanvasStyle()
 })
@@ -153,6 +157,8 @@ onUnmounted(() => {
   contentPanelResizeObserver.unobserve(pdfContentContainerToDispose)
   pdfContentContainerToDispose = null
 })
+
+// endregion
 </script>
 
 <style scoped>

@@ -56,7 +56,8 @@ defineOptions({
   name: 'FundChange',
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// region 头部面板
+
 const accountBookIndicatorValue = ref<DispAccountBook | null>(null)
 const showBillFilePanelSwitchValue = ref<boolean>(true)
 const showBillFilePanelSwitchValueDisabled = ref<boolean>(false)
@@ -75,14 +76,20 @@ function handleShowBillFilePanelSwitchChanged(): void {
   }, 1000)
 }
 
-// -----------------------------------------------------------资金变更面板-----------------------------------------------------------
+// endregion
+
+// region 资金变更面板
+
 const currentFundChange = ref<DispFundChange | null>(null)
 
 function handleFundChangePanelCurrentChanged(current: DispFundChange | null): void {
   currentFundChange.value = current
 }
 
-// -----------------------------------------------------------用户偏好-----------------------------------------------------------
+// endregion
+
+// region 用户偏好
+
 type UserPreference = {
   showBillFilePanel: boolean
 }
@@ -113,6 +120,8 @@ function userPreferenceSetter(userPreference: UserPreference): void {
 onMounted(() => {
   loadUserPreference()
 })
+
+// endregion
 </script>
 
 <script lang="ts">

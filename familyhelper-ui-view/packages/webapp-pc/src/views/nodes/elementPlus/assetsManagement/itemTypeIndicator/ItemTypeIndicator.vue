@@ -94,15 +94,22 @@ defineOptions({
   name: 'ItemTypeIndicator',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowItemTypeIndicatorCreateDialog(): void {
   showItemTypeIndicatorCreateMaintainDialog()
 }
 
-// -----------------------------------------------------------项目类型指示器搜索-----------------------------------------------------------
+// endregion
+
+// region 项目类型指示器搜索
+
 function handleItemTypeIndicatorSearch(): void {
   handleItemTypeIndicatorAllSearch()
 }
@@ -120,7 +127,10 @@ async function handleItemTypeIndicatorAllSearch(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目类型指示器表格处理-----------------------------------------------------------
+// endregion
+
+// region 项目类型指示器表格处理
+
 const {
   currentPage: itemTypeIndicatorTableCurrentPage,
   pageSize: itemTypeIndicatorTablePageSize,
@@ -174,7 +184,10 @@ async function handleItemTypeIndicatorDelete(item: ItemTypeIndicator): Promise<v
   }
 }
 
-// -----------------------------------------------------------项目类型指示器对话框-----------------------------------------------------------
+// endregion
+
+// region 项目类型指示器对话框
+
 type ItemTypeIndicatorMaintainDialogItem = {
   key_string_id: string
   label: string
@@ -287,6 +300,8 @@ async function handleItemTypeIndicatorEdit(
     itemTypeIndicatorMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

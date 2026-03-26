@@ -122,7 +122,8 @@ defineOptions({
   name: 'PermitMaintainDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
   pbSetId: string
@@ -133,20 +134,32 @@ const props = withDefaults(defineProps<Props>(), {
   pbSetId: '',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// endregion
+
+// region Store 引入
+
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -167,7 +180,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const form = ref<{
   userId: string
   permissionLevel: PopbPermissionLevel
@@ -201,7 +217,10 @@ async function handlePopbUpsert(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------个人最佳集合权限查询-----------------------------------------------------------
+// endregion
+
+// region 个人最佳集合权限查询
+
 watch(
   () => props.pbSetId,
   (value) => {
@@ -239,7 +258,10 @@ onMounted(() => {
   handlePopbSearch()
 })
 
-// -----------------------------------------------------------个人最佳集合权限表格处理-----------------------------------------------------------
+// endregion
+
+// region 个人最佳集合权限表格处理
+
 const {
   currentPage: popbTableCurrentPage,
   pageSize: popbTablePageSize,
@@ -311,6 +333,8 @@ async function handlePopbDelete(row: DispPopb): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

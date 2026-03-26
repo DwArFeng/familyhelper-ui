@@ -150,7 +150,8 @@ defineOptions({
   name: 'RemindMaintainPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   accountBookId?: string
 }
@@ -159,15 +160,24 @@ const props = withDefaults(defineProps<Props>(), {
   accountBookId: '',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowRemindDriverInfoCreateDialog(): void {
   showRemindDriverInfoCreateMaintainDialog()
 }
 
-// -----------------------------------------------------------搜索逻辑-----------------------------------------------------------
+// endregion
+
+// region 搜索逻辑
+
 function handleRemindDriverInfoSearch(): void {
   if (!props.accountBookId) {
     return
@@ -199,7 +209,10 @@ onMounted(() => {
   handleRemindDriverInfoSearch()
 })
 
-// -----------------------------------------------------------提醒驱动器信息表格-----------------------------------------------------------
+// endregion
+
+// region 提醒驱动器信息表格
+
 const {
   currentPage: remindDriverInfoTableCurrentPage,
   pageSize: remindDriverInfoTablePageSize,
@@ -272,7 +285,10 @@ async function handleRemindDriverInfoDelete(item: RemindDriverInfo): Promise<voi
   }
 }
 
-// -----------------------------------------------------------提醒驱动器信息维护对话框-----------------------------------------------------------
+// endregion
+
+// region 提醒驱动器信息维护对话框
+
 type RemindDriverInfoMaintainDialogItem = {
   key_long_id: string
   enabled: boolean
@@ -418,7 +434,10 @@ async function handleRemindDriverInfoEdit(item: RemindDriverInfoMaintainDialogIt
   }
 }
 
-// -----------------------------------------------------------提醒驱动器支持选择对话框-----------------------------------------------------------
+// endregion
+
+// region 提醒驱动器支持选择对话框
+
 const remindDriverSupportSelectDialogVisible = ref<boolean>(false)
 
 function handleRemindDriverSupportSelected(remindDriverSupport: RemindDriverSupport): void {
@@ -426,6 +445,8 @@ function handleRemindDriverSupportSelected(remindDriverSupport: RemindDriverSupp
   remindDriverInfoMaintainDialogItem.value.param = remindDriverSupport.example_param
   remindDriverSupportSelectDialogVisible.value = false
 }
+
+// endregion
 </script>
 
 <style scoped>

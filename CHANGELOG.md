@@ -5,6 +5,15 @@
 ### 功能构建
 
 - `webapp-pc` 子模块文件优化注释、文档注释格式、代码换行格式。
+  - src/views/nodes/elementPlus/about/\*/*.vue。
+  - src/views/nodes/elementPlus/assetsManagement/\*/*.vue。
+  - src/views/nodes/elementPlus/financeManagement/\*/*.vue。
+  - src/views/nodes/elementPlus/life/\*/*.vue。
+  - src/views/nodes/elementPlus/miscellaneous/\*/*.vue。
+  - src/views/nodes/elementPlus/note/\*/*.vue。
+  - src/views/nodes/elementPlus/notifyManagement/\*/*.vue。
+  - src/views/nodes/elementPlus/settingrepo/\*/*.vue。
+  - src/views/nodes/elementPlus/systemSettings/\*/*.vue。
   - src/library/modules/elementPlus/\*/*.vue。
   - src/library/modules/simple/\*/*.vue。
   - src/components/elementPlus/\*/*.ts。

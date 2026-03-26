@@ -58,14 +58,18 @@ defineOptions({
   name: 'RemindDriverSupportSelectDialog',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   visible: boolean
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'update:visible', value: boolean): void
   (e: 'onConfirmed', value: RemindDriverSupport): void
@@ -73,10 +77,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------可见性处理-----------------------------------------------------------
+// endregion
+
+// region 可见性处理
+
 const watchedVisible = ref(props.visible)
 
 watch(
@@ -97,7 +107,10 @@ onMounted(() => {
   watchedVisible.value = props.visible
 })
 
-// -----------------------------------------------------------搜索-----------------------------------------------------------
+// endregion
+
+// region 搜索
+
 function handleRemindDriverSupportSearch(): void {
   handleRemindDriverSupportAllSearch()
 }
@@ -115,7 +128,10 @@ async function handleRemindDriverSupportAllSearch(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------提醒驱动器支持表格处理-----------------------------------------------------------
+// endregion
+
+// region 提醒驱动器支持表格处理
+
 const {
   currentPage: remindDriverSupportTableCurrentPage,
   pageSize: remindDriverSupportTablePageSize,
@@ -134,7 +150,10 @@ function handleRemindDriverSupportTableCurrentChanged(current: RemindDriverSuppo
   remindDriverSupportTableCurrentRow.value = current
 }
 
-// -----------------------------------------------------------对话框处理-----------------------------------------------------------
+// endregion
+
+// region 对话框处理
+
 function handleConfirmButtonClicked(): void {
   const formatSupport: RemindDriverSupport | null = remindDriverSupportTableCurrentRow.value
   if (!formatSupport) {
@@ -156,6 +175,8 @@ function handleHotKeyDown(): void {
   emit('onConfirmed', formatSupport)
   watchedVisible.value = false
 }
+
+// endregion
 </script>
 
 <style scoped>

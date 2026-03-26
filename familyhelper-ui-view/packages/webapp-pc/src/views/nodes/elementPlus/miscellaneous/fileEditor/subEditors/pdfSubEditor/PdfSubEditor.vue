@@ -21,7 +21,8 @@ defineOptions({
   name: 'PdfSubEditor',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   baseBlob: Blob | null
   readonly: boolean
@@ -29,14 +30,20 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onContentChangeIndicatorChanged', value: boolean): void
 }
 
 defineEmits<Emits>()
 
-// -----------------------------------------------------------Blob 逻辑处理-----------------------------------------------------------
+// endregion
+
+// region Blob 逻辑处理
+
 watch(
   () => props.baseBlob,
   () => {
@@ -66,7 +73,10 @@ onMounted(() => {
   syncBlob()
 })
 
-// -----------------------------------------------------------暴露方法-----------------------------------------------------------
+// endregion
+
+// region 暴露方法
+
 function currentContent(): Blob | Promise<Blob> {
   throw new Error('不应该执行到此处, 请联系开发人员')
 }
@@ -80,11 +90,16 @@ defineExpose({
   fireCurrentContentCommitted,
 })
 
-// -----------------------------------------------------------编辑器-----------------------------------------------------------
+// endregion
+
+// region 编辑器
+
 type NullablePDFDocumentProxy = PDFDocumentProxy | null
 
 const loading = ref<number>(0)
 const pdfDoc = ref<PDFDocumentProxy | null>(null)
+
+// endregion
 </script>
 
 <style scoped>

@@ -277,7 +277,8 @@ defineOptions({
   name: 'BalanceRecord',
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// region 头部面板
+
 const accountBookIndicatorValue = ref<DispAccountBook | null>(null)
 
 function handleBankCardIndicatorChanged(value: DispAccountBook | null): void {
@@ -353,7 +354,10 @@ async function handleRollbackAll(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------只读计算-----------------------------------------------------------
+// endregion
+
+// region 只读计算
+
 const readonly = computed<boolean>(() => {
   if (!accountBookIndicatorValue.value) {
     return true
@@ -362,7 +366,10 @@ const readonly = computed<boolean>(() => {
   return accountBookIndicatorValue.value.permission_level !== 0
 })
 
-// -----------------------------------------------------------查询逻辑-----------------------------------------------------------
+// endregion
+
+// region 查询逻辑
+
 function handleBankCardSearch(): void {
   if (!accountBookIndicatorValue.value) {
     return
@@ -390,7 +397,10 @@ onMounted(() => {
   handleBankCardSearch()
 })
 
-// -----------------------------------------------------------金额转换-----------------------------------------------------------
+// endregion
+
+// region 金额转换
+
 function convertCurrency(value: string): string {
   if (value === '-') {
     return ''
@@ -456,7 +466,10 @@ function convertCurrency(value: string): string {
   )
 }
 
-// -----------------------------------------------------------银行卡卡片-----------------------------------------------------------
+// endregion
+
+// region 银行卡卡片
+
 type BankCardCardItem = {
   name: string
   formatted_type: { label: string; remark: string }
@@ -586,7 +599,10 @@ async function handleBankCardRollback(_index: number, item: BankCardCardItem): P
   }
 }
 
-// -----------------------------------------------------------记录对话框-----------------------------------------------------------
+// endregion
+
+// region 记录对话框
+
 type RecordDialogItem = {
   key_long_id: string
   name: string
@@ -719,6 +735,8 @@ function handleBankCardToCancel(): void {
   const _el: HTMLElement = (cardPanelRef.value as { $el: HTMLElement }).$el
   _el.focus()
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -97,7 +97,8 @@ defineOptions({
   name: 'ItemOverlookPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   noteItemId: string
   readonly: boolean
@@ -106,7 +107,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onNoteItemPropertyUpdated'): void
   (e: 'onPanelFloatyButtonClicked'): void
@@ -114,10 +118,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------笔记项目查询-----------------------------------------------------------
+// endregion
+
+// region 笔记项目查询
+
 watch(
   () => props.noteItemId,
   () => {
@@ -158,7 +168,10 @@ onMounted(() => {
   handleNoteItemSearch()
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowNoteItemEditDialog(): void {
   showNoteItemMaintainDialog(noteItemMaintainDialogItem.value)
 }
@@ -167,7 +180,10 @@ function handlePanelFloatyButtonClicked(): void {
   emit('onPanelFloatyButtonClicked')
 }
 
-// -----------------------------------------------------------属性表单-----------------------------------------------------------
+// endregion
+
+// region 属性表单
+
 type NoteItemPropertyFormItem = {
   name: string
   remark: string
@@ -184,7 +200,10 @@ const noteItemPropertyFormItem = ref<NoteItemPropertyFormItem>({
   formatted_inspected_date: '',
 })
 
-// -----------------------------------------------------------笔记项目维护对话框-----------------------------------------------------------
+// endregion
+
+// region 笔记项目维护对话框
+
 type NoteItemMaintainDialogItem = {
   long_id: string
   node_long_id: string
@@ -234,7 +253,10 @@ async function handleNoteItemEdit(item: NoteItemMaintainDialogItem): Promise<voi
   }
 }
 
-// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+// endregion
+
+// region 方法暴露
+
 function noteItemSearch(): void {
   handleNoteItemSearch()
 }
@@ -242,6 +264,8 @@ function noteItemSearch(): void {
 defineExpose({
   noteItemSearch,
 })
+
+// endregion
 </script>
 
 <style scoped>

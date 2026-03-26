@@ -88,17 +88,24 @@ defineOptions({
   name: 'NotifyHistoryPanel',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentNotifyHistoryChanged', value: DispNotifyHistory | null): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------通知历史查询-----------------------------------------------------------
+// endregion
+
+// region 通知历史查询
+
 function handleNotifyHistorySearch(): void {
   handleNotifyHistoryAllSearch()
 }
@@ -120,7 +127,10 @@ onMounted(() => {
   handleNotifyHistorySearch()
 })
 
-// -----------------------------------------------------------通知历史表格-----------------------------------------------------------
+// endregion
+
+// region 通知历史表格
+
 const {
   currentPage: notifyHistoryTableCurrentPage,
   pageSize: notifyHistoryTablePageSize,
@@ -190,7 +200,10 @@ async function handleNotifyHistoryDelete(row: DispNotifyHistory): Promise<void> 
   }
 }
 
-// -----------------------------------------------------------通知历史维护对话框-----------------------------------------------------------
+// endregion
+
+// region 通知历史维护对话框
+
 type NotifyHistoryMaintainDialogItem = {
   key_long_id: string
   notify_setting_key_long_id: string
@@ -227,6 +240,8 @@ function notifyHistoryMaintainDialogItemMap(t: DispNotifyHistory): NotifyHistory
     formatted_happened_date: formatTimestamp(t.happened_date),
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -125,7 +125,8 @@ defineOptions({
   name: 'BillPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   accountBook: DispAccountBook | null
   fundChange: DispFundChange | null
@@ -133,7 +134,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------只读计算-----------------------------------------------------------
+// endregion
+
+// region 只读计算
+
 const readonly = computed<boolean>(() => {
   if (!props.accountBook) {
     return true
@@ -141,7 +145,10 @@ const readonly = computed<boolean>(() => {
   return props.accountBook.permission_level !== 0
 })
 
-// -----------------------------------------------------------查询逻辑-----------------------------------------------------------
+// endregion
+
+// region 查询逻辑
+
 watch(
   () => props.fundChange,
   () => {
@@ -217,12 +224,18 @@ onUnmounted(() => {
   revokeBillFileTableDataUrl()
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handleShowBillFileUploadDialog(): void {
   billFileUploadDialogVisible.value = true
 }
 
-// -----------------------------------------------------------票据文件表格处理-----------------------------------------------------------
+// endregion
+
+// region 票据文件表格处理
+
 type BillFileTableItem = {
   key: LongIdKey
   fund_change_key: LongIdKey
@@ -299,7 +312,10 @@ async function handleBillFileDelete(_index: number, item: BillFileTableItem): Pr
   }
 }
 
-// -----------------------------------------------------------票据文件上传对话框-----------------------------------------------------------
+// endregion
+
+// region 票据文件上传对话框
+
 const billFileUploadDialogVisible = ref<boolean>(false)
 const billFileUploadDialogLoading = ref<number>(0)
 
@@ -324,6 +340,8 @@ async function handleBillFileUploadConfirmed(info: ImageSelectCropInfo): Promise
     billFileUploadDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

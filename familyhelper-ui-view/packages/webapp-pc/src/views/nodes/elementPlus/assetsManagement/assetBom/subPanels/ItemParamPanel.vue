@@ -36,7 +36,8 @@ defineOptions({
   name: 'ItemParamPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   itemId: string
   readonly: boolean
@@ -45,20 +46,31 @@ type Props = {
 
 defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onPanelFloatyButtonClicked'): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 function handlePanelFloatyButtonClicked(): void {
   emit('onPanelFloatyButtonClicked')
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -98,7 +98,8 @@ defineOptions({
   name: 'ItemNotePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   noteItemId: string
   readonly: boolean
@@ -107,7 +108,10 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onNoteItemNoteFileCommitted'): void
   (e: 'onNoteItemSaveAsAttachmentCompleted'): void
@@ -116,10 +120,16 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const editorEditableSwitchValue = ref<boolean>(false)
 
 const operateButtonDisabled = computed<boolean>(() => {
@@ -145,7 +155,10 @@ function handlePanelFloatyButtonClicked(): void {
   emit('onPanelFloatyButtonClicked')
 }
 
-// -----------------------------------------------------------笔记查询-----------------------------------------------------------
+// endregion
+
+// region 笔记查询
+
 watch(
   () => props.noteItemId,
   () => {
@@ -176,7 +189,10 @@ onMounted(() => {
   handleNoteItemSearch()
 })
 
-// -----------------------------------------------------------编辑器-----------------------------------------------------------
+// endregion
+
+// region 编辑器
+
 const editorInstance = ref<FamilyhelperEditor | null>(null)
 const editorContent = ref('')
 const editorBackupContent = ref<string>('')
@@ -232,7 +248,10 @@ function updateEditorReadonly(readonly: boolean): void {
   }
 }
 
-// -----------------------------------------------------------热键处理-----------------------------------------------------------
+// endregion
+
+// region 热键处理
+
 const hotKeyCommitColdDown = ref<boolean>(false)
 const hotKeyCommitTimeoutHandle = ref<number | null>(null)
 
@@ -261,7 +280,10 @@ onUnmounted(() => {
   }
 })
 
-// -----------------------------------------------------------文件上传-----------------------------------------------------------
+// endregion
+
+// region 文件上传
+
 async function commitNoteItemNoteFile(): Promise<void> {
   loading.value += 1
   try {
@@ -281,7 +303,10 @@ async function commitNoteItemNoteFile(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------附件文件创建对话框-----------------------------------------------------------
+// endregion
+
+// region 附件文件创建对话框
+
 const { visible: attachmentCreateDialogVisible, filter: attachmentFileCreateDialogFilter } =
   useSpecifiedExtensionFileCreateDialog('.rtf')
 const attachmentCreateDialogLoading = ref<number>(0)
@@ -305,7 +330,10 @@ async function handleAttachmentCreateDialogConfirmed(info: FileCreateInfo): Prom
   }
 }
 
-// -----------------------------------------------------------方法暴露-----------------------------------------------------------
+// endregion
+
+// region 方法暴露
+
 function noteItemSearch(): void {
   handleNoteItemSearch()
 }
@@ -313,6 +341,8 @@ function noteItemSearch(): void {
 defineExpose({
   noteItemSearch,
 })
+
+// endregion
 </script>
 
 <style scoped>

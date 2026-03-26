@@ -233,24 +233,34 @@ defineOptions({
   name: 'FundChangePanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   accountBook: DispAccountBook | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onCurrentChanged', current: DispFundChange | null): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------只读计算-----------------------------------------------------------
+// endregion
+
+// region 只读计算
+
 const readonly = computed<boolean>(() => {
   if (!props.accountBook) {
     return true
@@ -258,10 +268,16 @@ const readonly = computed<boolean>(() => {
   return props.accountBook.permission_level !== 0
 })
 
-// -----------------------------------------------------------资金变更类型-----------------------------------------------------------
+// endregion
+
+// region 资金变更类型
+
 const fundChangeTypeIndicators = ref<FundChangeTypeIndicator[]>([])
 
-// -----------------------------------------------------------查询逻辑-----------------------------------------------------------
+// endregion
+
+// region 查询逻辑
+
 function handleSearch(): void {
   handleFundChangeTypeIndicatorSearch()
   handleFundChangeSearch()
@@ -325,7 +341,10 @@ onMounted(() => {
   handleSearch()
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const fundChangeTypeIndicatorSelectorValue = ref<string | null>(null)
 const fundChangeRemarkSearchBarValue = ref<string>('')
 
@@ -333,7 +352,10 @@ function handleShowFundChangeCreateDialog(): void {
   showFundChangeCreateMaintainDialog()
 }
 
-// -----------------------------------------------------------资金变更表格处理-----------------------------------------------------------
+// endregion
+
+// region 资金变更表格处理
+
 const {
   currentPage: fundChangeTableCurrentPage,
   pageSize: fundChangeTablePageSize,
@@ -447,7 +469,10 @@ async function handleFundChangeDelete(_index: number, item: DispFundChange): Pro
   }
 }
 
-// -----------------------------------------------------------资金变更维护对话框-----------------------------------------------------------
+// endregion
+
+// region 资金变更维护对话框
+
 type FundChangeMaintainDialogItem = {
   key_long_id: string
   delta: string
@@ -670,6 +695,8 @@ async function handleFundChangeUpdate(item: FundChangeMaintainDialogItem): Promi
     fundChangeMaintainDialogLoading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

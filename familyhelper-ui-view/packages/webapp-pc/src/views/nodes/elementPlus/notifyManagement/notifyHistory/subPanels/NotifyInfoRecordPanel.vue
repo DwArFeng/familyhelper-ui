@@ -88,17 +88,24 @@ defineOptions({
   name: 'NotifyInfoRecordPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   notifyHistory: DispNotifyHistory | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------通知信息记录查询-----------------------------------------------------------
+// endregion
+
+// region 通知信息记录查询
+
 watch(
   () => props.notifyHistory,
   () => {
@@ -134,7 +141,10 @@ onMounted(() => {
   handleNotifyInfoRecordSearch()
 })
 
-// -----------------------------------------------------------通知信息记录表格-----------------------------------------------------------
+// endregion
+
+// region 通知信息记录表格
+
 const {
   currentPage: notifyInfoRecordTableCurrentPage,
   pageSize: notifyInfoRecordTablePageSize,
@@ -170,7 +180,10 @@ function handleShowNotifyInfoRecordInspectDialog(row: NotifyInfoRecord): void {
   showNotifyInfoRecordMaintainDialog(row)
 }
 
-// -----------------------------------------------------------通知信息记录维护对话框-----------------------------------------------------------
+// endregion
+
+// region 通知信息记录维护对话框
+
 type NotifyInfoRecordMaintainDialogItem = {
   key_notify_history_id: string
   key_type: NotifyInfoRecordType
@@ -203,6 +216,8 @@ function notifyInfoRecordMaintainDialogItemMap(
     value: t.value,
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

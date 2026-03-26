@@ -127,7 +127,8 @@ defineOptions({
   name: 'ItemEditPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   itemId: string
   readonly?: boolean
@@ -139,7 +140,10 @@ const props = withDefaults(defineProps<Props>(), {
   upsc: '',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onItemPropertyUpdated'): void
   (e: 'onItemCoverUpdated'): void
@@ -148,12 +152,18 @@ type Emits = {
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------Tab 页-----------------------------------------------------------
+// endregion
+
+// region Tab 页
+
 type TabsActiveName = 'itemInfo' | 'itemFile' | 'itemParam'
 
 const tabsActiveName = ref<TabsActiveName>('itemInfo')
 
-// -----------------------------------------------------------事件处理-----------------------------------------------------------
+// endregion
+
+// region 事件处理
+
 const itemInfoPanelRef = useTemplateRef<ComponentExposed<typeof ItemInfoPanel>>('itemInfoPanelRef')
 const floatyItemInfoPanelRef =
   useTemplateRef<ComponentExposed<typeof ItemInfoPanel>>('floatyItemInfoPanelRef')
@@ -199,7 +209,10 @@ function handleFileFloaty(id: string, name: string, mode: FileEditMode): void {
   fileFloatyVisible.value = true
 }
 
-// -----------------------------------------------------------面板悬浮-----------------------------------------------------------
+// endregion
+
+// region 面板悬浮
+
 const {
   visible: panelFloatyVisible,
   initialX: panelFloatyInitialX,
@@ -259,7 +272,10 @@ function handlePanelFloatyClosed(): void {
   saveUserPreference()
 }
 
-// -----------------------------------------------------------文件悬浮-----------------------------------------------------------
+// endregion
+
+// region 文件悬浮
+
 const {
   visible: fileFloatyVisible,
   initialX: fileFloatyInitialX,
@@ -289,7 +305,10 @@ function handleFileFloatyVisualFieldAdjusted(visualField: VisualField): void {
   saveUserPreference()
 }
 
-// -----------------------------------------------------------用户偏好-----------------------------------------------------------
+// endregion
+
+// region 用户偏好
+
 type UserPreference = {
   panelFloaty: {
     dialog: FloatyDialogUserPreference
@@ -376,6 +395,8 @@ function userPreferenceApply(userPreference: UserPreference): void {
 onMounted(() => {
   loadUserPreference()
 })
+
+// endregion
 </script>
 
 <style scoped>

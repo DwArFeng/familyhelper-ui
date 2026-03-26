@@ -150,10 +150,14 @@ defineOptions({
   name: 'NoteManagement',
 })
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------属性计算-----------------------------------------------------------
+// endregion
+
+// region 属性计算
+
 const nonNoteBookSelected = computed<boolean>(() => {
   return noteBookIndicatorValue.value === null
 })
@@ -181,14 +185,20 @@ const nodeItemSelected = computed<boolean>(() => {
   return item.type === 'item'
 })
 
-// -----------------------------------------------------------头部面板-----------------------------------------------------------
+// endregion
+
+// region 头部面板
+
 const noteBookIndicatorValue = ref<DispNoteBook | null>(null)
 
 function handleNoteBookIndicatorChanged(value: DispNoteBook | null): void {
   noteBookIndicatorValue.value = value
 }
 
-// -----------------------------------------------------------笔记本树面板-----------------------------------------------------------
+// endregion
+
+// region 笔记本树面板
+
 type NoteTreeItem = {
   tree_node_key: string
   type: 'node' | 'item'
@@ -338,7 +348,10 @@ async function handleNoteItemDelete(item: NoteTreeItem): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------节点维护对话框-----------------------------------------------------------
+// endregion
+
+// region 节点维护对话框
+
 type NoteNodeMaintainDialogItem = {
   long_id: string
   parent_long_id: string
@@ -460,7 +473,10 @@ async function handleNoteNodeCreate(item: NoteNodeMaintainDialogItem): Promise<v
   }
 }
 
-// -----------------------------------------------------------项目维护对话框-----------------------------------------------------------
+// endregion
+
+// region 项目维护对话框
+
 type NoteItemMaintainDialogItem = {
   long_id: string
   node_long_id: string
@@ -582,7 +598,10 @@ async function handleNoteItemCreate(item: NoteItemMaintainDialogItem): Promise<v
   }
 }
 
-// -----------------------------------------------------------节点编辑面板-----------------------------------------------------------
+// endregion
+
+// region 节点编辑面板
+
 async function handleNoteNodePropertyUpdated(): Promise<void> {
   const oldNode: DispNoteNode | null = noteTreeCurrentItem.value?.node ?? null
   if (!oldNode) {
@@ -600,7 +619,10 @@ async function handleNoteNodePropertyUpdated(): Promise<void> {
   }
 }
 
-// -----------------------------------------------------------项目编辑面板-----------------------------------------------------------
+// endregion
+
+// region 项目编辑面板
+
 const UPSC_ITEM_EDIT_PANEL: string = 'ui_preference.pc.note.note_management.item_edit_panel'
 
 const itemEditPanelUpsc = computed<string>(() => {
@@ -623,6 +645,8 @@ async function handleNoteItemPropertyUpdated(): Promise<void> {
     loading.value -= 1
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

@@ -91,17 +91,24 @@ defineOptions({
   name: 'NotifySendRecordPanel',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   notifyHistory: DispNotifyHistory | null
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------加载逻辑-----------------------------------------------------------
+// endregion
+
+// region 加载逻辑
+
 const loading = ref<number>(0)
 
-// -----------------------------------------------------------通知发送记录查询-----------------------------------------------------------
+// endregion
+
+// region 通知发送记录查询
+
 watch(
   () => props.notifyHistory,
   () => {
@@ -137,7 +144,10 @@ onMounted(() => {
   handleNotifySendRecordSearch()
 })
 
-// -----------------------------------------------------------格式化-----------------------------------------------------------
+// endregion
+
+// region 格式化
+
 function formatTopic(topic: Topic): string {
   return `${topic.label}(${topic.key.string_id})`
 }
@@ -153,7 +163,10 @@ function formatBoolean(value: boolean | null | undefined): string {
   return value ? '是' : '否'
 }
 
-// -----------------------------------------------------------通知发送记录表格-----------------------------------------------------------
+// endregion
+
+// region 通知发送记录表格
+
 const {
   currentPage: notifySendRecordTableCurrentPage,
   pageSize: notifySendRecordTablePageSize,
@@ -189,7 +202,10 @@ function handleShowNotifySendRecordInspectDialog(row: DispNotifySendRecord): voi
   showNotifySendRecordMaintainDialog(row)
 }
 
-// -----------------------------------------------------------通知发送记录维护对话框-----------------------------------------------------------
+// endregion
+
+// region 通知发送记录维护对话框
+
 type NotifySendRecordMaintainDialogItem = {
   key_notify_history_id: string
   key_topic_id: string
@@ -234,6 +250,8 @@ function notifySendRecordMaintainDialogItemMap(
     formatted_succeed_flag: formatBoolean(t.succeed_flag),
   }
 }
+
+// endregion
 </script>
 
 <style scoped>
