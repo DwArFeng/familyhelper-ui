@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块 hyperscript 页面新增。
+  - elementPlus/hyperscript/placeholder/index.ts。
   - comvisual/hyperscript/placeholder/index.ts。
 
 - `webapp-pc` 子模块组件优化。
