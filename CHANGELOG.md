@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块 hyperscript 页面新增。
+  - comvisual/hyperscript/placeholder/index.ts。
+
 - `webapp-mobile` 子模块组件新增。
   - 组件 `comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue` 新增。
   - 组件 `comvisual/layout/comingSoon/ComingSoon.vue` 新增。
