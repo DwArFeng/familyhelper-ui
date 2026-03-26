@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块文件优化注释、文档注释格式、代码换行格式。
+  - src/api/types.ts。
+  - src/compreg/types.ts。
+  - src/library/types.ts。
+  - src/navigation/types.ts。
+  - src/router/types.ts。
+  - src/store/types.ts。
+
 - `webapp-mobile` 子模块增加依赖。
   - 增加依赖 `screenfull` 以应用其新功能，版本为 `^6.0.2`。
 

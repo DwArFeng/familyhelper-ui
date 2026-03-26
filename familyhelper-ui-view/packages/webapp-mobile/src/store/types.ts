@@ -9,7 +9,8 @@ import {
   type StoreDefinition,
 } from 'pinia'
 
-// -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
+// region VIM 组件定义
+
 /**
  * VIM Store。
  */
@@ -93,7 +94,10 @@ export type SimplyStore<ID extends string, SS> = Store<
   _ExtractActionsFromSetupStore<SS>
 >
 
-// -----------------------------------------------------------模块定义-----------------------------------------------------------
+// endregion
+
+// region 模块定义
+
 /**
  * VIM Store 模块。
  */
@@ -113,3 +117,5 @@ export interface VimStoreModule extends VimComponentModule {
 export type StoreSetup = {
   (): unknown
 }
+
+// endregion

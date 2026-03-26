@@ -3,7 +3,8 @@
 import { type VimComponent } from '@/vim/types.ts'
 import { type Router } from 'vue-router'
 
-// -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
+// region VIM 组件定义
+
 /**
  * VIM Router。
  */
@@ -93,3 +94,5 @@ export type VimRouterLocate = {
    */
   query?: object
 }
+
+// endregion

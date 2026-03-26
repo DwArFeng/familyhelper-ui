@@ -3,7 +3,8 @@
 import { type VimComponent, type VimComponentModule } from '@/vim/types.ts'
 import { type VNode } from 'vue'
 
-// -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
+// region VIM 组件定义
+
 /**
  * VIM Library。
  */
@@ -86,7 +87,10 @@ export type LibrarySetting = {
   defaultVisualizerKey: string
 }
 
-// -----------------------------------------------------------模块定义-----------------------------------------------------------
+// endregion
+
+// region 模块定义
+
 /**
  * VIM Library 模块。
  */
@@ -275,3 +279,5 @@ export type RenderType = 'login' | 'layout' | 'pageForbidden' | 'pageNotFound' |
  * Vue hyperscript 函数。
  */
 export type Hyperscript = (typeof import('vue'))['h']
+
+// endregion

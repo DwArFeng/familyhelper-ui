@@ -3,7 +3,8 @@
 import { type VimComponent } from '@/vim/types.ts'
 import { type HttpClient } from '@dwarfeng/familyhelper-ui-component-api/src/util/http.ts'
 
-// -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
+// region VIM 组件定义
+
 /**
  * VIM Api。
  */
@@ -91,3 +92,5 @@ export type ApiSetting = {
    */
   authenticationRequestHeaderKey: string
 }
+
+// endregion
