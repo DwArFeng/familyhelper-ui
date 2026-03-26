@@ -20,7 +20,8 @@ defineOptions({
   name: 'PageNotFound',
 })
 
-// -----------------------------------------------------------报错文本-----------------------------------------------------------
+// region 报错文本
+
 const ERROR_TEXT: string = `您进入了未知领域 (๑•́ ₃ •̀๑)
 
 请检查以下可能的小意外：
@@ -59,6 +60,8 @@ const ERROR_TEXT: string = `您进入了未知领域 (๑•́ ₃ •̀๑)
 2. 召唤管理员：传送门已开启 → 915724865@qq.com
 `
 const textarea = ref<string>(ERROR_TEXT)
+
+// endregion
 </script>
 
 <style scoped>

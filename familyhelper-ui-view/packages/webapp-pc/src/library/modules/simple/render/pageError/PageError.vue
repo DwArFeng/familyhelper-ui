@@ -26,8 +26,11 @@ defineOptions({
   name: 'PageError',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const pageErrorStore = vim.ctx().store().vueStore<'page-error', PageErrorStore>('page-error')
+
+// endregion
 </script>
 
 <style scoped>

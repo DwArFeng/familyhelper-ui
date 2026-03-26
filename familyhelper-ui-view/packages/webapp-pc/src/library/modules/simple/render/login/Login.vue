@@ -27,10 +27,14 @@ defineOptions({
   name: 'LoginComponent',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// --------------------------------+---------------------------背景样式处理-----------------------------------------------------------
+// endregion
+
+// region +---------------------------背景样式处理
+
 const backgroundImageStyle = reactive({
   backgroundImage: `url(${backgroundImg})`,
   backgroundRepeat: 'no-repeat',
@@ -53,7 +57,10 @@ onMounted(() => {
   }
 })
 
-// -----------------------------------------------------------登录表单-----------------------------------------------------------
+// endregion
+
+// region 登录表单
+
 const username = ref<string>('')
 const password = ref<string>('')
 
@@ -62,6 +69,8 @@ function handleLogin(): void {
     .willLogin({ account_key: { string_id: username.value }, password: password.value })
     .execute()
 }
+
+// endregion
 </script>
 
 <style scoped>

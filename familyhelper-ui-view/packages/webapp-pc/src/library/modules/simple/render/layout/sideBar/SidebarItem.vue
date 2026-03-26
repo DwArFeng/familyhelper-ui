@@ -49,31 +49,47 @@ import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, ref } from 'vue'
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// endregion
+
+// region Store 引入
+
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// endregion
+
+// region Props 定义
+
 type Props = {
   node: NodeInfo
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
-const visualizerKey = computed<string>(
-  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
-)
+// endregion
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// region Emits 定义
+
 const emit = defineEmits<{
   select: [nodeKey: string]
 }>()
 
-// -----------------------------------------------------------主节点处理-----------------------------------------------------------
+// endregion
+
+// region 可视化键处理
+
+const visualizerKey = computed<string>(
+  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
+)
+
+// endregion
+
+// region 主节点处理
+
 const nodePermitted = computed<boolean>(() => {
   if (props.node.permission.required) {
     const mayPermissionNode: string | undefined = props.node.permission.node
@@ -85,7 +101,10 @@ const nodePermitted = computed<boolean>(() => {
   return true
 })
 
-// -----------------------------------------------------------子节点处理-----------------------------------------------------------
+// endregion
+
+// region 子节点处理
+
 const hasChild = computed<boolean>(() => {
   return navigationStore.getChildNodeInfos(props.node.key).length > 0
 })
@@ -94,17 +113,25 @@ const children = computed<Readonly<NodeInfo[]>>(() => {
   return navigationStore.getChildNodeInfos(props.node.key)
 })
 
-// -----------------------------------------------------------子菜单处理-----------------------------------------------------------
+// endregion
+
+// region 子菜单处理
+
 const isOpen = ref(false)
 
 function toggleSubmenu(): void {
   isOpen.value = !isOpen.value
 }
 
-// -----------------------------------------------------------选择处理-----------------------------------------------------------
+// endregion
+
+// region 选择处理
+
 function handleSelect(nodeKey: string): void {
   emit('select', nodeKey)
 }
+
+// endregion
 </script>
 
 <style scoped>
