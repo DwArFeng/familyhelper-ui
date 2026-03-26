@@ -14,6 +14,7 @@
   - 组件 `comvisual/layout/placeholderPanel/PlaceholderPanel.vue` 新增。
 
 - `webapp-pc` 子模块功能优化。
+  - 优化 `src/views/nodes/comvisual/*/*.vue` 中占位符部分结构优化。
   - 优化 `src/views/nodes/elementPlus/*/*.vue` 中占位符部分结构优化。
   - 将 `simple` 可视化器重命名为 `comvisual`，并优化项目结构。
   - 更新 `VimLayoutRouter` 动态路由表时，向路由的元数据区提供更多的信息。
