@@ -232,7 +232,7 @@ function handleButtonClicked(): void {
 则使用其 `value` 属性，否则按布尔值使用。
 
 视图中（如 layout、login、错误页等）从 `@/util/store.ts` 引入该 `ready`，在 `ready.value` 为假时渲染遮罩（如 VimMask），
-为真时再渲染正式内容，从而在"所有带 ready 的 store 均已就绪"后再展示主界面。
+为真时再渲染正式内容，从而在“所有带 ready 的 store 均已就绪”后再展示主界面。
 
 模块侧为可选实现：在 Store 类型上声明 `ready: ComputedRef<boolean>`，在 `provideStoreSetup` 返回的对象中暴露 `ready`；
 内部通常使用 `ref` 与 `computed` 暴露只读的 `ready`，在适当时机（如数据加载完成）将其设为 `true`。
