@@ -116,6 +116,9 @@
 
 ### 功能移除
 
+- 移除 `webapp-mobile` 子模块 views 中不需要的组件。
+  - src/views/nodes/comvisual/CompregFallback.vue
+
 - 移除 `webapp-pc` 子模块 views 中不需要的组件。
   - src/views/nodes/comvisual/miscellaneous/compregFallback/CompregFallback.vue。
 
