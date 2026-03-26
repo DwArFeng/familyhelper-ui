@@ -2,6 +2,8 @@
 
 import { type ComponentSetting, type VimCompregModule } from '@/compreg/types.ts'
 
+import { placeholder as comvisualPlaceholder } from '@/views/nodes/comvisual/hyperscript/placeholder/index.ts'
+
 /**
  * VIM Compreg 模块。
  */
@@ -22,8 +24,10 @@ const compregSettings: ComponentSetting[] = [
   {
     key: 'miscellaneous.compregFallback',
     component: {
-      '': () => import('@/views/nodes/comvisual/CompregFallback.vue'),
-      comvisual: () => import('@/views/nodes/comvisual/CompregFallback.vue'),
+      '': () =>
+        comvisualPlaceholder('当你看到这个页面的时候，意味着 router.component.key 没有被正确配置'),
+      comvisual: () =>
+        comvisualPlaceholder('当你看到这个页面的时候，意味着 router.component.key 没有被正确配置'),
     },
   },
   {
