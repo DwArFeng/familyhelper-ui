@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块组件新增。
+  - 组件 `comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue` 新增。
+  - 组件 `comvisual/layout/comingSoon/ComingSoon.vue` 新增。
+  - 组件 `comvisual/layout/cornerLightPanel/CornerLightPanel.vue` 新增。
+  - 组件 `comvisual/layout/placeholderPanel/PlaceholderPanel.vue` 新增。
+  - 组件 `comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue` 新增。
+  - 组件 `comvisual/widget/floatTool/FloatTool.vue` 新增。
+
 - `webapp-mobile` 子模块功能优化。
   - 将 `simple` 可视化器重命名为 `comvisual`，并优化项目结构。
   - 更新 `VimLayoutRouter` 动态路由表时，向路由的元数据区提供更多的信息。
