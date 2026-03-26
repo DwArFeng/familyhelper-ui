@@ -2,7 +2,8 @@
 
 import { type VimComponent, type VimComponentModule } from '@/vim/types.ts'
 
-// -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
+// region VIM 组件定义
+
 /**
  * VIM Compreg。
  */
@@ -68,7 +69,10 @@ export type CompregSetting = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Component = Record<string, any> & { '': any }
 
-// -----------------------------------------------------------模块定义-----------------------------------------------------------
+// endregion
+
+// region 模块定义
+
 /**
  * VIM Compreg 模块。
  */
@@ -97,3 +101,5 @@ export type ComponentSetting = {
    */
   component: Component
 }
+
+// endregion

@@ -2,7 +2,8 @@
 
 import { type VimComponent, type VimComponentModule } from '@/vim/types.ts'
 
-// -----------------------------------------------------------VIM 组件定义-----------------------------------------------------------
+// region VIM 组件定义
+
 /**
  * VIM Navigation。
  */
@@ -358,7 +359,10 @@ export type PermissionInfo = {
   node?: string
 }
 
-// -----------------------------------------------------------模块定义-----------------------------------------------------------
+// endregion
+
+// region 模块定义
+
 /**
  * VIM Navigation 模块。
  */
@@ -650,3 +654,5 @@ export type PermissionSetting = {
    */
   node?: string
 }
+
+// endregion
