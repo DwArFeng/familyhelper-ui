@@ -21,6 +21,8 @@
   - 组件 `comvisual/layout/placeholderPanel/PlaceholderPanel.vue` 新增。
 
 - `webapp-pc` 子模块功能优化。
+  - `src/views/nodes/elementPlus/welcome/Welcome.vue` 样式优化。
+  - 更改 VIM 组件 `VimLibrary` 的默认设置。
   - 增加 VIM 组件 `VimCompreg` 的接口方法，提供更多的功能。
   - 优化 Compreg `miscellaneous.compregFallback` 的组件设置。
   - 优化 `src/views/nodes/comvisual/*/*.vue` 中占位符部分结构优化。
