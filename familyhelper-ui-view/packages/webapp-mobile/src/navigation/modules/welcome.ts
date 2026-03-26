@@ -27,7 +27,7 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '首页',
       },
-      simple: {
+      comvisual: {
         label: '首页',
       },
     },

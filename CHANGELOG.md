@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块功能优化。
+  - 将 `simple` 可视化器重命名为 `comvisual`，并优化项目结构。
   - 更新 `VimLayoutRouter` 动态路由表时，向路由的元数据区提供更多的信息。
 
 - `webapp-mobile` 子模块文件优化注释、文档注释格式、代码换行格式。

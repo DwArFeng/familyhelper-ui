@@ -22,22 +22,22 @@ const compregSettings: ComponentSetting[] = [
   {
     key: 'navigationDemo.subMenuItem1',
     component: {
-      '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-      simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      '': () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
+      comvisual: () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
     },
   },
   {
     key: 'navigationDemo.subMenuItem2',
     component: {
-      '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-      simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      '': () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
+      comvisual: () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
     },
   },
   {
     key: 'navigationDemo.subMenuItem3',
     component: {
-      '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-      simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      '': () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
+      comvisual: () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
     },
   },
 ]

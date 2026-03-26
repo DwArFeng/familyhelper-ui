@@ -22,8 +22,8 @@ const compregSettings: ComponentSetting[] = [
   {
     key: 'welcome',
     component: {
-      '': () => import('@/views/nodes/simple/welcome/Welcome.vue'),
-      simple: () => import('@/views/nodes/simple/welcome/Welcome.vue'),
+      '': () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
+      comvisual: () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
     },
   },
 ]

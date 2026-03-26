@@ -174,14 +174,17 @@ function handleNavigation(nodeKey: string): void {
 
 // 删除处理。
 function handleRemove(nodeKey: string): void {
+  // 在导航栏中删除 nodeKey。
   navigationStore.removeEzNavNode(nodeKey)
 
+  // 获取 nodeKey 对应的元数据，分析关闭行为。
   const nodeInfo: NodeInfo | null = navigationStore.getNodeInfo(nodeKey)
   if (!nodeInfo) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
   const closedActionType: string = nodeInfo.ezNav.closedBehavior?.type ?? 'none'
 
+  // 根据不同的行为执行不同的退出动作。
   navigationStore.incrementEzNavBacking()
   switch (closedActionType) {
     case 'back':

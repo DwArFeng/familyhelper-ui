@@ -22,8 +22,8 @@ const compregSettings: ComponentSetting[] = [
   {
     key: 'miscellaneous.compregFallback',
     component: {
-      '': () => import('@/views/nodes/simple/CompregFallback.vue'),
-      simple: () => import('@/views/nodes/simple/CompregFallback.vue'),
+      '': () => import('@/views/nodes/comvisual/CompregFallback.vue'),
+      comvisual: () => import('@/views/nodes/comvisual/CompregFallback.vue'),
     },
   },
 ]

@@ -27,7 +27,7 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '导航演示',
       },
-      simple: {
+      comvisual: {
         label: '导航演示',
       },
     },
@@ -49,7 +49,7 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '子菜单1',
       },
-      simple: {
+      comvisual: {
         label: '子菜单1',
       },
     },
@@ -84,7 +84,7 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '子菜单2',
       },
-      simple: {
+      comvisual: {
         label: '子菜单2',
       },
     },
@@ -119,7 +119,7 @@ const nodeSettings: NodeSetting[] = [
       '': {
         label: '子菜单3',
       },
-      simple: {
+      comvisual: {
         label: '子菜单3',
       },
     },
