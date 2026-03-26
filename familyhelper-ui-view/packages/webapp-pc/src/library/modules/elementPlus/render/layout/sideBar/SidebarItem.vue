@@ -39,26 +39,39 @@ import { computed } from 'vue'
 
 import { Menu as MenuIcon } from '@element-plus/icons-vue'
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// endregion
+
+// region Store 引入
+
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// endregion
+
+// region Props 定义
+
 type Props = {
   node: NodeInfo
 }
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+// endregion
+
+// region 可视化键处理
+
 const visualizerKey = computed<string>(
   () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
 )
 
-// -----------------------------------------------------------主节点处理-----------------------------------------------------------
+// endregion
+
+// region 主节点处理
+
 const nodePermitted = computed<boolean>(() => {
   if (props.node.permission.required) {
     const mayPermissionNode: string | undefined = props.node.permission.node
@@ -70,7 +83,10 @@ const nodePermitted = computed<boolean>(() => {
   return true
 })
 
-// -----------------------------------------------------------子节点处理-----------------------------------------------------------
+// endregion
+
+// region 子节点处理
+
 const hasChild = computed<boolean>(() => {
   return navigationStore.getChildNodeInfos(props.node.key).length > 0
 })
@@ -78,4 +94,6 @@ const hasChild = computed<boolean>(() => {
 const children = computed<Readonly<NodeInfo[]>>(() => {
   return navigationStore.getChildNodeInfos(props.node.key)
 })
+
+// endregion
 </script>

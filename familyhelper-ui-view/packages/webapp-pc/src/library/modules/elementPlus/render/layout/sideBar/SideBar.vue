@@ -38,20 +38,30 @@ defineOptions({
   name: 'SideBar',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 
-// -----------------------------------------------------------滚动条处理-----------------------------------------------------------
+// endregion
+
+// region 滚动条处理
+
 const scrollBarOptions = ref({
   scrollbars: {
     theme: 'os-theme-light',
   },
 })
 
-// -----------------------------------------------------------菜单处理-----------------------------------------------------------
+// endregion
+
+// region 菜单处理
+
 const menuBackgroundColor = ref('#2D3A4B')
 
-// -----------------------------------------------------------选择事件处理-----------------------------------------------------------
+// endregion
+
+// region 选择事件处理
+
 function handleMenuSelect(nodeKey: string): void {
   const nodeInfo: Readonly<NodeInfo> | null = navigationStore.getNodeInfo(nodeKey)
   if (!nodeInfo) {
@@ -61,6 +71,8 @@ function handleMenuSelect(nodeKey: string): void {
     vim.ctx().router().vueRouter().push({ name: nodeInfo.key })
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

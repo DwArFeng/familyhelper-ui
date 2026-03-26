@@ -194,19 +194,28 @@ defineOptions({
   name: 'EzNavView',
 })
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// endregion
+
+// region Store 引入
+
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+// endregion
+
+// region 可视化键处理
+
 const visualizerKey = computed<string>(
   () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
 )
 
-// -----------------------------------------------------------急救操作-----------------------------------------------------------
+// endregion
+
+// region 急救操作
 
 function deepCleanWithoutPrompt(): void {
   Promise.resolve()
@@ -217,7 +226,10 @@ function deepCleanWithoutPrompt(): void {
     .catch(() => {})
 }
 
-// -----------------------------------------------------------Router Link 常规操作-----------------------------------------------------------
+// endregion
+
+// region Router Link 常规操作
+
 // 导航处理。
 function handleNavigation(nodeKey: string): void {
   const { params, query } = navigationStore.ezNavNodeMeta(nodeKey) ?? { params: {}, query: {} }
@@ -264,7 +276,10 @@ function handleCloseDefault(): void {
   vim.ctx().router().vueRouter().push({ name: vim.ctx().navigation().setting.defaultNodeKey })
 }
 
-// -----------------------------------------------------------Router Link 菜单操作-----------------------------------------------------------
+// endregion
+
+// region Router Link 菜单操作
+
 type ContextMenu = {
   visible: boolean
   left: number
@@ -351,7 +366,9 @@ function handleShowEditDialogContextMenuItemClicked(): void {
   handleShowEditDialog()
 }
 
-// -----------------------------------------------------------编辑对话框-----------------------------------------------------------
+// endregion
+
+// region 编辑对话框
 
 const editDialogVisible = ref<boolean>(false)
 const editorDialogPinnedNodes = ref<NodeInfo[]>([])
@@ -505,6 +522,8 @@ onMounted(() => {
 onUnmounted(() => {
   removeHotKeyListener()
 })
+
+// endregion
 </script>
 
 <style scoped>

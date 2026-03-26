@@ -51,13 +51,20 @@ defineOptions({
   name: 'LoginComponent',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 
-// -----------------------------------------------------------Loading 状态-----------------------------------------------------------
+// endregion
+
+// region Loading 状态
+
 const loading = ref<number>(0)
 
-// --------------------------------+---------------------------背景样式处理-----------------------------------------------------------
+// endregion
+
+// region +---------------------------背景样式处理
+
 const backgroundImageStyle = reactive({
   backgroundImage: `url(${backgroundImg})`,
   backgroundRepeat: 'no-repeat',
@@ -80,13 +87,19 @@ onMounted(() => {
   }
 })
 
-// -----------------------------------------------------------表单项处理-----------------------------------------------------------
+// endregion
+
+// region 表单项处理
+
 const form = reactive({
   id: '',
   password: '',
 })
 
-// -----------------------------------------------------------登录处理-----------------------------------------------------------
+// endregion
+
+// region 登录处理
+
 function handleLogin(): void {
   if (!form.id || !form.password) {
     return
@@ -106,6 +119,8 @@ function handleHotKeyDown(event: KeyboardEvent): void {
     handleLogin()
   }
 }
+
+// endregion
 </script>
 
 <style scoped>

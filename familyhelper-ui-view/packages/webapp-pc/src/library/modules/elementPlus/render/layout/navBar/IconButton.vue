@@ -11,7 +11,8 @@ defineOptions({
   name: 'IconButton',
 })
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// region Props 定义
+
 type Props = {
   icon?: string
 }
@@ -20,7 +21,10 @@ const props = withDefaults(defineProps<Props>(), {
   icon: '',
 })
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'click'): void
 }
@@ -31,6 +35,8 @@ const emit = defineEmits<Emits>()
 function handleClick(): void {
   emit('click')
 }
+
+// endregion
 </script>
 
 <style scoped>

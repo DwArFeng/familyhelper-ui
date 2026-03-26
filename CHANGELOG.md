@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块文件优化注释、文档注释格式、代码换行格式。
+  - src/library/modules/elementPlus/\*/*.vue。
   - src/library/modules/simple/\*/*.vue。
   - src/components/elementPlus/\*/*.ts。
   - src/components/elementPlus/\*/*.vue。

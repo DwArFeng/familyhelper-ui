@@ -51,7 +51,8 @@ defineOptions({
   name: 'AvatarComponent',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const notificationStore = vim
   .ctx()
   .store()
@@ -69,7 +70,10 @@ const notificationStyle = computed(() => {
   return 'long-notify'
 })
 
-// -----------------------------------------------------------下拉菜单命令处理-----------------------------------------------------------
+// endregion
+
+// region 下拉菜单命令处理
+
 function handleCommand(key: string): void {
   switch (key) {
     case 'welcome':
@@ -101,6 +105,8 @@ function handleLogoutCommand(): void {
     .execute()
     .catch(() => {})
 }
+
+// endregion
 </script>
 
 <style scoped>

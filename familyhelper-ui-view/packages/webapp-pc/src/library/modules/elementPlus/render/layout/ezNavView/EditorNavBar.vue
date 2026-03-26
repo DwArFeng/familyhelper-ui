@@ -22,10 +22,14 @@ defineOptions({
   name: 'EditorNavBar',
 })
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------Props 定义-----------------------------------------------------------
+// endregion
+
+// region Props 定义
+
 type Props = {
   node: NodeInfo
   annotation: string
@@ -33,22 +37,33 @@ type Props = {
 
 const props = defineProps<Props>()
 
-// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+// endregion
+
+// region 可视化键处理
+
 const visualizerKey = computed<string>(
   () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
 )
 
-// -----------------------------------------------------------Emits 定义-----------------------------------------------------------
+// endregion
+
+// region Emits 定义
+
 type Emits = {
   (e: 'onDelete'): void
 }
 
 const emit = defineEmits<Emits>()
 
-// -----------------------------------------------------------事件处理-----------------------------------------------------------
+// endregion
+
+// region 事件处理
+
 function handleDelete(): void {
   emit('onDelete')
 }
+
+// endregion
 </script>
 
 <style scoped>

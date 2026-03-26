@@ -18,18 +18,28 @@ defineOptions({
   name: 'BreadcrumbComponent',
 })
 
-// -----------------------------------------------------------Router 引入-----------------------------------------------------------
+// region Router 引入
+
 const router = vim.ctx().router().vueRouter()
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// endregion
+
+// region Store 引入
+
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 
-// -----------------------------------------------------------可视化键处理-----------------------------------------------------------
+// endregion
+
+// region 可视化键处理
+
 const visualizerKey = computed<string>(
   () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
 )
 
-// -----------------------------------------------------------节点处理-----------------------------------------------------------
+// endregion
+
+// region 节点处理
+
 const currentNodePath = computed<NodeInfo[]>(() => {
   // 获取当前节点路径。
   let anchorNode: NodeInfo | null = navigationStore.getNodeInfo(navigationStore.currentNodeKey)
@@ -46,6 +56,8 @@ const currentNodePath = computed<NodeInfo[]>(() => {
   // 返回结果。
   return currentNodePathList
 })
+
+// endregion
 </script>
 
 <style scoped>

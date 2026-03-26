@@ -30,14 +30,20 @@ defineOptions({
   name: 'LayoutComponent',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const elementPlusStore = vim
   .ctx()
   .store()
   .vueStore<'element-plus', ElementPlusStore>('element-plus')
 
-// -----------------------------------------------------------NavBar 样式处理-----------------------------------------------------------
+// endregion
+
+// region NavBar 样式处理
+
 const ezNavVisible = computed<boolean>(() => vim.ctx().navigation().setting.ezNavEnabled)
+
+// endregion
 </script>
 
 <style scoped>

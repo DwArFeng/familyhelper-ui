@@ -32,16 +32,22 @@ defineOptions({
   name: 'NavBar',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const elementPlusStore = vim
   .ctx()
   .store()
   .vueStore<'element-plus', ElementPlusStore>('element-plus')
 
-// -----------------------------------------------------------全屏切换逻辑处理-----------------------------------------------------------
+// endregion
+
+// region 全屏切换逻辑处理
+
 function handleToggleFullScreen(): void {
   elementPlusStore.setFullScreen(!elementPlusStore.fullScreen)
 }
+
+// endregion
 </script>
 
 <style scoped>

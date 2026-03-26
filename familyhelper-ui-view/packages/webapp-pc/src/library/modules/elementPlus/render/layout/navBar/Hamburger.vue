@@ -29,16 +29,22 @@ defineOptions({
   name: 'HamburgerComponent',
 })
 
-// -----------------------------------------------------------Store 引入-----------------------------------------------------------
+// region Store 引入
+
 const elementPlusStore = vim
   .ctx()
   .store()
   .vueStore<'element-plus', ElementPlusStore>('element-plus')
 
-// -----------------------------------------------------------菜单可视化处理-----------------------------------------------------------
+// endregion
+
+// region 菜单可视化处理
+
 function toggleClick(): void {
   elementPlusStore.setMenuVisible(!elementPlusStore.menuVisible)
 }
+
+// endregion
 </script>
 
 <style scoped>
