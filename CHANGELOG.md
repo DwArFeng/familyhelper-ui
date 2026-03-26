@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/SystemRequirements.md。
+
 - `webapp-mobile` 子模块实现杂项一级菜单。
   - 实现文本二级菜单。
   - 实现外链二级菜单。
