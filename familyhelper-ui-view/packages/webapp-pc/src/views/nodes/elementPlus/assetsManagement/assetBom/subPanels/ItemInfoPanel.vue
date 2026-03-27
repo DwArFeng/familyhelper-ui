@@ -1,6 +1,6 @@
 <template>
   <div class="item-info-panel-container">
-    <div class="placeholder" v-if="itemId === ''">请选择项目</div>
+    <placeholder-panel v-if="itemId === ''" text="请选择项目" />
     <div v-else class="main-container" v-loading="loading">
       <header-layout-panel>
         <template v-slot:header>
@@ -84,7 +84,7 @@
                     <el-image class="image" fit="cover" :src="url" />
                   </el-carousel-item>
                 </el-carousel>
-                <span class="placeholder" v-else>暂无封面，请上传</span>
+                <placeholder-panel v-else text="暂无封面，请上传" />
               </div>
             </title-layout-panel>
           </div>
@@ -164,6 +164,7 @@ import { type FormItemRule } from 'element-plus'
 
 import { useIconfontButtonIcon } from '@/composables/icon.ts'
 
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
@@ -563,19 +564,6 @@ defineExpose({
   height: 100%;
   width: 100%;
   background: #ffffff;
-}
-
-.placeholder {
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-  font-weight: bold;
-  color: #bfbfbf;
-  user-select: none;
 }
 
 .main-container {

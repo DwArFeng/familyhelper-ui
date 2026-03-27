@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块功能优化。
+  - `src/views/nodes/elementPlus/assetsManagement/assetBom/subPanels/ItemInfoPanel.vue` 中占位符部分结构优化。
   - `src/views/nodes/elementPlus/settingrepo/settingNode/subPanels/FileListNodeSubEditPanel.vue` 样式优化。
 
 - `webapp-pc` 子模块文件优化注释、文档注释格式、代码换行格式。
