@@ -98,7 +98,7 @@
             <placeholder-panel v-else-if="itemTableCurrentRow.null_flag" text="无文件" />
             <placeholder-panel v-else-if="!canInspect" text="文件不可展示" />
             <div
-              class="placeholder-rich-block"
+              class="placeholder"
               v-else-if="!readonly && canEdit && isLargeFile && !userConfirmedLargeFile"
             >
               文件大小超过 5MB，编辑操作可能影响性能
@@ -108,7 +108,7 @@
               <el-link type="primary" @click="handleConfirmLargeFile"> 点击此处编辑 </el-link>
             </div>
             <div
-              class="placeholder-rich-block"
+              class="placeholder"
               v-else-if="!readonly && isLargeFile && !userConfirmedLargeFile"
             >
               该文件不可编辑，只可查看
@@ -119,7 +119,7 @@
               <br />
               <el-link type="primary" @click="handleConfirmLargeFile"> 点击此处查看 </el-link>
             </div>
-            <div class="placeholder-rich-block" v-else-if="isLargeFile && !userConfirmedLargeFile">
+            <div class="placeholder" v-else-if="isLargeFile && !userConfirmedLargeFile">
               文件大小超过 5MB，查看操作可能影响性能
               <br />
               如需继续查看，请点击下方链接
@@ -852,7 +852,7 @@ async function handleRemove(row: TableItem): Promise<void> {
   flex-direction: column;
 }
 
-.placeholder-rich-block {
+.placeholder {
   width: 100%;
   height: 100%;
   text-align: center;
