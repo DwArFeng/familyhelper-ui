@@ -20,6 +20,15 @@
           @onRoleDataUpdated="handleRoleDataUpdated('DEFAULT')"
         />
       </el-tab-pane>
+      <el-tab-pane label="保护器" name="protector">
+        <account-protector-info-panel
+          ref="accountProtectorInfoPanelRef"
+          mode="DEFAULT"
+          :account-id="accountId"
+          :readonly="readonly"
+          @onPanelFloatyButtonClicked="showPanelFloaty(2)"
+        />
+      </el-tab-pane>
     </el-tabs>
     <floaty-dialog
       v-model:visible="panelFloatyVisible"
@@ -54,6 +63,13 @@
         :account-id="accountId"
         @onRoleDataUpdated="handleRoleDataUpdated('FLOATY')"
       />
+      <account-protector-info-panel
+        v-if="panelFloatyType === 2"
+        ref="floatyAccountProtectorInfoPanelRef"
+        mode="FLOATY"
+        :account-id="accountId"
+        :readonly="readonly"
+      />
     </floaty-dialog>
   </div>
 </template>
@@ -73,6 +89,7 @@ import {
 import { useUserPreferenceFloatyDialog } from '@/components/elementPlus/dialog/floatyDialog/composables.ts'
 
 import AccountOverviewPanel from './AccountOverviewPanel.vue'
+import AccountProtectorInfoPanel from './AccountProtectorInfoPanel.vue'
 import AccountRolePanel from './AccountRolePanel.vue'
 
 defineOptions({
@@ -106,7 +123,7 @@ const emit = defineEmits<Emits>()
 
 // region Tab 页
 
-type TabsActiveName = 'overlook' | 'role'
+type TabsActiveName = 'overlook' | 'role' | 'protector'
 
 const tabsActiveName = ref<TabsActiveName>('overlook')
 
@@ -124,6 +141,12 @@ const accountRolePanelRef =
 const floatyAccountRolePanelRef = useTemplateRef<ComponentExposed<typeof AccountRolePanel>>(
   'floatyAccountRolePanelRef',
 )
+const accountProtectorInfoPanelRef = useTemplateRef<
+  ComponentExposed<typeof AccountProtectorInfoPanel>
+>('accountProtectorInfoPanelRef')
+const floatyAccountProtectorInfoPanelRef = useTemplateRef<
+  ComponentExposed<typeof AccountProtectorInfoPanel>
+>('floatyAccountProtectorInfoPanelRef')
 
 function handleAccountPropertyUpdated(mode: 'DEFAULT' | 'FLOATY'): void {
   emit('onAccountPropertyUpdated')
@@ -165,7 +188,7 @@ const {
   dockStatus: 0,
   contentOpacity: 100,
 })
-const panelFloatyType = ref<0 | 1>(0)
+const panelFloatyType = ref<0 | 1 | 2>(0)
 
 const panelFloatyTitle = computed(() => {
   switch (panelFloatyType.value) {
@@ -173,12 +196,14 @@ const panelFloatyTitle = computed(() => {
       return '概览浮动窗口'
     case 1:
       return '角色浮动窗口'
+    case 2:
+      return '保护器浮动窗口'
     default:
       return '浮动窗口'
   }
 })
 
-function showPanelFloaty(type: 0 | 1): void {
+function showPanelFloaty(type: 0 | 1 | 2): void {
   let changeFlag: boolean = false
   if (panelFloatyType.value !== type) {
     changeFlag = true
@@ -216,7 +241,7 @@ function handlePanelFloatyClosed(): void {
 type UserPreference = {
   panelFloaty: {
     dialog: FloatyDialogUserPreference
-    type: 0 | 1
+    type: 0 | 1 | 2
   }
 }
 
