@@ -83,6 +83,11 @@ const floatyToolStyle = computed(() => {
 
 const SAFE_DISTANCE: number = 2
 
+/** 自 mousedown 起指针位移小于该值（像素）时视为点击抖动，不进入拖拽。 */
+const MOVE_SLOP_PX: number = 5
+/** MOVE_SLOP_PX 的平方，用于避免计算平方根。 */
+const MOVE_SLOP_SQ: number = MOVE_SLOP_PX * MOVE_SLOP_PX
+
 const xCopy = ref<number>(0)
 const yCopy = ref<number>(0)
 const mouseXCopy = ref<number>(0)
@@ -363,8 +368,6 @@ function handleMoving(event: MouseEvent): void {
   // 阻止默认事件、并阻止事件穿透。
   event.preventDefault()
   event.stopPropagation()
-  // 置位调整状态。
-  adjustStatus.value = 2
   // 应用动画帧处理移动动作。
   requestAnimationFrame(() => {
     if (!containerRef.value) {
@@ -375,6 +378,16 @@ function handleMoving(event: MouseEvent): void {
     if (adjustStatus.value === 0) {
       return
     }
+    if (!dragSlopPassed.value) {
+      const dx = event.clientX - mouseXCopy.value
+      const dy = event.clientY - mouseYCopy.value
+      if (dx * dx + dy * dy < MOVE_SLOP_SQ) {
+        adjustStatus.value = 1
+        return
+      }
+      dragSlopPassed.value = true
+    }
+    adjustStatus.value = 2
     // 计算推断位置。
     const xInfer: number = event.clientX - mouseXCopy.value + xCopy.value
     const yInfer: number = event.clientY - mouseYCopy.value + yCopy.value
