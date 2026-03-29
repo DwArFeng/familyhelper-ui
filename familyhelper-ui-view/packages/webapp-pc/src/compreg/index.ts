@@ -92,12 +92,23 @@ async function init(ctx: VimApplicationContext): Promise<void> {
   // 等待所有 Promise 完成。
   await Promise.all(promises)
 
+  /*
+   * 对于 component，将其每个 key 都变为 kebab 格式，值保持不变。
+   */
+  function mapComponent(component: Component): Component {
+    const _component: Component = { '': component[''] }
+    for (const key in component) {
+      _component[toKebabCase(key)] = component[key]
+    }
+    return _component
+  }
+
   // 将 ComponentSetting 转换为 Component，并存入 compregComponents 对象。
   for (const compregSetting of compregSettings) {
     if (compregComponents[compregSetting.key]) {
       throw new Error(`Compreg 组件 ${compregSetting.key} 重复`)
     }
-    compregComponents[compregSetting.key] = compregSetting.component
+    compregComponents[compregSetting.key] = mapComponent(compregSetting.component)
   }
 
   // 设置状态。
