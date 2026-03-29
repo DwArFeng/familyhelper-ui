@@ -14,7 +14,7 @@
           v-else
           text="未配置有效的外链地址（请在路由 componentParam 中提供 url）"
         />
-        <float-tool :initial-dock-status="4" :initial-y="-200">
+        <float-tool :allowed-dock-statuses="[2, 4]" :initial-dock-status="4" :initial-y="-200">
           <div class="full-screen-tool" @click="toggleFullScreen()">
             <span class="float-tool__icon" aria-hidden="true" />
             <span class="float-tool__label">{{ fullScreen ? '退出全屏' : '全屏' }}</span>
@@ -141,6 +141,8 @@ onBeforeUnmount(() => {
 }
 
 .full-screen-tool {
+  width: 40px;
+  height: 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
