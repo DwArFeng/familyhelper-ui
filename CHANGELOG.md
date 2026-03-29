@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块功能新增。
+  - 增加 library 模块下的 `comvisual/util/nativeUi.ts` 工具，提供原生 UI 相关的工具方法。
+
 - `webapp-pc` 子模块组件优化。
   - 组件 `components/comvisual/widget/floatTool/FloatTool.vue` 的点击体验优化，点击时小范围的鼠标抖动不会再导致点击失效。
   - 组件 `components/comvisual/widget/floatTool/FloatTool.vue` 的 props 优化。
