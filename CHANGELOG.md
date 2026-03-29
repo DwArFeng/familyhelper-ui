@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块功能新增。
+  - 增加 library 模块下的 `comvisual/util/nativeUi.ts` 工具，提供原生 UI 相关的工具方法。
+
 - `webapp-mobile` 子模块页面优化。
   - 杂项 -> 外链主面板浮动工具优化。
 
