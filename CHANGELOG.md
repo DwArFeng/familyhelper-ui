@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块组件优化。
+  - 组件 `components/comvisual/widget/floatTool/FloatTool.vue` 的点击体验优化，点击时小范围的鼠标抖动不会再导致点击失效。
   - 组件 `components/comvisual/widget/floatTool/FloatTool.vue` 的 props 优化。
 
 - `webapp-pc` 子模块页面功能新增。
