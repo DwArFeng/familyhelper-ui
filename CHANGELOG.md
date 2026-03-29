@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件优化。
+  - 组件 `components/comvisual/widget/floatTool/FloatTool.vue` 的 props 优化。
+
 - `webapp-pc` 子模块页面功能新增。
   - 系统设置 -> 账户管理页面右侧账户编辑面板新增保护器页签，及其相关功能。
 
