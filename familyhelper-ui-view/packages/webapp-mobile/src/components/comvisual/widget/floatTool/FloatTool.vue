@@ -1,8 +1,10 @@
 <template>
   <div class="floaty-tool-container">
-    <div class="floaty-tool" ref="containerRef" :style="floatyToolStype">
+    <div class="floaty-tool" ref="containerRef" :style="floatyToolStyle">
       <div class="body-wrapper" @mousedown="handleStartMove">
-        <slot name="default"><div></div></slot>
+        <slot name="default" :dock-status="dockStatus" :adjust-status="adjustStatus">
+          <div></div>
+        </slot>
       </div>
     </div>
     <div class="global-mask below" v-if="adjustStatus === 1" />
@@ -13,7 +15,16 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 
-import { type DockStatus } from './types.ts'
+import {
+  type AdjustStatus,
+  type DockStatus,
+  type DockStatusBottom,
+  type DockStatusLeft,
+  type DockStatusRight,
+  type DockStatusTop,
+} from './types.ts'
+
+import { DEFAULT_ALLOWED_DOCK_STATUSES } from './constants.ts'
 
 defineOptions({
   name: 'FloatTool',
@@ -22,9 +33,7 @@ defineOptions({
 // region Props 定义
 
 type Props = {
-  height?: string
-  width?: string
-  allowFloat?: boolean
+  allowedDockStatuses?: DockStatus[]
   snapDistance?: number
   initialX?: number
   initialY?: number
@@ -32,9 +41,7 @@ type Props = {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  height: '45px',
-  width: '45px',
-  allowFloat: false,
+  allowedDockStatuses: () => [...DEFAULT_ALLOWED_DOCK_STATUSES],
   snapDistance: 20,
   initialX: 100,
   initialY: 100,
@@ -46,10 +53,9 @@ const props = withDefaults(defineProps<Props>(), {
 // region Slots 定义
 
 defineSlots<{
-  // 参数 props: {} 是 vue 约定的类型，故忽略类型警告。
   // 返回值 any 是 vue 约定的类型，故忽略类型警告。
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-empty-object-type
-  default?: (props: {}) => any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  default?: (props: { dockStatus: DockStatus; adjustStatus: AdjustStatus }) => any
 }>()
 
 // endregion
@@ -64,10 +70,8 @@ const dockStatus = ref<DockStatus>(props.initialDockStatus)
 
 // region 样式处理
 
-const floatyToolStype = computed(() => {
+const floatyToolStyle = computed(() => {
   return {
-    height: props.height,
-    width: props.width,
     left: `${x.value}px`,
     top: `${y.value}px`,
   }
@@ -88,15 +92,73 @@ const parentLeft = ref<number>(0)
 const parentHeight = ref<number>(0)
 const parentWidth = ref<number>(0)
 
-/*
- * adjustStatus 代码含义:
- *   0: 没有调整。
- *   1: 正在鼠标按下。
- *   2: 正在移动。
- */
-const adjustStatus = ref<0 | 1 | 2>(0)
+const adjustStatus = ref<AdjustStatus>(0)
+const dragSlopPassed = ref<boolean>(false)
 
 const containerRef = useTemplateRef<HTMLElement>('containerRef')
+
+function normalizeAllowedDockStatuses(list: readonly DockStatus[] | undefined): DockStatus[] {
+  const src = list ?? DEFAULT_ALLOWED_DOCK_STATUSES
+  if (src.length === 0) {
+    return [...DEFAULT_ALLOWED_DOCK_STATUSES]
+  }
+  return [...src]
+}
+
+function calculateDockStatus(
+  inferX: number,
+  inferY: number,
+  containerHeight: number,
+  containerWidth: number,
+  pTop: number,
+  pLeft: number,
+  pHeight: number,
+  pWidth: number,
+  allowed: readonly DockStatus[],
+  snapDistance: number,
+): DockStatus {
+  const allowedSet = new Set(allowed)
+  const distanceToTop = Math.max(0, inferY - pTop)
+  const distanceToLeft = Math.max(0, inferX - pLeft)
+  const distanceToBottom = Math.max(0, pHeight - containerHeight - inferY + pTop)
+  const distanceToRight = Math.max(0, pWidth - containerWidth - inferX + pLeft)
+  const edgeDistances: Record<
+    DockStatusTop | DockStatusLeft | DockStatusBottom | DockStatusRight,
+    number
+  > = {
+    1: distanceToTop,
+    2: distanceToLeft,
+    3: distanceToBottom,
+    4: distanceToRight,
+  }
+  const edgeStatuses = [1, 2, 3, 4] as const
+  const edgeCandidates: { status: DockStatus; d: number }[] = []
+  for (const status of edgeStatuses) {
+    if (allowedSet.has(status)) {
+      edgeCandidates.push({ status, d: edgeDistances[status] })
+    }
+  }
+  const floatAllowed = allowedSet.has(0)
+  if (edgeCandidates.length === 0) {
+    if (!floatAllowed) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
+    return 0
+  }
+  let best = edgeCandidates[0]
+  for (let i = 1; i < edgeCandidates.length; i++) {
+    const cur = edgeCandidates[i]!
+    if (cur.d < best.d) {
+      best = cur
+    } else if (cur.d === best.d && cur.status < best.status) {
+      best = cur
+    }
+  }
+  if (floatAllowed && best.d > snapDistance) {
+    return 0
+  }
+  return best.status
+}
 
 function calculatePosition(current: number, min: number, max: number): number {
   // 如果 result 大于等于 min 且 result 小于等于 max，则返回 result。
@@ -141,8 +203,16 @@ function initParams(): void {
   if (initialY < parentTop.value) {
     initialY = SAFE_DISTANCE
   }
-  // 计算停靠状态。
-  dockStatus.value = props.initialDockStatus
+  const allowed = normalizeAllowedDockStatuses(props.allowedDockStatuses)
+  let nextDock = props.initialDockStatus
+  if (!allowed.includes(nextDock)) {
+    const first = allowed[0]
+    if (first === undefined) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
+    nextDock = first
+  }
+  dockStatus.value = nextDock
   // 根据停靠状态计算位置。
   switch (dockStatus.value) {
     // 停靠状态：浮动。
@@ -281,6 +351,7 @@ function handleStartMove(event: MouseEvent): void {
   // 设置位置副本。
   xCopy.value = x.value
   yCopy.value = y.value
+  dragSlopPassed.value = false
   // 置位调整状态。
   adjustStatus.value = 1
   // 为 document 增加相关侦听。
@@ -289,43 +360,6 @@ function handleStartMove(event: MouseEvent): void {
 }
 
 function handleMoving(event: MouseEvent): void {
-  function calculateDockStatus(
-    inferX: number,
-    inferY: number,
-    containerHeight: number,
-    containerWidth: number,
-    parentTop: number,
-    parentLeft: number,
-    parentHeight: number,
-    parentWidth: number,
-  ): DockStatus {
-    // 顶部，左侧，底部，右侧的距离。
-    const distanceToTop = Math.max(0, inferY - parentTop)
-    const distanceToLeft = Math.max(0, inferX - parentLeft)
-    const distanceToBottom = Math.max(0, parentHeight - containerHeight - inferY + parentTop)
-    const distanceToRight = Math.max(0, parentWidth - containerWidth - inferX + parentLeft)
-    // 计算距离最小的边。
-    const minDistance = Math.min(distanceToTop, distanceToLeft, distanceToBottom, distanceToRight)
-    // 如果距离最小的边大于吸附距离，且允许浮动，则返回浮动状态。
-    if (minDistance > props.snapDistance && props.allowFloat) {
-      return 0
-    }
-    // 根据距离最小的边返回对应的停靠状态。
-    switch (minDistance) {
-      case distanceToTop:
-        return 1
-      case distanceToLeft:
-        return 2
-      case distanceToBottom:
-        return 3
-      case distanceToRight:
-        return 4
-      // 该情况理论上不应该发生，但为了代码健壮性，仍然进行处理。
-      default:
-        throw new Error('不应该执行到此处，请联系开发人员')
-    }
-  }
-
   // 阻止默认事件、并阻止事件穿透。
   event.preventDefault()
   event.stopPropagation()
@@ -357,6 +391,7 @@ function handleMoving(event: MouseEvent): void {
     parentLeft.value = parent.offsetLeft
     parentHeight.value = parent.clientHeight
     parentWidth.value = parent.clientWidth
+    const allowed = normalizeAllowedDockStatuses(props.allowedDockStatuses)
     // 计算停靠状态。
     dockStatus.value = calculateDockStatus(
       xInfer,
@@ -367,6 +402,8 @@ function handleMoving(event: MouseEvent): void {
       parentLeft.value,
       parentHeight.value,
       parentWidth.value,
+      allowed,
+      props.snapDistance,
     )
     // 根据停靠状态计算位置。
     switch (dockStatus.value) {
@@ -432,16 +469,26 @@ function handleStopMove(event: MouseEvent): void {
   event.stopPropagation()
   // 复位调整状态。
   adjustStatus.value = 0
+  dragSlopPassed.value = false
   // 为 document 移除相关侦听。
   document.removeEventListener('mousemove', handleMoving)
   document.removeEventListener('mouseup', handleStopMove)
 }
 
 watch(
-  () => [props.height, props.width],
+  () => props.allowedDockStatuses,
   () => {
+    const allowed = normalizeAllowedDockStatuses(props.allowedDockStatuses)
+    if (!allowed.includes(dockStatus.value)) {
+      const first = allowed[0]
+      if (first === undefined) {
+        throw new Error('不应该执行到此处，请联系开发人员')
+      }
+      dockStatus.value = first
+    }
     updateParams()
   },
+  { deep: true },
 )
 
 onMounted(() => {
@@ -453,6 +500,7 @@ onMounted(() => {
 // region 全局（窗体）尺寸检测
 
 let bodyResizeObserver: ResizeObserver | null = null
+let toolResizeObserver: ResizeObserver | null = null
 
 function addBodyResizeListener(): void {
   if (bodyResizeObserver !== null) {
@@ -485,15 +533,40 @@ function removeBodyResizeListener(): void {
     return
   }
   bodyResizeObserver.unobserve(document.body)
+  bodyResizeObserver.disconnect()
   bodyResizeObserver = null
+}
+
+function addToolResizeListener(): void {
+  if (toolResizeObserver !== null) {
+    return
+  }
+  const el = containerRef.value
+  if (!el) {
+    return
+  }
+  toolResizeObserver = new ResizeObserver(() => {
+    updateParams()
+  })
+  toolResizeObserver.observe(el)
+}
+
+function removeToolResizeListener(): void {
+  if (toolResizeObserver === null) {
+    return
+  }
+  toolResizeObserver.disconnect()
+  toolResizeObserver = null
 }
 
 onMounted(() => {
   addBodyResizeListener()
+  addToolResizeListener()
 })
 
 onUnmounted(() => {
   removeBodyResizeListener()
+  removeToolResizeListener()
 })
 
 // endregion
@@ -513,6 +586,8 @@ onUnmounted(() => {
 
 .floaty-tool {
   position: fixed;
+  width: max-content;
+  height: max-content;
   border-radius: 8px;
   user-select: none;
   box-sizing: border-box;
@@ -538,11 +613,6 @@ onUnmounted(() => {
   opacity: 1;
   background: rgba(255, 255, 255, 0.96);
   pointer-events: all;
-}
-
-.body-wrapper {
-  width: 100%;
-  height: 100%;
 }
 
 .global-mask {

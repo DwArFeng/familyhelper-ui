@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块组件优化。
+  - 组件 `components/comvisual/widget/floatTool/FloatTool.vue` 的 props 优化。
+
 - `webapp-pc` 子模块 `comvisual` 可视化器实现系统设置一级菜单。
   - 实现账户管理二级菜单。
   - 实现账户安全二级菜单。
