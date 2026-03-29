@@ -52,10 +52,15 @@ const props = withDefaults(defineProps<Props>(), {
 
 // region Slots 定义
 
+type DefaultSlotProps = {
+  dockStatus: DockStatus
+  adjustStatus: AdjustStatus
+}
+
 defineSlots<{
   // 返回值 any 是 vue 约定的类型，故忽略类型警告。
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  default?: (props: { dockStatus: DockStatus; adjustStatus: AdjustStatus }) => any
+  default?: (props: DefaultSlotProps) => any
 }>()
 
 // endregion
