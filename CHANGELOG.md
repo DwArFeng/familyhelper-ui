@@ -4,6 +4,16 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块 `comvisual` 可视化器实现系统设置一级菜单。
+  - 实现账户管理二级菜单。
+  - 实现账户安全二级菜单。
+  - 实现角色管理二级菜单。
+  - 实现权限作用域管理二级菜单。
+  - 实现权限分组管理二级菜单。
+  - 实现权限节点管理二级菜单。
+  - 实现账户保护器支持二级菜单。
+  - 实现权限过滤器支持二级菜单。
+
 - `webapp-pc` 子模块组件新增。
   - 组件 `comvisual/card/cardPanel/CardPanel.vue` 新增。
   - 组件 `comvisual/dialog/floatyDialog/FloatyDialog.vue` 新增。
