@@ -69,6 +69,17 @@ const props = withDefaults(defineProps<Props>(), {
 
 // endregion
 
+// region Slots 定义
+
+defineSlots<{
+  // 参数 props: {} 是 vue 约定的类型，故忽略类型警告。
+  // 返回值 any 是 vue 约定的类型，故忽略类型警告。
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-empty-object-type
+  default?: (props: {}) => any
+}>()
+
+// endregion
+
 // region 样式计算
 
 const lightStyle = computed(() => {

@@ -4,6 +4,32 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块组件新增。
+  - 组件 `comvisual/card/cardPanel/CardPanel.vue` 新增。
+  - 组件 `comvisual/dialog/floatyDialog/FloatyDialog.vue` 新增。
+  - 组件 `comvisual/dialog/maintainDialog/MaintainDialog.vue` 新增。
+  - 组件 `comvisual/dialog/modalDialog/ModalDialog.vue` 新增。
+  - 组件 `comvisual/feedback/loadingOverlay/LoadingOverlay.vue` 新增。
+  - 组件 `comvisual/form/dateTimeInput/DateTimeInput.vue` 新增。
+  - 组件 `comvisual/form/divider/SectionDivider.vue` 新增。
+  - 组件 `comvisual/form/divider/VerticalDivider.vue` 新增。
+  - 组件 `comvisual/form/inputGroup/InputGroup.vue` 新增。
+  - 组件 `comvisual/form/nativeButton/NativeButton.vue` 新增。
+  - 组件 `comvisual/form/nativeCheckbox/NativeCheckbox.vue` 新增。
+  - 组件 `comvisual/form/nativeForm/NativeForm.vue` 新增。
+  - 组件 `comvisual/form/nativeForm/NativeFormItem.vue` 新增。
+  - 组件 `comvisual/form/nativeLink/NativeLink.vue` 新增。
+  - 组件 `comvisual/form/nativeSelect/NativeSelect.vue` 新增。
+  - 组件 `comvisual/form/nativeSwitch/NativeSwitch.vue` 新增。
+  - 组件 `comvisual/layout/headerLayoutPanel/HeaderLayoutPanel.vue` 新增。
+  - 组件 `comvisual/table/pagingTablePanel/PagingTableCellHost.vue` 新增。
+  - 组件 `comvisual/table/pagingTablePanel/PagingTableColumn.vue` 新增。
+  - 组件 `comvisual/table/pagingTablePanel/PagingTablePanel.vue` 新增。
+  - 组件 `comvisual/tabs/verticalTabs/VerticalTabPane.vue` 新增。
+  - 组件 `comvisual/tabs/verticalTabs/VerticalTabs.vue` 新增。
+  - 组件 `comvisual/tree/lazySearchTreePanel/LazySearchTreePanel.vue` 新增。
+  - 组件 `comvisual/tree/lazySearchTreePanel/LazyTreeNodeRow.vue` 新增。
+
 - `webapp-mobile` 子模块功能新增。
   - 增加 library 模块下的 `comvisual/util/nativeUi.ts` 工具，提供原生 UI 相关的工具方法。
 
