@@ -10,6 +10,9 @@
 
 ### Bug 修复
 
+- `webapp-mobile` 子模块 bug 修复。
+  - 修复 `src/compreg/index.ts` 加载 `compregComponents` 时，未正确处理 `Component` 对象键的格式问题。
+
 - `webapp-pc` 子模块 bug 修复。
   - 修复 `src/compreg/index.ts` 加载 `compregComponents` 时，未正确处理 `Component` 对象键的格式问题。
 
