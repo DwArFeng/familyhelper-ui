@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块优化。
+  - 新增 `src/composables/userPreference.ts` 用户偏好 Composition API。
+
 - `webapp-mobile` 子模块组件新增。
   - 组件 `comvisual/card/cardPanel/CardPanel.vue` 新增。
   - 组件 `comvisual/dialog/floatyDialog/FloatyDialog.vue` 新增。
