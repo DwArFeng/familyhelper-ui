@@ -1,4 +1,4 @@
-// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import { type VNode } from 'vue'
 
