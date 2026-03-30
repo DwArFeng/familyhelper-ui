@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 export type ManagedBean<PT> = {
   key: string
   label: string

@@ -1,4 +1,4 @@
-// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import { type ComputedRef, type Ref } from 'vue'
 import { computed, ref } from 'vue'

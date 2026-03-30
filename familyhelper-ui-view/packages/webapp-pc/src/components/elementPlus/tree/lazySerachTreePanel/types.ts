@@ -1,3 +1,5 @@
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
+
 export type HybridBeanMap<T, CT> = {
   type: string
   beanMap: (t: T) => CT
