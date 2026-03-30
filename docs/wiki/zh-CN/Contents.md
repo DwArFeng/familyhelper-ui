@@ -22,3 +22,8 @@
 ### 配置
 
 - [Conf Directory](./ConfDirectory.md) - 配置目录说明，详细说明如何配置本项目，即 `conf/` 目录下的内容。
+
+## 前端 view 模块
+
+- [Familyhelper UI View](./FamilyhelperUiView.md) - 前端 view 模块（monorepo）导读，
+  说明模块定位、包划分与后续文档阅读顺序，细节请参阅该目录内 `README.md`。
