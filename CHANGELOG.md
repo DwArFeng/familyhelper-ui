@@ -24,7 +24,8 @@
 
 ### Bug 修复
 
-- (无)
+- `webapp-pc` 子模块 `comvisual` 组件 bug 修复。
+  - `FloatTool` 组件停靠状态判断 switch 语句错误常量使用。
 
 ### 功能移除
 
