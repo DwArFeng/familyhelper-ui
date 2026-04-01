@@ -85,6 +85,8 @@ export type NavigationStore = {
   removeEzNavNode: (nodeKey: string) => void
   clearActiveEzNavNodes: () => void
   clearAllEzNavNodes: () => void
+  getModalOverrideInfo: () => ModalOverrideInfo | null
+  setModalOverrideInfo: (modalOverrideInfo: ModalOverrideInfo) => void
 }
 
 export type Modal = {
@@ -111,6 +113,11 @@ export type NavigationKey = {
 }
 
 export type NavigationKeyType = 'default' | 'custom'
+
+export type ModalOverrideInfo = {
+  navigationKey: NavigationKey
+  override: boolean
+}
 
 export type EzNavNodeMeta = { query: object; params: object }
 
@@ -451,6 +458,48 @@ function mayPutEzNavActiveNodeKey(nodeKey: string): void {
   _ezNavActiveNodeKeys.value.push(nodeKey)
 }
 
+// 模态覆盖信息。
+function getModalOverrideInfo(): ModalOverrideInfo | null {
+  const modalOverrideInfoJson = localStorage.getItem(
+    NAVIGATION_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY,
+  )
+  if (modalOverrideInfoJson === null || modalOverrideInfoJson === undefined) {
+    return null
+  }
+
+  try {
+    // 从 JSON 中反序列化得到的对象不可靠，应先校验结构。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const modalOverrideInfo: any = JSON.parse(modalOverrideInfoJson)
+    if (!modalOverrideInfo || typeof modalOverrideInfo !== 'object') {
+      return null
+    }
+    if (typeof modalOverrideInfo.override !== 'boolean') {
+      return null
+    }
+    if (!modalOverrideInfo.override) {
+      return null
+    }
+    return modalOverrideInfo as ModalOverrideInfo
+  } catch {
+    return null
+  }
+}
+
+function setModalOverrideInfo(modalOverrideInfo: ModalOverrideInfo): void {
+  try {
+    window.localStorage.setItem(
+      NAVIGATION_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY,
+      JSON.stringify({
+        navigationKey: modalOverrideInfo.navigationKey,
+        override: modalOverrideInfo.override,
+      }),
+    )
+  } catch {
+    window.localStorage.removeItem(NAVIGATION_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY)
+  }
+}
+
 /**
  * 提供 Store Setup。
  *
@@ -493,6 +542,8 @@ function provideStoreSetup(): StoreSetup {
     removeEzNavNode,
     clearActiveEzNavNodes,
     clearAllEzNavNodes,
+    getModalOverrideInfo,
+    setModalOverrideInfo,
   })
 }
 
@@ -507,6 +558,8 @@ export type EzNavPersistenceData = {
   nodeBackMap?: Record<string, string>
 }
 
+// Navigation 模态覆盖信息本地存储键。
+const NAVIGATION_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY = 'store.modal_override_info.navigation'
 // 导航.配置仓库类型。
 const NAVIGATION_SETTINGREPO_CATEGORY: string = 'framework.mobile.navigation'
 // 导航.配置仓库参数: key。
@@ -702,8 +755,11 @@ async function loadModal(): Promise<void> {
   }
 
   try {
+    // 优先尝试从本地覆盖信息中读取 Navigation Key。
+    const navigationKey: NavigationKey =
+      loadNavigationKeyFromLocalStorage() ?? (await loadNavigationKeyFromSettingrepo())
     // 获取模态。
-    const modal: Modal = await loadModal0()
+    const modal: Modal = await loadModal0(navigationKey)
     // 更新模态。
     updateModal(modal)
   } catch (e: unknown) {
@@ -728,23 +784,35 @@ async function loadModal(): Promise<void> {
   }
 }
 
-async function loadModal0(): Promise<Modal> {
-  // 该方法用于验证 NavigationKey 对象的格式，接受任何类型的参数，故忽略类型警告。
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  function validateNavigationKey(obj: any): void {
-    if (!obj || typeof obj !== 'object') {
-      throw new Error('NavigationKey 格式不正确')
-    }
-    if (!obj.type || (obj.type !== 'default' && obj.type !== 'custom')) {
-      throw new Error('NavigationKey.type 格式不正确')
-    }
-    if (obj.type === 'custom') {
-      if (!obj.id || typeof obj.id !== 'string') {
-        throw new Error('NavigationKey.id 格式不正确')
-      }
-    }
+function loadNavigationKeyFromLocalStorage(): NavigationKey | null {
+  const modalOverrideInfoJson = localStorage.getItem(
+    NAVIGATION_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY,
+  )
+  if (modalOverrideInfoJson === null || modalOverrideInfoJson === undefined) {
+    return null
   }
 
+  try {
+    // 从 JSON 中反序列化得到的对象不可靠，应先校验结构。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const modalOverrideInfo: any = JSON.parse(modalOverrideInfoJson)
+    if (!modalOverrideInfo || typeof modalOverrideInfo !== 'object') {
+      return null
+    }
+    if (typeof modalOverrideInfo.override !== 'boolean') {
+      return null
+    }
+    if (!modalOverrideInfo.override) {
+      return null
+    }
+    validateNavigationKey(modalOverrideInfo.navigationKey)
+    return modalOverrideInfo.navigationKey as NavigationKey
+  } catch {
+    return null
+  }
+}
+
+async function loadNavigationKeyFromSettingrepo(): Promise<NavigationKey> {
   // 获取 Navigation Key。
   const navigationKeyTextNode: TextNode | null = (await resolveResponse(
     textNodeOperateInspect({
@@ -757,7 +825,26 @@ async function loadModal0(): Promise<Modal> {
   }
   const navigationKey: NavigationKey = JSON.parse(navigationKeyTextNode.value)
   validateNavigationKey(navigationKey)
+  return navigationKey
+}
 
+// 该方法用于验证 NavigationKey 对象的格式，接受任何类型的参数，故忽略类型警告。
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function validateNavigationKey(obj: any): void {
+  if (!obj || typeof obj !== 'object') {
+    throw new Error('NavigationKey 格式不正确')
+  }
+  if (!obj.type || (obj.type !== 'default' && obj.type !== 'custom')) {
+    throw new Error('NavigationKey.type 格式不正确')
+  }
+  if (obj.type === 'custom') {
+    if (!obj.id || typeof obj.id !== 'string') {
+      throw new Error('NavigationKey.id 格式不正确')
+    }
+  }
+}
+
+async function loadModal0(navigationKey: NavigationKey): Promise<Modal> {
   // 加载 Navigation。
   if (navigationKey.type === 'default') {
     return loadModalDefault()
