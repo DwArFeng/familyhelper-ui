@@ -6,7 +6,7 @@ import {
   type RenderType,
   type ResponseMeta,
   type VimLibraryModule,
-  type Visualizer,
+  type VisualizerSetting,
 } from '@/library/types.ts'
 
 import { type VNode } from 'vue'
@@ -22,41 +22,46 @@ import PageError from './render/pageError/PageError.vue'
 
 const vimLibraryModule: VimLibraryModule = {
   init,
-  provideVisualizer,
+  provideVisualizerSetting,
 }
 
 function init(): void {}
 
-function provideVisualizer(): Visualizer {
+function provideVisualizerSetting(): VisualizerSetting {
   return {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    notify(type: NotifyType, ...args: any[]): void {
-      switch (type) {
-        case 'apiResponseBad':
-          notifyApiResponseBad(args[0] as ResponseMeta)
-          break
-        case 'apiResponseError':
-          notifyApiResponseError(args[0] as Error)
-          break
-        case 'errorMessage':
-          notifyErrorMessage(args[0] as string)
-          break
-      }
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    render(type: RenderType, ...args: any[]): VNode {
-      switch (type) {
-        case 'login':
-          return renderLogin(args[0] as Hyperscript)
-        case 'layout':
-          return renderLayout(args[0] as Hyperscript)
-        case 'pageForbidden':
-          return renderPageForbidden(args[0] as Hyperscript)
-        case 'pageNotFound':
-          return renderPageNotFound(args[0] as Hyperscript)
-        case 'pageError':
-          return renderPageError(args[0] as Hyperscript)
-      }
+    name: 'Comvisual',
+    description: '基于原生 Web 组件的轻量可视化方案',
+    exampleDisplay: { label: '菜单标签' },
+    visualizer: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      notify(type: NotifyType, ...args: any[]): void {
+        switch (type) {
+          case 'apiResponseBad':
+            notifyApiResponseBad(args[0] as ResponseMeta)
+            break
+          case 'apiResponseError':
+            notifyApiResponseError(args[0] as Error)
+            break
+          case 'errorMessage':
+            notifyErrorMessage(args[0] as string)
+            break
+        }
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      render(type: RenderType, ...args: any[]): VNode {
+        switch (type) {
+          case 'login':
+            return renderLogin(args[0] as Hyperscript)
+          case 'layout':
+            return renderLayout(args[0] as Hyperscript)
+          case 'pageForbidden':
+            return renderPageForbidden(args[0] as Hyperscript)
+          case 'pageNotFound':
+            return renderPageNotFound(args[0] as Hyperscript)
+          case 'pageError':
+            return renderPageError(args[0] as Hyperscript)
+        }
+      },
     },
   }
 }

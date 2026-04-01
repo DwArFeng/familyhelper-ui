@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 import { pad } from '@dwarfeng/familyhelper-ui-component-util/src/util/number.ts'
 

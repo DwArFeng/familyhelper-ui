@@ -84,14 +84,15 @@ function updateModal(visualizerKey: string | null): void {
   if (!visualizerKey) {
     _modal.value = {
       visualizerKey: ctx.library().setting.defaultVisualizerKey,
-      visualizer: ctx.library().defaultVisualizer(),
+      visualizer: ctx.library().defaultVisualizerInfo().visualizer,
     }
   } else {
-    const visualizer: Visualizer | null = vim.ctx().library().visualizer(visualizerKey)
+    const visualizer: Visualizer | null =
+      vim.ctx().library().visualizerInfo(visualizerKey)?.visualizer ?? null
     if (!visualizer) {
       _modal.value = {
         visualizerKey: ctx.library().setting.defaultVisualizerKey,
-        visualizer: ctx.library().defaultVisualizer(),
+        visualizer: ctx.library().defaultVisualizerInfo().visualizer,
       }
     } else {
       _modal.value = {
@@ -209,14 +210,17 @@ async function loadModal(): Promise<void> {
     updateModal(key)
   } catch (e: unknown) {
     // 输出错误信息。
-    ctx.library().defaultVisualizer().notify('errorMessage', '加载 Visualizer Key 失败')
+    ctx
+      .library()
+      .defaultVisualizerInfo()
+      .visualizer.notify('errorMessage', '加载 Visualizer Key 失败')
     let message: string
     if (e instanceof Error) {
       message = e.message
     } else {
       message = '未知错误'
     }
-    ctx.library().defaultVisualizer().notify('errorMessage', message)
+    ctx.library().defaultVisualizerInfo().visualizer.notify('errorMessage', message)
     // 更新模态。
     updateModal(null)
   } finally {

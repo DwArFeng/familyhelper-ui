@@ -1,7 +1,10 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import { type VimComponent, type VimComponentModule } from '@/vim/types.ts'
+
 import { type VNode } from 'vue'
+
+import { type JsonObject } from '@dwarfeng/familyhelper-ui-component-util/src/util/json.ts'
 
 // region VIM 组件定义
 
@@ -19,14 +22,14 @@ export interface VimLibrary extends VimComponent {
   setting: Readonly<LibrarySetting>
 
   /**
-   * 默认的 Visualizer。
+   * 默认的 Visualizer 信息。
    *
-   * 该字段对应的值是一个函数，调用后返回一个 Visualizer 对象。
+   * 该字段对应的值是一个函数，调用后返回一个 VisualizerInfo 对象。
    *
    * 该字段对应的值只能在 VIM 初始化完成后调用，
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
    */
-  defaultVisualizer: () => Visualizer
+  defaultVisualizerInfo: () => VisualizerInfo
 
   /**
    * Visualizer key 列表。
@@ -36,27 +39,27 @@ export interface VimLibrary extends VimComponent {
    * 该字段对应的值只能在 VIM 初始化完成后调用，
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
    */
-  visualizerKeys: () => Readonly<string[]>
+  visualizerInfoKeys: () => Readonly<string[]>
 
   /**
-   * Visualizer 列表。
+   * Visualizer 信息列表。
    *
-   * 该字段对应的值是一个函数，调用后返回一个只读的 Visualizer[]，表示所有可用的 Visualizer。
+   * 该字段对应的值是一个函数，调用后返回一个只读的 VisualizerInfo[]，表示所有可用的 Visualizer 信息。
    *
    * 该字段对应的值只能在 VIM 初始化完成后调用，
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
    */
-  visualizers: () => Readonly<Visualizer[]>
+  visualizerInfos: () => Readonly<VisualizerInfo[]>
 
   /**
-   * 根据指定的 key 获取 Visualizer。
+   * 根据指定的 key 获取 Visualizer 信息。
    *
-   * 该字段对应的值是一个函数，接受 VimLibraryModule 的 key，返回对应的 Visualizer 对象或 null。
+   * 该字段对应的值是一个函数，接受 VimLibraryModule 的 key，返回对应的 VisualizerInfo 对象或 null。
    *
    * 该字段对应的值只能在 VIM 初始化完成后调用，
    * 即在 `VimApplicationContext.status` 为 `initialized` 时调用。
    */
-  visualizer: (key: string) => Visualizer | null
+  visualizerInfo: (key: string) => VisualizerInfo | null
 }
 
 /**
@@ -72,7 +75,7 @@ export type LibrarySetting = {
    * 模块名称与 `./modules` 目录的文件名的 `kebab-case` 形式相同。
    *
    * 该值对应的模块必须是一个合法的 `VimLibraryModule`，
-   * 且 `provideVisualizer()` 方法必须返回一个非 `null` 的值。
+   * 且 `provideVisualizerSetting()` 方法必须返回一个非 `null` 的值。
    *
    * 例如：
    * ```
@@ -87,6 +90,33 @@ export type LibrarySetting = {
   defaultVisualizerKey: string
 }
 
+/**
+ * Visualizer 信息。
+ *
+ * 该类型由 `VisualizerSetting` 经 library 聚合转换得到；其中 `exampleDisplay` 的顶层键会被规范为 kebab-case。
+ */
+export type VisualizerInfo = {
+  /**
+   * 名称。
+   */
+  name: string
+
+  /**
+   * 描述。
+   */
+  description: string
+
+  /**
+   * 示例显示配置。
+   */
+  exampleDisplay: JsonObject
+
+  /**
+   * Visualizer 实现。
+   */
+  visualizer: Visualizer
+}
+
 // endregion
 
 // region 模块定义
@@ -96,14 +126,41 @@ export type LibrarySetting = {
  */
 export interface VimLibraryModule extends VimComponentModule {
   /**
-   * 提供 Visualizer。
+   * 提供 Visualizer 设置。
    *
-   * 当模块可以提供可视化方案时，返回一个非 null 的 Visualizer 对象；
+   * 当模块可以提供可视化方案时，返回一个非 null 的 VisualizerSetting 对象；
    * 当模块不可以提供可视化方案时，返回 null。
    *
-   * @returns Visualizer 对象或 null。
+   * @returns VisualizerSetting 对象或 null。
    */
-  provideVisualizer(): Visualizer | null
+  provideVisualizerSetting(): VisualizerSetting | null
+}
+
+/**
+ * Visualizer 设置。
+ *
+ * 模块通过 `provideVisualizerSetting()` 提供；字段语义与 {@link VisualizerInfo} 对应，`exampleDisplay` 的键可使用 camelCase，由 library 在聚合时转换。
+ */
+export type VisualizerSetting = {
+  /**
+   * Visualizer 实现。
+   */
+  visualizer: Visualizer
+
+  /**
+   * 名称。
+   */
+  name: string
+
+  /**
+   * 描述。
+   */
+  description: string
+
+  /**
+   * 示例显示配置（JSON 对象）。
+   */
+  exampleDisplay: JsonObject
 }
 
 /**

@@ -11,22 +11,19 @@ import {
 import { computed, type ComputedRef, ref } from 'vue'
 
 import {
-  login as apiLogin,
   type LoginInfo,
   type LoginResult,
+} from '@dwarfeng/familyhelper-ui-component-api/src/api/system/login.ts'
+import {
+  login as apiLogin,
   logoutMe as apiLogoutMe,
   postponeMe as apiPostponeMe,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/login.ts'
-import {
-  inspectPermissionOfMe as apiInspectPermissionOfMe,
-  type PermissionInspectResult,
-} from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
+import { type PermissionInspectResult } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
+import { inspectPermissionOfMe as apiInspectPermissionOfMe } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/permission.ts'
 import { currentDate } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/time.ts'
-import {
-  defaultResponseBadHandler,
-  resolveResponse,
-  type ResponseBadHandler,
-} from '@/util/response.ts'
+import { type ResponseBadHandler } from '@/util/response.ts'
+import { defaultResponseBadHandler, resolveResponse } from '@/util/response.ts'
 
 import { currentTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
 import { uuid } from '@dwarfeng/familyhelper-ui-component-util/src/util/uuid.ts'
@@ -243,7 +240,10 @@ function loginCheck(): void {
     if (!vueRouter.currentRoute.value.name) {
       vueRouter.push({ name: 'vim.login' }).then(() => {})
     } else if (vueRouter.currentRoute.value.name !== 'vim.login') {
-      ctx.library().defaultVisualizer().notify('errorMessage', '登录状态异常，请重新登录')
+      ctx
+        .library()
+        .defaultVisualizerInfo()
+        .visualizer.notify('errorMessage', '登录状态异常，请重新登录')
       vueRouter.push({ name: 'vim.login' }).then(() => {})
     }
   }
@@ -255,7 +255,10 @@ function loginCheck(): void {
           throw new Error('不应该执行到此处, 请联系开发人员')
         }
         if (responseMeta.code === 90) {
-          ctx.library().defaultVisualizer().notify('errorMessage', '登录状态异常，请重新登录')
+          ctx
+            .library()
+            .defaultVisualizerInfo()
+            .visualizer.notify('errorMessage', '登录状态异常，请重新登录')
         } else {
           defaultResponseBadHandler.handle(responseMeta)
         }

@@ -11,7 +11,7 @@ import { type LibrarySetting } from '@/library/types.ts'
  * 模块名称与 `./modules` 目录的文件名的 `kebab-case` 形式相同。
  *
  * 该值对应的模块必须是一个合法的 `VimLibraryModule`，
- * 且 `provideVisualizer()` 方法必须返回一个非 `null` 的值。
+ * 且 `provideVisualizerSetting()` 方法必须返回一个非 `null` 的值。
  *
  * 例如：
  * ```

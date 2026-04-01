@@ -27,7 +27,7 @@ import vim from '@/vim'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
-import { computed, type ComputedRef, onMounted, onUnmounted, ref } from 'vue'
+import { ref, onMounted, onUnmounted, computed, type ComputedRef } from 'vue'
 
 defineOptions({
   name: 'AvatarComponent',

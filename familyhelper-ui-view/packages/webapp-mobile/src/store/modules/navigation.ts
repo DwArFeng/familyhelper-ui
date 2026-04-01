@@ -765,14 +765,14 @@ async function loadModal(): Promise<void> {
     updateModal(modal)
   } catch (e: unknown) {
     // 输出错误信息。
-    ctx.library().defaultVisualizer().notify('errorMessage', '加载 Navigation 失败')
+    ctx.library().defaultVisualizerInfo().visualizer.notify('errorMessage', '加载 Navigation 失败')
     let message: string
     if (e instanceof Error) {
       message = e.message
     } else {
       message = '未知错误'
     }
-    ctx.library().defaultVisualizer().notify('errorMessage', message)
+    ctx.library().defaultVisualizerInfo().visualizer.notify('errorMessage', message)
     // 更新模态。
     updateModal(null)
   } finally {
