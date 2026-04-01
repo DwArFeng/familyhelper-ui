@@ -11,13 +11,13 @@
           </svg>
         </span>
         <span class="menu-text">
-          {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+          {{ parseLabel(props.node.display) }}
         </span>
         <span class="submenu-arrow" :class="{ 'is-open': isOpen }">▶</span>
       </div>
       <div class="submenu-content" v-show="isOpen">
         <sidebar-item
-          v-for="subNode in children.filter((f) => f.menu.shown)"
+          v-for="subNode in children.filter((f: NodeInfo) => f.menu.shown)"
           :key="subNode.key"
           :node="subNode"
           @select="handleSelect"
@@ -34,7 +34,7 @@
         </svg>
       </span>
       <span class="menu-text">
-        {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+        {{ parseLabel(props.node.display) }}
       </span>
     </div>
   </div>
@@ -49,11 +49,7 @@ import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, ref } from 'vue'
 
-// region Router 引入
-
-const router = vim.ctx().router().vueRouter()
-
-// endregion
+import { parseLabel } from '@/library/modules/comvisual/util/display.ts'
 
 // region Store 引入
 
@@ -77,14 +73,6 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   select: [nodeKey: string]
 }>()
-
-// endregion
-
-// region 可视化键处理
-
-const visualizerKey = computed<string>(
-  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
-)
 
 // endregion
 

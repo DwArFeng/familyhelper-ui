@@ -6,12 +6,12 @@
           <menu-icon />
         </el-icon>
         <span>
-          {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+          {{ parseLabel(props.node.display) }}
         </span>
       </template>
       <template v-slot:default>
         <sidebar-item
-          v-for="subNode in children.filter((f) => f.menu.shown)"
+          v-for="subNode in children.filter((f: NodeInfo) => f.menu.shown)"
           :key="subNode.key"
           :node="subNode"
         />
@@ -22,7 +22,7 @@
         <menu-icon />
       </el-icon>
       <span>
-        {{ props.node.display[visualizerKey]?.label ?? props.node.display['']?.label ?? '未知' }}
+        {{ parseLabel(props.node.display) }}
       </span>
     </el-menu-item>
   </div>
@@ -39,11 +39,7 @@ import { computed } from 'vue'
 
 import { Menu as MenuIcon } from '@element-plus/icons-vue'
 
-// region Router 引入
-
-const router = vim.ctx().router().vueRouter()
-
-// endregion
+import { parseLabel } from '@/library/modules/elementPlus/util/display.ts'
 
 // region Store 引入
 
@@ -59,14 +55,6 @@ type Props = {
 }
 
 const props = defineProps<Props>()
-
-// endregion
-
-// region 可视化键处理
-
-const visualizerKey = computed<string>(
-  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
-)
 
 // endregion
 

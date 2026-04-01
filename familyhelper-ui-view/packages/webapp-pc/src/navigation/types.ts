@@ -2,6 +2,8 @@
 
 import { type VimComponent, type VimComponentModule } from '@/vim/types.ts'
 
+import { type JsonObject } from '@dwarfeng/familyhelper-ui-component-util/src/util/json.ts'
+
 // region VIM 组件定义
 
 /**
@@ -151,18 +153,15 @@ export type NodeInfo = {
 /**
  * 显示信息。
  *
- * 该类型是一个嵌套的 Record 结构，表示 Navigation 节点的显示信息。
- *
- * 该字段的结构为 `Record<string, Record<string, string>>`，其中：
- * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
- * - 内层对象包含该 Visualizer 所需的属性键值对。
+ * 该字段的结构为 `Record<'' | string, JsonObject>`，其中：
+ * - 键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
+ * - 值对象为对应 Visualizer 所需的配置值，类型为 {@link JsonObject}。
  *
  * 该字段必须为所有注册的 Visualizer 提供对应的显示信息，其中对象的键的取值由 library 模块的 `Visualizer` 决定。
  * 开发人员需要提供满足 VIM 框架中所有注册的 `Visualizer` 规定的键及其对应的值，
  * 以避免 `Visualizer` 渲染时出现错误。
  */
-export type DisplayInfo = Record<'', Record<string, string>> &
-  Record<string, Record<string, string>>
+export type DisplayInfo = Record<'' | string, JsonObject>
 
 /**
  * 菜单信息。
@@ -320,15 +319,15 @@ export type RouterInfo = {
     /**
      * 参数。
      *
-     * 该字段对应的值是一个嵌套的 Record 结构，用于存储不同 Visualizer 的组件参数，其中：
-     * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
-     * - 外层值是一个对象，表示该 Visualizer 组件的参数键值对。
+     * 该字段的结构为 `Record<'' | string, JsonObject>`，其中：
+     * - 键（如 `''`、`foo`、`bar`）表示不同的 Component 键。
+     * - 值对象为对应 Component 所需的配置值，类型为 {@link JsonObject}。
      *
      * 该字段必须提供一个 `''` 键作为默认值，以便在找不到当前 Visualizer 对应的组件参数时使用。
      *
      * 如果在所有 Visualizer 中该组件均不需要参数，可以不提供该字段。
      */
-    param?: Record<string, Record<string, unknown>> & { '': Record<string, unknown> }
+    param?: Record<'' | string, JsonObject>
   }
 }
 
@@ -449,16 +448,15 @@ export type NodeSetting = {
  *
  * 该类型是一个嵌套的 Record 结构，表示 Navigation 节点的显示设置。
  *
- * 该字段的结构为 `Record<string, Record<string, string>>`，其中：
- * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
- * - 内层对象包含该 Visualizer 所需的属性键值对。
+ * 该字段的结构为 `Record<'' | string, JsonObject>`，其中：
+ * - 键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
+ * - 值对象为对应 Visualizer 所需的配置值，类型为 {@link JsonObject}。
  *
  * 该字段必须为所有注册的 Visualizer 提供对应的显示信息，其中对象的键的取值由 library 模块的 `Visualizer` 决定。
  * 开发人员需要提供满足 VIM 框架中所有注册的 `Visualizer` 规定的键及其对应的值，
  * 以避免 `Visualizer` 渲染时出现错误。
  */
-export type DisplaySetting = Record<'', Record<string, string>> &
-  Record<string, Record<string, string>>
+export type DisplaySetting = Record<'' | string, JsonObject>
 
 /**
  * 菜单设置。
@@ -616,15 +614,15 @@ export type RouterSetting = {
     /**
      * 参数。
      *
-     * 该字段对应的值是一个嵌套的 Record 结构，用于存储不同 Visualizer 的组件参数，其中：
-     * - 外层键（如 `''`、`foo`、`bar`）表示不同的 Visualizer 名称。
-     * - 外层值是一个对象，表示该 Visualizer 组件的参数键值对。
+     * 该字段的结构为 `Record<'' | string, JsonObject>`，其中：
+     * - 键（如 `''`、`foo`、`bar`）表示不同的 Component 键。
+     * - 值对象为对应 Component 所需的配置值，类型为 {@link JsonObject}。
      *
      * 该字段必须提供一个 `''` 键作为默认值，以便在找不到当前 Visualizer 对应的组件参数时使用。
      *
      * 如果在所有 Visualizer 中该组件均不需要参数，可以不提供该字段。
      */
-    param?: Record<string, Record<string, unknown>> & { '': Record<string, unknown> }
+    param?: Record<'' | string, JsonObject>
   }
 }
 

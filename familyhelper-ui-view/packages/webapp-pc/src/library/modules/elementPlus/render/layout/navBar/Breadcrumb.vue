@@ -1,7 +1,7 @@
 <template>
   <el-breadcrumb class="breadcrumb-container" separator="/">
     <el-breadcrumb-item v-for="(node, index) in currentNodePath" :key="index">
-      <span>{{ node.display[visualizerKey]?.label ?? node.display['']?.label ?? '未知' }}</span>
+      <span>{{ parseLabel(node.display) }}</span>
     </el-breadcrumb-item>
   </el-breadcrumb>
 </template>
@@ -12,29 +12,18 @@ import vim from '@/vim'
 import { type NavigationStore } from '@/store/modules/navigation.ts'
 
 import { computed } from 'vue'
+
 import { type NodeInfo } from '@/navigation/types.ts'
+
+import { parseLabel } from '@/library/modules/elementPlus/util/display.ts'
 
 defineOptions({
   name: 'BreadcrumbComponent',
 })
 
-// region Router 引入
-
-const router = vim.ctx().router().vueRouter()
-
-// endregion
-
 // region Store 引入
 
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
-
-// endregion
-
-// region 可视化键处理
-
-const visualizerKey = computed<string>(
-  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
-)
 
 // endregion
 
