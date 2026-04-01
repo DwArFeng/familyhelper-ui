@@ -6,12 +6,12 @@ import './global.css'
 
 const vimLibraryModule: VimLibraryModule = {
   init,
-  provideVisualizer,
+  provideVisualizerSetting,
 }
 
 function init(): void {}
 
-function provideVisualizer(): null {
+function provideVisualizerSetting(): null {
   return null
 }
 

@@ -39,11 +39,11 @@ library 模块负责处理第三方组件库的集成和使用，这些组件的
 ```typescript
 import vim from '@/vim'
 
-import { type VimLibrary } from '@/library/types.ts'
+import {type VimLibrary} from '@/library/types.ts'
 
 function notify(): void {
-  const library: Omit<VimLibrary, "init"> = vim.ctx().library()
-  library.defaultVisualizer().notify('errorMessage', 'This is a custom error.')
+    const library: Omit<VimLibrary, "init"> = vim.ctx().library()
+    library.defaultVisualizerInfo().visualizer.notify('errorMessage', 'This is a custom error.')
 }
 ```
 
@@ -78,20 +78,20 @@ library 中的模块采用动态扫描机制，开发人员只需要在 `./modul
 在 `index.ts` 文件的头部导入资源文件，方法提供空实现/ null 返回值即可，代码如下所示：
 
 ```ts
-import { type VimLibraryModule } from '@/library/types.ts'
+import {type VimLibraryModule} from '@/library/types.ts'
 
 import 'library.css'
 
 const vimLibraryModule: VimLibraryModule = {
-  init,
-  provideVisualizer,
+    init,
+    provideVisualizerSetting,
 }
 
 function init(): void {
 }
 
-function provideVisualizer(): null {
-  return null
+function provideVisualizerSetting(): null {
+    return null
 }
 
 export default vimLibraryModule
@@ -102,11 +102,11 @@ export default vimLibraryModule
 在初始化方法中，通过 `VimApplicationContext` 拿到 vue 的 `App` 对象，并注册组件，代码如下所示：
 
 ```ts
-import {type VimLibraryModule} from '@/library/types.ts'
+import {type VimLibraryModule, type VisualizerSetting} from '@/library/types.ts'
 
 const vimLibraryModule: VimLibraryModule = {
     init,
-    provideVisualizer,
+    provideVisualizerSetting,
 }
 
 function init(): void {
@@ -114,16 +114,21 @@ function init(): void {
     // setting up configurations, etc. You can perform these steps in the init method.
 }
 
-function provideVisualizer(): Visualizer {
+function provideVisualizerSetting(): VisualizerSetting {
     return {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        notify(type: NotifyType, ...args: any[]): void {
-            alert(`This is a demo visualizer. Please implement the notify method according to your needs.`)
+        visualizer: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            notify(type: NotifyType, ...args: any[]): void {
+                alert(`This is a demo visualizer. Please implement the notify method according to your needs.`)
+            },
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            render(type: RenderType, ...args: any[]): VNode {
+                return h('div', 'This is a demo visualizer. Please implement the render method according to your needs.')
+            },
         },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        render(type: RenderType, ...args: any[]): VNode {
-            return h('div', 'This is a demo visualizer. Please implement the render method according to your needs.')
-        },
+        name: 'Demo',
+        description: '演示用可视化器',
+        exampleDisplay: {},
     }
 }
 
@@ -132,19 +137,19 @@ export default vimLibraryModule
 
 #### 提供可视化器组件
 
-在 `VimLibraryModule.provideVisualizer` 方法中提供格式化器的实现。
+在 `VimLibraryModule.provideVisualizerSetting` 方法中提供可视化器的实现。
 
 ```ts
 import {
-  type Hyperscript,
-  type NotifyType,
-  type RenderType,
-  type ResponseMeta,
-  type VimLibraryModule,
-  type Visualizer,
+    type Hyperscript,
+    type NotifyType,
+    type RenderType,
+    type ResponseMeta,
+    type VimLibraryModule,
+    type VisualizerSetting,
 } from '@/library/types.ts'
 
-import { type VNode } from 'vue'
+import {type VNode} from 'vue'
 
 // 在这个例子中，除了提供可视化器，还和上面的例子一样，同时引入了资源文件。
 import './global.css'
@@ -157,83 +162,88 @@ import PageNotFound from './render/pageNotFound/PageNotFound.vue'
 import PageError from './render/pageError/PageError.vue'
 
 const vimLibraryModule: VimLibraryModule = {
-  init,
-  provideVisualizer,
+    init,
+    provideVisualizerSetting,
 }
 
 function init(): void {
 }
 
-function provideVisualizer(): Visualizer {
-  return {
-    // 对于 notify 方法，建议根据不同的类型进行不同的处理，以简化代码复杂度。
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    notify(type: NotifyType, ...args: any[]): void {
-      switch (type) {
-        case 'apiResponseBad':
-          notifyApiResponseBad(args[0] as ResponseMeta)
-          break
-        case 'apiResponseError':
-          notifyApiResponseError(args[0] as Error)
-          break
-        case 'errorMessage':
-          notifyErrorMessage(args[0] as string)
-          break
-      }
-    },
-    // 对于 render 方法，建议根据不同的类型进行不同的处理，以简化代码复杂度。
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    render(type: RenderType, ...args: any[]): VNode {
-      switch (type) {
-        case 'login':
-          return renderLogin(args[0] as Hyperscript)
-        case 'layout':
-          return renderLayout(args[0] as Hyperscript)
-        case 'pageForbidden':
-          return renderPageForbidden(args[0] as Hyperscript)
-        case 'pageNotFound':
-          return renderPageNotFound(args[0] as Hyperscript)
-        case 'pageError':
-          return renderPageError(args[0] as Hyperscript)
-      }
-    },
-  }
+function provideVisualizerSetting(): VisualizerSetting {
+    return {
+        name: '示例',
+        description: '示例可视化器',
+        exampleDisplay: {},
+        visualizer: {
+            // 对于 notify 方法，建议根据不同的类型进行不同的处理，以简化代码复杂度。
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            notify(type: NotifyType, ...args: any[]): void {
+                switch (type) {
+                    case 'apiResponseBad':
+                        notifyApiResponseBad(args[0] as ResponseMeta)
+                        break
+                    case 'apiResponseError':
+                        notifyApiResponseError(args[0] as Error)
+                        break
+                    case 'errorMessage':
+                        notifyErrorMessage(args[0] as string)
+                        break
+                }
+            },
+            // 对于 render 方法，建议根据不同的类型进行不同的处理，以简化代码复杂度。
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            render(type: RenderType, ...args: any[]): VNode {
+                switch (type) {
+                    case 'login':
+                        return renderLogin(args[0] as Hyperscript)
+                    case 'layout':
+                        return renderLayout(args[0] as Hyperscript)
+                    case 'pageForbidden':
+                        return renderPageForbidden(args[0] as Hyperscript)
+                    case 'pageNotFound':
+                        return renderPageNotFound(args[0] as Hyperscript)
+                    case 'pageError':
+                        return renderPageError(args[0] as Hyperscript)
+                }
+            },
+        },
+    }
 }
 
 function notifyApiResponseBad(responseMeta: ResponseMeta): void {
-  alert(`服务端通信错误，返回错误代码
+    alert(`服务端通信错误，返回错误代码
 错误代码: ${responseMeta.code}
 错误信息: ${responseMeta.message}`)
 }
 
 function notifyApiResponseError(err: Error): void {
-  alert(`通信错误
+    alert(`通信错误
 错误信息: ${err == null ? '' : err.message}`)
 }
 
 function notifyErrorMessage(message: string): void {
-  alert(`内部错误
+    alert(`内部错误
 错误信息: ${message}`)
 }
 
 function renderLogin(h: Hyperscript): VNode {
-  return h(LoginComponent)
+    return h(LoginComponent)
 }
 
 function renderLayout(h: Hyperscript): VNode {
-  return h(LayoutComponent)
+    return h(LayoutComponent)
 }
 
 function renderPageForbidden(h: Hyperscript): VNode {
-  return h(PageForbidden)
+    return h(PageForbidden)
 }
 
 function renderPageNotFound(h: Hyperscript): VNode {
-  return h(PageNotFound)
+    return h(PageNotFound)
 }
 
 function renderPageError(h: Hyperscript): VNode {
-  return h(PageError)
+    return h(PageError)
 }
 
 export default vimLibraryModule

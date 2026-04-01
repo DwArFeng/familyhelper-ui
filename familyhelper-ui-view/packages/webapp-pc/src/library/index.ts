@@ -5,7 +5,8 @@ import {
   type LibrarySetting,
   type VimLibrary,
   type VimLibraryModule,
-  type Visualizer,
+  type VisualizerInfo,
+  type VisualizerSetting,
 } from '@/library/types.ts'
 import { defaultVisualizerKey } from '@/library/props.ts'
 
@@ -19,9 +20,9 @@ type Module = { default: VimLibraryModule }
 let status: 'initializing' | 'initialized' = 'initializing'
 
 /**
- * 可视化器信息。
+ * Visualizer 信息（按模块 key 索引）。
  */
-const libraryVisualizers: Record<string, Visualizer> = {}
+const libraryVisualizerInfos: Record<string, VisualizerInfo> = {}
 
 /**
  * Library。
@@ -29,10 +30,10 @@ const libraryVisualizers: Record<string, Visualizer> = {}
 const library: VimLibrary = {
   init,
   setting: setting(),
-  defaultVisualizer,
-  visualizerKeys,
-  visualizers,
-  visualizer,
+  defaultVisualizerInfo,
+  visualizerInfoKeys,
+  visualizerInfos,
+  visualizerInfo,
 }
 
 /**
@@ -67,6 +68,18 @@ async function init(ctx: VimApplicationContext): Promise<void> {
     modules[moduleName] = rawModules[moduleKey]
   }
 
+  /*
+   * 将 VisualizerSetting 转为 VisualizerInfo。
+   */
+  function mapVisualizerInfo(setting: VisualizerSetting): VisualizerInfo {
+    return {
+      visualizer: setting.visualizer,
+      name: setting.name,
+      description: setting.description,
+      exampleDisplay: setting.exampleDisplay,
+    }
+  }
+
   // 定义 Promise 数组。
   const promises: Promise<void>[] = []
 
@@ -78,20 +91,20 @@ async function init(ctx: VimApplicationContext): Promise<void> {
     const mayPromise = vimLibraryModule.init(ctx)
     // 判断 mayPromise 是否为 Promise，并执行对应操作。
     if (mayPromise instanceof Promise) {
-      // 等待 mayPromise 完成后，将可视化器存入 visualizerInfos 对象。
+      // 等待 mayPromise 完成后，将 Visualizer 信息存入 libraryVisualizerInfos 对象。
       mayPromise.then(() => {
-        const mayVisualizer = vimLibraryModule.provideVisualizer()
-        if (mayVisualizer) {
-          libraryVisualizers[moduleName] = mayVisualizer
+        const maySetting = vimLibraryModule.provideVisualizerSetting()
+        if (maySetting) {
+          libraryVisualizerInfos[moduleName] = mapVisualizerInfo(maySetting)
         }
       })
       // 将 Promise 存入 Promise 数组。
       promises.push(mayPromise)
     } else {
-      // 将可视化器存入 visualizerInfos 对象。
-      const mayVisualizer = vimLibraryModule.provideVisualizer()
-      if (mayVisualizer) {
-        libraryVisualizers[moduleName] = mayVisualizer
+      // 将 Visualizer 信息存入 libraryVisualizerInfos 对象。
+      const maySetting = vimLibraryModule.provideVisualizerSetting()
+      if (maySetting) {
+        libraryVisualizerInfos[moduleName] = mapVisualizerInfo(maySetting)
       }
     }
   }
@@ -115,19 +128,19 @@ function setting(): LibrarySetting {
 }
 
 /**
- * 获取默认的 Visualizer。
+ * 获取默认的 Visualizer 信息。
  *
- * @returns 默认的 Visualizer。
+ * @returns 默认的 Visualizer 信息。
  */
-function defaultVisualizer(): Visualizer {
+function defaultVisualizerInfo(): VisualizerInfo {
   if (status === 'initializing') {
-    throw new Error('不能在 initializing 状态下获取 defaultVisualizer')
+    throw new Error('不能在 initializing 状态下获取 defaultVisualizerInfo')
   }
-  const visualizer: Visualizer = libraryVisualizers[defaultVisualizerKey]
-  if (!visualizer) {
+  const info: VisualizerInfo | undefined = libraryVisualizerInfos[defaultVisualizerKey]
+  if (!info) {
     throw new Error('找不到默认的 Visualizer')
   }
-  return visualizer
+  return info
 }
 
 /**
@@ -135,35 +148,35 @@ function defaultVisualizer(): Visualizer {
  *
  * @returns Visualizer key 列表。
  */
-function visualizerKeys(): Readonly<string[]> {
+function visualizerInfoKeys(): Readonly<string[]> {
   if (status === 'initializing') {
-    throw new Error('不能在 initializing 状态下获取 visualizerKeys')
+    throw new Error('不能在 initializing 状态下获取 visualizerInfoKeys')
   }
-  return Object.keys(libraryVisualizers)
+  return Object.keys(libraryVisualizerInfos)
 }
 
 /**
- * 获取 Visualizer 列表。
+ * 获取 Visualizer 信息列表。
  *
- * @returns Visualizer 列表。
+ * @returns Visualizer 信息列表。
  */
-function visualizers(): Readonly<Visualizer[]> {
+function visualizerInfos(): Readonly<VisualizerInfo[]> {
   if (status === 'initializing') {
-    throw new Error('不能在 initializing 状态下获取 visualizers')
+    throw new Error('不能在 initializing 状态下获取 visualizerInfos')
   }
-  return Object.values(libraryVisualizers)
+  return Object.values(libraryVisualizerInfos)
 }
 
 /**
- * 根据指定的 key 获取 Visualizer。
+ * 根据指定的 key 获取 Visualizer 信息。
  *
  * @param key 指定的 key。
  */
-function visualizer(key: string): Visualizer | null {
+function visualizerInfo(key: string): VisualizerInfo | null {
   if (status === 'initializing') {
-    throw new Error('不能在 initializing 状态下获取 visualizer')
+    throw new Error('不能在 initializing 状态下获取 visualizerInfo')
   }
-  return libraryVisualizers[key] || null
+  return libraryVisualizerInfos[key] || null
 }
 
 export default library

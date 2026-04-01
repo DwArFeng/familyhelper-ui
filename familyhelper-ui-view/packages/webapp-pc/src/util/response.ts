@@ -2,6 +2,8 @@
 
 import vim from '@/vim'
 
+import { type VisualizerStore } from '@/store/modules/visualizer.ts'
+
 import {
   type Pres,
   type ResponseMeta,
@@ -23,13 +25,21 @@ export interface ResponseErrorHandler {
 
 export const defaultResponseBadHandler: ResponseBadHandler = {
   handle(responseMeta: ResponseMeta) {
-    vim.ctx().library().defaultVisualizer().notify('apiResponseBad', responseMeta)
+    vim
+      .ctx()
+      .store()
+      .vueStore<'visualizer', VisualizerStore>('visualizer')
+      .visualizer.notify('apiResponseBad', responseMeta)
   },
 }
 
 export const defaultResponseErrorHandler: ResponseErrorHandler = {
   handle(err: Error) {
-    vim.ctx().library().defaultVisualizer().notify('apiResponseError', err)
+    vim
+      .ctx()
+      .store()
+      .vueStore<'visualizer', VisualizerStore>('visualizer')
+      .visualizer.notify('apiResponseError', err)
   },
 }
 

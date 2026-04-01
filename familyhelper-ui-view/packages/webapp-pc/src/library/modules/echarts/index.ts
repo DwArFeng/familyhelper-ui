@@ -22,7 +22,7 @@ import { CanvasRenderer, SVGRenderer } from 'echarts/renderers'
 
 const vimLibraryModule: VimLibraryModule = {
   init,
-  provideVisualizer,
+  provideVisualizerSetting,
 }
 
 function init(): void {
@@ -45,7 +45,7 @@ function init(): void {
   ])
 }
 
-function provideVisualizer(): null {
+function provideVisualizerSetting(): null {
   return null
 }
 

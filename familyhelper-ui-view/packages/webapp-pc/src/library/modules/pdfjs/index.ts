@@ -5,14 +5,14 @@ import pdfWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url'
 
 const vimLibraryModule: VimLibraryModule = {
   init,
-  provideVisualizer,
+  provideVisualizerSetting,
 }
 
 function init(): void {
   pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker
 }
 
-function provideVisualizer(): null {
+function provideVisualizerSetting(): null {
   return null
 }
 

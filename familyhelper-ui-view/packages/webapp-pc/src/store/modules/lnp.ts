@@ -240,7 +240,10 @@ function loginCheck(): void {
     if (!vueRouter.currentRoute.value.name) {
       vueRouter.push({ name: 'vim.login' }).then(() => {})
     } else if (vueRouter.currentRoute.value.name !== 'vim.login') {
-      ctx.library().defaultVisualizer().notify('errorMessage', '登录状态异常，请重新登录')
+      ctx
+        .library()
+        .defaultVisualizerInfo()
+        .visualizer.notify('errorMessage', '登录状态异常，请重新登录')
       vueRouter.push({ name: 'vim.login' }).then(() => {})
     }
   }
@@ -252,7 +255,10 @@ function loginCheck(): void {
           throw new Error('不应该执行到此处, 请联系开发人员')
         }
         if (responseMeta.code === 90) {
-          ctx.library().defaultVisualizer().notify('errorMessage', '登录状态异常，请重新登录')
+          ctx
+            .library()
+            .defaultVisualizerInfo()
+            .visualizer.notify('errorMessage', '登录状态异常，请重新登录')
         } else {
           defaultResponseBadHandler.handle(responseMeta)
         }

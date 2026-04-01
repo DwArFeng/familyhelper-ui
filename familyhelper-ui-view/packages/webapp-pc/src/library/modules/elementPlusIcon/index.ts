@@ -5,7 +5,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 const vimLibraryModule: VimLibraryModule = {
   init,
-  provideVisualizer,
+  provideVisualizerSetting,
 }
 
 function init(ctx: VimApplicationContext): void {
@@ -14,7 +14,7 @@ function init(ctx: VimApplicationContext): void {
   }
 }
 
-function provideVisualizer(): null {
+function provideVisualizerSetting(): null {
   return null
 }
 

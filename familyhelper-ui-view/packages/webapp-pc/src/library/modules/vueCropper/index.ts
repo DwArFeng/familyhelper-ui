@@ -9,14 +9,14 @@ import 'vue-cropper/dist/index.css'
 
 const vimLibraryModule: VimLibraryModule = {
   init,
-  provideVisualizer,
+  provideVisualizerSetting,
 }
 
 function init(ctx: VimApplicationContext): void {
   ctx.app.use(VueCropper)
 }
 
-function provideVisualizer(): null {
+function provideVisualizerSetting(): null {
   return null
 }
 
