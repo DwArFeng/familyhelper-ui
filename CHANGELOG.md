@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `component-util` 子模块功能新增。
+  - 新增 `src/util/json.ts` JSON 工具类。
+
 - `webapp-mobile` 子模块文件优化注释、文档注释格式、代码换行格式。
   - src/library/modules/comvisual/util/nativeUi.ts。
   - src/store/README.md。
