@@ -37,11 +37,18 @@ export type VisualizerStore = {
   ready: ComputedRef<boolean>
   visualizerKey: ComputedRef<string>
   visualizer: ComputedRef<Visualizer>
+  getModalOverrideInfo: () => ModalOverrideInfo | null
+  setModalOverrideInfo: (modalOverrideInfo: ModalOverrideInfo) => void
 }
 
 export type Modal = {
   visualizerKey: string
   visualizer: Visualizer
+}
+
+export type ModalOverrideInfo = {
+  visualizerKey: string
+  override: boolean
 }
 
 // Store 区域。
@@ -95,6 +102,48 @@ function updateModal(visualizerKey: string | null): void {
   }
 }
 
+// 模态覆盖信息。
+function getModalOverrideInfo(): ModalOverrideInfo | null {
+  const modalOverrideInfoJson = localStorage.getItem(
+    VISUALIZER_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY,
+  )
+  if (modalOverrideInfoJson === null || modalOverrideInfoJson === undefined) {
+    return null
+  }
+
+  try {
+    // 从 JSON 中反序列化得到的对象不可靠，应先校验结构。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const modalOverrideInfo: any = JSON.parse(modalOverrideInfoJson)
+    if (!modalOverrideInfo || typeof modalOverrideInfo !== 'object') {
+      return null
+    }
+    if (typeof modalOverrideInfo.override !== 'boolean') {
+      return null
+    }
+    if (!modalOverrideInfo.override) {
+      return null
+    }
+    return modalOverrideInfo as ModalOverrideInfo
+  } catch {
+    return null
+  }
+}
+
+function setModalOverrideInfo(modalOverrideInfo: ModalOverrideInfo): void {
+  try {
+    window.localStorage.setItem(
+      VISUALIZER_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY,
+      JSON.stringify({
+        visualizerKey: modalOverrideInfo.visualizerKey,
+        override: modalOverrideInfo.override,
+      }),
+    )
+  } catch {
+    window.localStorage.removeItem(VISUALIZER_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY)
+  }
+}
+
 /**
  * 提供 Store Setup。
  *
@@ -105,12 +154,21 @@ function provideStoreSetup(): StoreSetup {
     ready,
     visualizerKey,
     visualizer,
+    getModalOverrideInfo,
+    setModalOverrideInfo,
   })
 }
 
 // endregion
 
 // region 钩子逻辑
+
+// Visualizer 模态覆盖信息本地存储键。
+const VISUALIZER_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY = 'store.modal_override_info.visualizer'
+// 配置仓库类型。
+const SETTINGREPO_CATEGORY: string = 'framework.pc.visualizer'
+// 配置仓库参数: key。
+const SETTINGREPO_ARGS_KEY: string[] = ['key']
 
 /**
  * VIM 初始化钩子。
@@ -144,8 +202,9 @@ async function loadModal(): Promise<void> {
   }
 
   try {
-    // 获取 Visualizer Key。
-    const key: string = await loadVisualizerKey0()
+    // 优先尝试从本地覆盖信息中读取 Visualizer Key。
+    const key: string =
+      loadVisualizerKeyFromLocalStorage() ?? (await loadVisualizerKeyFromSettingrepo())
     // 更新模态。
     updateModal(key)
   } catch (e: unknown) {
@@ -166,12 +225,35 @@ async function loadModal(): Promise<void> {
   }
 }
 
-// 配置仓库类型。
-const SETTINGREPO_CATEGORY: string = 'framework.pc.visualizer'
-// 配置仓库参数: key。
-const SETTINGREPO_ARGS_KEY: string[] = ['key']
+function loadVisualizerKeyFromLocalStorage(): string | null {
+  const modalOverrideInfoJson = localStorage.getItem(
+    VISUALIZER_LOCAL_STORAGE_MODAL_OVERRIDE_INFO_KEY,
+  )
+  if (modalOverrideInfoJson === null || modalOverrideInfoJson === undefined) {
+    return null
+  }
 
-async function loadVisualizerKey0(): Promise<string> {
+  try {
+    // 从 JSON 中反序列化得到的对象不可靠，应先校验结构。
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const modalOverrideInfo: any = JSON.parse(modalOverrideInfoJson)
+    if (!modalOverrideInfo || typeof modalOverrideInfo !== 'object') {
+      return null
+    }
+    if (typeof modalOverrideInfo.override !== 'boolean') {
+      return null
+    }
+    if (!modalOverrideInfo.override) {
+      return null
+    }
+    validateVisualizerKey(modalOverrideInfo.visualizerKey)
+    return modalOverrideInfo.visualizerKey as string
+  } catch {
+    return null
+  }
+}
+
+async function loadVisualizerKeyFromSettingrepo(): Promise<string> {
   // 获取 Visualizer Key。
   const result: TextNodeInspectResult | null = (await resolveResponse(
     textNodeOperateInspect({
@@ -182,7 +264,17 @@ async function loadVisualizerKey0(): Promise<string> {
   if (!result) {
     throw new Error('无法获取 Visualizer Key, 请联系开发人员')
   }
-  return toKebabCase(result.value ?? '')
+  const visualizerKey = toKebabCase(result.value ?? '')
+  validateVisualizerKey(visualizerKey)
+  return visualizerKey
+}
+
+// 该方法用于验证 VisualizerKey 的格式，接受任何类型的参数，故忽略类型警告。
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function validateVisualizerKey(obj: any): void {
+  if (typeof obj !== 'string') {
+    throw new Error('VisualizerKey 格式不正确')
+  }
 }
 
 // endregion
