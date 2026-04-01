@@ -4,6 +4,13 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块功能优化。
+  - 将 Store 组件 `navigation` 模块的核心模态数据从仅初始化加载提升为可被观察的运行期状态。
+  - 将 Store 组件 `visualizer` 模块的核心模态数据从仅初始化加载提升为可被观察的运行期状态。
+  - 将 Store 组件的核心模态数据从仅初始化加载提升为可被观察的运行期状态。
+  - Router 组件 VIM 布局路加载与重建逻辑优化，深度监听导航与可视化器关键字段变化并重建动态路由。
+  - VIM 壳页面渲染逻辑优化。
+
 - `webapp-pc` 子模块实现开发者工具一级菜单。
   - 实现导航设置二级菜单。
   - 实现导航管理二级菜单。
@@ -67,6 +74,9 @@
   - `FloatTool` 组件停靠状态判断 switch 语句错误常量使用。
 
 ### 功能移除
+
+- 移除 `webapp-mobile` 子模块 util 中不需要的独立工具模块。
+  - src/util/visualizer.ts。
 
 - 移除 `webapp-pc` 子模块 util 中不需要的独立工具模块。
   - src/util/visualizer.ts。
