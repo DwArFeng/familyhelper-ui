@@ -51,10 +51,10 @@ function init(_ctx: VimApplicationContext): void {
  */
 export type NavigationStore = {
   ready: ComputedRef<boolean>
-  defaultNodeKey: ComputedRef<string | null>
+  defaultNodeKey: ComputedRef<string>
+  nodeInfos: ComputedRef<Readonly<Record<string, NodeInfo>>>
   isCurrentNode: (nodeKey: string) => boolean
   currentNodeKey: ComputedRef<string>
-  nodeInfos: ComputedRef<Readonly<Record<string, NodeInfo>>>
   getNodeInfo: (nodeKey: string) => Readonly<NodeInfo> | null
   getParentNodeInfo: (nodeKey: string) => Readonly<NodeInfo> | null
   getChildNodeInfos: (nodeKey: string | null) => Readonly<NodeInfo[]>
@@ -87,7 +87,7 @@ export type NavigationStore = {
   clearAllEzNavNodes: () => void
 }
 
-export type Navigation = {
+export type Modal = {
   setting: Readonly<{
     defaultNodeKey: string
     ezNavEnabled: boolean
@@ -138,43 +138,68 @@ function setReady(): void {
   _ready.value = true
 }
 
-// Navigation。
-const _navigation = ref<Readonly<Navigation> | null>(null)
+// 模态。
+const _modal = ref<Readonly<Modal> | null>(null)
 
-const defaultNodeKey: ComputedRef<string | null> = computed<string | null>(
-  () => _navigation.value?.setting.defaultNodeKey ?? null,
-)
+const defaultNodeKey: ComputedRef<string> = computed<string>(() => {
+  if (!_modal.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  return _modal.value.setting.defaultNodeKey
+})
 
-function setNavigation(value: Readonly<Navigation>): void {
-  _navigation.value = value
+const nodeInfos: ComputedRef<Readonly<Record<string, NodeInfo>>> = computed<
+  Readonly<Record<string, NodeInfo>>
+>(() => {
+  if (!_modal.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  return _modal.value.nodeInfos
+})
+
+function updateModal(modal: Modal | null): void {
+  if (!ctx) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  if (!modal) {
+    _modal.value = {
+      setting: {
+        defaultNodeKey: ctx.navigation().setting.defaultNodeKey,
+        ezNavEnabled: ctx.navigation().setting.ezNavEnabled,
+        ezNavMaxActiveItem: ctx.navigation().setting.ezNavMaxActiveItem,
+        ezNavRestoreWhenLogin: ctx.navigation().setting.ezNavRestoreWhenLogin,
+      },
+      nodeRootKeys: ctx.navigation().nodeRootKeys(),
+      nodeInfos: ctx.navigation().nodeInfos(),
+    }
+  } else {
+    _modal.value = modal
+  }
 }
 
 // Node。
 const _currentNodeKey = ref<string>('')
 
 const currentNodeKey = computed<string>(() => _currentNodeKey.value)
-const nodeInfos = computed<Readonly<Record<string, NodeInfo>>>(
-  () => _navigation.value?.nodeInfos ?? {},
-)
 
 function isCurrentNode(nodeKey: string): boolean {
   return _currentNodeKey.value === nodeKey
 }
 
 function getNodeInfo(nodeKey: string): Readonly<NodeInfo> | null {
-  return _navigation.value?.nodeInfos[nodeKey] ?? null
+  return _modal.value?.nodeInfos[nodeKey] ?? null
 }
 
 function getParentNodeInfo(nodeKey: string): Readonly<NodeInfo> | null {
-  const _aimNodeInfo: Readonly<NodeInfo> | null = _navigation.value?.nodeInfos[nodeKey] ?? null
+  const _aimNodeInfo: Readonly<NodeInfo> | null = _modal.value?.nodeInfos[nodeKey] ?? null
   if (!_aimNodeInfo || !_aimNodeInfo.parentKey) {
     return null
   }
-  return _navigation.value?.nodeInfos[_aimNodeInfo.parentKey] ?? null
+  return _modal.value?.nodeInfos[_aimNodeInfo.parentKey] ?? null
 }
 
 function getChildNodeInfos(nodeKey: string | null): Readonly<NodeInfo[]> {
-  const __navigation: Readonly<Navigation> | null = _navigation.value
+  const __navigation: Readonly<Modal> | null = _modal.value
   if (!__navigation) {
     return []
   }
@@ -199,16 +224,16 @@ function setCurrentNodeKey(value: string): void {
 
 // EzNav 设置。
 const ezNavEnabled: ComputedRef<boolean> = computed<boolean>(
-  () => _navigation.value?.setting.ezNavEnabled ?? false,
+  () => _modal.value?.setting.ezNavEnabled ?? false,
 )
 
 const ezNavMaxActiveItem: ComputedRef<number> = computed<number>(
-  () => _navigation.value?.setting.ezNavMaxActiveItem ?? 0,
+  () => _modal.value?.setting.ezNavMaxActiveItem ?? 0,
 )
 
 const ezNavRestoreWhenLogin: ComputedRef<'restore-pinned' | 'restore-all'> = computed<
   'restore-pinned' | 'restore-all'
->(() => _navigation.value?.setting.ezNavRestoreWhenLogin ?? 'restore-pinned')
+>(() => _modal.value?.setting.ezNavRestoreWhenLogin ?? 'restore-pinned')
 
 // EzNav 节点。
 const _ezNavAffixNodeKeys = ref<string[]>([])
@@ -274,7 +299,7 @@ function ezNavNodeMeta(nodeKey: string): EzNavNodeMeta | null {
 }
 
 function ezNavNodeBack(nodeKey: string): string | null {
-  const defaultNodeKey: string | null = _navigation.value?.setting.defaultNodeKey ?? null
+  const defaultNodeKey: string | null = _modal.value?.setting.defaultNodeKey ?? null
   let backNodeKey: string = nodeKey
   const forbiddenNodeKeys: string[] = []
   while (true) {
@@ -403,7 +428,7 @@ function mayPutEzNavNodeBackMap(to: EzNavLocation, from: EzNavLocation): void {
 
 function mayPutEzNavActiveNodeKey(nodeKey: string): void {
   // 如果当前 navigation 不存在，则返回。
-  if (!_navigation.value) {
+  if (!_modal.value) {
     return
   }
 
@@ -417,7 +442,7 @@ function mayPutEzNavActiveNodeKey(nodeKey: string): void {
   }
 
   // 如果 pinned 数组 + active 数组的数量已经到达了最大值，则返回。
-  const maxActiveItem: number = _navigation.value.setting.ezNavMaxActiveItem
+  const maxActiveItem: number = _modal.value.setting.ezNavMaxActiveItem
   if (_ezNavPinnedNodeKeys.value.length + _ezNavActiveNodeKeys.value.length >= maxActiveItem) {
     return
   }
@@ -435,9 +460,9 @@ function provideStoreSetup(): StoreSetup {
   return (): NavigationStore => ({
     ready,
     defaultNodeKey,
+    nodeInfos,
     isCurrentNode,
     currentNodeKey,
-    nodeInfos,
     getNodeInfo,
     getParentNodeInfo,
     getChildNodeInfos,
@@ -518,10 +543,19 @@ let ezNavDebounceSaveHandle: ReturnType<typeof setTimeout> | null = null
  * VIM 初始化钩子。
  */
 function vimInitializedLoadHook(): void {
+  // 初始化模态。
+  initModal()
   // 添加登录监听器。
   addEzNavLnpStoreLoginActionListener()
   // 添加登出监听器。
   addEzNavLnpStoreLogoutActionListener()
+}
+
+function initModal(): void {
+  if (!ctx) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  updateModal(null)
 }
 
 function addEzNavLnpStoreLoginActionListener(): void {
@@ -553,7 +587,7 @@ function addEzNavLnpStoreLoginActionListener(): void {
       _ezNavNodeMetaMap.value = persistenceData.nodeMetaMap ?? {}
       _ezNavNodeBackMap.value = persistenceData.nodeBackMap ?? {}
       // 根据 VIM 设置，选择性地恢复导航信息。
-      switch (_navigation.value?.setting.ezNavRestoreWhenLogin) {
+      switch (_modal.value?.setting.ezNavRestoreWhenLogin) {
         case 'restore-all':
           break
         case 'restore-pinned':
@@ -605,7 +639,7 @@ function addEzNavLnpStoreLogoutActionListener(): void {
     }
 
     // 根据 VIM 设置，选择性地恢复导航信息。
-    switch (_navigation.value?.setting.ezNavRestoreWhenLogin) {
+    switch (_modal.value?.setting.ezNavRestoreWhenLogin) {
       case 'restore-all':
         break
       case 'restore-pinned':
@@ -658,21 +692,20 @@ function addEzNavLnpStoreLogoutActionListener(): void {
  */
 function windowLoadHook(): void {
   // 加载 navigation。
-  loadNavigation().then(() => Promise.resolve())
+  loadModal().then(() => Promise.resolve())
 }
 
-// Navigation 加载方法。
-async function loadNavigation(): Promise<void> {
+// 模态加载方法。
+async function loadModal(): Promise<void> {
   if (!ctx) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
 
   try {
-    // 获取 Navigation。
-    const navigation: Navigation = await loadNavigation0()
-
-    // 设置 Navigation。
-    setNavigation(navigation)
+    // 获取模态。
+    const modal: Modal = await loadModal0()
+    // 更新模态。
+    updateModal(modal)
   } catch (e: unknown) {
     // 输出错误信息。
     ctx.library().defaultVisualizer().notify('errorMessage', '加载 Navigation 失败')
@@ -683,21 +716,19 @@ async function loadNavigation(): Promise<void> {
       message = '未知错误'
     }
     ctx.library().defaultVisualizer().notify('errorMessage', message)
-
-    // 使用默认 Navigation。
-    setNavigation(loadNavigationDefault())
+    // 更新模态。
+    updateModal(null)
   } finally {
     // 遍历所有 nodeInfos，加载 affixNodeKeys。
     loadEzNavAffixNodeKeys()
     // 根据当前状态，选择性地恢复持久化数据。
     mayRestoreEzNavPersistenceData()
-
     // 设置准备标记。
     setReady()
   }
 }
 
-async function loadNavigation0(): Promise<Navigation> {
+async function loadModal0(): Promise<Modal> {
   // 该方法用于验证 NavigationKey 对象的格式，接受任何类型的参数，故忽略类型警告。
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function validateNavigationKey(obj: any): void {
@@ -729,16 +760,16 @@ async function loadNavigation0(): Promise<Navigation> {
 
   // 加载 Navigation。
   if (navigationKey.type === 'default') {
-    return loadNavigationDefault()
+    return loadModalDefault()
   }
   if (navigationKey.type === 'custom') {
     // 已经通过验证，此处断言非空。
-    return await loadNavigationCustom(navigationKey.id!)
+    return await loadModalCustom(navigationKey.id!)
   }
   throw new Error('不应该执行到此处，请联系开发人员')
 }
 
-function loadNavigationDefault(): Navigation {
+function loadModalDefault(): Modal {
   if (!ctx) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
@@ -759,7 +790,7 @@ function loadNavigationDefault(): Navigation {
   }
 }
 
-async function loadNavigationCustom(id: string): Promise<Navigation> {
+async function loadModalCustom(id: string): Promise<Modal> {
   type NavigationSetting = {
     defaultNodeKey: string
     ezNavEnabled: boolean
@@ -940,7 +971,7 @@ function loadEzNavAffixNodeKeys(): void {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
 
-  _ezNavAffixNodeKeys.value = Object.values(_navigation.value?.nodeInfos ?? {})
+  _ezNavAffixNodeKeys.value = Object.values(_modal.value?.nodeInfos ?? {})
     .filter((nodeInfo) => nodeInfo.ezNav.shown && nodeInfo.ezNav.affix)
     .sort((a, b) => {
       const affixIndexAlpha = a.ezNav.affixIndex ?? 0

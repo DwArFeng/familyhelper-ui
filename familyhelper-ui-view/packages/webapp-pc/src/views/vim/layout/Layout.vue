@@ -1,10 +1,13 @@
 <script lang="ts">
+import vim from '@/vim'
+
+import { type VisualizerStore } from '@/store/modules/visualizer.ts'
+
 import { h } from 'vue'
 
 import VimMask from '@/components/vim/vimMask/VimMask.vue'
 
 import { ready } from '@/util/store.ts'
-import { getVisualizer } from '@/util/visualizer.ts'
 
 export default {
   name: 'LayoutComponent',
@@ -13,7 +16,11 @@ export default {
       if (!ready.value) {
         return h(VimMask)
       }
-      return h(getVisualizer().render('layout', h))
+      const visualizerStore = vim
+        .ctx()
+        .store()
+        .vueStore<'visualizer', VisualizerStore>('visualizer')
+      return h(visualizerStore.visualizer.render('layout', h))
     }
   },
 }

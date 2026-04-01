@@ -1,13 +1,12 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import { nextTick, watch, type WatchHandle } from 'vue'
+import { nextTick, watch } from 'vue'
 
 import { type VimApplicationContext } from '@/vim/types.ts'
 
 import { guardNotExistsErrorText, noGuardNameErrorText } from './texts.ts'
 
 import { type Component } from '@/compreg/types.ts'
-import { type NodeInfo } from '@/navigation/types.ts'
 import { type VimRouter, type VimRouterLocation } from '@/router/types.ts'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
@@ -26,10 +25,11 @@ import {
 import guards from './guards.ts'
 
 import { type PageErrorStore } from '@/store/modules/pageError.ts'
-import { type VisualizerStore } from '@/store/modules/visualizer.ts'
-import { type NavigationStore } from '@/store/modules/navigation.ts'
 
 import { ready } from '@/util/store.ts'
+import { type VisualizerStore } from '@/store/modules/visualizer.ts'
+import { type NavigationStore } from '@/store/modules/navigation.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
 
 /**
  * 状态。
@@ -146,9 +146,9 @@ function init(ctx: VimApplicationContext): void {
     finishInitializing(ctx)
   }, 1000000000)
 
-  // 注册 Window load 钩子，在回调中执行 VIM 布局路由初始化调度。
+  // 注册 Window load 钩子，在回调中添加有关数据的监听，并在相关数据变化时更新路由表。
   ctx.registerWindowLoadHook(() => {
-    waitReadyAndUpdateVimLayoutRouter(ctx)
+    watchRelatedDataToRefreshVimLayoutRoutes(ctx)
   })
 
   // 注册 Window beforeunload 钩子，在回调中执行销毁调度。
@@ -275,18 +275,19 @@ function initBaseRouter(ctx: VimApplicationContext): void {
   vueRouter.beforeEach(doGuard)
 }
 
-function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
-  function refreshVimLayoutRoutes(ctx: VimApplicationContext): void {
+function watchRelatedDataToRefreshVimLayoutRoutes(ctx: VimApplicationContext): void {
+  function refreshVimLayoutRoutes(
+    ctx: VimApplicationContext,
+    navigationDefaultNodeKey: string,
+    navigationNodeInfos: Readonly<Record<string, NodeInfo>>,
+    visualizerVisualizerKey: string,
+  ): void {
     if (!vueRouter) {
       throw new Error('不应该执行到此处, 请联系开发人员')
     }
 
-    // 获取导航节点。
-    const navigationStore = ctx.store().vueStore<'navigation', NavigationStore>('navigation')
-    const nodeInfos: Readonly<NodeInfo[]> = Object.values(navigationStore.nodeInfos)
-
     // 解析 VIM 布局路由表的重定向。
-    vimLayoutRoute.redirect = { name: navigationStore.defaultNodeKey ?? '' }
+    vimLayoutRoute.redirect = { name: navigationDefaultNodeKey ?? '' }
 
     // 重置 vim.layout 路由表。
     vueRouter.removeRoute('vim.layout')
@@ -294,11 +295,8 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
     vimLayoutRoute.children = []
     vueRouter.addRoute(vimLayoutRoute)
 
-    const visualizerStore = ctx.store().vueStore<'visualizer', VisualizerStore>('visualizer')
-    const visualizerKey: string = visualizerStore.visualizerKey ?? ''
-
     // 遍历导航节点。
-    for (const nodeInfo of nodeInfos) {
+    for (const nodeInfo of Object.values(navigationNodeInfos)) {
       // 如果节点没有 router 信息，则跳过。
       if (!nodeInfo.router.required) {
         continue
@@ -321,7 +319,7 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
       let componentParam
       if (nodeInfo.router.component.param) {
         componentParam =
-          nodeInfo.router.component.param[visualizerKey] ??
+          nodeInfo.router.component.param[visualizerVisualizerKey] ??
           nodeInfo.router.component.param[''] ??
           {}
       } else {
@@ -332,7 +330,7 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
         permissionRequired: nodeInfo.permission.required,
         permissionNode: nodeInfo.permission.node,
         ezNav: nodeInfo.ezNav.shown,
-        visualizerKey: visualizerKey,
+        visualizerKey: visualizerVisualizerKey,
         compreg: nodeInfo.router.component.key,
         componentParam: componentParam,
       }
@@ -344,7 +342,7 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
       const defaultCompregComponent: Component = ctx.compreg().defaultComponent()
       let component
       if (customCompregComponent) {
-        component = customCompregComponent[visualizerKey] ?? customCompregComponent['']
+        component = customCompregComponent[visualizerVisualizerKey] ?? customCompregComponent['']
       } else {
         component = defaultCompregComponent['']
       }
@@ -372,14 +370,29 @@ function waitReadyAndUpdateVimLayoutRouter(ctx: VimApplicationContext): void {
     }).then(() => Promise.resolve())
   }
 
-  // 添加 vim.layout 的监视逻辑。
-  const readyWatchHandle: WatchHandle = watch(ready, (value) => {
-    if (!value) {
-      return
-    }
-    readyWatchHandle.stop()
-    refreshVimLayoutRoutes(ctx)
-  })
+  const navigationStore = ctx.store().vueStore<'navigation', NavigationStore>('navigation')
+  const visualizerStore = ctx.store().vueStore<'visualizer', VisualizerStore>('visualizer')
+
+  watch(
+    () => ({
+      ready: ready,
+      navigationDefaultNodeKey: navigationStore.defaultNodeKey,
+      navigationNodeInfos: navigationStore.nodeInfos,
+      visualizerVisualizerKey: visualizerStore.visualizerKey,
+    }),
+    (value) => {
+      if (!value.ready) {
+        return
+      }
+      refreshVimLayoutRoutes(
+        ctx,
+        value.navigationDefaultNodeKey,
+        value.navigationNodeInfos,
+        value.visualizerVisualizerKey,
+      )
+    },
+    { deep: true, immediate: true },
+  )
 }
 
 function addLnpStoreLogoutActionListener(ctx: VimApplicationContext): void {

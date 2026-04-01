@@ -10,6 +10,8 @@ import { operateInspectForPublic as textNodeOperateInspect } from '@dwarfeng/fam
 import { resolveResponse } from '@/util/response.ts'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
+import { type Visualizer } from '@/library/types.ts'
+import vim from '@/vim'
 
 // region 初始化逻辑
 
@@ -20,6 +22,7 @@ let ctx: VimApplicationContext | null = null
 
 function init(_ctx: VimApplicationContext): void {
   ctx = _ctx
+  ctx.registerVimInitializedHook(vimInitializedLoadHook)
   ctx.registerWindowLoadHook(windowLoadHook)
 }
 
@@ -33,22 +36,63 @@ function init(_ctx: VimApplicationContext): void {
 export type VisualizerStore = {
   ready: ComputedRef<boolean>
   visualizerKey: ComputedRef<string>
+  visualizer: ComputedRef<Visualizer>
+}
+
+export type Modal = {
+  visualizerKey: string
+  visualizer: Visualizer
 }
 
 // Store 区域。
 const _ready = ref<boolean>(false)
-const _visualizerKey = ref<string>('')
 
-// Visualizer Key。
 const ready: ComputedRef<boolean> = computed(() => _ready.value)
-const visualizerKey: ComputedRef<string> = computed(() => _visualizerKey.value)
 
 function setReady(): void {
   _ready.value = true
 }
 
-function setVisualizerKey(value: string): void {
-  _visualizerKey.value = value
+// 模态。
+const _modal = ref<Modal | null>(null)
+
+const visualizerKey: ComputedRef<string> = computed(() => {
+  if (!_modal.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  return _modal.value.visualizerKey
+})
+
+const visualizer: ComputedRef<Visualizer> = computed(() => {
+  if (!_modal.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  return _modal.value.visualizer
+})
+
+function updateModal(visualizerKey: string | null): void {
+  if (!ctx) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  if (!visualizerKey) {
+    _modal.value = {
+      visualizerKey: ctx.library().setting.defaultVisualizerKey,
+      visualizer: ctx.library().defaultVisualizer(),
+    }
+  } else {
+    const visualizer: Visualizer | null = vim.ctx().library().visualizer(visualizerKey)
+    if (!visualizer) {
+      _modal.value = {
+        visualizerKey: ctx.library().setting.defaultVisualizerKey,
+        visualizer: ctx.library().defaultVisualizer(),
+      }
+    } else {
+      _modal.value = {
+        visualizerKey,
+        visualizer,
+      }
+    }
+  }
 }
 
 /**
@@ -60,6 +104,7 @@ function provideStoreSetup(): StoreSetup {
   return (): VisualizerStore => ({
     ready,
     visualizerKey,
+    visualizer,
   })
 }
 
@@ -68,17 +113,32 @@ function provideStoreSetup(): StoreSetup {
 // region 钩子逻辑
 
 /**
+ * VIM 初始化钩子。
+ */
+function vimInitializedLoadHook(): void {
+  // 初始化模态。
+  initModal()
+}
+
+function initModal(): void {
+  if (!ctx) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  updateModal(null)
+}
+
+/**
  * Window 加载钩子。
  */
 function windowLoadHook(): void {
   // 加载 visualizer key。
-  loadVisualizerKey().then(() => {})
+  loadModal().then(() => {})
 }
 
 /**
  * 加载 Visualizer Key。
  */
-async function loadVisualizerKey(): Promise<void> {
+async function loadModal(): Promise<void> {
   if (!ctx) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
@@ -86,9 +146,8 @@ async function loadVisualizerKey(): Promise<void> {
   try {
     // 获取 Visualizer Key。
     const key: string = await loadVisualizerKey0()
-
-    // 设置 Visualizer Key。
-    setVisualizerKey(key)
+    // 更新模态。
+    updateModal(key)
   } catch (e: unknown) {
     // 输出错误信息。
     ctx.library().defaultVisualizer().notify('errorMessage', '加载 Visualizer Key 失败')
@@ -99,9 +158,8 @@ async function loadVisualizerKey(): Promise<void> {
       message = '未知错误'
     }
     ctx.library().defaultVisualizer().notify('errorMessage', message)
-
-    // 使用默认 Visualizer Key。
-    setVisualizerKey('')
+    // 更新模态。
+    updateModal(null)
   } finally {
     // 设置准备标记。
     setReady()
