@@ -248,7 +248,7 @@ function initParams(): void {
       y.value = parentTop.value + SAFE_DISTANCE
       break
     // 停靠状态：左侧。
-    case SAFE_DISTANCE:
+    case 2:
       x.value = parentLeft.value + SAFE_DISTANCE
       y.value = calculatePosition(
         initialY,
@@ -319,7 +319,7 @@ function updateParams(): void {
       y.value = parentTop.value + SAFE_DISTANCE
       break
     // 停靠状态：左侧。
-    case SAFE_DISTANCE:
+    case 2:
       x.value = parentLeft.value + SAFE_DISTANCE
       y.value = calculatePosition(
         y.value,
@@ -448,7 +448,7 @@ function handleMoving(event: MouseEvent): void {
         y.value = parentTop.value + SAFE_DISTANCE
         break
       // 停靠状态：左侧。
-      case SAFE_DISTANCE:
+      case 2:
         x.value = parentLeft.value + SAFE_DISTANCE
         y.value = calculatePosition(
           yInfer,
