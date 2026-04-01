@@ -12,6 +12,7 @@ import { type VimRouter, type VimRouterLocation } from '@/router/types.ts'
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import { type JsonObject } from '@dwarfeng/familyhelper-ui-component-util/src/util/json.ts'
 
 import {
   createRouter,
@@ -309,7 +310,7 @@ function watchRelatedDataToRefreshVimLayoutRoutes(ctx: VimApplicationContext): v
         ezNav: boolean
         visualizerKey?: string
         compreg: string
-        componentParam?: Record<string, unknown>
+        componentParam?: JsonObject
       }
 
       // 构建元数据。

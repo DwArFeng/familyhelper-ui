@@ -8,6 +8,7 @@ import { type SimplyStore, type StoreSetup, type VimStoreModule } from '@/store/
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { type ExecutableActionHandle } from '@dwarfeng/familyhelper-ui-component-util/src/util/store.ts'
+import { type JsonObject } from '@dwarfeng/familyhelper-ui-component-util/src/util/json.ts'
 
 import { type DisplayInfo, type NodeInfo, type VimNavigation } from '@/navigation/types.ts'
 
@@ -887,7 +888,7 @@ async function loadModalCustom(id: string): Promise<Modal> {
 
   type NodeSetting = {
     key: string
-    display?: Record<'', Record<string, string>> & Record<string, Record<string, string>>
+    display?: Record<'' | string, JsonObject>
     menu?: {
       shown: boolean
     }
@@ -905,7 +906,7 @@ async function loadModalCustom(id: string): Promise<Modal> {
       path?: string
       component?: {
         key: string
-        param?: Record<string, Record<string, unknown>> & { '': Record<string, unknown> }
+        param?: Record<'' | string, JsonObject>
       }
     }
     permission?: {

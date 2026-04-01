@@ -35,7 +35,7 @@
               />
             </svg>
           </span>
-          <span>{{ node.display[visualizerKey]?.label ?? node.display['']?.label ?? '未知' }}</span>
+          <span>{{ parseLabel(node.display) }}</span>
           <span
             class="close-icon"
             v-if="navigationStore.ezNavAnnotation(node.key) === 'active'"
@@ -121,32 +121,20 @@ import { type NavigationStore } from '@/store/modules/navigation.ts'
 import { type NodeInfo } from '@/navigation/types.ts'
 import { type LnpStore } from '@/store/modules/lnp.ts'
 
-import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { nextTick, onMounted, onUnmounted, ref } from 'vue'
 
 import { type RouteLocationRaw } from 'vue-router'
+
+import { parseLabel } from '@/library/modules/comvisual/util/display.ts'
 
 defineOptions({
   name: 'EzNavView',
 })
 
-// region Router 引入
-
-const router = vim.ctx().router().vueRouter()
-
-// endregion
-
 // region Store 引入
 
 const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
-
-// endregion
-
-// region 可视化键处理
-
-const visualizerKey = computed<string>(
-  () => (router.currentRoute.value.meta.visualizerKey as string) ?? '',
-)
 
 // endregion
 
