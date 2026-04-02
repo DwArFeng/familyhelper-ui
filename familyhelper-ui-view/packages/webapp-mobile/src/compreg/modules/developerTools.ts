@@ -34,6 +34,20 @@ const compregSettings: ComponentSetting[] = [
         import('@/views/nodes/comvisual/developerTools/visualizerSupport/VisualizerSupport.vue'),
     },
   },
+  {
+    key: 'developerTools.compregSupport',
+    name: '组件注册',
+    description: '组件注册',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+    },
+    component: {
+      '': () => import('@/views/nodes/comvisual/developerTools/compregSupport/CompregSupport.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/developerTools/compregSupport/CompregSupport.vue'),
+    },
+  },
 ]
 
 /**
