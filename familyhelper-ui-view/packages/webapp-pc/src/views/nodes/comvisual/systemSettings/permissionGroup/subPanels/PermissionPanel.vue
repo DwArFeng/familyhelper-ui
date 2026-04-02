@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-      <div class="section-divider" role="separator" />
+      <section-divider />
       <paging-table-panel
         class="permission-table-panel"
         v-model:current-page="currentPage"
@@ -62,6 +62,7 @@
 import { ref, watch } from 'vue'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
+import SectionDivider from '@/components/comvisual/form/divider/sectionDivider/SectionDivider.vue'
 import PagingTableColumn from '@/components/comvisual/table/pagingTablePanel/PagingTableColumn.vue'
 import PagingTablePanel from '@/components/comvisual/table/pagingTablePanel/PagingTablePanel.vue'
 
@@ -242,13 +243,6 @@ watch(
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-}
-
-.section-divider {
-  height: 1px;
-  margin: 15px 0;
-  background: #ebeef5;
-  border: none;
 }
 
 .permission-table-panel {

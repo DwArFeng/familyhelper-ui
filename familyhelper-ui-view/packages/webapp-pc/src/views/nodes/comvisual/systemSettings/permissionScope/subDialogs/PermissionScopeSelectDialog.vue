@@ -14,7 +14,7 @@
             <native-button kind="success" @click="handlePermissionScopeSearch"
               >刷新数据</native-button
             >
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <div class="name-search-bar">
               <span class="name-search-prepend">作用域名称</span>
               <input
@@ -98,6 +98,7 @@ import CornerLightPanel from '@/components/comvisual/layout/cornerLightPanel/Cor
 import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 import ModalDialog from '@/components/comvisual/dialog/modalDialog/ModalDialog.vue'
 
 import { useGeneralCardPanel } from '@/components/comvisual/card/cardPanel/composables.ts'
@@ -287,12 +288,6 @@ function handleHotKeyDown(): void {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.header-sep {
-  width: 1px;
-  height: 20px;
-  background: #dcdfe6;
 }
 
 .name-search-bar {
