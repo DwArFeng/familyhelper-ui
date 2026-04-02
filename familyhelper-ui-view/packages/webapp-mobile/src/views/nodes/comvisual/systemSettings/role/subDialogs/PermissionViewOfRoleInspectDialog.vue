@@ -8,8 +8,8 @@
   >
     <div class="body-wrapper">
       <loading-overlay :loading="loading > 0" />
-      <vertical-tabs v-model="activeTabName" :panes="tabPanes">
-        <vertical-tab-pane name="matched">
+      <native-tabs v-model="activeTabName">
+        <native-tab-pane name="matched" label="匹配权限">
           <header-layout-panel class="tab-panel">
             <template v-slot:header>
               <div class="header-container">
@@ -52,8 +52,8 @@
               </paging-table-panel>
             </template>
           </header-layout-panel>
-        </vertical-tab-pane>
-        <vertical-tab-pane name="accepted">
+        </native-tab-pane>
+        <native-tab-pane name="accepted" label="已接受权限">
           <header-layout-panel class="tab-panel">
             <template v-slot:header>
               <div class="header-container">
@@ -96,8 +96,8 @@
               </paging-table-panel>
             </template>
           </header-layout-panel>
-        </vertical-tab-pane>
-        <vertical-tab-pane name="rejected">
+        </native-tab-pane>
+        <native-tab-pane name="rejected" label="已拒绝权限">
           <header-layout-panel class="tab-panel">
             <template v-slot:header>
               <div class="header-container">
@@ -140,8 +140,8 @@
               </paging-table-panel>
             </template>
           </header-layout-panel>
-        </vertical-tab-pane>
-        <vertical-tab-pane name="global_rejected">
+        </native-tab-pane>
+        <native-tab-pane name="global_rejected" label="全局拒绝权限">
           <header-layout-panel class="tab-panel">
             <template v-slot:header>
               <div class="header-container">
@@ -184,8 +184,8 @@
               </paging-table-panel>
             </template>
           </header-layout-panel>
-        </vertical-tab-pane>
-      </vertical-tabs>
+        </native-tab-pane>
+      </native-tabs>
     </div>
     <template v-slot:footer>
       <native-button @click="watchedVisible = false">关闭</native-button>
@@ -202,8 +202,8 @@ import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/H
 import ModalDialog from '@/components/comvisual/dialog/modalDialog/ModalDialog.vue'
 import PagingTableColumn from '@/components/comvisual/table/pagingTablePanel/PagingTableColumn.vue'
 import PagingTablePanel from '@/components/comvisual/table/pagingTablePanel/PagingTablePanel.vue'
-import VerticalTabPane from '@/components/comvisual/tabs/verticalTabs/VerticalTabPane.vue'
-import VerticalTabs from '@/components/comvisual/tabs/verticalTabs/VerticalTabs.vue'
+import NativeTabPane from '@/components/comvisual/tabs/nativeTabs/NativeTabPane.vue'
+import NativeTabs from '@/components/comvisual/tabs/nativeTabs/NativeTabs.vue'
 
 import { useIdentityFrontendPagingTablePanel } from '@/components/comvisual/table/pagingTablePanel/composables.ts'
 
@@ -266,13 +266,6 @@ watch(
 // endregion
 
 // region 数据
-
-const tabPanes = [
-  { name: 'matched', label: '匹配权限' },
-  { name: 'accepted', label: '已接受权限' },
-  { name: 'rejected', label: '已拒绝权限' },
-  { name: 'global_rejected', label: '全局拒绝权限' },
-]
 
 const activeTabName = ref<string>('matched')
 

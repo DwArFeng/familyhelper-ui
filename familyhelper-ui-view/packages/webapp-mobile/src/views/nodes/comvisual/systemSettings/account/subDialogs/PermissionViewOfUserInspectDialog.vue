@@ -17,8 +17,8 @@
         <template v-slot:default>
           <placeholder-panel v-if="scopeIndicatorValue === null" text="请选择权限作用域" />
           <div v-else class="dialog-body-inner">
-            <vertical-tabs v-model="activeTabName" class="tabs-panel" :panes="mainTabPanes">
-              <vertical-tab-pane name="matched">
+            <native-tabs v-model="activeTabName" class="tabs-panel">
+              <native-tab-pane name="matched" label="匹配权限">
                 <header-layout-panel class="tab-panel">
                   <template v-slot:header>
                     <div class="header-container">
@@ -69,8 +69,8 @@
                     </paging-table-panel>
                   </template>
                 </header-layout-panel>
-              </vertical-tab-pane>
-              <vertical-tab-pane name="role_details">
+              </native-tab-pane>
+              <native-tab-pane name="role_details" label="角色明细">
                 <div class="role-details-pane">
                   <template v-if="roleDetailsItems.length > 0">
                     <label class="role-select">
@@ -94,8 +94,8 @@
                   </template>
                   <div v-else class="role-details-empty">暂无角色明细</div>
                 </div>
-              </vertical-tab-pane>
-            </vertical-tabs>
+              </native-tab-pane>
+            </native-tabs>
           </div>
         </template>
       </header-layout-panel>
@@ -119,8 +119,8 @@ import ModalDialog from '@/components/comvisual/dialog/modalDialog/ModalDialog.v
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import PagingTableColumn from '@/components/comvisual/table/pagingTablePanel/PagingTableColumn.vue'
 import PagingTablePanel from '@/components/comvisual/table/pagingTablePanel/PagingTablePanel.vue'
-import VerticalTabPane from '@/components/comvisual/tabs/verticalTabs/VerticalTabPane.vue'
-import VerticalTabs from '@/components/comvisual/tabs/verticalTabs/VerticalTabs.vue'
+import NativeTabPane from '@/components/comvisual/tabs/nativeTabs/NativeTabPane.vue'
+import NativeTabs from '@/components/comvisual/tabs/nativeTabs/NativeTabs.vue'
 
 import { useIdentityFrontendPagingTablePanel } from '@/components/comvisual/table/pagingTablePanel/composables.ts'
 
@@ -199,11 +199,6 @@ function handlePermissionScopeIndicatorChanged(value: Scope | null): void {
 // region 数据
 
 const activeTabName = ref<string>('matched')
-
-const mainTabPanes = [
-  { name: 'matched', label: '匹配权限' },
-  { name: 'role_details', label: '角色明细' },
-]
 
 const matchedPermissionsSearchValue = ref<string>('')
 

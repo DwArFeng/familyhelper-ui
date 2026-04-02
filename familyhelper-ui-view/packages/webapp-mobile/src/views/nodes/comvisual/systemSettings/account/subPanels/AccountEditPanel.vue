@@ -1,7 +1,7 @@
 <template>
   <div class="account-edit-panel-container">
-    <vertical-tabs v-model="tabsActiveName" class="tabs-panel" :panes="tabPanes">
-      <vertical-tab-pane name="overlook">
+    <native-tabs v-model="tabsActiveName" class="tabs-panel">
+      <native-tab-pane name="overlook" label="概览">
         <account-overview-panel
           ref="accountOverviewPanelRef"
           mode="DEFAULT"
@@ -10,8 +10,8 @@
           @on-account-property-updated="() => handleAccountPropertyUpdated('DEFAULT')"
           @on-panel-floaty-button-clicked="showPanelFloaty(0)"
         />
-      </vertical-tab-pane>
-      <vertical-tab-pane name="role">
+      </native-tab-pane>
+      <native-tab-pane name="role" label="角色">
         <account-role-panel
           ref="accountRolePanelRef"
           mode="DEFAULT"
@@ -19,8 +19,8 @@
           @on-panel-floaty-button-clicked="showPanelFloaty(1)"
           @on-role-data-updated="() => handleRoleDataUpdated('DEFAULT')"
         />
-      </vertical-tab-pane>
-      <vertical-tab-pane name="protector">
+      </native-tab-pane>
+      <native-tab-pane name="protector" label="保护器">
         <account-protector-info-panel
           ref="accountProtectorInfoPanelRef"
           mode="DEFAULT"
@@ -28,8 +28,8 @@
           :readonly="readonly"
           @on-panel-floaty-button-clicked="showPanelFloaty(2)"
         />
-      </vertical-tab-pane>
-    </vertical-tabs>
+      </native-tab-pane>
+    </native-tabs>
     <floaty-dialog
       v-model:visible="panelFloatyVisible"
       show-dock-button
@@ -85,8 +85,8 @@ import {
   type VisualField,
 } from '@/components/comvisual/dialog/floatyDialog/types.ts'
 import { useUserPreferenceFloatyDialog } from '@/components/comvisual/dialog/floatyDialog/composables.ts'
-import VerticalTabPane from '@/components/comvisual/tabs/verticalTabs/VerticalTabPane.vue'
-import VerticalTabs from '@/components/comvisual/tabs/verticalTabs/VerticalTabs.vue'
+import NativeTabPane from '@/components/comvisual/tabs/nativeTabs/NativeTabPane.vue'
+import NativeTabs from '@/components/comvisual/tabs/nativeTabs/NativeTabs.vue'
 
 import AccountOverviewPanel from './AccountOverviewPanel.vue'
 import AccountProtectorInfoPanel from './AccountProtectorInfoPanel.vue'
@@ -126,12 +126,6 @@ const emit = defineEmits<Emits>()
 type TabsActiveName = 'overlook' | 'role' | 'protector'
 
 const tabsActiveName = ref<TabsActiveName>('overlook')
-
-const tabPanes = [
-  { name: 'overlook', label: '概览' },
-  { name: 'role', label: '角色' },
-  { name: 'protector', label: '保护器' },
-]
 
 // endregion
 

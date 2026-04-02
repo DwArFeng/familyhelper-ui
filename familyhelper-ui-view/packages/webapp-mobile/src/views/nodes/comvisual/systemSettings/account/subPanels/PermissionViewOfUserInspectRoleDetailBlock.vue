@@ -1,6 +1,6 @@
 <template>
-  <vertical-tabs v-model="activeInnerTabName" class="role-detail-tabs" nested :panes="innerPanes">
-    <vertical-tab-pane name="accepted">
+  <native-tabs v-model="activeInnerTabName" class="role-detail-tabs" tab-position="top">
+    <native-tab-pane name="accepted" label="已接受权限">
       <header-layout-panel class="inner-tab-panel">
         <template v-slot:header>
           <div class="header-container">
@@ -43,8 +43,8 @@
           </paging-table-panel>
         </template>
       </header-layout-panel>
-    </vertical-tab-pane>
-    <vertical-tab-pane name="rejected">
+    </native-tab-pane>
+    <native-tab-pane name="rejected" label="已拒绝权限">
       <header-layout-panel class="inner-tab-panel">
         <template v-slot:header>
           <div class="header-container">
@@ -87,8 +87,8 @@
           </paging-table-panel>
         </template>
       </header-layout-panel>
-    </vertical-tab-pane>
-    <vertical-tab-pane name="global_rejected">
+    </native-tab-pane>
+    <native-tab-pane name="global_rejected" label="全局拒绝权限">
       <header-layout-panel class="inner-tab-panel">
         <template v-slot:header>
           <div class="header-container">
@@ -135,8 +135,8 @@
           </paging-table-panel>
         </template>
       </header-layout-panel>
-    </vertical-tab-pane>
-  </vertical-tabs>
+    </native-tab-pane>
+  </native-tabs>
 </template>
 
 <script setup lang="ts">
@@ -147,8 +147,8 @@ import InputGroup from '@/components/comvisual/form/inputGroup/InputGroup.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 import PagingTableColumn from '@/components/comvisual/table/pagingTablePanel/PagingTableColumn.vue'
 import PagingTablePanel from '@/components/comvisual/table/pagingTablePanel/PagingTablePanel.vue'
-import VerticalTabPane from '@/components/comvisual/tabs/verticalTabs/VerticalTabPane.vue'
-import VerticalTabs from '@/components/comvisual/tabs/verticalTabs/VerticalTabs.vue'
+import NativeTabPane from '@/components/comvisual/tabs/nativeTabs/NativeTabPane.vue'
+import NativeTabs from '@/components/comvisual/tabs/nativeTabs/NativeTabs.vue'
 
 import { useIdentityFrontendPagingTablePanel } from '@/components/comvisual/table/pagingTablePanel/composables.ts'
 
@@ -170,12 +170,6 @@ const props = defineProps<Props>()
 // endregion
 
 // region 表格与筛选
-
-const innerPanes = [
-  { name: 'accepted', label: '已接受权限' },
-  { name: 'rejected', label: '已拒绝权限' },
-  { name: 'global_rejected', label: '全局拒绝权限' },
-]
 
 const activeInnerTabName = ref<string>('accepted')
 

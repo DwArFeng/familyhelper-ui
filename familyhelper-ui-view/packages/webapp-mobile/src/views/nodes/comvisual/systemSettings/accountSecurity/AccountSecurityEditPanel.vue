@@ -1,39 +1,39 @@
 <template>
   <div class="account-security-edit-panel-container">
-    <vertical-tabs v-model="tabsActiveName" class="tabs-panel" :panes="tabPanes">
-      <vertical-tab-pane name="account_overlook">
+    <native-tabs v-model="tabsActiveName" class="tabs-panel">
+      <native-tab-pane name="account_overlook" label="账户概览">
         <account-overlook-panel
           mode="DEFAULT"
           :account-id="accountId"
           :readonly="readonly"
           @on-panel-floaty-button-clicked="showPanelFloaty(0)"
         />
-      </vertical-tab-pane>
-      <vertical-tab-pane name="login_state">
+      </native-tab-pane>
+      <native-tab-pane name="login_state" label="凭证管理">
         <login-state-panel
           mode="DEFAULT"
           :account-id="accountId"
           :readonly="readonly"
           @on-panel-floaty-button-clicked="showPanelFloaty(1)"
         />
-      </vertical-tab-pane>
-      <vertical-tab-pane name="login_history">
+      </native-tab-pane>
+      <native-tab-pane name="login_history" label="登录历史">
         <login-history-panel
           mode="DEFAULT"
           :account-id="accountId"
           :readonly="readonly"
           @on-panel-floaty-button-clicked="showPanelFloaty(2)"
         />
-      </vertical-tab-pane>
-      <vertical-tab-pane name="derive_history">
+      </native-tab-pane>
+      <native-tab-pane name="derive_history" label="派生历史">
         <derive-history-panel
           mode="DEFAULT"
           :account-id="accountId"
           :readonly="readonly"
           @on-panel-floaty-button-clicked="showPanelFloaty(3)"
         />
-      </vertical-tab-pane>
-    </vertical-tabs>
+      </native-tab-pane>
+    </native-tabs>
     <floaty-dialog
       v-model:visible="panelFloatyVisible"
       show-dock-button
@@ -89,8 +89,8 @@ import {
   type VisualField,
 } from '@/components/comvisual/dialog/floatyDialog/types.ts'
 import { useUserPreferenceFloatyDialog } from '@/components/comvisual/dialog/floatyDialog/composables.ts'
-import VerticalTabPane from '@/components/comvisual/tabs/verticalTabs/VerticalTabPane.vue'
-import VerticalTabs from '@/components/comvisual/tabs/verticalTabs/VerticalTabs.vue'
+import NativeTabPane from '@/components/comvisual/tabs/nativeTabs/NativeTabPane.vue'
+import NativeTabs from '@/components/comvisual/tabs/nativeTabs/NativeTabs.vue'
 
 import AccountOverlookPanel from './subPanels/AccountOverlookPanel.vue'
 import DeriveHistoryPanel from './subPanels/DeriveHistoryPanel.vue'
@@ -122,13 +122,6 @@ const props = withDefaults(defineProps<Props>(), {
 type TabsActiveName = 'account_overlook' | 'login_state' | 'login_history' | 'derive_history'
 
 const tabsActiveName = ref<TabsActiveName>('account_overlook')
-
-const tabPanes = [
-  { name: 'account_overlook', label: '账户概览' },
-  { name: 'login_state', label: '凭证管理' },
-  { name: 'login_history', label: '登录历史' },
-  { name: 'derive_history', label: '派生历史' },
-]
 
 // endregion
 
