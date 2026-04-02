@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块组件优化。
+  - 重构 `comvisual/tree/lazySearchTreePanel/LazySearchTreePanel.vue` 组件，提升公共子组件、类型、组合式方法。
   - 优化 `comvisual/form/divider/sectionDivider/SectionDivider.vue` 组件的路径。
   - 优化 `comvisual/form/divider/verticalDiriver/VerticalDivider.vue` 组件的路径。
   - 优化 `comvisual/form/divider/VerticalDivider.vue` 组件的样式。
