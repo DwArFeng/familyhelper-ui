@@ -57,7 +57,7 @@
                   @mouseenter="onOptionHover(idx, $event)"
                 >
                   <slot name="default" :node="null" :item="opt as CT">
-                    <span>{{ searchOptionLabel(opt as CT) }}</span>
+                    <default-tree-default-slot :label="searchOptionLabel(opt as CT)" />
                   </slot>
                 </native-button>
               </div>
@@ -94,10 +94,23 @@
               "
             >
               <template v-slot:default="slotProps">
-                <slot name="default" :node="slotProps.node" :item="slotProps.item" />
+                <slot name="default" :node="slotProps.node" :item="slotProps.item">
+                  <default-tree-default-slot :label="slotProps.item[labelField] as string" />
+                </slot>
               </template>
               <template v-slot:operateArea="slotProps">
-                <slot name="operateArea" v-bind="slotProps" />
+                <slot name="operateArea" v-bind="slotProps">
+                  <default-tree-operate-area-slot
+                    :node="slotProps.node"
+                    :item="slotProps.item"
+                    :inspect-button-visible="inspectButtonVisible"
+                    :edit-button-visible="editButtonVisible"
+                    :delete-button-visible="deleteButtonVisible"
+                    @onItemInspect="handleOperateAreaItemInspect"
+                    @onItemEdit="handleOperateAreaItemEdit"
+                    @onItemDelete="handleOperateAreaItemDelete"
+                  />
+                </slot>
               </template>
             </lazy-tree-node-row>
           </div>
@@ -113,6 +126,8 @@ import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
+import DefaultTreeDefaultSlot from '@/components/comvisual/tree/commons/DefaultTreeDefaultSlot.vue'
+import DefaultTreeOperateAreaSlot from '@/components/comvisual/tree/commons/DefaultTreeOperateAreaSlot.vue'
 
 import LazyTreeNodeRow from './LazyTreeNodeRow.vue'
 import { type NativeTreeNode } from './nativeLazyTree.ts'
@@ -640,16 +655,16 @@ onMounted(() => {
 
 // region 操作区
 
-function handleOperateAreaItemInspect(item: CT, node: NativeTreeNode<CT>): void {
-  emit('onItemInspect', item, node as TreeNode<CT>)
+function handleOperateAreaItemInspect(item: CT, node: TreeNode<CT>): void {
+  emit('onItemInspect', item, node)
 }
 
-function handleOperateAreaItemEdit(item: CT, node: NativeTreeNode<CT>): void {
-  emit('onItemEdit', item, node as TreeNode<CT>)
+function handleOperateAreaItemEdit(item: CT, node: TreeNode<CT>): void {
+  emit('onItemEdit', item, node)
 }
 
-function handleOperateAreaItemDelete(item: CT, node: NativeTreeNode<CT>): void {
-  emit('onItemDelete', item, node as TreeNode<CT>)
+function handleOperateAreaItemDelete(item: CT, node: TreeNode<CT>): void {
+  emit('onItemDelete', item, node)
 }
 
 // endregion
