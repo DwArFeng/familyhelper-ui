@@ -407,7 +407,6 @@ function handlePermissionStringIdInput(e: Event): void {
 }
 
 function handleShowPermissionCreateDialog(): void {
-  permissionMaintainDialogItem.value = { ...INITIAL_PERMISSION_MAINTAIN_DIALOG_ITEM }
   showPermissionCreateMaintainDialog()
 }
 
