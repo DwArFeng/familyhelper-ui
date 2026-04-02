@@ -3,6 +3,7 @@
 import { type VimApplicationContext } from '@/vim/types.ts'
 import {
   type Component,
+  type ComponentInfo,
   type ComponentSetting,
   type CompregSetting,
   type VimCompreg,
@@ -11,6 +12,7 @@ import {
 import { defaultComponentKey } from '@/compreg/props.ts'
 
 import { toKebabCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
+import { type JsonObject } from '@dwarfeng/familyhelper-ui-component-util/src/util/json.ts'
 
 type Module = { default: VimCompregModule }
 
@@ -22,7 +24,7 @@ let status: 'initializing' | 'initialized' = 'initializing'
 /**
  * Compreg 组件信息。
  */
-const compregComponents: Record<string, Component> = {}
+const compregComponentInfos: Record<string, ComponentInfo> = {}
 
 /**
  * Compreg。
@@ -30,9 +32,9 @@ const compregComponents: Record<string, Component> = {}
 const compreg: VimCompreg = {
   init,
   setting: setting(),
-  defaultComponent,
-  component,
-  components,
+  defaultComponentInfo,
+  componentInfo,
+  componentInfos,
 }
 
 /**
@@ -103,12 +105,37 @@ async function init(ctx: VimApplicationContext): Promise<void> {
     return _component
   }
 
-  // 将 ComponentSetting 转换为 Component，并存入 compregComponents 对象。
+  /*
+   * 对于 exampleRouterComponentParam，将每个 key 都变为 kebab 格式，值保持不变。
+   */
+  function mapExampleRouterComponentParam(
+    param: Record<'' | string, JsonObject>,
+  ): Record<'' | string, JsonObject> {
+    const _param: Record<'' | string, JsonObject> = { '': {} }
+    for (const key in param) {
+      _param[toKebabCase(key)] = param[key]
+    }
+    return _param
+  }
+
+  function mapComponentInfo(setting: ComponentSetting): ComponentInfo {
+    return {
+      key: setting.key,
+      name: setting.name,
+      description: setting.description,
+      exampleRouterComponentParam: mapExampleRouterComponentParam(
+        setting.exampleRouterComponentParam,
+      ),
+      component: mapComponent(setting.component),
+    }
+  }
+
+  // 将 ComponentSetting 转换为 ComponentInfo，并存入 compregComponentInfos 对象。
   for (const compregSetting of compregSettings) {
-    if (compregComponents[compregSetting.key]) {
+    if (compregComponentInfos[compregSetting.key]) {
       throw new Error(`Compreg 组件 ${compregSetting.key} 重复`)
     }
-    compregComponents[compregSetting.key] = mapComponent(compregSetting.component)
+    compregComponentInfos[compregSetting.key] = mapComponentInfo(compregSetting)
   }
 
   // 设置状态。
@@ -127,43 +154,43 @@ function setting(): CompregSetting {
 }
 
 /**
- * 获取默认的 Component。
+ * 获取默认的 ComponentInfo。
  *
- * @returns 默认的 Component。
+ * @returns 默认的 ComponentInfo。
  */
-function defaultComponent(): Component {
+function defaultComponentInfo(): ComponentInfo {
   if (status === 'initializing') {
-    throw new Error('不能在 initializing 状态下获取 defaultComponent')
+    throw new Error('不能在 initializing 状态下获取 defaultComponentInfo')
   }
-  const component: Component = compregComponents[defaultComponentKey]
-  if (!component) {
-    throw new Error('找不到默认的 Component')
+  const info: ComponentInfo = compregComponentInfos[defaultComponentKey]
+  if (!info) {
+    throw new Error('找不到默认的 ComponentInfo')
   }
-  return component
+  return info
 }
 
 /**
- * 根据指定的 key 获取组件。
+ * 根据指定的 key 获取组件信息。
  *
  * @param key 指定的 key。
  */
-function component(key: string): Component | null {
+function componentInfo(key: string): ComponentInfo | null {
   if (status === 'initializing') {
-    throw new Error('不能在 initializing 状态下获取 component')
+    throw new Error('不能在 initializing 状态下获取 componentInfo')
   }
-  return compregComponents[key] || null
+  return compregComponentInfos[key] || null
 }
 
 /**
- * 获取全部 Compreg 组件。
+ * 获取全部 Compreg 组件信息。
  *
- * @returns 全部 Compreg 组件与其 key 的映射。
+ * @returns 全部 Compreg 组件信息与其 key 的映射。
  */
-function components(): Readonly<Record<string, Component>> {
+function componentInfos(): Readonly<Record<string, ComponentInfo>> {
   if (status === 'initializing') {
-    throw new Error('不能在 initializing 状态下获取 components')
+    throw new Error('不能在 initializing 状态下获取 componentInfos')
   }
-  return compregComponents
+  return compregComponentInfos
 }
 
 export default compreg

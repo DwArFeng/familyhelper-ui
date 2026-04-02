@@ -6,7 +6,6 @@ import { type VimApplicationContext } from '@/vim/types.ts'
 
 import { guardNotExistsErrorText, noGuardNameErrorText } from './texts.ts'
 
-import { type Component } from '@/compreg/types.ts'
 import { type VimRouter, type VimRouterLocation } from '@/router/types.ts'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
@@ -337,15 +336,14 @@ function watchRelatedDataToRefreshVimLayoutRoutes(ctx: VimApplicationContext): v
       }
 
       // 构建 vim 子路由记录。
-      const customCompregComponent: Component | null = ctx
-        .compreg()
-        .component(nodeInfo.router.component.key)
-      const defaultCompregComponent: Component = ctx.compreg().defaultComponent()
+      const customCompregInfo = ctx.compreg().componentInfo(nodeInfo.router.component.key)
+      const defaultCompregInfo = ctx.compreg().defaultComponentInfo()
       let component
-      if (customCompregComponent) {
-        component = customCompregComponent[visualizerVisualizerKey] ?? customCompregComponent['']
+      if (customCompregInfo) {
+        component =
+          customCompregInfo.component[visualizerVisualizerKey] ?? customCompregInfo.component['']
       } else {
-        component = defaultCompregComponent['']
+        component = defaultCompregInfo.component['']
       }
       const vimChildRoute: RouteRecordRaw = {
         name: nodeInfo.key,

@@ -21,6 +21,13 @@ function init(): void {}
 const compregSettings: ComponentSetting[] = [
   {
     key: 'note.noteBook',
+    name: '笔记本',
+    description: '笔记本',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
       comvisual: () => import('@/views/nodes/elementPlus/note/noteBook/NoteBook.vue'),
@@ -29,6 +36,13 @@ const compregSettings: ComponentSetting[] = [
   },
   {
     key: 'note.noteManagement',
+    name: '笔记管理',
+    description: '笔记管理',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),
       comvisual: () => import('@/views/nodes/elementPlus/note/noteManagement/NoteManagement.vue'),

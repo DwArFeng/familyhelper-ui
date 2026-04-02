@@ -21,6 +21,13 @@ function init(): void {}
 const compregSettings: ComponentSetting[] = [
   {
     key: 'about',
+    name: '关于',
+    description: '关于',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () => import('@/views/nodes/elementPlus/about/About.vue'),
       comvisual: () => import('@/views/nodes/elementPlus/about/About.vue'),

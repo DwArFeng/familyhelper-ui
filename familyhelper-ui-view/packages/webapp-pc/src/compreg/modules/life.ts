@@ -21,6 +21,13 @@ function init(): void {}
 const compregSettings: ComponentSetting[] = [
   {
     key: 'life.pbSet',
+    name: '个人最佳集合',
+    description: '个人最佳集合',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
       comvisual: () => import('@/views/nodes/elementPlus/life/pbSet/PbSet.vue'),
@@ -29,6 +36,13 @@ const compregSettings: ComponentSetting[] = [
   },
   {
     key: 'life.pbManagement',
+    name: '个人最佳管理',
+    description: '个人最佳管理',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),
       comvisual: () => import('@/views/nodes/elementPlus/life/pbManagement/PbManagement.vue'),

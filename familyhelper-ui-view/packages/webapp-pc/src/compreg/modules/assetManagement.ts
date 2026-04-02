@@ -21,6 +21,13 @@ function init(): void {}
 const compregSettings: ComponentSetting[] = [
   {
     key: 'assetsManagement.assetCatalog',
+    name: '资产目录管理',
+    description: '资产目录管理',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () => import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
       comvisual: () =>
@@ -31,6 +38,13 @@ const compregSettings: ComponentSetting[] = [
   },
   {
     key: 'assetsManagement.assetBom',
+    name: '资产BOM管理',
+    description: '资产BOM管理',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
       comvisual: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
@@ -39,6 +53,13 @@ const compregSettings: ComponentSetting[] = [
   },
   {
     key: 'assetsManagement.itemTypeIndicator',
+    name: '项目类型管理',
+    description: '项目类型管理',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () =>
         import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
@@ -50,6 +71,13 @@ const compregSettings: ComponentSetting[] = [
   },
   {
     key: 'assetsManagement.itemLabel',
+    name: '项目标签管理',
+    description: '项目标签管理',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
     component: {
       '': () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
       comvisual: () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
