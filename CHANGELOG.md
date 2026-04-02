@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件新增。
+  - 组件 `comvisual/tree/searchTreePanel/SearchTreePanel.vue` 新增。
+
 - `webapp-pc` 子模块组件优化。
   - 优化 `comvisual/table/pagingTablePanel/PagingTablePanel.vue` 组件的显示样式。
   - 重构 `comvisual/tree/lazySearchTreePanel/LazySearchTreePanel.vue` 组件，提升公共子组件、类型、组合式方法。
