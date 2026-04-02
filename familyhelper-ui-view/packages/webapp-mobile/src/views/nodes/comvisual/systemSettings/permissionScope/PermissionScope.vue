@@ -6,7 +6,7 @@
           <native-button kind="success" @click="handlePermissionScopeSearch">
             刷新数据
           </native-button>
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <div class="name-search-bar">
             <span class="name-search-prepend">作用域名称</span>
             <input
@@ -17,7 +17,7 @@
             />
             <native-button attach-end @click="handlePermissionScopeSearch">搜索</native-button>
           </div>
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <native-button
             kind="primary"
             :disabled="applyChangesButtonDisabled"
@@ -127,6 +127,7 @@ import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormIte
 import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 import NativeLink from '@/components/comvisual/form/nativeLink/NativeLink.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 
 import { useGeneralCardPanel } from '@/components/comvisual/card/cardPanel/composables.ts'
 import { useGeneralMaintainDialog } from '@/components/comvisual/dialog/maintainDialog/composables.ts'
@@ -397,12 +398,6 @@ async function handlePermissionScopeEdit(item: PermissionScopeMaintainDialogItem
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.header-sep {
-  width: 1px;
-  height: 20px;
-  background: #dcdfe6;
 }
 
 .name-search-bar {

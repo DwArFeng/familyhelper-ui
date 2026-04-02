@@ -16,9 +16,9 @@
             <native-button kind="success" :disabled="scopeId === ''" @click="handlePexpSearch">
               刷新数据
             </native-button>
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <permission-scope-indicator @on-changed="handlePermissionScopeIndicatorChanged" />
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <native-button
               kind="primary"
               :disabled="applyChangesButtonDisabled"
@@ -26,7 +26,7 @@
             >
               应用变更
             </native-button>
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <native-button
               kind="info"
               :disabled="scopeId === ''"
@@ -115,6 +115,7 @@ import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/H
 import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormItem.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import PagingTableColumn from '@/components/comvisual/table/pagingTablePanel/PagingTableColumn.vue'
@@ -517,14 +518,6 @@ async function handlePexpDelete(item: DispPexp): Promise<void> {
   flex-wrap: wrap;
   gap: 8px;
   row-gap: 5px;
-}
-
-.header-sep {
-  display: inline-block;
-  width: 1px;
-  height: 18px;
-  margin: 0 4px;
-  background: #dcdfe6;
 }
 
 .form-input {

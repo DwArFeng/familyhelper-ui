@@ -8,7 +8,7 @@
             新建角色
           </native-button>
           <native-button kind="success" @click="handleRoleSearch">刷新数据</native-button>
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <native-button
             kind="primary"
             :disabled="applyChangesButtonDisabled"
@@ -107,6 +107,7 @@ import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/Loadi
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'
 import NativeSwitch from '@/components/comvisual/form/nativeSwitch/NativeSwitch.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 import PagingTableColumn from '@/components/comvisual/table/pagingTablePanel/PagingTableColumn.vue'
 import PagingTablePanel from '@/components/comvisual/table/pagingTablePanel/PagingTablePanel.vue'
 
@@ -402,14 +403,6 @@ onMounted(() => {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.header-sep {
-  display: inline-block;
-  width: 1px;
-  height: 18px;
-  margin: 0 4px;
-  background: #dcdfe6;
 }
 
 .form-input {

@@ -12,7 +12,7 @@
             <native-button kind="success" :disabled="readonly" @click="handleProtectorInfoSearch">
               刷新
             </native-button>
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <native-button
               kind="primary"
               :disabled="readonly || applyChangesButtonDisabled"
@@ -85,6 +85,7 @@ import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormIte
 import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 
 import AccountProtectorSupportSelectDialog from '@/views/nodes/comvisual/systemSettings/accountProtectorSupport/AccountProtectorSupportSelectDialog.vue'
 import { type ProtectorSupport } from '@dwarfeng/familyhelper-ui-component-api/src/api/acckeeper/protectorSupport.ts'
@@ -305,13 +306,6 @@ function handlePanelFloatyButtonClicked(): void {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.header-sep {
-  display: inline-block;
-  width: 1px;
-  height: 18px;
-  background: #dcdfe6;
 }
 
 .header-spacer {

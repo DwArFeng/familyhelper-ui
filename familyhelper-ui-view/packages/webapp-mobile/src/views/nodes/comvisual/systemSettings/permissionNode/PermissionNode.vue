@@ -18,9 +18,9 @@
           >
             刷新数据
           </native-button>
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <permission-scope-indicator @on-changed="handlePermissionScopeIndicatorChanged" />
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <span class="search-label">权限节点</span>
           <input
             v-model="idSearchBarValue"
@@ -37,7 +37,7 @@
           >
             搜索
           </native-button>
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <native-button
             kind="primary"
             :disabled="applyChangesButtonDisabled"
@@ -186,6 +186,7 @@ import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/Loadi
 import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormItem.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 import NativeLink from '@/components/comvisual/form/nativeLink/NativeLink.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import PagingTableColumn from '@/components/comvisual/table/pagingTablePanel/PagingTableColumn.vue'
@@ -543,14 +544,6 @@ async function handlePermissionEdit(item: PermissionMaintainDialogItem): Promise
   flex-wrap: wrap;
   gap: 8px;
   row-gap: 5px;
-}
-
-.header-sep {
-  display: inline-block;
-  width: 1px;
-  height: 18px;
-  margin: 0 4px;
-  background: #dcdfe6;
 }
 
 .search-label {

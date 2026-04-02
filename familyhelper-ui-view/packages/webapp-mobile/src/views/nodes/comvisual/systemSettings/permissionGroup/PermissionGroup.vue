@@ -23,7 +23,7 @@
           >
             新建子权限组
           </native-button>
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <native-button
             kind="primary"
             :disabled="scopeIndicatorValue === null || treeCurrentItem === null"
@@ -45,9 +45,9 @@
           >
             取消关联权限节点
           </native-button>
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <permission-scope-indicator @on-changed="handlePermissionScopeIndicatorChanged" />
-          <span class="header-sep" aria-hidden="true" />
+          <vertical-divider />
           <native-button
             kind="primary"
             :disabled="applyChangesButtonDisabled"
@@ -128,6 +128,7 @@ import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/B
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormItem.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 
@@ -563,14 +564,6 @@ async function handleUnattachPermission(): Promise<void> {
   flex-wrap: wrap;
   gap: 8px;
   row-gap: 5px;
-}
-
-.header-sep {
-  display: inline-block;
-  width: 1px;
-  height: 18px;
-  margin: 0 4px;
-  background: #dcdfe6;
 }
 
 .form-input {

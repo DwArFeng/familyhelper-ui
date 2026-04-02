@@ -9,7 +9,7 @@
             <native-button kind="primary" :disabled="readonly" @click="handleShowLoginDialog">
               生成凭证
             </native-button>
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <span class="label">登录类型:</span>
             <select
               v-model="typeSelectorModel"
@@ -20,7 +20,7 @@
                 {{ item.label }}
               </option>
             </select>
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <native-button kind="success" @click="handleLoginStateSearch">刷新数据</native-button>
             <span class="header-spacer" />
             <native-button
@@ -223,6 +223,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 import NativeLink from '@/components/comvisual/form/nativeLink/NativeLink.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 import DateTimeInput from '@/components/comvisual/form/dateTimeInput/DateTimeInput.vue'
 import NativeForm from '@/components/comvisual/form/nativeForm/NativeForm.vue'
 import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormItem.vue'
@@ -636,13 +637,6 @@ async function handleDeriveDialogConfirmButtonClicked(): Promise<void> {
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.header-sep {
-  display: inline-block;
-  width: 1px;
-  height: 18px;
-  background: #dcdfe6;
 }
 
 .header-spacer {

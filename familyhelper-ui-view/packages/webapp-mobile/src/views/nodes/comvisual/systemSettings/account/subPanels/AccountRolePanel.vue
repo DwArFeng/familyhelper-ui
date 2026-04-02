@@ -8,7 +8,7 @@
           <div class="header-container">
             <native-button kind="primary" @click="handleShowAttachDialog">添加角色</native-button>
             <native-button kind="success" @click="handleSearch">刷新数据</native-button>
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <native-button
               kind="primary"
               :disabled="applyChangesButtonDisabled"
@@ -16,7 +16,7 @@
             >
               应用变更
             </native-button>
-            <span class="header-sep" aria-hidden="true" />
+            <vertical-divider />
             <native-button kind="info" @click="handleShowPermissionViewOfUserInspectDialog"
               >权限视图</native-button
             >
@@ -127,6 +127,7 @@ import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormIte
 import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
+import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
 import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'
 import NativeSwitch from '@/components/comvisual/form/nativeSwitch/NativeSwitch.vue'
 import PagingTableColumn from '@/components/comvisual/table/pagingTablePanel/PagingTableColumn.vue'
@@ -490,13 +491,6 @@ defineExpose({
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-}
-
-.header-sep {
-  display: inline-block;
-  width: 1px;
-  height: 18px;
-  background: #dcdfe6;
 }
 
 .header-spacer {
