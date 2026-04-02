@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts" generic="CT extends Record<string, any>">
-import { inject, onBeforeUnmount, onMounted, ref, useSlots, type VNode } from 'vue'
+import { inject, onBeforeUnmount, ref, useSlots, watch, type VNode } from 'vue'
 
 import { type PagingTableRegisterContext } from './context.ts'
 import { PAGING_TABLE_PANEL_CONTEXT_KEY } from './context.ts'
@@ -69,8 +69,6 @@ if (ctx === null) {
 
 const widthPx = ref(parseSizePx(props.width) ?? parseSizePx(props.minWidth) ?? 120)
 
-const minWidthPx = parseSizePx(props.minWidth) ?? 48
-
 // endregion
 
 // region 渲染（表头 / 单元格）
@@ -103,20 +101,39 @@ function renderCell(scope: { row: CT; index: number }): string | VNode[] {
 
 let unregister: (() => void) | null = null
 
-onMounted(() => {
-  unregister = ctx.registerColumn({
-    label: props.label,
-    prop: props.prop,
-    widthPx,
-    minWidthPx,
-    resizable: props.resizable,
+watch(
+  () => ({
+    width: props.width,
+    minWidth: props.minWidth,
     align: props.align,
+    resizable: props.resizable,
     headerClass: props.headerClass,
     cellClass: props.cellClass,
-    renderHeader,
-    renderCell,
-  })
-})
+    prop: props.prop,
+    label: props.label,
+  }),
+  (next, prev) => {
+    if (prev !== undefined) {
+      if (next.width !== prev.width || next.minWidth !== prev.minWidth) {
+        widthPx.value = parseSizePx(props.width) ?? parseSizePx(props.minWidth) ?? 120
+      }
+    }
+    unregister?.()
+    unregister = ctx.registerColumn({
+      label: props.label,
+      prop: props.prop,
+      widthPx,
+      minWidthPx: parseSizePx(props.minWidth) ?? 48,
+      resizable: props.resizable,
+      align: props.align,
+      headerClass: props.headerClass,
+      cellClass: props.cellClass,
+      renderHeader,
+      renderCell,
+    })
+  },
+  { immediate: true },
+)
 
 onBeforeUnmount(() => {
   unregister?.()
