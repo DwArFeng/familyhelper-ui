@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块 `comvisual` 可视化器页面优化。
+  - 系统设置 -> 权限节点管理头部面板新建权限功能体验优化。
+
 - `webapp-mobile` 子模块组件新增。
   - 组件 `comvisual/tree/searchTreePanel/SearchTreePanel.vue` 新增。
 
