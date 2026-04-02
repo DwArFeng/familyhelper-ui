@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件优化。
+  - 重构 `comvisual/tabs` 中的页签组件。
+
 - `webapp-pc` 子模块功能新增。
   - 调整 VIM 组件 `VimCompreg` 的接口方法，提供更多的信息。
   - 调整 VIM 组件 `VimLibrary` 的接口方法，提供更多的信息。
