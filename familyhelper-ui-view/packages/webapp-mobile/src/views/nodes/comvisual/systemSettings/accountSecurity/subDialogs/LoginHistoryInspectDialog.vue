@@ -85,7 +85,7 @@ import { onMounted, ref, watch } from 'vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 import ModalDialog from '@/components/comvisual/dialog/modalDialog/ModalDialog.vue'
-import SectionDivider from '@/components/comvisual/form/divider/SectionDivider.vue'
+import SectionDivider from '@/components/comvisual/form/divider/sectionDivider/SectionDivider.vue'
 
 import {
   type LoginHistory,

@@ -5,6 +5,8 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块组件优化。
+  - 优化 `comvisual/form/divider/sectionDivider/SectionDivider.vue` 组件的路径。
+  - 优化 `comvisual/form/divider/verticalDiriver/VerticalDivider.vue` 组件的路径。
   - 优化 `comvisual/form/divider/VerticalDivider.vue` 组件的样式。
   - 重构 `comvisual/tabs` 中的页签组件。
 
