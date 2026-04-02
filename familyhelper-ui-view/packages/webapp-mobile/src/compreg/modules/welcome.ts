@@ -21,6 +21,12 @@ function init(): void {}
 const compregSettings: ComponentSetting[] = [
   {
     key: 'welcome',
+    name: '首页',
+    description: '首页',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+    },
     component: {
       '': () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
       comvisual: () => import('@/views/nodes/comvisual/welcome/Welcome.vue'),
