@@ -79,6 +79,43 @@ const nodeSettings: NodeSetting[] = [
       node: 'ui.pc;ui.pc.menu_visible.developer_tools.visualizer_support',
     },
   },
+  {
+    parentKey: 'developerTools',
+    key: 'developerTools.compregSupport',
+    index: 910,
+    display: {
+      '': {
+        label: '组件注册支持',
+      },
+      comvisual: {
+        label: '组件注册支持',
+      },
+      elementPlus: {
+        label: '组件注册支持',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'developer-tools/compreg-support',
+      component: {
+        key: 'developerTools.compregSupport',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.developer_tools.compreg_support',
+    },
+  },
 ]
 
 /**
