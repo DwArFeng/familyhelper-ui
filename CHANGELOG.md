@@ -25,6 +25,7 @@
 ### Bug 修复
 
 - `webapp-pc` 子模块 `comvisual` 组件 bug 修复。
+  - `PagingTableColumn` 组件属性变化后未更新注册。
   - `FloatTool` 组件停靠状态判断 switch 语句错误常量使用。
 
 ### 功能移除
