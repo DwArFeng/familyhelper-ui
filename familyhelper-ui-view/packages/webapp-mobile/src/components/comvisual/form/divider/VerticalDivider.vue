@@ -12,8 +12,8 @@ defineOptions({
 .vertical-divider {
   display: inline-block;
   width: 1px;
-  height: 1em;
-  margin: 0 8px;
+  height: 18px;
+  margin: 0 4px;
   vertical-align: middle;
   background: #dcdfe6;
   flex-shrink: 0;
