@@ -20,6 +20,24 @@ function init(): void {}
  */
 const compregSettings: ComponentSetting[] = [
   {
+    key: 'developerTools.visualizerSettings',
+    name: '可视化器设置',
+    description: '可视化器设置',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
+    component: {
+      '': () =>
+        import('@/views/nodes/comvisual/developerTools/visualizerSettings/VisualizerSettings.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/developerTools/visualizerSettings/VisualizerSettings.vue'),
+      elementPlus: () =>
+        import('@/views/nodes/comvisual/developerTools/visualizerSettings/VisualizerSettings.vue'),
+    },
+  },
+  {
     key: 'developerTools.visualizerSupport',
     name: '可视化器支持',
     description: '可视化器支持',

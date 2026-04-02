@@ -44,6 +44,43 @@ const nodeSettings: NodeSetting[] = [
   },
   {
     parentKey: 'developerTools',
+    key: 'developerTools.visualizerSettings',
+    index: 10,
+    display: {
+      '': {
+        label: '可视化器设置',
+      },
+      comvisual: {
+        label: '可视化器设置',
+      },
+      elementPlus: {
+        label: '可视化器设置',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'developer-tools/visualizer-settings',
+      component: {
+        key: 'developerTools.visualizerSettings',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.developer_tools.visualizer_settings',
+    },
+  },
+  {
+    parentKey: 'developerTools',
     key: 'developerTools.visualizerSupport',
     index: 900,
     display: {
