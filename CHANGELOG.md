@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块组件优化。
+  - 优化 `comvisual/form/divider/VerticalDivider.vue` 组件的样式。
   - 重构 `comvisual/tabs` 中的页签组件。
 
 - `webapp-pc` 子模块功能新增。
