@@ -69,12 +69,12 @@
         </div>
       </template>
       <template v-slot:default>
-        <div class="scroll-bar" :key="renderTick">
+        <div class="scroll-bar">
           <div class="tree-panel" role="tree">
             <lazy-tree-node-row
               v-for="n in lazyTreeStore.rootNodes"
               :key="n.key"
-              :node="n"
+              :node="n as NativeTreeNode<CT>"
               :selected-key="selectedKey"
               :operate-area-visible="operateAreaVisible"
               :inspect-button-visible="inspectButtonVisible"
@@ -108,7 +108,7 @@
 </template>
 
 <script setup lang="ts" generic="CT extends Record<string, any>">
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, reactive, ref } from 'vue'
 
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
@@ -239,26 +239,22 @@ defineSlots<{
 // region 加载与渲染
 
 const loading = ref<number>(0)
-const renderTick = ref(0)
-
-function bumpRender(): void {
-  renderTick.value += 1
-}
 
 // endregion
 
 // region 树存储与 treeRef 兼容对象
 
-const lazyTreeStore = new LazyTreeStore<CT>({
-  keyField: props.keyField,
-  labelField: props.labelField,
-  isLeafField: props.isLeafField,
-  treeAccordion: props.treeAccordion,
-  loadChildHandler: (item, accept) => {
-    props.loadChildHandler(item, accept)
-  },
-  onStructureChanged: bumpRender,
-})
+const lazyTreeStore = reactive(
+  new LazyTreeStore<CT>({
+    keyField: props.keyField,
+    labelField: props.labelField,
+    isLeafField: props.isLeafField,
+    treeAccordion: props.treeAccordion,
+    loadChildHandler: (item, accept) => {
+      props.loadChildHandler(item, accept)
+    },
+  }),
+)
 
 const treeRef = ref({
   get store() {
@@ -266,29 +262,23 @@ const treeRef = ref({
   },
   setCurrentKey: (key?: string) => {
     lazyTreeStore.setCurrentKey(key)
-    bumpRender()
   },
   getNode: (k: string | CT) => lazyTreeStore.getNode(k),
   getCurrentNode: () => lazyTreeStore.getCurrentData(),
   append: (item: CT, parent: TreeNode<CT>) => {
     lazyTreeStore.append(parent as NativeTreeNode<CT>, item)
-    bumpRender()
   },
   insertBefore: (item: CT, refNode: TreeNode<CT>) => {
     lazyTreeStore.insertBefore(refNode as NativeTreeNode<CT>, item)
-    bumpRender()
   },
   insertAfter: (item: CT, refNode: TreeNode<CT>) => {
     lazyTreeStore.insertAfter(refNode as NativeTreeNode<CT>, item)
-    bumpRender()
   },
   remove: (item: CT) => {
     lazyTreeStore.remove(item)
-    bumpRender()
   },
   update: (item: CT) => {
     lazyTreeStore.update(item)
-    bumpRender()
   },
 })
 
@@ -535,7 +525,6 @@ function handleSearchBarChanged(value: CT): void {
       const currentNode: TreeNode<CT> = nm[currentKey]
       const currentItem: CT = currentNode.data
       lazyTreeStore.selectNodeData(currentItem)
-      bumpRender()
       emit('onCurrentChanged', currentItem, currentNode)
       mayCollapseOtherNode(path)
       loading.value -= 1
@@ -566,7 +555,6 @@ function handleSearchBarChanged(value: CT): void {
       const currentNode: TreeNode<CT> = nm[currentKey]
       const currentItem: CT = currentNode.data
       lazyTreeStore.selectNodeData(currentItem)
-      bumpRender()
       emit('onCurrentChanged', currentItem, currentNode)
       mayCollapseOtherNode(path)
       loading.value -= 1
@@ -603,12 +591,10 @@ const selectedKey = computed(() => lazyTreeStore.getCurrentKey())
 
 function onToggleExpand(node: NativeTreeNode<CT>): void {
   lazyTreeStore.toggleExpand(node)
-  bumpRender()
 }
 
 function onNodeSelect(node: NativeTreeNode<CT>): void {
   lazyTreeStore.selectNodeData(node.data)
-  bumpRender()
   if (searchBarValue.value) {
     const selectKey = itemKeyString(searchBarValue.value)
     const treeKey = itemKeyString(node.data)
@@ -686,7 +672,6 @@ function getNode(keyOrData: string | CT): TreeNode<CT> {
 
 function appendRoot(item: CT): void {
   lazyTreeStore.appendRoot(item)
-  bumpRender()
   nextTick(() => {
     if (!treeRef.value) {
       throw new Error('不应该执行到此处, 请联系开发人员')
@@ -698,7 +683,6 @@ function appendRoot(item: CT): void {
     if (!treeRef.value.getCurrentNode()) {
       treeRef.value.setCurrentKey(itemKeyString(item))
     }
-    bumpRender()
   })
 }
 
@@ -711,7 +695,6 @@ function appendNode(target: TreeNode<CT>, item: CT): void {
   }
   nextTick(() => {
     target.isLeaf = false
-    bumpRender()
   })
 }
 
@@ -750,7 +733,6 @@ function remove(item: CT): void {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
   treeRef.value.remove(item)
-  bumpRender()
 }
 
 function setCurrent(item: CT | null): void {
@@ -759,11 +741,9 @@ function setCurrent(item: CT | null): void {
   }
   if (!item) {
     treeRef.value.setCurrentKey()
-    bumpRender()
     return
   }
   treeRef.value.setCurrentKey(itemKeyString(item))
-  bumpRender()
 }
 
 function refresh(): void {

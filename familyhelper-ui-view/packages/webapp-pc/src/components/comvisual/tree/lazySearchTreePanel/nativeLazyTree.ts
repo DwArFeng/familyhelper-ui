@@ -15,10 +15,10 @@ export class NativeTreeNode<CT extends Record<string, unknown>> implements TreeN
   isLeaf: boolean
   readonly key: string
 
-  private readonly keyField: keyof CT
-  private readonly isLeafField: keyof CT
-  private readonly onExpandLoad: (node: NativeTreeNode<CT>) => void
-  private readonly onAccordionCollapse: (node: NativeTreeNode<CT>) => void
+  readonly keyField: keyof CT
+  readonly isLeafField: keyof CT
+  readonly onExpandLoad: (node: NativeTreeNode<CT>) => void
+  readonly onAccordionCollapse: (node: NativeTreeNode<CT>) => void
 
   constructor(
     id: number,

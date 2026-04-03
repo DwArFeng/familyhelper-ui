@@ -25,6 +25,7 @@
 ### Bug 修复
 
 - `webapp-pc` 子模块 `comvisual` 组件 bug 修复。
+  - `LazySearchTreePanel` 选择行变化后，当前选择键未传递至 `LazyTreeNodeRow` 组件。
   - `LazySearchTreePanel` 组件选择搜索项后，搜索项对应的路径指示器不消失。
   - `LoadingOverlay` 组件在父组件处于滚动条内时，组件尺寸没有与其视口对应。
   - `PagingTableColumn` 组件属性变化后未更新注册。
