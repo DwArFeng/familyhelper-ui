@@ -66,6 +66,9 @@
 
 ### Bug 修复
 
+- `webapp-mobile` 子模块 bug 修复。
+  - 修复 `src/navigation/modules/miscellaneous.ts` 模块中多余的配置项。
+
 - `webapp-mobile` 子模块 `comvisual` 组件 bug 修复。
   - `LazySearchTreePanel` 选择行变化后，当前选择键未传递至 `LazyTreeNodeRow` 组件。
   - `LazySearchTreePanel` 组件选择搜索项后，搜索项对应的路径指示器不消失。

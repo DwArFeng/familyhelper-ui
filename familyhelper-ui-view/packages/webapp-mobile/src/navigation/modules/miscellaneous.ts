@@ -30,9 +30,6 @@ const nodeSettings: NodeSetting[] = [
       comvisual: {
         label: '杂项',
       },
-      elementPlus: {
-        label: '杂项',
-      },
     },
   },
   {
@@ -44,9 +41,6 @@ const nodeSettings: NodeSetting[] = [
         label: '外链',
       },
       comvisual: {
-        label: '外链',
-      },
-      elementPlus: {
         label: '外链',
       },
     },
@@ -77,9 +71,6 @@ const nodeSettings: NodeSetting[] = [
         label: '文本',
       },
       comvisual: {
-        label: '文本',
-      },
-      elementPlus: {
         label: '文本',
       },
     },
