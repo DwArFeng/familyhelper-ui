@@ -68,7 +68,7 @@
   </div>
 </template>
 
-<script setup lang="ts" generic="CT extends Record<string, unknown>">
+<script setup lang="ts" generic="CT extends Record<string, any>">
 import { computed } from 'vue'
 
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
