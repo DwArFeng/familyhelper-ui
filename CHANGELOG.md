@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/FamilyhelperUiViewBuildScript.md。
+
 - `webapp-mobile` 子模块实现开发者工具一级菜单。
   - 实现导航设置二级菜单。
   - 实现导航管理二级菜单。
