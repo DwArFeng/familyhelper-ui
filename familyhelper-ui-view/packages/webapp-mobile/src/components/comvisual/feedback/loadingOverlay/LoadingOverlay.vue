@@ -1,5 +1,5 @@
 <template>
-  <!-- 占位锚点：父级 DOM 即为需覆盖的区域，不依赖父级 position -->
+  <!-- 占位锚点：父级 DOM 即为需覆盖的区域，不依赖父级 position。 -->
   <div ref="anchorRef" class="loading-overlay-anchor" aria-hidden="true" />
   <Teleport to="body">
     <div
@@ -24,7 +24,6 @@ defineOptions({
 // region Props 定义
 
 type Props = {
-  /** 与 v-loading 计数用法一致：大于 0 时显示；或 boolean */
   loading?: boolean | number
   text?: string
 }
@@ -56,6 +55,73 @@ let resizeObserver: ResizeObserver | null = null
 
 const OVERLAY_Z_INDEX = '3000'
 
+type EdgeRect = { left: number; top: number; right: number; bottom: number }
+
+function rectFromDomRect(r: DOMRectReadOnly): EdgeRect {
+  return { left: r.left, top: r.top, right: r.right, bottom: r.bottom }
+}
+
+function intersectEdgeRects(a: EdgeRect, b: EdgeRect): EdgeRect {
+  return {
+    left: Math.max(a.left, b.left),
+    top: Math.max(a.top, b.top),
+    right: Math.min(a.right, b.right),
+    bottom: Math.min(a.bottom, b.bottom),
+  }
+}
+
+function edgeRectToBox(r: EdgeRect): { left: number; top: number; width: number; height: number } {
+  return {
+    left: r.left,
+    top: r.top,
+    width: Math.max(0, r.right - r.left),
+    height: Math.max(0, r.bottom - r.top),
+  }
+}
+
+/** 滚动/裁剪容器在视口中的内侧可绘区域（与 overflow 裁剪一致） */
+function getOverflowClipRect(el: HTMLElement): EdgeRect {
+  const br = el.getBoundingClientRect()
+  const left = br.left + el.clientLeft
+  const top = br.top + el.clientTop
+  return {
+    left,
+    top,
+    right: left + el.clientWidth,
+    bottom: top + el.clientHeight,
+  }
+}
+
+function isOverflowClipping(cs: CSSStyleDeclaration): boolean {
+  return cs.overflowX !== 'visible' || cs.overflowY !== 'visible'
+}
+
+/** 父元素在视口与各层 overflow 裁剪下的可见矩形（用于 fixed 叠加层，避免画出滚动区域外） */
+function getVisibleRectForElement(el: HTMLElement): {
+  left: number
+  top: number
+  width: number
+  height: number
+} {
+  let rect = rectFromDomRect(el.getBoundingClientRect())
+  let node: HTMLElement | null = el.parentElement
+  while (node) {
+    const cs = getComputedStyle(node)
+    if (isOverflowClipping(cs)) {
+      rect = intersectEdgeRects(rect, getOverflowClipRect(node))
+    }
+    node = node.parentElement
+  }
+  const viewport: EdgeRect = {
+    left: 0,
+    top: 0,
+    right: window.innerWidth,
+    bottom: window.innerHeight,
+  }
+  rect = intersectEdgeRects(rect, viewport)
+  return edgeRectToBox(rect)
+}
+
 function updateOverlayRect(): void {
   const anchor = anchorRef.value
   if (!anchor) {
@@ -65,17 +131,19 @@ function updateOverlayRect(): void {
   if (!parent || !(parent instanceof HTMLElement)) {
     return
   }
-  const r = parent.getBoundingClientRect()
+  const { left, top, width, height } = getVisibleRectForElement(parent)
   const cs = getComputedStyle(parent)
+  const hidden = width === 0 || height === 0
   overlayStyle.value = {
     position: 'fixed',
-    top: `${r.top}px`,
-    left: `${r.left}px`,
-    width: `${r.width}px`,
-    height: `${r.height}px`,
+    top: `${top}px`,
+    left: `${left}px`,
+    width: `${width}px`,
+    height: `${height}px`,
     zIndex: OVERLAY_Z_INDEX,
     borderRadius: cs.borderRadius,
     boxSizing: 'border-box',
+    display: hidden ? 'none' : 'flex',
   }
 }
 
