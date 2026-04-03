@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块文件优化注释、文档注释格式、代码换行格式。
+  - src/library/modules/comvisual/util/nativeUi.ts。
+  - src/store/README.md。
+
 - `webapp-pc` 子模块文件优化注释、文档注释格式、代码换行格式。
   - src/library/modules/comvisual/util/nativeUi.ts。
   - src/store/README.md。

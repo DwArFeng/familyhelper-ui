@@ -27,7 +27,7 @@ export function notifyWarning(message: string): void {
 /**
  * 使用浏览器原生对话框展示一般性说明或中性信息。
  *
- * 文案前会加上「提示：」前缀，便于与纯成功/错误提示在视觉上区分。
+ * 文案前会加上“提示：”前缀，便于与纯成功/错误提示在视觉上区分。
  *
  * @param message - 信息说明正文（不含前缀，前缀由本函数追加）
  */
@@ -38,7 +38,7 @@ export function notifyInfo(message: string): void {
 /**
  * 使用浏览器原生对话框展示错误、失败或异常相关说明。
  *
- * 文案前会加上「错误：」前缀，便于用户快速识别为问题类提示。
+ * 文案前会加上“错误：”前缀，便于用户快速识别为问题类提示。
  *
  * @param message - 错误说明正文（不含前缀，前缀由本函数追加）
  */
@@ -52,8 +52,8 @@ export function notifyError(message: string): void {
  * 用于删除、不可逆修改等需二次确认的场景，以同步方式取得用户选择。
  * 对话框会阻塞脚本直至用户点击按钮或关闭。
  *
- * @param message - 向用户展示的确认问题或说明（例如「确定要删除吗？」）
- * @returns 用户点击「确定」时为 true；点击「取消」或关闭对话框时为 false
+ * @param message - 向用户展示的确认问题或说明（例如“确定要删除吗？”）
+ * @returns 用户点击“确定」时为 true；点击「取消”或关闭对话框时为 false
  */
 export function confirmAction(message: string): boolean {
   return window.confirm(message)
