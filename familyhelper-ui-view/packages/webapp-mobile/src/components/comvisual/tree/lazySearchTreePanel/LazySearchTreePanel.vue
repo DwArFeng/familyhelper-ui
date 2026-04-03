@@ -365,6 +365,7 @@ function selectSearchOption(value: CT): void {
   searchInputText.value = String(value[props.labelField])
   pathIndicatorAnchorIndex.value = -1
   searchDropdownVisible.value = false
+  updatePathIndicator()
   handleSearchBarChanged(value)
 }
 
