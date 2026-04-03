@@ -6,11 +6,11 @@ export type CustomNavigation = {
   remark: string
 }
 
-export const SETTINGREPO_CATEGORY = 'public$framework.pc.navigation' as const
+export const SETTINGREPO_CATEGORY = 'public$framework.mobile.navigation' as const
 
 export const SETTINGREPO_ARGS_LIST = ['list'] as const
 
-function isNavigationListRow(v: unknown): v is CustomNavigation {
+function isCustomNavigation(v: unknown): v is CustomNavigation {
   if (v === null || typeof v !== 'object') {
     return false
   }
@@ -18,7 +18,7 @@ function isNavigationListRow(v: unknown): v is CustomNavigation {
   return typeof o.key === 'string' && typeof o.name === 'string' && typeof o.remark === 'string'
 }
 
-export function parseNavigationListText(value: string | null | undefined): CustomNavigation[] {
+export function parseCustomNavigations(value: string | null | undefined): CustomNavigation[] {
   if (value === null || value === undefined || value.trim() === '') {
     return []
   }
@@ -29,7 +29,7 @@ export function parseNavigationListText(value: string | null | undefined): Custo
     }
     const rows: CustomNavigation[] = []
     for (const el of parsed) {
-      if (!isNavigationListRow(el)) {
+      if (!isCustomNavigation(el)) {
         return []
       }
       rows.push({

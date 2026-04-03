@@ -75,6 +75,40 @@ const nodeSettings: NodeSetting[] = [
   },
   {
     parentKey: 'developerTools',
+    key: 'developerTools.navigation',
+    index: 20,
+    display: {
+      '': {
+        label: '导航管理',
+      },
+      comvisual: {
+        label: '导航管理',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'developer-tools/navigation',
+      component: {
+        key: 'developerTools.navigation',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.mobile;ui.mobile.menu_visible.developer_tools.navigation',
+    },
+  },
+  {
+    parentKey: 'developerTools',
     key: 'developerTools.visualizerSupport',
     index: 900,
     display: {
@@ -82,9 +116,6 @@ const nodeSettings: NodeSetting[] = [
         label: '可视化器支持',
       },
       comvisual: {
-        label: '可视化器支持',
-      },
-      elementPlus: {
         label: '可视化器支持',
       },
     },

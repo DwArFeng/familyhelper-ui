@@ -35,6 +35,19 @@ const compregSettings: ComponentSetting[] = [
     },
   },
   {
+    key: 'developerTools.navigation',
+    name: '导航管理',
+    description: '自定义导航配置与列表维护',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+    },
+    component: {
+      '': () => import('@/views/nodes/comvisual/developerTools/navigation/Navigation.vue'),
+      comvisual: () => import('@/views/nodes/comvisual/developerTools/navigation/Navigation.vue'),
+    },
+  },
+  {
     key: 'developerTools.visualizerSupport',
     name: '可视化器支持',
     description: '可视化器支持',
