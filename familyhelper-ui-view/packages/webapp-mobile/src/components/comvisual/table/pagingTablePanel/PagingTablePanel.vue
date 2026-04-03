@@ -103,15 +103,13 @@
                 <span class="operate-actions">
                   <native-link
                     v-if="inspectButtonVisible"
-                    size="small"
-                    type="primary"
+                    type="success"
                     @click="handleOperateColumnItemInspect(row, index)"
                   >
                     查看
                   </native-link>
                   <native-link
                     v-if="editButtonVisible"
-                    size="small"
                     type="primary"
                     @click="handleOperateColumnItemEdit(row, index)"
                   >
@@ -119,7 +117,6 @@
                   </native-link>
                   <native-link
                     v-if="deleteButtonVisible"
-                    size="small"
                     type="danger"
                     @click="handleOperateColumnItemDelete(row, index)"
                   >
@@ -768,6 +765,10 @@ function onJumpChange(): void {
   background: #fafafa;
 }
 
+.native-table.stripe :deep(tbody tr.is-current) {
+  background: #ecf5ff;
+}
+
 .native-table :deep(tbody tr.is-current) {
   background: #ecf5ff;
 }
@@ -778,10 +779,10 @@ function onJumpChange(): void {
 }
 
 .operate-actions {
-  display: inline-flex;
+  display: flex;
   gap: 6px;
   flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
 }
 
 .pagination {
