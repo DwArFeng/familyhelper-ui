@@ -129,7 +129,7 @@ async function validate(callback?: FormValidateCallback): Promise<void> {
       invalid[prop] = [{ message: msg }]
     }
   }
-  await Promise.resolve(callback?.(allValid, allValid ? undefined : invalid))
+  await callback?.(allValid, allValid ? undefined : invalid)
 }
 
 // endregion
