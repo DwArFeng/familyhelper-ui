@@ -25,6 +25,7 @@
 ### Bug 修复
 
 - `webapp-pc` 子模块 `comvisual` 组件 bug 修复。
+  - `LoadingOverlay` 组件在父组件处于滚动条内时，组件尺寸没有与其视口对应。
   - `PagingTableColumn` 组件属性变化后未更新注册。
   - `FloatTool` 组件停靠状态判断 switch 语句错误常量使用。
 
