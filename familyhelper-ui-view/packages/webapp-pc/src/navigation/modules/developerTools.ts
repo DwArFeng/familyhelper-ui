@@ -118,6 +118,43 @@ const nodeSettings: NodeSetting[] = [
   },
   {
     parentKey: 'developerTools',
+    key: 'developerTools.navigationSettings',
+    index: 30,
+    display: {
+      '': {
+        label: '导航设置',
+      },
+      comvisual: {
+        label: '导航设置',
+      },
+      elementPlus: {
+        label: '导航设置',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'developer-tools/navigation-settings',
+      component: {
+        key: 'developerTools.navigationSettings',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.developer_tools.navigation_settings',
+    },
+  },
+  {
+    parentKey: 'developerTools',
     key: 'developerTools.visualizerSupport',
     index: 900,
     display: {

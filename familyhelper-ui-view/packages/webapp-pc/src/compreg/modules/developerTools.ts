@@ -53,6 +53,24 @@ const compregSettings: ComponentSetting[] = [
     },
   },
   {
+    key: 'developerTools.navigationSettings',
+    name: '导航设置',
+    description: 'Navigation Key 远端与本地覆盖',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+    },
+    component: {
+      '': () =>
+        import('@/views/nodes/comvisual/developerTools/navigationSettings/NavigationSettings.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/developerTools/navigationSettings/NavigationSettings.vue'),
+      elementPlus: () =>
+        import('@/views/nodes/comvisual/developerTools/navigationSettings/NavigationSettings.vue'),
+    },
+  },
+  {
     key: 'developerTools.visualizerSupport',
     name: '可视化器支持',
     description: '可视化器支持',
