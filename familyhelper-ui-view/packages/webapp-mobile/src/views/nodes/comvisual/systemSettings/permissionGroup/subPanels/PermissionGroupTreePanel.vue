@@ -11,25 +11,13 @@
         :operate-area-visible="!readonly"
         :inspect-button-visible="false"
         :edit-button-visible="false"
-        :delete-button-visible="false"
         :search-option-handler="searchOptionHandler"
         :load-root-handler="loadRootHandler"
         :load-child-handler="loadChildHandler"
         :query-path-handler="queryPathHandler"
         @on-current-changed="handleCurrentChanged"
         @on-item-delete="handleItemDelete"
-      >
-        <template v-slot:default="{ item }">
-          <div class="item-container">
-            <div class="label">{{ item.name }}</div>
-          </div>
-        </template>
-        <template v-slot:operateArea="{ fireItemDelete }">
-          <native-button size="small" kind="danger" plain @click="fireItemDelete"
-            >删除</native-button
-          >
-        </template>
-      </lazy-search-tree-panel>
+      />
     </div>
   </div>
 </template>
@@ -41,7 +29,6 @@ import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import LazySearchTreePanel from '@/components/comvisual/tree/lazySearchTreePanel/LazySearchTreePanel.vue'
-import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 
 import { useOperableGeneralLazySearchTreePanel } from '@/components/comvisual/tree/lazySearchTreePanel/composables.ts'
 
@@ -240,30 +227,5 @@ defineExpose({
 .main-container {
   width: 100%;
   height: 100%;
-}
-
-.item-container {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.label {
-  flex: 1;
-  margin-right: 20px;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-}
-
-.label:before {
-  content: '权限组: ';
-  font-size: 14px;
-  font-family: Arial, sans-serif;
-  font-weight: 600;
 }
 </style>
