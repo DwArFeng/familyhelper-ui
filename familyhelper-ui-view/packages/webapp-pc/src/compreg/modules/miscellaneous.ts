@@ -61,8 +61,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
-      comvisual: () => import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
+      comvisual: () =>
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
     },

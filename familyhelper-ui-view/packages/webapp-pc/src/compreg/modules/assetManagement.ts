@@ -2,6 +2,8 @@
 
 import { type ComponentSetting, type VimCompregModule } from '@/compreg/types.ts'
 
+import { placeholder as comvisualPlaceholder } from '@/views/nodes/comvisual/hyperscript/placeholder/index.ts'
+
 /**
  * VIM Compreg 模块。
  */
@@ -29,9 +31,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () => import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
-        import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/assetsManagement/assetCatalog/AssetCatalog.vue'),
     },
@@ -46,8 +48,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
-      comvisual: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
+      comvisual: () =>
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/assetsManagement/assetBom/AssetBom.vue'),
     },
   },
@@ -61,10 +64,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () =>
-        import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
-        import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/assetsManagement/itemTypeIndicator/ItemTypeIndicator.vue'),
     },
@@ -79,8 +81,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
-      comvisual: () => import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
+      comvisual: () =>
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/assetsManagement/itemLabel/ItemLabel.vue'),
     },

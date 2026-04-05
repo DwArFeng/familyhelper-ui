@@ -2,6 +2,8 @@
 
 import { type ComponentSetting, type VimCompregModule } from '@/compreg/types.ts'
 
+import { placeholder as comvisualPlaceholder } from '@/views/nodes/comvisual/hyperscript/placeholder/index.ts'
+
 /**
  * VIM Compreg 模块。
  */
@@ -29,9 +31,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () => import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
-        import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
     },
@@ -46,8 +48,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
-      comvisual: () => import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
+      comvisual: () =>
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
     },
@@ -62,10 +65,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () =>
-        import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
-        import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
     },
@@ -80,10 +82,9 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: {},
     },
     component: {
-      '': () =>
-        import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
-        import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
     },
