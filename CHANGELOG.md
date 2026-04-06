@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块 `elementPlus` 可视化器实现杂项一级菜单。
+  - 实现外链二级菜单。
+
 - `webapp-pc` 子模块 `elementPlus` 可视化器 hyperscript 页面优化。
   - hyperscript/placeholder/index.ts 根面板浮动工具优化。
 

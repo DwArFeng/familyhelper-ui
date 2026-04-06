@@ -82,7 +82,7 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () =>
         import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
       elementPlus: () =>
-        import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
+        import('@/views/nodes/elementPlus/miscellaneous/externalLink/ExternalLink.vue'),
     },
   },
   {
