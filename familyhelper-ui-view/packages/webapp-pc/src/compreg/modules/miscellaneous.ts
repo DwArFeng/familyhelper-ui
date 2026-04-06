@@ -33,12 +33,21 @@ const compregSettings: ComponentSetting[] = [
     },
     component: {
       '': () =>
-        comvisualPlaceholder('当你看到这个页面的时候，意味着 router.component.key 没有被正确配置'),
-      comvisual: comvisualPlaceholder(
-        '当你看到这个页面的时候，意味着 router.component.key 没有被正确配置',
-      ),
-      elementPlus: elementPlusPlaceholder(
-        '当你看到这个页面的时候，意味着 router.component.key 没有被正确配置',
+        Promise.resolve(
+          comvisualPlaceholder(
+            '当你看到这个页面的时候，意味着 router.component.key 没有被正确配置',
+          ),
+        ),
+      comvisual: () =>
+        Promise.resolve(
+          comvisualPlaceholder(
+            '当你看到这个页面的时候，意味着 router.component.key 没有被正确配置',
+          ),
+        ),
+      elementPlus: Promise.resolve(
+        elementPlusPlaceholder(
+          '当你看到这个页面的时候，意味着 router.component.key 没有被正确配置',
+        ),
       ),
     },
   },

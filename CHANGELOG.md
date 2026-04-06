@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- 修复 `webapp-pc` 子模块 `VimCompreg` 组件的子模块中的错误配置。
+  - miscellaneous.ts。
 
 ### 功能移除
 
