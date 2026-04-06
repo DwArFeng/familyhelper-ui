@@ -35,17 +35,17 @@ defineOptions({
 type Props = {
   allowedDockStatuses?: DockStatus[]
   snapDistance?: number
+  initialDockStatus?: DockStatus
   initialX?: number
   initialY?: number
-  initialDockStatus?: DockStatus
 }
 
 const props = withDefaults(defineProps<Props>(), {
   allowedDockStatuses: () => [...DEFAULT_ALLOWED_DOCK_STATUSES],
   snapDistance: 20,
+  initialDockStatus: 4,
   initialX: 100,
   initialY: 100,
-  initialDockStatus: 4,
 })
 
 // endregion
