@@ -1,6 +1,13 @@
 <template>
   <div class="account-protector-support-container">
-    <border-layout-panel class="border-layout-panel" v-loading="loading" :header-visible="true">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      v-loading="loading"
+      :header-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <table-panel
         class="table"
         v-model:page-size="accountProtectorSupportTablePageSize"
@@ -25,7 +32,7 @@
           <div class="tooltip">账户保护器的支持与程序相关，仅可查看，不能更改</div>
         </div>
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
     <maintain-dialog
       v-model:visible="accountProtectorSupportMaintainDialogVisible"
       mode="INSPECT"
@@ -55,7 +62,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/elementPlus/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 import TextEditor from '@/components/elementPlus/text/textEditor/TextEditor.vue'

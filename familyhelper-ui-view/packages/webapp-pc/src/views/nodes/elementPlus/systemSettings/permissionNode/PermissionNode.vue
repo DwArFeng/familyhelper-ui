@@ -1,6 +1,13 @@
 <template>
   <div class="permission-node-container">
-    <border-layout-panel class="border-layout-panel" v-loading="loading" :header-visible="true">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      v-loading="loading"
+      :header-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <template v-slot:header>
         <div class="header-container">
           <el-button
@@ -130,7 +137,7 @@
           </template>
         </table-panel>
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
     <maintain-dialog
       v-model:visible="permissionMaintainDialogVisible"
       label-width="120px"
@@ -204,7 +211,7 @@ import {
 } from '@element-plus/icons-vue'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
-import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/elementPlus/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 

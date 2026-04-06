@@ -1,11 +1,14 @@
 <template>
   <div class="permission-group-container">
-    <border-layout-panel
+    <root-border-layout-panel
       class="border-layout-panel"
       v-loading="loading"
       west-width="350px"
       :header-visible="true"
       :west-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
     >
       <template v-slot:header>
         <div class="header-container">
@@ -80,7 +83,7 @@
           @onSelectionChanged="handlePermissionPanelSelectionChanged"
         />
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
     <maintain-dialog
       v-model:visible="entityMaintainDialogVisible"
       label-width="120px"
@@ -128,7 +131,7 @@ import { type FormItemRule } from 'element-plus'
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
-import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/elementPlus/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 
 import PermissionScopeIndicator from '@/views/nodes/elementPlus/systemSettings/permissionScope/PermissionScopeIndicator.vue'

@@ -1,6 +1,12 @@
 <template>
   <div class="permission-scope-container">
-    <border-layout-panel class="border-layout-panel" :header-visible="true">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      :header-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <template v-slot:header>
         <div class="header-container">
           <el-button type="success" @click="handlePermissionScopeSearch">刷新数据</el-button>
@@ -86,7 +92,7 @@
           </template>
         </card-panel>
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
     <maintain-dialog
       v-model:visible="permissionScopeMaintainDialogVisible"
       :loading="permissionScopeMaintainDialogLoading"
@@ -131,7 +137,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 
 import { Delete as DeleteIcon, EditPen, Search as SearchButton } from '@element-plus/icons-vue'
 
-import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/elementPlus/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import MaintainDialog from '@/components/elementPlus/dialog/maintainDialog/MaintainDialog.vue'
 import CardPanel from '@/components/elementPlus/card/cardPanel/CardPanel.vue'
 

@@ -1,6 +1,11 @@
 <template>
   <div class="account-security-container">
-    <border-layout-panel :header-visible="headerVisible">
+    <root-border-layout-panel
+      :header-visible="headerVisible"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <template v-slot:header>
         <div class="header-container">
           <account-selector class="item expand" v-model="accountSelectorUserId" />
@@ -13,7 +18,7 @@
           :upsc="accountSecurityEditPanelUpsc"
         />
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
   </div>
 </template>
 
@@ -24,7 +29,7 @@ import { type LnpStore } from '@/store/modules/lnp.ts'
 
 import { computed, ref } from 'vue'
 
-import BorderLayoutPanel from '@/components/elementPlus/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/elementPlus/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 
 import AccountSelector from '@/views/nodes/elementPlus/systemSettings/account/AccountSelector.vue'
 
