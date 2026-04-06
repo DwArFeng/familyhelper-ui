@@ -1,21 +1,28 @@
 <template>
   <div class="navigation-container">
-    <border-layout-panel class="border-layout-panel" :east-visible="true" east-width="60%">
-      <template v-slot:default>
+    <root-border-layout-panel
+      class="border-layout-panel"
+      west-width="40%"
+      :west-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
+      <template v-slot:west>
         <custom-navigation-panel @on-current-changed="handleListCurrentChanged" />
       </template>
-      <template v-slot:east>
+      <template v-slot:default>
         <placeholder-panel v-if="selectedListKey === null" text="请选择左侧列表中的导航项" />
         <navigation-edit-panel v-else :selected-key="selectedListKey" />
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 
 import CustomNavigationPanel from './subPanels/CustomNavigationPanel.vue'
