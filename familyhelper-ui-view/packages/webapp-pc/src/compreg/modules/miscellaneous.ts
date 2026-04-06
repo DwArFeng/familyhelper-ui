@@ -97,7 +97,7 @@ const compregSettings: ComponentSetting[] = [
     component: {
       '': () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
       comvisual: () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
-      elementPlus: () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
+      elementPlus: () => import('@/views/nodes/elementPlus/miscellaneous/text/Text.vue'),
     },
   },
 ]
