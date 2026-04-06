@@ -29,6 +29,7 @@
   - hyperscript/placeholder/index.ts 根面板浮动工具优化。
 
 - `webapp-pc` 子模块组件新增。
+  - 组件 `elementPlus/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue` 新增。
   - 组件 `comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue` 新增。
 
 - `webapp-pc` 子模块组件优化。
