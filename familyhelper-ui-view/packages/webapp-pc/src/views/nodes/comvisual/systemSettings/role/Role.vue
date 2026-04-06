@@ -1,20 +1,27 @@
 <template>
   <div class="role-container">
-    <border-layout-panel class="border-layout-panel" west-width="35%" :west-visible="true">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      west-width="35%"
+      :west-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <template v-slot:west>
         <role-panel @on-current-changed="handleRolePanelCurrentChanged" />
       </template>
       <template v-slot:default>
         <pexp-panel :role="roleTableCurrentRow" />
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 
 import PexpPanel from './subPanels/PexpPanel.vue'
 import RolePanel from './subPanels/RolePanel.vue'
