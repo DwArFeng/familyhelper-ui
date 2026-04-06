@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件新增。
+  - 组件 `comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue` 新增。
+
 - `webapp-pc` 子模块组件优化。
   - 增加 `comvisual/widget/floatyTool/FloatyTool.vue` 组件的 Props 属性。
   - 优化 `comvisual/widget/floatyTool/FloatyTool.vue` 组件的 Props 顺序。
