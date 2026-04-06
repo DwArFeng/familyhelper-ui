@@ -1,5 +1,5 @@
 <template>
-  <div class="floaty-tool-container">
+  <div class="floaty-tool-container" :style="floatyToolContainerStyle">
     <div class="floaty-tool" ref="containerRef" :style="floatyToolStyle">
       <div class="body-wrapper" @mousedown="handleStartMove">
         <slot name="default" :dock-status="dockStatus" :adjust-status="adjustStatus">
@@ -35,6 +35,7 @@ defineOptions({
 type Props = {
   allowedDockStatuses?: DockStatus[]
   snapDistance?: number
+  zIndex?: number
   initialDockStatus?: DockStatus
   initialX?: number
   initialY?: number
@@ -43,6 +44,7 @@ type Props = {
 const props = withDefaults(defineProps<Props>(), {
   allowedDockStatuses: () => [...DEFAULT_ALLOWED_DOCK_STATUSES],
   snapDistance: 20,
+  zIndex: 500,
   initialDockStatus: 4,
   initialX: 100,
   initialY: 100,
@@ -74,6 +76,12 @@ const dockStatus = ref<DockStatus>(props.initialDockStatus)
 // endregion
 
 // region 样式处理
+
+const floatyToolContainerStyle = computed(() => {
+  return {
+    zIndex: props.zIndex,
+  }
+})
 
 const floatyToolStyle = computed(() => {
   return {
@@ -617,7 +625,6 @@ onUnmounted(() => {
   left: 0;
   bottom: 0;
   right: 0;
-  z-index: 10000;
   pointer-events: none;
   touch-action: none;
 }
