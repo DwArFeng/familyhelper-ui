@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件优化。
+  - 优化 `comvisual` 可视化器 `FloatTool` 组件的名称为 `comvisual/widget/floatyTool/FloatyTool.vue`。
+
 - `webapp-pc` 子模块 VIM 组件注册调整。
   - 调整默认可视化器组件展示方案，不适配的组件显示为占位提示，不再用其它的可视化器组件进行展示。
   - 调整 `comvisual` 可视化器组件展示方案，不适配的组件显示为占位提示，不再用其它的可视化器组件进行展示。

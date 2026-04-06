@@ -27,7 +27,7 @@ import {
 import { DEFAULT_ALLOWED_DOCK_STATUSES } from './constants.ts'
 
 defineOptions({
-  name: 'FloatTool',
+  name: 'FloatyTool',
 })
 
 // region Props 定义
