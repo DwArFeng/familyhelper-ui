@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块 `elementPlus` 可视化器 hyperscript 页面优化。
+  - hyperscript/placeholder/index.ts 根面板浮动工具优化。
+
 - `webapp-pc` 子模块 `comvisual` 可视化器页面优化。
   - 开发者工具 -> 导航管理页面右侧主面板概览页签主面板显示样式优化。
   - 系统设置 -> 账户安全页面主面板登录历史页签主表格操作列查看按钮弹出对话框显示样式优化。
