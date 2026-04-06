@@ -1,7 +1,7 @@
 <template>
   <div class="external-link-container">
-    <border-layout-panel>
-      <div class="iframe-wrapper" ref="iframeWrapperRef">
+    <root-border-layout-panel :initial-tool-dock-status="4" :initial-tool-y="-200">
+      <div class="iframe-wrapper">
         <iframe
           class="iframe"
           v-if="iframeSrc"
@@ -14,27 +14,18 @@
           v-else
           text="未配置有效的外链地址（请在路由 componentParam 中提供 url）"
         />
-        <floaty-tool :allowed-dock-statuses="[2, 4]" :initial-dock-status="4" :initial-y="-200">
-          <div class="full-screen-tool" @click="toggleFullScreen()">
-            <span class="float-tool__icon" aria-hidden="true" />
-            <span class="float-tool__label">{{ fullScreen ? '退出全屏' : '全屏' }}</span>
-          </div>
-        </floaty-tool>
       </div>
-    </border-layout-panel>
+    </root-border-layout-panel>
   </div>
 </template>
 
 <script setup lang="ts">
 import vim from '@/vim'
 
-import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
-import FloatyTool from '@/components/comvisual/widget/floatyTool/FloatyTool.vue'
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
-
-import screenfull from 'screenfull'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 
 defineOptions({
   name: 'ExternalLink',
@@ -69,54 +60,6 @@ onMounted(() => {
 })
 
 // endregion
-
-// region 全屏逻辑
-
-const iframeWrapperRef = useTemplateRef<HTMLElement>('iframeWrapperRef')
-
-const fullScreen = ref(false)
-
-// 事件逃逸标记。
-let escapeEventFlag = false
-
-function fullScreenHandler(): void {
-  if (escapeEventFlag) {
-    escapeEventFlag = false
-    return
-  }
-  fullScreen.value = screenfull.element === iframeWrapperRef.value
-}
-
-async function toggleFullScreen(): Promise<void> {
-  const iframeWrapper = iframeWrapperRef.value
-  if (!iframeWrapper) {
-    throw new Error('不应该执行到此处，请联系开发人员')
-  }
-  if (screenfull.isEnabled) {
-    escapeEventFlag = true
-    fullScreen.value = !fullScreen.value
-    if (fullScreen.value) {
-      screenfull.request(iframeWrapper).finally()
-    } else {
-      screenfull.exit().finally()
-    }
-  }
-}
-
-onMounted(() => {
-  if (screenfull.isEnabled) {
-    fullScreen.value = screenfull.element === iframeWrapperRef.value
-    screenfull.on('change', fullScreenHandler)
-  }
-})
-
-onBeforeUnmount(() => {
-  if (screenfull.isEnabled) {
-    screenfull.off('change', fullScreenHandler)
-  }
-})
-
-// endregion
 </script>
 
 <style scoped>
@@ -138,41 +81,5 @@ onBeforeUnmount(() => {
   height: 100%;
   border: none;
   background: #fff;
-}
-
-.full-screen-tool {
-  width: 40px;
-  height: 36px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  cursor: pointer;
-}
-
-.float-tool__icon {
-  position: relative;
-  width: 18px;
-  height: 18px;
-  border: 2px solid currentColor;
-  border-radius: 3px;
-}
-
-.float-tool__icon::after {
-  content: '';
-  position: absolute;
-  inset: 2px;
-  border: 1px dashed currentColor;
-  border-radius: 1px;
-  opacity: 0.7;
-}
-
-.float-tool__label {
-  font-size: 10px;
-  line-height: 1.1;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
 }
 </style>

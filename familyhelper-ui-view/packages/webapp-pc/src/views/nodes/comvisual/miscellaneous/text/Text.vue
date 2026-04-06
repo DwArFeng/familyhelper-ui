@@ -1,11 +1,11 @@
 <template>
   <div class="text-container">
-    <border-layout-panel>
+    <root-border-layout-panel :initial-tool-dock-status="4" :initial-tool-y="-200">
       <div class="text-wrapper">
         <placeholder-panel v-if="placeholderContent" :text="placeholderContent" />
         <placeholder-panel v-else text="未配置文本内容（请在路由 componentParam 中提供 content）" />
       </div>
-    </border-layout-panel>
+    </root-border-layout-panel>
   </div>
 </template>
 
@@ -15,11 +15,13 @@ import vim from '@/vim'
 import { onMounted, ref, watch } from 'vue'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 
 defineOptions({
   name: 'TextComponent',
 })
+
+// region 路由与 componentParam 文本
 
 type ComponentParam = {
   content?: string
@@ -46,6 +48,8 @@ watch(router.currentRoute, () => {
 onMounted(() => {
   syncContent()
 })
+
+// endregion
 </script>
 
 <style scoped>
