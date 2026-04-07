@@ -1,6 +1,6 @@
 <template>
   <div class="navigation-settings-local-override-panel">
-    <loading-overlay :loading="loading > 0 && !editDialogVisible" />
+    <loading-overlay :loading="loading > 0 && !localOverrideEditDialogVisible" />
     <header-layout-panel class="header-panel">
       <template v-slot:header>
         <div class="header-container">
@@ -67,51 +67,49 @@
         </div>
       </template>
     </header-layout-panel>
-    <modal-dialog
-      v-model:visible="editDialogVisible"
-      title="设置本地 Navigation 覆盖"
+    <maintain-dialog
+      v-model:visible="localOverrideEditDialogVisible"
+      label-width="100px"
+      edit-title="设置本地 Navigation 覆盖"
+      edit-confirm-button-label="确认"
+      :loading="localOverrideEditDialogLoading"
+      :mode="localOverrideEditDialogMode"
+      :item="localOverrideEditDialogItem"
       :close-on-click-modal="false"
       :width="480"
-      :overlay-loading="loading > 0 && editDialogVisible"
-      @hot-confirm="handleEditHotConfirm"
+      @on-item-edit="handleLocalOverrideEdit"
     >
-      <native-form class="dialog-form" :model="dialogFormStub" label-width="100px">
-        <native-form-item label="类型">
-          <native-select
-            v-model="editType"
-            class="dialog-select"
-            :disabled="loading > 0"
-            :options="typeSelectOptions"
+      <native-form-item label="类型">
+        <native-select
+          v-model="localOverrideEditDialogItem.type"
+          class="dialog-select"
+          :disabled="localOverrideEditDialogLoading > 0"
+          :options="localOverrideTypeSelectOptions"
+        />
+      </native-form-item>
+      <native-form-item v-if="localOverrideEditDialogItem.type === 'custom'" label="自定义 ID">
+        <div class="custom-id-row">
+          <input
+            v-model="localOverrideEditDialogItem.customId"
+            class="form-input form-input--dialog"
+            type="text"
+            autocomplete="off"
+            aria-label="自定义 ID"
+            :disabled="localOverrideEditDialogLoading > 0"
           />
-        </native-form-item>
-        <native-form-item v-if="editType === 'custom'" label="自定义 ID">
-          <div class="custom-id-row">
-            <input
-              v-model="editCustomId"
-              class="form-input"
-              type="text"
-              autocomplete="off"
-              aria-label="自定义 ID"
-              :disabled="loading > 0"
-            />
-            <native-button kind="primary" :disabled="loading > 0" @click="openCustomNavDialog">
-              选择
-            </native-button>
-          </div>
-        </native-form-item>
-      </native-form>
-      <template v-slot:footer>
-        <div class="footer-row">
-          <native-button kind="primary" :disabled="loading > 0" @click="handleEditConfirm">
-            确认
+          <native-button
+            kind="primary"
+            :disabled="localOverrideEditDialogLoading > 0"
+            @click="openLocalOverrideCustomNavDialog"
+          >
+            选择
           </native-button>
-          <native-button :disabled="loading > 0" @click="closeEditDialog">取消</native-button>
         </div>
-      </template>
-    </modal-dialog>
+      </native-form-item>
+    </maintain-dialog>
     <custom-navigation-select-dialog
-      v-model:visible="customNavDialogVisible"
-      @on-confirmed="handleCustomNavConfirmed"
+      v-model:visible="localOverrideCustomNavDialogVisible"
+      @on-confirmed="handleLocalOverrideCustomNavConfirmed"
     />
   </div>
 </template>
@@ -128,6 +126,7 @@ import {
 
 import { computed, ref, watch } from 'vue'
 
+import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'
 import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
@@ -138,7 +137,7 @@ import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormIte
 import NativeSelect, {
   type NativeSelectOption,
 } from '@/components/comvisual/form/nativeSelect/NativeSelect.vue'
-import ModalDialog from '@/components/comvisual/dialog/modalDialog/ModalDialog.vue'
+import { useEditOnlyMaintainDialog } from '@/components/comvisual/dialog/maintainDialog/composables.ts'
 import { notifySuccess } from '@/library/modules/comvisual/util/nativeUi.ts'
 
 import CustomNavigationSelectDialog from '../../navigation/CustomNavigationSelectDialog.vue'
@@ -223,76 +222,77 @@ function handleCancelOverride(): void {
 
 // endregion
 
-// region 编辑对话框
+// region 本地覆盖编辑对话框
 
-const dialogFormStub = ref<Record<string, unknown>>({})
+type LocalOverrideEditDialogItem = {
+  type: NavigationKeyType
+  customId: string
+}
 
-const editDialogVisible = ref(false)
-const editType = ref<NavigationKeyType>('default')
-const editCustomId = ref('')
-const customNavDialogVisible = ref(false)
+const INITIAL_LOCAL_OVERRIDE_EDIT_ITEM: LocalOverrideEditDialogItem = {
+  type: 'default',
+  customId: '',
+}
 
-const typeSelectOptions: NativeSelectOption[] = [
+function navigationKeyToLocalOverrideEditItem(key: NavigationKey): LocalOverrideEditDialogItem {
+  return {
+    type: key.type,
+    customId: key.type === 'custom' ? (key.id ?? '') : '',
+  }
+}
+
+const { item: localOverrideEditDialogItem, mode: localOverrideEditDialogMode } =
+  useEditOnlyMaintainDialog<NavigationKey, LocalOverrideEditDialogItem>(
+    navigationKeyToLocalOverrideEditItem,
+    INITIAL_LOCAL_OVERRIDE_EDIT_ITEM,
+  )
+
+const localOverrideEditDialogLoading = ref<number>(0)
+
+const localOverrideTypeSelectOptions: NativeSelectOption[] = [
   { label: '内置默认导航', value: 'default' },
   { label: '自定义导航', value: 'custom' },
 ]
 
-function notifyError(message: string): void {
+const localOverrideEditDialogVisible = ref(false)
+
+const initialNavigationKeyForEdit = computed((): NavigationKey => {
+  return modalOverrideInfo.value?.navigationKey ?? { ...DEFAULT_NAVIGATION_KEY }
+})
+
+function notifyEditError(message: string): void {
   vim.ctx().library().defaultVisualizerInfo().visualizer.notify('errorMessage', message)
 }
 
-function syncEditFormFromCurrent(): void {
-  const info = navigationStore.getModalOverrideInfo()
-  if (!info) {
-    editType.value = 'default'
-    editCustomId.value = ''
-    return
-  }
-  editType.value = info.navigationKey.type
-  editCustomId.value = info.navigationKey.type === 'custom' ? (info.navigationKey.id ?? '') : ''
-}
+watch(
+  () => [localOverrideEditDialogVisible.value, initialNavigationKeyForEdit.value] as const,
+  ([visible, key]) => {
+    if (visible) {
+      localOverrideEditDialogItem.value = navigationKeyToLocalOverrideEditItem(key)
+    }
+  },
+)
 
-function openEditDialog(): void {
-  syncEditFormFromCurrent()
-  editDialogVisible.value = true
-}
-
-function closeEditDialog(): void {
-  editDialogVisible.value = false
-}
-
-watch(editDialogVisible, (visible) => {
-  if (visible) {
-    syncEditFormFromCurrent()
-  }
-})
-
-function openCustomNavDialog(): void {
-  customNavDialogVisible.value = true
-}
-
-function handleCustomNavConfirmed(row: CustomNavigation): void {
-  editCustomId.value = row.key
-}
-
-function buildKeyFromEditForm(): NavigationKey | null {
-  if (editType.value === 'default') {
+function buildKeyFromLocalOverrideEditItem(
+  item: LocalOverrideEditDialogItem,
+): NavigationKey | null {
+  if (item.type === 'default') {
     return { type: 'default' }
   }
-  const id = editCustomId.value.trim()
+  const id = item.customId.trim()
   if (id === '') {
-    notifyError('请选择或填写自定义导航 ID')
+    notifyEditError('请选择或填写自定义导航 ID')
     return null
   }
   return { type: 'custom', id }
 }
 
-function handleEditConfirm(): void {
-  const key = buildKeyFromEditForm()
+function handleLocalOverrideEdit(item: LocalOverrideEditDialogItem): void {
+  const key = buildKeyFromLocalOverrideEditItem(item)
   if (!key) {
     return
   }
-  loading.value += 1
+  localOverrideEditDialogLoading.value += 1
   try {
     navigationStore.setModalOverrideInfo({
       navigationKey: key,
@@ -300,14 +300,28 @@ function handleEditConfirm(): void {
     })
     readOverrideAndSyncDetail()
     notifySuccess('本地 Navigation 覆盖已保存')
-    closeEditDialog()
+    localOverrideEditDialogVisible.value = false
   } finally {
-    loading.value -= 1
+    localOverrideEditDialogLoading.value -= 1
   }
 }
 
-function handleEditHotConfirm(): void {
-  handleEditConfirm()
+function openEditDialog(): void {
+  localOverrideEditDialogVisible.value = true
+}
+
+// endregion
+
+// region CustomNavigationSelectDialog
+
+const localOverrideCustomNavDialogVisible = ref(false)
+
+function openLocalOverrideCustomNavDialog(): void {
+  localOverrideCustomNavDialogVisible.value = true
+}
+
+function handleLocalOverrideCustomNavConfirmed(row: CustomNavigation): void {
+  localOverrideEditDialogItem.value.customId = row.key
 }
 
 // endregion
@@ -404,6 +418,11 @@ readOverrideAndSyncDetail()
   background: #f5f7fa;
 }
 
+.form-input--dialog {
+  flex: 1;
+  min-width: 160px;
+}
+
 .text-area {
   width: 100%;
   height: 100%;
@@ -421,11 +440,6 @@ readOverrideAndSyncDetail()
   background: #f5f7fa;
 }
 
-.dialog-form {
-  padding: 8px 12px;
-  box-sizing: border-box;
-}
-
 .dialog-select {
   width: 100%;
   min-width: 0;
@@ -436,17 +450,5 @@ readOverrideAndSyncDetail()
   flex-wrap: wrap;
   gap: 8px;
   align-items: center;
-}
-
-.custom-id-row .form-input {
-  flex: 1;
-  min-width: 160px;
-}
-
-.footer-row {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  flex-wrap: wrap;
 }
 </style>

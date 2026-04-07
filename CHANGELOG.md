@@ -61,6 +61,10 @@
 
 ### Bug 修复
 
+- `webapp-mobile` 子模块 `comvisual` 可视化器页面 bug 修复。
+  - 开发者工具 -> 导航设置页面远端设置页签头部面板设置按钮点击后控制台报错。
+  - 开发者工具 -> 导航设置页面本地覆盖页签头部面板设置按钮点击后控制台报错。
+
 - 修复 `webapp-mobile` 子模块 `VimCompreg` 组件的子模块中的错误配置。
   - miscellaneous.ts。
 
