@@ -283,21 +283,23 @@ function formatResponseCode(responseCode: LoginResponseCode): string {
 .property-label {
   flex-shrink: 0;
   width: 80px;
+  font-size: 14px;
   color: #99a9bf;
-  line-height: 28px;
+  line-height: 1.4;
 }
 
 .property-value {
   flex: 1;
   min-width: 0;
-  line-height: 28px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #303133;
   word-break: break-word;
 }
 
 .empty-placeholder {
   color: #606266;
   font-size: 14px;
-  margin-bottom: 8px;
 }
 
 .footer-container {
