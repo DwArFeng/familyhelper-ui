@@ -14,12 +14,12 @@
           v-else
           text="未配置有效的外链地址（请在路由 componentParam 中提供 url）"
         />
-        <float-tool :allowed-dock-statuses="[2, 4]" :initial-dock-status="4" :initial-y="-200">
+        <floaty-tool :allowed-dock-statuses="[2, 4]" :initial-dock-status="4" :initial-y="-200">
           <div class="full-screen-tool" @click="toggleFullScreen()">
             <span class="float-tool__icon" aria-hidden="true" />
             <span class="float-tool__label">{{ fullScreen ? '退出全屏' : '全屏' }}</span>
           </div>
-        </float-tool>
+        </floaty-tool>
       </div>
     </border-layout-panel>
   </div>
@@ -31,7 +31,7 @@ import vim from '@/vim'
 import { onBeforeUnmount, onMounted, ref, useTemplateRef, watch } from 'vue'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
-import FloatTool from '@/components/comvisual/widget/floatTool/FloatTool.vue'
+import FloatyTool from '@/components/comvisual/widget/floatyTool/FloatyTool.vue'
 import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
 
 import screenfull from 'screenfull'

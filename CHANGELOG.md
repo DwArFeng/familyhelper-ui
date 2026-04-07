@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块组件优化。
+  - 优化 `comvisual` 可视化器 `FloatTool` 组件的名称为 `comvisual/widget/floatyTool/FloatyTool.vue`。
+
 - `webapp-pc` 子模块 `elementPlus` 可视化器页面优化。
   - 系统设置 -> 账户管理根面板浮动工具优化。
   - 系统设置 -> 账户安全根面板浮动工具优化。
