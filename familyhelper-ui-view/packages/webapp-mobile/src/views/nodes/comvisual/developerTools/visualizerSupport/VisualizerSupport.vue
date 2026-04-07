@@ -1,6 +1,13 @@
 <template>
   <div class="visualizer-support-container">
-    <border-layout-panel class="border-layout-panel" :west-visible="true" west-width="45%">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      :west-visible="true"
+      west-width="45%"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <template v-slot:west>
         <div class="panel-wrap">
           <loading-overlay :loading="loading > 0" />
@@ -94,7 +101,7 @@
           </header-layout-panel>
         </div>
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
   </div>
 </template>
 
@@ -103,7 +110,7 @@ import { nextTick, onMounted, ref } from 'vue'
 
 import vim from '@/vim'
 
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeForm from '@/components/comvisual/form/nativeForm/NativeForm.vue'

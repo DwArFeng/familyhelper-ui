@@ -1,6 +1,11 @@
 <template>
   <div class="visualizer-settings-container">
-    <border-layout-panel class="border-layout-panel">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <template v-slot:default>
         <native-tabs v-model="tabsActiveName" class="tabs-panel" tab-position="left">
           <native-tab-pane name="remote_settings" label="远端设置">
@@ -11,14 +16,14 @@
           </native-tab-pane>
         </native-tabs>
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import NativeTabPane from '@/components/comvisual/tabs/nativeTabs/NativeTabPane.vue'
 import NativeTabs from '@/components/comvisual/tabs/nativeTabs/NativeTabs.vue'
 
