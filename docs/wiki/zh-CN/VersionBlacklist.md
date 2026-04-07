@@ -30,11 +30,46 @@
 
 ## 版本黑名单
 
-| 编号                                           | 大版本   | 起始版本    | 结束版本    | 原因     |
-|----------------------------------------------|-------|---------|---------|--------|
-| [BLACKLIST-20250809.1](#BLACKLIST-202508091) | 3.6.x | 3.6.0.a | 3.6.0.b | 无法通过打包 |
+| 编号                                           | 大版本   | 起始版本    | 结束版本    | 原因                                          |
+|----------------------------------------------|-------|---------|---------|---------------------------------------------|
+| [BLACKLIST-20260407.2](#BLACKLIST-202604072) | 4.4.x | 4.4.0.a | 4.4.0.a | webapp-mobile VimCompreg miscellaneous 配置错误 |
+| [BLACKLIST-20260407.1](#BLACKLIST-202604071) | 4.4.x | 4.4.0.a | 4.4.0.a | webapp-pc VimCompreg miscellaneous 配置错误     |
+| [BLACKLIST-20250809.1](#BLACKLIST-202508091) | 3.6.x | 3.6.0.a | 3.6.0.b | 无法通过打包                                      |
 
 ## 详细原因
+
+### BLACKLIST-20260407.1
+
+原因：`webapp-pc` 子模块 `VimCompreg` 的 `miscellaneous.compregFallback` 中，
+部分组件入口未按约定以 `Promise`（或返回`Promise` 的懒加载函数） 形式提供占位组件，与 `VimCompreg` 解析逻辑不匹配。
+
+- 受影响模块/类：
+   - `familyhelper-ui-view/packages/webapp-pc/src/compreg/modules/miscellaneous.ts`。
+- 典型触发条件：
+   - 路由落入 `miscellaneous.compregFallback` 且需展示占位提示（`router.component.key` 未正确配置等）时，由 `VimCompreg`
+     加载对应占位组件。
+- 典型症状：
+   - 组件解析或展示行为与预期不符，控制台可能出现与异步组件加载相关的异常或警告。
+- 影响范围：
+   - 使用 `webapp-pc` 构建、且依赖上述 Compreg 回退占位逻辑的功能与页面。
+
+迁移建议：升级至 4.4.1.a 及以上版本。
+
+### BLACKLIST-20260407.2
+
+原因：`webapp-mobile` 子模块 `VimCompreg` 的 `miscellaneous.compregFallback` 中，
+部分组件入口未按约定以 `Promise`（或返回`Promise` 的懒加载函数） 形式提供占位组件，与 `VimCompreg` 解析逻辑不匹配。
+
+- 受影响模块/类：
+   - `familyhelper-ui-view/packages/webapp-mobile/src/compreg/modules/miscellaneous.ts`。
+- 典型触发条件：
+   - 路由落入 `miscellaneous.compregFallback` 且需展示占位提示时，由 `VimCompreg` 加载对应占位组件。
+- 典型症状：
+   - 组件解析或展示行为与预期不符，控制台可能出现与异步组件加载相关的异常或警告。
+- 影响范围：
+   - 使用 `webapp-mobile` 构建、且依赖上述 Compreg 回退占位逻辑的功能与页面。
+
+迁移建议：升级至 4.4.1.a 及以上版本。
 
 ### BLACKLIST-20250809.1
 
