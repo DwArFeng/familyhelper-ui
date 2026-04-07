@@ -12,7 +12,8 @@
 
 ### 功能移除
 
-- (无)
+- 移除 `webapp-pc` 子模块 views 中不需要的组件。
+  - src/views/nodes/comvisual/systemSettings/accountProtectorSupport/AccountProtectorSupportMaintainForm.vue。
 
 ---
 
