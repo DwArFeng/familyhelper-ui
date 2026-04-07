@@ -36,7 +36,6 @@
           @on-item-edit="handleShowItemEditDialogFromTree"
           @on-item-delete="handleItemDeleteFromTree"
         />
-        <div class="vertical-rule" />
         <div class="detail-panel">
           <placeholder-panel v-if="structureTreeCurrent === null" text="请选择导航节点" />
           <div v-else class="detail-form-wrap">
@@ -497,13 +496,6 @@ async function handleFormatIndex(): Promise<void> {
   width: min(380px, 42%);
   flex-shrink: 0;
   min-height: 0;
-}
-
-.vertical-rule {
-  width: 1px;
-  background: #e4e7ed;
-  margin: 0 8px;
-  flex-shrink: 0;
 }
 
 .detail-panel {
