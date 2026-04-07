@@ -13,23 +13,30 @@
       </div>
     </template>
     <template v-slot:default>
-      <native-form class="overview-form" :model="overviewDisplay" label-width="200px">
-        <native-form-item label="子节点条目总数">
-          <span>{{ overviewDisplay.count }}</span>
-        </native-form-item>
-        <native-form-item label="defaultNodeKey">
-          <span class="overview-readonly-text">{{ overviewDisplay.defaultNodeKey }}</span>
-        </native-form-item>
-        <native-form-item label="ezNavEnabled">
-          <span>{{ overviewDisplay.ezNavEnabled ? '是' : '否' }}</span>
-        </native-form-item>
-        <native-form-item label="ezNavMaxActiveItem">
-          <span>{{ overviewDisplay.ezNavMaxActiveItem }}</span>
-        </native-form-item>
-        <native-form-item label="ezNavRestoreWhenLogin">
-          <span>{{ overviewDisplay.ezNavRestoreWhenLogin }}</span>
-        </native-form-item>
-      </native-form>
+      <div class="scroll-bar">
+        <div class="property-form">
+          <div class="property-row">
+            <span class="property-label">子节点条目总数</span>
+            <span class="property-value">{{ overviewDisplay.count }}</span>
+          </div>
+          <div class="property-row">
+            <span class="property-label">defaultNodeKey</span>
+            <span class="property-value">{{ overviewDisplay.defaultNodeKey }}</span>
+          </div>
+          <div class="property-row">
+            <span class="property-label">ezNavEnabled</span>
+            <span class="property-value">{{ formatBoolean(overviewDisplay.ezNavEnabled) }}</span>
+          </div>
+          <div class="property-row">
+            <span class="property-label">ezNavMaxActiveItem</span>
+            <span class="property-value">{{ overviewDisplay.ezNavMaxActiveItem }}</span>
+          </div>
+          <div class="property-row">
+            <span class="property-label">ezNavRestoreWhenLogin</span>
+            <span class="property-value">{{ overviewDisplay.ezNavRestoreWhenLogin }}</span>
+          </div>
+        </div>
+      </div>
     </template>
   </header-layout-panel>
   <maintain-dialog
@@ -82,7 +89,6 @@ import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/H
 import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
 import VerticalDivider from '@/components/comvisual/form/divider/verticalDivider/VerticalDivider.vue'
-import NativeForm from '@/components/comvisual/form/nativeForm/NativeForm.vue'
 import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormItem.vue'
 
 import { useEditOnlyMaintainDialog } from '@/components/comvisual/dialog/maintainDialog/composables.ts'
@@ -154,6 +160,10 @@ const overviewDisplay = computed<OverviewDisplayModel>(() => {
     ...parseNavigationSetting(props.navigationNode.content),
   }
 })
+
+function formatBoolean(value: boolean): string {
+  return value ? '是' : '否'
+}
 
 // endregion
 
@@ -269,15 +279,38 @@ async function handleSyncDefaultNavigationClick(): Promise<void> {
   gap: 5px;
 }
 
-.overview-form {
+.property-form {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
-  height: 100%;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  padding: 8px;
+  overflow: auto;
+  max-height: 100%;
 }
 
-.overview-readonly-text {
-  word-break: break-all;
+.property-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 160px;
+}
+
+.property-label {
+  flex-shrink: 0;
+  width: 200px;
+  font-size: 14px;
+  color: #99a9bf;
+  line-height: 1.4;
+}
+
+.property-value {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #303133;
+  word-break: break-word;
 }
 
 .overview-input {
