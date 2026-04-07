@@ -40,7 +40,6 @@
             :item-count="loginStateTableItemCount"
             :page-sizes="[10, 15, 20, 30]"
             :items="loginStateTableItems"
-            :operate-column-visible="false"
             :highlight-current-row="false"
             :row-key="loginStateRowKey"
             :operate-column-width="200"
