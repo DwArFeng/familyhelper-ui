@@ -1,11 +1,14 @@
 <template>
   <div class="permission-group-container">
     <loading-overlay :loading="loading > 0" />
-    <border-layout-panel
+    <root-border-layout-panel
       class="border-layout-panel"
       west-width="350px"
       :header-visible="true"
       :west-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
     >
       <template v-slot:header>
         <div class="header-container">
@@ -75,7 +78,7 @@
           @on-selection-changed="handlePermissionPanelSelectionChanged"
         />
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
     <maintain-dialog
       v-model:visible="entityMaintainDialogVisible"
       label-width="120px"
@@ -124,7 +127,7 @@ import { computed, ref, useTemplateRef, watch } from 'vue'
 
 import { type ComponentExposed } from 'vue-component-type-helpers'
 
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormItem.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'

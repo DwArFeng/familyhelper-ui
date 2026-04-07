@@ -1,6 +1,13 @@
 <template>
   <div class="account-container">
-    <border-layout-panel class="border-layout-panel" west-width="35%" :west-visible="true">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      west-width="35%"
+      :west-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <template v-slot:west>
         <user-list-panel
           ref="userListPanelRef"
@@ -16,7 +23,7 @@
           @on-account-property-updated="handleAccountPropertyUpdated"
         />
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
   </div>
 </template>
 
@@ -26,7 +33,7 @@ import { ref, useTemplateRef } from 'vue'
 import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 
 import { type Account } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 

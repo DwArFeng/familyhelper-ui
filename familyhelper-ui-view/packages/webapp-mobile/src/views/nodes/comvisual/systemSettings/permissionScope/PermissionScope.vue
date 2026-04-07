@@ -1,6 +1,12 @@
 <template>
   <div class="permission-scope-container">
-    <border-layout-panel class="border-layout-panel" :header-visible="true">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      :header-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
       <template v-slot:header>
         <div class="header-container">
           <native-button kind="success" @click="handlePermissionScopeSearch">
@@ -72,7 +78,7 @@
           </card-panel>
         </div>
       </template>
-    </border-layout-panel>
+    </root-border-layout-panel>
     <maintain-dialog
       v-model:visible="permissionScopeMaintainDialogVisible"
       :loading="permissionScopeMaintainDialogLoading"
@@ -121,7 +127,7 @@
 import { onMounted, reactive, ref } from 'vue'
 
 import CardPanel from '@/components/comvisual/card/cardPanel/CardPanel.vue'
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormItem.vue'
 import MaintainDialog from '@/components/comvisual/dialog/maintainDialog/MaintainDialog.vue'

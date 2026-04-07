@@ -2,7 +2,13 @@
   <div class="account-protector-support-container">
     <div class="panel-wrap">
       <loading-overlay :loading="loading > 0" />
-      <border-layout-panel class="border-layout-panel" :header-visible="true">
+      <root-border-layout-panel
+        class="border-layout-panel"
+        :header-visible="true"
+        :full-screen-tool-visible="false"
+        :initial-tool-dock-status="4"
+        :initial-tool-y="-200"
+      >
         <paging-table-panel
           class="table"
           v-model:current-page="accountProtectorSupportTableCurrentPage"
@@ -34,7 +40,7 @@
             <div class="tooltip">账户保护器的支持与程序相关，仅可查看，不能更改</div>
           </div>
         </template>
-      </border-layout-panel>
+      </root-border-layout-panel>
     </div>
     <maintain-dialog
       v-model:visible="accountProtectorSupportMaintainDialogVisible"
@@ -82,7 +88,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-import BorderLayoutPanel from '@/components/comvisual/layout/borderLayoutPanel/BorderLayoutPanel.vue'
+import RootBorderLayoutPanel from '@/components/comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
 import NativeFormItem from '@/components/comvisual/form/nativeForm/NativeFormItem.vue'
 import NativeButton from '@/components/comvisual/form/nativeButton/NativeButton.vue'
