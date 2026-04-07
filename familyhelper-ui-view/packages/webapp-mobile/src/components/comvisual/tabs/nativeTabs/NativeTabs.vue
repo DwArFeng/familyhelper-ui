@@ -122,18 +122,22 @@ function select(name: string): void {
   min-height: 0;
 }
 
+/*noinspection ALL*/
 .native-tabs--tab-position-left {
   flex-direction: row;
 }
 
+/*noinspection ALL*/
 .native-tabs--tab-position-right {
   flex-direction: row-reverse;
 }
 
+/*noinspection ALL*/
 .native-tabs--tab-position-top {
   flex-direction: column;
 }
 
+/*noinspection ALL*/
 .native-tabs--tab-position-bottom {
   flex-direction: column-reverse;
 }
