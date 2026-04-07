@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块 `comvisual` 可视化器 hyperscript 页面优化。
+  - hyperscript/placeholder/index.ts 根面板浮动工具优化。
+
 - `webapp-mobile` 子模块组件新增。
   - 组件 `comvisual/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue` 新增。
 
