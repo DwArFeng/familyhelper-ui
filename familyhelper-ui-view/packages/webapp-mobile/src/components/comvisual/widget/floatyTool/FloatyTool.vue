@@ -101,6 +101,8 @@ const parentTop = ref<number>(0)
 const parentLeft = ref<number>(0)
 const parentHeight = ref<number>(0)
 const parentWidth = ref<number>(0)
+const containerHeight = ref<number>(0)
+const containerWidth = ref<number>(0)
 
 const adjustStatus = ref<AdjustStatus>(0)
 const dragSlopPassed = ref<boolean>(false)
@@ -116,22 +118,20 @@ function normalizeAllowedDockStatuses(list: readonly DockStatus[] | undefined): 
 }
 
 function calculateDockStatus(
-  inferX: number,
-  inferY: number,
-  containerHeight: number,
-  containerWidth: number,
-  pTop: number,
-  pLeft: number,
-  pHeight: number,
-  pWidth: number,
+  pointerX: number,
+  pointerY: number,
+  parentTop: number,
+  parentLeft: number,
+  parentHeight: number,
+  parentWidth: number,
   allowed: readonly DockStatus[],
   snapDistance: number,
 ): DockStatus {
   const allowedSet = new Set(allowed)
-  const distanceToTop = Math.max(0, inferY - pTop)
-  const distanceToLeft = Math.max(0, inferX - pLeft)
-  const distanceToBottom = Math.max(0, pHeight - containerHeight - inferY + pTop)
-  const distanceToRight = Math.max(0, pWidth - containerWidth - inferX + pLeft)
+  const distanceToTop = Math.max(0, pointerY - parentTop)
+  const distanceToLeft = Math.max(0, pointerX - parentLeft)
+  const distanceToBottom = Math.max(0, parentTop + parentHeight - pointerY)
+  const distanceToRight = Math.max(0, parentLeft + parentWidth - pointerX)
   const edgeDistances: Record<
     DockStatusTop | DockStatusLeft | DockStatusBottom | DockStatusRight,
     number
@@ -189,22 +189,24 @@ function initParams(): void {
   if (!container) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
-  const containerHeight = container.clientHeight
-  const containerWidth = container.clientWidth
+  const containerBoundingClientRect = container.getBoundingClientRect()
+  containerHeight.value = containerBoundingClientRect.height
+  containerWidth.value = containerBoundingClientRect.width
   // 计算父元素尺寸。
   const parent = container.parentElement?.parentElement ?? document.body
-  parentTop.value = parent.offsetTop
-  parentLeft.value = parent.offsetLeft
-  parentHeight.value = parent.clientHeight
-  parentWidth.value = parent.clientWidth
+  const parentBoundingClientRect = parent.getBoundingClientRect()
+  parentTop.value = parentBoundingClientRect.top
+  parentLeft.value = parentBoundingClientRect.left
+  parentHeight.value = parentBoundingClientRect.height
+  parentWidth.value = parentBoundingClientRect.width
   // 处理负数初始位置，负数位置的含义是相对于父元素右侧或底部的偏移。
   let initialX =
     props.initialX < 0
-      ? parentLeft.value + parentWidth.value + props.initialX - containerWidth
+      ? parentLeft.value + parentWidth.value + props.initialX - containerWidth.value
       : parentLeft.value + props.initialX
   let initialY =
     props.initialY < 0
-      ? parentTop.value + parentHeight.value + props.initialY - containerHeight
+      ? parentTop.value + parentHeight.value + props.initialY - containerHeight.value
       : parentTop.value + props.initialY
   // 需要考虑负数绝对值大于 2 倍父元素尺寸的情况，此时将其视为无效的初始位置，重置为安全距离。
   if (initialX < parentLeft.value) {
@@ -230,12 +232,12 @@ function initParams(): void {
       x.value = calculatePosition(
         initialX,
         SAFE_DISTANCE,
-        parentWidth.value - containerWidth - SAFE_DISTANCE,
+        parentWidth.value - containerWidth.value - SAFE_DISTANCE,
       )
       y.value = calculatePosition(
         initialY,
         SAFE_DISTANCE,
-        parentHeight.value - containerHeight - SAFE_DISTANCE,
+        parentHeight.value - containerHeight.value - SAFE_DISTANCE,
       )
       break
     // 停靠状态：顶部。
@@ -243,7 +245,7 @@ function initParams(): void {
       x.value = calculatePosition(
         initialX,
         parentLeft.value + SAFE_DISTANCE,
-        parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE,
+        parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE,
       )
       y.value = parentTop.value + SAFE_DISTANCE
       break
@@ -253,7 +255,7 @@ function initParams(): void {
       y.value = calculatePosition(
         initialY,
         parentTop.value + SAFE_DISTANCE,
-        parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE,
+        parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE,
       )
       break
     // 停靠状态：底部。
@@ -261,17 +263,17 @@ function initParams(): void {
       x.value = calculatePosition(
         initialX,
         parentLeft.value + SAFE_DISTANCE,
-        parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE,
+        parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE,
       )
-      y.value = parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE
+      y.value = parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE
       break
     // 停靠状态：右侧。
     case 4:
-      x.value = parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE
+      x.value = parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE
       y.value = calculatePosition(
         initialY,
         parentTop.value + SAFE_DISTANCE,
-        parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE,
+        parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE,
       )
       break
     // 停靠状态：错误。
@@ -286,14 +288,16 @@ function updateParams(): void {
   if (!container) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
-  const containerHeight = container.clientHeight
-  const containerWidth = container.clientWidth
+  const containerBoundingClientRect = container.getBoundingClientRect()
+  containerHeight.value = containerBoundingClientRect.height
+  containerWidth.value = containerBoundingClientRect.width
   // 计算父元素尺寸。
   const parent = container.parentElement?.parentElement ?? document.body
-  parentTop.value = parent.offsetTop
-  parentLeft.value = parent.offsetLeft
-  parentHeight.value = parent.clientHeight
-  parentWidth.value = parent.clientWidth
+  const parentBoundingClientRect = parent.getBoundingClientRect()
+  parentTop.value = parentBoundingClientRect.top
+  parentLeft.value = parentBoundingClientRect.left
+  parentHeight.value = parentBoundingClientRect.height
+  parentWidth.value = parentBoundingClientRect.width
   // 根据停靠状态计算位置。
   switch (dockStatus.value) {
     // 停靠状态：浮动。
@@ -301,12 +305,12 @@ function updateParams(): void {
       x.value = calculatePosition(
         x.value,
         parentLeft.value + SAFE_DISTANCE,
-        parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE,
+        parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE,
       )
       y.value = calculatePosition(
         y.value,
         parentTop.value + SAFE_DISTANCE,
-        parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE,
+        parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE,
       )
       break
     // 停靠状态：顶部。
@@ -314,7 +318,7 @@ function updateParams(): void {
       x.value = calculatePosition(
         x.value,
         parentLeft.value + SAFE_DISTANCE,
-        parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE,
+        parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE,
       )
       y.value = parentTop.value + SAFE_DISTANCE
       break
@@ -324,7 +328,7 @@ function updateParams(): void {
       y.value = calculatePosition(
         y.value,
         parentTop.value + SAFE_DISTANCE,
-        parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE,
+        parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE,
       )
       break
     // 停靠状态：底部。
@@ -332,17 +336,17 @@ function updateParams(): void {
       x.value = calculatePosition(
         x.value,
         parentLeft.value + SAFE_DISTANCE,
-        parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE,
+        parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE,
       )
-      y.value = parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE
+      y.value = parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE
       break
     // 停靠状态：右侧。
     case 4:
-      x.value = parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE
+      x.value = parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE
       y.value = calculatePosition(
         y.value,
         parentTop.value + SAFE_DISTANCE,
-        parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE,
+        parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE,
       )
       break
     // 停靠状态：错误。
@@ -401,21 +405,21 @@ function handleMoving(event: MouseEvent): void {
     if (!container) {
       throw new Error('不应该执行到此处，请联系开发人员')
     }
-    const containerHeight = container.clientHeight
-    const containerWidth = container.clientWidth
+    const containerBoundingClientRect = container.getBoundingClientRect()
+    containerHeight.value = containerBoundingClientRect.height
+    containerWidth.value = containerBoundingClientRect.width
     // 计算父元素尺寸。
     const parent = container.parentElement?.parentElement ?? document.body
-    parentTop.value = parent.offsetTop
-    parentLeft.value = parent.offsetLeft
-    parentHeight.value = parent.clientHeight
-    parentWidth.value = parent.clientWidth
+    const parentBoundingClientRect = parent.getBoundingClientRect()
+    parentTop.value = parentBoundingClientRect.top
+    parentLeft.value = parentBoundingClientRect.left
+    parentHeight.value = parentBoundingClientRect.height
+    parentWidth.value = parentBoundingClientRect.width
     const allowed = normalizeAllowedDockStatuses(props.allowedDockStatuses)
-    // 计算停靠状态。
+    // 计算停靠状态（按指针相对父矩形各边距离，避免插槽尺寸变化导致选边抖动）。
     dockStatus.value = calculateDockStatus(
-      xInfer,
-      yInfer,
-      containerHeight,
-      containerWidth,
+      event.clientX,
+      event.clientY,
       parentTop.value,
       parentLeft.value,
       parentHeight.value,
@@ -430,12 +434,12 @@ function handleMoving(event: MouseEvent): void {
         x.value = calculatePosition(
           xInfer,
           parentLeft.value + SAFE_DISTANCE,
-          parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE,
+          parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE,
         )
         y.value = calculatePosition(
           yInfer,
           parentTop.value + SAFE_DISTANCE,
-          parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE,
+          parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE,
         )
         break
       // 停靠状态：顶部。
@@ -443,7 +447,7 @@ function handleMoving(event: MouseEvent): void {
         x.value = calculatePosition(
           xInfer,
           parentLeft.value + SAFE_DISTANCE,
-          parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE,
+          parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE,
         )
         y.value = parentTop.value + SAFE_DISTANCE
         break
@@ -453,7 +457,7 @@ function handleMoving(event: MouseEvent): void {
         y.value = calculatePosition(
           yInfer,
           parentTop.value + SAFE_DISTANCE,
-          parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE,
+          parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE,
         )
         break
       // 停靠状态：底部。
@@ -461,17 +465,17 @@ function handleMoving(event: MouseEvent): void {
         x.value = calculatePosition(
           xInfer,
           parentLeft.value + SAFE_DISTANCE,
-          parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE,
+          parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE,
         )
-        y.value = parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE
+        y.value = parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE
         break
       // 停靠状态：右侧。
       case 4:
-        x.value = parentLeft.value + parentWidth.value - containerWidth - SAFE_DISTANCE
+        x.value = parentLeft.value + parentWidth.value - containerWidth.value - SAFE_DISTANCE
         y.value = calculatePosition(
           yInfer,
           parentTop.value + SAFE_DISTANCE,
-          parentTop.value + parentHeight.value - containerHeight - SAFE_DISTANCE,
+          parentTop.value + parentHeight.value - containerHeight.value - SAFE_DISTANCE,
         )
         break
       // 停靠状态：错误。
@@ -509,82 +513,98 @@ watch(
   { deep: true },
 )
 
-onMounted(() => {
-  initParams()
-})
-
 // endregion
 
-// region 全局（窗体）尺寸检测
+// region 布局父级尺寸与位置检测
 
-let bodyResizeObserver: ResizeObserver | null = null
-let toolResizeObserver: ResizeObserver | null = null
+let parentLayoutResizeObserver: ResizeObserver | null = null
+let containerResizeObserver: ResizeObserver | null = null
 
-function addBodyResizeListener(): void {
-  if (bodyResizeObserver !== null) {
+function addParentLayoutResizeListener(): void {
+  function getParent(): HTMLElement {
+    const container = containerRef.value
+    if (!container) {
+      return document.body
+    }
+    return (container.parentElement?.parentElement ?? document.body) as HTMLElement
+  }
+
+  if (parentLayoutResizeObserver !== null) {
     return
   }
-  bodyResizeObserver = new ResizeObserver(() => {
-    function parentSizeChanged(): boolean {
-      const container = containerRef.value
-      if (!container) {
-        throw new Error('不应该执行到此处，请联系开发人员')
-      }
-      const parent = container.parentElement?.parentElement ?? document.body
-      return (
-        parent.offsetTop !== parentTop.value ||
-        parent.offsetLeft !== parentLeft.value ||
-        parent.clientHeight !== parentHeight.value ||
-        parent.clientWidth !== parentWidth.value
-      )
+  const parent = getParent()
+  parentLayoutResizeObserver = new ResizeObserver(() => {
+    const parent = getParent()
+    if (!parent.checkVisibility()) {
+      return
     }
-    if (!parentSizeChanged()) {
+    if (
+      parent.offsetTop === parentTop.value &&
+      parent.offsetLeft === parentLeft.value &&
+      parent.clientHeight === parentHeight.value &&
+      parent.clientWidth === parentWidth.value
+    ) {
       return
     }
     updateParams()
   })
-  bodyResizeObserver.observe(document.body)
+  parentLayoutResizeObserver.observe(parent)
 }
 
-function removeBodyResizeListener(): void {
-  if (bodyResizeObserver === null) {
+function removeParentLayoutResizeListener(): void {
+  if (parentLayoutResizeObserver === null) {
     return
   }
-  bodyResizeObserver.unobserve(document.body)
-  bodyResizeObserver.disconnect()
-  bodyResizeObserver = null
+  parentLayoutResizeObserver.disconnect()
+  parentLayoutResizeObserver = null
 }
 
-function addToolResizeListener(): void {
-  if (toolResizeObserver !== null) {
+function addContainerResizeListener(): void {
+  function getContainer(): HTMLElement {
+    const container = containerRef.value
+    if (!container) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
+    return container
+  }
+
+  if (containerResizeObserver !== null) {
     return
   }
-  const el = containerRef.value
-  if (!el) {
-    return
-  }
-  toolResizeObserver = new ResizeObserver(() => {
+  const container = getContainer()
+  containerResizeObserver = new ResizeObserver(() => {
+    const container = getContainer()
+    if (!container.checkVisibility()) {
+      return
+    }
+    if (
+      container.clientHeight === containerHeight.value &&
+      container.clientWidth === containerWidth.value
+    ) {
+      return
+    }
     updateParams()
   })
-  toolResizeObserver.observe(el)
+  containerResizeObserver.observe(container)
 }
 
-function removeToolResizeListener(): void {
-  if (toolResizeObserver === null) {
+function removeContainerResizeListener(): void {
+  if (containerResizeObserver === null) {
     return
   }
-  toolResizeObserver.disconnect()
-  toolResizeObserver = null
+  containerResizeObserver.disconnect()
+  containerResizeObserver = null
 }
 
 onMounted(() => {
-  addBodyResizeListener()
-  addToolResizeListener()
+  initParams()
+  addParentLayoutResizeListener()
+  addContainerResizeListener()
 })
 
 onUnmounted(() => {
-  removeBodyResizeListener()
-  removeToolResizeListener()
+  removeParentLayoutResizeListener()
+  removeContainerResizeListener()
 })
 
 // endregion

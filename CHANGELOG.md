@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-mobile` 子模块组件优化。
+  - 优化 `comvisual/widget/floatyTool/FloatyTool.vue` 组件拖拽时的停靠状态判断逻辑。
   - 优化 `comvisual` 可视化器 `FloatTool` 组件的名称为 `comvisual/widget/floatyTool/FloatyTool.vue`。
 
 - `webapp-pc` 子模块 `elementPlus` 可视化器页面优化。
