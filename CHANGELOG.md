@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块 `comvisual` 可视化器页面优化。
+  - 系统设置 -> 权限分组管理头部面板关联权限节点按钮弹出对话框用户体验优化。
+
 - `component-api` 子模功能新增。
   - 更新 `src/api/rbac/permission.ts` API 接口。
 
