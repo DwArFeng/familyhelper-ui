@@ -9,7 +9,10 @@
     @keydown.ctrl.enter="handleHotKeyDown"
   >
     <div>
-      <placeholder-panel v-if="validCreateInfos.length" text="您没有创建任何类型文件的权限！" />
+      <placeholder-panel
+        v-if="validCreateInfos.length === 0"
+        text="您没有创建任何类型文件的权限！"
+      />
       <div
         class="editor-container"
         v-else

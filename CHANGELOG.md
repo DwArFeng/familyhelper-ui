@@ -18,6 +18,9 @@
 
 ### Bug 修复
 
+- `webapp-pc` 子模块 `elementPlus` 组件 bug 修复。
+  - `FileCreateDialog` 类型选择器显示行为异常。
+
 - `webapp-pc` 子模块 `comvisual` 可视化器页面 bug 修复。
   - 系统设置 -> 权限分组管理头部面板权限作用域指示器发生变化时，左侧树面板刷新行为异常。
 
