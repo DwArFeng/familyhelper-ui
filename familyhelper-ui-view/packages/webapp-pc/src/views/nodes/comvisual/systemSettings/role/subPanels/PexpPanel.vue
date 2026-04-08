@@ -3,7 +3,7 @@
     <placeholder-panel v-if="role === null" text="请选择角色" />
     <template v-else>
       <loading-overlay :loading="pexpTableLoading > 0" />
-      <header-layout-panel class="panel">
+      <header-layout-panel>
         <template v-slot:header>
           <div class="header-container">
             <native-button
@@ -500,15 +500,6 @@ async function handlePexpDelete(item: DispPexp): Promise<void> {
   min-height: 0;
   display: flex;
   flex-direction: column;
-}
-
-.panel {
-  flex: 1;
-  min-height: 0;
-}
-
-.panel :deep(.main-container-wrapper) {
-  min-height: 0;
 }
 
 .header-container {

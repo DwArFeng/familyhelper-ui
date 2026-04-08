@@ -1,7 +1,7 @@
 <template>
   <div class="pexp-panel-container">
     <placeholder-panel v-if="role === null" text="请选择角色" />
-    <header-layout-panel v-else class="panel">
+    <header-layout-panel v-else>
       <template v-slot:header>
         <div class="header-container">
           <el-button
@@ -602,16 +602,6 @@ async function handlePexpDelete(item: DispPexp): Promise<void> {
   min-height: 0;
   display: flex;
   flex-direction: column;
-}
-
-.panel {
-  flex: 1;
-  min-height: 0;
-}
-
-/*noinspection CssUnusedSymbol*/
-.panel :deep(.main-container-wrapper) {
-  min-height: 0;
 }
 
 .header-container {

@@ -1,7 +1,7 @@
 <template>
   <div class="navigation-list-panel-container">
     <loading-overlay :loading="listLoading > 0" />
-    <header-layout-panel class="panel">
+    <header-layout-panel>
       <template v-slot:header>
         <div class="header-container">
           <native-button kind="primary" @click="handleShowCreateDialog">创建</native-button>
@@ -370,10 +370,6 @@ defineExpose({
   height: 100%;
   width: 100%;
   min-height: 0;
-}
-
-.panel {
-  height: 100%;
 }
 
 .header-container {

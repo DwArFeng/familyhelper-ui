@@ -1,7 +1,7 @@
 <template>
   <div class="user-list-panel-container">
     <loading-overlay :loading="userTableLoading > 0" />
-    <header-layout-panel class="panel">
+    <header-layout-panel>
       <template v-slot:header>
         <div class="header-container">
           <native-button kind="primary" @click="handleShowRegisterDialog">新建用户</native-button>
@@ -207,15 +207,6 @@ defineExpose({
   min-height: 0;
   display: flex;
   flex-direction: column;
-}
-
-.panel {
-  flex: 1;
-  min-height: 0;
-}
-
-.panel :deep(.main-container-wrapper) {
-  min-height: 0;
 }
 
 .header-container {

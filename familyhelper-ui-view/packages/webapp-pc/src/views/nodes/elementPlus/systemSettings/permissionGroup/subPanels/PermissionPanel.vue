@@ -197,6 +197,7 @@ watch(
   line-height: 30px;
 }
 
+/*noinspection CssUnusedSymbol*/
 .detail-form :deep(.el-form-item__content) {
   width: 0;
   margin-right: 5px;
@@ -206,6 +207,7 @@ watch(
   line-height: 30px;
 }
 
+/*noinspection CssUnusedSymbol*/
 .detail-form :deep(.el-form-item) {
   margin-right: 0;
   margin-bottom: 0;

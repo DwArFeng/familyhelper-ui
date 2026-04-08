@@ -141,12 +141,6 @@ const accountRolePanelRef =
 const floatyAccountRolePanelRef = useTemplateRef<ComponentExposed<typeof AccountRolePanel>>(
   'floatyAccountRolePanelRef',
 )
-const accountProtectorInfoPanelRef = useTemplateRef<
-  ComponentExposed<typeof AccountProtectorInfoPanel>
->('accountProtectorInfoPanelRef')
-const floatyAccountProtectorInfoPanelRef = useTemplateRef<
-  ComponentExposed<typeof AccountProtectorInfoPanel>
->('floatyAccountProtectorInfoPanelRef')
 
 function handleAccountPropertyUpdated(mode: 'DEFAULT' | 'FLOATY'): void {
   emit('onAccountPropertyUpdated')
