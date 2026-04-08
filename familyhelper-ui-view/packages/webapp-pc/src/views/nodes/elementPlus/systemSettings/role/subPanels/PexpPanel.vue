@@ -271,8 +271,6 @@ async function checkInfluenced(roleId: string): Promise<boolean> {
 // region 权限表达式维护对话框
 
 type PexpMaintainDialogItem = {
-  scope_string_id: string
-  role_string_id: string
   pexp_string_id: string
   content: string
   remark: string
@@ -280,8 +278,6 @@ type PexpMaintainDialogItem = {
 
 function pexpMaintainDialogItemMap(t: DispPexp): PexpMaintainDialogItem {
   return {
-    scope_string_id: t.key.scope_string_id,
-    role_string_id: t.key.role_string_id,
     pexp_string_id: t.key.pexp_string_id,
     content: t.content,
     remark: t.remark,
@@ -296,8 +292,6 @@ const {
   showEditDialog: showPexpEditMaintainDialog,
   showInspectDialog: showPexpInspectMaintainDialog,
 } = useGeneralMaintainDialog<DispPexp, PexpMaintainDialogItem>(pexpMaintainDialogItemMap, {
-  scope_string_id: '',
-  role_string_id: '',
   pexp_string_id: '',
   content: '',
   remark: '',
@@ -413,8 +407,8 @@ async function handlePexpCreate(item: PexpMaintainDialogItem): Promise<void> {
     await resolveResponse(
       createPexp({
         key: {
-          scope_string_id: item.scope_string_id,
-          role_string_id: item.role_string_id,
+          scope_string_id: scopeIndicatorValue.value.key.string_id,
+          role_string_id: props.role.key.string_id,
           pexp_string_id: item.pexp_string_id,
         },
         content: item.content,
@@ -446,7 +440,7 @@ async function handlePexpCreate(item: PexpMaintainDialogItem): Promise<void> {
 }
 
 async function handlePexpEdit(item: PexpMaintainDialogItem): Promise<void> {
-  if (props.role === null) {
+  if (props.role === null || scopeIndicatorValue.value === null) {
     throw new Error('不应该执行到此处，请联系开发人员')
   }
   try {
@@ -467,7 +461,7 @@ async function handlePexpEdit(item: PexpMaintainDialogItem): Promise<void> {
   } catch {
     return
   }
-  const influencedFlag = await checkInfluenced(item.role_string_id)
+  const influencedFlag = await checkInfluenced(props.role.key.string_id)
   if (influencedFlag) {
     try {
       await ElMessageBox.confirm(
@@ -493,8 +487,8 @@ async function handlePexpEdit(item: PexpMaintainDialogItem): Promise<void> {
     await resolveResponse(
       updatePexp({
         key: {
-          scope_string_id: item.scope_string_id,
-          role_string_id: item.role_string_id,
+          scope_string_id: scopeIndicatorValue.value.key.string_id,
+          role_string_id: props.role.key.string_id,
           pexp_string_id: item.pexp_string_id,
         },
         content: item.content,
