@@ -199,10 +199,6 @@ watch(
     permissionToUnattach.value = []
     entityMaintainDialogVisible.value = false
     permissionAttachDialogVisible.value = false
-    const treePanel = permissionGroupTreePanelRef.value
-    if (treePanel) {
-      treePanel.refresh()
-    }
   },
 )
 
