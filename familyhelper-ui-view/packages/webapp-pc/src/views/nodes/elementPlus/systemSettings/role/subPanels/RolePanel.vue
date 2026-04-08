@@ -68,7 +68,7 @@
           :readonly="roleMaintainDialogMode === 'INSPECT'"
         />
       </el-form-item>
-      <el-form-item label="启用" prop="enabled" v-if="roleMaintainDialogMode !== 'CREATE'">
+      <el-form-item label="启用" prop="enabled">
         <el-switch
           class="focusable-switch"
           tabindex="0"
