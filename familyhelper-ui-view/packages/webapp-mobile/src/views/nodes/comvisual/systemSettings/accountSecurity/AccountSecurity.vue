@@ -48,7 +48,7 @@ const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 // region 账户选择器
 
 const PERMISSION_HEADER_VISIBLE =
-  'ui.mobile;ui.mobile.component_visible.system_setting.account_security.account_selector'
+  'ui.mobile;ui.mobile.component_visible.system_settings.account_security.account_selector'
 
 const accountSelectorUserId = ref<string>('')
 
