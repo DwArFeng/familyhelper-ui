@@ -74,7 +74,7 @@
           :readonly="roleMaintainDialogMode === 'INSPECT'"
         />
       </native-form-item>
-      <native-form-item v-if="roleMaintainDialogMode !== 'CREATE'" label="启用">
+      <native-form-item label="启用">
         <native-switch
           v-model="roleMaintainDialogItem.enabled"
           active-text="启用"
@@ -390,10 +390,6 @@ onMounted(() => {
 
 .panel {
   flex: 1;
-  min-height: 0;
-}
-
-.panel :deep(.main-container-wrapper) {
   min-height: 0;
 }
 
