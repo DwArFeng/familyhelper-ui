@@ -115,41 +115,44 @@
       :close-on-click-modal="false"
     >
       <loading-overlay :loading="loginDialogFormLoading > 0" />
-      <form class="dialog-form" @submit.prevent="handleLoginDialogConfirmButtonClicked">
-        <native-form :model="loginDialogFormModel" label-width="85px">
-          <native-form-item label="账号密码">
-            <input
-              v-model="loginDialogFormModel.password"
-              class="form-input"
-              type="password"
-              placeholder="请输入密码"
-              autocomplete="current-password"
-            />
-          </native-form-item>
-          <native-form-item label="过期时间" :error="loginExpireError">
-            <date-time-input v-model="loginDialogFormModel.expire_iso" />
-            <div class="shortcut-row">
-              <native-link
-                v-for="s in expireShortcuts"
-                :key="s.label"
-                size="small"
-                type="primary"
-                @click="loginDialogFormModel.expire_iso = s.iso()"
-              >
-                {{ s.label }}
-              </native-link>
-            </div>
-          </native-form-item>
-          <native-form-item label="凭证备注">
-            <input
-              v-model="loginDialogFormModel.remark"
-              class="form-input"
-              type="text"
-              placeholder="请输入备注"
-            />
-          </native-form-item>
-        </native-form>
-      </form>
+      <native-form
+        class="dialog-form"
+        :model="loginDialogFormModel"
+        label-width="85px"
+        @submit.prevent="handleLoginDialogConfirmButtonClicked"
+      >
+        <native-form-item label="账号密码">
+          <input
+            v-model="loginDialogFormModel.password"
+            class="form-input"
+            type="password"
+            placeholder="请输入密码"
+            autocomplete="current-password"
+          />
+        </native-form-item>
+        <native-form-item label="过期时间" :error="loginExpireError">
+          <date-time-input v-model="loginDialogFormModel.expire_iso" />
+          <div class="shortcut-row">
+            <native-link
+              v-for="s in expireShortcuts"
+              :key="s.label"
+              size="small"
+              type="primary"
+              @click="loginDialogFormModel.expire_iso = s.iso()"
+            >
+              {{ s.label }}
+            </native-link>
+          </div>
+        </native-form-item>
+        <native-form-item label="凭证备注">
+          <input
+            v-model="loginDialogFormModel.remark"
+            class="form-input"
+            type="text"
+            placeholder="请输入备注"
+          />
+        </native-form-item>
+      </native-form>
       <template v-slot:footer>
         <native-button
           v-if="!readonly"
@@ -170,32 +173,35 @@
       :close-on-click-modal="false"
     >
       <loading-overlay :loading="deriveDialogFormLoading > 0" />
-      <form class="dialog-form" @submit.prevent="handleDeriveDialogConfirmButtonClicked">
-        <native-form :model="deriveDialogFormModel" label-width="85px">
-          <native-form-item label="过期时间" :error="deriveExpireError">
-            <date-time-input v-model="deriveDialogFormModel.expire_iso" />
-            <div class="shortcut-row">
-              <native-link
-                v-for="s in expireShortcuts"
-                :key="'d-' + s.label"
-                size="small"
-                type="primary"
-                @click="deriveDialogFormModel.expire_iso = s.iso()"
-              >
-                {{ s.label }}
-              </native-link>
-            </div>
-          </native-form-item>
-          <native-form-item label="凭证备注">
-            <input
-              v-model="deriveDialogFormModel.remark"
-              class="form-input"
-              type="text"
-              placeholder="请输入备注"
-            />
-          </native-form-item>
-        </native-form>
-      </form>
+      <native-form
+        class="dialog-form"
+        :model="deriveDialogFormModel"
+        label-width="85px"
+        @submit.prevent="handleDeriveDialogConfirmButtonClicked"
+      >
+        <native-form-item label="过期时间" :error="deriveExpireError">
+          <date-time-input v-model="deriveDialogFormModel.expire_iso" />
+          <div class="shortcut-row">
+            <native-link
+              v-for="s in expireShortcuts"
+              :key="'d-' + s.label"
+              size="small"
+              type="primary"
+              @click="deriveDialogFormModel.expire_iso = s.iso()"
+            >
+              {{ s.label }}
+            </native-link>
+          </div>
+        </native-form-item>
+        <native-form-item label="凭证备注">
+          <input
+            v-model="deriveDialogFormModel.remark"
+            class="form-input"
+            type="text"
+            placeholder="请输入备注"
+          />
+        </native-form-item>
+      </native-form>
       <template v-slot:footer>
         <native-button
           v-if="!readonly"
