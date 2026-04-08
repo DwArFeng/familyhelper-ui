@@ -142,22 +142,36 @@ export function childForScopePermissionStringIdLike(
   )
 }
 
-export function create(createInfo: PermissionCreateInfo): Pres<PermissionCreateResult> {
-  return http
-    .generalClient()
-    .post('rbac', 'permission/create', createInfo, 'application/json;charset=UTF-8')
+export function childForScopeGroupIsNull(
+  scopeKey: StringIdKey,
+  pagingInfo: PagingInfo,
+): Prespa<Permission> {
+  return http.generalClient().get(
+    'rbac',
+    `scope/${scopeKey.string_id}/permission/group-is-null`,
+    {
+      page: pagingInfo.page,
+      rows: pagingInfo.rows,
+    },
+    'json',
+  )
 }
 
-export function update(updateInfo: PermissionUpdateInfo): Pres<null> {
-  return http
-    .generalClient()
-    .patch('rbac', 'permission/update', updateInfo, 'application/json;charset=UTF-8')
-}
-
-export function remove(removeInfo: PermissionRemoveInfo): Pres<null> {
-  return http
-    .generalClient()
-    .post('rbac', 'permission/remove', removeInfo, 'application/json;charset=UTF-8')
+export function childForScopeGroupIsNullPermissionStringIdLike(
+  scopeKey: StringIdKey,
+  pattern: string,
+  pagingInfo: PagingInfo,
+): Prespa<Permission> {
+  return http.generalClient().get(
+    'rbac',
+    `scope/${scopeKey.string_id}/permission/group-is-null/permission-string-id-like`,
+    {
+      pattern,
+      page: pagingInfo.page,
+      rows: pagingInfo.rows,
+    },
+    'json',
+  )
 }
 
 export function getDisp(scopeId: string, permissionStringId: string): Pres<DispPermission> {
@@ -235,4 +249,54 @@ export function nameLikeDisp(pattern: string, pagingInfo: PagingInfo): Prespa<Di
     },
     'json',
   )
+}
+
+export function childForScopeGroupIsNullDisp(
+  scopeKey: StringIdKey,
+  pagingInfo: PagingInfo,
+): Prespa<DispPermission> {
+  return http.generalClient().get(
+    'rbac',
+    `scope/${scopeKey.string_id}/permission/group-is-null/disp`,
+    {
+      page: pagingInfo.page,
+      rows: pagingInfo.rows,
+    },
+    'json',
+  )
+}
+
+export function childForScopeGroupIsNullPermissionStringIdLikeDisp(
+  scopeKey: StringIdKey,
+  pattern: string,
+  pagingInfo: PagingInfo,
+): Prespa<DispPermission> {
+  return http.generalClient().get(
+    'rbac',
+    `scope/${scopeKey.string_id}/permission/group-is-null/permission-string-id-like/disp`,
+    {
+      pattern,
+      page: pagingInfo.page,
+      rows: pagingInfo.rows,
+    },
+    'json',
+  )
+}
+
+export function create(createInfo: PermissionCreateInfo): Pres<PermissionCreateResult> {
+  return http
+    .generalClient()
+    .post('rbac', 'permission/create', createInfo, 'application/json;charset=UTF-8')
+}
+
+export function update(updateInfo: PermissionUpdateInfo): Pres<null> {
+  return http
+    .generalClient()
+    .patch('rbac', 'permission/update', updateInfo, 'application/json;charset=UTF-8')
+}
+
+export function remove(removeInfo: PermissionRemoveInfo): Pres<null> {
+  return http
+    .generalClient()
+    .post('rbac', 'permission/remove', removeInfo, 'application/json;charset=UTF-8')
 }

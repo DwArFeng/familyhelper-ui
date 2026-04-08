@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `component-api` 子模功能新增。
+  - 更新 `src/api/rbac/permission.ts` API 接口。
+
 - `component-ckeditor` 子模块依赖升级。
   - 升级 `vite` 依赖版本为 `^6.4.2` 以规避漏洞。
 
