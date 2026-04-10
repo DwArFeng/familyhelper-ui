@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/VimArchitecture.md。
+
 - `webapp-mobile` 子模块页面优化。
   - 系统设置 -> 账户安全页面头部面板显示权限节点优化。
 
