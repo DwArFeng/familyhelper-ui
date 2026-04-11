@@ -15,7 +15,7 @@
   "dependencies": {
     "@dwarfeng/familyhelper-ui-component-api": "workspace:*",
     "@dwarfeng/familyhelper-ui-component-util": "workspace:*",
-    "axios": "^1.13.6",
+    "axios": "^1.15.0",
     "js-base64": "^3.7.8",
     "pinia": "^2.3.1",
     "screenfull": "^6.0.2",
