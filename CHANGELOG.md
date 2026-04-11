@@ -5,6 +5,7 @@
 ### 功能构建
 
 - Wiki 更新。
+  - docs/wiki/zh-CN/FamilyhelperUiViewBuildScript.md。
   - docs/wiki/zh-CN/FamilyhelperUiView.md。
 
 - Wiki 编写。

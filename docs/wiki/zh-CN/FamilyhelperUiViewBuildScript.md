@@ -100,8 +100,6 @@ Vue 核心仓库中的 [`scripts/build.js`](https://github.com/vuejs/vue/blob/ma
 `scripts/util/log.js` 从 `scripts/config` 等读取脚本公共配置（如日志级别），再按级别输出带时间戳与模块名的行。构建过程中的
 `info` / `debug` 等级别会影响控制台详细程度；细节以 `scripts` 目录内配置与模块为准。
 
-## 延伸阅读
+## 参阅
 
-- [Familyhelper UI View - 前端 view 模块导读](./FamilyhelperUiView.md)
-- 模块内命令与格式化约定：`familyhelper-ui-view` 仓库中的 `README.md`
-- Wiki 总目录：[目录](./Contents.md)
+- [Familyhelper UI View](./FamilyhelperUiView.md) - 前端 view 模块（monorepo）导读，说明模块定位、包划分与后续文档阅读顺序，细节请参阅该目录内 `README.md`。
