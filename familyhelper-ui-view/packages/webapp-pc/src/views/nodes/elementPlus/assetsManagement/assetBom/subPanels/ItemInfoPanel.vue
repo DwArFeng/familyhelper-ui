@@ -615,12 +615,6 @@ defineExpose({
   flex-wrap: wrap;
 }
 
-.property-container .property-form :deep(label) {
-  width: 240px;
-  color: #99a9bf;
-  line-height: 30px;
-}
-
 /*noinspection CssUnusedSymbol*/
 .property-container .property-form :deep(.el-form-item) {
   margin-right: 0;
@@ -629,6 +623,12 @@ defineExpose({
   white-space: nowrap;
   display: flex;
   flex-direction: row;
+}
+
+/*noinspection CssUnusedSymbol*/
+.property-container .property-form :deep(.el-form-item__label) {
+  width: 240px;
+  color: #99a9bf;
 }
 
 /*noinspection CssUnusedSymbol*/

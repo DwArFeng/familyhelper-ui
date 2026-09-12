@@ -480,12 +480,6 @@ async function handleUpload(files: File[]): Promise<void> {
   flex-wrap: wrap;
 }
 
-.property-container .property-form :deep(label) {
-  width: 240px;
-  color: #99a9bf;
-  line-height: 30px;
-}
-
 /*noinspection CssUnusedSymbol*/
 .property-container .property-form :deep(.el-form-item) {
   margin-right: 0;
@@ -494,6 +488,12 @@ async function handleUpload(files: File[]): Promise<void> {
   white-space: nowrap;
   display: flex;
   flex-direction: row;
+}
+
+/*noinspection CssUnusedSymbol*/
+.property-form :deep(.el-form-item__label) {
+  width: 240px;
+  color: #99a9bf;
 }
 
 /*noinspection CssUnusedSymbol*/

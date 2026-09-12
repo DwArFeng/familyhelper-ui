@@ -35,6 +35,7 @@
             >
               <el-form-item label="头像" style="width: 100%">
                 <avatar-panel
+                  class="multiline-height-item"
                   shape="square"
                   render-mode="BY_ID"
                   :size="180"
@@ -276,10 +277,8 @@ defineExpose({
   flex-wrap: wrap;
 }
 
-.property-form :deep(label) {
-  width: 240px;
-  color: #99a9bf;
-  line-height: 30px;
+.property-form .multiline-height-item {
+  margin-top: 10px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -290,6 +289,12 @@ defineExpose({
   white-space: nowrap;
   display: flex;
   flex-direction: row;
+}
+
+/*noinspection CssUnusedSymbol*/
+.property-form :deep(.el-form-item__label) {
+  width: 240px;
+  color: #99a9bf;
 }
 
 /*noinspection CssUnusedSymbol*/
