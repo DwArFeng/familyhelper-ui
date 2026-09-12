@@ -66,6 +66,7 @@ export interface HttpClient {
    * @param url URL。
    * @param params POST 参数。
    * @param contentType 内容类型。
+   * @returns 请求的 Promise 对象。
    */
   post<E>(module: string, url: string, params: PostParam, contentType: ContentType): Promise<E>
 
@@ -79,6 +80,7 @@ export interface HttpClient {
    * @param url URL。
    * @param params PATCH 参数。
    * @param contentType 内容类型。
+   * @returns 请求的 Promise 对象。
    */
   patch<E>(module: string, url: string, params: PatchParam, contentType: ContentType): Promise<E>
 
@@ -92,6 +94,7 @@ export interface HttpClient {
    * @param url URL。
    * @param params DEL 参数。
    * @param responseType 响应类型。
+   * @returns 请求的 Promise 对象。
    */
   del<E>(module: string, url: string, params: DelParam, responseType: ResponseType): Promise<E>
 }
