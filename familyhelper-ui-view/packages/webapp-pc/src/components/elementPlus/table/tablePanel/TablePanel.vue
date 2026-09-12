@@ -2,6 +2,7 @@
   <div class="table-panel-container" ref="rootRef">
     <div class="table-container">
       <el-table
+        ref="tableRef"
         class="table"
         height="100%"
         stripe
@@ -121,6 +122,10 @@
 
 <script setup lang="ts" generic="CT extends Record<string, any>">
 import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
+
+import { type ComponentExposed } from 'vue-component-type-helpers'
+
+import { ElTable } from 'element-plus'
 
 import { Delete as DeleteIcon, EditPen, Search as SearchIcon } from '@element-plus/icons-vue'
 
@@ -449,6 +454,59 @@ function handleContextmenuItemDelete(item: CT, index: number): void {
   contextmenuClose()
   emit('onItemDelete', item, index)
 }
+
+// endregion
+
+// region 表格操作
+
+const tableRef = useTemplateRef<ComponentExposed<typeof ElTable>>('tableRef')
+
+function clearSelection(): void {
+  if (!tableRef.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  tableRef.value.clearSelection()
+}
+
+function getSelectionRows(): CT[] {
+  if (!tableRef.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  return tableRef.value.getSelectionRows() as CT[]
+}
+
+function toggleRowSelection(row: CT, selected?: boolean, ignoreSelectable?: boolean): void {
+  if (!tableRef.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  tableRef.value.toggleRowSelection(row, selected, ignoreSelectable)
+}
+
+function toggleAllSelection(): void {
+  if (!tableRef.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  tableRef.value.toggleAllSelection()
+}
+
+function setCurrentRow(row?: CT): void {
+  if (!tableRef.value) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  tableRef.value.setCurrentRow(row)
+}
+
+// endregion
+
+// region 方法暴露
+
+defineExpose({
+  clearSelection,
+  getSelectionRows,
+  toggleRowSelection,
+  toggleAllSelection,
+  setCurrentRow,
+})
 
 // endregion
 </script>

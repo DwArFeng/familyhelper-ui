@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件优化。
+  - 增加 `elementPlus/table/tablePanel/TablePanel.vue` 组件的暴露方法。
+
 - `webapp-pc` 子模块页面优化。
   - 系统设置 -> 账户管理右侧预览页签主属性表单样式优化。
   - 系统设置 -> 账户安全主面板账户概览页签主属性表单样式优化。
