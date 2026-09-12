@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块优化。
+  - src/composables/icon.ts 中新增 Element Plus 图标的 Composition API。
+  - src/composables/icon.ts 中新增图标的尺寸重载 Composition API。
+
 - `webapp-pc` 子模块类优化注释、文档注释格式、代码换行格式。
   - src/store/index.ts。
 
