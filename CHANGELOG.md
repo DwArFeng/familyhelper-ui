@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块类优化注释、文档注释格式、代码换行格式。
+  - src/store/index.ts。
+
 - `webapp-mobile` 子模块类优化注释、文档注释格式、代码换行格式。
   - src/store/index.ts。
 
