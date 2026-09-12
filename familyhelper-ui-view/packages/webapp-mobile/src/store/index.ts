@@ -96,6 +96,8 @@ async function init(ctx: VimApplicationContext): Promise<void> {
 
 /**
  * 获取所有已注册的 Store ID。
+ *
+ * @returns 所有已注册的 Store ID。
  */
 function storeIds(): string[] {
   if (status === 'initializing') {
@@ -110,6 +112,7 @@ function storeIds(): string[] {
  * 调用者需要保证方法的 id 与对应的泛型 SS 匹配，否则会导致错误的 IDE 补全提示。
  *
  * @param id Store ID。
+ * @returns Vue Store 定义。
  */
 function vueStoreDefinition<Id extends string, SS>(id: Id): SimplyStoreDefinition<Id, SS> {
   if (status === 'initializing') {
@@ -124,6 +127,7 @@ function vueStoreDefinition<Id extends string, SS>(id: Id): SimplyStoreDefinitio
  * 调用者需要保证方法的 id 与对应的泛型 SS 匹配，否则会导致错误的 IDE 补全提示。
  *
  * @param id
+ * @returns Vue Store。
  */
 function vueStore<Id extends string, SS>(id: Id): SimplyStore<Id, SS> {
   if (status === 'initializing') {
