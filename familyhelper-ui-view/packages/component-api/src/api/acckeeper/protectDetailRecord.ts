@@ -22,7 +22,7 @@ export function exists(key: RecordKey): Pres<boolean> {
     .generalClient()
     .get(
       'acckeeper',
-      `protect-detail-record/${key.login_history_id}&${key.record_id}/exists/`,
+      `protect-detail-record/${key.login_history_id}%26${key.record_id}/exists/`,
       {},
       'json',
     )
@@ -31,7 +31,12 @@ export function exists(key: RecordKey): Pres<boolean> {
 export function get(key: RecordKey): Pres<ProtectDetailRecord> {
   return http
     .generalClient()
-    .get('acckeeper', `protect-detail-record/${key.login_history_id}&${key.record_id}/`, {}, 'json')
+    .get(
+      'acckeeper',
+      `protect-detail-record/${key.login_history_id}%26${key.record_id}/`,
+      {},
+      'json',
+    )
 }
 
 export function all(pagingInfo: PagingInfo): Prespa<ProtectDetailRecord> {
@@ -66,7 +71,7 @@ export function getDisp(key: RecordKey): Pres<DispProtectDetailRecord> {
     .generalClient()
     .get(
       'acckeeper',
-      `protect-detail-record/${key.login_history_id}&${key.record_id}/disp/`,
+      `protect-detail-record/${key.login_history_id}%26${key.record_id}/disp/`,
       {},
       'json',
     )

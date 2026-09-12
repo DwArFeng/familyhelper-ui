@@ -42,7 +42,7 @@ export function exists(key: ProtectorVariableKey): Pres<boolean> {
     .generalClient()
     .get(
       'acckeeper',
-      `protector-variable/${key.protector_info_id}&${key.variable_id}/exists/`,
+      `protector-variable/${key.protector_info_id}%26${key.variable_id}/exists/`,
       {},
       'json',
     )
@@ -51,7 +51,12 @@ export function exists(key: ProtectorVariableKey): Pres<boolean> {
 export function get(key: ProtectorVariableKey): Pres<ProtectorVariable> {
   return http
     .generalClient()
-    .get('acckeeper', `protector-variable/${key.protector_info_id}&${key.variable_id}/`, {}, 'json')
+    .get(
+      'acckeeper',
+      `protector-variable/${key.protector_info_id}%26${key.variable_id}/`,
+      {},
+      'json',
+    )
 }
 
 export function insert(protectorVariable: InsertProtectorVariable): Pres<ProtectorVariableKey> {
@@ -69,7 +74,12 @@ export function update(protectorVariable: UpdateProtectorVariable): Pres<null> {
 export function remove(key: ProtectorVariableKey): Pres<null> {
   return http
     .generalClient()
-    .del('acckeeper', `protector-variable/${key.protector_info_id}&${key.variable_id}/`, {}, 'json')
+    .del(
+      'acckeeper',
+      `protector-variable/${key.protector_info_id}%26${key.variable_id}/`,
+      {},
+      'json',
+    )
 }
 
 export function all(pagingInfo: PagingInfo): Prespa<ProtectorVariable> {
@@ -104,7 +114,7 @@ export function getDisp(key: ProtectorVariableKey): Pres<DispProtectorVariable> 
     .generalClient()
     .get(
       'acckeeper',
-      `protector-variable/${key.protector_info_id}&${key.variable_id}/disp/`,
+      `protector-variable/${key.protector_info_id}%26${key.variable_id}/disp/`,
       {},
       'json',
     )

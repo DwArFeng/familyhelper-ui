@@ -22,7 +22,7 @@ export function exists(key: RecordKey): Pres<boolean> {
     .generalClient()
     .get(
       'acckeeper',
-      `login-param-record/${key.login_history_id}&${key.record_id}/exists/`,
+      `login-param-record/${key.login_history_id}%26${key.record_id}/exists/`,
       {},
       'json',
     )
@@ -31,7 +31,7 @@ export function exists(key: RecordKey): Pres<boolean> {
 export function get(key: RecordKey): Pres<LoginParamRecord> {
   return http
     .generalClient()
-    .get('acckeeper', `login-param-record/${key.login_history_id}&${key.record_id}/`, {}, 'json')
+    .get('acckeeper', `login-param-record/${key.login_history_id}%26${key.record_id}/`, {}, 'json')
 }
 
 export function all(pagingInfo: PagingInfo): Prespa<LoginParamRecord> {
@@ -66,7 +66,7 @@ export function getDisp(key: RecordKey): Pres<DispLoginParamRecord> {
     .generalClient()
     .get(
       'acckeeper',
-      `login-param-record/${key.login_history_id}&${key.record_id}/disp/`,
+      `login-param-record/${key.login_history_id}%26${key.record_id}/disp/`,
       {},
       'json',
     )

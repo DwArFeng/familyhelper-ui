@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- `component-api` 子模块优化。
+  - 优化 `src/api/acckeeper/loginParamRecord.ts` 中部分方法的 URL，特殊字符使用 URL 转义。
+  - 优化 `src/api/acckeeper/protectDetailRecord.ts` 中部分方法的 URL，特殊字符使用 URL 转义。
+  - 优化 `src/api/acckeeper/protectorVariable.ts` 中部分方法的 URL，特殊字符使用 URL 转义。
+
 - 优化文件格式。
   - 优化 `pom.xml` 文件的格式。
 
