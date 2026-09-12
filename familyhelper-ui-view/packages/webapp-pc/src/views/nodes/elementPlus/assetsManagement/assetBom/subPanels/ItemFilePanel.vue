@@ -236,7 +236,7 @@ import {
   childForItemModifiedDateDesc,
   childForItemOriginNameAsc,
   remove,
-  upload,
+  uploadStream,
   requestItemFileStreamVoucher,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/assets/itemFile.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
@@ -605,22 +605,28 @@ const fileUploadDialogVisible = ref<boolean>(false)
 const fileUploadDialogLoading = ref<number>(0)
 
 async function handleFileUploadDialogConfirmed(files: File[], callback: () => void): Promise<void> {
+  if (files.length <= 0 || props.itemId === '') {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
   fileUploadDialogLoading.value += 1
   try {
-    const promises: Promise<unknown>[] = []
-    files.forEach((file: File) => {
+    for (const file of files) {
+      // 构造表单数据。
       const formData: FormData = new FormData()
-      formData.append('file', file, file.name)
-      promises.push(resolveResponse(upload({ long_id: props.itemId }, formData)))
-    })
-    await Promise.all(promises)
+      formData.append('file', file)
+      // 执行上传。
+      await resolveResponse(uploadStream({ long_id: props.itemId }, formData))
+    }
     callback()
     ElMessage({
       showClose: true,
-      message: '文件上传成功',
+      message: '上传成功',
       type: 'success',
     })
-    handleItemFileInfoSearch()
+    const asyncWrapper = () => {
+      handleItemFileInfoSearch()
+    }
+    asyncWrapper()
     emit('onItemFileUpdated')
     fileUploadDialogVisible.value = false
   } finally {
@@ -636,18 +642,30 @@ const fileCreateDialogVisible = ref<boolean>(false)
 const fileCreateDialogLoading = ref<number>(0)
 
 async function handleFileCreateDialogConfirmed(file: FileCreateInfo): Promise<void> {
+  if (props.itemId === '') {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
   fileCreateDialogLoading.value += 1
   try {
+    // 将 Blob 转换为 File。
+    const fileBlob = new File([file.blob], file.name, { type: 'application/octet-stream' })
+    // 构造表单数据。
     const formData: FormData = new FormData()
-    formData.append('file', file.blob, file.name)
-    await resolveResponse(upload({ long_id: props.itemId }, formData))
+    formData.append('file', fileBlob)
+    // 执行上传。
+    await resolveResponse(uploadStream({ long_id: props.itemId }, formData))
     ElMessage({
       showClose: true,
       message: '文件新建成功',
       type: 'success',
     })
-    handleItemFileInfoSearch()
+    // 刷新文件信息。
+    const asyncWrapper = () => {
+      handleItemFileInfoSearch()
+    }
+    asyncWrapper()
     emit('onItemFileUpdated')
+    // 关闭对话框。
     fileCreateDialogVisible.value = false
   } finally {
     fileCreateDialogLoading.value -= 1

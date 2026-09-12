@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块页面优化。
+  - 资产管理 -> 资产BOM管理右侧资料页签上传附件功能调整为流式传输。
+
 - `webapp-pc` 子模块组件优化。
   - 增加 `elementPlus/table/tablePanel/TablePanel.vue` 组件的暴露方法。
 
