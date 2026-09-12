@@ -86,6 +86,9 @@
                 <configuration>
                     <filesets>
                         <fileset>
+                            <directory>packages/component-util/dist</directory>
+                        </fileset>
+                        <fileset>
                             <directory>packages/webapp-mobile/dist</directory>
                         </fileset>
                         <fileset>

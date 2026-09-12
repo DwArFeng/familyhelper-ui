@@ -33,7 +33,7 @@
 
 ### Bug 修复
 
-- (无)
+- 修复 `familyhelper-ui-view` 模块中 `pom.xml` 缺失的配置。
 
 ### 功能移除
 
