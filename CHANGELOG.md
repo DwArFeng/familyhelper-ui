@@ -4,6 +4,32 @@
 
 ### 功能构建
 
+- `component-api` 子模块功能新增。
+  - 新增 `src/api/fileio/common.ts` API 接口。
+  - 新增 `src/api/fileio/exportConf.ts` API 接口。
+  - 新增 `src/api/fileio/exporterInfo.ts` API 接口。
+  - 新增 `src/api/fileio/exporterSupport.ts` API 接口。
+  - 新增 `src/api/fileio/exportFile.ts` API 接口。
+  - 新增 `src/api/fileio/exportMetadata.ts` API 接口。
+  - 新增 `src/api/fileio/exportOperation.ts` API 接口。
+  - 新增 `src/api/fileio/exportTask.ts` API 接口。
+  - 新增 `src/api/fileio/exportTaskSetting.ts` API 接口。
+  - 新增 `src/api/fileio/exportTemplate.ts` API 接口。
+  - 新增 `src/api/fileio/importConf.ts` API 接口。
+  - 新增 `src/api/fileio/importerInfo.ts` API 接口。
+  - 新增 `src/api/fileio/importerSupport.ts` API 接口。
+  - 新增 `src/api/fileio/importFile.ts` API 接口。
+  - 新增 `src/api/fileio/importMetadata.ts` API 接口。
+  - 新增 `src/api/fileio/importOperation.ts` API 接口。
+  - 新增 `src/api/fileio/importTask.ts` API 接口。
+  - 新增 `src/api/fileio/importTaskSetting.ts` API 接口。
+  - 新增 `src/api/fileio/importTemplate.ts` API 接口。
+  - 新增 `src/api/fileio/readerInfo.ts` API 接口。
+  - 新增 `src/api/fileio/readerSupport.ts` API 接口。
+  - 新增 `src/api/fileio/reset.ts` API 接口。
+  - 新增 `src/api/fileio/writerInfo.ts` API 接口。
+  - 新增 `src/api/fileio/writerSupport.ts` API 接口。
+
 - `webapp-pc` 子模块优化。
   - src/composables/icon.ts 中新增 Element Plus 图标的 Composition API。
   - src/composables/icon.ts 中新增图标的尺寸重载 Composition API。
