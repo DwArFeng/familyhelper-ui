@@ -27,6 +27,8 @@
 
 - [Familyhelper UI View](./FamilyhelperUiView.md) - 前端 view 模块（monorepo）导读，
   说明模块定位、包划分与后续文档阅读顺序，细节请参阅该目录内 `README.md`。
+- [Familyhelper UI View Development](./FamilyhelperUiViewDevelopment.md) - 前端 view 模块本地开发指南，
+  说明环境准备、依赖安装、配置生成、构建、单包开发和代码检查流程。
 - [Familyhelper UI View Build Script](./FamilyhelperUiViewBuildScript.md) - VIM 5 构型下 `scripts/build.js`的原理，
   含 workspace 依赖图、并行调度及与 Vue 官方 `scripts/build.js` 的差异说明。
 - [VIM Architecture](./VimArchitecture.md) - VIM 总体架构说明，
