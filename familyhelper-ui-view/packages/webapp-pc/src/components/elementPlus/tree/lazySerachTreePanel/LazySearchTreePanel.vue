@@ -120,15 +120,16 @@
 </template>
 
 <script setup lang="ts" generic="CT extends Record<string, any>">
-import { type Ref } from 'vue'
-import { computed, nextTick, onMounted, ref, useTemplateRef, watch } from 'vue'
+import { computed, nextTick, onMounted, type Ref, ref, useTemplateRef, watch } from 'vue'
 
 import {
+  ElOption,
+  ElSelect,
+  ElTree,
   type LoadFunction,
-  type TreeOptionProps as ElTreeOptionProps,
   type TreeNodeData,
+  type TreeOptionProps as ElTreeOptionProps,
 } from 'element-plus'
-import { ElOption, ElSelect, ElTree } from 'element-plus'
 
 import {
   Aim as AimIcon,
@@ -143,7 +144,7 @@ import DefaultTreeDefaultSlot from '@/components/elementPlus/tree/commons/Defaul
 import DefaultTreeOperateAreaSlot from '@/components/elementPlus/tree/commons/DefaultTreeOperateAreaSlot.vue'
 
 import { type TreeNode } from '@/components/elementPlus/tree/commons/types.ts'
-import { type Node } from 'element-plus/es/components/tree/src/model/node'
+import type Node from 'element-plus/es/components/tree/src/model/node'
 
 defineOptions({
   name: 'LazySearchTreePanel',

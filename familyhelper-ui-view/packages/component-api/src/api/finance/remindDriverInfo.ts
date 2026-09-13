@@ -10,9 +10,7 @@ export type RemindScopeTypeOwnerAndModifier = 1
 export type RemindScopeTypeAllPermitted = 2
 
 export type RemindScopeType =
-  | RemindScopeTypeOwnerOnly
-  | RemindScopeTypeOwnerAndModifier
-  | RemindScopeTypeAllPermitted
+  RemindScopeTypeOwnerOnly | RemindScopeTypeOwnerAndModifier | RemindScopeTypeAllPermitted
 
 export type RemindDriverInfo = {
   key: LongIdKey

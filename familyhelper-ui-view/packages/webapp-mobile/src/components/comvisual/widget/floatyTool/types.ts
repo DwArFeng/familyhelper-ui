@@ -27,11 +27,7 @@ export type DockStatusRight = 4
  * 停靠状态。
  */
 export type DockStatus =
-  | DockStatusFloat
-  | DockStatusTop
-  | DockStatusLeft
-  | DockStatusBottom
-  | DockStatusRight
+  DockStatusFloat | DockStatusTop | DockStatusLeft | DockStatusBottom | DockStatusRight
 
 /**
  * 调整状态：未调整。

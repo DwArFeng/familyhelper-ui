@@ -13,9 +13,4 @@
  * @see https://www.json.org/json-zh.html JSON 数据格式说明
  */
 export type JsonObject =
-  | string
-  | number
-  | boolean
-  | null
-  | JsonObject[]
-  | { [key: string]: JsonObject }
+  string | number | boolean | null | JsonObject[] | { [key: string]: JsonObject }

@@ -145,12 +145,9 @@
 <script setup lang="ts" generic="CT extends Record<string, any>">
 import { nextTick, ref, useTemplateRef, watch } from 'vue'
 
-import { ElTable } from 'element-plus'
-
 import { Delete as DeleteIcon, EditPen, Search as SearchIcon } from '@element-plus/icons-vue'
 
-import { type SortableEvent } from 'sortablejs'
-import Sortable from 'sortablejs'
+import Sortable, { type SortableEvent } from 'sortablejs'
 
 defineOptions({
   name: 'DraggableTablePanel',
@@ -280,7 +277,7 @@ defineSlots<{
 
 // region 拖拽处理
 
-const elTableRef = useTemplateRef<InstanceType<typeof ElTable>>('elTableRef')
+const elTableRef = useTemplateRef<{ $el: HTMLElement }>('elTableRef')
 
 let sortable: Sortable | null = null
 
@@ -309,7 +306,10 @@ function setSort(): void {
   if (!elTableRef.value) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
-  const el: HTMLElement = elTableRef.value.$el.querySelector('.el-table__body-wrapper table tbody')
+  const el = elTableRef.value.$el.querySelector<HTMLElement>('.el-table__body-wrapper table tbody')
+  if (!el) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
   // 基于表格元素初始化 sortable。
   sortable = Sortable.create(el, {
     ghostClass: 'sortable-ghost', // Class name for the drop placeholder,
@@ -344,7 +344,10 @@ function handleTableRowClick(row: CT): void {
   emit('onRowClick', row)
 }
 
-function handleTableCurrentChange(current: CT): void {
+function handleTableCurrentChange(current: CT | null): void {
+  if (!current) {
+    return
+  }
   emit('onCurrentChanged', current)
 }
 

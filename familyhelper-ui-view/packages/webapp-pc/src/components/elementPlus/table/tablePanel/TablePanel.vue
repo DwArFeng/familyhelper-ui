@@ -333,7 +333,10 @@ function handleTableRowClick(row: CT): void {
   emit('onRowClick', row)
 }
 
-function handleTableCurrentChange(current: CT): void {
+function handleTableCurrentChange(current: CT | null): void {
+  if (!current) {
+    return
+  }
   emit('onCurrentChanged', current)
 }
 

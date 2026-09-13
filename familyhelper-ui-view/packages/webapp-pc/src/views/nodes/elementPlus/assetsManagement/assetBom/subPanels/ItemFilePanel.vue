@@ -202,16 +202,15 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import { type VNode } from 'vue'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, type VNode, watch } from 'vue'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import {
-  Search as SearchIcon,
-  EditPen,
-  Download as DownloadIcon,
   Delete as DeleteIcon,
+  Download as DownloadIcon,
+  EditPen,
+  Search as SearchIcon,
 } from '@element-plus/icons-vue'
 
 import { useIconfontButtonIcon } from '@/composables/icon.ts'
@@ -228,16 +227,16 @@ import { useIdentityBackendPagingTablePanel } from '@/components/elementPlus/tab
 
 import { type FileEditMode } from '@/views/nodes/elementPlus/miscellaneous/fileEditor/type.ts'
 
-import { type ItemFileInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/assets/itemFile.ts'
 import {
   childForItem,
   childForItemCreatedDateAsc,
   childForItemInspectedDateDesc,
   childForItemModifiedDateDesc,
   childForItemOriginNameAsc,
+  type ItemFileInfo,
   remove,
-  uploadStream,
   requestItemFileStreamVoucher,
+  uploadStream,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/assets/itemFile.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
 import { resolveResponse } from '@/util/response.ts'
@@ -249,8 +248,7 @@ import {
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
 import { parseFileExtension } from '@dwarfeng/familyhelper-ui-component-util/src/util/file.ts'
 
-import { type EditInfo } from '@/util/file.ts'
-import { getEditInfo } from '@/util/file.ts'
+import { type EditInfo, getEditInfo } from '@/util/file.ts'
 import { type LongIdKey } from '@dwarfeng/familyhelper-ui-component-api/src/api/subgrade/key.ts'
 
 defineOptions({
@@ -290,11 +288,7 @@ const loading = ref<number>(0)
 // region 头部面板
 
 type OrderSelectorValue =
-  | 'default'
-  | 'inspected_date_desc'
-  | 'modified_date_desc'
-  | 'origin_name_asc'
-  | 'created_date_asc'
+  'default' | 'inspected_date_desc' | 'modified_date_desc' | 'origin_name_asc' | 'created_date_asc'
 
 const orderSelectorValue = ref<OrderSelectorValue>('default')
 

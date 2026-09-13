@@ -15,10 +15,7 @@ export type ItemLifeCycleDisabled = 2
 export type ItemLifeCycleScrapped = 3
 
 export type ItemLifeCycle =
-  | ItemLifeCyclePreparing
-  | ItemLifeCycleUsing
-  | ItemLifeCycleDisabled
-  | ItemLifeCycleScrapped
+  ItemLifeCyclePreparing | ItemLifeCycleUsing | ItemLifeCycleDisabled | ItemLifeCycleScrapped
 
 export type Item = {
   key: LongIdKey

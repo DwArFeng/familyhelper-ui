@@ -158,8 +158,7 @@ import PermissionNodeSelectDialog from '@/views/nodes/comvisual/systemSettings/p
 import { type JsonObject } from '@dwarfeng/familyhelper-ui-component-util/src/util/json.ts'
 import { type Permission } from '@dwarfeng/familyhelper-ui-component-api/src/api/rbac/permission.ts'
 
-import { type NodeInfo } from '../nodeInfo.ts'
-import { parseNodeInfoContent, stringifyNodeInfo } from '../nodeInfo.ts'
+import { type NodeInfo, parseNodeInfoContent, stringifyNodeInfo } from '../nodeInfo.ts'
 
 defineOptions({
   name: 'NodeInfoForm',
@@ -244,9 +243,7 @@ function jsonBlockText(record: Record<string, JsonObject>, paramKey: string): st
 // region JSON 解析与应用
 
 type ParseJsonObjectFieldResult =
-  | { kind: 'object'; value: JsonObject }
-  | { kind: 'empty' }
-  | { kind: 'error' }
+  { kind: 'object'; value: JsonObject } | { kind: 'empty' } | { kind: 'error' }
 
 function parseJsonObjectField(raw: string): ParseJsonObjectFieldResult {
   const t = raw.trim()

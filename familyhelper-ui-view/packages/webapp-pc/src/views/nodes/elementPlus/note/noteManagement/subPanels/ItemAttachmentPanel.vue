@@ -206,16 +206,15 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import { type VNode } from 'vue'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, type VNode, watch } from 'vue'
 
 import { ElMessage, ElMessageBox } from 'element-plus'
 
 import {
-  Search as SearchIcon,
-  EditPen,
-  Download as DownloadIcon,
   Delete as DeleteIcon,
+  Download as DownloadIcon,
+  EditPen,
+  Search as SearchIcon,
 } from '@element-plus/icons-vue'
 
 import { useIconfontButtonIcon } from '@/composables/icon.ts'
@@ -232,8 +231,8 @@ import { useIdentityBackendPagingTablePanel } from '@/components/elementPlus/tab
 
 import { type FileEditMode } from '@/views/nodes/elementPlus/miscellaneous/fileEditor/type.ts'
 
-import { type AttachmentFileInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/attachmentFile.ts'
 import {
+  type AttachmentFileInfo,
   childForNoteItem,
   childForNoteItemCreatedDateAsc,
   childForNoteItemInspectedDateDesc,
@@ -253,8 +252,7 @@ import {
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
 import { parseFileExtension } from '@dwarfeng/familyhelper-ui-component-util/src/util/file.ts'
 
-import { type EditInfo } from '@/util/file.ts'
-import { getEditInfo } from '@/util/file.ts'
+import { type EditInfo, getEditInfo } from '@/util/file.ts'
 
 defineOptions({
   name: 'ItemAttachmentPanel',
@@ -293,11 +291,7 @@ const loading = ref<number>(0)
 // region 头部面板
 
 type OrderSelectorValue =
-  | 'default'
-  | 'inspected_date_desc'
-  | 'modified_date_desc'
-  | 'origin_name_asc'
-  | 'created_date_asc'
+  'default' | 'inspected_date_desc' | 'modified_date_desc' | 'origin_name_asc' | 'created_date_asc'
 
 const orderSelectorValue = ref<OrderSelectorValue>('default')
 
