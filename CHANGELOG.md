@@ -4,6 +4,13 @@
 
 ### 功能构建
 
+- `component-api` 子模块优化。
+  - 优化 `src/api/acckeeper/access.ts` 中部分类型的定义，并解决兼容性问题。
+  - 优化 `src/api/acckeeper/derive.ts` 中部分类型的定义，并解决兼容性问题。
+  - 优化 `src/api/acckeeper/protectorInfo.ts` 中部分类型的定义，并解决兼容性问题。
+  - 优化 `src/api/acckeeper/protectorVariable.ts` 中部分类型的定义，并解决兼容性问题。
+  - 优化 `src/api/rbac/inspect.ts` 中部分类型的定义，并解决兼容性问题。
+
 - `webapp-pc` 子模块类优化注释、文档注释格式、代码换行格式。
   - src/components/comvisual/form/nativeLink/NativeLink.vue。
   - src/components/comvisual/tabs/nativeTabs/NativeTabs.vue。

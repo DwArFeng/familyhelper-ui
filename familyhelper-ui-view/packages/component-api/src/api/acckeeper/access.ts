@@ -9,16 +9,16 @@ import { type LoginResponseCode } from './loginHistory'
 export type DynamicLoginInfo = {
   account_key: StringIdKey
   password: string
-  remark?: string
-  extra_params?: Record<string, string>
+  remark: string | null
+  extra_params: Record<string, string> | null
 }
 
 export type StaticLoginInfo = {
   account_key: StringIdKey
   password: string
   expire_date: number
-  remark?: string
-  extra_params?: Record<string, string>
+  remark: string | null
+  extra_params: Record<string, string> | null
 }
 
 export type LogoutInfo = {

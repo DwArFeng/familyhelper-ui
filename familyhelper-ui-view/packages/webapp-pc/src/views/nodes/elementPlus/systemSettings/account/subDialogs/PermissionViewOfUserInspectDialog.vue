@@ -258,6 +258,9 @@ async function handleSearch(): Promise<void> {
           scope_string_id: scopeIndicatorValue.value.key.string_id,
           user_string_id: props.accountId,
         },
+        permission_key_matched: null,
+        all_of_permission_keys_matched: null,
+        any_of_permission_keys_matched: null,
         detail_mode: true,
       }),
     )

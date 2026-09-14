@@ -8,13 +8,13 @@ import { type DeriveResponseCode } from './deriveHistory'
 
 export type WebInputDynamicDeriveInfo = {
   login_state_key: StringIdKey
-  remark?: string
+  remark: string | null
 }
 
 export type WebInputStaticDeriveInfo = {
   login_state_key: StringIdKey
   expire_date: number
-  remark?: string
+  remark: string | null
 }
 
 export type DynamicDeriveResult = {

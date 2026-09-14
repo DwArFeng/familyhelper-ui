@@ -13,17 +13,17 @@ export type ProtectorInfo = {
 }
 
 export type InsertProtectorInfo = {
-  key?: StringIdKey
+  key: StringIdKey | null
   type: string
-  param?: string
-  remark?: string
+  param: string | null
+  remark: string | null
 }
 
 export type UpdateProtectorInfo = {
   key: StringIdKey
   type: string
-  param?: string
-  remark?: string
+  param: string | null
+  remark: string | null
 }
 
 export function exists(key: StringIdKey): Pres<boolean> {

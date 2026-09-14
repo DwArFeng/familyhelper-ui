@@ -322,6 +322,9 @@ async function handleSearch(): Promise<void> {
     const result = await resolveResponse(
       inspectUserViewOfPermission({
         permission_key: props.permission.key,
+        user_key_matched: null,
+        all_of_user_keys_matched: null,
+        any_of_user_keys_matched: null,
         detail_mode: true,
       }),
     )

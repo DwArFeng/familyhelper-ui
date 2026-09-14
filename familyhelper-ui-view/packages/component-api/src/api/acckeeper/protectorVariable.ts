@@ -28,13 +28,13 @@ export type DispProtectorVariable = ProtectorVariable & {
 export type InsertProtectorVariable = {
   key: ProtectorVariableKey
   value: string
-  remark?: string
+  remark: string | null
 }
 
 export type UpdateProtectorVariable = {
   key: ProtectorVariableKey
   value: string
-  remark?: string
+  remark: string | null
 }
 
 export function exists(key: ProtectorVariableKey): Pres<boolean> {

@@ -403,6 +403,9 @@ async function handleSearch(): Promise<void> {
           scope_string_id: props.scopeId,
           role_string_id: props.role.key.string_id,
         },
+        permission_key_matched: null,
+        all_of_permission_keys_matched: null,
+        any_of_permission_keys_matched: null,
         detail_mode: true,
       }),
     )

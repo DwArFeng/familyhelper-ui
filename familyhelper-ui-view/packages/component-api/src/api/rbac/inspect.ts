@@ -57,25 +57,25 @@ export type PermissionViewOfUserInspectResult = {
 
 export type UserViewOfPermissionInspectInfo = {
   permission_key: PermissionKey
-  user_key_matched?: StringIdKey
-  all_of_user_keys_matched?: StringIdKey[]
-  any_of_user_keys_matched?: StringIdKey[]
+  user_key_matched: StringIdKey | null
+  all_of_user_keys_matched: StringIdKey[] | null
+  any_of_user_keys_matched: StringIdKey[] | null
   detail_mode: boolean
 }
 
 export type PermissionViewOfRoleInspectInfo = {
   scoped_role_key: ScopedRoleKey
-  permission_key_matched?: PermissionKey
-  all_of_permission_keys_matched?: PermissionKey[]
-  any_of_permission_keys_matched?: PermissionKey[]
+  permission_key_matched: PermissionKey | null
+  all_of_permission_keys_matched: PermissionKey[] | null
+  any_of_permission_keys_matched: PermissionKey[] | null
   detail_mode: boolean
 }
 
 export type PermissionViewOfUserInspectInfo = {
   scoped_user_key: ScopedUserKey
-  permission_key_matched?: PermissionKey
-  all_of_permission_keys_matched?: PermissionKey[]
-  any_of_permission_keys_matched?: PermissionKey[]
+  permission_key_matched: PermissionKey | null
+  all_of_permission_keys_matched: PermissionKey[] | null
+  any_of_permission_keys_matched: PermissionKey[] | null
   detail_mode: boolean
 }
 
