@@ -165,110 +165,110 @@ function onAnchorClick(e: MouseEvent): void {
   outline: none;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--size-default {
   font-size: 13px;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--size-small {
   font-size: 12px;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link:disabled,
 .native-link.is-disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-default {
   color: #606266;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-default:not(:disabled):not(.is-disabled):hover {
   color: #409eff;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-primary {
   color: #409eff;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-primary:not(:disabled):not(.is-disabled):hover {
   color: #66b1ff;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-success {
   color: #67c23a;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-success:not(:disabled):not(.is-disabled):hover {
   color: #85ce61;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-warning {
   color: #e6a23c;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-warning:not(:disabled):not(.is-disabled):hover {
   color: #ebb563;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-danger {
   color: #f56c6c;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-danger:not(:disabled):not(.is-disabled):hover {
   color: #f78989;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-info {
   color: #909399;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--type-info:not(:disabled):not(.is-disabled):hover {
   color: #a6a9ad;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--underline-always {
   text-decoration: underline;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--underline-never {
   text-decoration: none;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--underline-hover {
   text-decoration: none;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--underline-hover:not(:disabled):not(.is-disabled):hover {
   text-decoration: underline;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--underline-never:disabled,
 .native-link--underline-never.is-disabled {
   text-decoration: none;
 }
 
-/*noinspection ALL*/
+/*noinspection CssUnusedSymbol*/
 .native-link--underline-hover:disabled,
 .native-link--underline-hover.is-disabled {
   text-decoration: none;

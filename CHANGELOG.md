@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块类优化注释、文档注释格式、代码换行格式。
+  - src/components/comvisual/form/nativeLink/NativeLink.vue。
+  - src/components/comvisual/tabs/nativeTabs/NativeTabs.vue。
+  - vite.config.ts。
+
 - `webapp-mobile` 子模块类优化注释、文档注释格式、代码换行格式。
   - src/components/comvisual/form/nativeLink/NativeLink.vue。
   - src/components/comvisual/tabs/nativeTabs/NativeTabs.vue。
