@@ -106,10 +106,10 @@ import AccountSelector from '@/views/nodes/elementPlus/systemSettings/account/Ac
 import { useIdentityBackendPagingTablePanel } from '@/components/elementPlus/table/tablePanel/composables.ts'
 
 import {
+  childForNoteBookDisp,
   type DispPonb,
   type PonbPermissionLevel,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/ponb.ts'
-import { childForNoteBookDisp } from '@dwarfeng/familyhelper-ui-component-api/src/api/note/ponb.ts'
 import { type DispAccount } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
 import {
   removePermission,
@@ -299,7 +299,7 @@ function handlePonbTablePagingAttributeChanged(): void {
 async function handlePonbDelete(row: DispPonb): Promise<void> {
   try {
     await ElMessageBox.confirm(
-      `此操作将删除 ${row.account.display_name}(${row.account.key.string_id}) 对该账本的权限。<br>是否继续?`,
+      `此操作将删除 ${row.account.display_name}(${row.account.key.string_id}) 对该笔记本的权限。<br>是否继续?`,
       '提示',
       {
         confirmButtonText: '确定',
