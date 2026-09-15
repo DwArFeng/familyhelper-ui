@@ -4,6 +4,26 @@
 
 ### 功能构建
 
+- `component-api` 子模块功能新增。
+  - 新增 `src/api/audit/auditCategory.ts` API 接口。
+  - 新增 `src/api/audit/auditEntry.ts` API 接口。
+  - 新增 `src/api/audit/auditEntryLookup.ts` API 接口。
+  - 新增 `src/api/audit/auditEntryProperty.ts` API 接口。
+  - 新增 `src/api/audit/auditPropertyIndicator.ts` API 接口。
+  - 新增 `src/api/audit/auditRecord.ts` API 接口。
+  - 新增 `src/api/audit/inspection.ts` API 接口。
+  - 新增 `src/api/audit/inspectionAlarm.ts` API 接口。
+  - 新增 `src/api/audit/inspectionAlarmTypeIndicator.ts` API 接口。
+  - 新增 `src/api/audit/inspectionDriverInfo.ts` API 接口。
+  - 新增 `src/api/audit/inspectionDriverSupport.ts` API 接口。
+  - 新增 `src/api/audit/inspectionJob.ts` API 接口。
+  - 新增 `src/api/audit/inspectionTask.ts` API 接口。
+  - 新增 `src/api/audit/inspectionTaskEvent.ts` API 接口。
+  - 新增 `src/api/audit/inspectorInfo.ts` API 接口。
+  - 新增 `src/api/audit/inspectorSupport.ts` API 接口。
+  - 新增 `src/api/audit/inspectorVariable.ts` API 接口。
+  - 新增 `src/api/audit/reset.ts` API 接口。
+
 - `component-api` 子模块优化。
   - 优化 `src/api/acckeeper/access.ts` 中部分类型的定义，并解决兼容性问题。
   - 优化 `src/api/acckeeper/derive.ts` 中部分类型的定义，并解决兼容性问题。
