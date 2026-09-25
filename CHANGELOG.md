@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/CompileBySource.md。
+
 - `webapp-pc` 子模块实现审计管理一级菜单。
   - 实现审计类别二级菜单。
   - 实现巡检设置二级菜单。

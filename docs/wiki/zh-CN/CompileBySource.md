@@ -24,7 +24,7 @@
             <password>your-password-here</password>
         </server>
         <server>
-            <id>rdc-snapshots</id>
+            <id>xxx-snapshots</id>
             <username>your-username-here</username>
             <password>your-password-here</password>
         </server>
