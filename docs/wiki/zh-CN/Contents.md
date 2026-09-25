@@ -19,6 +19,11 @@
 - [System Requirements](./SystemRequirements.md) - 系统需求，详细说明本项目推荐的系统要求，以及其它版本的测试报告。
 - [Compile by Source](./CompileBySource.md) - 从源码编译，详细说明如何从源码编译本项目，以及编译产物的部署方式。
 
+### 部署
+
+- [Familyhelper UI Deployment](./FamilyhelperUiDeployment.md) - 分发包部署与初始化，
+  说明外置配置、WAR 文件、Tomcat 部署和部署后的基础运行检查。
+
 ### 配置
 
 - [Conf Directory](./ConfDirectory.md) - 配置目录说明，详细说明如何配置本项目，即 `conf/` 目录下的内容。

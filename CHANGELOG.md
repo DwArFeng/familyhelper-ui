@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/FamilyhelperUiDeployment.md。
+
 - Wiki 更新。
   - docs/wiki/zh-CN/CompileBySource.md。
 
