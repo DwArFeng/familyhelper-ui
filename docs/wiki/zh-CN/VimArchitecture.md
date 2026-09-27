@@ -15,33 +15,7 @@
 
 ### 逻辑分层
 
-```mermaid
-flowchart TB
-    Entry["main.ts"]
-    Vim["vim/index.ts (VimApplicationContext)"]
-    Api["api"]
-    Library["library"]
-    Compreg["compreg"]
-    Navigation["navigation"]
-    Router["router"]
-    Store["store"]
-    Views["views (vim + nodes)"]
-    ComponentApi["component-api"]
-    Entry --> Vim
-    Vim --> Api
-    Vim --> Library
-    Vim --> Compreg
-    Vim --> Navigation
-    Vim --> Router
-    Vim --> Store
-    Router --> Views
-    Navigation --> Router
-    Store --> Router
-    Library --> Views
-    Compreg --> Router
-    Api --> ComponentApi
-    Store --> Api
-```
+![VIM 逻辑分层架构](./images/VimArchitecture-LogicalLayering.png)
 
 说明：
 
@@ -69,74 +43,74 @@ flowchart TB
 
 ### vim
 
-| 项      | 说明                                                      |
-|--------|---------------------------------------------------------|
-| 输入     | Vue `App`、各模块实现、初始化/窗口钩子注册请求                            |
-| 输出     | `VimApplicationContext`、统一的模块访问入口、初始化生命周期               |
-| 依赖     | `api`、`compreg`、`library`、`navigation`、`router`、`store` |
-| 典型使用场景 | 在业务代码中通过 `vim.ctx()` 获取模块能力；在模块初始化时注册生命周期钩子             |
+| 项           | 说明                                                                      |
+|--------------|---------------------------------------------------------------------------|
+| 输入         | Vue `App`、各模块实现、初始化/窗口钩子注册请求                            |
+| 输出         | `VimApplicationContext`、统一的模块访问入口、初始化生命周期               |
+| 依赖         | `api`、`compreg`、`library`、`navigation`、`router`、`store`              |
+| 典型使用场景 | 在业务代码中通过 `vim.ctx()` 获取模块能力；在模块初始化时注册生命周期钩子 |
 
 ### api
 
-| 项      | 说明                                                          |
-|--------|-------------------------------------------------------------|
-| 输入     | 环境配置（`development/debug/production`）、认证 token、`props.ts` 配置 |
-| 输出     | `generalClient`、`publicClient`、统一 `baseUrl`                 |
-| 依赖     | `component-api`、`store`（用于读取登录态 token）                      |
-| 典型使用场景 | 通过 `component-api` 暴露的接口方法发起请求，或在特殊场景中使用公共客户端               |
+| 项           | 说明                                                                      |
+|--------------|---------------------------------------------------------------------------|
+| 输入         | 环境配置（`development/debug/production`）、认证 token、`props.ts` 配置   |
+| 输出         | `generalClient`、`publicClient`、统一 `baseUrl`                           |
+| 依赖         | `component-api`、`store`（用于读取登录态 token）                          |
+| 典型使用场景 | 通过 `component-api` 暴露的接口方法发起请求，或在特殊场景中使用公共客户端 |
 
 ### navigation
 
-| 项      | 说明                                     |
-|--------|----------------------------------------|
-| 输入     | `modules/*.ts` 导航节点定义（`NodeSetting`）   |
-| 输出     | 节点树（根节点、子节点、显示/权限/路由信息）                |
-| 依赖     | `component-util`（命名转换等工具）、`store`（消费侧） |
-| 典型使用场景 | 声明菜单、节点排序、节点级权限与路由元信息                  |
+| 项           | 说明                                                  |
+|--------------|-------------------------------------------------------|
+| 输入         | `modules/*.ts` 导航节点定义（`NodeSetting`）          |
+| 输出         | 节点树（根节点、子节点、显示/权限/路由信息）          |
+| 依赖         | `component-util`（命名转换等工具）、`store`（消费侧） |
+| 典型使用场景 | 声明菜单、节点排序、节点级权限与路由元信息            |
 
 ### router
 
-| 项      | 说明                                                        |
-|--------|-----------------------------------------------------------|
-| 输入     | 基础静态路由、`navigation` 节点信息、`compreg` 组件信息、`store` 状态        |
-| 输出     | Vue Router 实例、动态 `vim.layout` 子路由、守卫拦截结果                  |
-| 依赖     | `vue-router`、`navigation`、`compreg`、`store`、`views/vim/*` |
-| 典型使用场景 | 登录后跳转、按导航节点生成业务页面路由、权限失败跳转错误页                             |
+| 项           | 说明                                                                  |
+|--------------|-----------------------------------------------------------------------|
+| 输入         | 基础静态路由、`navigation` 节点信息、`compreg` 组件信息、`store` 状态 |
+| 输出         | Vue Router 实例、动态 `vim.layout` 子路由、守卫拦截结果               |
+| 依赖         | `vue-router`、`navigation`、`compreg`、`store`、`views/vim/*`         |
+| 典型使用场景 | 登录后跳转、按导航节点生成业务页面路由、权限失败跳转错误页            |
 
 ### store
 
-| 项      | 说明                                       |
-|--------|------------------------------------------|
-| 输入     | `modules/*.ts` Store 模块定义、初始化上下文         |
-| 输出     | Pinia StoreDefinition 与 Store 实例访问入口     |
-| 依赖     | `pinia`、各业务 store 模块                     |
+| 项           | 说明                                                                |
+|--------------|---------------------------------------------------------------------|
+| 输入         | `modules/*.ts` Store 模块定义、初始化上下文                         |
+| 输出         | Pinia StoreDefinition 与 Store 实例访问入口                         |
+| 依赖         | `pinia`、各业务 store 模块                                          |
 | 典型使用场景 | 读取登录态、页面状态、可视化器状态；通过 `$onAction` 组织跨模块协作 |
 
 ### compreg
 
-| 项      | 说明                                        |
-|--------|-------------------------------------------|
-| 输入     | `modules/*.ts` 组件注册定义（`ComponentSetting`） |
-| 输出     | `componentInfo(key)`、默认组件信息、可视化器维度组件映射    |
-| 依赖     | `component-util`（命名转换等工具）                 |
-| 典型使用场景 | 路由根据组件 key 查找实际页面组件，实现“导航配置驱动组件解析”        |
+| 项           | 说明                                                          |
+|--------------|---------------------------------------------------------------|
+| 输入         | `modules/*.ts` 组件注册定义（`ComponentSetting`）             |
+| 输出         | `componentInfo(key)`、默认组件信息、可视化器维度组件映射      |
+| 依赖         | `component-util`（命名转换等工具）                            |
+| 典型使用场景 | 路由根据组件 key 查找实际页面组件，实现“导航配置驱动组件解析” |
 
 ### library
 
-| 项      | 说明                                             |
-|--------|------------------------------------------------|
-| 输入     | `modules/*/index.ts` 的 Visualizer 定义与第三方库初始化逻辑 |
-| 输出     | 默认/指定 Visualizer 信息、统一 `notify/render` 能力      |
-| 依赖     | 第三方组件库、样式资源、Vue 渲染函数能力                         |
-| 典型使用场景 | 提供 `layout/login/pageError/...` 等框架渲染与通知实现     |
+| 项           | 说明                                                        |
+|--------------|-------------------------------------------------------------|
+| 输入         | `modules/*/index.ts` 的 Visualizer 定义与第三方库初始化逻辑 |
+| 输出         | 默认/指定 Visualizer 信息、统一 `notify/render` 能力        |
+| 依赖         | 第三方组件库、样式资源、Vue 渲染函数能力                    |
+| 典型使用场景 | 提供 `layout/login/pageError/...` 等框架渲染与通知实现      |
 
 ### views
 
-| 项      | 说明                                                                    |
-|--------|-----------------------------------------------------------------------|
-| 输入     | 路由元数据、`library` 的 Visualizer 能力、`store` 状态                            |
-| 输出     | 实际页面渲染结果                                                              |
-| 依赖     | `views/vim`（框架视图）与 `views/nodes`（业务视图）                                |
+| 项           | 说明                                                                                |
+|--------------|-------------------------------------------------------------------------------------|
+| 输入         | 路由元数据、`library` 的 Visualizer 能力、`store` 状态                              |
+| 输出         | 实际页面渲染结果                                                                    |
+| 依赖         | `views/vim`（框架视图）与 `views/nodes`（业务视图）                                 |
 | 典型使用场景 | `views/vim/layout/Layout.vue` 在 ready 前显示遮罩，ready 后委托 Visualizer 渲染布局 |
 
 ## 模块协作时序

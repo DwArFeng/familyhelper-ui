@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/ConfDirectory.md。
+  - docs/wiki/zh-CN/SystemRequirements.md。
+  - docs/wiki/zh-CN/VersionBlacklist.md。
+  - docs/wiki/zh-CN/VimArchitecture.md。
+
 - `webapp-pc` 子模块页面功能新增。
   - 审计管理 -> 审计类别左侧面板头部面板增加审计类别搜索功能。
 

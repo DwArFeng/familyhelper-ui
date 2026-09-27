@@ -26,10 +26,10 @@ conf
 
 日志配置位于 `conf/familyhelper-ui/logging`（相对于 Tomcat 的 `conf` 目录）。
 
-| 文件名                      | 说明                     |
-|--------------------------|------------------------|
-| README.md                | 说明文件                   |
-| settings.xml             | 日志配置的配置文件              |
+| 文件名                   | 说明                                 |
+|--------------------------|--------------------------------------|
+| README.md                | 说明文件                             |
+| settings.xml             | 日志配置的配置文件                   |
 | settings-ref-linux.xml   | Linux 系统中日志配置的配置参考文件   |
 | settings-ref-windows.xml | Windows 系统中日志配置的配置参考文件 |
 
