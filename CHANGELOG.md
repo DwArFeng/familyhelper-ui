@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块页面优化。
+  - 审计管理 -> 审计类别左侧面板主表格选中行变化时，右侧页签面板的加载行为优化。
+
 - `component-api` 子模功能变更。
   - 新增 `src/api/audit/auditCategory.ts` 中的接口方法，以同步 webapi 服务。
   - 新增 `src/api/audit/inspectorSupport.ts` 中的接口方法，以适配 webapi 变更。

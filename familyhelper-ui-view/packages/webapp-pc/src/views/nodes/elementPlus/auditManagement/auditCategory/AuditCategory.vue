@@ -20,7 +20,6 @@
         <placeholder-panel v-show="currentCategoryId === ''" text="请选择审计类别" />
         <audit-category-edit-panel
           v-show="currentCategoryId !== ''"
-          :key="currentCategoryId"
           :category-id="currentCategoryId"
           :apply-changes-disabled="applyChangesButtonDisabled"
           upsc="ui_preference.pc.audit_management.audit_category.audit_category_edit_panel"
