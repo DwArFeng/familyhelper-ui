@@ -16,14 +16,21 @@
             <el-button type="success" @click="handleAuditCategorySearch">刷新数据</el-button>
             <el-divider direction="vertical" />
             <el-input
-              class="id-search-bar"
-              v-model="idSearchBarValue"
+              class="search-bar"
+              v-model="searchBarValue"
               clearable
               @keydown.enter="handleAuditCategorySearch"
               @clear="handleAuditCategorySearch"
             >
               <template v-slot:prepend>
-                <span>类别 ID</span>
+                <el-select
+                  class="search-field-select"
+                  v-model="searchField"
+                  @change="handleAuditCategorySearch"
+                >
+                  <el-option label="类别 ID" value="ID" />
+                  <el-option label="名称" value="NAME" />
+                </el-select>
               </template>
               <template v-slot:append>
                 <el-button :icon="SearchIcon" @click="handleAuditCategorySearch" />
@@ -85,12 +92,10 @@ import { useIdentityBackendPagingTablePanel } from '@/components/elementPlus/tab
 import {
   all,
   type AuditCategory,
-  exists,
-  get,
+  idLike,
+  nameLike,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/audit/auditCategory.ts'
-import { type PagedData } from '@dwarfeng/familyhelper-ui-component-api/src/util/response.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
-import { resolveResponse } from '@/util/response.ts'
 
 defineOptions({
   name: 'AuditCategorySelectDialog',
@@ -139,7 +144,8 @@ watch(
   (value) => {
     emit('update:visible', value)
     if (value) {
-      idSearchBarValue.value = ''
+      searchField.value = 'ID'
+      searchBarValue.value = ''
       auditCategoryTableCurrentRow.value = null
       handleAuditCategorySearch()
     }
@@ -154,43 +160,48 @@ onMounted(() => {
 
 // region 头部面板
 
-const idSearchBarValue = ref<string>('')
+type AuditCategorySearchField = 'ID' | 'NAME'
+
+const searchField = ref<AuditCategorySearchField>('ID')
+const searchBarValue = ref<string>('')
 
 // endregion
 
 // region 审计类别搜索
 
-function handleAuditCategorySearch(): void {
-  if (idSearchBarValue.value !== '') {
-    handleAuditCategoryIdSearch()
+async function handleAuditCategorySearch(): Promise<void> {
+  // 未输入关键字时查询全部数据，否则按照下拉框中选择的字段进行模糊查询。
+  const pattern = searchBarValue.value.trim()
+  if (pattern === '') {
+    await handleAuditCategoryAllSearch()
+  } else if (searchField.value === 'ID') {
+    await handleAuditCategoryIdLikeSearch(pattern)
   } else {
-    handleAuditCategoryAllSearch()
+    await handleAuditCategoryNameLikeSearch(pattern)
   }
 }
 
-async function handleAuditCategoryIdSearch(): Promise<void> {
+async function handleAuditCategoryIdLikeSearch(pattern: string): Promise<void> {
   loading.value += 1
   try {
-    const existed = await resolveResponse(exists({ string_id: idSearchBarValue.value }))
-    if (!existed) {
-      const empty: PagedData<AuditCategory> = {
-        current_page: 0,
-        total_pages: 0,
-        rows: auditCategoryTablePageSize.value,
-        count: '0',
-        data: [],
-      }
-      updateAuditCategoryTableByLookup(empty)
-      return
-    }
-    const item = await resolveResponse(get({ string_id: idSearchBarValue.value }))
-    updateAuditCategoryTableByLookup({
-      current_page: 0,
-      total_pages: 1,
-      rows: 1,
-      count: '1',
-      data: [item],
-    })
+    const res = await lookupWithAdjustPage(
+      (pagingInfo) => idLike(pattern, pagingInfo),
+      auditCategoryTablePagingInfo.value,
+    )
+    updateAuditCategoryTableByLookup(res)
+  } finally {
+    loading.value -= 1
+  }
+}
+
+async function handleAuditCategoryNameLikeSearch(pattern: string): Promise<void> {
+  loading.value += 1
+  try {
+    const res = await lookupWithAdjustPage(
+      (pagingInfo) => nameLike(pattern, pagingInfo),
+      auditCategoryTablePagingInfo.value,
+    )
+    updateAuditCategoryTableByLookup(res)
   } finally {
     loading.value -= 1
   }
@@ -278,13 +289,12 @@ function handleHotKeyDown(): void {
   margin: 0 8px;
 }
 
-.header-container .id-search-bar {
-  width: 360px;
+.header-container .search-bar {
+  width: 400px;
 }
 
-/*noinspection CssUnusedSymbol*/
-.header-container .id-search-bar :deep(.el-input-group__prepend) {
-  padding: 0 10px;
+.header-container .search-field-select {
+  width: 100px;
 }
 
 .table {
