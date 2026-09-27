@@ -26,6 +26,7 @@
           ref="auditCategoryTablePanelRef"
           class="table"
           v-loading="loading"
+          pagination-adjust-strategy="FORCE_COMPACT"
           highlight-current-row
           v-model:current-page="auditCategoryTableCurrentPage"
           v-model:page-size="auditCategoryTablePageSize"
