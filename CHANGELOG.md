@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `component-api` 子模功能变更。
+  - 新增 `src/api/audit/auditCategory.ts` 中的接口方法，以同步 webapi 服务。
+  - 新增 `src/api/audit/inspectorSupport.ts` 中的接口方法，以适配 webapi 变更。
+
 - familyhelper-ui-view 模块前端依赖升降级。
   - 降级 `ckeditor5` 依赖版本为 `~47.6.2`，以解决兼容性问题。
 

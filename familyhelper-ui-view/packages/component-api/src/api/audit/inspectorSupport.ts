@@ -31,3 +31,29 @@ export function all(pagingInfo: PagingInfo): Prespa<InspectorSupport> {
     'json',
   )
 }
+
+export function idLike(pattern: string, pagingInfo: PagingInfo): Prespa<InspectorSupport> {
+  return http.generalClient().get(
+    'audit',
+    'inspector-support/id-like/',
+    {
+      pattern,
+      page: pagingInfo.page,
+      rows: pagingInfo.rows,
+    },
+    'json',
+  )
+}
+
+export function labelLike(pattern: string, pagingInfo: PagingInfo): Prespa<InspectorSupport> {
+  return http.generalClient().get(
+    'audit',
+    'inspector-support/label-like/',
+    {
+      pattern,
+      page: pagingInfo.page,
+      rows: pagingInfo.rows,
+    },
+    'json',
+  )
+}

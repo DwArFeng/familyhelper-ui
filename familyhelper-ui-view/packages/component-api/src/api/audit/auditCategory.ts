@@ -51,3 +51,29 @@ export function all(pagingInfo: PagingInfo): Prespa<AuditCategory> {
     'json',
   )
 }
+
+export function idLike(pattern: string, pagingInfo: PagingInfo): Prespa<AuditCategory> {
+  return http.generalClient().get(
+    'audit',
+    'audit-category/id-like/',
+    {
+      pattern,
+      page: pagingInfo.page,
+      rows: pagingInfo.rows,
+    },
+    'json',
+  )
+}
+
+export function nameLike(pattern: string, pagingInfo: PagingInfo): Prespa<AuditCategory> {
+  return http.generalClient().get(
+    'audit',
+    'audit-category/name-like/',
+    {
+      pattern,
+      page: pagingInfo.page,
+      rows: pagingInfo.rows,
+    },
+    'json',
+  )
+}
