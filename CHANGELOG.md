@@ -9,7 +9,8 @@
 
 ### Bug 修复
 
-- (无)
+- `webapp-pc` 子模块 `elementPlus` 组件 bug 修复。
+  - `FloatyDialog` 部分方向停靠功能行为异常。
 
 ### 功能移除
 

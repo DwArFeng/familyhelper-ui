@@ -317,36 +317,44 @@ function revalidateVisualField(): boolean {
   const oldPositionY = y.value
   const oldSizeHeight = height.value
   const oldSizeWidth = width.value
+  const viewportWidth = document.body.clientWidth
+  const viewportHeight = document.body.clientHeight
   switch (dockStatus.value) {
     case 0:
-      x.value = Math.min(x.value, document.body.clientWidth - 20)
-      y.value = Math.min(y.value, document.body.clientHeight - 40)
+      x.value = Math.min(x.value, viewportWidth - 20)
+      y.value = Math.min(y.value, viewportHeight - 40)
       height.value = Math.max(height.value, props.minHeight)
       width.value = Math.max(width.value, props.minWidth)
       break
     case 1:
+      height.value = Math.max(height.value, props.minHeight)
+      height.value = Math.min(height.value, viewportHeight)
+      width.value = viewportWidth
       x.value = 0
       y.value = 0
-      height.value = Math.max(height.value, props.minHeight)
-      width.value = document.body.clientWidth
       break
     case 2:
+      height.value = viewportHeight
+      width.value = Math.max(width.value, props.minWidth)
+      width.value = Math.min(width.value, viewportWidth)
       x.value = 0
       y.value = 0
-      height.value = document.body.clientHeight
-      width.value = Math.max(width.value, props.minWidth)
       break
     case 3:
-      x.value = 0
-      y.value = document.body.clientHeight - height.value
+      // 底部停靠必须先钳制高度，再按对边计算 y，否则最小高度生效后底边会错位。
       height.value = Math.max(height.value, props.minHeight)
-      width.value = document.body.clientWidth
+      height.value = Math.min(height.value, viewportHeight)
+      width.value = viewportWidth
+      x.value = 0
+      y.value = viewportHeight - height.value
       break
     case 4:
-      x.value = document.body.clientWidth - width.value
-      y.value = 0
-      height.value = document.body.clientHeight
+      // 右侧停靠必须先钳制宽度，再按对边计算 x，否则最小宽度生效后右边会错位。
+      height.value = viewportHeight
       width.value = Math.max(width.value, props.minWidth)
+      width.value = Math.min(width.value, viewportWidth)
+      x.value = viewportWidth - width.value
+      y.value = 0
       break
     default:
       break
@@ -645,6 +653,10 @@ function handleResizing(event: MouseEvent): void {
     const dY = event.clientY - mouseYCopy.value
     // 调用锚点句柄处理调整尺寸细节。
     anchorResizeHandle(dX, dY)
+    // 停靠状态下按锚边重算位置，避免调整宽度/高度后对边偏移。
+    if (dockStatus.value !== 0) {
+      revalidateVisualField()
+    }
   })
 }
 
@@ -674,6 +686,14 @@ function sizeCopyEquals(): boolean {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function westResizingHandle(dX: number, _dY: number): void {
+  // 右侧停靠时保持右边缘贴齐视口，只调整宽度与左侧位置。
+  if (dockStatus.value === 4) {
+    width.value = widthCopy.value - dX
+    width.value = Math.max(width.value, props.minWidth)
+    width.value = Math.min(width.value, document.body.clientWidth)
+    x.value = document.body.clientWidth - width.value
+    return
+  }
   // 将增量应用到元素的位置属性中。
   x.value = xCopy.value + dX
   width.value = widthCopy.value - dX
@@ -696,6 +716,14 @@ function eastResizingHandle(dX: number, _dY: number): void {
 }
 
 function northResizingHandle(_dX: number, dY: number): void {
+  // 底部停靠时保持底边缘贴齐视口，只调整高度与顶部位置。
+  if (dockStatus.value === 3) {
+    height.value = heightCopy.value - dY
+    height.value = Math.max(height.value, props.minHeight)
+    height.value = Math.min(height.value, document.body.clientHeight)
+    y.value = document.body.clientHeight - height.value
+    return
+  }
   // 将增量应用到元素的位置属性中。
   y.value = yCopy.value + dY
   height.value = heightCopy.value - dY
@@ -824,12 +852,9 @@ function handleDockTop(): void {
   if (dockStatus.value === 0) {
     backupVisualField()
   }
-  // 位置及尺寸变更。
-  x.value = 0
-  y.value = 0
-  width.value = document.body.clientWidth
-  // 设置停靠状态。
+  // 设置停靠状态，并按停靠规则重算位置及尺寸。
   dockStatus.value = 1
+  revalidateVisualField()
   // 关闭菜单。
   doCloseContextMenu()
   // 抛出事件。
@@ -841,12 +866,9 @@ function handleDockLeft(): void {
   if (dockStatus.value === 0) {
     backupVisualField()
   }
-  // 位置及尺寸变更。
-  x.value = 0
-  y.value = 0
-  height.value = document.body.clientHeight
-  // 设置停靠状态。
+  // 设置停靠状态，并按停靠规则重算位置及尺寸。
   dockStatus.value = 2
+  revalidateVisualField()
   // 关闭菜单。
   doCloseContextMenu()
   // 抛出事件。
@@ -858,12 +880,9 @@ function handleDockBottom(): void {
   if (dockStatus.value === 0) {
     backupVisualField()
   }
-  // 位置及尺寸变更。
-  x.value = 0
-  y.value = document.body.clientHeight - heightCopy.value
-  height.value = heightCopy.value
-  // 设置停靠状态。
+  // 设置停靠状态，并按停靠规则重算位置及尺寸。
   dockStatus.value = 3
+  revalidateVisualField()
   // 关闭菜单。
   doCloseContextMenu()
   // 抛出事件。
@@ -875,12 +894,9 @@ function handleDockRight(): void {
   if (dockStatus.value === 0) {
     backupVisualField()
   }
-  // 位置及尺寸变更。
-  x.value = document.body.clientWidth - widthCopy.value
-  y.value = 0
-  height.value = document.body.clientHeight
-  // 设置停靠状态。
+  // 设置停靠状态，并按停靠规则重算位置及尺寸。
   dockStatus.value = 4
+  revalidateVisualField()
   // 关闭菜单。
   doCloseContextMenu()
   // 抛出事件。
