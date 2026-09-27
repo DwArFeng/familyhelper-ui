@@ -3,18 +3,10 @@
     <placeholder-panel v-if="row === null" text="请选择审计记录" />
     <div v-else class="main-container" v-loading="loading">
       <header-layout-panel>
-        <template v-slot:header>
-          <div class="header-container">
-            <el-button type="success" @click="handleSearch">刷新数据</el-button>
-          </div>
-        </template>
         <template v-slot:default>
           <div class="detail-body">
             <overlay-scrollbars-component class="scroll-bar">
               <el-form class="property-form" label-position="left" label-width="120px" inline>
-                <el-form-item label="条目 ID" style="width: 100%">
-                  {{ row.entry_id }}
-                </el-form-item>
                 <el-form-item label="类别 ID" style="width: 50%">
                   {{ row.category_id }}
                 </el-form-item>
@@ -239,13 +231,6 @@ onMounted(() => {
 .main-container {
   width: 100%;
   height: 100%;
-}
-
-.header-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
 }
 
 .detail-body {
