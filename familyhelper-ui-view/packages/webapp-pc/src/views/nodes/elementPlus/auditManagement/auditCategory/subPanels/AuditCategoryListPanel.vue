@@ -12,6 +12,28 @@
           </el-button>
           <el-button type="success" @click="handleAuditCategorySearch">刷新数据</el-button>
           <el-divider direction="vertical" />
+          <el-input
+            class="search-bar"
+            v-model="searchBarValue"
+            clearable
+            @keydown.enter="handleAuditCategorySearch"
+            @clear="handleAuditCategorySearch"
+          >
+            <template v-slot:prepend>
+              <el-select
+                class="search-field-select"
+                v-model="searchField"
+                @change="handleAuditCategorySearch"
+              >
+                <el-option label="类别 ID" value="ID" />
+                <el-option label="名称" value="NAME" />
+              </el-select>
+            </template>
+            <template v-slot:append>
+              <el-button :icon="SearchIcon" @click="handleAuditCategorySearch" />
+            </template>
+          </el-input>
+          <el-divider direction="vertical" />
           <el-button
             type="primary"
             :disabled="applyChangesDisabled"
@@ -118,6 +140,8 @@ import { nextTick, onMounted, ref, useTemplateRef } from 'vue'
 
 import { ElMessage, ElMessageBox, type FormItemRule } from 'element-plus'
 
+import { Search as SearchIcon } from '@element-plus/icons-vue'
+
 import { type ComponentExposed } from 'vue-component-type-helpers'
 
 import HeaderLayoutPanel from '@/components/elementPlus/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
@@ -131,7 +155,9 @@ import {
   all,
   type AuditCategory,
   exists,
+  idLike,
   insert,
+  nameLike,
   remove,
   update,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/audit/auditCategory.ts'
@@ -181,7 +207,52 @@ function handleApplyChangesClicked(): void {
 
 // region 审计类别搜索
 
+type AuditCategorySearchField = 'ID' | 'NAME'
+
+const searchField = ref<AuditCategorySearchField>('ID')
+const searchBarValue = ref<string>('')
+
 async function handleAuditCategorySearch(): Promise<void> {
+  // 未输入关键字时查询全部数据，否则按照下拉框中选择的字段进行模糊查询。
+  const pattern = searchBarValue.value.trim()
+  if (pattern === '') {
+    await handleAuditCategoryAllSearch()
+  } else if (searchField.value === 'ID') {
+    await handleAuditCategoryIdLikeSearch(pattern)
+  } else {
+    await handleAuditCategoryNameLikeSearch(pattern)
+  }
+}
+
+async function handleAuditCategoryIdLikeSearch(pattern: string): Promise<void> {
+  loading.value += 1
+  try {
+    const res = await lookupWithAdjustPage(
+      (pagingInfo) => idLike(pattern, pagingInfo),
+      auditCategoryTablePagingInfo.value,
+    )
+    updateAuditCategoryTableByLookup(res)
+    restoreAuditCategorySelection()
+  } finally {
+    loading.value -= 1
+  }
+}
+
+async function handleAuditCategoryNameLikeSearch(pattern: string): Promise<void> {
+  loading.value += 1
+  try {
+    const res = await lookupWithAdjustPage(
+      (pagingInfo) => nameLike(pattern, pagingInfo),
+      auditCategoryTablePagingInfo.value,
+    )
+    updateAuditCategoryTableByLookup(res)
+    restoreAuditCategorySelection()
+  } finally {
+    loading.value -= 1
+  }
+}
+
+async function handleAuditCategoryAllSearch(): Promise<void> {
   loading.value += 1
   try {
     const res = await lookupWithAdjustPage(
@@ -466,6 +537,17 @@ defineExpose({
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
+  row-gap: 5px;
+}
+
+.header-container .search-bar {
+  width: 0;
+  min-width: 400px;
+  flex-grow: 1;
+}
+
+.header-container .search-field-select {
+  width: 100px;
 }
 
 /*noinspection CssUnusedSymbol*/
