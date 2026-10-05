@@ -4,6 +4,13 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块实现逻辑引擎一级菜单。
+  - 实现部件设置二级菜单。
+  - 实现任务二级菜单。
+  - 实现驱动器支持二级菜单。
+  - 实现执行器支持二级菜单。
+  - 实现守卫器支持二级菜单。
+
 - `component-api` 子模块功能新增。
   - 新增 `src/api/logicengine/driverInfo.ts` API 接口。
   - 新增 `src/api/logicengine/driverSupport.ts` API 接口。
