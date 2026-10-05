@@ -4,6 +4,22 @@
 
 ### 功能构建
 
+- `component-api` 子模块功能新增。
+  - 新增 `src/api/logicengine/driverInfo.ts` API 接口。
+  - 新增 `src/api/logicengine/driverSupport.ts` API 接口。
+  - 新增 `src/api/logicengine/guarderInfo.ts` API 接口。
+  - 新增 `src/api/logicengine/guarderSupport.ts` API 接口。
+  - 新增 `src/api/logicengine/job.ts` API 接口。
+  - 新增 `src/api/logicengine/manualDispatch.ts` API 接口。
+  - 新增 `src/api/logicengine/performerInfo.ts` API 接口。
+  - 新增 `src/api/logicengine/performerSupport.ts` API 接口。
+  - 新增 `src/api/logicengine/reset.ts` API 接口。
+  - 新增 `src/api/logicengine/section.ts` API 接口。
+  - 新增 `src/api/logicengine/state.ts` API 接口。
+  - 新增 `src/api/logicengine/task.ts` API 接口。
+  - 新增 `src/api/logicengine/taskEvent.ts` API 接口。
+  - 新增 `src/api/logicengine/taskVariable.ts` API 接口。
+
 - `webapp-pc` 子模块页面优化。
   - 审计管理 -> 审计类别右侧属性指标维护对话框不再弹出类别 ID。
   - 审计管理 -> 巡检设置左侧主表格和右侧各页签不再显示 LongID。
