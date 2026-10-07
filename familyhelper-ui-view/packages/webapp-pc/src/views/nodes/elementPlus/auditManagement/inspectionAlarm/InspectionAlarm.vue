@@ -78,11 +78,7 @@
               show-overflow-tooltip
               :formatter="inspectionNameFormatter"
             />
-            <el-table-column
-              prop="inspection_task_key.long_id"
-              label="任务 ID"
-              show-overflow-tooltip
-            />
+            <el-table-column label="任务 ID" show-overflow-tooltip :formatter="taskIdFormatter" />
             <el-table-column label="检查器" show-overflow-tooltip :formatter="inspectorFormatter" />
             <el-table-column
               label="发生时间"
@@ -294,11 +290,24 @@ function formatNullableTimestamp(value: number | null | undefined): string {
 }
 
 function inspectionNameFormatter(row: DispInspectionAlarm): string {
-  return row.inspection?.name ?? row.inspection_key.long_id
+  if (row.inspection === null) {
+    return '（未知）'
+  }
+  return row.inspection.name
+}
+
+function taskIdFormatter(row: DispInspectionAlarm): string {
+  if (row.inspection_task_key === null) {
+    return '（未知）'
+  }
+  return row.inspection_task_key.long_id
 }
 
 function inspectorFormatter(row: DispInspectionAlarm): string {
-  return row.inspector_info?.type ?? row.inspector_info_key.long_id
+  if (row.inspector_info === null) {
+    return '（未知）'
+  }
+  return row.inspector_info.type
 }
 
 function typeLabelFormatter(row: DispInspectionAlarm): string {
@@ -335,9 +344,9 @@ const {
 } = useInspectOnlyMaintainDialog<DispInspectionAlarm, InspectionAlarmMaintainDialogItem>(
   (item) => ({
     long_id: item.key.long_id,
-    inspection_name: item.inspection?.name ?? item.inspection_key.long_id,
-    task_id: item.inspection_task_key.long_id,
-    inspector_label: item.inspector_info?.type ?? item.inspector_info_key.long_id,
+    inspection_name: item.inspection === null ? '（未知）' : item.inspection.name,
+    task_id: item.inspection_task_key === null ? '（未知）' : item.inspection_task_key.long_id,
+    inspector_label: item.inspector_info === null ? '（未知）' : item.inspector_info.type,
     type: item.type,
     type_label: item.type_indicator?.label ?? '（未知）',
     happened_date: formatNullableTimestamp(item.happened_date),

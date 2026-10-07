@@ -12,18 +12,18 @@ import { type InspectionAlarmTypeIndicator } from './inspectionAlarmTypeIndicato
 
 export type InspectionAlarm = {
   key: LongIdKey
-  inspection_key: LongIdKey
-  inspection_task_key: LongIdKey
-  inspector_info_key: LongIdKey
+  inspection_key: LongIdKey | null
+  inspection_task_key: LongIdKey | null
+  inspector_info_key: LongIdKey | null
   happened_date: number
   type: string
   message: string
 }
 
 export type DispInspectionAlarm = InspectionAlarm & {
-  inspection: Inspection
-  inspection_task: InspectionTask
-  inspector_info: InspectorInfo
+  inspection: Inspection | null
+  inspection_task: InspectionTask | null
+  inspector_info: InspectorInfo | null
   type_indicator: InspectionAlarmTypeIndicator | null
 }
 
