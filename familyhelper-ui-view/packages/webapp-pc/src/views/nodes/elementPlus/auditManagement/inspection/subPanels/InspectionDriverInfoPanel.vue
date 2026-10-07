@@ -329,7 +329,7 @@ const {
   visible: inspectionDriverInfoMaintainDialogVisible,
   item: inspectionDriverInfoMaintainDialogItem,
   mode: inspectionDriverInfoMaintainDialogMode,
-  showCreateDialog: showInspectionDriverInfoCreateMaintainDialogInner,
+  showCreateDialog: showInspectionDriverInfoCreateMaintainDialog,
   showEditDialog: showInspectionDriverInfoEditMaintainDialog,
   showInspectDialog: showInspectionDriverInfoInspectMaintainDialog,
 } = useGeneralMaintainDialog<InspectionDriverInfo, InspectionDriverInfoMaintainDialogItem>(
@@ -391,17 +391,6 @@ function inspectionDriverInfoMaintainDialogItemMap(
     param: t.param,
     remark: t.remark,
   }
-}
-
-function showInspectionDriverInfoCreateMaintainDialog(): void {
-  inspectionDriverInfoMaintainDialogItem.value = {
-    long_id: '',
-    enabled: true,
-    type: '',
-    param: '',
-    remark: '',
-  }
-  showInspectionDriverInfoCreateMaintainDialogInner()
 }
 
 async function handleInspectionDriverInfoCreate(

@@ -542,18 +542,7 @@ function auditPropertyIndicatorMaintainDialogItemMap(
 }
 
 function showAuditPropertyIndicatorCreateMaintainDialog(): void {
-  auditPropertyIndicatorMaintainDialogItem.value = {
-    category_id: props.categoryId,
-    property_id: '',
-    label: '',
-    property_type: 0,
-    default_string_value: '',
-    default_long_value: '0',
-    default_double_value: 0,
-    default_boolean_value: false,
-    default_date_value: null,
-    order: 0,
-  }
+  auditPropertyIndicatorMaintainDialogItem.value.category_id = props.categoryId
   showAuditPropertyIndicatorCreateMaintainDialogInner()
 }
 

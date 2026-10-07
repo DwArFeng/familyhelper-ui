@@ -408,7 +408,7 @@ const {
   visible: inspectorInfoMaintainDialogVisible,
   item: inspectorInfoMaintainDialogItem,
   mode: inspectorInfoMaintainDialogMode,
-  showCreateDialog: showInspectorInfoCreateMaintainDialogInner,
+  showCreateDialog: showInspectorInfoCreateMaintainDialog,
   showEditDialog: showInspectorInfoEditMaintainDialog,
   showInspectDialog: showInspectorInfoInspectMaintainDialog,
 } = useGeneralMaintainDialog<InspectorInfo, InspectorInfoMaintainDialogItem>(
@@ -483,18 +483,6 @@ function inspectorInfoMaintainDialogItemMap(t: InspectorInfo): InspectorInfoMain
     param: t.param,
     remark: t.remark,
   }
-}
-
-function showInspectorInfoCreateMaintainDialog(): void {
-  inspectorInfoMaintainDialogItem.value = {
-    long_id: '',
-    index: 0,
-    enabled: true,
-    type: '',
-    param: '',
-    remark: '',
-  }
-  showInspectorInfoCreateMaintainDialogInner()
 }
 
 async function handleInspectorInfoCreate(item: InspectorInfoMaintainDialogItem): Promise<void> {

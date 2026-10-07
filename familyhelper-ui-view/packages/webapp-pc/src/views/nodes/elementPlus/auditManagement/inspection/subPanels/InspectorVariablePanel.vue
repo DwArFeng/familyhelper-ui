@@ -397,7 +397,7 @@ const {
   visible: inspectorVariableMaintainDialogVisible,
   item: inspectorVariableMaintainDialogItem,
   mode: inspectorVariableMaintainDialogMode,
-  showCreateDialog: showInspectorVariableCreateMaintainDialogInner,
+  showCreateDialog: showInspectorVariableCreateMaintainDialog,
   showEditDialog: showInspectorVariableEditMaintainDialog,
   showInspectDialog: showInspectorVariableInspectMaintainDialog,
 } = useGeneralMaintainDialog<InspectorVariable, InspectorVariableMaintainDialogItem>(
@@ -481,19 +481,6 @@ function inspectorVariableMaintainDialogItemMap(
     boolean_value: t.boolean_value ?? false,
     date_value: t.date_value ?? null,
   }
-}
-
-function showInspectorVariableCreateMaintainDialog(): void {
-  inspectorVariableMaintainDialogItem.value = {
-    variable_id: '',
-    value_type: 0,
-    string_value: '',
-    long_value: '0',
-    double_value: 0,
-    boolean_value: false,
-    date_value: null,
-  }
-  showInspectorVariableCreateMaintainDialogInner()
 }
 
 function toValueString(item: InspectorVariableMaintainDialogItem): string {
