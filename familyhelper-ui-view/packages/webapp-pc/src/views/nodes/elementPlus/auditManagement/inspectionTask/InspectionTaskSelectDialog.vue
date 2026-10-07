@@ -53,13 +53,13 @@
               />
               <el-table-column
                 label="状态"
-                width="90"
+                width="90px"
                 show-overflow-tooltip
                 :formatter="statusFormatter"
               />
               <el-table-column
                 label="创建时间"
-                width="180"
+                width="180px"
                 show-overflow-tooltip
                 :formatter="(row: DispInspectionTask) => formatNullableTimestamp(row.created_date)"
               />

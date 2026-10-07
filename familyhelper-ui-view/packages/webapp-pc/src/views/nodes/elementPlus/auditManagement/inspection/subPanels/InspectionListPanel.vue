@@ -44,7 +44,7 @@
             <el-table-column
               prop="enabled"
               label="使能"
-              width="55px"
+              width="70"
               :formatter="enabledFormatter"
               show-overflow-tooltip
             />

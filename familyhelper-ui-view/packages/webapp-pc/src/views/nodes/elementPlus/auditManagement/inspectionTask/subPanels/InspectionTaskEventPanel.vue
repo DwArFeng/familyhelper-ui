@@ -33,6 +33,7 @@
           >
             <el-table-column
               label="发生时间"
+              width="180px"
               show-overflow-tooltip
               :formatter="
                 (row: DispInspectionTaskEvent) => formatNullableTimestamp(row.happened_date)

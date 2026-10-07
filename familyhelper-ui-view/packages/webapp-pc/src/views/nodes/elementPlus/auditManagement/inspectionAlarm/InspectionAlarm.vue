@@ -60,16 +60,15 @@
           @onItemInspect="handleShowInspectionAlarmInspectDialog"
         >
           <template v-slot:default>
-            <el-table-column prop="key.long_id" label="告警 ID" show-overflow-tooltip />
             <el-table-column
               label="巡检"
               show-overflow-tooltip
               :formatter="inspectionNameFormatter"
             />
-            <el-table-column label="任务 ID" show-overflow-tooltip :formatter="taskIdFormatter" />
             <el-table-column label="检查器" show-overflow-tooltip :formatter="inspectorFormatter" />
             <el-table-column
               label="发生时间"
+              width="180px"
               show-overflow-tooltip
               :formatter="(row: DispInspectionAlarm) => formatNullableTimestamp(row.happened_date)"
             />
@@ -90,14 +89,8 @@
       :item="inspectionAlarmMaintainDialogItem"
       :close-on-click-modal="false"
     >
-      <el-form-item label="告警 ID">
-        <el-input v-model="inspectionAlarmMaintainDialogItem.long_id" readonly />
-      </el-form-item>
       <el-form-item label="巡检">
         <el-input v-model="inspectionAlarmMaintainDialogItem.inspection_name" readonly />
-      </el-form-item>
-      <el-form-item label="任务 ID">
-        <el-input v-model="inspectionAlarmMaintainDialogItem.task_id" readonly />
       </el-form-item>
       <el-form-item label="检查器">
         <el-input v-model="inspectionAlarmMaintainDialogItem.inspector_label" readonly />
@@ -366,13 +359,6 @@ function inspectionNameFormatter(row: DispInspectionAlarm): string {
   return row.inspection.name
 }
 
-function taskIdFormatter(row: DispInspectionAlarm): string {
-  if (row.inspection_task_key === null) {
-    return '（未知）'
-  }
-  return row.inspection_task_key.long_id
-}
-
 function inspectorFormatter(row: DispInspectionAlarm): string {
   if (row.inspector_info === null) {
     return '（未知）'
@@ -397,9 +383,7 @@ function handleShowInspectionAlarmInspectDialog(item: DispInspectionAlarm): void
 // region 巡检告警维护对话框处理
 
 type InspectionAlarmMaintainDialogItem = {
-  long_id: string
   inspection_name: string
-  task_id: string
   inspector_label: string
   type: string
   type_label: string
@@ -413,9 +397,7 @@ const {
   showDialog: showInspectionAlarmInspectMaintainDialog,
 } = useInspectOnlyMaintainDialog<DispInspectionAlarm, InspectionAlarmMaintainDialogItem>(
   (item) => ({
-    long_id: item.key.long_id,
     inspection_name: item.inspection === null ? '（未知）' : item.inspection.name,
-    task_id: item.inspection_task_key === null ? '（未知）' : item.inspection_task_key.long_id,
     inspector_label: item.inspector_info === null ? '（未知）' : item.inspector_info.type,
     type: item.type,
     type_label: item.type_indicator?.label ?? '（未知）',
@@ -423,9 +405,7 @@ const {
     message: item.message,
   }),
   {
-    long_id: '',
     inspection_name: '',
-    task_id: '',
     inspector_label: '',
     type: '',
     type_label: '',
