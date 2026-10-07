@@ -2,7 +2,7 @@
   <div class="inspection-task-container">
     <root-border-layout-panel
       class="border-layout-panel"
-      west-width="35%"
+      west-width="50%"
       :west-visible="true"
       :full-screen-tool-visible="false"
       :initial-tool-dock-status="4"

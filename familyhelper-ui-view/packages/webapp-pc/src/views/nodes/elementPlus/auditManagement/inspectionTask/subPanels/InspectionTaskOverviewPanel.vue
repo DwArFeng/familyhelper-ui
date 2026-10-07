@@ -22,48 +22,25 @@
         <template v-slot:default>
           <overlay-scrollbars-component class="scroll-bar">
             <el-form class="property-form" label-position="left" label-width="110px" inline>
-              <el-form-item label="任务 ID" style="width: 50%">
-                {{ task.key.long_id }}
-              </el-form-item>
-              <el-form-item label="巡检 ID" style="width: 50%">
-                {{ task.inspection_key.long_id }}
-              </el-form-item>
-              <el-form-item label="巡检名称" style="width: 50%">
-                {{ task.inspection?.name ?? '' }}
-              </el-form-item>
-              <el-form-item label="状态" style="width: 50%">
-                {{ formatTaskStatus(task.status) }}
-              </el-form-item>
-              <el-form-item label="创建时间" style="width: 50%">
-                {{ formatNullableTimestamp(task.created_date) }}
-              </el-form-item>
-              <el-form-item label="开始时间" style="width: 50%">
-                {{ formatNullableTimestamp(task.started_date) }}
-              </el-form-item>
-              <el-form-item label="结束时间" style="width: 50%">
-                {{ formatNullableTimestamp(task.ended_date) }}
-              </el-form-item>
               <el-form-item
-                label="持续时间"
-                style="width: 50%"
-                :title="formatInspectionDurationRawTitle(task.duration)"
+                v-for="item in propertyItems"
+                :key="item.id"
+                :label="item.label"
+                :style="{ width: item.width ?? '50%' }"
               >
-                {{ formatInspectionDuration(task.duration) }}
-              </el-form-item>
-              <el-form-item label="应过期时间" style="width: 50%">
-                {{ formatNullableTimestamp(task.should_expire_date) }}
-              </el-form-item>
-              <el-form-item label="应僵死时间" style="width: 50%">
-                {{ formatNullableTimestamp(task.should_die_date) }}
-              </el-form-item>
-              <el-form-item label="过期时间" style="width: 50%">
-                {{ formatNullableTimestamp(task.expired_date) }}
-              </el-form-item>
-              <el-form-item label="僵死时间" style="width: 50%">
-                {{ formatNullableTimestamp(task.died_date) }}
-              </el-form-item>
-              <el-form-item label="锚点消息" style="width: 100%">
-                {{ task.anchor_message || '（暂无）' }}
+                <el-tooltip
+                  placement="top"
+                  :content="item.tooltip ?? item.display"
+                  :disabled="item.tooltipAlways !== true && !isPropertyTextOverflow(item.id)"
+                  :show-after="200"
+                >
+                  <span
+                    class="property-ellipsis"
+                    @mouseenter="handlePropertyTextMouseEnter($event, item.id)"
+                  >
+                    {{ item.display }}
+                  </span>
+                </el-tooltip>
               </el-form-item>
             </el-form>
           </overlay-scrollbars-component>
@@ -74,7 +51,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 
@@ -230,6 +207,98 @@ defineExpose({
 
 // endregion
 
+// region 属性表单
+
+type PropertyItem = {
+  id: string
+  label: string
+  display: string
+  tooltip?: string
+  tooltipAlways?: boolean
+  width?: '50%' | '100%'
+}
+
+const propertyItems = computed<PropertyItem[]>(() => {
+  const value = task.value
+  return [
+    {
+      id: 'inspection_name',
+      label: '巡检名称',
+      display: value.inspection?.name ?? '',
+    },
+    {
+      id: 'status',
+      label: '状态',
+      display: formatTaskStatus(value.status),
+    },
+    {
+      id: 'created_date',
+      label: '创建时间',
+      display: formatNullableTimestamp(value.created_date),
+    },
+    {
+      id: 'started_date',
+      label: '开始时间',
+      display: formatNullableTimestamp(value.started_date),
+    },
+    {
+      id: 'ended_date',
+      label: '结束时间',
+      display: formatNullableTimestamp(value.ended_date),
+    },
+    {
+      id: 'duration',
+      label: '持续时间',
+      display: formatInspectionDuration(value.duration),
+      tooltip: formatInspectionDurationRawTitle(value.duration),
+      tooltipAlways: value.duration !== null && value.duration !== '',
+    },
+    {
+      id: 'should_expire_date',
+      label: '应过期时间',
+      display: formatNullableTimestamp(value.should_expire_date),
+    },
+    {
+      id: 'should_die_date',
+      label: '应僵死时间',
+      display: formatNullableTimestamp(value.should_die_date),
+    },
+    {
+      id: 'expired_date',
+      label: '过期时间',
+      display: formatNullableTimestamp(value.expired_date),
+    },
+    {
+      id: 'died_date',
+      label: '僵死时间',
+      display: formatNullableTimestamp(value.died_date),
+    },
+    {
+      id: 'anchor_message',
+      label: '锚点消息',
+      display: value.anchor_message || '（暂无）',
+      width: '100%',
+    },
+  ]
+})
+
+const propertyTextOverflow = ref<Record<string, boolean>>({})
+
+function isPropertyTextOverflow(propertyId: string): boolean {
+  return propertyTextOverflow.value[propertyId] === true
+}
+
+function handlePropertyTextMouseEnter(event: MouseEvent, propertyId: string): void {
+  const target = event.currentTarget as HTMLElement
+  propertyTextOverflow.value[propertyId] = target.scrollWidth > target.clientWidth
+}
+
+watch(task, () => {
+  propertyTextOverflow.value = {}
+})
+
+// endregion
+
 // region 面板悬浮
 
 function handlePanelFloatyButtonClicked(): void {
@@ -327,6 +396,16 @@ async function handleExecuteJob(): Promise<void> {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 30px;
+}
+
+.property-ellipsis {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   line-height: 30px;
 }
 </style>

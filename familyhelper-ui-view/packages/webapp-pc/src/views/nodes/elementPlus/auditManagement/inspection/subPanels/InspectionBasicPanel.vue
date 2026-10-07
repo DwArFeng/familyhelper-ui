@@ -28,9 +28,6 @@
         <template v-slot:default>
           <overlay-scrollbars-component class="scroll-bar">
             <el-form class="property-form" label-position="left" label-width="80px" inline>
-              <el-form-item label="ID" style="width: 50%">
-                {{ inspectionFormItem.long_id }}
-              </el-form-item>
               <el-form-item label="名称" style="width: 50%">
                 {{ inspectionFormItem.name }}
               </el-form-item>
@@ -139,7 +136,6 @@ async function handleSearch(): Promise<void> {
   loading.value += 1
   try {
     const res = await resolveResponse(get({ long_id: props.inspectionId }))
-    inspectionFormItem.value.long_id = res.key.long_id
     inspectionFormItem.value.name = res.name
     inspectionFormItem.value.enabled = res.enabled
     inspectionFormItem.value.remark = res.remark
@@ -180,14 +176,12 @@ function handlePanelFloatyButtonClicked(): void {
 // region 巡检表单
 
 type InspectionFormItem = {
-  long_id: string
   name: string
   enabled: boolean
   remark: string
 }
 
 const inspectionFormItem = ref<InspectionFormItem>({
-  long_id: '',
   name: '',
   enabled: false,
   remark: '',

@@ -10,51 +10,39 @@
     >
       <template v-slot:header>
         <div class="header-container">
-          <el-radio-group v-model="queryMode" @change="handleQueryModeChanged">
-            <el-radio-button value="ALL">全部告警</el-radio-button>
-            <el-radio-button value="INSPECTION">按巡检</el-radio-button>
-            <el-radio-button value="TASK">按任务</el-radio-button>
-            <el-radio-button value="INSPECTOR">按检查器</el-radio-button>
-          </el-radio-group>
+          <el-button type="success" @click="handleInspectionAlarmRefresh">刷新数据</el-button>
           <el-divider direction="vertical" />
           <el-input
-            v-if="queryMode === 'INSPECTION'"
-            class="id-search-bar"
-            :model-value="inspectionId"
+            class="search-bar"
+            :model-value="searchBarValue"
             readonly
+            :placeholder="searchPlaceholder"
+            @keydown.enter="handleInspectionAlarmRefresh"
           >
             <template v-slot:prepend>
-              <span>巡检</span>
+              <el-select
+                class="search-field-select"
+                v-model="queryMode"
+                @change="handleQueryModeChanged"
+              >
+                <el-option label="按巡检" value="INSPECTION" />
+                <el-option label="按任务" value="TASK" />
+                <el-option label="按检查器" value="INSPECTOR" />
+              </el-select>
+            </template>
+            <template v-slot:suffix>
+              <el-icon
+                v-if="searchBarValue !== ''"
+                class="search-clear"
+                @click.stop="handleSearchTargetCleared"
+              >
+                <CircleCloseIcon />
+              </el-icon>
             </template>
             <template v-slot:append>
-              <el-button :icon="SearchIcon" @click="inspectionSelectDialogVisible = true" />
+              <el-button :icon="SearchIcon" @click="handleSearchButtonClicked" />
             </template>
           </el-input>
-          <el-input
-            v-else-if="queryMode === 'TASK'"
-            class="id-search-bar"
-            v-model="taskId"
-            clearable
-            @keydown.enter="handleInspectionAlarmSearch"
-            @clear="handleInspectionAlarmSearch"
-          >
-            <template v-slot:prepend>
-              <span>任务 ID</span>
-            </template>
-          </el-input>
-          <el-input
-            v-else-if="queryMode === 'INSPECTOR'"
-            class="id-search-bar"
-            v-model="inspectorId"
-            clearable
-            @keydown.enter="handleInspectionAlarmSearch"
-            @clear="handleInspectionAlarmSearch"
-          >
-            <template v-slot:prepend>
-              <span>检查器 ID</span>
-            </template>
-          </el-input>
-          <el-button type="success" @click="handleInspectionAlarmRefresh">刷新数据</el-button>
         </div>
       </template>
       <template v-slot:default>
@@ -136,13 +124,21 @@
       v-model:visible="inspectionSelectDialogVisible"
       @onConfirmed="handleInspectionConfirmed"
     />
+    <inspection-task-select-dialog
+      v-model:visible="taskSelectDialogVisible"
+      @onConfirmed="handleTaskConfirmed"
+    />
+    <inspector-info-select-dialog
+      v-model:visible="inspectorSelectDialogVisible"
+      @onConfirmed="handleInspectorConfirmed"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
-import { Search as SearchIcon } from '@element-plus/icons-vue'
+import { CircleClose as CircleCloseIcon, Search as SearchIcon } from '@element-plus/icons-vue'
 
 import RootBorderLayoutPanel from '@/components/elementPlus/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
 import TablePanel from '@/components/elementPlus/table/tablePanel/TablePanel.vue'
@@ -159,10 +155,14 @@ import {
   childForInspectorInfoDisp,
   type DispInspectionAlarm,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/audit/inspectionAlarm.ts'
+import { type DispInspectionTask } from '@dwarfeng/familyhelper-ui-component-api/src/api/audit/inspectionTask.ts'
+import { type DispInspectorInfo } from '@dwarfeng/familyhelper-ui-component-api/src/api/audit/inspectorInfo.ts'
 import { formatTimestamp } from '@dwarfeng/familyhelper-ui-component-util/src/util/timestamp.ts'
 import { lookupWithAdjustPage } from '@/util/lookup.ts'
 
 import InspectionSelectDialog from '../inspection/InspectionSelectDialog.vue'
+import InspectorInfoSelectDialog from '../inspection/InspectorInfoSelectDialog.vue'
+import InspectionTaskSelectDialog from '../inspectionTask/InspectionTaskSelectDialog.vue'
 
 defineOptions({
   name: 'InspectionAlarm',
@@ -176,22 +176,122 @@ const loading = ref<number>(0)
 
 // region 头部面板
 
-type QueryMode = 'ALL' | 'INSPECTION' | 'TASK' | 'INSPECTOR'
+type QueryMode = 'INSPECTION' | 'TASK' | 'INSPECTOR'
 
-const queryMode = ref<QueryMode>('ALL')
+const queryMode = ref<QueryMode>('INSPECTION')
 const inspectionId = ref<string>('')
+const inspectionLabel = ref<string>('')
 const taskId = ref<string>('')
+const taskLabel = ref<string>('')
 const inspectorId = ref<string>('')
+const inspectorLabel = ref<string>('')
 const inspectionSelectDialogVisible = ref<boolean>(false)
+const taskSelectDialogVisible = ref<boolean>(false)
+const inspectorSelectDialogVisible = ref<boolean>(false)
+
+const searchBarValue = computed(() => {
+  if (queryMode.value === 'TASK') {
+    return taskLabel.value
+  }
+  if (queryMode.value === 'INSPECTOR') {
+    return inspectorLabel.value
+  }
+  return inspectionLabel.value
+})
+
+const searchPlaceholder = computed(() => {
+  if (queryMode.value === 'TASK') {
+    return '请选择巡检任务'
+  }
+  if (queryMode.value === 'INSPECTOR') {
+    return '请选择检查器'
+  }
+  return '请选择巡检'
+})
 
 function handleQueryModeChanged(): void {
   inspectionAlarmTableCurrentPage.value = 0
   handleInspectionAlarmSearch()
 }
 
+function handleSearchButtonClicked(): void {
+  if (queryMode.value === 'TASK') {
+    taskSelectDialogVisible.value = true
+    return
+  }
+  if (queryMode.value === 'INSPECTOR') {
+    inspectorSelectDialogVisible.value = true
+    return
+  }
+  inspectionSelectDialogVisible.value = true
+}
+
+function handleSearchTargetCleared(): void {
+  if (queryMode.value === 'INSPECTION') {
+    inspectionId.value = ''
+    inspectionLabel.value = ''
+  } else if (queryMode.value === 'TASK') {
+    taskId.value = ''
+    taskLabel.value = ''
+  } else if (queryMode.value === 'INSPECTOR') {
+    inspectorId.value = ''
+    inspectorLabel.value = ''
+  }
+  inspectionAlarmTableCurrentPage.value = 0
+  handleInspectionAlarmSearch()
+}
+
+function formatTaskStatus(status: number): string {
+  switch (status) {
+    case 0:
+      return '已创建'
+    case 1:
+      return '处理中'
+    case 2:
+      return '已完成'
+    case 3:
+      return '失败'
+    case 4:
+      return '已过期'
+    case 5:
+      return '已僵死'
+    default:
+      return `未知（${status}）`
+  }
+}
+
+function formatTaskSelectionLabel(task: DispInspectionTask): string {
+  return `${task.inspection.name} / ${formatTaskStatus(task.status)} / ${formatTimestamp(task.created_date)}`
+}
+
+function formatInspectorSelectionLabel(inspector: DispInspectorInfo): string {
+  const inspectionName = inspector.inspection.name
+  if (inspectionName === '') {
+    return inspector.type
+  }
+  return `${inspectionName} / ${inspector.type}`
+}
+
 function handleInspectionConfirmed(inspection: Inspection): void {
   inspectionId.value = inspection.key.long_id
+  inspectionLabel.value = inspection.name
   queryMode.value = 'INSPECTION'
+  inspectionAlarmTableCurrentPage.value = 0
+  handleInspectionAlarmSearch()
+}
+
+function handleTaskConfirmed(task: DispInspectionTask): void {
+  taskId.value = task.key.long_id
+  taskLabel.value = formatTaskSelectionLabel(task)
+  queryMode.value = 'TASK'
+  inspectionAlarmTableCurrentPage.value = 0
+  handleInspectionAlarmSearch()
+}
+
+function handleInspectorConfirmed(inspector: DispInspectorInfo): void {
+  inspectorId.value = inspector.key.long_id
+  inspectorLabel.value = formatInspectorSelectionLabel(inspector)
+  queryMode.value = 'INSPECTOR'
   inspectionAlarmTableCurrentPage.value = 0
   handleInspectionAlarmSearch()
 }
@@ -205,50 +305,20 @@ async function handleInspectionAlarmRefresh(): Promise<void> {
 // region 巡检告警搜索
 
 async function handleInspectionAlarmSearch(): Promise<void> {
-  if (queryMode.value === 'INSPECTION' && inspectionId.value === '') {
-    updateInspectionAlarmTableByLookup({
-      current_page: 0,
-      total_pages: 0,
-      rows: inspectionAlarmTablePageSize.value,
-      count: '0',
-      data: [],
-    })
-    return
-  }
-  if (queryMode.value === 'TASK' && taskId.value === '') {
-    updateInspectionAlarmTableByLookup({
-      current_page: 0,
-      total_pages: 0,
-      rows: inspectionAlarmTablePageSize.value,
-      count: '0',
-      data: [],
-    })
-    return
-  }
-  if (queryMode.value === 'INSPECTOR' && inspectorId.value === '') {
-    updateInspectionAlarmTableByLookup({
-      current_page: 0,
-      total_pages: 0,
-      rows: inspectionAlarmTablePageSize.value,
-      count: '0',
-      data: [],
-    })
-    return
-  }
   loading.value += 1
   try {
     let res
-    if (queryMode.value === 'INSPECTION') {
+    if (queryMode.value === 'INSPECTION' && inspectionId.value !== '') {
       res = await lookupWithAdjustPage(
         (pagingInfo) => childForInspectionDisp({ long_id: inspectionId.value }, pagingInfo),
         inspectionAlarmTablePagingInfo.value,
       )
-    } else if (queryMode.value === 'TASK') {
+    } else if (queryMode.value === 'TASK' && taskId.value !== '') {
       res = await lookupWithAdjustPage(
         (pagingInfo) => childForInspectionTaskDisp({ long_id: taskId.value }, pagingInfo),
         inspectionAlarmTablePagingInfo.value,
       )
-    } else if (queryMode.value === 'INSPECTOR') {
+    } else if (queryMode.value === 'INSPECTOR' && inspectorId.value !== '') {
       res = await lookupWithAdjustPage(
         (pagingInfo) => childForInspectorInfoDisp({ long_id: inspectorId.value }, pagingInfo),
         inspectionAlarmTablePagingInfo.value,
@@ -378,20 +448,28 @@ const {
   flex-direction: row;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  row-gap: 5px;
+}
+
+.header-container .search-bar {
+  width: 480px;
+}
+
+.header-container .search-field-select {
+  width: 100px;
+}
+
+.header-container .search-clear {
+  cursor: pointer;
+  color: var(--el-text-color-placeholder);
+}
+
+.header-container .search-clear:hover {
+  color: var(--el-text-color-secondary);
 }
 
 /*noinspection CssUnusedSymbol*/
 .header-container .el-divider--vertical {
   margin: 0 8px;
-}
-
-.header-container .id-search-bar {
-  width: 320px;
-}
-
-/*noinspection CssUnusedSymbol*/
-.header-container .id-search-bar :deep(.el-input-group__prepend) {
-  padding: 0 10px;
 }
 </style>

@@ -32,6 +32,7 @@
           :edit-button-visible="false"
           inspect-button-label="查看巡检"
           delete-button-label="删除巡检"
+          :operate-column-width="80"
           :contextmenu-width="100"
           @onPagingAttributeChanged="handleInspectionPagingAttributeChanged"
           @onCurrentChanged="handleInspectionTableCurrentChanged"
@@ -39,7 +40,6 @@
           @onItemDelete="handleInspectionDelete"
         >
           <template v-slot:default>
-            <el-table-column prop="key.long_id" label="ID" show-overflow-tooltip />
             <el-table-column prop="name" label="名称" show-overflow-tooltip />
             <el-table-column
               prop="enabled"

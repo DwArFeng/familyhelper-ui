@@ -29,7 +29,10 @@
         >
           <template v-slot:default>
             <el-table-column
+              class-name="single-line"
+              label-class-name="single-line"
               label="巡检名称"
+              min-width="120"
               show-overflow-tooltip
               :formatter="inspectionNameFormatter"
             />

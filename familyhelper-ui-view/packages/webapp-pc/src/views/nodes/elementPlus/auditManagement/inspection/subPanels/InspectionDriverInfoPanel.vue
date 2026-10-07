@@ -43,7 +43,6 @@
             @onItemDelete="handleInspectionDriverInfoDelete"
           >
             <template v-slot:default>
-              <el-table-column prop="key.long_id" label="ID" show-overflow-tooltip />
               <el-table-column
                 prop="enabled"
                 label="使能"

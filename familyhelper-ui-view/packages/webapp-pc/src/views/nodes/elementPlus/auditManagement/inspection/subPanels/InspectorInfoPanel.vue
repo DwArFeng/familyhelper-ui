@@ -47,7 +47,6 @@
             @onItemDelete="handleInspectorInfoDelete"
           >
             <template v-slot:default>
-              <el-table-column prop="key.long_id" label="ID" show-overflow-tooltip />
               <el-table-column prop="index" label="顺序" width="70" />
               <el-table-column
                 prop="enabled"

@@ -100,9 +100,6 @@
       @onItemCreate="handleAuditPropertyIndicatorCreate"
       @onItemEdit="handleAuditPropertyIndicatorEdit"
     >
-      <el-form-item label="类别 ID" prop="category_id">
-        <el-input v-model="auditPropertyIndicatorMaintainDialogItem.category_id" readonly />
-      </el-form-item>
       <el-form-item label="属性 ID" prop="property_id">
         <el-input
           v-model="auditPropertyIndicatorMaintainDialogItem.property_id"
