@@ -38,17 +38,16 @@
 
 应用技术以 **Vue 3** 为基础；
 仓库根 `README` 中提到的 **vim（Vue Interactive Model）** 是本项目在交互与视图组织上的自研模型，旨在统一应用内开发体验。
-包管理**仅**使用 **pnpm workspace**；全仓构建依赖仓库根目录提供的脚本（如 `pnpm run build`）， 
-以正确处理组件包与 webapp 之间的产物依赖。
+包管理仅使用 pnpm workspace；全仓构建依赖仓库根目录提供的脚本（如 `pnpm run build`），以正确处理 workspace 内的包依赖。
 vim 的设计理念、扩展方式、与路由或 Store 的分工等，**不在本文展开**。
 
 ## 本地上手线索
 
-推荐阅读顺序：进入 `familyhelper-ui-view` 目录后，先按该目录文档完成依赖安装与**全量构建**，
-再在具体 `webapp-*` 包内进行开发或本地预览。
-原因是部分 webapp 会直接依赖组件包**已构建产物**；跳过全量构建可能导致 `serve` 等行为异常。
+推荐阅读顺序：进入 `familyhelper-ui-view` 目录后，
+先按该目录文档完成依赖安装与全量构建，再在具体 `webapp-*` 包内进行开发或本地预览。
 **具体命令（含 `pnpm install --frozen-lockfile`、必须使用 pnpm 的约定等） 一律以模块内部的 `README.md` 为准**。
 
 ## 构建脚本维护约定
 
-若修改 `scripts/` 下的脚本，需按该工程约定使用 Prettier 做格式检查与修正（命令见模块内部的 `README.md` 中“构建脚本格式化”一节）。
+若修改 `scripts/` 下的脚本，
+需按该工程约定使用 Prettier 做格式检查与修正（命令见模块内部的 `README.md` 中“构建脚本格式化”一节）。

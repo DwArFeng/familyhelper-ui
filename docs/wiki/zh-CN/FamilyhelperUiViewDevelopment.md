@@ -97,8 +97,7 @@ pnpm run build
 `pnpm run generate-config` 生成根工程和各子包的本地脚本配置。
 `pnpm run build` 按 workspace 依赖关系执行具备 `build` 脚本的子包。
 
-初始化完成后，再进入 `packages/webapp-pc` 或 `packages/webapp-mobile` 启动开发服务器。
-根工程 README 明确要求安装依赖后执行全量构建，因为 Web 应用的首次启动需要完成当前工程约定的构建准备。
+初始化完成并全量构建后，再进入 `packages/webapp-pc` 或 `packages/webapp-mobile` 启动开发服务器。
 
 ### 安装依赖
 
@@ -131,7 +130,7 @@ Web 应用默认配置包含以下开发服务器字段：
 - `open`：默认值为 `true`，启动后自动打开浏览器。
 - `host`：默认值为 `0.0.0.0`，表示开发服务器绑定的主机。
 - `port`：默认值为 `8088`，表示开发服务器端口。
-- `https`：默认值为 `false`，表示配置文件中的 HTTPS 开关字段。
+- `https`：默认值为 `false`，当前 Vite 配置未使用该字段。
 - `hmr`：默认值为 `false`，表示配置文件默认的热更新字段。
 
 如果目标 `scripts-config.json` 已经存在，生成脚本会先将旧文件复制为对应的 `scripts-config.json.old`，再写入默认配置。
@@ -385,5 +384,6 @@ pnpx prettier --write scripts/
 - [Familyhelper UI View](./FamilyhelperUiView.md) - 前端 view 模块（monorepo）导读，
   说明模块定位、包划分与后续文档阅读顺序，细节请参阅该目录内 `README.md`。
 - [Familyhelper UI View Build Script](./FamilyhelperUiViewBuildScript.md) - VIM 5 构型下 `scripts/build.js`的原理，
-  含 workspace 依赖图、并行调度及与 Vue 官方 `scripts/build.js` 的差异说明。- [VIM Architecture](./VimArchitecture.md) - 说明 `vim`、`api`、`compreg`、`library`、`navigation`、`router`、`store` 和 `views` 的职责边界。
+  含 workspace 依赖图、并行调度及与 Vue 官方 `scripts/build.js` 的差异说明。
+- [VIM Architecture](./VimArchitecture.md) - VIM 总体架构说明，
 - [System Requirements](./SystemRequirements.md) - 系统需求，详细说明本项目推荐的系统要求，以及其它版本的测试报告。

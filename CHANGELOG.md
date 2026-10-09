@@ -4,6 +4,12 @@
 
 ### 功能构建
 
+- Wiki 更新。
+  - docs/wiki/zh-CN/CompileBySource.md。
+  - docs/wiki/zh-CN/FamilyhelperUiView.md。
+  - docs/wiki/zh-CN/FamilyhelperUiViewDevelopment.md。
+  - docs/wiki/zh-CN/SystemRequirements.md。
+
 - `webapp-pc` 子模块实现逻辑引擎一级菜单。
   - 实现部件设置二级菜单。
   - 实现任务二级菜单。
