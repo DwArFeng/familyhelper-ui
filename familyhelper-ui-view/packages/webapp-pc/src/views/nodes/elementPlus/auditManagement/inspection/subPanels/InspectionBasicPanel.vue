@@ -238,7 +238,7 @@ async function handleInspectionEdit(item: InspectionMaintainDialogItem): Promise
     })
     emit('onInspectionPropertyUpdated', payload)
     inspectionMaintainDialogVisible.value = false
-    handleSearch()
+    await handleSearch()
   } finally {
     inspectionMaintainDialogLoading.value -= 1
   }

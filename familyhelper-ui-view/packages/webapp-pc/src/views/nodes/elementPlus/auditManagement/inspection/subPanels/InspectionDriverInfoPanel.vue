@@ -306,7 +306,7 @@ async function handleInspectionDriverInfoDelete(item: InspectionDriverInfo): Pro
       message: `巡检驱动 ${item.key.long_id} 删除成功`,
       type: 'success',
     })
-    handleInspectionDriverInfoSearch()
+    await handleInspectionDriverInfoSearch()
   } finally {
     loading.value -= 1
   }
@@ -412,7 +412,7 @@ async function handleInspectionDriverInfoCreate(
       message: '巡检驱动创建成功',
       type: 'success',
     })
-    handleInspectionDriverInfoSearch()
+    await handleInspectionDriverInfoSearch()
     inspectionDriverInfoMaintainDialogVisible.value = false
   } finally {
     inspectionDriverInfoMaintainDialogLoading.value -= 1
@@ -439,7 +439,7 @@ async function handleInspectionDriverInfoEdit(
       message: `巡检驱动 ${item.long_id} 更新成功`,
       type: 'success',
     })
-    handleInspectionDriverInfoSearch()
+    await handleInspectionDriverInfoSearch()
     inspectionDriverInfoMaintainDialogVisible.value = false
   } finally {
     inspectionDriverInfoMaintainDialogLoading.value -= 1

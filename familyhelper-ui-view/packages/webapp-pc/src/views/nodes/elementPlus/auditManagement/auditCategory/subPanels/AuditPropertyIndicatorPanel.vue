@@ -397,7 +397,7 @@ async function handleAuditPropertyIndicatorDelete(item: AuditPropertyIndicator):
       message: '属性指标删除成功',
       type: 'success',
     })
-    handleAuditPropertyIndicatorSearch()
+    await await handleAuditPropertyIndicatorSearch()
   } finally {
     loading.value -= 1
   }
@@ -577,7 +577,7 @@ async function handleAuditPropertyIndicatorCreate(
       message: `属性指标 ${item.property_id} 创建成功`,
       type: 'success',
     })
-    handleAuditPropertyIndicatorSearch()
+    await await handleAuditPropertyIndicatorSearch()
     auditPropertyIndicatorMaintainDialogVisible.value = false
   } finally {
     auditPropertyIndicatorMaintainDialogLoading.value -= 1
@@ -595,7 +595,7 @@ async function handleAuditPropertyIndicatorEdit(
       message: `属性指标 ${item.property_id} 更新成功`,
       type: 'success',
     })
-    handleAuditPropertyIndicatorSearch()
+    await await handleAuditPropertyIndicatorSearch()
     auditPropertyIndicatorMaintainDialogVisible.value = false
   } finally {
     auditPropertyIndicatorMaintainDialogLoading.value -= 1

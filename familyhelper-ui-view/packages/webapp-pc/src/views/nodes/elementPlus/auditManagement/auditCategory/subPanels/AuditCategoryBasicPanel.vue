@@ -250,7 +250,7 @@ async function handleAuditCategoryEdit(item: AuditCategoryMaintainDialogItem): P
     })
     emit('onCategoryPropertyUpdated', payload)
     auditCategoryMaintainDialogVisible.value = false
-    handleSearch()
+    await handleSearch()
   } finally {
     auditCategoryMaintainDialogLoading.value -= 1
   }
