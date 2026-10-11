@@ -14,6 +14,10 @@
 
 ### Bug 修复
 
+- `webapp-mobile` 子模块 `comvisual` 组件 bug 修复。
+  - `PagingTablePanel` 动态列注册后表格未立即重渲染。
+  - `PagingTablePanel` 固定布局表格总宽度未按已注册列宽生效。
+
 - `component-api` 子模块 bug 修复。
   - 修复 `src/api/settingrepo/iahnNode.ts` 中错误的类型定义。
 

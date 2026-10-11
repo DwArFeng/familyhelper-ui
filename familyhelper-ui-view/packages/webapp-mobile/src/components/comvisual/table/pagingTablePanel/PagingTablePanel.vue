@@ -4,7 +4,11 @@
       <slot name="default" />
     </div>
     <div class="table-container">
-      <table class="native-table" :class="{ stripe, 'layout-fixed': registeredColumns.length > 0 }">
+      <table
+        class="native-table"
+        :class="{ stripe, 'layout-fixed': registeredColumns.length > 0 }"
+        :style="tableStyle"
+      >
         <colgroup>
           <col
             v-if="selectionColumnVisible"
@@ -183,10 +187,10 @@ import NativeLink from '@/components/comvisual/form/nativeLink/NativeLink.vue'
 import PagingTableCellHost from '@/components/comvisual/table/pagingTablePanel/PagingTableCellHost.vue'
 
 import {
+  PAGING_TABLE_PANEL_CONTEXT_KEY,
   type PagingTableRegisterContext,
   type RegisteredColumn,
 } from '@/components/comvisual/table/pagingTablePanel/context.ts'
-import { PAGING_TABLE_PANEL_CONTEXT_KEY } from '@/components/comvisual/table/pagingTablePanel/context.ts'
 
 defineOptions({
   name: 'PagingTablePanel',
@@ -287,12 +291,10 @@ function registerColumn(meta: Omit<RegisteredColumn<CT>, 'id'>): () => void {
     ...meta,
     id,
   }
-  registeredColumns.value.push(entry)
+  // shallowRef 不会追踪数组原地变更，使用新数组确保动态列注册后立即触发表格渲染。
+  registeredColumns.value = [...registeredColumns.value, entry]
   return () => {
-    const i = registeredColumns.value.findIndex((c) => c.id === id)
-    if (i >= 0) {
-      registeredColumns.value.splice(i, 1)
-    }
+    registeredColumns.value = registeredColumns.value.filter((column) => column.id !== id)
   }
 }
 
@@ -317,6 +319,25 @@ function dataColumnCellStyle(col: RegisteredColumn<CT>): Record<string, string> 
     ...colGroupColStyle(col),
   }
 }
+
+/**
+ * 为固定布局表格提供明确的总宽度，避免 `max-content` 再次按照单元格内容撑开列宽。
+ */
+const tableStyle = computed<Record<string, string>>(() => {
+  const style: Record<string, string> = {}
+  if (registeredColumns.value.length === 0) {
+    return style
+  }
+  const selectionWidth = props.selectionColumnVisible ? 40 : 0
+  const dataWidth = registeredColumns.value.reduce((total, column) => {
+    return total + unref(column.widthPx)
+  }, 0)
+  const operateWidth = props.operateColumnVisible ? props.operateColumnWidth : 0
+  const width = selectionWidth + dataWidth + operateWidth
+  style.width = `${width}px`
+  style.minWidth = `${width}px`
+  return style
+})
 
 function onColResizeMouseDown(e: MouseEvent, columnId: number): void {
   e.preventDefault()
