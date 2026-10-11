@@ -315,6 +315,9 @@ importers:
       vue-cropper:
         specifier: ^1.1.4
         version: 1.1.4
+      vue-i18n:
+        specifier: ^11.4.14
+        version: 11.4.14(vue@3.5.42(typescript@5.7.3))
       vue-router:
         specifier: ^4.6.4
         version: 4.6.4(vue@3.5.42(typescript@5.7.3))
