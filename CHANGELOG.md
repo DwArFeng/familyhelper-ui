@@ -31,6 +31,10 @@
 
 ### Bug 修复
 
+- `webapp-pc` 子模块 `comvisual` 组件 bug 修复。
+  - `PagingTablePanel` 动态列注册后表格未立即重渲染。
+  - `PagingTablePanel` 固定布局表格总宽度未按已注册列宽生效。
+
 - `webapp-mobile` 子模块 `comvisual` 组件 bug 修复。
   - `PagingTablePanel` 动态列注册后表格未立即重渲染。
   - `PagingTablePanel` 固定布局表格总宽度未按已注册列宽生效。
