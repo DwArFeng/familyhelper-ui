@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块依赖新增。
+  - 增加依赖 `vue-i18n` 以应用其新功能，版本为 `^11.4.14`。
+  - 增加依赖 `sortablejs` 以应用其新功能，版本为 `^1.15.7`。
+  - 增加依赖 `@types/sortablejs` 以应用其新功能，版本为 `^1.15.9`。
+
 - `component-iconfont` 子模块功能新增。
   - 新增 `shixindiqiu`（实心地球，Unicode `ffc8`）图标。
 

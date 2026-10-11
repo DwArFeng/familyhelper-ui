@@ -19,13 +19,16 @@
     "js-base64": "^3.9.3",
     "pinia": "^2.3.1",
     "screenfull": "^6.0.2",
+    "sortablejs": "^1.15.7",
     "vue": "^3.5.42",
     "vue-component-type-helpers": "^2.2.12",
+    "vue-i18n": "^11.4.14",
     "vue-router": "^4.6.4"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.6",
     "@types/node": "^22.20.2",
+    "@types/sortablejs": "^1.15.9",
     "@vitejs/plugin-vue": "^5.2.4",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.9.0",
