@@ -143,6 +143,40 @@ const nodeSettings: NodeSetting[] = [
   },
   {
     parentKey: 'developerTools',
+    key: 'developerTools.iahnSettings',
+    index: 40,
+    display: {
+      '': {
+        label: '国际化设置',
+      },
+      comvisual: {
+        label: '国际化设置',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'developer-tools/iahn-settings',
+      component: {
+        key: 'developerTools.iahnSettings',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.mobile;ui.mobile.menu_visible.developer_tools.iahn_settings',
+    },
+  },
+  {
+    parentKey: 'developerTools',
     key: 'developerTools.visualizerSupport',
     index: 900,
     display: {

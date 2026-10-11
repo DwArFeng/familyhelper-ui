@@ -63,6 +63,20 @@ const compregSettings: ComponentSetting[] = [
     },
   },
   {
+    key: 'developerTools.iahnSettings',
+    name: '国际化设置',
+    description: '维护 IAHN 地区列表与消息仓库',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+    },
+    component: {
+      '': () => import('@/views/nodes/comvisual/developerTools/iahnSettings/IahnSettings.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/developerTools/iahnSettings/IahnSettings.vue'),
+    },
+  },
+  {
     key: 'developerTools.visualizerSupport',
     name: '可视化器支持',
     description: '可视化器支持',
