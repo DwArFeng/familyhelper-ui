@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- `component-iconfont` 子模块功能新增。
+  - 新增 `shixindiqiu`（实心地球，Unicode `ffc8`）图标。
 
 ### Bug 修复
 
