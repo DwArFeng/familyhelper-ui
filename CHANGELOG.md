@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块组件优化。
+  - 增加 `components/comvisual/form/nativeSelect/NativeSelect.vue` 组件的多选功能。
+
 - `webapp-mobile` 子模块功能新增。
   - 增加 library 模块下的 `iahn` 模块项目，引入国际化功能。
   - 增加 store 模块下的 `iahn.ts` 模块项目，实现地区与国际化内容的动态加载与持久化。
