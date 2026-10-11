@@ -8,7 +8,8 @@
 
 ### Bug 修复
 
-- (无)
+- `component-api` 子模块 bug 修复。
+  - 修复 `src/api/settingrepo/iahnNode.ts` 中错误的类型定义。
 
 ### 功能移除
 

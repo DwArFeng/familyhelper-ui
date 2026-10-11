@@ -99,7 +99,7 @@ export type IahnNodeMessageTableInspectResultRow = {
 }
 
 export type IahnNodeMessageTableInspectResultRowData = {
-  message: string
+  message: string | null
 }
 
 export type IahnNodeLocalePutInfo = {

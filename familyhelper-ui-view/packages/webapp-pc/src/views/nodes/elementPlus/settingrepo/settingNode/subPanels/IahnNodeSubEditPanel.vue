@@ -763,7 +763,7 @@ function handleTableCellDbclicked(
   messageEditDialogRow.value = row
   messageEditDialogColumn.value = column
   // 获取当前的消息并将其设置到编辑对话框中表单数据中。
-  messageEditDialogFormData.value.message = row.row_datas[index].message
+  messageEditDialogFormData.value.message = row.row_datas[index].message ?? ''
   // 显示编辑对话框。
   handleShowMessageEditDialog()
 }
