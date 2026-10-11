@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块功能优化。
+  - 增加 library 模块下的 `elementPlus` 模块项目，以解决潜在的 Element Plus 运行时初始化问题。
+
 - `webapp-pc` 子模块依赖新增。
   - 增加依赖 `vue-i18n` 以应用其新功能，版本为 `^11.4.14`。
 

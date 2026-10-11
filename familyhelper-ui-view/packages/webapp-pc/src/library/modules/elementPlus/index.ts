@@ -26,12 +26,28 @@ import PageForbidden from './render/pageForbidden/PageForbidden.vue'
 import PageNotFound from './render/pageNotFound/PageNotFound.vue'
 import PageError from './render/pageError/PageError.vue'
 
+/**
+ * Element Plus Engineering 模块的构建期存在性信息。
+ *
+ * `import.meta.glob` 会在构建阶段展开为模块清单，因此该判断不依赖 VIM 或 library
+ * 的初始化状态，也不会触发运行时模块加载。
+ */
+const elementPlusEngineeringModules = import.meta.glob('../elementPlusEngineering/index.ts')
+
 const vimLibraryModule: VimLibraryModule = {
   init,
   provideVisualizerSetting,
 }
 
 function init(ctx: VimApplicationContext): void {
+  /*
+   * Element Plus Engineering 存在时，由其统一负责 Element Plus 的运行时初始化，
+   * 避免两个可视化器同时设置 Element Plus 全局配置。
+   */
+  if (Object.keys(elementPlusEngineeringModules).length > 0) {
+    return
+  }
+
   ctx.app.use(ElementPLUS, {
     locale: zhCn,
   })
