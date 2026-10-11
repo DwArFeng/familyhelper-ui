@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '首页',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.welcome',
+      },
     },
     menu: {
       shown: false,

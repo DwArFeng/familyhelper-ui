@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '资产管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.assets_management',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '资产目录管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.assets_management.asset_catalog',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '资产BOM管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.assets_management.asset_bom',
+      },
     },
     menu: {
       shown: true,
@@ -130,6 +139,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '项目类型管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.assets_management.item_type_indicator',
+      },
     },
     menu: {
       shown: true,
@@ -166,6 +178,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '项目标签管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.assets_management.item_label',
       },
     },
     menu: {

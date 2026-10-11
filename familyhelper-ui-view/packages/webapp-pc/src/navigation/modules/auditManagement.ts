@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '审计管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '审计类别',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management.audit_category',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '巡检设置',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management.inspection',
+      },
     },
     menu: {
       shown: true,
@@ -129,6 +138,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '告警类型',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management.inspection_alarm_type_indicator',
       },
     },
     menu: {
@@ -167,6 +179,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '审计记录',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management.audit_entry',
+      },
     },
     menu: {
       shown: true,
@@ -203,6 +218,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '巡检任务',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management.inspection_task',
       },
     },
     menu: {
@@ -241,6 +259,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '巡检告警',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management.inspection_alarm',
+      },
     },
     menu: {
       shown: true,
@@ -278,6 +299,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '检查器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management.inspector_support',
+      },
     },
     menu: {
       shown: true,
@@ -314,6 +338,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '巡检驱动支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.audit_management.inspection_driver_support',
       },
     },
     menu: {

@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '配置仓库',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.settingrepo',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '配置类型管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.settingrepo.setting_category',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '配置节点管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.settingrepo.setting_node',
+      },
     },
     menu: {
       shown: true,
@@ -130,6 +139,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '格式化器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.settingrepo.formatter_support',
+      },
     },
     menu: {
       shown: true,
@@ -166,6 +178,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '配置节点编辑器',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.settingrepo.setting_node_editor',
       },
     },
     ezNav: {

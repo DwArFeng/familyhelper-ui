@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '开发者工具',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '可视化器设置',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools.visualizer_settings',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '导航管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools.navigation',
+      },
     },
     menu: {
       shown: true,
@@ -129,6 +138,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '导航设置',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools.navigation_settings',
       },
     },
     menu: {
@@ -167,6 +179,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '可视化器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools.visualizer_support',
+      },
     },
     menu: {
       shown: true,
@@ -203,6 +218,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '组件注册支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools.compreg_support',
       },
     },
     menu: {

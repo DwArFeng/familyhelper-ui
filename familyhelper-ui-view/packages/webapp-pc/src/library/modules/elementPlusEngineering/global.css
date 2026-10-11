@@ -1,0 +1,18 @@
+.custom-message-box__w450 {
+  --el-messagebox-width: 450px;
+}
+
+.custom-message-box__w500 {
+  --el-messagebox-width: 500px;
+}
+
+.loading-spinner__s24 .el-loading-spinner {
+  --el-loading-spinner-size: 24px;
+  height: 100%;
+  width: 100%;
+  margin: unset;
+  position: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

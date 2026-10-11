@@ -29,12 +29,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/fileio/importTaskSetting/ImportTaskSetting.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/fileio/importTaskSetting/ImportTaskSetting.vue'),
     },
   },
@@ -46,12 +49,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/fileio/exportTaskSetting/ExportTaskSetting.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/fileio/exportTaskSetting/ExportTaskSetting.vue'),
     },
   },
@@ -63,12 +69,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/importTask/ImportTask.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlus/fileio/importTask/ImportTask.vue'),
     },
   },
   {
@@ -79,12 +88,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/exportTask/ExportTask.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlus/fileio/exportTask/ExportTask.vue'),
     },
   },
   {
@@ -95,12 +107,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/myImportTask/MyImportTask.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlus/fileio/myImportTask/MyImportTask.vue'),
     },
   },
   {
@@ -111,12 +126,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/myExportTask/MyExportTask.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlus/fileio/myExportTask/MyExportTask.vue'),
     },
   },
   {
@@ -127,12 +145,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/fileio/importerSupport/ImporterSupport.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/fileio/importerSupport/ImporterSupport.vue'),
     },
   },
@@ -144,12 +165,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/fileio/exporterSupport/ExporterSupport.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/fileio/exporterSupport/ExporterSupport.vue'),
     },
   },
@@ -161,12 +185,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/readerSupport/ReaderSupport.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlus/fileio/readerSupport/ReaderSupport.vue'),
     },
   },
   {
@@ -177,12 +204,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/writerSupport/WriterSupport.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlus/fileio/writerSupport/WriterSupport.vue'),
     },
   },
   {
@@ -193,12 +223,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/fileio/exportTaskPanel/ExportTaskPanel.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/fileio/exportTaskPanel/ExportTaskPanel.vue'),
     },
   },

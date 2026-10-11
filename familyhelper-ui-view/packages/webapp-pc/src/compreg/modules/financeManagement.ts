@@ -29,12 +29,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/financeManagement/accountBook/AccountBook.vue'),
     },
   },
@@ -46,12 +49,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/financeManagement/bankCardTypeIndicator/BankCardTypeIndicator.vue'),
     },
   },
@@ -63,12 +69,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/financeManagement/bankCard/BankCard.vue'),
     },
   },
@@ -80,12 +89,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/financeManagement/balanceRecord/BalanceRecord.vue'),
     },
   },
@@ -97,12 +109,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/financeManagement/fundChangeTypeIndicator/FundChangeTypeIndicator.vue'),
     },
   },
@@ -114,12 +129,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/financeManagement/fundChange/FundChange.vue'),
     },
   },
@@ -131,12 +149,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/financeManagement/financeReport/FinanceReport.vue'),
     },
   },
@@ -148,12 +169,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/financeManagement/remindDriverSupport/RemindDriverSupport.vue'),
     },
   },

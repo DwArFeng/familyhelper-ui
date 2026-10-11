@@ -30,6 +30,7 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () =>
@@ -49,6 +50,11 @@ const compregSettings: ComponentSetting[] = [
           '当你看到这个页面的时候，意味着 router.component.key 没有被正确配置',
         ),
       ),
+      elementPlusEngineering: Promise.resolve(
+        elementPlusPlaceholder(
+          '当你看到这个页面的时候，意味着 router.component.key 没有被正确配置',
+        ),
+      ),
     },
   },
   {
@@ -59,12 +65,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
     },
   },
@@ -76,12 +85,15 @@ const compregSettings: ComponentSetting[] = [
       '': { src: 'http://info.cern.ch/' },
       comvisual: { src: 'http://info.cern.ch/' },
       elementPlus: { src: 'http://info.cern.ch/' },
+      elementPlusEngineering: { src: 'http://info.cern.ch/' },
     },
     component: {
       '': () => import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
       comvisual: () =>
         import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/miscellaneous/externalLink/ExternalLink.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/miscellaneous/externalLink/ExternalLink.vue'),
     },
   },
@@ -93,11 +105,13 @@ const compregSettings: ComponentSetting[] = [
       '': { content: '这是一段测试文本' },
       comvisual: { content: '这是一段测试文本' },
       elementPlus: { content: '这是一段测试文本' },
+      elementPlusEngineering: { content: '这是一段测试文本' },
     },
     component: {
       '': () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
       comvisual: () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/miscellaneous/text/Text.vue'),
+      elementPlusEngineering: () => import('@/views/nodes/elementPlus/miscellaneous/text/Text.vue'),
     },
   },
 ]

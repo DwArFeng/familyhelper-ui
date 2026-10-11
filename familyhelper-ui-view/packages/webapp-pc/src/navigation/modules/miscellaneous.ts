@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '杂项',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.miscellaneous',
+      },
     },
   },
   {
@@ -48,6 +51,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '文件编辑器',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.miscellaneous.file_editor',
       },
     },
     menu: {
@@ -82,6 +88,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '外链',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.miscellaneous.external_link',
+      },
     },
     menu: {
       shown: true,
@@ -114,6 +123,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '文本',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.miscellaneous.text',
       },
     },
     menu: {

@@ -27,6 +27,7 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () =>
@@ -34,6 +35,8 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () =>
         import('@/views/nodes/comvisual/developerTools/visualizerSettings/VisualizerSettings.vue'),
       elementPlus: () =>
+        import('@/views/nodes/comvisual/developerTools/visualizerSettings/VisualizerSettings.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/comvisual/developerTools/visualizerSettings/VisualizerSettings.vue'),
     },
   },
@@ -45,11 +48,14 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => import('@/views/nodes/comvisual/developerTools/navigation/Navigation.vue'),
       comvisual: () => import('@/views/nodes/comvisual/developerTools/navigation/Navigation.vue'),
       elementPlus: () => import('@/views/nodes/comvisual/developerTools/navigation/Navigation.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/comvisual/developerTools/navigation/Navigation.vue'),
     },
   },
   {
@@ -60,6 +66,7 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () =>
@@ -67,6 +74,8 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () =>
         import('@/views/nodes/comvisual/developerTools/navigationSettings/NavigationSettings.vue'),
       elementPlus: () =>
+        import('@/views/nodes/comvisual/developerTools/navigationSettings/NavigationSettings.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/comvisual/developerTools/navigationSettings/NavigationSettings.vue'),
     },
   },
@@ -78,6 +87,7 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () =>
@@ -85,6 +95,8 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () =>
         import('@/views/nodes/comvisual/developerTools/visualizerSupport/VisualizerSupport.vue'),
       elementPlus: () =>
+        import('@/views/nodes/comvisual/developerTools/visualizerSupport/VisualizerSupport.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/comvisual/developerTools/visualizerSupport/VisualizerSupport.vue'),
     },
   },
@@ -96,12 +108,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => import('@/views/nodes/comvisual/developerTools/compregSupport/CompregSupport.vue'),
       comvisual: () =>
         import('@/views/nodes/comvisual/developerTools/compregSupport/CompregSupport.vue'),
       elementPlus: () =>
+        import('@/views/nodes/comvisual/developerTools/compregSupport/CompregSupport.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/comvisual/developerTools/compregSupport/CompregSupport.vue'),
     },
   },

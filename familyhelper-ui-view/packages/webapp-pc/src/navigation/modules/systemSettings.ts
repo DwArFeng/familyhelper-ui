@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '系统设置',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '账户管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings.account',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '账户安全',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings.account_security',
+      },
     },
     menu: {
       shown: true,
@@ -129,6 +138,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '角色管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings.role',
       },
     },
     menu: {
@@ -167,6 +179,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '权限作用域管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings.permission_scope',
+      },
     },
     menu: {
       shown: true,
@@ -203,6 +218,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '权限分组管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings.permission_group',
       },
     },
     menu: {
@@ -241,6 +259,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '权限节点管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings.permission_node',
+      },
     },
     menu: {
       shown: true,
@@ -278,6 +299,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '账户保护器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings.account_protector_support',
+      },
     },
     menu: {
       shown: true,
@@ -314,6 +338,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '权限过滤器支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.system_settings.permission_filter_support',
       },
     },
     menu: {

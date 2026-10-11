@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '日常生活',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.life',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '个人最佳集合',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.life.pb_set',
       },
     },
     menu: {
@@ -92,6 +98,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '个人最佳管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.life.pb_management',
       },
     },
     menu: {

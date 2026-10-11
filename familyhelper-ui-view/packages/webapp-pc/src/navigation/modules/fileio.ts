@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '文件IO',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '导入设置',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.import_task_setting',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '导出设置',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.export_task_setting',
+      },
     },
     menu: {
       shown: true,
@@ -129,6 +138,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '导入任务',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.import_task',
       },
     },
     menu: {
@@ -167,6 +179,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '导出任务',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.export_task',
+      },
     },
     menu: {
       shown: true,
@@ -203,6 +218,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '我的导入任务',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.my_import_task',
       },
     },
     menu: {
@@ -241,6 +259,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '我的导出任务',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.my_export_task',
+      },
     },
     menu: {
       shown: true,
@@ -277,6 +298,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '导入器支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.importer_support',
       },
     },
     menu: {
@@ -315,6 +339,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '导出器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.exporter_support',
+      },
     },
     menu: {
       shown: true,
@@ -351,6 +378,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '读取器支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.reader_support',
       },
     },
     menu: {
@@ -389,6 +419,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '写入器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.writer_support',
+      },
     },
     menu: {
       shown: true,
@@ -425,6 +458,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '导出任务面板',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.fileio.export_task_panel',
       },
     },
     menu: {

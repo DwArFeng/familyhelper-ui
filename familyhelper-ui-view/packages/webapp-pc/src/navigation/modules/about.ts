@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '关于',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.about',
+      },
     },
     menu: {
       shown: true,

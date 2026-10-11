@@ -1,0 +1,734 @@
+<template>
+  <div class="ez-nav-container" ref="rootRef">
+    <div class="router-link-container-wrapper">
+      <div class="loading" v-if="navigationStore.ezNavLoading > 0">
+        <span>{{ t('library.element_plus_engineering.ez_nav.loading.message') }}</span>
+        <div class="deep-clean-panel">
+          <span>{{ t('library.element_plus_engineering.ez_nav.loading.failed') }}</span>
+          <span class="span-link" @click="deepCleanWithoutPrompt">{{
+            t('library.element_plus_engineering.ez_nav.loading.click_here')
+          }}</span>
+          <span>{{ t('library.element_plus_engineering.ez_nav.loading.deep_clean') }}</span>
+        </div>
+      </div>
+      <div class="router-link-container" v-else>
+        <div
+          class="ez-nav-item"
+          ref="routerLinkRef"
+          :class="navigationStore.isCurrentNode(node.key) ? 'active' : ''"
+          v-for="node in navigationStore.ezNavNodes"
+          :key="node.key"
+          @click="handleNavigation(node.key)"
+          @contextmenu.prevent="openMenu(node.key, $event)"
+        >
+          <el-icon
+            class="prefix-icon"
+            v-if="navigationStore.ezNavAnnotation(node.key) === 'affix'"
+            :size="12"
+          >
+            <lock-icon />
+          </el-icon>
+          <el-icon
+            class="prefix-icon"
+            v-if="navigationStore.ezNavAnnotation(node.key) === 'pinned'"
+            :size="12"
+          >
+            <link-icon />
+          </el-icon>
+          <span>{{ parseLabel(node.display, t) }}</span>
+          <el-icon
+            class="close-icon"
+            v-if="navigationStore.ezNavAnnotation(node.key) === 'active'"
+            :size="12"
+            @click.stop="handleRemove(node.key)"
+          >
+            <close-icon />
+          </el-icon>
+        </div>
+      </div>
+    </div>
+    <ul
+      v-if="contextmenu.visible"
+      ref="contextmenuRef"
+      class="contextmenu"
+      tabindex="0"
+      :style="{ left: contextmenu.left + 'px', top: contextmenu.top + 'px' }"
+      @blur="closeMenu"
+    >
+      <li
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'active'"
+        @click="handlePinContextMenuItemClicked"
+      >
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.pin') }}
+      </li>
+      <li
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'pinned'"
+        @click="handleUnpinContextMenuItemClicked"
+      >
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.unpin') }}
+      </li>
+      <li
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'pinned'"
+        @click="handleUnpinAndCloseContextMenuItemClicked"
+      >
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.unpin_and_close') }}
+      </li>
+      <li
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'active'"
+        @click="handleRemoveNodeKeyContextMenuItemClicked"
+      >
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.close') }}
+      </li>
+      <li
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'active'"
+        @click="handleClearOtherContextMenuItemClicked"
+      >
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.close_others') }}
+      </li>
+      <li
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) === 'active'"
+        @click="handleClearActiveContextMenuItemClicked"
+      >
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.close_all') }}
+      </li>
+      <li
+        v-if="navigationStore.ezNavAnnotation(contextmenu.nodeKey) !== 'affix'"
+        @click="handleShowEditDialogContextMenuItemClicked"
+      >
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.reorder') }}
+      </li>
+      <li @click="handleNavigationContextMenuItemClicked">
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.navigate') }}
+      </li>
+      <li
+        v-if="lnpStore.hasPermission('action.eznav.pc.deep_clean')"
+        @click="handleDeepCleanContextMenuItemClicked"
+      >
+        {{ t('library.element_plus_engineering.ez_nav.context_menu.deep_clean') }}
+      </li>
+    </ul>
+    <div v-if="contextmenu.visible" class="contextmenu-modal" />
+    <el-dialog
+      class="edit-dialog-container"
+      ref="dialog"
+      tabindex="0"
+      append-to-body
+      destroy-on-close
+      :title="t('library.element_plus_engineering.ez_nav.editor.title')"
+      top="6vh"
+      width="40%"
+      v-model="editDialogVisible"
+      :close-on-click-modal="false"
+      @keydown="handleEditDialogHotKeyDown"
+    >
+      <template #default>
+        <div class="editor-container">
+          <div class="editor-column">
+            <span class="editor-title">{{
+              t('library.element_plus_engineering.ez_nav.editor.pinned')
+            }}</span>
+            <draggable-component
+              class="editor-dragger"
+              item-key="key"
+              :list="editorDialogPinnedNodes"
+              :group="{ name: 'nav' }"
+            >
+              <!--suppress VueUnrecognizedSlot -->
+              <template v-slot:item="{ element, index }">
+                <div class="editor-nav-item" :key="element.key">
+                  <editor-nav-bar
+                    annotation="pinned"
+                    :node="element"
+                    @onDelete="handleEditorNodeDelete('pinned', index)"
+                  />
+                </div>
+              </template>
+            </draggable-component>
+          </div>
+          <div class="editor-column">
+            <span class="editor-title">{{
+              t('library.element_plus_engineering.ez_nav.editor.active')
+            }}</span>
+            <draggable-component
+              class="editor-dragger"
+              item-key="key"
+              :list="editorDialogActiveNodes"
+              :group="{ name: 'nav' }"
+            >
+              <!--suppress VueUnrecognizedSlot -->
+              <template v-slot:item="{ element, index }">
+                <div class="editor-nav-item" :key="element.key">
+                  <editor-nav-bar
+                    annotation="active"
+                    :node="element"
+                    @onDelete="handleEditorNodeDelete('active', index)"
+                  />
+                </div>
+              </template>
+            </draggable-component>
+          </div>
+        </div>
+      </template>
+      <template #footer>
+        <div class="footer-container">
+          <el-button type="primary" @click="handleEditorConfirm">
+            {{ t('library.element_plus_engineering.common.confirm') }}
+          </el-button>
+          <el-button @click="editDialogVisible = false">
+            {{ t('library.element_plus_engineering.common.cancel') }}
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
+  </div>
+</template>
+
+<script setup lang="ts">
+import vim from '@/vim'
+
+import { type NavigationStore } from '@/store/modules/navigation.ts'
+import { type NodeInfo } from '@/navigation/types.ts'
+import { type LnpStore } from '@/store/modules/lnp.ts'
+
+import { nextTick, onMounted, onUnmounted, ref } from 'vue'
+
+import { useI18n } from 'vue-i18n'
+
+import { type RouteLocationRaw } from 'vue-router'
+
+import { ElMessageBox } from 'element-plus'
+
+import { Close as CloseIcon, Link as LinkIcon, Lock as LockIcon } from '@element-plus/icons-vue'
+
+import DraggableComponent from 'vuedraggable'
+
+import { parseLabel } from '@/library/modules/elementPlusEngineering/util/display.ts'
+
+import EditorNavBar from './EditorNavBar.vue'
+
+defineOptions({
+  name: 'EzNavView',
+})
+
+// region I18n 引入
+
+const { t } = useI18n()
+
+// endregion
+
+// region Store 引入
+
+const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore>('navigation')
+const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
+
+// endregion
+
+// region 急救操作
+
+function deepCleanWithoutPrompt(): void {
+  Promise.resolve()
+    .then(() => navigationStore.clearAllEzNavNodes())
+    .then(() => {
+      vim.ctx().router().vueRouter().push({ name: 'vim.layout' })
+    })
+    .catch(() => {})
+}
+
+// endregion
+
+// region Router Link 常规操作
+
+// 导航处理。
+function handleNavigation(nodeKey: string): void {
+  const { params, query } = navigationStore.ezNavNodeMeta(nodeKey) ?? { params: {}, query: {} }
+  const location = { name: nodeKey, params, query } as RouteLocationRaw
+  vim.ctx().router().vueRouter().push(location)
+}
+
+// 删除处理。
+function handleRemove(nodeKey: string): void {
+  // 在导航栏中删除 nodeKey。
+  navigationStore.removeEzNavNode(nodeKey)
+
+  // 获取 nodeKey 对应的元数据，分析关闭行为。
+  const nodeInfo: NodeInfo | null = navigationStore.getNodeInfo(nodeKey)
+  if (!nodeInfo) {
+    throw new Error('不应该执行到此处，请联系开发人员')
+  }
+  const closedActionType: string = nodeInfo.ezNav.closedBehavior?.type ?? 'none'
+
+  // 根据不同的行为执行不同的退出动作。
+  navigationStore.incrementEzNavBacking()
+  switch (closedActionType) {
+    case 'back':
+      handleCloseBack(nodeKey)
+      break
+    case 'default':
+      handleCloseDefault()
+      break
+    case 'none':
+    default:
+      break
+  }
+  navigationStore.decrementEzNavBacking()
+}
+
+function handleCloseBack(nodeKey: string): void {
+  const backNodeKey: string = navigationStore.ezNavNodeBack(nodeKey) ?? ''
+  const { params, query } = navigationStore.ezNavNodeMeta(backNodeKey) ?? { params: {}, query: {} }
+  const location = { name: backNodeKey, params, query } as RouteLocationRaw
+  vim.ctx().router().vueRouter().push(location)
+}
+
+function handleCloseDefault(): void {
+  vim.ctx().router().vueRouter().push({ name: vim.ctx().navigation().setting.defaultNodeKey })
+}
+
+// endregion
+
+// region Router Link 菜单操作
+
+type ContextMenu = {
+  visible: boolean
+  left: number
+  top: number
+  nodeKey: string
+}
+
+const contextmenu = ref<ContextMenu>({
+  visible: false,
+  left: 0,
+  top: 0,
+  nodeKey: '',
+})
+
+const contextmenuRef = ref()
+const routerLinkRef = ref()
+const rootRef = ref()
+
+// 打开菜单。
+function openMenu(nodeKey: string, e: MouseEvent): void {
+  contextmenu.value.nodeKey = nodeKey
+
+  const menuMinWidth: number = 120
+  const boundingClientRect = rootRef.value.getBoundingClientRect()
+  const offsetLeft = boundingClientRect.left
+  const offsetWidth = rootRef.value.offsetWidth
+  const maxLeft = offsetWidth - menuMinWidth // left boundary
+  const left = e.clientX - offsetLeft + 15 // 15: margin right
+
+  if (left > maxLeft) {
+    contextmenu.value.left = maxLeft
+  } else {
+    contextmenu.value.left = left
+  }
+
+  const offsetTop = boundingClientRect.top // container margin left
+  contextmenu.value.top = e.clientY - offsetTop
+
+  contextmenu.value.visible = true
+
+  nextTick(() => {
+    contextmenuRef.value.focus()
+  })
+}
+
+function closeMenu(): void {
+  contextmenu.value.visible = false
+}
+
+function handlePinContextMenuItemClicked(): void {
+  closeMenu()
+  navigationStore.pinEzNavNode(contextmenu.value.nodeKey)
+}
+
+function handleUnpinContextMenuItemClicked(): void {
+  closeMenu()
+  navigationStore.unpinEzNavNode(contextmenu.value.nodeKey)
+}
+
+function handleUnpinAndCloseContextMenuItemClicked(): void {
+  closeMenu()
+  navigationStore.unpinEzNavNode(contextmenu.value.nodeKey)
+  navigationStore.removeEzNavNode(contextmenu.value.nodeKey)
+}
+
+function handleRemoveNodeKeyContextMenuItemClicked(): void {
+  closeMenu()
+  navigationStore.removeEzNavNode(contextmenu.value.nodeKey)
+}
+
+function handleClearOtherContextMenuItemClicked(): void {
+  closeMenu()
+  navigationStore.clearActiveEzNavNodes()
+  navigationStore.pushEzNavByNodeKey(contextmenu.value.nodeKey)
+}
+
+function handleClearActiveContextMenuItemClicked(): void {
+  closeMenu()
+  navigationStore.clearActiveEzNavNodes()
+}
+
+function handleShowEditDialogContextMenuItemClicked(): void {
+  closeMenu()
+  handleShowEditDialog()
+}
+
+// endregion
+
+// region 编辑对话框
+
+const editDialogVisible = ref<boolean>(false)
+const editorDialogPinnedNodes = ref<NodeInfo[]>([])
+const editorDialogActiveNodes = ref<NodeInfo[]>([])
+
+function handleShowEditDialog(): void {
+  // 数据初始化。
+  editorDialogPinnedNodes.value = []
+  editorDialogActiveNodes.value = []
+  navigationStore.ezNavPinnedNodeKeys.forEach((key) => {
+    const mayNode: NodeInfo | null = navigationStore.getNodeInfo(key)
+    if (mayNode) {
+      editorDialogPinnedNodes.value.push(mayNode)
+    }
+  })
+  navigationStore.ezNavActiveNodeKeys.forEach((key) => {
+    const mayNode: NodeInfo | null = navigationStore.getNodeInfo(key)
+    if (mayNode) {
+      editorDialogActiveNodes.value.push(mayNode)
+    }
+  })
+  // 显示对话框。
+  editDialogVisible.value = true
+}
+
+function handleDeepCleanContextMenuItemClicked(): void {
+  closeMenu()
+  deepClean()
+}
+
+function handleNavigationContextMenuItemClicked(): void {
+  closeMenu()
+  handleNavigation(contextmenu.value.nodeKey)
+}
+
+function handleEditorConfirm(): void {
+  navigationStore.setEzNavPinnedNodeKeys(editorDialogPinnedNodes.value.map((node) => node.key))
+  navigationStore.setEzNavActiveNodeKeys(editorDialogActiveNodes.value.map((node) => node.key))
+  editDialogVisible.value = false
+}
+
+function handleEditDialogHotKeyDown(event: KeyboardEvent): void {
+  if (!editDialogVisible.value) {
+    return
+  }
+  if (event.key === 'Enter' && !event.shiftKey && !event.altKey) {
+    handleEditorConfirm()
+  }
+}
+
+function handleEditorNodeDelete(annotation: string, index: number): void {
+  if (annotation === 'pinned') {
+    editorDialogPinnedNodes.value.splice(index, 1)
+  } else {
+    editorDialogActiveNodes.value.splice(index, 1)
+  }
+}
+
+// 深度清理。
+function deepClean(): void {
+  ElMessageBox.confirm(
+    t('library.element_plus_engineering.ez_nav.deep_clean.confirm_message'),
+    t('library.element_plus_engineering.ez_nav.deep_clean.confirm_title'),
+    {
+      confirmButtonText: t('library.element_plus_engineering.common.confirm'),
+      cancelButtonText: t('library.element_plus_engineering.common.cancel'),
+      dangerouslyUseHTMLString: true,
+      customClass: 'custom-message-box__w500',
+      type: 'warning',
+    },
+  )
+    .then(() => navigationStore.clearAllEzNavNodes())
+    .then(() => {
+      vim.ctx().router().vueRouter().push({ name: 'vim.layout' })
+    })
+    .catch(() => {})
+}
+
+// 添加快捷键监听。
+function addHotKeyListener(): void {
+  document.body.addEventListener('keydown', handleHotKeyDown)
+}
+
+function removeHotKeyListener(): void {
+  document.body.removeEventListener('keydown', handleHotKeyDown)
+}
+
+function handleHotKeyDown($event: KeyboardEvent): void {
+  // ctrl + alt + leftArrow
+  if ($event.key === 'ArrowLeft' && $event.ctrlKey && $event.altKey) {
+    mayBackward()
+  }
+  // ctrl + alt + rightArrow
+  if ($event.key === 'ArrowRight' && $event.ctrlKey && $event.altKey) {
+    mayForward()
+  }
+}
+
+function mayBackward(): void {
+  if (navigationStore.ezNavLoading > 0) {
+    return
+  }
+  if (navigationStore.ezNavLoading > 0) {
+    return
+  }
+  const index = currentIndex()
+  if (index < 0) {
+    return
+  }
+  if (index === 0) {
+    return
+  }
+  jumpToIndex(index - 1)
+}
+
+function mayForward(): void {
+  if (navigationStore.ezNavLoading > 0) {
+    return
+  }
+  if (navigationStore.ezNavLoading > 0) {
+    return
+  }
+  const index = currentIndex()
+  if (index < 0) {
+    return
+  }
+  if (index === navigationStore.ezNavNodes.length - 1) {
+    return
+  }
+  jumpToIndex(index + 1)
+}
+
+function currentIndex(): number {
+  const nodeKeys: string[] = navigationStore.ezNavNodes.map((node) => node.key)
+  return nodeKeys.indexOf(navigationStore.currentNodeKey)
+}
+
+function jumpToIndex(index: number): void {
+  const nodeKey: string = navigationStore.ezNavNodes[index].key
+  const { params, query } = navigationStore.ezNavNodeMeta(nodeKey) ?? { params: {}, query: {} }
+  const location = { name: nodeKey, params, query } as RouteLocationRaw
+  vim.ctx().router().vueRouter().push(location)
+}
+
+onMounted(() => {
+  addHotKeyListener()
+})
+
+onUnmounted(() => {
+  removeHotKeyListener()
+})
+
+// endregion
+</script>
+
+<style scoped>
+.ez-nav-container {
+  height: fit-content;
+  width: 100%;
+  background: #fff;
+  position: relative;
+}
+
+.router-link-container-wrapper {
+  width: 100%;
+  min-height: 32px;
+}
+
+.router-link-container-wrapper .loading {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 14px;
+  padding: 1px 0;
+  line-height: 30px;
+  font-size: 14px;
+  user-select: none;
+}
+
+.router-link-container-wrapper .loading .deep-clean-panel {
+  display: inline-block;
+}
+
+.router-link-container-wrapper .loading .deep-clean-panel .span-link {
+  color: var(--el-color-primary);
+  cursor: pointer;
+  margin: 0 4px;
+}
+
+.router-link-container-wrapper .loading .deep-clean-panel .span-link:hover {
+  text-decoration: underline;
+}
+
+.router-link-container {
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-end;
+  box-sizing: border-box;
+  margin: 0 14px;
+  padding: 1px 0;
+}
+
+.ez-nav-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  height: 26px;
+  line-height: 26px;
+  border: 1px solid #d8dce5;
+  color: #495060;
+  background: #fff;
+  padding: 0 8px;
+  font-size: 12px;
+  white-space: nowrap;
+  margin: 1px 1px;
+  column-gap: 4px;
+}
+
+/*noinspection CssUnusedSymbol*/
+.ez-nav-item.active {
+  background-color: #42b983;
+  color: #fff;
+  border-color: #42b983;
+}
+
+/*noinspection CssUnusedSymbol*/
+.ez-nav-item span {
+  user-select: none;
+}
+
+.prefix-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: 2px;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.prefix-icon:before {
+  display: inline-block;
+  vertical-align: -3px;
+}
+
+.close-icon {
+  width: 14px;
+  height: 14px;
+  vertical-align: 2px;
+  border-radius: 50%;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transform-origin: 100% 50%;
+}
+
+.close-icon:before {
+  display: inline-block;
+  vertical-align: -3px;
+}
+
+.close-icon:hover {
+  background-color: #b4bccc;
+  color: #fff;
+}
+
+.contextmenu {
+  width: 120px;
+  min-width: 120px;
+  margin: 0;
+  background: #fff;
+  z-index: 3000;
+  position: absolute;
+  list-style-type: none;
+  padding: 5px 0;
+  border-radius: 4px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #7f7f7f;
+  font-size: 12px;
+  font-weight: 400;
+  color: #333;
+  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+.contextmenu:focus {
+  outline: none;
+}
+
+.contextmenu li {
+  margin: 0;
+  padding: 7px 16px;
+  cursor: pointer;
+}
+
+.contextmenu li:hover {
+  background: #eee;
+}
+
+.contextmenu-modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 2999;
+}
+
+/*noinspection CssUnusedSymbol*/
+.edit-dialog-container :deep(.el-dialog) {
+  margin-bottom: 0 !important;
+}
+
+.editor-container {
+  height: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.editor-column {
+  height: 100%;
+  width: 0;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-column:first-child {
+  margin-right: 15px;
+}
+
+.editor-title {
+  font-size: 16px;
+  font-family:
+    'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑',
+    Arial, sans-serif;
+  user-select: none;
+  margin-bottom: 5px;
+  padding-left: 2px;
+}
+
+.editor-dragger {
+  width: 100%;
+  height: 0;
+  flex-grow: 1;
+}
+
+.editor-nav-item:not(:first-child) {
+  margin-top: 2px;
+}
+</style>

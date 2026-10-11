@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '资金管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '账本管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management.account_book',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '银行卡类型管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management.bank_card_type_indicator',
+      },
     },
     menu: {
       shown: true,
@@ -129,6 +138,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '银行卡管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management.bank_card',
       },
     },
     menu: {
@@ -167,6 +179,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '余额记录',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management.balance_record',
+      },
     },
     menu: {
       shown: true,
@@ -203,6 +218,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '资金变更类型管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management.fund_change_type_indicator',
       },
     },
     menu: {
@@ -241,6 +259,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '资金变更记录',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management.fund_change',
+      },
     },
     menu: {
       shown: true,
@@ -278,6 +299,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '资金报告',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management.finance_report',
+      },
     },
     menu: {
       shown: true,
@@ -314,6 +338,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '提醒驱动器支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.finance_management.remind_driver_support',
       },
     },
     menu: {

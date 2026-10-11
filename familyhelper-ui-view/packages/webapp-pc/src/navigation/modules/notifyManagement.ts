@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '通知管理',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '通知接收',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.notification',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '通知设置',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.notify_setting',
+      },
     },
     menu: {
       shown: true,
@@ -129,6 +138,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '主题设置',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.topic',
       },
     },
     menu: {
@@ -167,6 +179,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '元数据指示器',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.meta_indicator',
+      },
     },
     menu: {
       shown: true,
@@ -203,6 +218,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '元数据管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.meta',
       },
     },
     menu: {
@@ -241,6 +259,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '发送器设置',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.sender_info',
+      },
     },
     menu: {
       shown: true,
@@ -277,6 +298,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '通知历史',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.notify_history',
       },
     },
     menu: {
@@ -315,6 +339,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '路由器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.router_support',
+      },
     },
     menu: {
       shown: true,
@@ -352,6 +379,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '调度器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.dispatcher_support',
+      },
     },
     menu: {
       shown: true,
@@ -388,6 +418,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '发送器支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.notify_management.sender_support',
       },
     },
     menu: {

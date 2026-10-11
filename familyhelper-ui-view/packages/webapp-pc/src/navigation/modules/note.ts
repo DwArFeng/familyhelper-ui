@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '学习笔记',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.note',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '笔记本',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.note.note_book',
       },
     },
     menu: {
@@ -92,6 +98,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '笔记管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.note.note_management',
       },
     },
     menu: {

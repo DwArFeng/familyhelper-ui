@@ -29,12 +29,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
     },
   },
@@ -46,12 +49,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
     },
   },
@@ -63,12 +69,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
     },
   },
@@ -80,12 +89,15 @@ const compregSettings: ComponentSetting[] = [
       '': {},
       comvisual: {},
       elementPlus: {},
+      elementPlusEngineering: {},
     },
     component: {
       '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
+        import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+      elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
     },
   },

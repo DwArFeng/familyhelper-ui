@@ -33,6 +33,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '逻辑引擎',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.logic_engine',
+      },
     },
     menu: {
       shown: true,
@@ -55,6 +58,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '部件设置',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.logic_engine.section',
       },
     },
     menu: {
@@ -93,6 +99,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '任务',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.logic_engine.task',
+      },
     },
     menu: {
       shown: true,
@@ -129,6 +138,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '驱动器支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.logic_engine.driver_support',
       },
     },
     menu: {
@@ -167,6 +179,9 @@ const nodeSettings: NodeSetting[] = [
       elementPlus: {
         label: '执行器支持',
       },
+      elementPlusEngineering: {
+        messageKey: 'navigation.logic_engine.performer_support',
+      },
     },
     menu: {
       shown: true,
@@ -203,6 +218,9 @@ const nodeSettings: NodeSetting[] = [
       },
       elementPlus: {
         label: '守卫器支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.logic_engine.guarder_support',
       },
     },
     menu: {
