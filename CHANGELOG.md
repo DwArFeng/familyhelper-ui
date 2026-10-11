@@ -4,6 +4,30 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件实现 `elementPlusEngineering` 可视化器页面，及其国际化功能。
+  - 实现 `components/elementPlusEngineering/avatar/avatarPanel/AvatarPanel.vue` 组件。
+  - 实现 `components/elementPlusEngineering/card/cardPanel/CardPanel.vue` 组件。
+  - 实现 `components/elementPlusEngineering/dialog/floatyDialog/FloatyDialog.vue` 组件。
+  - 实现 `components/elementPlusEngineering/dialog/maintainDialog/MaintainDialog.vue` 组件。
+  - 实现 `components/elementPlusEngineering/file/fileCreateDialog/FileCreateDialog.vue` 组件。
+  - 实现 `components/elementPlusEngineering/file/fileSelector/FileSelector.vue` 组件。
+  - 实现 `components/elementPlusEngineering/file/fileUploadDialog/FileUploadDialog.vue` 组件。
+  - 实现 `components/elementPlusEngineering/image/imageCropper/ImageCropper.vue` 组件。
+  - 实现 `components/elementPlusEngineering/image/imageSelectCropDialog/ImageSelectCropDialog.vue` 组件。
+  - 实现 `components/elementPlusEngineering/layout/borderLayoutPanel/BorderLayoutPanel.vue` 组件。
+  - 实现 `components/elementPlusEngineering/layout/headerLayoutPanel/HeaderLayoutPanel.vue` 组件。
+  - 实现 `components/elementPlusEngineering/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue` 组件。
+  - 实现 `components/elementPlusEngineering/table/draggableTablePanel/DraggableTablePanel.vue` 组件。
+  - 实现 `components/elementPlusEngineering/table/tablePanel/TablePanel.vue` 组件。
+  - 实现 `components/elementPlusEngineering/text/jsonEditor/JsonEditor.vue` 组件。
+  - 实现 `components/elementPlusEngineering/text/textEditor/TextEditor.vue` 组件。
+  - 实现 `components/elementPlusEngineering/text/textEditor/subEditors/JsonSubEditor.vue` 组件。
+  - 实现 `components/elementPlusEngineering/text/textEditor/subEditors/PlainSubEditor.vue` 组件。
+  - 实现 `components/elementPlusEngineering/tree/commons/DefaultTreeDefaultSlot.vue` 组件。
+  - 实现 `components/elementPlusEngineering/tree/commons/DefaultTreeOperateAreaSlot.vue` 组件。
+  - 实现 `components/elementPlusEngineering/tree/lazySerachTreePanel/LazySearchTreePanel.vue` 组件。
+  - 实现 `components/elementPlusEngineering/tree/searchTreePanel/SearchTreePanel.vue` 组件。
+
 - `webapp-pc` 子模块实现开发者工具一级菜单。
   - 实现国际化设置二级菜单。
 
