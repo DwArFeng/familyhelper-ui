@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块功能新增。
+  - 增加 library 模块下的 `iahn` 模块项目，引入国际化功能。
+  - 增加 store 模块下的 `iahn.ts` 模块项目，实现地区与国际化内容的动态加载与持久化。
+
 - `webapp-pc` 子模块功能优化。
   - 增加 library 模块下的 `elementPlus` 模块项目，以解决潜在的 Element Plus 运行时初始化问题。
 
