@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块实现开发者工具一级菜单。
+  - 实现国际化设置二级菜单。
+
 - `webapp-pc` 子模块组件新增。
   - 组件 `components/comvisual/table/draggableTablePanel/DraggableTablePanel.vue` 新增。
   - 组件 `components/comvisual/text/textEditor/TextEditor.vue` 新增。
