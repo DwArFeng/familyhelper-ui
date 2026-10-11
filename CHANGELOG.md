@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件优化。
+  - 增加 `components/comvisual/form/nativeSelect/NativeSelect.vue` 组件的多选功能。
+
 - `webapp-pc` 子模块功能新增。
   - 增加 library 模块下的 `elementPlusEngineering` 模块项目，引入基于 Element Plus 组件库的工程化可视化方案。
   - 增加 library 模块下的 `iahn` 模块项目，引入国际化功能。
