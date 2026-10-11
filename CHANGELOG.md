@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块组件新增。
+  - 组件 `components/comvisual/table/draggableTablePanel/DraggableTablePanel.vue` 新增。
+  - 组件 `components/comvisual/text/textEditor/TextEditor.vue` 新增。
+
 - `webapp-mobile` 子模块组件优化。
   - 增加 `components/comvisual/form/nativeSelect/NativeSelect.vue` 组件的多选功能。
 
