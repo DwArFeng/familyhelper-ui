@@ -38,7 +38,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/auditManagement/auditCategory/AuditCategory.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/auditManagement/auditCategory/AuditCategory.vue'),
+        import('@/views/nodes/elementPlusEngineering/auditManagement/auditCategory/AuditCategory.vue'),
     },
   },
   {
@@ -58,7 +58,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/auditManagement/auditEntry/AuditEntry.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/auditManagement/auditEntry/AuditEntry.vue'),
+        import('@/views/nodes/elementPlusEngineering/auditManagement/auditEntry/AuditEntry.vue'),
     },
   },
   {
@@ -78,7 +78,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/auditManagement/inspection/Inspection.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/auditManagement/inspection/Inspection.vue'),
+        import('@/views/nodes/elementPlusEngineering/auditManagement/inspection/Inspection.vue'),
     },
   },
   {
@@ -98,7 +98,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/auditManagement/inspectionTask/InspectionTask.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/auditManagement/inspectionTask/InspectionTask.vue'),
+        import('@/views/nodes/elementPlusEngineering/auditManagement/inspectionTask/InspectionTask.vue'),
     },
   },
   {
@@ -118,7 +118,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/auditManagement/inspectionAlarm/InspectionAlarm.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/auditManagement/inspectionAlarm/InspectionAlarm.vue'),
+        import('@/views/nodes/elementPlusEngineering/auditManagement/inspectionAlarm/InspectionAlarm.vue'),
     },
   },
   {
@@ -138,7 +138,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/auditManagement/inspectionAlarmTypeIndicator/InspectionAlarmTypeIndicator.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/auditManagement/inspectionAlarmTypeIndicator/InspectionAlarmTypeIndicator.vue'),
+        import('@/views/nodes/elementPlusEngineering/auditManagement/inspectionAlarmTypeIndicator/InspectionAlarmTypeIndicator.vue'),
     },
   },
   {
@@ -158,7 +158,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/auditManagement/inspectorSupport/InspectorSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/auditManagement/inspectorSupport/InspectorSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/auditManagement/inspectorSupport/InspectorSupport.vue'),
     },
   },
   {
@@ -178,7 +178,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/auditManagement/inspectionDriverSupport/InspectionDriverSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/auditManagement/inspectionDriverSupport/InspectionDriverSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/auditManagement/inspectionDriverSupport/InspectionDriverSupport.vue'),
     },
   },
 ]

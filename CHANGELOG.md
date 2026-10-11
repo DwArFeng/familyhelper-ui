@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块视图实现 `elementPlusEngineering` 可视化器页面，及其国际化功能。
+  - 审计管理一级菜单。
+
 - `webapp-pc` 子模块组件实现 `elementPlusEngineering` 可视化器页面，及其国际化功能。
   - 实现 `components/elementPlusEngineering/avatar/avatarPanel/AvatarPanel.vue` 组件。
   - 实现 `components/elementPlusEngineering/card/cardPanel/CardPanel.vue` 组件。
