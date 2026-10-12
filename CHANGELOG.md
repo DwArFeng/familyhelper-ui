@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块视图实现 `elementPlusEngineering` 可视化器页面，及其国际化功能。
+  - 系统设置一级菜单。
   - 审计管理一级菜单。
 
 - `webapp-pc` 子模块组件实现 `elementPlusEngineering` 可视化器页面，及其国际化功能。

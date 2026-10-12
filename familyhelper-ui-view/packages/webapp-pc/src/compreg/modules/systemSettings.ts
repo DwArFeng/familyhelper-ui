@@ -34,7 +34,7 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () => import('@/views/nodes/comvisual/systemSettings/account/Account.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/systemSettings/account/Account.vue'),
+        import('@/views/nodes/elementPlusEngineering/systemSettings/account/Account.vue'),
     },
   },
   {
@@ -55,7 +55,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/systemSettings/accountSecurity/AccountSecurity.vue'),
+        import('@/views/nodes/elementPlusEngineering/systemSettings/accountSecurity/AccountSecurity.vue'),
     },
   },
   {
@@ -73,7 +73,7 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () => import('@/views/nodes/comvisual/systemSettings/role/Role.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/systemSettings/role/Role.vue'),
+        import('@/views/nodes/elementPlusEngineering/systemSettings/role/Role.vue'),
     },
   },
   {
@@ -94,7 +94,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionScope/PermissionScope.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/systemSettings/permissionScope/PermissionScope.vue'),
+        import('@/views/nodes/elementPlusEngineering/systemSettings/permissionScope/PermissionScope.vue'),
     },
   },
   {
@@ -115,7 +115,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/systemSettings/permissionGroup/PermissionGroup.vue'),
+        import('@/views/nodes/elementPlusEngineering/systemSettings/permissionGroup/PermissionGroup.vue'),
     },
   },
   {
@@ -135,7 +135,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/systemSettings/permissionNode/PermissionNode.vue'),
+        import('@/views/nodes/elementPlusEngineering/systemSettings/permissionNode/PermissionNode.vue'),
     },
   },
   {
@@ -156,7 +156,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/accountProtectorSupport/AccountProtectorSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/systemSettings/accountProtectorSupport/AccountProtectorSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/systemSettings/accountProtectorSupport/AccountProtectorSupport.vue'),
     },
   },
   {
@@ -177,7 +177,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/systemSettings/permissionFilterSupport/PermissionFilterSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/systemSettings/permissionFilterSupport/PermissionFilterSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/systemSettings/permissionFilterSupport/PermissionFilterSupport.vue'),
     },
   },
 ]

@@ -1,0 +1,81 @@
+<template>
+  <div class="account-container">
+    <root-border-layout-panel
+      class="border-layout-panel"
+      west-width="35%"
+      :west-visible="true"
+      :full-screen-tool-visible="false"
+      :initial-tool-dock-status="4"
+      :initial-tool-y="-200"
+    >
+      <template v-slot:west>
+        <user-list-panel ref="userListPanelRef" @onCurrentChanged="handleUserListCurrentChanged" />
+      </template>
+      <template v-slot:default>
+        <placeholder-panel
+          v-show="currentAccount === null"
+          :text="t('views.element_plus_engineering.system_settings.please_select_user')"
+        />
+        <account-edit-panel
+          v-show="currentAccount !== null"
+          :account-id="currentAccount?.key.string_id ?? ''"
+          :upsc="UPSC_ACCOUNT_EDIT_PANEL"
+          @onAccountPropertyUpdated="handleAccountPropertyUpdated"
+        />
+      </template>
+    </root-border-layout-panel>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { ref, useTemplateRef } from 'vue'
+
+import { type ComponentExposed } from 'vue-component-type-helpers'
+
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
+import RootBorderLayoutPanel from '@/components/elementPlusEngineering/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue'
+
+import { type Account } from '@dwarfeng/familyhelper-ui-component-api/src/api/system/account.ts'
+
+import UserListPanel from './subPanels/UserListPanel.vue'
+import AccountEditPanel from './subPanels/AccountEditPanel.vue'
+
+import { useI18n } from 'vue-i18n'
+
+const UPSC_ACCOUNT_EDIT_PANEL = 'ui_preference.pc.system_settings.account.account_edit_panel'
+
+defineOptions({
+  name: 'AccountComponent',
+})
+
+// region I18n 引入
+
+const { t } = useI18n()
+
+// endregion
+// region 用户列表当前选中
+
+const currentAccount = ref<Account | null>(null)
+const userListPanelRef = useTemplateRef<ComponentExposed<typeof UserListPanel>>('userListPanelRef')
+
+function handleUserListCurrentChanged(account: Account | null): void {
+  currentAccount.value = account
+}
+
+// endregion
+
+// region 账户属性更新
+
+function handleAccountPropertyUpdated(): void {
+  userListPanelRef.value?.refresh()
+}
+
+// endregion
+</script>
+
+<style scoped>
+.account-container {
+  width: 100%;
+  height: 100%;
+}
+</style>
