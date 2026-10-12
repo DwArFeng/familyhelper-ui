@@ -38,7 +38,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/settingrepo/settingCategory/SettingCategory.vue'),
+        import('@/views/nodes/elementPlusEngineering/settingrepo/settingCategory/SettingCategory.vue'),
     },
   },
   {
@@ -58,7 +58,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/settingrepo/settingNode/SettingNode.vue'),
+        import('@/views/nodes/elementPlusEngineering/settingrepo/settingNode/SettingNode.vue'),
     },
   },
   {
@@ -78,7 +78,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/settingrepo/formatterSupport/FormatterSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/settingrepo/formatterSupport/FormatterSupport.vue'),
     },
   },
   {
@@ -98,7 +98,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
+        import('@/views/nodes/elementPlusEngineering/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
     },
   },
 ]
