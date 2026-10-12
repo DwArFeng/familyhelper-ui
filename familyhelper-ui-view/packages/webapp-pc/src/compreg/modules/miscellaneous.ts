@@ -72,7 +72,7 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () =>
-        import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
+        import('@/views/nodes/elementPlusEngineering/miscellaneous/fileEditor/FileEditor.vue'),
       elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/miscellaneous/fileEditor/FileEditor.vue'),
     },
@@ -92,7 +92,7 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () =>
         import('@/views/nodes/comvisual/miscellaneous/externalLink/ExternalLink.vue'),
       elementPlus: () =>
-        import('@/views/nodes/elementPlus/miscellaneous/externalLink/ExternalLink.vue'),
+        import('@/views/nodes/elementPlusEngineering/miscellaneous/externalLink/ExternalLink.vue'),
       elementPlusEngineering: () =>
         import('@/views/nodes/elementPlus/miscellaneous/externalLink/ExternalLink.vue'),
     },
@@ -111,7 +111,8 @@ const compregSettings: ComponentSetting[] = [
       '': () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
       comvisual: () => import('@/views/nodes/comvisual/miscellaneous/text/Text.vue'),
       elementPlus: () => import('@/views/nodes/elementPlus/miscellaneous/text/Text.vue'),
-      elementPlusEngineering: () => import('@/views/nodes/elementPlus/miscellaneous/text/Text.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlusEngineering/miscellaneous/text/Text.vue'),
     },
   },
 ]

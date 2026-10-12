@@ -1,0 +1,583 @@
+<template>
+  <div class="file-edit-panel-container">
+    <placeholder-panel
+      v-if="type === ''"
+      :text="t('views.element_plus_engineering.miscellaneous.specify_file_type')"
+    />
+    <placeholder-panel
+      v-else-if="id === ''"
+      :text="t('views.element_plus_engineering.miscellaneous.specify_file_id')"
+    />
+    <placeholder-panel
+      v-else-if="mode === ''"
+      :text="t('views.element_plus_engineering.miscellaneous.specify_editor_mode')"
+    />
+    <div v-else class="main-container" v-loading="loading">
+      <div class="editor-header">
+        <div class="file-indicator">
+          <component class="icon" :is="fileIndicatorIcon" />
+          <span>{{ fileName }}</span>
+        </div>
+        <div class="operate-area">
+          <el-button
+            v-if="fileIndicatorOperateButtonVisible"
+            class="commit-button"
+            type="primary"
+            @click="handleCommitButtonClicked"
+          >
+            <span class="unsaved-emphasis" v-if="fileIndicatorContentChanged" />
+            <span class="text">{{ t('views.element_plus_engineering.miscellaneous.commit') }}</span>
+          </el-button>
+          <el-button
+            v-if="fileIndicatorOperateButtonVisible"
+            type="danger"
+            @click="handleResetButtonClicked"
+          >
+            {{ t('views.element_plus_engineering.miscellaneous.reset') }}
+          </el-button>
+        </div>
+      </div>
+      <el-divider />
+      <div class="editor-body" tabindex="0" @keydown="handleHotKeyDown">
+        <placeholder-panel
+          v-if="reading"
+          :text="t('views.element_plus_engineering.miscellaneous.loading_file')"
+        />
+        <div class="sub-editor-wrapper" v-show="!reading">
+          <pdf-sub-editor
+            v-if="pdfSubEditorUsing"
+            ref="pdfSubEditorRef"
+            :base-blob="fileBaseBlob"
+            :readonly="subEditorReadonly"
+            @onContentChangeIndicatorChanged="handlePdfSubEditorContentChangeIndicatorChanged"
+          />
+          <photo-sub-editor
+            v-else-if="photoSubEditorUsing"
+            ref="photoSubEditorRef"
+            :base-blob="fileBaseBlob"
+            :readonly="subEditorReadonly"
+            @onContentChangeIndicatorChanged="handlePhotoSubEditorContentChangeIndicatorChanged"
+          />
+          <rtf-sub-editor
+            v-else-if="rtfSubEditorUsing"
+            ref="rtfSubEditor"
+            :base-blob="fileBaseBlob"
+            :readonly="subEditorReadonly"
+            @onContentChangeIndicatorChanged="handleRtfSubEditorContentChangeIndicatorChanged"
+          />
+          <txt-sub-editor
+            v-else-if="txtSubEditorUsing"
+            ref="txtSubEditor"
+            :base-blob="fileBaseBlob"
+            :readonly="subEditorReadonly"
+            @onContentChangeIndicatorChanged="handleTxtSubEditorContentChangeIndicatorChanged"
+          />
+          <placeholder-panel v-else :text="unsupportedSubEditorPlaceholderText" />
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted, ref, useTemplateRef, type VNode, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+import { ElMessage } from 'element-plus'
+
+import { useDisplayIconWithDefaults } from '@/composables/file.ts'
+
+import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
+
+import PdfSubEditor from './subEditors/pdfSubEditor/PdfSubEditor.vue'
+import PhotoSubEditor from './subEditors/photoSubEditor/PhotoSubEditor.vue'
+import RtfSubEditor from './subEditors/rtfSubEditor/RtfSubEditor.vue'
+import TxtSubEditor from './subEditors/txtSubEditor/TxtSubEditor.vue'
+
+import { parseFileExtension } from '@dwarfeng/familyhelper-ui-component-util/src/util/file.ts'
+
+import { type EditInfo } from '@/util/file.ts'
+import { getEditInfo } from '@/util/file.ts'
+
+import { type FileEditMode, type FileEditType } from './type.ts'
+import { type FileHandler, type InspectFileResult, type UpdateFileResult } from './fileHandlers.ts'
+import { fileHandler } from './fileHandlers.ts'
+
+defineOptions({
+  name: 'FileEditPanel',
+})
+
+// region Props 定义
+
+type Props = {
+  type: FileEditType
+  id: string
+  mode: FileEditMode
+}
+
+const props = defineProps<Props>()
+
+// endregion
+
+// region Emits 定义
+
+type Emits = {
+  onFileCommitted: []
+}
+
+const emit = defineEmits<Emits>()
+
+// endregion
+
+// region I18n 引入
+
+const { t } = useI18n()
+
+// endregion
+
+// region 加载逻辑
+
+const loading = ref<number>(0)
+const reading = ref<number>(0)
+
+// endregion
+
+// region 文件属性
+
+const fileName = ref<string>('')
+const fileBaseBlob = ref<Blob | null>(null)
+
+const fileExtension = computed<string>(() => {
+  return parseFileExtension(fileName.value)
+})
+
+// endregion
+
+// region 文件指示器
+
+function fileIndicatorIcon(): VNode {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  return useDisplayIconWithDefaults(indicator, { type: 'iconfont', content: '\uffe5' })
+}
+
+const fileIndicatorOperateButtonVisible = computed<boolean>(() => {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
+    return false
+  }
+  return editInfo.actionLevel === 'EDIT' && props.mode === 'EDIT'
+})
+
+const fileIndicatorContentChanged = computed<boolean>(() => {
+  // PDF。
+  if (pdfSubEditorUsing.value) {
+    return pdfSubEditorContentChangeIndicator.value
+  }
+  // PHOTO。
+  else if (photoSubEditorUsing.value) {
+    return photoSubEditorContentChangeIndicator.value
+  }
+  // RTF。
+  else if (rtfSubEditorUsing.value) {
+    return rtfSubEditorContentChangeIndicator.value
+  }
+  // TXT。
+  else if (txtSubEditorUsing.value) {
+    return txtSubEditorContentChangeIndicator.value
+  }
+  // UNKNOWN。
+  return false
+})
+
+const fileIndicatorCommitButtonWidth = computed(() => {
+  return `${fileIndicatorContentChanged.value ? 70 : 60}px`
+})
+
+function handleCommitButtonClicked(): void {
+  commitFile()
+}
+
+function handleResetButtonClicked(): void {
+  handleFileInspectSearch()
+}
+
+// endregion
+
+// region 文件查询
+
+const watchedFileProps = computed(() => {
+  return {
+    type: props.type,
+    id: props.id,
+    mode: props.mode,
+  }
+})
+watch(watchedFileProps, () => {
+  handleFileSearch()
+})
+
+function handleFileSearch(): void {
+  if (props.type === '' || props.id === '' || props.mode === '') {
+    return
+  }
+  const _fileHandler: FileHandler | null = fileHandler(props.type)
+  if (!_fileHandler) {
+    return
+  }
+  handleFileInspectSearch()
+}
+
+async function handleFileInspectSearch(): Promise<void> {
+  loading.value += 1
+  reading.value += 1
+  try {
+    const _fileHandler: FileHandler | null = fileHandler(props.type)
+    if (!_fileHandler) {
+      throw new Error(
+        t('views.element_plus_engineering.miscellaneous.unexpected_execution_contact_developer'),
+      )
+    }
+    const res: InspectFileResult | Promise<InspectFileResult> = _fileHandler.inspectFile(props.id)
+    let _inspectFileResult: InspectFileResult
+    if (res instanceof Promise) {
+      _inspectFileResult = await res
+    } else {
+      _inspectFileResult = res
+    }
+    fileName.value = _inspectFileResult.name
+    fileBaseBlob.value = _inspectFileResult.blob
+  } finally {
+    reading.value -= 1
+    loading.value -= 1
+  }
+}
+
+onMounted(() => {
+  handleFileSearch()
+})
+
+// endregion
+
+// region 子编辑器
+
+const subEditorCurrent = computed<string | null>(() => {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
+    return null
+  }
+  return editInfo.subEditor
+})
+
+const subEditorReadonly = computed<boolean>(() => {
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
+    return true
+  }
+  if (props.mode === '' || props.mode === 'INSPECT') {
+    return true
+  }
+  return !(props.mode === 'EDIT') || !(editInfo.actionLevel === 'EDIT')
+})
+
+const unsupportedSubEditorPlaceholderText = computed<string>(() => {
+  return t('views.element_plus_engineering.miscellaneous.unsupported_file_editor', {
+    extension: fileExtension.value,
+    editorType:
+      props.mode === 'INSPECT'
+        ? t('views.element_plus_engineering.miscellaneous.viewer')
+        : t('views.element_plus_engineering.miscellaneous.editor'),
+  })
+})
+
+// endregion
+
+// region PDF 子编辑器
+const pdfSubEditorContentChangeIndicator = ref<boolean>(false)
+
+const pdfSubEditorRef = useTemplateRef<InstanceType<typeof PdfSubEditor>>('pdfSubEditorRef')
+
+const pdfSubEditorUsing = computed<boolean>(() => {
+  return subEditorCurrent.value === 'PDF'
+})
+
+function handlePdfSubEditorContentChangeIndicatorChanged(value: boolean): void {
+  pdfSubEditorContentChangeIndicator.value = value
+}
+
+// endregion
+
+// region PHOTO 子编辑器
+
+const photoSubEditorContentChangeIndicator = ref<boolean>(false)
+
+const photoSubEditorRef = useTemplateRef<InstanceType<typeof PhotoSubEditor>>('photoSubEditorRef')
+
+const photoSubEditorUsing = computed<boolean>(() => {
+  return subEditorCurrent.value === 'PHOTO'
+})
+
+function handlePhotoSubEditorContentChangeIndicatorChanged(value: boolean): void {
+  photoSubEditorContentChangeIndicator.value = value
+}
+
+// endregion
+
+// region RTF 子编辑器
+
+const rtfSubEditorContentChangeIndicator = ref<boolean>(false)
+
+const rtfSubEditor = useTemplateRef<InstanceType<typeof RtfSubEditor>>('rtfSubEditor')
+
+const rtfSubEditorUsing = computed<boolean>(() => {
+  return subEditorCurrent.value === 'RTF'
+})
+
+function handleRtfSubEditorContentChangeIndicatorChanged(value: boolean): void {
+  rtfSubEditorContentChangeIndicator.value = value
+}
+
+// endregion
+
+// region TXT 子编辑器
+
+const txtSubEditorContentChangeIndicator = ref<boolean>(false)
+
+const txtSubEditor = useTemplateRef<InstanceType<typeof TxtSubEditor>>('txtSubEditor')
+
+const txtSubEditorUsing = computed<boolean>(() => {
+  return subEditorCurrent.value === 'TXT'
+})
+
+function handleTxtSubEditorContentChangeIndicatorChanged(value: boolean): void {
+  txtSubEditorContentChangeIndicator.value = value
+}
+
+// endregion
+
+// region 热键处理
+
+const hotKeyCommitColdDown = ref<boolean>(false)
+const hotKeyCommitTimeoutHandle = ref<number | null>(null)
+
+function handleHotKeyDown(event: KeyboardEvent): void {
+  if (event.ctrlKey && event.key === 's') {
+    event.preventDefault()
+    handleCommitHotKeyDown()
+  }
+}
+
+function handleCommitHotKeyDown(): void {
+  if (hotKeyCommitColdDown.value) {
+    return
+  }
+  hotKeyCommitColdDown.value = true
+  commitFile()
+  hotKeyCommitTimeoutHandle.value = setTimeout(() => {
+    hotKeyCommitColdDown.value = false
+    hotKeyCommitTimeoutHandle.value = null
+  }, 1000)
+}
+
+onUnmounted(() => {
+  if (hotKeyCommitTimeoutHandle.value !== null) {
+    clearTimeout(hotKeyCommitTimeoutHandle.value)
+  }
+})
+
+// endregion
+
+// region 文件提交
+
+function commitFile(): void {
+  if (props.type === '' || props.id === '' || props.mode === '') {
+    return
+  }
+  const indicator: unknown = parseFileExtension(fileName.value).toUpperCase()
+  const editInfo: EditInfo | null = getEditInfo(indicator)
+  if (!editInfo) {
+    return
+  }
+  if (editInfo.actionLevel !== 'EDIT') {
+    return
+  }
+  if (subEditorReadonly.value) {
+    return
+  }
+  const _fileHandler: FileHandler | null = fileHandler(props.type)
+  if (!_fileHandler) {
+    return
+  }
+  doCommitFile()
+}
+
+async function doCommitFile(): Promise<void> {
+  loading.value += 1
+  try {
+    let subEditor:
+      | InstanceType<typeof PdfSubEditor>
+      | InstanceType<typeof PhotoSubEditor>
+      | InstanceType<typeof RtfSubEditor>
+      | InstanceType<typeof TxtSubEditor>
+      | null
+    if (pdfSubEditorUsing.value) {
+      if (!pdfSubEditorRef.value) {
+        throw new Error(
+          t('views.element_plus_engineering.miscellaneous.unexpected_execution_contact_developer'),
+        )
+      }
+      subEditor = pdfSubEditorRef.value
+    } else if (photoSubEditorUsing.value) {
+      if (!photoSubEditorRef.value) {
+        throw new Error(
+          t('views.element_plus_engineering.miscellaneous.unexpected_execution_contact_developer'),
+        )
+      }
+      subEditor = photoSubEditorRef.value
+    } else if (rtfSubEditorUsing.value) {
+      if (!rtfSubEditor.value) {
+        throw new Error(
+          t('views.element_plus_engineering.miscellaneous.unexpected_execution_contact_developer'),
+        )
+      }
+      subEditor = rtfSubEditor.value
+    } else if (txtSubEditorUsing.value) {
+      if (!txtSubEditor.value) {
+        throw new Error(
+          t('views.element_plus_engineering.miscellaneous.unexpected_execution_contact_developer'),
+        )
+      }
+      subEditor = txtSubEditor.value
+    } else {
+      throw new Error(
+        t('views.element_plus_engineering.miscellaneous.unexpected_execution_contact_developer'),
+      )
+    }
+    const blobRes: Blob | Promise<Blob> = subEditor.currentContent()
+    let blob
+    if (blobRes instanceof Promise) {
+      blob = await blobRes
+    } else {
+      blob = blobRes
+    }
+    const _fileHandler: FileHandler | null = fileHandler(props.type)
+    if (!_fileHandler) {
+      throw new Error(
+        t('views.element_plus_engineering.miscellaneous.unexpected_execution_contact_developer'),
+      )
+    }
+    const resultRes: UpdateFileResult | Promise<UpdateFileResult> = _fileHandler.updateFile(
+      props.id,
+      blob,
+      fileName.value,
+    )
+    let result: UpdateFileResult
+    if (resultRes instanceof Promise) {
+      result = await resultRes
+    } else {
+      result = resultRes
+    }
+    if (result.success) {
+      ElMessage({
+        showClose: true,
+        message: result.message,
+        type: 'success',
+      })
+      subEditor.fireCurrentContentCommitted()
+      emit('onFileCommitted')
+    } else {
+      ElMessage({
+        showClose: true,
+        message: result.message,
+        type: 'error',
+      })
+    }
+  } finally {
+    loading.value -= 1
+  }
+}
+
+// endregion
+</script>
+
+<style scoped>
+.file-edit-panel-container {
+  height: 100%;
+  width: 100%;
+  background: #ffffff;
+}
+
+.main-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/*noinspection CssUnusedSymbol*/
+.main-container .el-divider {
+  margin: 5px 0;
+}
+
+.main-container .editor-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.main-container .editor-header .file-indicator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #606266;
+}
+
+.main-container .editor-header .icon {
+  height: 32px;
+  width: 32px;
+  font-size: 32px;
+  user-select: none;
+}
+
+.main-container .editor-header .operate-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.main-container .editor-header .operate-area .commit-button {
+  width: v-bind(fileIndicatorCommitButtonWidth);
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.main-container .editor-header .commit-button .unsaved-emphasis {
+  background: #fff;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  margin-left: -6px;
+}
+
+.main-container .editor-body {
+  height: 0;
+  flex-grow: 1;
+}
+
+.main-container .editor-body:focus {
+  outline: none;
+}
+
+.main-container .editor-body .sub-editor-wrapper {
+  height: 100%;
+  width: 100%;
+}
+</style>
