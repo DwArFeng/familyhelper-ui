@@ -38,7 +38,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/fileio/importTaskSetting/ImportTaskSetting.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/importTaskSetting/ImportTaskSetting.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/importTaskSetting/ImportTaskSetting.vue'),
     },
   },
   {
@@ -58,7 +58,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/fileio/exportTaskSetting/ExportTaskSetting.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/exportTaskSetting/ExportTaskSetting.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/exportTaskSetting/ExportTaskSetting.vue'),
     },
   },
   {
@@ -77,7 +77,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/importTask/ImportTask.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/importTask/ImportTask.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/importTask/ImportTask.vue'),
     },
   },
   {
@@ -96,7 +96,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/exportTask/ExportTask.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/exportTask/ExportTask.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/exportTask/ExportTask.vue'),
     },
   },
   {
@@ -115,7 +115,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/myImportTask/MyImportTask.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/myImportTask/MyImportTask.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/myImportTask/MyImportTask.vue'),
     },
   },
   {
@@ -134,7 +134,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/myExportTask/MyExportTask.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/myExportTask/MyExportTask.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/myExportTask/MyExportTask.vue'),
     },
   },
   {
@@ -154,7 +154,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/fileio/importerSupport/ImporterSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/importerSupport/ImporterSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/importerSupport/ImporterSupport.vue'),
     },
   },
   {
@@ -174,7 +174,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/fileio/exporterSupport/ExporterSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/exporterSupport/ExporterSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/exporterSupport/ExporterSupport.vue'),
     },
   },
   {
@@ -193,7 +193,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/readerSupport/ReaderSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/readerSupport/ReaderSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/readerSupport/ReaderSupport.vue'),
     },
   },
   {
@@ -212,7 +212,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/fileio/writerSupport/WriterSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/writerSupport/WriterSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/writerSupport/WriterSupport.vue'),
     },
   },
   {
@@ -232,7 +232,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/fileio/exportTaskPanel/ExportTaskPanel.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/fileio/exportTaskPanel/ExportTaskPanel.vue'),
+        import('@/views/nodes/elementPlusEngineering/fileio/exportTaskPanel/ExportTaskPanel.vue'),
     },
   },
 ]
