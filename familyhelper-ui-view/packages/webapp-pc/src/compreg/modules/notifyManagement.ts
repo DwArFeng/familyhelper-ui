@@ -38,7 +38,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notification/Notification.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/notification/Notification.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/notification/Notification.vue'),
     },
   },
   {
@@ -58,7 +58,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notifySetting/NotifySetting.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/notifySetting/NotifySetting.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/notifySetting/NotifySetting.vue'),
     },
   },
   {
@@ -77,7 +77,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/notifyManagement/topic/Topic.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/topic/Topic.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/topic/Topic.vue'),
     },
   },
   {
@@ -122,7 +122,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/notifyManagement/meta/Meta.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/meta/Meta.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/meta/Meta.vue'),
     },
   },
   {
@@ -142,7 +142,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/senderInfo/SenderInfo.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/senderInfo/SenderInfo.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/senderInfo/SenderInfo.vue'),
     },
   },
   {
@@ -162,7 +162,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/notifyHistory/NotifyHistory.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/notifyHistory/NotifyHistory.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/notifyHistory/NotifyHistory.vue'),
     },
   },
   {
@@ -182,7 +182,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/routerSupport/RouterSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/routerSupport/RouterSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/routerSupport/RouterSupport.vue'),
     },
   },
   {
@@ -202,7 +202,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/dispatcherSupport/DispatcherSupport.vue'),
     },
   },
   {
@@ -222,7 +222,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/notifyManagement/senderSupport/SenderSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/notifyManagement/senderSupport/SenderSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/notifyManagement/senderSupport/SenderSupport.vue'),
     },
   },
 ]

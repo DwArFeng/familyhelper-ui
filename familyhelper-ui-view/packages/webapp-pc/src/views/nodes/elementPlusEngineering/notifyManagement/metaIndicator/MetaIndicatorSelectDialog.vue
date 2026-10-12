@@ -1,0 +1,155 @@
+<template>
+  <el-dialog
+    class="meta-indicator-select-dialog-container"
+    v-model="watchedVisible"
+    id="dialog"
+    tabindex="0"
+    destroy-on-close
+    :title="t('views.element_plus_engineering.notify_management.select_missing_meta_items')"
+    :close-on-click-modal="false"
+    @keydown.ctrl.enter="handleHotKeyDown"
+  >
+    <div class="main-container">
+      <child-for-meta-missing-sub-panel
+        :notify-setting-id="notifySettingId"
+        :topic-id="topicId"
+        :account-id="accountId"
+        @onSelectionChanged="handleSelectionChanged"
+      />
+    </div>
+    <template v-slot:footer>
+      <div class="footer-container">
+        <el-button type="primary" :disabled="loading > 0 || notConfirmable" @click="handleConfirm">
+          {{ t('views.element_plus_engineering.notify_management.confirmation') }}
+        </el-button>
+        <el-button :disabled="loading > 0" @click="watchedVisible = false">
+          {{ t('views.element_plus_engineering.notify_management.cancel') }}</el-button
+        >
+      </div>
+    </template>
+  </el-dialog>
+</template>
+
+<script setup lang="ts">
+import { computed, onMounted, ref, watch } from 'vue'
+
+import ChildForMetaMissingSubPanel from './subPanels/ChildForMetaMissingSubPanel.vue'
+
+import { type MetaIndicator } from '@dwarfeng/familyhelper-ui-component-api/src/api/notify/metaIndicator.ts'
+
+import { useI18n } from 'vue-i18n'
+
+defineOptions({
+  name: 'MetaIndicatorSelectDialog',
+})
+
+// region Props 定义
+
+type Props = {
+  visible: boolean
+  notifySettingId: string
+  topicId: string
+  accountId: string
+  mode?: 'CHILD_FOR_META_MISSING'
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  mode: 'CHILD_FOR_META_MISSING',
+})
+
+// endregion
+
+// region Emits 定义
+
+type Emits = {
+  (e: 'update:visible', value: boolean): void
+  (e: 'onConfirmed', selection: MetaIndicator[]): void
+}
+
+const emit = defineEmits<Emits>()
+
+// endregion
+
+// region I18n 引入
+
+const { t } = useI18n()
+
+// endregion
+
+// region 加载逻辑
+
+const loading = ref<number>(0)
+
+// endregion
+
+// region 可见性处理
+
+const watchedVisible = ref(props.visible)
+
+watch(
+  () => props.visible,
+  (value) => {
+    watchedVisible.value = value
+  },
+)
+
+watch(
+  () => watchedVisible.value,
+  (value) => {
+    emit('update:visible', value)
+  },
+)
+
+onMounted(() => {
+  watchedVisible.value = props.visible
+})
+
+// endregion
+
+// region 选区逻辑
+
+const selection = ref<MetaIndicator[]>([])
+
+function handleSelectionChanged(value: MetaIndicator[]): void {
+  selection.value = value
+}
+
+// endregion
+
+// region 确认逻辑
+
+const notConfirmable = computed<boolean>(() => {
+  if (props.mode === 'CHILD_FOR_META_MISSING') {
+    return selection.value.length === 0
+  }
+  return true
+})
+
+function handleHotKeyDown(): void {
+  if (notConfirmable.value) {
+    return
+  }
+  handleConfirm()
+}
+
+function handleConfirm(): void {
+  if (props.mode === 'CHILD_FOR_META_MISSING') {
+    emit('onConfirmed', selection.value)
+  }
+}
+
+// endregion
+</script>
+
+<style scoped>
+.main-container {
+  width: 100%;
+  height: 512px;
+}
+
+.footer-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+</style>
