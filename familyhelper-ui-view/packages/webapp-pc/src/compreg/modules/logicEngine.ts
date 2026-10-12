@@ -37,7 +37,7 @@ const compregSettings: ComponentSetting[] = [
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/logicEngine/section/Section.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/logicEngine/section/Section.vue'),
+        import('@/views/nodes/elementPlusEngineering/logicEngine/section/Section.vue'),
     },
   },
   {
@@ -55,7 +55,8 @@ const compregSettings: ComponentSetting[] = [
       comvisual: () =>
         Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
       elementPlus: () => import('@/views/nodes/elementPlus/logicEngine/task/Task.vue'),
-      elementPlusEngineering: () => import('@/views/nodes/elementPlus/logicEngine/task/Task.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlusEngineering/logicEngine/task/Task.vue'),
     },
   },
   {
@@ -75,7 +76,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/logicEngine/driverSupport/DriverSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/logicEngine/driverSupport/DriverSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/logicEngine/driverSupport/DriverSupport.vue'),
     },
   },
   {
@@ -95,7 +96,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/logicEngine/performerSupport/PerformerSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/logicEngine/performerSupport/PerformerSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/logicEngine/performerSupport/PerformerSupport.vue'),
     },
   },
   {
@@ -115,7 +116,7 @@ const compregSettings: ComponentSetting[] = [
       elementPlus: () =>
         import('@/views/nodes/elementPlus/logicEngine/guarderSupport/GuarderSupport.vue'),
       elementPlusEngineering: () =>
-        import('@/views/nodes/elementPlus/logicEngine/guarderSupport/GuarderSupport.vue'),
+        import('@/views/nodes/elementPlusEngineering/logicEngine/guarderSupport/GuarderSupport.vue'),
     },
   },
 ]
