@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/FamilyhelperUiViewApi.md。
+
 - 更新 README.md。
 
 - Wiki 更新。
