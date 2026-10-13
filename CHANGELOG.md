@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- 更新 README.md。
+
+- Wiki 更新。
+  - docs/wiki/zh-CN/Introduction.md。
+
 - `webapp-pc` 子模块视图实现 `elementPlusEngineering` 可视化器页面，及其国际化功能。
   - 杂项一级菜单。
   - 文件IO一级菜单。
