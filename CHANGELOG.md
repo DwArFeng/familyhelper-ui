@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `component-util` 子模块功能新增。
+  - 新增 `src/util/string.ts` 中的工具方法。
+
 - `component-iconfont` 子模块功能新增。
   - 新增 `a-huaban2fuben9`（主题，Unicode `ffc7`）图标。
 
