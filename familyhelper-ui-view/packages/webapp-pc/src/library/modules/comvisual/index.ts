@@ -34,6 +34,7 @@ function provideVisualizerSetting(): VisualizerSetting {
     exampleDisplay: { label: '菜单标签' },
     supportIahn: false,
     supportTheme: false,
+    supportCustomize: false,
     visualizer: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       notify(type: NotifyType, ...args: any[]): void {

@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块定制功能新增。
+  - 增加 library 模块 Visualizer 的 `supportCustomize` 属性，用于标识可视化方案是否支持固定产品方案定制。
+  - 新增 store 模块下的 `customize.ts`，按 Visualizer 加载远端定制方案，并保存本地覆盖。
+  - 新增 composables 模块下的 `customize.ts`，通过 `useCustomize` 提供 Composition API。
+
 - `webapp-pc` 子模块主题功能新增。
   - 增加 library 模块 Visualizer 的 `supportTheme` 属性，用于标识可视化方案是否支持主题。
   - 新增 store 模块下的 `theme.ts`，按 Visualizer 加载独立的远端主题列表并保存用户选择。

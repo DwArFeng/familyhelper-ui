@@ -65,6 +65,7 @@ function provideVisualizerSetting(): VisualizerSetting {
     },
     supportIahn: true,
     supportTheme: true,
+    supportCustomize: true,
     visualizer: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       notify(type: NotifyType, ...args: any[]): void {
