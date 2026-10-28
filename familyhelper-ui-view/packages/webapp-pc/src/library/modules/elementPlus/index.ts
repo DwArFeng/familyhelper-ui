@@ -58,6 +58,7 @@ function provideVisualizerSetting(): VisualizerSetting {
     name: 'Element Plus',
     description: '基于 Element Plus 组件库的可视化方案',
     exampleDisplay: { label: '菜单标签' },
+    supportIahn: false,
     visualizer: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       notify(type: NotifyType, ...args: any[]): void {

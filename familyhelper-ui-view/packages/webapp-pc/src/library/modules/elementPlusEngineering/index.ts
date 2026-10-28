@@ -63,6 +63,7 @@ function provideVisualizerSetting(): VisualizerSetting {
     exampleDisplay: {
       messageKey: 'library.element_plus_engineering.visualizer.example_display.label',
     },
+    supportIahn: true,
     visualizer: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       notify(type: NotifyType, ...args: any[]): void {
