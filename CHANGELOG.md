@@ -4,7 +4,8 @@
 
 ### 功能构建
 
-- (无)
+- `component-api` 子模块功能新增。
+  - 新增 `src/api/settingrepo/kvNode.ts` API 接口。
 
 ### Bug 修复
 
