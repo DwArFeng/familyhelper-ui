@@ -33,6 +33,7 @@ function provideVisualizerSetting(): VisualizerSetting {
     description: '基于原生 Web 组件的轻量可视化方案',
     exampleDisplay: { label: '菜单标签' },
     supportIahn: false,
+    supportTheme: false,
     visualizer: {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       notify(type: NotifyType, ...args: any[]): void {

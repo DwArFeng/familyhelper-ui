@@ -4,6 +4,11 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块主题功能新增。
+  - 增加 library 模块 Visualizer 的 `supportTheme` 属性，用于标识可视化方案是否支持主题。
+  - 新增 store 模块下的 `theme.ts`，按 Visualizer 加载独立的远端主题列表并保存用户选择。
+  - 新增 composables 模块下的 `theme.ts`，通过 `useTheme` 提供 Composition API。
+
 - `webapp-pc` 子模块国际化功能优化。
   - 增加 library 模块 Visualizer 的 `supportIahn` 属性，用于标识可视化方案是否支持国际化和输出国际化示例消息键。
   - 优化 store 模块下的 `iahn.ts` 模块项目的加载方式。
