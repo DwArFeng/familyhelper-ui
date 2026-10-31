@@ -247,6 +247,86 @@ const nodeSettings: NodeSetting[] = [
   },
   {
     parentKey: 'developerTools',
+    key: 'developerTools.customize',
+    index: 60,
+    display: {
+      '': {
+        label: '定制管理',
+      },
+      comvisual: {
+        label: '定制管理',
+      },
+      elementPlus: {
+        label: '定制管理',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools.customize',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'developer-tools/customize',
+      component: {
+        key: 'developerTools.customize',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.developer_tools.customize',
+    },
+  },
+  {
+    parentKey: 'developerTools',
+    key: 'developerTools.customizeSettings',
+    index: 70,
+    display: {
+      '': {
+        label: '定制设置',
+      },
+      comvisual: {
+        label: '定制设置',
+      },
+      elementPlus: {
+        label: '定制设置',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools.customize_settings',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'developer-tools/customize-settings',
+      component: {
+        key: 'developerTools.customizeSettings',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.developer_tools.customize_settings',
+    },
+  },
+  {
+    parentKey: 'developerTools',
     key: 'developerTools.visualizerSupport',
     index: 900,
     display: {
