@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `component-iconfont` 子模块功能新增。
+  - 新增 `a-huaban2fuben9`（主题，Unicode `ffc7`）图标。
+
 - `component-api` 子模块功能新增。
   - 新增 `src/api/settingrepo/kvNode.ts` API 接口。
 

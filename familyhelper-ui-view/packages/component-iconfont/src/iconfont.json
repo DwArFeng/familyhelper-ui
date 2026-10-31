@@ -6,6 +6,13 @@
   "description": "家庭帮手",
   "glyphs": [
     {
+      "icon_id": "28715065",
+      "name": "主题",
+      "font_class": "a-huaban2fuben9",
+      "unicode": "ffc7",
+      "unicode_decimal": 65479
+    },
+    {
       "icon_id": "866508",
       "name": "实心地球",
       "font_class": "shixindiqiu",
