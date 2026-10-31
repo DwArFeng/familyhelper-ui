@@ -535,18 +535,18 @@ function handleContextmenuItemDelete(item: CT, index: number): void {
 .contextmenu {
   margin: 0;
   padding: 5px 0;
-  background: #fff;
+  background: var(--element-plus-engineering-menu-background);
   z-index: 3000;
   position: fixed;
   list-style-type: none;
-  border-radius: 4px;
+  border-radius: var(--el-border-radius-base);
   border-width: 1px;
   border-style: solid;
-  border-color: #7f7f7f;
-  font-size: 12px;
+  border-color: var(--element-plus-engineering-menu-border-color);
+  font-size: var(--element-plus-engineering-font-size-small);
   font-weight: 400;
-  color: #333;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+  color: var(--element-plus-engineering-menu-text-color);
+  box-shadow: var(--element-plus-engineering-menu-shadow);
   box-sizing: border-box;
 }
 
@@ -567,7 +567,7 @@ function handleContextmenuItemDelete(item: CT, index: number): void {
 }
 
 .contextmenu :deep(li:hover) {
-  background: #eee;
+  background: var(--element-plus-engineering-menu-hover-background);
 }
 
 .contextmenu-modal {

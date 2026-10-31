@@ -4,6 +4,20 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件功能优化。
+  - 组件 `components/elementPlusEngineering/layout/rootBorderLayoutPanel/RootBorderLayoutPanel.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/tree/commons/DefaultTreeDefaultSlot.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/text/textEditor/TextEditor.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/dialog/floatyDialog/FloatyDialog.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/file/fileUploadDialog/FileUploadDialog.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/file/fileCreateDialog/FileCreateDialog.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/table/draggableTablePanel/DraggableTablePanel.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/table/tablePanel/TablePanel.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/card/cardPanel/CardPanel.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/image/imageCropper/ImageCropper.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/tree/lazySerachTreePanel/LazySearchTreePanel.vue` 应用主题变量。
+  - 组件 `components/elementPlusEngineering/tree/searchTreePanel/SearchTreePanel.vue` 应用主题变量。
+
 - `webapp-pc` 子模块 `elementPlusEngineering` 可视化器功能新增。
   - 定制功能。
   - 主题功能。

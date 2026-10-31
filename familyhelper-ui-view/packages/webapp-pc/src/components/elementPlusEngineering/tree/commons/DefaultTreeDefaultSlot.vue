@@ -36,16 +36,17 @@ defineProps<Props>()
 
 .icon-wrapper {
   margin-right: 5px;
-  font-size: 18px;
+  font-size: var(--el-font-size-large);
 }
 
+/*noinspection CssNoGenericFontName*/
 .label {
   flex: 1;
   margin-right: 20px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 14px;
-  font-family: Arial, sans-serif;
+  font-size: var(--element-plus-engineering-font-size-base);
+  font-family: var(--element-plus-engineering-font-family);
 }
 </style>

@@ -403,7 +403,7 @@ onBeforeUnmount(() => {
 }
 
 .root-border-layout-panel-container.is-fullscreen {
-  background-color: #ffffff;
+  background-color: var(--element-plus-engineering-panel-background);
 }
 
 .main-area {
@@ -467,6 +467,6 @@ onBeforeUnmount(() => {
   margin: 0;
   padding: 0;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: var(--element-plus-engineering-font-size-base);
 }
 </style>

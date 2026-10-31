@@ -660,9 +660,9 @@ function handleOperateAreaItemDelete(item: CT, node: TreeNode<CT>): void {
   position: fixed;
   z-index: 6000;
   padding: 2px 0;
-  color: #606266;
-  background: white;
-  border: solid 1px #dcdfe6;
+  color: var(--el-text-color-regular);
+  background: var(--element-plus-engineering-panel-background);
+  border: solid 1px var(--el-border-color);
   pointer-events: none;
 }
 
@@ -705,13 +705,13 @@ function handleOperateAreaItemDelete(item: CT, node: TreeNode<CT>): void {
 
 .search-bar .path-indicator i {
   margin-right: 5px;
-  font-size: 14px;
+  font-size: var(--element-plus-engineering-font-size-base);
 }
 
 .search-bar .path-indicator .content-wrapper .content span {
   width: 0;
   flex-grow: 1;
-  font-size: 12px;
+  font-size: var(--element-plus-engineering-font-size-small);
   word-break: break-all;
 }
 

@@ -255,7 +255,7 @@ defineExpose({
   display: flex;
   flex-direction: column;
   padding: 3px;
-  background: #d6d6d6;
+  background: var(--element-plus-engineering-toolbar-background);
 }
 
 .toolbar button {
@@ -271,7 +271,7 @@ defineExpose({
 }
 
 .toolbar i {
-  font-size: 18px;
-  color: white;
+  font-size: var(--el-font-size-large);
+  color: var(--element-plus-engineering-toolbar-text-color);
 }
 </style>

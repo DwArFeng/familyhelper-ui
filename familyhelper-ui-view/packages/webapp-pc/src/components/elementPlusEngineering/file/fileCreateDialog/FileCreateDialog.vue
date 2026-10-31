@@ -264,12 +264,12 @@ function handleHotKeyDown(): void {
 .type-selector .item-wrapper {
   height: 100px;
   width: 85px;
-  background: rgba(0, 0, 0, 0.025);
+  background: var(--element-plus-engineering-hover-background);
   cursor: pointer;
 }
 
 .type-selector .item-wrapper:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: var(--el-fill-color-light);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -282,7 +282,7 @@ function handleHotKeyDown(): void {
   padding: 0;
   border-style: solid;
   border-width: 2px;
-  border-color: #409eff;
+  border-color: var(--element-plus-engineering-active-background);
 }
 
 .type-selector .item-wrapper:not(:nth-child(1)) {
@@ -301,7 +301,7 @@ function handleHotKeyDown(): void {
 .type-selector .item-wrapper .item .icon {
   height: 48px;
   width: 48px;
-  font-size: 48px;
+  font-size: var(--element-plus-engineering-font-size-file-type);
   user-select: none;
 }
 

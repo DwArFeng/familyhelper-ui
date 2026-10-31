@@ -9,7 +9,14 @@
       <div class="title-bar" :style="titleBarStyle" @mousedown="handleStartMove">
         <div class="title-bar-item icon-area" v-if="iconVisible">
           <slot name="icon">
-            <i class="iconfont" style="font-size: 20px; color: #495060">&#xffd3;</i>
+            <i
+              class="iconfont"
+              style="
+                font-size: var(--el-font-size-extra-large);
+                color: var(--element-plus-engineering-menu-text-color);
+              "
+              >&#xffd3;</i
+            >
           </slot>
         </div>
         <div class="title-bar-item title-area">
@@ -50,14 +57,20 @@
         <div
           class="content-panel-item content-panel-mask"
           v-show="showContentMask && adjustStatus === 1"
-          :style="{ background: `rgba(255,255,255,${contentOpacity}%)` }"
+          :style="{
+            background: 'var(--element-plus-engineering-panel-background)',
+            opacity: contentOpacity / 100,
+          }"
         >
           <i class="iconfont">&#xffcb;</i>
         </div>
         <div
           class="content-panel-item content-panel-mask"
           v-show="showContentMask && adjustStatus === 2"
-          :style="{ background: `rgba(255,255,255,${contentOpacity}%)` }"
+          :style="{
+            background: 'var(--element-plus-engineering-panel-background)',
+            opacity: contentOpacity / 100,
+          }"
         >
           <i class="iconfont">&#xffca;</i>
         </div>
@@ -993,10 +1006,10 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: var(--el-border-radius-base);
   border-width: 2px;
   border-style: solid;
-  border-color: #d8dce5;
+  border-color: var(--element-plus-engineering-panel-border-color);
 }
 
 .title-bar {
@@ -1006,11 +1019,9 @@ onUnmounted(() => {
   flex-direction: row;
   box-sizing: border-box;
   padding: 5px 8px;
-  background: #f5f7fa;
-  border-bottom: 1px solid #d8dce5;
-  box-shadow:
-    0 1px 3px 0 rgba(0, 0, 0, 0.12),
-    0 0 3px 0 rgba(0, 0, 0, 0.04);
+  background: var(--element-plus-engineering-panel-header-background);
+  border-bottom: 1px solid var(--element-plus-engineering-panel-border-color);
+  box-shadow: var(--element-plus-engineering-panel-shadow);
 }
 
 .title-bar-item {
@@ -1043,15 +1054,15 @@ onUnmounted(() => {
 
 .content-panel-mask i {
   user-select: none;
-  color: #bfbfbf;
-  font-size: 64px;
+  color: var(--element-plus-engineering-content-placeholder-color);
+  font-size: var(--element-plus-engineering-font-size-floaty-placeholder);
 }
 
 .content-panel-body {
   overflow: hidden;
   border-style: solid;
   border-width: 8px;
-  border-color: #ffffff;
+  border-color: var(--element-plus-engineering-panel-background);
 }
 
 .content-panel-placeholder {
@@ -1061,13 +1072,13 @@ onUnmounted(() => {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
+  background: var(--element-plus-engineering-panel-background);
 }
 
 .content-panel-placeholder i {
   user-select: none;
-  color: #bfbfbf;
-  font-size: 64px;
+  color: var(--element-plus-engineering-content-placeholder-color);
+  font-size: var(--element-plus-engineering-font-size-floaty-placeholder);
 }
 
 .resize-item {
@@ -1120,13 +1131,12 @@ onUnmounted(() => {
   align-items: center;
 }
 
+/*noinspection CssNoGenericFontName*/
 .title-area span {
-  color: #495060;
+  color: var(--element-plus-engineering-menu-text-color);
   user-select: none;
-  font-size: 14px;
-  font-family:
-    'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑',
-    Arial, sans-serif;
+  font-size: var(--element-plus-engineering-font-size-base);
+  font-family: var(--element-plus-engineering-font-family);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1144,7 +1154,7 @@ onUnmounted(() => {
 }
 
 .operate-area .button i {
-  font-size: 14px;
+  font-size: var(--element-plus-engineering-font-size-base);
 }
 
 .contextmenu {
@@ -1169,28 +1179,28 @@ onUnmounted(() => {
   padding: 5px 0;
   box-sizing: border-box;
   list-style-type: none;
-  border-radius: 4px;
+  border-radius: var(--el-border-radius-base);
   border-width: 1px;
   border-style: solid;
   border-color: transparent;
-  font-size: 12px;
+  font-size: var(--element-plus-engineering-font-size-small);
   font-weight: 400;
-  color: #333;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
-  background: #f5f7fa;
+  color: var(--element-plus-engineering-menu-text-color);
+  box-shadow: var(--element-plus-engineering-menu-shadow);
+  background: var(--element-plus-engineering-panel-header-background);
 }
 
 .contextmenu.dock li {
   margin: 0;
   padding: 1px 4px;
   cursor: pointer;
-  font-size: 20px;
+  font-size: var(--el-font-size-extra-large);
   text-align: center;
-  color: #495060;
+  color: var(--element-plus-engineering-menu-text-color);
 }
 
 .contextmenu.dock li:hover {
-  background: #eee;
+  background: var(--element-plus-engineering-menu-hover-background);
 }
 
 .contextmenu.opacity .slider {
@@ -1199,15 +1209,15 @@ onUnmounted(() => {
   padding: 17px 0;
   box-sizing: border-box;
   list-style-type: none;
-  border-radius: 4px;
+  border-radius: var(--el-border-radius-base);
   border-width: 1px;
   border-style: solid;
   border-color: transparent;
-  font-size: 12px;
+  font-size: var(--element-plus-engineering-font-size-small);
   font-weight: 400;
-  color: #333;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
-  background: #f5f7fa;
+  color: var(--element-plus-engineering-menu-text-color);
+  box-shadow: var(--element-plus-engineering-menu-shadow);
+  background: var(--element-plus-engineering-panel-header-background);
   display: flex;
   flex-direction: column;
   align-items: center;

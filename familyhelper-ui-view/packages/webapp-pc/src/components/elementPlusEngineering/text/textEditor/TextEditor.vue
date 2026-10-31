@@ -168,7 +168,7 @@ function addonReplace(value: string): void {
 .text-editor-container {
   height: 100%;
   width: 100%;
-  background: #f5f7fa;
+  background: var(--element-plus-engineering-panel-header-background);
   display: flex;
   flex-direction: column;
   row-gap: 5px;

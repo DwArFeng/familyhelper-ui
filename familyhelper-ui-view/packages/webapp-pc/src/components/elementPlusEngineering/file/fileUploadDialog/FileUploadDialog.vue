@@ -276,7 +276,7 @@ function handleHotKeyDown(): void {
 .file-detail .icon {
   height: 32px;
   width: 32px;
-  font-size: 32px;
+  font-size: var(--element-plus-engineering-font-size-icon-large);
   user-select: none;
 }
 
