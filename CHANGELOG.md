@@ -5,6 +5,7 @@
 ### 功能构建
 
 - `webapp-pc` 子模块 `elementPlusEngineering` 可视化器功能新增。
+  - 定制功能。
   - 主题功能。
 
 - `webapp-pc` 子模块实现开发者工具一级菜单。

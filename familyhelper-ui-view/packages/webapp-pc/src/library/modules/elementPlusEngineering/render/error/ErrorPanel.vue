@@ -1,5 +1,11 @@
 <template>
-  <div class="error-panel-container" v-cloak :style="backgroundImageStyle">
+  <div
+    class="error-panel-container"
+    v-cloak
+    :style="backgroundImageStyle"
+    v-loading="backgroundLoading"
+    element-loading-background="var(--element-plus-engineering-login-loading-mask-background)"
+  >
     <div class="error-panel">
       <div class="home-button-container">
         <el-tooltip
@@ -25,17 +31,37 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import { onMounted, reactive } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 
 import { useI18n } from 'vue-i18n'
 
-import { HomeFilled } from '@element-plus/icons-vue'
+import { type CustomizeStore } from '@/store/modules/customize.ts'
 
-import backgroundImg from '@/assets/img/error-background.jpg'
+import {
+  applyElementPlusEngineeringResponsiveBackgroundSize,
+  type ElementPlusEngineeringCustomizeBackgroundKeys,
+  notifyElementPlusEngineeringCustomizeError,
+  preloadElementPlusEngineeringBackgroundImage,
+  readElementPlusEngineeringCustomizeBackgroundConfig,
+  registerElementPlusEngineeringResponsiveBackgroundResize,
+  resolveElementPlusEngineeringCustomizeBackgroundUrl,
+  revokeElementPlusEngineeringCustomizeObjectUrl,
+} from '@/library/modules/elementPlusEngineering/util/customize.ts'
+
+import { HomeFilled } from '@element-plus/icons-vue'
 
 defineOptions({
   name: 'ErrorPanel',
 })
+
+// region Props 定义
+
+const props = defineProps<{
+  backgroundKeys: ElementPlusEngineeringCustomizeBackgroundKeys
+  embeddedBackgroundUrl: string
+}>()
+
+// endregion
 
 // region I18n 引入
 
@@ -56,26 +82,91 @@ defineSlots<{
 
 // region 背景样式处理
 
+const customizeStore = vim.ctx().store().vueStore<'customize', CustomizeStore>('customize')
+
+const backgroundLoading = ref<boolean>(true)
+
 const backgroundImageStyle = reactive({
-  backgroundImage: `url(${backgroundImg})`,
+  backgroundImage: 'none',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'auto 100%',
   backgroundPosition: 'center',
 })
 
-onMounted(() => {
-  if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
-    backgroundImageStyle.backgroundSize = 'auto 100%'
-  } else {
-    backgroundImageStyle.backgroundSize = '100% auto'
+let errorPanelBackgroundObjectUrl: string | null = null
+let errorPanelBackgroundLoadGeneration = 0
+
+async function reloadErrorPanelBackground(): Promise<void> {
+  backgroundLoading.value = true
+  const generation = ++errorPanelBackgroundLoadGeneration
+  const readValue = (key: string): string | null => customizeStore.customizeValue(key).value
+  const config = readElementPlusEngineeringCustomizeBackgroundConfig(
+    readValue,
+    props.backgroundKeys,
+  )
+  const resolvedUrl = await resolveElementPlusEngineeringCustomizeBackgroundUrl(
+    config,
+    props.embeddedBackgroundUrl,
+  )
+  if (generation !== errorPanelBackgroundLoadGeneration) {
+    if (resolvedUrl.startsWith('blob:')) {
+      revokeElementPlusEngineeringCustomizeObjectUrl(resolvedUrl)
+    }
+    return
   }
-  window.onresize = () => {
-    if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
-      backgroundImageStyle.backgroundSize = 'auto 100%'
-    } else {
-      backgroundImageStyle.backgroundSize = '100% auto'
+  let displayUrl = resolvedUrl
+  try {
+    await preloadElementPlusEngineeringBackgroundImage(resolvedUrl)
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : '未知错误'
+    notifyElementPlusEngineeringCustomizeError(message)
+    if (resolvedUrl !== props.embeddedBackgroundUrl) {
+      displayUrl = props.embeddedBackgroundUrl
+    }
+    try {
+      await preloadElementPlusEngineeringBackgroundImage(displayUrl)
+    } catch {
+      // 预加载失败时仍展示 URL 并结束 loading，避免页面无法交互。
     }
   }
+  if (generation !== errorPanelBackgroundLoadGeneration) {
+    if (resolvedUrl.startsWith('blob:')) {
+      revokeElementPlusEngineeringCustomizeObjectUrl(resolvedUrl)
+    }
+    return
+  }
+  revokeElementPlusEngineeringCustomizeObjectUrl(errorPanelBackgroundObjectUrl)
+  errorPanelBackgroundObjectUrl = displayUrl.startsWith('blob:') ? displayUrl : null
+  if (displayUrl !== resolvedUrl && resolvedUrl.startsWith('blob:')) {
+    revokeElementPlusEngineeringCustomizeObjectUrl(resolvedUrl)
+  }
+  backgroundImageStyle.backgroundImage = `url(${displayUrl})`
+  applyElementPlusEngineeringResponsiveBackgroundSize(backgroundImageStyle)
+  backgroundLoading.value = false
+}
+
+watch(
+  () => customizeStore.customizeItem,
+  () => {
+    void reloadErrorPanelBackground()
+  },
+  { deep: true, immediate: true },
+)
+
+let unregisterErrorPanelBackgroundResize: (() => void) | null = null
+
+onMounted(() => {
+  applyElementPlusEngineeringResponsiveBackgroundSize(backgroundImageStyle)
+  unregisterErrorPanelBackgroundResize =
+    registerElementPlusEngineeringResponsiveBackgroundResize(backgroundImageStyle)
+  void reloadErrorPanelBackground()
+})
+
+onBeforeUnmount(() => {
+  errorPanelBackgroundLoadGeneration += 1
+  unregisterErrorPanelBackgroundResize?.()
+  revokeElementPlusEngineeringCustomizeObjectUrl(errorPanelBackgroundObjectUrl)
+  errorPanelBackgroundObjectUrl = null
 })
 
 // endregion

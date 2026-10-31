@@ -1,5 +1,11 @@
 <template>
-  <div class="page-login-container" v-cloak :style="backgroundImageStyle">
+  <div
+    class="page-login-container"
+    v-cloak
+    :style="backgroundImageStyle"
+    v-loading="backgroundLoading"
+    element-loading-background="var(--element-plus-engineering-login-loading-mask-background)"
+  >
     <!--suppress HtmlUnknownAttribute -->
     <div
       class="login-panel"
@@ -140,15 +146,28 @@
 <script setup lang="ts">
 import vim from '@/vim'
 
-import { onMounted, reactive, ref } from 'vue'
+import { onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 
 import { useI18n } from 'vue-i18n'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
 import { type IahnStore } from '@/store/modules/iahn.ts'
 import { type ThemeStore } from '@/store/modules/theme.ts'
+import { type CustomizeStore } from '@/store/modules/customize.ts'
 
-import backgroundImg from '@/assets/img/login-background.jpg'
+import {
+  applyElementPlusEngineeringResponsiveBackgroundSize,
+  CUSTOMIZE_EMBEDDED_LOGIN_BACKGROUND_URL,
+  CUSTOMIZE_KEY_LOGIN_BACKGROUND_ARGS,
+  CUSTOMIZE_KEY_LOGIN_BACKGROUND_CATEGORY,
+  CUSTOMIZE_KEY_LOGIN_BACKGROUND_TYPE,
+  notifyElementPlusEngineeringCustomizeError,
+  preloadElementPlusEngineeringBackgroundImage,
+  readElementPlusEngineeringCustomizeBackgroundConfig,
+  registerElementPlusEngineeringResponsiveBackgroundResize,
+  resolveElementPlusEngineeringCustomizeBackgroundUrl,
+  revokeElementPlusEngineeringCustomizeObjectUrl,
+} from '@/library/modules/elementPlusEngineering/util/customize.ts'
 
 import { Check as CheckIcon } from '@element-plus/icons-vue'
 
@@ -192,28 +211,96 @@ const loading = ref<number>(0)
 
 // endregion
 
-// region +---------------------------背景样式处理
+// region 背景样式处理
+
+const customizeStore = vim.ctx().store().vueStore<'customize', CustomizeStore>('customize')
+
+const loginBackgroundKeys = {
+  typeKey: CUSTOMIZE_KEY_LOGIN_BACKGROUND_TYPE,
+  categoryKey: CUSTOMIZE_KEY_LOGIN_BACKGROUND_CATEGORY,
+  argsKey: CUSTOMIZE_KEY_LOGIN_BACKGROUND_ARGS,
+} as const
+
+const backgroundLoading = ref<boolean>(true)
 
 const backgroundImageStyle = reactive({
-  backgroundImage: `url(${backgroundImg})`,
+  backgroundImage: 'none',
   backgroundRepeat: 'no-repeat',
   backgroundSize: 'auto 100%',
   backgroundPosition: 'center',
 })
 
-onMounted(() => {
-  if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
-    backgroundImageStyle.backgroundSize = 'auto 100%'
-  } else {
-    backgroundImageStyle.backgroundSize = '100% auto'
+let loginBackgroundObjectUrl: string | null = null
+let loginBackgroundLoadGeneration = 0
+
+async function reloadLoginBackground(): Promise<void> {
+  backgroundLoading.value = true
+  const generation = ++loginBackgroundLoadGeneration
+  const readValue = (key: string): string | null => customizeStore.customizeValue(key).value
+  const config = readElementPlusEngineeringCustomizeBackgroundConfig(readValue, loginBackgroundKeys)
+  const resolvedUrl = await resolveElementPlusEngineeringCustomizeBackgroundUrl(
+    config,
+    CUSTOMIZE_EMBEDDED_LOGIN_BACKGROUND_URL,
+  )
+  if (generation !== loginBackgroundLoadGeneration) {
+    if (resolvedUrl.startsWith('blob:')) {
+      revokeElementPlusEngineeringCustomizeObjectUrl(resolvedUrl)
+    }
+    return
   }
-  window.onresize = () => {
-    if (document.documentElement.clientWidth < document.documentElement.clientHeight) {
-      backgroundImageStyle.backgroundSize = 'auto 100%'
-    } else {
-      backgroundImageStyle.backgroundSize = '100% auto'
+  let displayUrl = resolvedUrl
+  try {
+    await preloadElementPlusEngineeringBackgroundImage(resolvedUrl)
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : '未知错误'
+    notifyElementPlusEngineeringCustomizeError(message)
+    if (resolvedUrl !== CUSTOMIZE_EMBEDDED_LOGIN_BACKGROUND_URL) {
+      displayUrl = CUSTOMIZE_EMBEDDED_LOGIN_BACKGROUND_URL
+      try {
+        await preloadElementPlusEngineeringBackgroundImage(displayUrl)
+      } catch {
+        // 内嵌默认图预加载失败时仍结束 loading，避免页面无法交互。
+      }
     }
   }
+  if (generation !== loginBackgroundLoadGeneration) {
+    if (resolvedUrl.startsWith('blob:')) {
+      revokeElementPlusEngineeringCustomizeObjectUrl(resolvedUrl)
+    }
+    return
+  }
+  revokeElementPlusEngineeringCustomizeObjectUrl(loginBackgroundObjectUrl)
+  loginBackgroundObjectUrl = displayUrl.startsWith('blob:') ? displayUrl : null
+  if (displayUrl !== resolvedUrl && resolvedUrl.startsWith('blob:')) {
+    revokeElementPlusEngineeringCustomizeObjectUrl(resolvedUrl)
+  }
+  backgroundImageStyle.backgroundImage = `url(${displayUrl})`
+  applyElementPlusEngineeringResponsiveBackgroundSize(backgroundImageStyle)
+  backgroundLoading.value = false
+}
+
+watch(
+  () => customizeStore.customizeItem,
+  () => {
+    void reloadLoginBackground()
+  },
+  { deep: true, immediate: true },
+)
+
+let unregisterLoginBackgroundResize: (() => void) | null = null
+
+onMounted(() => {
+  applyElementPlusEngineeringResponsiveBackgroundSize(backgroundImageStyle)
+  unregisterLoginBackgroundResize =
+    registerElementPlusEngineeringResponsiveBackgroundResize(backgroundImageStyle)
+  void reloadLoginBackground()
+})
+
+onBeforeUnmount(() => {
+  loginBackgroundLoadGeneration += 1
+  unregisterLoginBackgroundResize?.()
+  revokeElementPlusEngineeringCustomizeObjectUrl(loginBackgroundObjectUrl)
+  loginBackgroundObjectUrl = null
 })
 
 // endregion

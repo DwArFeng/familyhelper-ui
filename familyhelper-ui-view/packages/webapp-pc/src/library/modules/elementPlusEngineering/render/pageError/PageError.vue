@@ -1,6 +1,9 @@
 <template>
   <div class="page-error-container">
-    <error-panel>
+    <error-panel
+      :background-keys="pageErrorBackgroundKeys"
+      :embedded-background-url="CUSTOMIZE_EMBEDDED_PAGE_ERROR_BACKGROUND_URL"
+    >
       <template v-slot:default>
         <div class="error-content-container">
           <span class="error-header-title-chs">{{
@@ -29,9 +32,26 @@ import { useI18n } from 'vue-i18n'
 
 import ErrorPanel from '@/library/modules/elementPlusEngineering/render/error/ErrorPanel.vue'
 
+import {
+  CUSTOMIZE_EMBEDDED_PAGE_ERROR_BACKGROUND_URL,
+  CUSTOMIZE_KEY_PAGE_ERROR_BACKGROUND_ARGS,
+  CUSTOMIZE_KEY_PAGE_ERROR_BACKGROUND_CATEGORY,
+  CUSTOMIZE_KEY_PAGE_ERROR_BACKGROUND_TYPE,
+} from '@/library/modules/elementPlusEngineering/util/customize.ts'
+
 defineOptions({
   name: 'PageError',
 })
+
+// region 报错页背景定制键
+
+const pageErrorBackgroundKeys = {
+  typeKey: CUSTOMIZE_KEY_PAGE_ERROR_BACKGROUND_TYPE,
+  categoryKey: CUSTOMIZE_KEY_PAGE_ERROR_BACKGROUND_CATEGORY,
+  argsKey: CUSTOMIZE_KEY_PAGE_ERROR_BACKGROUND_ARGS,
+} as const
+
+// endregion
 
 // region I18n 引入
 
