@@ -50,10 +50,10 @@ function handleClick(): void {
 }
 
 .nav-button-container:hover {
-  background: rgba(0, 0, 0, 0.025);
+  background: var(--element-plus-engineering-hover-background);
 }
 
 .icon-button {
-  font-size: 16px;
+  font-size: var(--el-font-size-medium);
 }
 </style>

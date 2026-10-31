@@ -6,6 +6,7 @@
     <digital-watch class="nav-digital-watch" />
     <div class="nav-button-group">
       <!--suppress JSUnresolvedVariable -->
+      <icon-button class="nav-icon-button" :icon="'\uffc7'" @click="handleShowThemeSelectDialog" />
       <icon-button class="nav-icon-button" :icon="'\uffc8'" @click="handleShowI18nSelectDialog" />
       <icon-button
         class="nav-icon-button"
@@ -14,6 +15,7 @@
       />
     </div>
     <avatar class="nav-avatar" />
+    <theme-select-dialog v-model:visible="themeSelectDialogVisible" />
     <i18n-select-dialog v-model:visible="i18nSelectDialogVisible" />
   </div>
 </template>
@@ -30,6 +32,7 @@ import Breadcrumb from './Breadcrumb.vue'
 import DigitalWatch from './DigitalWatch.vue'
 import IconButton from './IconButton.vue'
 import Avatar from './Avatar.vue'
+import ThemeSelectDialog from './ThemeSelectDialog.vue'
 import I18nSelectDialog from './I18nSelectDialog.vue'
 
 defineOptions({
@@ -42,6 +45,16 @@ const elementPlusStore = vim
   .ctx()
   .store()
   .vueStore<'element-plus', ElementPlusStore>('element-plus')
+
+// endregion
+
+// region 主题选择对话框处理
+
+const themeSelectDialogVisible = ref<boolean>(false)
+
+function handleShowThemeSelectDialog(): void {
+  themeSelectDialogVisible.value = true
+}
 
 // endregion
 
@@ -72,10 +85,10 @@ function handleToggleFullScreen(): void {
   flex-direction: row;
   align-items: center;
   overflow: hidden;
-  background-color: #ffffff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  background-color: var(--element-plus-engineering-navbar-background);
+  box-shadow: var(--element-plus-engineering-navbar-shadow);
   padding-top: 2px;
-  color: #889aa4;
+  color: var(--element-plus-engineering-navbar-text-color);
 }
 
 .placeholder {

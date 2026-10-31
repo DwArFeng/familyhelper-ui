@@ -2,9 +2,6 @@
   <div class="side-bar-container">
     <overlay-scrollbars-component class="scroll-bar" :options="scrollBarOptions">
       <el-menu
-        text-color="#ffffff"
-        active-text-color="#ffd04b"
-        :background-color="menuBackgroundColor"
         :router="false"
         :collapse-transition="false"
         :unique-opened="true"
@@ -28,8 +25,6 @@ import vim from '@/vim'
 
 import { type NavigationStore } from '@/store/modules/navigation.ts'
 
-import { ref } from 'vue'
-
 import { OverlayScrollbarsComponent } from 'overlayscrollbars-vue'
 import SidebarItem from './SidebarItem.vue'
 import { type NodeInfo } from '@/navigation/types.ts'
@@ -46,17 +41,11 @@ const navigationStore = vim.ctx().store().vueStore<'navigation', NavigationStore
 
 // region 滚动条处理
 
-const scrollBarOptions = ref({
+const scrollBarOptions = {
   scrollbars: {
     theme: 'os-theme-light',
   },
-})
-
-// endregion
-
-// region 菜单处理
-
-const menuBackgroundColor = ref('#2D3A4B')
+}
 
 // endregion
 
@@ -83,6 +72,9 @@ function handleMenuSelect(nodeKey: string): void {
 
 /*noinspection CssUnusedSymbol*/
 .el-menu {
+  --el-menu-text-color: var(--element-plus-engineering-sidebar-text-color);
+  --el-menu-active-color: var(--element-plus-engineering-sidebar-active-text-color);
+  --el-menu-bg-color: var(--element-plus-engineering-sidebar-background);
   padding: 0;
   margin: 0;
   border-right: 0;

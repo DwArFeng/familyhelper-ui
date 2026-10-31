@@ -536,7 +536,7 @@ onUnmounted(() => {
 .ez-nav-container {
   height: fit-content;
   width: 100%;
-  background: #fff;
+  background: var(--element-plus-engineering-ez-nav-background);
   position: relative;
 }
 
@@ -553,7 +553,7 @@ onUnmounted(() => {
   margin: 0 14px;
   padding: 1px 0;
   line-height: 30px;
-  font-size: 14px;
+  font-size: var(--element-plus-engineering-font-size-base);
   user-select: none;
 }
 
@@ -591,11 +591,11 @@ onUnmounted(() => {
   cursor: pointer;
   height: 26px;
   line-height: 26px;
-  border: 1px solid #d8dce5;
-  color: #495060;
-  background: #fff;
+  border: 1px solid var(--element-plus-engineering-ez-nav-border-color);
+  color: var(--element-plus-engineering-ez-nav-text-color);
+  background: var(--element-plus-engineering-ez-nav-background);
   padding: 0 8px;
-  font-size: 12px;
+  font-size: var(--element-plus-engineering-font-size-small);
   white-space: nowrap;
   margin: 1px 1px;
   column-gap: 4px;
@@ -603,9 +603,9 @@ onUnmounted(() => {
 
 /*noinspection CssUnusedSymbol*/
 .ez-nav-item.active {
-  background-color: #42b983;
-  color: #fff;
-  border-color: #42b983;
+  background-color: var(--element-plus-engineering-ez-nav-active-background);
+  color: var(--element-plus-engineering-ez-nav-active-text-color);
+  border-color: var(--element-plus-engineering-ez-nav-active-background);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -642,15 +642,15 @@ onUnmounted(() => {
 }
 
 .close-icon:hover {
-  background-color: #b4bccc;
-  color: #fff;
+  background-color: var(--el-border-color-dark);
+  color: var(--el-color-white);
 }
 
 .contextmenu {
   width: 120px;
   min-width: 120px;
   margin: 0;
-  background: #fff;
+  background: var(--element-plus-engineering-menu-background);
   z-index: 3000;
   position: absolute;
   list-style-type: none;
@@ -658,11 +658,11 @@ onUnmounted(() => {
   border-radius: 4px;
   border-width: 1px;
   border-style: solid;
-  border-color: #7f7f7f;
-  font-size: 12px;
+  border-color: var(--element-plus-engineering-menu-border-color);
+  font-size: var(--element-plus-engineering-font-size-small);
   font-weight: 400;
-  color: #333;
-  box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+  color: var(--element-plus-engineering-menu-text-color);
+  box-shadow: var(--element-plus-engineering-menu-shadow);
 }
 
 .contextmenu:focus {
@@ -676,7 +676,7 @@ onUnmounted(() => {
 }
 
 .contextmenu li:hover {
-  background: #eee;
+  background: var(--element-plus-engineering-menu-hover-background);
 }
 
 .contextmenu-modal {
@@ -712,11 +712,10 @@ onUnmounted(() => {
   margin-right: 15px;
 }
 
+/*noinspection CssNoGenericFontName*/
 .editor-title {
-  font-size: 16px;
-  font-family:
-    'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑',
-    Arial, sans-serif;
+  font-size: var(--element-plus-engineering-font-size-large);
+  font-family: var(--element-plus-engineering-font-family);
   user-select: none;
   margin-bottom: 5px;
   padding-left: 2px;

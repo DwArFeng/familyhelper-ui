@@ -1,0 +1,381 @@
+/*
+ * Element Plus 组件局部固定值颜色、字体变量桥接。
+ *
+ * Element Plus 会在组件选择器内重新声明这些变量，因此无法通过 :root 上的同名变量覆盖。
+ * 本文件将这些组件变量映射到同名的 `-override` 变量，并保留 Element Plus 原始值作为
+ * fallback。本文件必须在 Element Plus 官方样式之后加载。
+ */
+
+/*
+ * 静态分析可见的 override 默认值。运行时会由 index.ts 调用 util/theme.ts，在 documentElement（:root）上写入同名属性，
+ * 当前块只负责提供 CSS fallback 和 IDE 静态解析依据；scripts/check-theme-bridge.js
+ * 会校验这里的默认值与 theme.ts 保持一致。
+ */
+:root {
+  --el-color-white: #ffffff;
+  --el-color-black: #000000;
+  --el-color-primary: #409eff;
+  --el-color-primary-rgb: 64, 158, 255;
+  --el-color-primary-light-3: #79bbff;
+  --el-color-primary-light-5: #a0cfff;
+  --el-color-primary-light-7: #c6e2ff;
+  --el-color-primary-light-8: #d9ecff;
+  --el-color-primary-light-9: #ecf5ff;
+  --el-color-primary-dark-2: #337ecc;
+  --el-color-success: #67c23a;
+  --el-color-success-rgb: 103, 194, 58;
+  --el-color-success-light-3: #95d475;
+  --el-color-success-light-5: #b3e19d;
+  --el-color-success-light-7: #d1edc4;
+  --el-color-success-light-8: #e1f3d8;
+  --el-color-success-light-9: #f0f9eb;
+  --el-color-success-dark-2: #529b2e;
+  --el-color-warning: #e6a23c;
+  --el-color-warning-rgb: 230, 162, 60;
+  --el-color-warning-light-3: #eebe77;
+  --el-color-warning-light-5: #f3d19e;
+  --el-color-warning-light-7: #f8e3c5;
+  --el-color-warning-light-8: #faecd8;
+  --el-color-warning-light-9: #fdf6ec;
+  --el-color-warning-dark-2: #b88230;
+  --el-color-danger: #f56c6c;
+  --el-color-danger-rgb: 245, 108, 108;
+  --el-color-danger-light-3: #f89898;
+  --el-color-danger-light-5: #fab6b6;
+  --el-color-danger-light-7: #fcd3d3;
+  --el-color-danger-light-8: #fde2e2;
+  --el-color-danger-light-9: #fef0f0;
+  --el-color-danger-dark-2: #c45656;
+  --el-color-error: #f56c6c;
+  --el-color-error-rgb: 245, 108, 108;
+  --el-color-error-light-3: #f89898;
+  --el-color-error-light-5: #fab6b6;
+  --el-color-error-light-7: #fcd3d3;
+  --el-color-error-light-8: #fde2e2;
+  --el-color-error-light-9: #fef0f0;
+  --el-color-error-dark-2: #c45656;
+  --el-color-info: #909399;
+  --el-color-info-rgb: 144, 147, 153;
+  --el-color-info-light-3: #b1b3b8;
+  --el-color-info-light-5: #c8c9cc;
+  --el-color-info-light-7: #dedfe0;
+  --el-color-info-light-8: #e9e9eb;
+  --el-color-info-light-9: #f4f4f5;
+  --el-color-info-dark-2: #73767a;
+  --el-bg-color: #ffffff;
+  --el-bg-color-page: #f2f3f5;
+  --el-bg-color-overlay: #ffffff;
+  --el-text-color-primary: #303133;
+  --el-text-color-regular: #606266;
+  --el-text-color-secondary: #909399;
+  --el-text-color-placeholder: #a8abb2;
+  --el-text-color-disabled: #c0c4cc;
+  --el-border-color: #dcdfe6;
+  --el-border-color-light: #e4e7ed;
+  --el-border-color-lighter: #ebeef5;
+  --el-border-color-extra-light: #f2f6fc;
+  --el-border-color-dark: #d4d7de;
+  --el-border-color-darker: #cdd0d6;
+  --el-fill-color: #f0f2f5;
+  --el-fill-color-light: #f5f7fa;
+  --el-fill-color-lighter: #fafafa;
+  --el-fill-color-extra-light: #fafcff;
+  --el-fill-color-dark: #ebedf0;
+  --el-fill-color-darker: #e6e8eb;
+  --el-fill-color-blank: #ffffff;
+  --el-mask-color: rgba(255, 255, 255, 0.9);
+  --el-mask-color-extra-light: rgba(255, 255, 255, 0.3);
+  --el-overlay-color: rgba(0, 0, 0, 0.8);
+  --el-overlay-color-light: rgba(0, 0, 0, 0.7);
+  --el-overlay-color-lighter: rgba(0, 0, 0, 0.5);
+  --el-disabled-bg-color: var(--el-fill-color-light);
+  --el-disabled-text-color: var(--el-text-color-placeholder);
+  --el-disabled-border-color: var(--el-border-color-light);
+  --el-border-color-hover: var(--el-text-color-disabled);
+  --el-svg-monochrome-grey: var(--el-border-color);
+  --el-popup-modal-bg-color: var(--el-color-black);
+  --el-popup-modal-opacity: 0.5;
+  --el-menu-active-color: #ffd04b;
+  --el-menu-text-color: #ffffff;
+  --el-menu-hover-text-color: #ffffff;
+  --el-menu-bg-color: #2d3a4b;
+  --el-menu-hover-bg-color: #242e3c;
+  --el-menu-item-font-size: var(--el-font-size-base);
+  --el-menu-item-hover-fill: #242e3c;
+  --el-menu-border-color: var(--el-border-color);
+  --el-font-family:
+    'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑',
+    Arial, sans-serif;
+  --el-font-size-extra-large: 20px;
+  --el-font-size-large: 18px;
+  --el-font-size-medium: 16px;
+  --el-font-size-base: 14px;
+  --el-font-size-small: 13px;
+  --el-font-size-extra-small: 12px;
+  --el-font-weight-primary: 500;
+  --el-font-line-height-primary: 24px;
+  --el-component-size-large: 40px;
+  --el-component-size: 32px;
+  --el-component-size-small: 24px;
+  --el-border-radius-base: 4px;
+  --el-border-radius-small: 2px;
+  --el-border-radius-round: 20px;
+  --el-border-width: 1px;
+  --el-box-shadow: 0px 12px 32px 4px rgba(0, 0, 0, 0.04), 0px 8px 20px rgba(0, 0, 0, 0.08);
+  --el-box-shadow-light: 0px 0px 12px rgba(0, 0, 0, 0.12);
+  --el-box-shadow-lighter: 0px 0px 6px rgba(0, 0, 0, 0.12);
+  --el-box-shadow-dark:
+    0px 16px 48px 16px rgba(0, 0, 0, 0.08), 0px 12px 32px rgba(0, 0, 0, 0.12),
+    0px 8px 16px -8px rgba(0, 0, 0, 0.16);
+  --element-plus-engineering-navbar-background: #ffffff;
+  --element-plus-engineering-navbar-text-color: #889aa4;
+  --element-plus-engineering-navbar-hover-background: rgba(0, 0, 0, 0.025);
+  --element-plus-engineering-navbar-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  --element-plus-engineering-navbar-border-color: #d8dce5;
+  --element-plus-engineering-sidebar-background: #2d3a4b;
+  --element-plus-engineering-sidebar-text-color: #ffffff;
+  --element-plus-engineering-sidebar-active-text-color: #ffd04b;
+  --element-plus-engineering-workbench-background: #ffffff;
+  --element-plus-engineering-ez-nav-background: #ffffff;
+  --element-plus-engineering-ez-nav-text-color: #495060;
+  --element-plus-engineering-ez-nav-border-color: #d8dce5;
+  --element-plus-engineering-ez-nav-active-background: #42b983;
+  --element-plus-engineering-ez-nav-active-text-color: #ffffff;
+  --element-plus-engineering-panel-background: #ffffff;
+  --element-plus-engineering-panel-header-background: #f5f7fa;
+  --element-plus-engineering-panel-border-color: #d8dce5;
+  --element-plus-engineering-panel-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 0 3px 0 rgba(0, 0, 0, 0.04);
+  --element-plus-engineering-menu-background: #ffffff;
+  --element-plus-engineering-menu-text-color: #333333;
+  --element-plus-engineering-menu-border-color: #7f7f7f;
+  --element-plus-engineering-menu-hover-background: #eeeeee;
+  --element-plus-engineering-menu-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+  --element-plus-engineering-content-placeholder-color: #bfbfbf;
+  --element-plus-engineering-hover-background: rgba(0, 0, 0, 0.025);
+  --element-plus-engineering-active-background: #409eff;
+  --element-plus-engineering-toolbar-background: #d6d6d6;
+  --element-plus-engineering-toolbar-text-color: #ffffff;
+  --element-plus-engineering-error-panel-background: rgba(225, 225, 225, 0.5);
+  --element-plus-engineering-error-text-background: rgba(255, 255, 255, 0.8);
+  --element-plus-engineering-error-title-color: #7bbdff;
+  --element-plus-engineering-error-title-shadow: 0 0 8px #000000;
+  --element-plus-engineering-login-panel-background: rgba(128, 128, 128, 0.5);
+  --element-plus-engineering-login-loading-mask-background: rgba(0, 0, 0, 0.1);
+  --element-plus-engineering-login-accent-color: #7bbdff;
+  --element-plus-engineering-login-text-color: #ffffff;
+  --element-plus-engineering-login-title-shadow: 0 0 8px #000000;
+  --element-plus-engineering-login-subtitle-shadow: 0 0 4px #000000;
+  --element-plus-engineering-font-family:
+    'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑',
+    Arial, sans-serif;
+  --element-plus-engineering-font-size-small: 12px;
+  --element-plus-engineering-font-size-base: 14px;
+  --element-plus-engineering-font-size-large: 16px;
+  --element-plus-engineering-font-size-title: 18px;
+  --element-plus-engineering-font-size-display: 40px;
+  --element-plus-engineering-font-size-icon-large: 32px;
+  --element-plus-engineering-font-size-file-type: 48px;
+  --element-plus-engineering-font-size-error-title: 58px;
+  --element-plus-engineering-font-size-floaty-placeholder: 64px;
+  --element-plus-engineering-font-size-login-title: 64px;
+  --element-plus-engineering-font-size-login-subtitle: 24px;
+  --el-alert-title-font-size-override: 14px;
+  --el-alert-title-with-description-font-size-override: 16px;
+  --el-alert-description-font-size-override: 14px;
+  --el-alert-close-font-size-override: 16px;
+  --el-alert-close-customed-font-size-override: 14px;
+  --el-badge-font-size-override: 12px;
+  --el-button-divide-border-color-override: #ffffff80;
+  --el-carousel-arrow-font-size-override: 12px;
+  --el-carousel-arrow-background-override: #1f2d3d1c;
+  --el-carousel-arrow-hover-background-override: #1f2d3d3b;
+  --el-checkbox-font-size-override: 14px;
+  --el-collapse-header-font-size-override: 13px;
+  --el-collapse-content-font-size-override: 13px;
+  --el-color-picker-alpha-bg-a-override: #cccccc;
+  --el-color-picker-alpha-bg-b-override: transparent;
+  --el-dialog-content-font-size-override: 14px;
+  --el-empty-fill-color-1-override: #fcfcfd;
+  --el-empty-fill-color-2-override: #f8f9fb;
+  --el-empty-fill-color-3-override: #f7f8fc;
+  --el-empty-fill-color-4-override: #eeeff3;
+  --el-empty-fill-color-5-override: #edeef2;
+  --el-empty-fill-color-6-override: #e9ebef;
+  --el-empty-fill-color-7-override: #e5e7e9;
+  --el-empty-fill-color-8-override: #e0e3e9;
+  --el-empty-fill-color-9-override: #d5d7de;
+  --el-input-tag-line-height-override: 24px;
+  --el-input-tag-font-size-override: 14px;
+  --el-input-otp-font-size-override: 14px;
+  --el-messagebox-error-font-size-override: 12px;
+  --el-notification-title-font-size-override: 16px;
+  --el-pagination-font-size-override: 14px;
+  --el-pagination-font-size-small-override: 12px;
+  --el-popover-title-font-size-override: 16px;
+  --el-rate-fill-color-override: #f7ba2a;
+  --el-result-icon-font-size-override: 64px;
+  --el-result-title-font-size-override: 20px;
+  --el-select-input-font-size-override: 14px;
+  --el-tag-font-size-override: 12px;
+  --el-statistic-title-font-weight-override: 400;
+  --el-statistic-content-font-weight-override: 400;
+  --el-tour-title-font-size-override: 16px;
+  --el-tour-title-font-weight-override: 400;
+  --el-tour-font-size-override: 14px;
+  --el-tour-title-text-color-override: #ffffff;
+  --el-tour-text-color-override: #ffffff;
+  --el-tour-close-color-override: #ffffff;
+  --el-anchor-line-height-override: 22px;
+  --el-anchor-font-size-override: 12px;
+}
+
+.el-alert {
+  --el-alert-title-font-size: var(--el-alert-title-font-size-override);
+  --el-alert-title-with-description-font-size: var(
+    --el-alert-title-with-description-font-size-override
+  );
+  --el-alert-description-font-size: var(--el-alert-description-font-size-override);
+  --el-alert-close-font-size: var(--el-alert-close-font-size-override);
+  --el-alert-close-customed-font-size: var(--el-alert-close-customed-font-size-override);
+}
+
+.el-badge {
+  --el-badge-font-size: var(--el-badge-font-size-override);
+}
+
+.el-button {
+  --el-button-divide-border-color: var(--el-button-divide-border-color-override);
+}
+
+.el-carousel {
+  --el-carousel-arrow-font-size: var(--el-carousel-arrow-font-size-override);
+  --el-carousel-arrow-background: var(--el-carousel-arrow-background-override);
+  --el-carousel-arrow-hover-background: var(--el-carousel-arrow-hover-background-override);
+}
+
+.el-checkbox {
+  --el-checkbox-font-size: var(--el-checkbox-font-size-override);
+}
+
+.el-collapse {
+  --el-collapse-header-font-size: var(--el-collapse-header-font-size-override);
+  --el-collapse-content-font-size: var(--el-collapse-content-font-size-override);
+}
+
+.el-color-picker-panel {
+  --el-color-picker-alpha-bg-a: var(--el-color-picker-alpha-bg-a-override);
+  --el-color-picker-alpha-bg-b: var(--el-color-picker-alpha-bg-b-override);
+}
+
+.dark .el-color-picker-panel {
+  --el-color-picker-alpha-bg-a: var(--el-color-picker-alpha-bg-a-override);
+}
+
+.el-color-picker,
+.el-color-picker__panel {
+  --el-color-picker-alpha-bg-a: var(--el-color-picker-alpha-bg-a-override);
+  --el-color-picker-alpha-bg-b: var(--el-color-picker-alpha-bg-b-override);
+}
+
+.dark .el-color-picker,
+.dark .el-color-picker__panel {
+  --el-color-picker-alpha-bg-a: var(--el-color-picker-alpha-bg-a-override);
+}
+
+.el-dialog {
+  --el-dialog-content-font-size: var(--el-dialog-content-font-size-override);
+}
+
+.el-empty {
+  --el-empty-fill-color-1: var(--el-empty-fill-color-1-override);
+  --el-empty-fill-color-2: var(--el-empty-fill-color-2-override);
+  --el-empty-fill-color-3: var(--el-empty-fill-color-3-override);
+  --el-empty-fill-color-4: var(--el-empty-fill-color-4-override);
+  --el-empty-fill-color-5: var(--el-empty-fill-color-5-override);
+  --el-empty-fill-color-6: var(--el-empty-fill-color-6-override);
+  --el-empty-fill-color-7: var(--el-empty-fill-color-7-override);
+  --el-empty-fill-color-8: var(--el-empty-fill-color-8-override);
+  --el-empty-fill-color-9: var(--el-empty-fill-color-9-override);
+}
+
+.el-input-tag {
+  --el-input-tag-line-height: var(--el-input-tag-line-height-override);
+}
+
+.el-input-tag--large {
+  --el-input-tag-font-size: var(--el-input-tag-font-size-override);
+}
+
+.el-input-tag--small {
+  --el-input-tag-font-size: var(--el-input-tag-font-size-override);
+  --el-input-tag-line-height: var(--el-input-tag-line-height-override);
+}
+
+.el-input-otp {
+  --el-input-otp-font-size: var(--el-input-otp-font-size-override);
+}
+
+.el-input-otp--large {
+  --el-input-otp-font-size: var(--el-input-otp-font-size-override);
+}
+
+.el-input-otp--small {
+  --el-input-otp-font-size: var(--el-input-otp-font-size-override);
+}
+
+.el-message-box {
+  --el-messagebox-error-font-size: var(--el-messagebox-error-font-size-override);
+}
+
+.el-notification {
+  --el-notification-title-font-size: var(--el-notification-title-font-size-override);
+}
+
+.el-pagination {
+  --el-pagination-font-size: var(--el-pagination-font-size-override);
+  --el-pagination-font-size-small: var(--el-pagination-font-size-small-override);
+}
+
+.el-popover {
+  --el-popover-title-font-size: var(--el-popover-title-font-size-override);
+}
+
+.el-rate {
+  --el-rate-fill-color: var(--el-rate-fill-color-override);
+}
+
+.el-result {
+  --el-result-icon-font-size: var(--el-result-icon-font-size-override);
+  --el-result-title-font-size: var(--el-result-title-font-size-override);
+}
+
+.el-select {
+  --el-select-input-font-size: var(--el-select-input-font-size-override);
+}
+
+.el-tag {
+  --el-tag-font-size: var(--el-tag-font-size-override);
+}
+
+.el-statistic {
+  --el-statistic-title-font-weight: var(--el-statistic-title-font-weight-override);
+  --el-statistic-content-font-weight: var(--el-statistic-content-font-weight-override);
+}
+
+.el-tour {
+  --el-tour-title-font-size: var(--el-tour-title-font-size-override);
+  --el-tour-title-font-weight: var(--el-tour-title-font-weight-override);
+  --el-tour-font-size: var(--el-tour-font-size-override);
+}
+
+.el-tour.el-tour--primary {
+  --el-tour-title-text-color: var(--el-tour-title-text-color-override);
+  --el-tour-text-color: var(--el-tour-text-color-override);
+  --el-tour-close-color: var(--el-tour-close-color-override);
+}
+
+.el-anchor {
+  --el-anchor-line-height: var(--el-anchor-line-height-override);
+  --el-anchor-font-size: var(--el-anchor-font-size-override);
+}

@@ -1,7 +1,11 @@
 <template>
   <div class="page-login-container" v-cloak :style="backgroundImageStyle">
     <!--suppress HtmlUnknownAttribute -->
-    <div class="login-panel" v-loading="loading" element-loading-background="rgba(0, 0, 0, 0.1)">
+    <div
+      class="login-panel"
+      v-loading="loading"
+      element-loading-background="var(--element-plus-engineering-login-loading-mask-background)"
+    >
       <div class="login-banner">
         <span class="login-panel-text">{{
           t('library.element_plus_engineering.login.banner.author')
@@ -11,33 +15,69 @@
             t('library.element_plus_engineering.login.banner.github')
           }}</span>
           <el-dropdown
-            class="login-locale-selector"
+            class="login-banner-selector"
+            trigger="click"
+            :disabled="!themeStore.ready || themeStore.themeList.length === 0"
+            @command="handleThemeChange"
+          >
+            <el-button
+              class="login-banner-button"
+              type="primary"
+              :disabled="!themeStore.ready || themeStore.themeList.length === 0"
+              :title="t('library.element_plus_engineering.theme_selector.placeholder')"
+              :aria-label="t('library.element_plus_engineering.theme_selector.placeholder')"
+            >
+              <i class="iconfont login-banner-icon" aria-hidden="true">&#xffc7;</i>
+            </el-button>
+            <template v-slot:dropdown>
+              <el-dropdown-menu class="login-selector-menu">
+                <el-dropdown-item
+                  v-for="item in themeStore.themeList"
+                  :key="item.key"
+                  class="login-selector-item"
+                  :class="{ 'is-current': themeStore.theme === item.key }"
+                  :command="item.key"
+                >
+                  <span class="login-selector-label">{{ item.label }}</span>
+                  <el-icon
+                    v-if="themeStore.theme === item.key"
+                    class="login-selector-check"
+                    aria-hidden="true"
+                  >
+                    <check-icon />
+                  </el-icon>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <el-dropdown
+            class="login-banner-selector"
             trigger="click"
             :disabled="!iahnStore.ready || iahnStore.localeList.length === 0"
             @command="handleLocaleChange"
           >
             <el-button
-              class="login-locale-button"
+              class="login-banner-button"
               type="primary"
               :disabled="!iahnStore.ready || iahnStore.localeList.length === 0"
               :title="t('library.element_plus_engineering.locale_selector.placeholder')"
               :aria-label="t('library.element_plus_engineering.locale_selector.placeholder')"
             >
-              <i class="iconfont login-locale-icon" aria-hidden="true">&#xffc8;</i>
+              <i class="iconfont login-banner-icon" aria-hidden="true">&#xffc8;</i>
             </el-button>
             <template v-slot:dropdown>
-              <el-dropdown-menu class="login-locale-menu">
+              <el-dropdown-menu class="login-selector-menu login-locale-menu">
                 <el-dropdown-item
                   v-for="item in iahnStore.localeList"
                   :key="item.locale"
-                  class="login-locale-item"
+                  class="login-selector-item"
                   :class="{ 'is-current': iahnStore.locale === item.locale }"
                   :command="item.locale"
                 >
-                  <span class="login-locale-label" :lang="item.locale">{{ item.label }}</span>
+                  <span class="login-selector-label" :lang="item.locale">{{ item.label }}</span>
                   <el-icon
                     v-if="iahnStore.locale === item.locale"
-                    class="login-locale-check"
+                    class="login-selector-check"
                     aria-hidden="true"
                   >
                     <check-icon />
@@ -106,6 +146,7 @@ import { useI18n } from 'vue-i18n'
 
 import { type LnpStore } from '@/store/modules/lnp.ts'
 import { type IahnStore } from '@/store/modules/iahn.ts'
+import { type ThemeStore } from '@/store/modules/theme.ts'
 
 import backgroundImg from '@/assets/img/login-background.jpg'
 
@@ -125,6 +166,15 @@ const { t } = useI18n()
 
 const lnpStore = vim.ctx().store().vueStore<'lnp', LnpStore>('lnp')
 const iahnStore = vim.ctx().store().vueStore<'iahn', IahnStore>('iahn')
+const themeStore = vim.ctx().store().vueStore<'theme', ThemeStore>('theme')
+
+// endregion
+
+// region 主题切换逻辑
+
+function handleThemeChange(theme: string): void {
+  themeStore.setTheme(theme)
+}
 
 // endregion
 
@@ -212,11 +262,11 @@ function handleHotKeyDown(event: KeyboardEvent): void {
 }
 
 .login-panel {
-  background-color: rgba(128, 128, 128, 0.5);
+  background-color: var(--element-plus-engineering-login-panel-background);
   height: min(600px, 75%);
   width: min(800px, 75%);
   border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--el-box-shadow-dark);
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -278,18 +328,20 @@ function handleHotKeyDown(event: KeyboardEvent): void {
   margin-bottom: 40px;
 }
 
+/*noinspection CssNoGenericFontName*/
 .login-header-title-chs {
-  font-size: 64px;
-  font-family: 微软雅黑, serif;
-  color: #7bbdff;
-  text-shadow: 0 0 8px black;
+  font-size: var(--element-plus-engineering-font-size-login-title);
+  font-family: var(--element-plus-engineering-font-family);
+  color: var(--element-plus-engineering-login-accent-color);
+  text-shadow: var(--element-plus-engineering-login-title-shadow);
 }
 
+/*noinspection CssNoGenericFontName*/
 .login-header-title-en {
-  font-size: 24px;
-  font-family: 微软雅黑, serif;
-  color: #7bbdff;
-  text-shadow: 0 0 4px black;
+  font-size: var(--element-plus-engineering-font-size-login-subtitle);
+  font-family: var(--element-plus-engineering-font-family);
+  color: var(--element-plus-engineering-login-accent-color);
+  text-shadow: var(--element-plus-engineering-login-subtitle-shadow);
 }
 
 .login-main-status {
@@ -313,42 +365,42 @@ function handleHotKeyDown(event: KeyboardEvent): void {
   height: 40px;
   border-radius: 25px;
   margin-bottom: 10px;
-  background: #7bbdff;
-  border-color: #7bbdff;
+  background: var(--element-plus-engineering-login-accent-color);
+  border-color: var(--element-plus-engineering-login-accent-color);
 }
 
-.login-locale-selector {
+.login-banner-selector {
   flex-shrink: 0;
 }
 
-.login-locale-button {
+.login-banner-button {
   height: 28px;
   width: 28px;
   padding: 7px;
 }
 
-.login-locale-icon {
-  color: #ffffff;
-  font-size: 18px;
+.login-banner-icon {
+  color: var(--element-plus-engineering-login-text-color);
+  font-size: var(--el-font-size-large);
   line-height: 1;
 }
 
-.login-locale-menu {
+.login-selector-menu {
   min-width: 160px;
 }
 
-.login-locale-item {
+.login-selector-item {
   display: flex;
   align-items: center;
   gap: 16px;
 }
 
-.login-locale-item.is-current {
+.login-selector-item.is-current {
   color: var(--el-color-primary);
-  font-weight: 500;
+  font-weight: var(--el-font-weight-primary);
 }
 
-.login-locale-label {
+.login-selector-label {
   min-width: 0;
   flex-grow: 1;
   overflow: hidden;
@@ -356,7 +408,7 @@ function handleHotKeyDown(event: KeyboardEvent): void {
   white-space: nowrap;
 }
 
-.login-locale-check {
+.login-selector-check {
   flex-shrink: 0;
 }
 
@@ -366,8 +418,8 @@ function handleHotKeyDown(event: KeyboardEvent): void {
 }
 
 .login-panel-text {
-  color: #7bbdff;
-  text-shadow: 0 0 4px black;
+  color: var(--element-plus-engineering-login-accent-color);
+  text-shadow: var(--element-plus-engineering-login-subtitle-shadow);
 }
 
 .login-placeholder {

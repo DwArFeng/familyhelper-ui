@@ -58,15 +58,18 @@ function toggleClick(): void {
   padding: 0 15px;
 }
 
+/*noinspection CssUnresolvedCustomProperty*/
 .hamburger-container:hover {
-  background: rgba(0, 0, 0, 0.025);
+  background: var(--element-plus-engineering-hover-background);
 }
 
+/*noinspection CssUnresolvedCustomProperty*/
 .hamburger {
   display: inline-block;
   vertical-align: middle;
   width: 20px;
   height: 20px;
+  fill: var(--element-plus-engineering-navbar-text-color);
 }
 
 .hamburger.is-active {

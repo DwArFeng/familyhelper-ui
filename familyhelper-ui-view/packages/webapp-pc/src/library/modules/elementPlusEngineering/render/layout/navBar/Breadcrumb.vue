@@ -60,7 +60,7 @@ const currentNodePath = computed<NodeInfo[]>(() => {
 <style scoped>
 .breadcrumb-container {
   display: inline-block;
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
 }
 
 /*noinspection CssUnusedSymbol*/

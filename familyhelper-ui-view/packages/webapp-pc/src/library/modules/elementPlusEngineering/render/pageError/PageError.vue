@@ -61,11 +61,12 @@ const pageErrorStore = vim.ctx().store().vueStore<'page-error', PageErrorStore>(
   align-items: center;
 }
 
+/*noinspection CssNoGenericFontName*/
 .error-header-title-chs {
-  font-size: 58px;
-  font-family: 微软雅黑, serif;
-  color: #7bbdff;
-  text-shadow: 0 0 8px black;
+  font-size: var(--element-plus-engineering-font-size-error-title);
+  font-family: var(--element-plus-engineering-font-family);
+  color: var(--element-plus-engineering-error-title-color);
+  text-shadow: var(--element-plus-engineering-error-title-shadow);
   margin-bottom: 10px;
 }
 
@@ -74,11 +75,11 @@ const pageErrorStore = vim.ctx().store().vueStore<'page-error', PageErrorStore>(
   flex-grow: 1;
 }
 
-/*noinspection CssUnusedSymbol*/
+/*noinspection CssUnusedSymbol,CssNoGenericFontName*/
 .error-message-container :deep(.el-textarea__inner) {
   height: 100%;
-  background: rgba(255, 255, 255, 0.8);
-  font-size: 14px;
-  font-family: 微软雅黑, serif;
+  background: var(--element-plus-engineering-error-text-background);
+  font-size: var(--el-font-size-base);
+  font-family: var(--element-plus-engineering-font-family);
 }
 </style>

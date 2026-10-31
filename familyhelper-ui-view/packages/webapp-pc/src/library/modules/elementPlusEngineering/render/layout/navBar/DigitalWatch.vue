@@ -41,15 +41,9 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/*noinspection CssNoGenericFontName*/
 .digital-watch-container {
-  font-size: 14px;
-  font-family:
-    Helvetica Neue,
-    Helvetica,
-    PingFang SC,
-    Hiragino Sans GB,
-    Microsoft YaHei,
-    Arial,
-    sans-serif;
+  font-size: var(--el-font-size-base);
+  font-family: var(--element-plus-engineering-font-family);
 }
 </style>

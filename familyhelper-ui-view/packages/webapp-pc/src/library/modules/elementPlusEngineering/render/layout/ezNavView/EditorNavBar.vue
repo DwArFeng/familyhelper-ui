@@ -64,10 +64,10 @@ function handleDelete(): void {
   cursor: move;
   height: 28px;
   line-height: 26px;
-  border: 1px solid #d8dce5;
-  color: #495060;
-  background: #fff;
-  font-size: 12px;
+  border: 1px solid var(--element-plus-engineering-ez-nav-border-color);
+  color: var(--element-plus-engineering-ez-nav-text-color);
+  background: var(--element-plus-engineering-ez-nav-background);
+  font-size: var(--element-plus-engineering-font-size-small);
   white-space: nowrap;
   padding: 0 4px;
 }
@@ -80,12 +80,12 @@ function handleDelete(): void {
 
 .close-icon {
   text-align: center;
-  font-size: 14px;
-  color: #f56c6c;
+  font-size: var(--element-plus-engineering-font-size-base);
+  color: var(--el-color-danger);
   cursor: pointer;
 }
 
 .close-icon:hover {
-  background: #eeeeee;
+  background: var(--element-plus-engineering-menu-hover-background);
 }
 </style>

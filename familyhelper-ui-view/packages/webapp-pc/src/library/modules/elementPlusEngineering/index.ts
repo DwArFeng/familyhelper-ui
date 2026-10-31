@@ -15,13 +15,19 @@ import { computed, type VNode, watch } from 'vue'
 import ElementPLUS, { ElMessage, provideGlobalConfig } from 'element-plus'
 
 import { i18n } from '@/library/modules/iahn/index.ts'
+import { type ThemeStore } from '@/store/modules/theme.ts'
 import { type VisualizerStore } from '@/store/modules/visualizer.ts'
 
 import { elementPlusLocale, setElementPlusEngineeringVisualizerActive } from './util/i18n.ts'
+import {
+  applyElementPlusEngineeringThemeValues,
+  ELEMENT_PLUS_ENGINEERING_VISUALIZER_KEY,
+} from './util/theme.ts'
 
 import 'element-plus/dist/index.css'
 
 import './global.css'
+import './theme-bridge.css'
 
 // 组件导入。
 import LayoutComponent from './render/layout/Layout.vue'
@@ -35,25 +41,48 @@ const vimLibraryModule: VimLibraryModule = {
   provideVisualizerSetting,
 }
 
-function init(ctx: VimApplicationContext): void {
+let applicationContext: VimApplicationContext | null = null
+
+function init(_ctx: VimApplicationContext): void {
+  applicationContext = _ctx
   provideGlobalConfig(
     computed(() => ({
       locale: elementPlusLocale.value,
     })),
-    ctx.app,
+    _ctx.app,
     true,
   )
-  ctx.app.use(ElementPLUS)
-  ctx.registerVimInitializedHook(() => {
-    const visualizerStore = ctx.store().vueStore<'visualizer', VisualizerStore>('visualizer')
-    watch(
-      () => visualizerStore.visualizerKey,
-      (visualizerKey) => {
-        setElementPlusEngineeringVisualizerActive(visualizerKey === 'element-plus-engineering')
-      },
-      { immediate: true },
-    )
-  }, 1)
+  _ctx.app.use(ElementPLUS)
+  _ctx.registerVimInitializedHook(vimInitializedHook, 1)
+}
+
+function vimInitializedHook(): void {
+  if (!applicationContext) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
+  const visualizerStore = applicationContext
+    .store()
+    .vueStore<'visualizer', VisualizerStore>('visualizer')
+  const themeStore = applicationContext.store().vueStore<'theme', ThemeStore>('theme')
+  watch(
+    () => ({
+      visualizerKey: visualizerStore.visualizerKey,
+      ready: themeStore.ready,
+      themeItem: themeStore.themeItem,
+    }),
+    (value) => {
+      const active = value.visualizerKey === ELEMENT_PLUS_ENGINEERING_VISUALIZER_KEY
+      setElementPlusEngineeringVisualizerActive(active)
+      if (!active || !document.documentElement) {
+        return
+      }
+      applyElementPlusEngineeringThemeValues(
+        document.documentElement,
+        value.ready ? value.themeItem?.value : null,
+      )
+    },
+    { immediate: true, deep: true },
+  )
 }
 
 function provideVisualizerSetting(): VisualizerSetting {

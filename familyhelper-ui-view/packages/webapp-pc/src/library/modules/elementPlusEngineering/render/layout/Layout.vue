@@ -55,8 +55,8 @@ const ezNavVisible = computed<boolean>(() => vim.ctx().navigation().setting.ezNa
 }
 
 .side-bar {
-  color: #889aa4;
-  background-color: #2d3a4b;
+  color: var(--element-plus-engineering-sidebar-text-color);
+  background-color: var(--element-plus-engineering-sidebar-background);
   width: 230px;
   padding: 0;
   margin: 0;
@@ -69,7 +69,7 @@ const ezNavVisible = computed<boolean>(() => vim.ctx().navigation().setting.ezNa
   display: flex;
   flex-direction: column;
   padding: 0;
-  background-color: #ffffff;
+  background-color: var(--element-plus-engineering-workbench-background);
 }
 
 .router-container {
@@ -83,9 +83,7 @@ const ezNavVisible = computed<boolean>(() => vim.ctx().navigation().setting.ezNa
 
 /*noinspection CssUnusedSymbol*/
 .bottom-shadow {
-  border-bottom: 1px solid #d8dce5;
-  box-shadow:
-    0 1px 3px 0 rgba(0, 0, 0, 0.12),
-    0 0 3px 0 rgba(0, 0, 0, 0.04);
+  border-bottom: 1px solid var(--element-plus-engineering-navbar-border-color);
+  box-shadow: var(--element-plus-engineering-panel-shadow);
 }
 </style>

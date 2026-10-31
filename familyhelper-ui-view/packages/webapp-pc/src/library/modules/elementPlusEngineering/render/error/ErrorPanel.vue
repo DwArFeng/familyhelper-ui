@@ -100,11 +100,11 @@ function handleBackToHomeButtonClicked(): void {
 
 .error-panel {
   position: relative;
-  background-color: rgba(225, 225, 225, 0.5);
+  background-color: var(--element-plus-engineering-error-panel-background);
   height: min(768px, 85%);
   width: min(1024px, 85%);
   border-radius: 5px;
-  box-shadow: 2px 2px 5px #808080;
+  box-shadow: var(--el-box-shadow-dark);
   z-index: 1;
   display: flex;
   flex-direction: column;

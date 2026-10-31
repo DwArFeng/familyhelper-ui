@@ -129,7 +129,7 @@ function handleLogoutCommand(): void {
 }
 
 .avatar-wrapper:hover {
-  background: rgba(0, 0, 0, 0.025);
+  background: var(--element-plus-engineering-hover-background);
 }
 
 .avatar {
