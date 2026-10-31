@@ -100,6 +100,26 @@ const compregSettings: ComponentSetting[] = [
     },
   },
   {
+    key: 'developerTools.themeSettings',
+    name: '主题设置',
+    description: '维护各可视化器的主题列表与配置',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+      elementPlusEngineering: {},
+    },
+    component: {
+      '': () => import('@/views/nodes/comvisual/developerTools/themeSettings/ThemeSettings.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/developerTools/themeSettings/ThemeSettings.vue'),
+      elementPlus: () =>
+        import('@/views/nodes/comvisual/developerTools/themeSettings/ThemeSettings.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/comvisual/developerTools/themeSettings/ThemeSettings.vue'),
+    },
+  },
+  {
     key: 'developerTools.visualizerSupport',
     name: '可视化器支持',
     description: '可视化器支持',

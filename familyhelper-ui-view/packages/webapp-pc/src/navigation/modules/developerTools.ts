@@ -207,6 +207,46 @@ const nodeSettings: NodeSetting[] = [
   },
   {
     parentKey: 'developerTools',
+    key: 'developerTools.themeSettings',
+    index: 50,
+    display: {
+      '': {
+        label: '主题设置',
+      },
+      comvisual: {
+        label: '主题设置',
+      },
+      elementPlus: {
+        label: '主题设置',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.developer_tools.theme_settings',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'developer-tools/theme-settings',
+      component: {
+        key: 'developerTools.themeSettings',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.developer_tools.theme_settings',
+    },
+  },
+  {
+    parentKey: 'developerTools',
     key: 'developerTools.visualizerSupport',
     index: 900,
     display: {
