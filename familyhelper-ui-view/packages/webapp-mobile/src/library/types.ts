@@ -117,6 +117,11 @@ export type VisualizerInfo = {
   supportIahn: boolean
 
   /**
+   * 是否支持主题。
+   */
+  supportTheme: boolean
+
+  /**
    * Visualizer 实现。
    */
   visualizer: Visualizer
@@ -171,6 +176,11 @@ export type VisualizerSetting = {
    * 是否支持 IAHN 国际化。
    */
   supportIahn: boolean
+
+  /**
+   * 是否支持主题。
+   */
+  supportTheme: boolean
 }
 
 /**

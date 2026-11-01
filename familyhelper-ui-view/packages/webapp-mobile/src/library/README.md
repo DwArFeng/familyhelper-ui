@@ -130,6 +130,7 @@ function provideVisualizerSetting(): VisualizerSetting {
         description: '演示用可视化器',
         exampleDisplay: {},
         supportIahn: false,
+        supportTheme: false,
     }
 }
 
@@ -176,6 +177,7 @@ function provideVisualizerSetting(): VisualizerSetting {
         description: '示例可视化器',
         exampleDisplay: {},
         supportIahn: false,
+        supportTheme: false,
         visualizer: {
             // 对于 notify 方法，建议根据不同的类型进行不同的处理，以简化代码复杂度。
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
