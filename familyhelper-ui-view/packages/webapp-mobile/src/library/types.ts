@@ -122,6 +122,11 @@ export type VisualizerInfo = {
   supportTheme: boolean
 
   /**
+   * 是否支持自定义。
+   */
+  supportCustomize: boolean
+
+  /**
    * Visualizer 实现。
    */
   visualizer: Visualizer
@@ -181,6 +186,11 @@ export type VisualizerSetting = {
    * 是否支持主题。
    */
   supportTheme: boolean
+
+  /**
+   * 是否支持自定义。
+   */
+  supportCustomize: boolean
 }
 
 /**

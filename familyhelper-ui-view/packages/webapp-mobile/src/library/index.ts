@@ -79,6 +79,7 @@ async function init(ctx: VimApplicationContext): Promise<void> {
       exampleDisplay: setting.exampleDisplay,
       supportIahn: setting.supportIahn,
       supportTheme: setting.supportTheme,
+      supportCustomize: setting.supportCustomize,
     }
   }
 
