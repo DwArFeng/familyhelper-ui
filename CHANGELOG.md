@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块国际化功能优化。
+  - 增加 library 模块 Visualizer 的 `supportIahn` 属性，用于标识可视化方案是否支持国际化和输出国际化示例消息键。
+  - 优化 store 模块下的 `iahn.ts` 模块项目的加载方式。
+
 - `component-util` 子模块功能新增。
   - 新增 `src/util/string.ts` 中的工具方法。
 

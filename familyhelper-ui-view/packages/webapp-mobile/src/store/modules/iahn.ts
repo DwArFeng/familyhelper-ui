@@ -1,9 +1,10 @@
 // noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
-import { computed, type ComputedRef, ref } from 'vue'
+import { computed, type ComputedRef, ref, watch } from 'vue'
 
 import { type VimApplicationContext } from '@/vim/types.ts'
 import { type StoreSetup, type VimStoreModule } from '@/store/types.ts'
+import { type VisualizerStore } from '@/store/modules/visualizer.ts'
 
 import {
   type IahnNodeMessageTableInspectResult,
@@ -16,6 +17,7 @@ import {
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
 
 import { formatLocale } from '@dwarfeng/familyhelper-ui-component-util/src/util/i18n.ts'
+import { toSnakeCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
 
 import {
   applyIahnMessageSets,
@@ -41,8 +43,7 @@ let ctx: VimApplicationContext | null = null
  */
 function init(_ctx: VimApplicationContext): void {
   ctx = _ctx
-  ctx.registerVimInitializedHook(vimInitializedLoadHook)
-  ctx.registerWindowLoadHook(windowLoadHook)
+  ctx.registerVimInitializedHook(vimInitializedHook)
 }
 
 // endregion
@@ -135,43 +136,73 @@ type IahnPersistenceData = {
 const IAHN_LOCAL_STORAGE_KEY: string = 'store.persistence_data.iahn'
 // IAHN 配置仓库分类。
 const IAHN_SETTINGREPO_CATEGORY: string = 'framework.mobile.iahn'
-// IAHN 地区列表配置参数。
-const IAHN_SETTINGREPO_ARGS_LOCALE_LIST: string[] = ['locale_list']
-// IAHN 国际化仓库配置参数。
-const IAHN_SETTINGREPO_ARGS_REPO: string[] = ['repo']
+// IAHN 地区列表配置参数的基础部分。
+const IAHN_SETTINGREPO_ARGS_LOCALE_LIST: string = 'locale_list'
+// IAHN 国际化仓库配置参数的基础部分。
+const IAHN_SETTINGREPO_ARGS_REPO: string = 'repo'
+
+/**
+ * 已触发 IAHN 加载的 Visualizer key。
+ *
+ * Visualizer 在应用生命周期中只确定一次，因此保存该值可以防止响应式监听重复发起加载请求。
+ */
+let handledVisualizerKey: string | null = null
 
 /**
  * VIM 初始化钩子。
  */
-function vimInitializedLoadHook(): void {
+function vimInitializedHook(): void {
+  if (!ctx) {
+    throw new Error('不应该执行到此处, 请联系开发人员')
+  }
   const persistenceData = loadPersistenceData()
   if (persistenceData) {
     _locale.value = persistenceData.locale
     setIahnLocale(persistenceData.locale)
   }
-}
-
-/**
- * Window 加载钩子。
- */
-function windowLoadHook(): void {
-  loadIahn().then(() => {})
+  const visualizerStore = ctx.store().vueStore<'visualizer', VisualizerStore>('visualizer')
+  watch(
+    () => ({
+      ready: visualizerStore.ready,
+      visualizerKey: visualizerStore.ready ? visualizerStore.visualizerKey : null,
+    }),
+    (value) => {
+      if (!value.ready || !value.visualizerKey) {
+        return
+      }
+      if (handledVisualizerKey === value.visualizerKey) {
+        return
+      }
+      handledVisualizerKey = value.visualizerKey
+      const supportIahn = ctx?.library().visualizerInfo(value.visualizerKey)?.supportIahn ?? false
+      loadIahn(value.visualizerKey, supportIahn).then(() => {})
+    },
+    { immediate: true },
+  )
 }
 
 /**
  * 加载 IAHN 数据。
+ *
+ * 只有支持 IAHN 的 Visualizer 才需要访问配置仓库。对于不支持 IAHN 的 Visualizer，
+ * 直接结束初始化流程，避免不必要的网络请求与消息处理。
+ *
+ * @param visualizerKey 当前 Visualizer 的 key。
+ * @param supportIahn 当前 Visualizer 是否支持 IAHN。
  */
-async function loadIahn(): Promise<void> {
+async function loadIahn(visualizerKey: string, supportIahn: boolean): Promise<void> {
   if (!ctx) {
     throw new Error('不应该执行到此处, 请联系开发人员')
   }
 
+  if (!supportIahn) {
+    setReady()
+    return
+  }
+
   try {
-    const [localeListResult, repoResult] = await Promise.all([
-      loadLocaleListFromSettingrepo(),
-      loadRepoFromSettingrepo(),
-    ])
-    const parsedLocaleList = parseIahnLocaleList(localeListResult?.value)
+    const [localeListResult, repoResult] = await loadIahnFromSettingrepo(visualizerKey)
+    const parsedLocaleList = parseIahnLocaleList(localeListResult.value)
     _localeList.value = parsedLocaleList
     await applyIahnMessageSets(buildIahnMessageSets(repoResult))
     const resolvedLocale = resolveIahnLocaleKey(parsedLocaleList, _locale.value)
@@ -179,22 +210,51 @@ async function loadIahn(): Promise<void> {
     setIahnLocale(resolvedLocale)
     persistLocale(resolvedLocale)
   } catch (e: unknown) {
-    notifyLoadError(e)
+    const message = e instanceof Error ? e.message : i18n.global.t('store.iahn.error.unknown')
+    ctx
+      .library()
+      .defaultVisualizerInfo()
+      .visualizer.notify('errorMessage', i18n.global.t('store.iahn.error.load'))
+    ctx.library().defaultVisualizerInfo().visualizer.notify('errorMessage', message)
   } finally {
+    // 无论配置加载成功或失败，都结束支持 IAHN 的初始化流程。
     setReady()
   }
 }
 
 /**
+ * 加载并校验 Visualizer 的 IAHN 配置。
+ *
+ * @param visualizerKey 当前 Visualizer 的 key。
+ * @returns 地区列表与消息仓库配置。
+ */
+async function loadIahnFromSettingrepo(
+  visualizerKey: string,
+): Promise<[TextNodeInspectResult, IahnNodeMessageTableInspectResult]> {
+  const settingrepoArgsPrefix = toSnakeCase(visualizerKey)
+  const [localeListResult, repoResult] = await Promise.all([
+    loadLocaleListFromSettingrepo(settingrepoArgsPrefix),
+    loadRepoFromSettingrepo(settingrepoArgsPrefix),
+  ])
+  if (!localeListResult || !repoResult) {
+    throw new Error(`Visualizer ${visualizerKey} 的 IAHN 配置不存在`)
+  }
+  return [localeListResult, repoResult]
+}
+
+/**
  * 从配置仓库加载地区列表。
  *
+ * @param settingrepoArgsPrefix 配置仓库参数中的 Visualizer 前缀。
  * @returns 地区列表配置。
  */
-async function loadLocaleListFromSettingrepo(): Promise<TextNodeInspectResult | null> {
+async function loadLocaleListFromSettingrepo(
+  settingrepoArgsPrefix: string,
+): Promise<TextNodeInspectResult | null> {
   return (await resolveResponse(
     textNodeOperateInspect({
       category: IAHN_SETTINGREPO_CATEGORY,
-      args: IAHN_SETTINGREPO_ARGS_LOCALE_LIST,
+      args: [settingrepoArgsPrefix, IAHN_SETTINGREPO_ARGS_LOCALE_LIST],
     }),
   )) as TextNodeInspectResult | null
 }
@@ -202,13 +262,16 @@ async function loadLocaleListFromSettingrepo(): Promise<TextNodeInspectResult | 
 /**
  * 从配置仓库加载国际化消息表。
  *
+ * @param settingrepoArgsPrefix 配置仓库参数中的 Visualizer 前缀。
  * @returns 国际化消息表。
  */
-async function loadRepoFromSettingrepo(): Promise<IahnNodeMessageTableInspectResult | null> {
+async function loadRepoFromSettingrepo(
+  settingrepoArgsPrefix: string,
+): Promise<IahnNodeMessageTableInspectResult | null> {
   return (await resolveResponse(
     inspectMessageTableForPublic({
       category: IAHN_SETTINGREPO_CATEGORY,
-      args: IAHN_SETTINGREPO_ARGS_REPO,
+      args: [settingrepoArgsPrefix, IAHN_SETTINGREPO_ARGS_REPO],
     }),
   )) as IahnNodeMessageTableInspectResult | null
 }
@@ -249,23 +312,6 @@ function persistLocale(value: string): void {
   } catch {
     window.localStorage.removeItem(IAHN_LOCAL_STORAGE_KEY)
   }
-}
-
-/**
- * 通知加载错误。
- *
- * @param e 错误对象。
- */
-function notifyLoadError(e: unknown): void {
-  if (!ctx) {
-    return
-  }
-  const message = e instanceof Error ? e.message : i18n.global.t('store.iahn.error.unknown')
-  ctx
-    .library()
-    .defaultVisualizerInfo()
-    .visualizer.notify('errorMessage', i18n.global.t('store.iahn.error.load'))
-  ctx.library().defaultVisualizerInfo().visualizer.notify('errorMessage', message)
 }
 
 // endregion

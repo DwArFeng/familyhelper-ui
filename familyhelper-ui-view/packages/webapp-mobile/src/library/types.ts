@@ -112,6 +112,11 @@ export type VisualizerInfo = {
   exampleDisplay: JsonObject
 
   /**
+   * 是否支持 IAHN 国际化。
+   */
+  supportIahn: boolean
+
+  /**
    * Visualizer 实现。
    */
   visualizer: Visualizer
@@ -161,6 +166,11 @@ export type VisualizerSetting = {
    * 示例显示配置（JSON 对象）。
    */
   exampleDisplay: JsonObject
+
+  /**
+   * 是否支持 IAHN 国际化。
+   */
+  supportIahn: boolean
 }
 
 /**
