@@ -191,10 +191,9 @@ watch(
   flex-wrap: wrap;
 }
 
-.detail-form :deep(label) {
+.detail-form :deep(.el-form-item__label) {
   width: 240px;
   color: #99a9bf;
-  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -204,7 +203,6 @@ watch(
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/

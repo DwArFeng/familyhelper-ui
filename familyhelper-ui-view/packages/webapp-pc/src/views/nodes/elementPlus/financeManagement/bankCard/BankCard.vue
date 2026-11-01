@@ -25,7 +25,9 @@
           <template v-slot:default="{ item }">
             <div class="bank-card-card-container">
               <div class="bank-card-property">
-                <span class="iconfont bank-card-property-icon" style="color: black">&#xffee;</span>
+                <span class="iconfont bank-card-property-icon" style="color: #303133"
+                  >&#xffee;</span
+                >
                 <!--suppress JSUnresolvedVariable -->
                 <div class="bank-card-property-text">
                   <span>类型: </span>
@@ -40,14 +42,18 @@
                 </div>
               </div>
               <div class="bank-card-property">
-                <span class="iconfont bank-card-property-icon" style="color: black">&#xfff9;</span>
+                <span class="iconfont bank-card-property-icon" style="color: #303133"
+                  >&#xfff9;</span
+                >
                 <!--suppress JSUnresolvedVariable -->
                 <span class="bank-card-property-text">
                   余额: {{ (item as BankCardCardItem).balance_value }}
                 </span>
               </div>
               <div class="bank-card-property">
-                <span class="iconfont bank-card-property-icon" style="color: black">&#xffef;</span>
+                <span class="iconfont bank-card-property-icon" style="color: #303133"
+                  >&#xffef;</span
+                >
                 <!--suppress JSUnresolvedVariable -->
                 <span class="bank-card-property-text">
                   记录日期: {{ (item as BankCardCardItem).formatted_last_recorded_date }}
@@ -532,7 +538,7 @@ async function handleBankCardEdit(item: BankCardMaintainDialogItem): Promise<voi
 
 .bank-card-property {
   width: 100%;
-  color: black;
+  color: #303133;
   display: flex;
   flex-direction: row;
   align-items: center;

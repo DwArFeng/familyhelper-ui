@@ -27,7 +27,7 @@
           <template v-slot:default="{ item }">
             <div class="asset-catalog-card-container">
               <div class="asset-catalog-property">
-                <span class="iconfont asset-catalog-property-icon" style="color: black">
+                <span class="iconfont asset-catalog-property-icon" style="color: #303133">
                   &#xfffa;
                 </span>
                 <span class="asset-catalog-property-text">
@@ -35,7 +35,7 @@
                 </span>
               </div>
               <div class="asset-catalog-property">
-                <span class="iconfont asset-catalog-property-icon" style="color: black">
+                <span class="iconfont asset-catalog-property-icon" style="color: #303133">
                   &#xfffb;
                 </span>
                 <span class="asset-catalog-property-text">
@@ -43,7 +43,7 @@
                 </span>
               </div>
               <div class="asset-catalog-property">
-                <span class="iconfont asset-catalog-property-icon" style="color: black">
+                <span class="iconfont asset-catalog-property-icon" style="color: #303133">
                   &#xffe7;
                 </span>
                 <span class="asset-catalog-property-text">
@@ -51,7 +51,7 @@
                 </span>
               </div>
               <div class="asset-catalog-property">
-                <span class="iconfont asset-catalog-property-icon" style="color: black">
+                <span class="iconfont asset-catalog-property-icon" style="color: #303133">
                   &#xffef;
                 </span>
                 <span class="asset-catalog-property-text">
@@ -470,7 +470,7 @@ const permitMaintainDialogAssetCatalogId = ref<string>('')
 
 .asset-catalog-property {
   width: 100%;
-  color: black;
+  color: #303133;
   display: flex;
   flex-direction: row;
   align-items: center;

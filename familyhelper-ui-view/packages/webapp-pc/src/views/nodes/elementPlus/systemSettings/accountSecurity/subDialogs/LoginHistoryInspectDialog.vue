@@ -285,7 +285,6 @@ function formatResponseCode(responseCode: LoginResponseCode): string {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .empty-placeholder {

@@ -268,7 +268,6 @@ onMounted(() => {
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
   color: #99a9bf;
-  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -278,7 +277,6 @@ onMounted(() => {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/

@@ -638,7 +638,6 @@ defineExpose({
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .property-container .form-tag:not(:first-child) {

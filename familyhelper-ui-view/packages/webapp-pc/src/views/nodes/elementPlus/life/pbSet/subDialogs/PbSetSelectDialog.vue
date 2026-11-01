@@ -33,25 +33,33 @@
             <template v-slot:default="{ item }">
               <div class="pb-set-card-container">
                 <div class="pb-set-property">
-                  <span class="iconfont pb-set-property-icon" style="color: black"> &#xfffa; </span>
+                  <span class="iconfont pb-set-property-icon" style="color: #303133">
+                    &#xfffa;
+                  </span>
                   <span class="pb-set-property-text">
                     权限: {{ (item as PbSetCardItem).formatted_permission_level }}
                   </span>
                 </div>
                 <div class="pb-set-property">
-                  <span class="iconfont pb-set-property-icon" style="color: black"> &#xfffb; </span>
+                  <span class="iconfont pb-set-property-icon" style="color: #303133">
+                    &#xfffb;
+                  </span>
                   <span class="pb-set-property-text">
                     所有者: {{ (item as PbSetCardItem).owner_display_name }}
                   </span>
                 </div>
                 <div class="pb-set-property">
-                  <span class="iconfont pb-set-property-icon" style="color: black"> &#xffe7; </span>
+                  <span class="iconfont pb-set-property-icon" style="color: #303133">
+                    &#xffe7;
+                  </span>
                   <span class="pb-set-property-text">
                     项目总数: {{ (item as PbSetCardItem).item_count }}
                   </span>
                 </div>
                 <div class="pb-set-property">
-                  <span class="iconfont pb-set-property-icon" style="color: black"> &#xffef; </span>
+                  <span class="iconfont pb-set-property-icon" style="color: #303133">
+                    &#xffef;
+                  </span>
                   <span class="pb-set-property-text">
                     创建日期: {{ (item as PbSetCardItem).formatted_created_date }}
                   </span>
@@ -301,7 +309,7 @@ function handleHotKeyDown(): void {
 
 .pb-set-property {
   width: 100%;
-  color: black;
+  color: #303133;
   display: flex;
   flex-direction: row;
   align-items: center;

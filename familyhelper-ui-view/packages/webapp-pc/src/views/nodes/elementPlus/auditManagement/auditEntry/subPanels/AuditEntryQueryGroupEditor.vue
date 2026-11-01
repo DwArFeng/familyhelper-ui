@@ -252,26 +252,22 @@ function emitGroup(updater: (group: GroupedQueryGroupDraft) => void): void {
   border-radius: 4px;
   padding: 10px;
   box-sizing: border-box;
-  background: #fafafa;
 }
 
 /*noinspection CssUnusedSymbol*/
 .audit-entry-query-group-editor-container.depth-1 {
   border-left-color: #67c23a;
-  background: #f8faf5;
 }
 
 /*noinspection CssUnusedSymbol*/
 .audit-entry-query-group-editor-container.depth-2 {
   border-left-color: #e6a23c;
-  background: #fffaf0;
 }
 
 /*noinspection CssUnusedSymbol*/
 .audit-entry-query-group-editor-container.depth-3,
 .audit-entry-query-group-editor-container.depth-4 {
   border-left-color: #f56c6c;
-  background: #fff6f6;
 }
 
 .group-header {

@@ -503,7 +503,6 @@ async function handleUpload(files: File[]): Promise<void> {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .editor-container {

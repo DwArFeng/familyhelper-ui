@@ -27,7 +27,7 @@
           <template v-slot:default="{ item }">
             <div class="account-book-card-container">
               <div class="account-book-property">
-                <span class="iconfont account-book-property-icon" style="color: black">
+                <span class="iconfont account-book-property-icon" style="color: #303133">
                   &#xfffa;
                 </span>
                 <span class="account-book-property-text">
@@ -35,7 +35,7 @@
                 </span>
               </div>
               <div class="account-book-property">
-                <span class="iconfont account-book-property-icon" style="color: black">
+                <span class="iconfont account-book-property-icon" style="color: #303133">
                   &#xfffb;
                 </span>
                 <span class="account-book-property-text">
@@ -43,7 +43,7 @@
                 </span>
               </div>
               <div class="account-book-property">
-                <span class="iconfont account-book-property-icon" style="color: black">
+                <span class="iconfont account-book-property-icon" style="color: #303133">
                   &#xfff9;
                 </span>
                 <span class="account-book-property-text">
@@ -51,7 +51,7 @@
                 </span>
               </div>
               <div class="account-book-property">
-                <span class="iconfont account-book-property-icon" style="color: black">
+                <span class="iconfont account-book-property-icon" style="color: #303133">
                   &#xffef;
                 </span>
                 <span class="account-book-property-text">
@@ -491,7 +491,7 @@ const functionMaintainDialogAccountBookId = ref<string>('')
 
 .account-book-property {
   width: 100%;
-  color: black;
+  color: #303133;
   display: flex;
   flex-direction: row;
   align-items: center;

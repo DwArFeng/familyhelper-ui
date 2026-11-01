@@ -325,6 +325,5 @@ function handleApplyChangesClicked(): void {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 </style>

@@ -250,10 +250,9 @@ async function handleNoteNodeEdit(item: NoteNodeMaintainDialogItem): Promise<voi
   flex-wrap: wrap;
 }
 
-.property-container .property-form :deep(label) {
+.property-container .property-form :deep(.el-form-item__label) {
   width: 240px;
   color: #99a9bf;
-  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -273,7 +272,6 @@ async function handleNoteNodeEdit(item: NoteNodeMaintainDialogItem): Promise<voi
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .property-container .property-form :deep(textarea) {

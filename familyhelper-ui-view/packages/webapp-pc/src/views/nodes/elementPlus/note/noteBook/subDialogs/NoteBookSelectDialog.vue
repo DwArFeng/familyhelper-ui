@@ -66,7 +66,7 @@
               >
                 <div class="note-book-card-container">
                   <div class="note-book-property">
-                    <span class="iconfont note-book-property-icon" style="color: black">
+                    <span class="iconfont note-book-property-icon" style="color: #303133">
                       &#xfffa;
                     </span>
                     <span class="note-book-property-text">
@@ -74,7 +74,7 @@
                     </span>
                   </div>
                   <div class="note-book-property">
-                    <span class="iconfont note-book-property-icon" style="color: black">
+                    <span class="iconfont note-book-property-icon" style="color: #303133">
                       &#xfffb;
                     </span>
                     <span class="note-book-property-text">
@@ -82,7 +82,7 @@
                     </span>
                   </div>
                   <div class="note-book-property">
-                    <span class="iconfont note-book-property-icon" style="color: black">
+                    <span class="iconfont note-book-property-icon" style="color: #303133">
                       &#xffe7;
                     </span>
                     <span class="note-book-property-text">
@@ -90,7 +90,7 @@
                     </span>
                   </div>
                   <div class="note-book-property">
-                    <span class="iconfont note-book-property-icon" style="color: black">
+                    <span class="iconfont note-book-property-icon" style="color: #303133">
                       &#xffef;
                     </span>
                     <span class="note-book-property-text">
@@ -386,7 +386,7 @@ function handleHotKeyDown(): void {
 
 .note-book-property {
   width: 100%;
-  color: black;
+  color: #303133;
   display: flex;
   flex-direction: row;
   align-items: center;

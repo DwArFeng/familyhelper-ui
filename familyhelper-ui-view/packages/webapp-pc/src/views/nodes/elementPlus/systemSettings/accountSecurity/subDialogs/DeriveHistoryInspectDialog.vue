@@ -220,6 +220,5 @@ function formatResponseCode(responseCode: DeriveResponseCode): string {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 </style>

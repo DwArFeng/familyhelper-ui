@@ -341,7 +341,6 @@ onUnmounted(() => {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .image-container .image {

@@ -49,7 +49,7 @@
           <template v-slot:default="{ item }">
             <div class="permission-scope-card-container">
               <div class="permission-scope-property">
-                <span class="iconfont permission-scope-property-icon" style="color: black">
+                <span class="iconfont permission-scope-property-icon" style="color: #303133">
                   &#xffee;
                 </span>
                 <span class="permission-scope-property-text">
@@ -57,7 +57,7 @@
                 </span>
               </div>
               <div class="permission-scope-property">
-                <span class="iconfont permission-scope-property-icon" style="color: black">
+                <span class="iconfont permission-scope-property-icon" style="color: #303133">
                   &#xffee;
                 </span>
                 <span class="permission-scope-property-text">
@@ -386,7 +386,7 @@ async function handlePermissionScopeEdit(item: PermissionScopeMaintainDialogItem
 
 .permission-scope-property {
   width: 100%;
-  color: black;
+  color: #303133;
   display: flex;
   flex-direction: row;
   align-items: center;

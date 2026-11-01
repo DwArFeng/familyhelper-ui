@@ -45,7 +45,7 @@
             >
               <div class="balance-record-card-container">
                 <div class="balance-record-property">
-                  <span class="iconfont balance-record-property-icon" style="color: black">
+                  <span class="iconfont balance-record-property-icon" style="color: #303133">
                     &#xffee;
                   </span>
                   <!--suppress JSUnresolvedVariable -->
@@ -62,7 +62,7 @@
                   </div>
                 </div>
                 <div class="balance-record-property">
-                  <span class="iconfont balance-record-property-icon" style="color: black">
+                  <span class="iconfont balance-record-property-icon" style="color: #303133">
                     &#xfff9;
                   </span>
                   <!--suppress JSUnresolvedVariable -->
@@ -87,7 +87,7 @@
                   </div>
                 </div>
                 <div class="balance-record-property">
-                  <span class="iconfont balance-record-property-icon" style="color: black">
+                  <span class="iconfont balance-record-property-icon" style="color: #303133">
                     &#xffef;
                   </span>
                   <!--suppress JSUnresolvedVariable -->
@@ -119,7 +119,7 @@
                   </div>
                 </div>
                 <div class="balance-record-property">
-                  <span class="iconfont balance-record-property-icon" style="color: black">
+                  <span class="iconfont balance-record-property-icon" style="color: #303133">
                     &#xffed;
                   </span>
                   <!--suppress JSUnresolvedVariable -->
@@ -777,7 +777,7 @@ function handleBankCardToCancel(): void {
 
 .balance-record-property {
   width: 100%;
-  color: black;
+  color: #303133;
   display: flex;
   flex-direction: row;
   align-items: center;

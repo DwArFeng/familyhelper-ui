@@ -505,10 +505,9 @@ onUnmounted(() => {
   flex-wrap: wrap;
 }
 
-.property-form :deep(label) {
+.property-form :deep(.el-form-item__label) {
   width: 240px;
   color: #99a9bf;
-  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -528,7 +527,6 @@ onUnmounted(() => {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .record-panel {
