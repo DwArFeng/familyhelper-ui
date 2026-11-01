@@ -120,7 +120,7 @@
                   {{ t('views.element_plus_engineering.system_settings.derive_ellipsis') }}
                 </li>
                 <li
-                  :class="{ disabled: readonly || row.key.long_id === lnpStore.token }"
+                  :class="{ disabled: readonly || row.key.string_id === lnpStore.token }"
                   @click="
                     handleLoginStateTableLogoutContextmenuClicked(row as LoginState, close, $event)
                   "
