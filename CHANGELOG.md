@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/FamilyhelperUiViewNavigation.md。
+
 - `webapp-pc` 子模块 `elementPlusEngineering` 可视化器页面优化。
   - 审计管理 -> 审计类别页面优化。
   - 审计管理 -> 巡检设置页面优化。
