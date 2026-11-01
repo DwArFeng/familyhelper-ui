@@ -305,6 +305,32 @@ async function persistLocaleList(rows: readonly LocaleRow[]): Promise<void> {
   )
 }
 
+/**
+ * 持久化地区列表，并在写入失败时执行消息仓库回滚。
+ *
+ * 地区列表与消息仓库需要保持一致，因此列表写入失败后必须先恢复消息仓库。回滚完成后再次抛出原始异常，
+ * 由调用方统一提示错误，确保用户能够看到真实失败原因；回滚失败时记录日志，避免覆盖主要错误。
+ *
+ * @param rows 待写入的地区列表。
+ * @param rollback 列表写入失败后执行的消息仓库回滚操作。
+ * @returns 持久化完成后的 Promise。
+ */
+async function persistLocaleListWithRollback(
+  rows: readonly LocaleRow[],
+  rollback: () => Promise<void>,
+): Promise<void> {
+  try {
+    await persistLocaleList(rows)
+  } catch (error: unknown) {
+    try {
+      await rollback()
+    } catch (rollbackError: unknown) {
+      console.error('地区列表写入失败后回滚消息仓库失败', rollbackError)
+    }
+    throw error
+  }
+}
+
 function refreshRows(rows: LocaleRow[]): void {
   allRows.value = rows.map((row, index) => ({ ...row, index }))
 }
@@ -418,9 +444,7 @@ async function handleCreate(item: LocaleMaintainItem): Promise<void> {
       }
     }
     const nextRows = [...allRows.value, nextItem]
-    try {
-      await persistLocaleList(nextRows)
-    } catch (e: unknown) {
+    await persistLocaleListWithRollback(nextRows, async () => {
       if (repositoryCreated) {
         await resolveResponse(
           removeLocale({
@@ -432,8 +456,7 @@ async function handleCreate(item: LocaleMaintainItem): Promise<void> {
           }),
         )
       }
-      throw e
-    }
+    })
     refreshRows(nextRows)
     repositoryLocales.value = await inspectRepositoryLocaleList()
     maintainDialogVisible.value = false
@@ -479,9 +502,7 @@ async function handleEditConfirm(item: LocaleMaintainItem): Promise<void> {
         ? { ...value, label: nextRepositoryItem.label, remark: nextRepositoryItem.remark }
         : value,
     )
-    try {
-      await persistLocaleList(nextRows)
-    } catch (e: unknown) {
+    await persistLocaleListWithRollback(nextRows, async () => {
       if (repositoryItem) {
         await resolveResponse(
           putLocale({
@@ -501,8 +522,7 @@ async function handleEditConfirm(item: LocaleMaintainItem): Promise<void> {
           }),
         )
       }
-      throw e
-    }
+    })
     refreshRows(nextRows)
     repositoryLocales.value = await inspectRepositoryLocaleList()
     maintainDialogVisible.value = false
@@ -540,9 +560,7 @@ async function handleDelete(row: LocaleRow): Promise<void> {
       repositoryRemoved = true
     }
     const nextRows = allRows.value.filter((value) => value.locale !== row.locale)
-    try {
-      await persistLocaleList(nextRows)
-    } catch (e: unknown) {
+    await persistLocaleListWithRollback(nextRows, async () => {
       if (repositoryRemoved && repositoryItem) {
         await resolveResponse(
           putLocale({
@@ -552,8 +570,7 @@ async function handleDelete(row: LocaleRow): Promise<void> {
           }),
         )
       }
-      throw e
-    }
+    })
     refreshRows(nextRows)
     repositoryLocales.value = await inspectRepositoryLocaleList()
     notifySuccess('地区 ' + row.locale + ' 删除成功')

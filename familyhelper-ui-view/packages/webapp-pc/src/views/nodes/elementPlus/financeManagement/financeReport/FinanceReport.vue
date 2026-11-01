@@ -72,12 +72,6 @@ const tabPanelValue = ref<'account_book' | 'bank_card' | 'fund_change'>('account
   align-items: center;
 }
 
-.finance-report-main-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .finance-report-main-body {
   width: 100%;
   height: 100%;

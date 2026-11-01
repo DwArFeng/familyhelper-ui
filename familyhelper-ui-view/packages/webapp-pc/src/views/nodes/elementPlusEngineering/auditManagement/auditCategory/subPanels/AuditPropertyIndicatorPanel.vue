@@ -455,7 +455,7 @@ async function handleAuditPropertyIndicatorDelete(item: AuditPropertyIndicator):
       message: t('views.element_plus_engineering.audit_management.audit_property_deleted'),
       type: 'success',
     })
-    await await handleAuditPropertyIndicatorSearch()
+    await handleAuditPropertyIndicatorSearch()
   } finally {
     loading.value -= 1
   }
@@ -663,7 +663,7 @@ async function handleAuditPropertyIndicatorCreate(
       }),
       type: 'success',
     })
-    await await handleAuditPropertyIndicatorSearch()
+    await handleAuditPropertyIndicatorSearch()
     auditPropertyIndicatorMaintainDialogVisible.value = false
   } finally {
     auditPropertyIndicatorMaintainDialogLoading.value -= 1
@@ -683,7 +683,7 @@ async function handleAuditPropertyIndicatorEdit(
       }),
       type: 'success',
     })
-    await await handleAuditPropertyIndicatorSearch()
+    await handleAuditPropertyIndicatorSearch()
     auditPropertyIndicatorMaintainDialogVisible.value = false
   } finally {
     auditPropertyIndicatorMaintainDialogLoading.value -= 1

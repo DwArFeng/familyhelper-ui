@@ -1,4 +1,4 @@
-// noinspection JSUnusedGlobalSymbols
+// noinspection JSUnusedGlobalSymbols,DuplicatedCode
 
 import { type FileEditType } from '@/views/nodes/elementPlus/miscellaneous/fileEditor/type.ts'
 
