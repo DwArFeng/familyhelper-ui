@@ -91,6 +91,34 @@ const compregSettings: ComponentSetting[] = [
     },
   },
   {
+    key: 'developerTools.customize',
+    name: '定制管理',
+    description: '维护各可视化器的定制方案列表与配置',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+    },
+    component: {
+      '': () => import('@/views/nodes/comvisual/developerTools/customize/Customize.vue'),
+      comvisual: () => import('@/views/nodes/comvisual/developerTools/customize/Customize.vue'),
+    },
+  },
+  {
+    key: 'developerTools.customizeSettings',
+    name: '定制设置',
+    description: '定制键远端设置与本地覆盖',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+    },
+    component: {
+      '': () =>
+        import('@/views/nodes/comvisual/developerTools/customizeSettings/CustomizeSettings.vue'),
+      comvisual: () =>
+        import('@/views/nodes/comvisual/developerTools/customizeSettings/CustomizeSettings.vue'),
+    },
+  },
+  {
     key: 'developerTools.visualizerSupport',
     name: '可视化器支持',
     description: '可视化器支持',
