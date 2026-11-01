@@ -353,7 +353,7 @@ function handlePanelFloatyButtonClicked(): void {
 .account-protector-info-panel-container {
   height: 100%;
   width: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {

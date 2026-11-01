@@ -169,20 +169,24 @@ onMounted(() => {
   height: 100%;
   width: 100%;
 }
+
 .header-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
+
 .header-container .tooltip {
-  font-size: 14px;
-  color: #909399;
+  font-size: var(--el-font-size-base);
+  color: var(--el-text-color-secondary);
 }
+
 .table :deep(.single-line .cell) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
 .text-editor {
   height: 300px;
 }

@@ -549,7 +549,7 @@ async function handleUpload(files: File[]): Promise<void> {
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
   width: 240px;
-  color: #99a9bf;
+  color: var(--el-text-color-regular);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -559,7 +559,6 @@ async function handleUpload(files: File[]): Promise<void> {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .editor-container {
@@ -576,7 +575,7 @@ async function handleUpload(files: File[]): Promise<void> {
 
 .inspect-notice {
   padding: 5px 10px;
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
   margin-bottom: 5px;
 }
 </style>

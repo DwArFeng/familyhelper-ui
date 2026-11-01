@@ -363,7 +363,7 @@ async function handleExecuteJob(): Promise<void> {
 .inspection-task-overview-panel-container {
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {
@@ -405,7 +405,7 @@ async function handleExecuteJob(): Promise<void> {
 
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
-  color: #99a9bf;
+  color: var(--el-text-color-regular);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -415,7 +415,6 @@ async function handleExecuteJob(): Promise<void> {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .property-ellipsis {

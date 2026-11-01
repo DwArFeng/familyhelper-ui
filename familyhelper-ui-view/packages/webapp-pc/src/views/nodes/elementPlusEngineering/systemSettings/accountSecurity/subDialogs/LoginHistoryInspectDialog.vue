@@ -322,7 +322,7 @@ function formatResponseCode(responseCode: LoginResponseCode): string {
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
   width: 240px;
-  color: #99a9bf;
+  color: var(--el-text-color-regular);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -332,11 +332,10 @@ function formatResponseCode(responseCode: LoginResponseCode): string {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .empty-placeholder {
-  color: #606266;
-  font-size: 14px;
+  color: var(--el-text-color-regular);
+  font-size: var(--el-font-size-base);
 }
 </style>

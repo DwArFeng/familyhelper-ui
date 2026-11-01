@@ -506,7 +506,7 @@ async function doCommitFile(): Promise<void> {
 .file-edit-panel-container {
   height: 100%;
   width: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {
@@ -532,7 +532,7 @@ async function doCommitFile(): Promise<void> {
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #606266;
+  color: var(--el-text-color-regular);
 }
 
 .main-container .editor-header .icon {
@@ -558,7 +558,7 @@ async function doCommitFile(): Promise<void> {
 }
 
 .main-container .editor-header .commit-button .unsaved-emphasis {
-  background: #fff;
+  background: var(--el-bg-color);
   display: inline-block;
   width: 8px;
   height: 8px;

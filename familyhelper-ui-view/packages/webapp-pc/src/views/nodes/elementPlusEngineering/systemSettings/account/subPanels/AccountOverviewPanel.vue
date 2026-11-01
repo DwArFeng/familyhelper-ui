@@ -273,7 +273,7 @@ defineExpose({
 .account-overview-panel-container {
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {
@@ -322,7 +322,7 @@ defineExpose({
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
   width: 240px;
-  color: #99a9bf;
+  color: var(--el-text-color-regular);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -332,14 +332,13 @@ defineExpose({
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 .property-form :deep(textarea) {
   padding: 0;
   border: none;
   font: unset;
-  font-size: 14px;
-  color: #303133;
+  font-size: var(--el-font-size-base);
+  color: var(--el-text-color-primary);
 }
 </style>

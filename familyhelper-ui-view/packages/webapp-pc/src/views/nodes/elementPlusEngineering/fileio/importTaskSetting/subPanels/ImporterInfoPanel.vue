@@ -345,7 +345,7 @@ defineExpose({
 .importer-info-panel-container {
   height: 100%;
   width: 100%;
-  background: #fff;
+  background: var(--el-bg-color);
 }
 .placeholder {
   width: 100%;

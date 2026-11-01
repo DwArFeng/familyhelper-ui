@@ -242,7 +242,7 @@ function handleShowLoginHistoryInspectDialog(row: LoginHistory): void {
 .login-history-panel-container {
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {

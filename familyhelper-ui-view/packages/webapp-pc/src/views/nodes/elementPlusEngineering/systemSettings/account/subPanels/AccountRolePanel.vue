@@ -581,7 +581,7 @@ defineExpose({
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {

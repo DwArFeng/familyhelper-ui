@@ -460,8 +460,8 @@ function handleClose(): void {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #909399;
-  font-size: 14px;
+  color: var(--el-text-color-secondary);
+  font-size: var(--el-font-size-base);
 }
 
 .footer-container {

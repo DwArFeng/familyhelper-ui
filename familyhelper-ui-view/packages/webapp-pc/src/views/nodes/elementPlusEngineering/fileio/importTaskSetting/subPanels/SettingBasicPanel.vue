@@ -217,7 +217,7 @@ defineExpose({
 .task-setting-basic-panel-container {
   height: 100%;
   width: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {
@@ -260,7 +260,7 @@ defineExpose({
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
   width: 240px;
-  color: #99a9bf;
+  color: var(--el-text-color-regular);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -270,6 +270,5 @@ defineExpose({
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 </style>

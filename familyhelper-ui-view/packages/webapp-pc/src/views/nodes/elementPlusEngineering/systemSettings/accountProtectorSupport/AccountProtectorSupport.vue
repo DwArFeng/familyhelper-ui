@@ -220,8 +220,8 @@ function handleShowAccountProtectorSupportMaintainInspectDialog(item: ProtectorS
 }
 
 .header-container .tooltip {
-  font-size: 14px;
-  color: #909399;
+  font-size: var(--el-font-size-base);
+  color: var(--el-text-color-secondary);
 }
 
 /*noinspection CssUnusedSymbol*/

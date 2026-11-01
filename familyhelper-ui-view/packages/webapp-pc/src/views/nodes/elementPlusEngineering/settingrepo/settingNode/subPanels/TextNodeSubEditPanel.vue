@@ -208,7 +208,7 @@ function handleEditorResetButtonClicked(): void {
 }
 
 .header-container .confirm-button .unsaved-emphasis {
-  background: #fff;
+  background: var(--el-bg-color);
   display: inline-block;
   width: 8px;
   height: 8px;

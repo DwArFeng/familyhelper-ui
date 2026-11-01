@@ -598,7 +598,7 @@ function handleCancelButtonClicked(): void {
 <style scoped>
 .limit-tip {
   margin-bottom: 8px;
-  color: #909399;
+  color: var(--el-text-color-primary);
 }
 
 .group-scroll {

@@ -60,7 +60,10 @@
               >
                 <div class="permission-scope-card-container">
                   <div class="permission-scope-property">
-                    <span class="iconfont permission-scope-property-icon" style="color: black">
+                    <span
+                      class="iconfont permission-scope-property-icon"
+                      style="color: var(--el-text-color-primary)"
+                    >
                       &#xfffa;
                     </span>
                     <span class="permission-scope-property-text">
@@ -69,7 +72,10 @@
                     </span>
                   </div>
                   <div class="permission-scope-property">
-                    <span class="iconfont permission-scope-property-icon" style="color: black">
+                    <span
+                      class="iconfont permission-scope-property-icon"
+                      style="color: var(--el-text-color-primary)"
+                    >
                       &#xfffb;
                     </span>
                     <span class="permission-scope-property-text">
@@ -357,7 +363,7 @@ function handleHotKeyDown(): void {
 
 .permission-scope-property {
   width: 100%;
-  color: black;
+  color: var(--el-text-color-primary);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -366,12 +372,12 @@ function handleHotKeyDown(): void {
 }
 
 .permission-scope-property-icon {
-  font-size: 18px;
+  font-size: var(--el-font-size-large);
   margin-right: 4px;
 }
 
 .permission-scope-property-text {
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
   margin-right: 4px;
   white-space: nowrap;
   text-overflow: ellipsis;

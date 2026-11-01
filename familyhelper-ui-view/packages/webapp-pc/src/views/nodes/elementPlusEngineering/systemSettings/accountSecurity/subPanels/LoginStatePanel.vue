@@ -883,7 +883,7 @@ async function handleDeriveConfirm(): Promise<void> {
 .login-state-panel-container {
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {
@@ -904,9 +904,9 @@ async function handleDeriveConfirm(): Promise<void> {
 }
 
 .header-container .label {
-  color: #606266;
+  color: var(--el-text-color-regular);
   margin-right: 10px;
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
   font-family: 微软雅黑, serif;
 }
 
@@ -950,7 +950,7 @@ async function handleDeriveConfirm(): Promise<void> {
 }
 
 .my-contextmenu li:hover {
-  background: #eee;
+  background: var(--element-plus-engineering-menu-hover-background);
 }
 
 /*noinspection CssUnusedSymbol*/

@@ -231,7 +231,7 @@ function formatResponseCode(responseCode: DeriveResponseCode): string {
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
   width: 240px;
-  color: #99a9bf;
+  color: var(--el-text-color-regular);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -241,6 +241,5 @@ function formatResponseCode(responseCode: DeriveResponseCode): string {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 </style>

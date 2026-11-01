@@ -51,7 +51,10 @@
           <template v-slot:default="{ item }">
             <div class="permission-scope-card-container">
               <div class="permission-scope-property">
-                <span class="iconfont permission-scope-property-icon" style="color: black">
+                <span
+                  class="iconfont permission-scope-property-icon"
+                  style="color: var(--el-text-color-primary)"
+                >
                   &#xffee;
                 </span>
                 <span class="permission-scope-property-text">
@@ -60,7 +63,10 @@
                 </span>
               </div>
               <div class="permission-scope-property">
-                <span class="iconfont permission-scope-property-icon" style="color: black">
+                <span
+                  class="iconfont permission-scope-property-icon"
+                  style="color: var(--el-text-color-primary)"
+                >
                   &#xffee;
                 </span>
                 <span class="permission-scope-property-text">
@@ -432,7 +438,7 @@ async function handlePermissionScopeEdit(item: PermissionScopeMaintainDialogItem
 
 .permission-scope-property {
   width: 100%;
-  color: black;
+  color: var(--el-text-color-primary);
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -441,12 +447,12 @@ async function handlePermissionScopeEdit(item: PermissionScopeMaintainDialogItem
 }
 
 .permission-scope-property-icon {
-  font-size: 18px;
+  font-size: var(--el-font-size-large);
   margin-right: 4px;
 }
 
 .permission-scope-property-text {
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
   margin-right: 4px;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -499,6 +505,6 @@ async function handlePermissionScopeEdit(item: PermissionScopeMaintainDialogItem
 }
 
 .my-contextmenu li:hover {
-  background: #eee;
+  background: var(--element-plus-engineering-menu-hover-background);
 }
 </style>

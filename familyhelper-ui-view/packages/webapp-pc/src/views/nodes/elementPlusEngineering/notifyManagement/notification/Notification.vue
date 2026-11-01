@@ -18,8 +18,8 @@
             v-model="unreadSwitchValue"
             :active-text="t('views.element_plus_engineering.notify_management.unread_only')"
             :inactive-text="t('views.element_plus_engineering.notify_management.all')"
-            active-color="#409EFF"
-            inactive-color="#409EFF"
+            active-color="var(--el-color-primary)"
+            inactive-color="var(--el-color-primary)"
             @change="handleNotificationSearch"
           />
         </div>

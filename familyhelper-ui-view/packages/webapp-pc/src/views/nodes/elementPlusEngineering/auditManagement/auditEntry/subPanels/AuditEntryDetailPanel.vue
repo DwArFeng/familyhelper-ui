@@ -247,7 +247,7 @@ onMounted(() => {
 .audit-entry-detail-panel-container {
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {
@@ -289,8 +289,7 @@ onMounted(() => {
 
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
-  color: #99a9bf;
-  line-height: 30px;
+  color: var(--el-text-color-regular);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -300,7 +299,6 @@ onMounted(() => {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 
 /*noinspection CssUnusedSymbol*/

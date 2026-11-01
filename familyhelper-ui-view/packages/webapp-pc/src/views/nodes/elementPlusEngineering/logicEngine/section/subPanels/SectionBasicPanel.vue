@@ -380,7 +380,7 @@ function handleApplyChangesClicked(): void {
 .section-basic-panel-container {
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {
@@ -428,7 +428,7 @@ function handleApplyChangesClicked(): void {
 /*noinspection CssUnusedSymbol*/
 .property-form :deep(.el-form-item__label) {
   width: 240px;
-  color: #99a9bf;
+  color: var(--el-text-color-regular);
 }
 
 /*noinspection CssUnusedSymbol*/
@@ -438,6 +438,5 @@ function handleApplyChangesClicked(): void {
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 30px;
 }
 </style>

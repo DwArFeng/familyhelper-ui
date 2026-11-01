@@ -949,7 +949,7 @@ async function handleRemove(row: TableItem): Promise<void> {
 
 .inspect-notice {
   padding: 5px 10px;
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
   margin-bottom: 5px;
 }
 </style>

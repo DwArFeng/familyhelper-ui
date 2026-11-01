@@ -279,7 +279,7 @@ defineExpose({
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
   font-family: Arial, sans-serif;
 }
 
@@ -288,6 +288,6 @@ defineExpose({
 }
 
 .icon-wrapper .iconfont {
-  font-size: 18px;
+  font-size: var(--el-font-size-large);
 }
 </style>

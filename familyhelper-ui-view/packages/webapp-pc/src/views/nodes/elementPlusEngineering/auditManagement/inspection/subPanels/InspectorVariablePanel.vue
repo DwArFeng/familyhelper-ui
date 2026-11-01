@@ -610,7 +610,7 @@ async function handleInspectorVariableUpsert(
   width: 100%;
   height: 100%;
   min-height: 0;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {

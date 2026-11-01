@@ -237,7 +237,7 @@ function handlePanelFloatyButtonClicked(): void {
 .inspection-task-alarm-panel-container {
   width: 100%;
   height: 100%;
-  background: #ffffff;
+  background: var(--el-bg-color);
 }
 
 .main-container {
