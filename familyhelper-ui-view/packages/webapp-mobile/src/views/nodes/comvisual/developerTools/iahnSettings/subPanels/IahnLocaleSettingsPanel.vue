@@ -74,7 +74,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import HeaderLayoutPanel from '@/components/comvisual/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
 import LoadingOverlay from '@/components/comvisual/feedback/loadingOverlay/LoadingOverlay.vue'
@@ -103,17 +103,43 @@ import {
   operatePut,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/textNode.ts'
 import { formatLocale } from '@dwarfeng/familyhelper-ui-component-util/src/util/i18n.ts'
+import { toSnakeCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 defineOptions({
   name: 'IahnLocaleSettingsPanel',
 })
 
+// region Props 定义
+
+type Props = {
+  /**
+   * 当前编辑的 Visualizer key。
+   */
+  visualizerKey: string
+}
+
+const props = defineProps<Props>()
+
+// endregion
+
 // region 配置仓库常量
 
 const SETTINGREPO_CATEGORY = 'public$framework.mobile.iahn'
-const SETTINGREPO_ARGS_LOCALE_LIST: string[] = ['locale_list']
-const SETTINGREPO_ARGS_REPO: string[] = ['repo']
+const SETTINGREPO_ARGS_LOCALE_LIST: string = 'locale_list'
+const SETTINGREPO_ARGS_REPO: string = 'repo'
+
+/**
+ * 构建当前 Visualizer 对应的配置仓库参数。
+ *
+ * 配置仓库中的 Visualizer key 使用 snake_case，因此这里不能直接使用前端的 kebab-case key。
+ *
+ * @param baseArg 配置节点的基础参数。
+ * @returns 带 Visualizer 前缀的完整参数。
+ */
+function settingrepoArgs(baseArg: string): string[] {
+  return [toSnakeCase(props.visualizerKey), baseArg]
+}
 
 // endregion
 
@@ -263,7 +289,7 @@ async function inspectRepositoryLocaleList(): Promise<IahnNodeLocaleListInspectR
   const result = await resolveResponse(
     inspectLocaleList({
       category: SETTINGREPO_CATEGORY,
-      args: [...SETTINGREPO_ARGS_REPO],
+      args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
     }),
   )
   return result?.items ?? []
@@ -273,7 +299,7 @@ async function persistLocaleList(rows: readonly LocaleRow[]): Promise<void> {
   await resolveResponse(
     operatePut({
       category: SETTINGREPO_CATEGORY,
-      args: [...SETTINGREPO_ARGS_LOCALE_LIST],
+      args: settingrepoArgs(SETTINGREPO_ARGS_LOCALE_LIST),
       value: stringifyLocaleList(rows),
     }),
   )
@@ -294,7 +320,7 @@ async function handleRefresh(): Promise<void> {
       resolveResponse(
         operateInspect({
           category: SETTINGREPO_CATEGORY,
-          args: [...SETTINGREPO_ARGS_LOCALE_LIST],
+          args: settingrepoArgs(SETTINGREPO_ARGS_LOCALE_LIST),
         }),
       ),
       inspectRepositoryLocaleList(),
@@ -376,7 +402,7 @@ async function handleCreate(item: LocaleMaintainItem): Promise<void> {
     } else {
       const payload = {
         category: SETTINGREPO_CATEGORY,
-        args: [...SETTINGREPO_ARGS_REPO],
+        args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
         language,
         country,
         variant,
@@ -399,7 +425,7 @@ async function handleCreate(item: LocaleMaintainItem): Promise<void> {
         await resolveResponse(
           removeLocale({
             category: SETTINGREPO_CATEGORY,
-            args: [...SETTINGREPO_ARGS_REPO],
+            args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
             language,
             country,
             variant,
@@ -440,7 +466,7 @@ async function handleEditConfirm(item: LocaleMaintainItem): Promise<void> {
     )
     const nextRepositoryItem = {
       category: SETTINGREPO_CATEGORY,
-      args: [...SETTINGREPO_ARGS_REPO],
+      args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
       language: row.language,
       country: row.country,
       variant: row.variant,
@@ -460,7 +486,7 @@ async function handleEditConfirm(item: LocaleMaintainItem): Promise<void> {
         await resolveResponse(
           putLocale({
             category: SETTINGREPO_CATEGORY,
-            args: [...SETTINGREPO_ARGS_REPO],
+            args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
             ...repositoryItem,
           }),
         )
@@ -468,7 +494,7 @@ async function handleEditConfirm(item: LocaleMaintainItem): Promise<void> {
         await resolveResponse(
           removeLocale({
             category: SETTINGREPO_CATEGORY,
-            args: [...SETTINGREPO_ARGS_REPO],
+            args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
             language: row.language,
             country: row.country,
             variant: row.variant,
@@ -505,7 +531,7 @@ async function handleDelete(row: LocaleRow): Promise<void> {
       await resolveResponse(
         removeLocale({
           category: SETTINGREPO_CATEGORY,
-          args: [...SETTINGREPO_ARGS_REPO],
+          args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
           language: repositoryItem.language,
           country: repositoryItem.country,
           variant: repositoryItem.variant,
@@ -521,7 +547,7 @@ async function handleDelete(row: LocaleRow): Promise<void> {
         await resolveResponse(
           putLocale({
             category: SETTINGREPO_CATEGORY,
-            args: [...SETTINGREPO_ARGS_REPO],
+            args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
             ...repositoryItem,
           }),
         )
@@ -571,6 +597,13 @@ function localeRowKey(row: LocaleRow): string {
 onMounted(() => {
   void handleRefresh()
 })
+
+watch(
+  () => props.visualizerKey,
+  () => {
+    void handleRefresh()
+  },
+)
 
 defineExpose({
   refresh: handleRefresh,

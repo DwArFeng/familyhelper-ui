@@ -156,16 +156,42 @@ import {
   upsertMessage,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/iahnNode.ts'
 import { formatLocale } from '@dwarfeng/familyhelper-ui-component-util/src/util/i18n.ts'
+import { toSnakeCase } from '@dwarfeng/familyhelper-ui-component-util/src/util/string.ts'
 import { resolveResponse } from '@/util/response.ts'
 
 defineOptions({
   name: 'IahnMessageSettingsPanel',
 })
 
+// region Props 定义
+
+type Props = {
+  /**
+   * 当前编辑的 Visualizer key。
+   */
+  visualizerKey: string
+}
+
+const props = defineProps<Props>()
+
+// endregion
+
 // region 配置仓库常量
 
 const SETTINGREPO_CATEGORY = 'public$framework.mobile.iahn'
-const SETTINGREPO_ARGS_REPO: string[] = ['repo']
+const SETTINGREPO_ARGS_REPO: string = 'repo'
+
+/**
+ * 构建当前 Visualizer 对应的配置仓库参数。
+ *
+ * 配置仓库中的 Visualizer key 使用 snake_case，因此这里不能直接使用前端的 kebab-case key。
+ *
+ * @param baseArg 配置节点的基础参数。
+ * @returns 带 Visualizer 前缀的完整参数。
+ */
+function settingrepoArgs(baseArg: string): string[] {
+  return [toSnakeCase(props.visualizerKey), baseArg]
+}
 
 // endregion
 
@@ -285,6 +311,15 @@ watch(
   { deep: true },
 )
 
+watch(
+  () => props.visualizerKey,
+  () => {
+    localeFilter.value = []
+    mekFilter.value = ''
+    void handleRefresh()
+  },
+)
+
 // endregion
 
 // region 加载逻辑
@@ -295,7 +330,7 @@ async function handleRefresh(): Promise<void> {
     const result = await resolveResponse(
       inspectMessageTable({
         category: SETTINGREPO_CATEGORY,
-        args: [...SETTINGREPO_ARGS_REPO],
+        args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
       }),
     )
     messageTable.value = result
@@ -333,7 +368,7 @@ async function handleMekCreate(item: MekMaintainItem): Promise<void> {
     await resolveResponse(
       putMek({
         category: SETTINGREPO_CATEGORY,
-        args: [...SETTINGREPO_ARGS_REPO],
+        args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
         mek_id: mekId,
         label,
         default_message: item.default_message,
@@ -359,7 +394,7 @@ async function handleDeleteMek(row: MessageRow): Promise<void> {
     await resolveResponse(
       removeMek({
         category: SETTINGREPO_CATEGORY,
-        args: [...SETTINGREPO_ARGS_REPO],
+        args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
         mek_id: row.mek_id,
       }),
     )
@@ -392,7 +427,7 @@ async function handleMessageEdit(item: MessageEditItem): Promise<void> {
     await resolveResponse(
       upsertMessage({
         category: SETTINGREPO_CATEGORY,
-        args: [...SETTINGREPO_ARGS_REPO],
+        args: settingrepoArgs(SETTINGREPO_ARGS_REPO),
         language: context.column.language,
         country: context.column.country,
         variant: context.column.variant,

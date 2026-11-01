@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-mobile` 子模块页面功能新增。
+  - 开发者工具 -> 国际化设置增加头部面板，进行可视化器选择。
+
 - `webapp-mobile` 子模块定制功能新增。
   - 增加 library 模块 Visualizer 的 `supportCustomize` 属性，用于标识可视化方案是否支持固定产品方案定制。
   - 新增 store 模块下的 `customize.ts`，按 Visualizer 加载远端定制方案，并保存本地覆盖。
