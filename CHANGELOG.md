@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块功能新增。
+  - 新增 `src/util/video.ts` 工具类。
+
 - `component-api` 子模块功能新增。
   - 新增 `src/api/settingrepo/iahnNodeLocale.ts` API 接口。
   - 新增 `src/api/settingrepo/iahnNodeMek.ts` API 接口。
