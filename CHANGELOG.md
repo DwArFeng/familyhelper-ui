@@ -4,6 +4,10 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块组件新增。
+  - 组件 `components/elementPlus/layout/titleLayoutPanel/TitleLayoutPanel.vue` 新增。
+  - 组件 `components/elementPlusEngineering/layout/titleLayoutPanel/TitleLayoutPanel.vue` 新增。
+
 - `webapp-pc` 子模块功能新增。
   - 新增 `src/util/video.ts` 工具类。
 
