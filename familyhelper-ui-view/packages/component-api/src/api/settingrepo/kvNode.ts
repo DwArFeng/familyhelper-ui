@@ -135,6 +135,12 @@ export function operateClear(clearInfo: KvNodeClearInfo): Pres<null> {
     .post('settingrepo', 'kv-node/clear/', clearInfo, 'application/json;charset=UTF-8')
 }
 
+export function operateClearCache(clearCacheInfo: KvNodeClearInfo): Pres<null> {
+  return http
+    .generalClient()
+    .post('settingrepo', 'kv-node/clear-cache/', clearCacheInfo, 'application/json;charset=UTF-8')
+}
+
 export function operateCountForPublic(
   countInfo: PublicKvNodeCountInfo,
 ): Pres<KvNodeCountResult | null> {

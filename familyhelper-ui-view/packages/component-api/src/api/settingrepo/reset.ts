@@ -8,3 +8,9 @@ export function resetFormat(): Pres<null> {
     .generalClient()
     .post('settingrepo', 'reset-format/', {}, 'application/json;charset=UTF-8')
 }
+
+export function resetWarmup(): Pres<null> {
+  return http
+    .generalClient()
+    .post('settingrepo', 'reset-warmup/', {}, 'application/json;charset=UTF-8')
+}

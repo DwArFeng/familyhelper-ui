@@ -205,6 +205,11 @@ export type PublicIahnNodeMessageTableInspectInfo = {
   args: string[]
 }
 
+export type IahnNodeClearCacheInfo = {
+  category: string
+  args: string[]
+}
+
 export function exists(key: StringIdKey): Pres<boolean> {
   return http.generalClient().get('settingrepo', `iahn-node/${key.string_id}/exists/`, {}, 'json')
 }
@@ -320,6 +325,12 @@ export function batchUpsertMessageByMek(info: IahnNodeMessageUpsertByMekInfo): P
       info,
       'application/json;charset=UTF-8',
     )
+}
+
+export function operateClearCache(info: IahnNodeClearCacheInfo): Pres<null> {
+  return http
+    .generalClient()
+    .post('settingrepo', 'iahn-node/clear-cache/', info, 'application/json;charset=UTF-8')
 }
 
 export function inspectMessageForPublic(

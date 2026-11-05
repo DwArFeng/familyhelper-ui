@@ -31,6 +31,11 @@ export type NavigationNodeInspectResult = {
   children: NavigationNodeInspectResultItem[]
 }
 
+export type NavigationNodeClearCacheInfo = {
+  category: string
+  args: string[]
+}
+
 export type NavigationNodeInspectResultItem = {
   key: LongIdKey
   parent_item_key: LongIdKey | null
@@ -185,6 +190,17 @@ export function formatIndex(formatIndexInfo: NavigationNodeFormatIndexInfo): Pre
       'settingrepo',
       'navigation-node/format-index/',
       formatIndexInfo,
+      'application/json;charset=UTF-8',
+    )
+}
+
+export function operateClearCache(clearCacheInfo: NavigationNodeClearCacheInfo): Pres<null> {
+  return http
+    .generalClient()
+    .post(
+      'settingrepo',
+      'navigation-node/clear-cache/',
+      clearCacheInfo,
       'application/json;charset=UTF-8',
     )
 }

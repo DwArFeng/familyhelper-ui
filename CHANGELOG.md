@@ -4,7 +4,12 @@
 
 ### 功能构建
 
-- (无)
+- `component-api` 子模功能变更。
+  - 新增 `src/api/settingrepo/settingNode.ts` 中的类型枚举，以同步 webapi 服务。
+  - 新增 `src/api/settingrepo/iahnNode.ts` 中的接口方法，以同步 webapi 服务。
+  - 新增 `src/api/settingrepo/kvNode.ts` 中的接口方法，以同步 webapi 服务。
+  - 新增 `src/api/settingrepo/navigationNode.ts` 中的接口方法，以同步 webapi 服务。
+  - 新增 `src/api/settingrepo/reset.ts` 中的接口方法，以同步 webapi 服务。
 
 ### Bug 修复
 

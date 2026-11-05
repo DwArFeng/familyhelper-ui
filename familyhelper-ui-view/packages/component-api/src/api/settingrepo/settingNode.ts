@@ -13,6 +13,10 @@ export type SettingNodeTypeIahn = 4
 export type SettingNodeTypeFile = 5
 export type SettingNodeTypeFileList = 6
 export type SettingNodeTypeNavigation = 7
+export type SettingNodeTypeKv = 8
+export type SettingNodeTypeTextList = 9
+export type SettingNodeTypeVideo = 10
+export type SettingNodeTypeVideoList = 11
 
 export type SettingNodeType =
   | SettingNodeTypeText
@@ -23,6 +27,10 @@ export type SettingNodeType =
   | SettingNodeTypeFile
   | SettingNodeTypeFileList
   | SettingNodeTypeNavigation
+  | SettingNodeTypeKv
+  | SettingNodeTypeTextList
+  | SettingNodeTypeVideo
+  | SettingNodeTypeVideoList
 
 export type SettingNode = {
   key: StringIdKey
