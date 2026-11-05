@@ -4,6 +4,18 @@
 
 ### 功能构建
 
+- `component-api` 子模块功能新增。
+  - 新增 `src/api/settingrepo/iahnNodeLocale.ts` API 接口。
+  - 新增 `src/api/settingrepo/iahnNodeMek.ts` API 接口。
+  - 新增 `src/api/settingrepo/iahnNodeMessage.ts` API 接口。
+  - 新增 `src/api/settingrepo/longTextNode.ts` API 接口。
+  - 新增 `src/api/settingrepo/textListNode.ts` API 接口。
+  - 新增 `src/api/settingrepo/videoNode.ts` API 接口。
+  - 新增 `src/api/settingrepo/videoListNode.ts` API 接口。
+  - 新增 `src/api/settingrepo/warmupDriverInfo.ts` API 接口。
+  - 新增 `src/api/settingrepo/warmupDriverSupport.ts` API 接口。
+  - 新增 `src/api/settingrepo/warmupSetting.ts` API 接口。
+
 - `component-api` 子模功能变更。
   - 新增 `src/api/settingrepo/settingNode.ts` 中的类型枚举，以同步 webapi 服务。
   - 新增 `src/api/settingrepo/iahnNode.ts` 中的接口方法，以同步 webapi 服务。
