@@ -127,6 +127,46 @@ const nodeSettings: NodeSetting[] = [
   },
   {
     parentKey: 'settingrepo',
+    key: 'settingrepo.warmupSetting',
+    index: 25,
+    display: {
+      '': {
+        label: '预热设置',
+      },
+      comvisual: {
+        label: '预热设置',
+      },
+      elementPlus: {
+        label: '预热设置',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.settingrepo.warmup_setting',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'settingrepo/warmup-setting',
+      component: {
+        key: 'settingrepo.warmupSetting',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.settingrepo.warmup_setting',
+    },
+  },
+  {
+    parentKey: 'settingrepo',
     key: 'settingrepo.formatterSupport',
     index: 30,
     display: {
@@ -200,6 +240,46 @@ const nodeSettings: NodeSetting[] = [
     permission: {
       required: true,
       node: 'ui.pc;ui.pc.menu_visible.settingrepo.setting_node_editor',
+    },
+  },
+  {
+    parentKey: 'settingrepo',
+    key: 'settingrepo.warmupDriverSupport',
+    index: 60,
+    display: {
+      '': {
+        label: '预热驱动器支持',
+      },
+      comvisual: {
+        label: '预热驱动器支持',
+      },
+      elementPlus: {
+        label: '预热驱动器支持',
+      },
+      elementPlusEngineering: {
+        messageKey: 'navigation.settingrepo.warmup_driver_support',
+      },
+    },
+    menu: {
+      shown: true,
+    },
+    ezNav: {
+      shown: true,
+      closedBehavior: {
+        type: 'back',
+        data: {},
+      },
+    },
+    router: {
+      required: true,
+      path: 'settingrepo/warmup-driver-support',
+      component: {
+        key: 'settingrepo.warmupDriverSupport',
+      },
+    },
+    permission: {
+      required: true,
+      node: 'ui.pc;ui.pc.menu_visible.settingrepo.warmup_driver_support',
     },
   },
 ]

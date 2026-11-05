@@ -101,6 +101,46 @@ const compregSettings: ComponentSetting[] = [
         import('@/views/nodes/elementPlusEngineering/settingrepo/settingNodeEditor/SettingNodeEditor.vue'),
     },
   },
+  {
+    key: 'settingrepo.warmupSetting',
+    name: '预热设置',
+    description: '预热设置',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+      elementPlusEngineering: {},
+    },
+    component: {
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
+      comvisual: () =>
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
+      elementPlus: () =>
+        import('@/views/nodes/elementPlus/settingrepo/warmupSetting/WarmupSetting.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlusEngineering/settingrepo/warmupSetting/WarmupSetting.vue'),
+    },
+  },
+  {
+    key: 'settingrepo.warmupDriverSupport',
+    name: '预热驱动器支持',
+    description: '预热驱动器支持',
+    exampleRouterComponentParam: {
+      '': {},
+      comvisual: {},
+      elementPlus: {},
+      elementPlusEngineering: {},
+    },
+    component: {
+      '': () => Promise.resolve(comvisualPlaceholder('该组件无法在默认可视化器下展示')),
+      comvisual: () =>
+        Promise.resolve(comvisualPlaceholder('该组件无法在 comvisual 可视化器下展示')),
+      elementPlus: () =>
+        import('@/views/nodes/elementPlus/settingrepo/warmupDriverSupport/WarmupDriverSupport.vue'),
+      elementPlusEngineering: () =>
+        import('@/views/nodes/elementPlusEngineering/settingrepo/warmupDriverSupport/WarmupDriverSupport.vue'),
+    },
+  },
 ]
 
 /**
