@@ -10,6 +10,9 @@
             >推入文本键</el-button
           >
           <el-button type="success" @click="handleInspect">刷新</el-button>
+          <el-button type="warning" :disabled="readonly" @click="handleClearCache"
+            >清除缓存</el-button
+          >
           <el-divider direction="vertical" />
           <el-select
             class="locale-selector"
@@ -275,6 +278,7 @@ import {
   upsertMessage,
   removeLocale,
   removeMek,
+  operateClearCache,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/iahnNode.ts'
 import { resolveResponse } from '@/util/response.ts'
 
@@ -365,6 +369,43 @@ const messageTable = ref<IahnNodeMessageTableInspectResult | null>(null)
 
 function handleInspect(): void {
   handleInspectMessageTable()
+}
+
+async function handleClearCache(): Promise<void> {
+  if (settingNodeInvalid.value) {
+    return
+  }
+  try {
+    await ElMessageBox.confirm('此操作将清除该国际化节点的缓存。<br>是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      dangerouslyUseHTMLString: true,
+      customClass: 'custom-message-box__w500',
+      type: 'warning',
+    })
+  } catch {
+    return
+  }
+  loading.value += 1
+  try {
+    if (!props.category || !props.args) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
+    await resolveResponse(
+      operateClearCache({
+        category: props.category,
+        args: props.args,
+      }),
+    )
+    ElMessage({
+      showClose: true,
+      message: '缓存清除成功',
+      type: 'success',
+    })
+  } finally {
+    loading.value -= 1
+  }
+  handleInspect()
 }
 
 async function handleInspectMessageTable(): Promise<void> {

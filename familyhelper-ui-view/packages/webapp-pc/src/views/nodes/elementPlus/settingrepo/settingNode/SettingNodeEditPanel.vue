@@ -8,6 +8,12 @@
       :args="settingNode?.args"
       :readonly="readonly"
     />
+    <long-text-node-sub-edit-panel
+      v-else-if="settingNode?.type === 1"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
     <image-node-sub-edit-panel
       v-else-if="settingNode?.type === 2"
       :category="settingNode?.category"
@@ -44,6 +50,30 @@
       :args="settingNode?.args"
       :readonly="readonly"
     />
+    <kv-node-sub-edit-panel
+      v-else-if="settingNode?.type === 8"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
+    <text-list-node-sub-edit-panel
+      v-else-if="settingNode?.type === 9"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
+    <video-node-sub-edit-panel
+      v-else-if="settingNode?.type === 10"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
+    <video-list-node-sub-edit-panel
+      v-else-if="settingNode?.type === 11"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
     <placeholder-panel v-else text="节点类型未知，无法查看或编辑" />
   </div>
 </template>
@@ -58,12 +88,17 @@ import { ElNotification } from 'element-plus'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import TextNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/TextNodeSubEditPanel.vue'
+import LongTextNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/LongTextNodeSubEditPanel.vue'
 import ImageNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/ImageNodeSubEditPanel.vue'
 import ImageListNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/ImageListNodeSubEditPanel.vue'
 import IahnNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/IahnNodeSubEditPanel.vue'
 import FileNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/FileNodeSubEditPanel.vue'
 import FileListNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/FileListNodeSubEditPanel.vue'
 import NavigationNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/NavigationNodeSubEditPanel.vue'
+import KvNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/KvNodeSubEditPanel.vue'
+import TextListNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/TextListNodeSubEditPanel.vue'
+import VideoNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/VideoNodeSubEditPanel.vue'
+import VideoListNodeSubEditPanel from '@/views/nodes/elementPlus/settingrepo/settingNode/subPanels/VideoListNodeSubEditPanel.vue'
 
 import {
   type SettingNode,
@@ -148,9 +183,11 @@ onMounted(() => {
 // region 提醒处理
 
 const IMAGE_TYPES: SettingNodeType[] = [2, 3]
+const VIDEO_TYPES: SettingNodeType[] = [10, 11]
 
 const notifyShow = ref<boolean>(false)
 const notifyHandle = ref<NotificationHandle | null>(null)
+const notifyMessage = ref<string>('')
 
 watch(router.currentRoute, (value) => {
   updateNotify(value.name as string)
@@ -182,13 +219,29 @@ function updateNotify(currentRouteName: string): void {
           '</div>',
       }
     }
+    // 展示视频缩略图的通知。
+    if (VIDEO_TYPES.some((type) => type === settingNodeValue.type)) {
+      return {
+        shouldShow: true,
+        message:
+          '<div style="line-height: 20px">' +
+          '显示内容使用的是缩略图，清晰度较低，仅供预览。<br>' +
+          '<b>请勿截屏或使用浏览器的保存图片功能！</b><br>如需下载原视频，请点击下载按钮。' +
+          '</div>',
+      }
+    }
     // 如无命中，则不显示通知。
     return { shouldShow: false, message: '' }
   }
 
   const { shouldShow, message } = checkStatus()
 
-  if (shouldShow && !notifyShow.value) {
+  if (shouldShow) {
+    if (notifyShow.value && notifyMessage.value === message) {
+      return
+    }
+    notifyHandle.value?.close()
+    notifyMessage.value = message
     notifyShow.value = true
     notifyHandle.value = ElNotification({
       title: '使用提示',
@@ -202,15 +255,19 @@ function updateNotify(currentRouteName: string): void {
       onClose: () => {
         notifyShow.value = false
         notifyHandle.value = null
+        notifyMessage.value = ''
       },
     })
-  } else if (!shouldShow && notifyShow.value) {
+    return
+  }
+  if (notifyShow.value) {
     if (!notifyHandle.value) {
       throw new Error('不应该执行到此处, 请联系开发人员')
     }
     notifyHandle.value.close()
     notifyShow.value = false
     notifyHandle.value = null
+    notifyMessage.value = ''
   }
 }
 

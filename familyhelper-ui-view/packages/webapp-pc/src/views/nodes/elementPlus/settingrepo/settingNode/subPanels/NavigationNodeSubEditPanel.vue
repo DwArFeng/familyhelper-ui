@@ -9,6 +9,9 @@
                 编辑属性
               </el-button>
               <el-button type="success" @click="handleInspect">刷新数据</el-button>
+              <el-button type="warning" :disabled="readonly" @click="handleClearCache">
+                清除缓存
+              </el-button>
             </div>
           </template>
           <template v-slot:default>
@@ -54,6 +57,12 @@
               格式化索引
             </el-button>
             <el-button type="success" @click="handleInspect">刷新数据</el-button>
+            <el-button type="warning" :disabled="readonly" @click="handleClearCache"
+              >清除缓存</el-button
+            >
+            <el-button type="warning" :disabled="readonly" @click="handleClearCache"
+              >清除缓存</el-button
+            >
           </template>
           <template v-slot:default>
             <div class="structure-container-body">
@@ -205,6 +214,7 @@ import {
   removeItem,
   updateItem,
   updateNode,
+  operateClearCache,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/navigationNode.ts'
 import { resolveResponse } from '@/util/response.ts'
 
@@ -268,6 +278,43 @@ const navigationNode = ref<NavigationNodeInspectResult | null>(null)
 
 function handleInspect(): void {
   handleInspectNavigationNode()
+}
+
+async function handleClearCache(): Promise<void> {
+  if (settingNodeInvalid.value) {
+    return
+  }
+  try {
+    await ElMessageBox.confirm('此操作将清除该导航节点的缓存。<br>是否继续?', '提示', {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      dangerouslyUseHTMLString: true,
+      customClass: 'custom-message-box__w500',
+      type: 'warning',
+    })
+  } catch {
+    return
+  }
+  loading.value += 1
+  try {
+    if (!props.category || !props.args) {
+      throw new Error('不应该执行到此处，请联系开发人员')
+    }
+    await resolveResponse(
+      operateClearCache({
+        category: props.category,
+        args: props.args,
+      }),
+    )
+    ElMessage({
+      showClose: true,
+      message: '缓存清除成功',
+      type: 'success',
+    })
+  } finally {
+    loading.value -= 1
+  }
+  handleInspect()
 }
 
 async function handleInspectNavigationNode(): Promise<void> {

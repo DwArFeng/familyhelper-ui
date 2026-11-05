@@ -204,12 +204,17 @@ const mainDialogRules = ref({
 })
 const mainDialogModelTypeIndicator = ref<{ type: SettingNodeType; label: string }[]>([
   { type: 0, label: '文本' },
+  { type: 1, label: '长文本' },
   { type: 2, label: '图片' },
   { type: 3, label: '图片列表' },
   { type: 4, label: '国际化' },
   { type: 5, label: '文件' },
   { type: 6, label: '文件列表' },
   { type: 7, label: '导航' },
+  { type: 8, label: '键值' },
+  { type: 9, label: '文本列表' },
+  { type: 10, label: '视频' },
+  { type: 11, label: '视频列表' },
 ])
 
 const formRef = useTemplateRef<InstanceType<typeof ElForm>>('formRef')

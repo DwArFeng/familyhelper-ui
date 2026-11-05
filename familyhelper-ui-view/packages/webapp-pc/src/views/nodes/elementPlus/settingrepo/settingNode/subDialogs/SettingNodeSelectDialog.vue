@@ -234,6 +234,14 @@ function settingNodeTableTypeFormatter(row: SettingNode, column: any): string {
       return '文件列表'
     case 7:
       return '导航'
+    case 8:
+      return '键值'
+    case 9:
+      return '文本列表'
+    case 10:
+      return '视频'
+    case 11:
+      return '视频列表'
     default:
       return '（未知）'
   }

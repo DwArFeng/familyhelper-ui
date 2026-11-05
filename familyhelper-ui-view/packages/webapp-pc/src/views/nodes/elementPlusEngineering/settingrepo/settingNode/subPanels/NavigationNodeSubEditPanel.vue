@@ -11,9 +11,12 @@
               <el-button type="primary" :disabled="readonly" @click="handleShowNodeMaintainDialog">
                 {{ t('views.element_plus_engineering.settingrepo.edit_properties') }}
               </el-button>
-              <el-button type="success" @click="handleInspect">{{
-                t('views.element_plus_engineering.settingrepo.refresh_data')
-              }}</el-button>
+              <el-button type="success" @click="handleInspect">
+                {{ t('views.element_plus_engineering.settingrepo.refresh_data') }}
+              </el-button>
+              <el-button type="warning" :disabled="readonly" @click="handleClearCache">
+                {{ t('views.element_plus_engineering.settingrepo.clear_cache') }}
+              </el-button>
             </div>
           </template>
           <template v-slot:default>
@@ -68,9 +71,12 @@
             >
               {{ t('views.element_plus_engineering.settingrepo.format_index') }}
             </el-button>
-            <el-button type="success" @click="handleInspect">{{
-              t('views.element_plus_engineering.settingrepo.refresh_data')
-            }}</el-button>
+            <el-button type="success" @click="handleInspect">
+              {{ t('views.element_plus_engineering.settingrepo.refresh_data') }}
+            </el-button>
+            <el-button type="warning" :disabled="readonly" @click="handleClearCache">
+              {{ t('views.element_plus_engineering.settingrepo.clear_cache') }}
+            </el-button>
           </template>
           <template v-slot:default>
             <div class="structure-container-body">
@@ -250,6 +256,7 @@ import {
   removeItem,
   updateItem,
   updateNode,
+  operateClearCache,
 } from '@dwarfeng/familyhelper-ui-component-api/src/api/settingrepo/navigationNode.ts'
 import { resolveResponse } from '@/util/response.ts'
 
@@ -321,6 +328,49 @@ const navigationNode = ref<NavigationNodeInspectResult | null>(null)
 
 function handleInspect(): void {
   handleInspectNavigationNode()
+}
+
+async function handleClearCache(): Promise<void> {
+  if (settingNodeInvalid.value) {
+    return
+  }
+  try {
+    await ElMessageBox.confirm(
+      t('views.element_plus_engineering.settingrepo.clear_navigation_cache_confirmation'),
+      t('views.element_plus_engineering.settingrepo.prompt'),
+      {
+        confirmButtonText: t('views.element_plus_engineering.settingrepo.confirm'),
+        cancelButtonText: t('views.element_plus_engineering.settingrepo.cancel'),
+        dangerouslyUseHTMLString: true,
+        customClass: 'custom-message-box__w500',
+        type: 'warning',
+      },
+    )
+  } catch {
+    return
+  }
+  loading.value += 1
+  try {
+    if (!props.category || !props.args) {
+      throw new Error(
+        t('views.element_plus_engineering.settingrepo.unexpected_execution_contact_developer'),
+      )
+    }
+    await resolveResponse(
+      operateClearCache({
+        category: props.category,
+        args: props.args,
+      }),
+    )
+    ElMessage({
+      showClose: true,
+      message: t('views.element_plus_engineering.settingrepo.cache_cleared_successfully'),
+      type: 'success',
+    })
+  } finally {
+    loading.value -= 1
+  }
+  handleInspect()
 }
 
 async function handleInspectNavigationNode(): Promise<void> {

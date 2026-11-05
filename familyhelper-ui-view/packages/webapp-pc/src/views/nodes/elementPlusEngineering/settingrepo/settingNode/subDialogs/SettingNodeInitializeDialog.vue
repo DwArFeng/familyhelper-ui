@@ -238,6 +238,10 @@ const mainDialogModelTypeIndicator = ref<{ type: SettingNodeType; label: string 
     label: t('views.element_plus_engineering.settingrepo.text_node_type'),
   },
   {
+    type: 1,
+    label: t('views.element_plus_engineering.settingrepo.long_text_node_type'),
+  },
+  {
     type: 2,
     label: t('views.element_plus_engineering.settingrepo.image_node_type'),
   },
@@ -260,6 +264,22 @@ const mainDialogModelTypeIndicator = ref<{ type: SettingNodeType; label: string 
   {
     type: 7,
     label: t('views.element_plus_engineering.settingrepo.navigation_node_type'),
+  },
+  {
+    type: 8,
+    label: t('views.element_plus_engineering.settingrepo.kv_node_type'),
+  },
+  {
+    type: 9,
+    label: t('views.element_plus_engineering.settingrepo.text_list_node_type'),
+  },
+  {
+    type: 10,
+    label: t('views.element_plus_engineering.settingrepo.video_node_type'),
+  },
+  {
+    type: 11,
+    label: t('views.element_plus_engineering.settingrepo.video_list_node_type'),
   },
 ])
 

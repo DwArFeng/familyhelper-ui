@@ -254,6 +254,14 @@ function settingNodeTableTypeFormatter(row: SettingNode, column: any): string {
       return t('views.element_plus_engineering.settingrepo.file_list_node_type')
     case 7:
       return t('views.element_plus_engineering.settingrepo.navigation_node_type')
+    case 8:
+      return t('views.element_plus_engineering.settingrepo.kv_node_type')
+    case 9:
+      return t('views.element_plus_engineering.settingrepo.text_list_node_type')
+    case 10:
+      return t('views.element_plus_engineering.settingrepo.video_node_type')
+    case 11:
+      return t('views.element_plus_engineering.settingrepo.video_list_node_type')
     default:
       return t('views.element_plus_engineering.settingrepo.unknown_parenthesized')
   }

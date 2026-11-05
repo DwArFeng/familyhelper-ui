@@ -17,9 +17,9 @@
             @keydown.enter="handleSettingNodeSearch"
             @clear="handleSettingNodeSearch"
           >
-            <template v-slot:prepend>{{
-              t('views.element_plus_engineering.settingrepo.node_id')
-            }}</template>
+            <template v-slot:prepend>
+              {{ t('views.element_plus_engineering.settingrepo.node_id') }}
+            </template>
             <template v-slot:append>
               <el-button :icon="SearchIcon" @click="handleSettingNodeSearch" />
             </template>
@@ -228,7 +228,7 @@ onMounted(() => {
 
 // region 配置节点表格处理
 
-const SETTING_NODE_TYPE_SPACE: SettingNodeType[] = [0, 1, 2, 3, 4, 5, 6, 7]
+const SETTING_NODE_TYPE_SPACE: SettingNodeType[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
 
 const {
   currentPage: settingNodeTableCurrentPage,
@@ -261,6 +261,14 @@ function settingNodeTableTypeFormatter(row: SettingNode, column: any): string {
       return t('views.element_plus_engineering.settingrepo.file_list_node_type')
     case 7:
       return t('views.element_plus_engineering.settingrepo.navigation_node_type')
+    case 8:
+      return t('views.element_plus_engineering.settingrepo.kv_node_type')
+    case 9:
+      return t('views.element_plus_engineering.settingrepo.text_list_node_type')
+    case 10:
+      return t('views.element_plus_engineering.settingrepo.video_node_type')
+    case 11:
+      return t('views.element_plus_engineering.settingrepo.video_list_node_type')
     default:
       return t('views.element_plus_engineering.settingrepo.unknown_parenthesized')
   }

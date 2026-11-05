@@ -14,6 +14,12 @@
       :args="settingNode?.args"
       :readonly="readonly"
     />
+    <long-text-node-sub-edit-panel
+      v-else-if="settingNode?.type === 1"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
     <image-node-sub-edit-panel
       v-else-if="settingNode?.type === 2"
       :category="settingNode?.category"
@@ -50,6 +56,30 @@
       :args="settingNode?.args"
       :readonly="readonly"
     />
+    <kv-node-sub-edit-panel
+      v-else-if="settingNode?.type === 8"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
+    <text-list-node-sub-edit-panel
+      v-else-if="settingNode?.type === 9"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
+    <video-node-sub-edit-panel
+      v-else-if="settingNode?.type === 10"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
+    <video-list-node-sub-edit-panel
+      v-else-if="settingNode?.type === 11"
+      :category="settingNode?.category"
+      :args="settingNode?.args"
+      :readonly="readonly"
+    />
     <placeholder-panel
       v-else
       :text="t('views.element_plus_engineering.settingrepo.unknown_node_type')"
@@ -67,12 +97,17 @@ import { ElNotification } from 'element-plus'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import TextNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/TextNodeSubEditPanel.vue'
+import LongTextNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/LongTextNodeSubEditPanel.vue'
 import ImageNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/ImageNodeSubEditPanel.vue'
 import ImageListNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/ImageListNodeSubEditPanel.vue'
 import IahnNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/IahnNodeSubEditPanel.vue'
 import FileNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/FileNodeSubEditPanel.vue'
 import FileListNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/FileListNodeSubEditPanel.vue'
 import NavigationNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/NavigationNodeSubEditPanel.vue'
+import KvNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/KvNodeSubEditPanel.vue'
+import TextListNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/TextListNodeSubEditPanel.vue'
+import VideoNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/VideoNodeSubEditPanel.vue'
+import VideoListNodeSubEditPanel from '@/views/nodes/elementPlusEngineering/settingrepo/settingNode/subPanels/VideoListNodeSubEditPanel.vue'
 
 import {
   type SettingNode,
@@ -164,9 +199,11 @@ onMounted(() => {
 // region 提醒处理
 
 const IMAGE_TYPES: SettingNodeType[] = [2, 3]
+const VIDEO_TYPES: SettingNodeType[] = [10, 11]
 
 const notifyShow = ref<boolean>(false)
 const notifyHandle = ref<NotificationHandle | null>(null)
+const notifyMessage = ref<string>('')
 
 watch(router.currentRoute, (value) => {
   updateNotify(value.name as string)
@@ -198,13 +235,29 @@ function updateNotify(currentRouteName: string): void {
           '</div>',
       }
     }
+    // 展示视频缩略图的通知。
+    if (VIDEO_TYPES.some((type) => type === settingNodeValue.type)) {
+      return {
+        shouldShow: true,
+        message:
+          '<div style="line-height: 20px">' +
+          t('views.element_plus_engineering.settingrepo.thumbnail_preview_notice') +
+          t('views.element_plus_engineering.settingrepo.original_video_download_security_warning') +
+          '</div>',
+      }
+    }
     // 如无命中，则不显示通知。
     return { shouldShow: false, message: '' }
   }
 
   const { shouldShow, message } = checkStatus()
 
-  if (shouldShow && !notifyShow.value) {
+  if (shouldShow) {
+    if (notifyShow.value && notifyMessage.value === message) {
+      return
+    }
+    notifyHandle.value?.close()
+    notifyMessage.value = message
     notifyShow.value = true
     notifyHandle.value = ElNotification({
       title: t('views.element_plus_engineering.settingrepo.usage_hint'),
@@ -218,9 +271,12 @@ function updateNotify(currentRouteName: string): void {
       onClose: () => {
         notifyShow.value = false
         notifyHandle.value = null
+        notifyMessage.value = ''
       },
     })
-  } else if (!shouldShow && notifyShow.value) {
+    return
+  }
+  if (notifyShow.value) {
     if (!notifyHandle.value) {
       throw new Error(
         t('views.element_plus_engineering.settingrepo.unexpected_execution_contact_developer'),
@@ -229,6 +285,7 @@ function updateNotify(currentRouteName: string): void {
     notifyHandle.value.close()
     notifyShow.value = false
     notifyHandle.value = null
+    notifyMessage.value = ''
   }
 }
 
