@@ -4,6 +4,14 @@
 
 ### 功能构建
 
+- `webapp-pc` 子模块页面功能优化。
+  - 配置仓库 -> 配置节点编辑器文件节点子编辑面板组件方案优化。
+  - 配置仓库 -> 配置节点编辑器文件列表节点子编辑面板组件方案优化。
+  - 配置仓库 -> 配置节点编辑器图片节点子编辑面板组件方案优化。
+  - 配置仓库 -> 配置节点编辑器图片列表节点子编辑面板组件方案优化。
+  - 通知管理 -> 元数据管理左侧通知设置主题面板组件方案优化。
+  - 通知管理 -> 发送器设置左侧通知设置主题面板组件方案优化。
+
 - `webapp-pc` 子模块组件新增。
   - 组件 `components/elementPlus/layout/titleLayoutPanel/TitleLayoutPanel.vue` 新增。
   - 组件 `components/elementPlusEngineering/layout/titleLayoutPanel/TitleLayoutPanel.vue` 新增。

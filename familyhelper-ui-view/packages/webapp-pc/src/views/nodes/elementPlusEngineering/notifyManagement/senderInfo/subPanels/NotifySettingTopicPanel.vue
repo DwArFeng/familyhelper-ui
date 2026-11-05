@@ -130,7 +130,7 @@ import { Search as SearchIcon } from '@element-plus/icons-vue'
 
 import TablePanel from '@/components/elementPlusEngineering/table/tablePanel/TablePanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlusEngineering/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
-import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
+import TitleLayoutPanel from '@/components/elementPlusEngineering/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 
 import { useIdentityBackendPagingTablePanel } from '@/components/elementPlusEngineering/table/tablePanel/composables.ts'
 

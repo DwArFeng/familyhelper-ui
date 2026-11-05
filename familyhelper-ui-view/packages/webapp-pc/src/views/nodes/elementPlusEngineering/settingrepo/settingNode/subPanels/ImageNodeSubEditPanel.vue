@@ -74,7 +74,7 @@ import { ElMessage } from 'element-plus'
 
 import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/PlaceholderPanel.vue'
 import HeaderLayoutPanel from '@/components/elementPlusEngineering/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
-import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
+import TitleLayoutPanel from '@/components/elementPlusEngineering/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import FileSelector from '@/components/elementPlusEngineering/file/fileSelector/FileSelector.vue'
 
 import { useImageFileSelector } from '@/components/elementPlusEngineering/file/fileSelector/composables.ts'

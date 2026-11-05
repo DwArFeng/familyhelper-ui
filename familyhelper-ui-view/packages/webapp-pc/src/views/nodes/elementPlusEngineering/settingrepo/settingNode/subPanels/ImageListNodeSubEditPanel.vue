@@ -168,7 +168,7 @@ import PlaceholderPanel from '@/components/comvisual/layout/placeholderPanel/Pla
 import TablePanel from '@/components/elementPlusEngineering/table/tablePanel/TablePanel.vue'
 import MaintainDialog from '@/components/elementPlusEngineering/dialog/maintainDialog/MaintainDialog.vue'
 import HeaderLayoutPanel from '@/components/elementPlusEngineering/layout/headerLayoutPanel/HeaderLayoutPanel.vue'
-import TitleLayoutPanel from '@/components/comvisual/layout/titleLayoutPanel/TitleLayoutPanel.vue'
+import TitleLayoutPanel from '@/components/elementPlusEngineering/layout/titleLayoutPanel/TitleLayoutPanel.vue'
 import FileSelector from '@/components/elementPlusEngineering/file/fileSelector/FileSelector.vue'
 
 import { useIdentityFrontendPagingTablePanel } from '@/components/elementPlusEngineering/table/tablePanel/composables.ts'
