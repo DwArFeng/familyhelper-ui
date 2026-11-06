@@ -4,6 +4,9 @@
 
 ### 功能构建
 
+- Wiki 编写。
+  - docs/wiki/zh-CN/FamilyhelperUiViewStore.md。
+
 - `webapp-pc` 子模块配置仓库一级菜单新增二级菜单。
   - 实现预热设置二级菜单。
   - 实现预热驱动器支持二级菜单。
